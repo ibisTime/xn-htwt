@@ -16,6 +16,7 @@ import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISmsOutBO;
+import com.cdkj.loan.bo.ITencentBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -24,10 +25,12 @@ import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.dto.res.XN630800Res;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECaptchaType;
 import com.cdkj.loan.enums.ECurrency;
+import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.enums.EUserStatus;
@@ -51,6 +54,9 @@ public class UserAOImpl implements IUserAO {
     @Autowired
     ICreditscoreBO creditscoreBO;
 
+    @Autowired
+    ITencentBO tencentBO;
+
     @Override
     @Transactional
     public String doRegister(String mobile, String nickname, String loginPwd,
@@ -68,6 +74,10 @@ public class UserAOImpl implements IUserAO {
 
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
+
+        // 注册腾讯云用户
+        tencentBO.register(userId, nickname, ESystemCode.HTWT.getCode(),
+            ESystemCode.HTWT.getCode());
 
         // 分配账户
         distributeAccount(userId, mobile, kind);
@@ -297,6 +307,12 @@ public class UserAOImpl implements IUserAO {
     @Override
     public void modifyNickname(String userId, String nickname) {
         userBO.refreshNickname(userId, nickname);
+    }
+
+    @Override
+    public XN630800Res getTencentSign(String userId) {
+        return tencentBO.getSign(userId, ESystemCode.HTWT.getCode(),
+            ESystemCode.HTWT.getCode());
     }
 
     @Override

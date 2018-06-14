@@ -57,4 +57,14 @@ public class SysConstants {
     // 公告范围类型
     public static String SCOPE_PEOPLE_TYPE = "scope_people_type";// 公告范围类型
 
+    // 腾讯云配置
+    public static String TX_APP_CODE = "tx_app_code";// 应用编号
+
+    public static String TX_APP_ADMIN = "tx_app_admin";// 应用编号
+
+    public static String TX_ACCESS_KEY = "tx_access_key";// 公钥
+
+    public static String TX_SECRET_KEY = "tx_secret_key";// 私钥
+
+    public static String TX_ACCOUNT_TYPE = "tx_account_type";// 账号类型
 }
