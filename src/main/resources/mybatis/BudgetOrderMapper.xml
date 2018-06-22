@@ -1493,8 +1493,6 @@
 	<update id="update_advancefund" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		<result column="advance_fund_amount_pdf" property="advanceFundAmountPdf" />
-		<result column="advance_fund_other_pdf" property="advanceFundOtherPdf" />
 		advance_fund_datetime = #{advanceFundDatetime}
 		,advance_fund_amount = #{advanceFundAmount}
 		,bill_pdf = #{billPdf}
