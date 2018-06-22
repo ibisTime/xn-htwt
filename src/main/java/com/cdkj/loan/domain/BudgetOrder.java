@@ -171,7 +171,7 @@ public class BudgetOrder extends ABaseDO {
     // 工作单位地址
     private String workCompanyAddress;
 
-    // 是否卡邮寄地址
+    // 工作单位是否卡邮寄地址
     private String workIsCardMailAddress;
 
     // 单位性质
@@ -487,7 +487,7 @@ public class BudgetOrder extends ABaseDO {
     private Date wxJourDatetimeEnd;
 
     // 微信流水结息
-    private String wxJouInterest;
+    private String wxJourInterest;
 
     // 微信收入
     private Long wxJourIncome;
@@ -777,6 +777,17 @@ public class BudgetOrder extends ABaseDO {
 
     // 超过一天的标志
     private String advanceFlag;
+
+    // 团队名称
+    private String teamName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public String getAdvanceFlag() {
         return advanceFlag;
@@ -2470,12 +2481,12 @@ public class BudgetOrder extends ABaseDO {
         this.zfbJourInterest = zfbJourInterest;
     }
 
-    public String getWxJouInterest() {
-        return wxJouInterest;
+    public String getWxJourInterest() {
+        return wxJourInterest;
     }
 
-    public void setWxJouInterest(String wxJouInterest) {
-        this.wxJouInterest = wxJouInterest;
+    public void setWxJourInterest(String wxJourInterest) {
+        this.wxJourInterest = wxJourInterest;
     }
 
     public String getJourInterest() {

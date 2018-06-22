@@ -405,7 +405,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getWxJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setWxJourDatetimeEnd(DateUtil.strToDate(req.getWxJourDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setWxJouInterest(req.getWxJouInterest());
+        data.setWxJourInterest(req.getWxJourInterest());
 
         data.setWxJourIncome(StringValidater.toLong(req.getWxJourIncome()));
         data.setWxJourExpend(StringValidater.toLong(req.getWxJourExpend()));
@@ -1109,12 +1109,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 业务员姓名
         SYSUser sysUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
-        budgetOrder.setSaleUserName(sysUser.getRealName());
+        if (StringUtils.isNotBlank(sysUser.getRealName())) {
+            budgetOrder.setSaleUserName(sysUser.getRealName());
+        }
 
         // 贷款银行
         if (StringUtils.isNotBlank(budgetOrder.getLoanBank())) {
             Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
             budgetOrder.setLoanBankName(loanBank.getBankName());
+        }
+
+        // 团队
+        BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
+        if (StringUtils.isNotBlank(bizTeam.getName())) {
+            budgetOrder.setTeamName(bizTeam.getName());
         }
     }
 
