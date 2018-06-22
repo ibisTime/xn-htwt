@@ -13,7 +13,7 @@ package com.cdkj.loan.dto.res;
  * @since: 2017年11月16日 下午5:02:42 
  * @history:
  */
-public class XN625000Res {
+public class XN630800Res {
 
     private String txAppCode;
 

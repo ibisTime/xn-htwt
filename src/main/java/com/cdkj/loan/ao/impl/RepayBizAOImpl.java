@@ -191,9 +191,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
         for (RepayPlan repayPlan : planList) {
             if (ERepayPlanNode.TO_REPAY.getCode().equals(
                 repayPlan.getCurNodeCode())) {
+                Long monthRepayAmount = repayPlan.getRepayCapital()
+                        + repayPlan.getRepayInterest();
                 // 更新还款计划
-                repayPlanBO.repaySuccess(repayPlan,
-                    repayPlan.getMonthRepayAmount());
+                repayPlanBO.repaySuccess(repayPlan, monthRepayAmount);
             }
         }
     }

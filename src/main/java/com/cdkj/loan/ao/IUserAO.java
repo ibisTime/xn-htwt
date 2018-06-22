@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.dto.res.XN630800Res;
 
 public interface IUserAO {
 
@@ -52,6 +53,9 @@ public interface IUserAO {
 
     // 注销/激活用户
     public void doCloseOpen(String userId, String updater, String remark);
+
+    // 获取腾讯云信息
+    public XN630800Res getTencentSign(String userId);
 
     // 分页查询
     public Paginable<User> queryUserPage(int start, int limit, User condition);
