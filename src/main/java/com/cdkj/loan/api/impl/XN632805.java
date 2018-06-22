@@ -9,6 +9,7 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632805Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -33,14 +34,18 @@ public class XN632805 extends AProcessor {
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
         condition.setEntryDatetimeStart(req.getEntryDatetimeStart());
+
         condition.setEntryDatetimeEnd(req.getEntryDatetimeEnd());
         condition.setWorkStatus(req.getWorkStatus());
-        condition.setStatus("1");
+        condition.setStatus(EBoolean.YES.getCode());
+        condition.setIsDistribute(req.getIsDistribute());
+
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IArchiveAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
+
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return archiveAO.queryArchivePage(start, limit, condition);

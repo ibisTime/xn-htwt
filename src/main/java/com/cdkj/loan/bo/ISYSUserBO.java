@@ -11,6 +11,8 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
     public void refreshStatus(String userId, EUserStatus status,
             String updater, String remark);
 
+    public void refreshUserLock(String userId);
+
     public void refreshMobile(String userId, String mobile);
 
     public void refreshRole(String userId, String roleCode, String updater,
@@ -24,11 +26,11 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
 
     public void isMobileExist(String mobile);
 
-    public boolean isUserExist(String code);
-
     public void saveUser(SYSUser data);
 
     public List<SYSUser> queryUserList(SYSUser condition);
+
+    public SYSUser getUserByArchiveCode(String archiveCode);
 
     public SYSUser getUser(String userId);
 

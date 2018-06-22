@@ -68,6 +68,9 @@ public class SYSUser extends ABaseDO {
     // 团队编号
     private String teamCode;
 
+    // 档案编号
+    private String archiveCode;
+
     // **************db**********
     private Date createDatetimeStart;
 
@@ -82,6 +85,14 @@ public class SYSUser extends ABaseDO {
     private String companyName;
 
     private String teamName;
+
+    public String getArchiveCode() {
+        return archiveCode;
+    }
+
+    public void setArchiveCode(String archiveCode) {
+        this.archiveCode = archiveCode;
+    }
 
     public String getTeamName() {
         return teamName;

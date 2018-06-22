@@ -211,6 +211,17 @@ public class Archive extends ABaseDO {
     // 年龄止
     private Integer ageEnd;
 
+    // 档案是否被分配
+    private String isDistribute;
+
+    public String getIsDistribute() {
+        return isDistribute;
+    }
+
+    public void setIsDistribute(String isDistribute) {
+        this.isDistribute = isDistribute;
+    }
+
     public Integer getAgeStart() {
         return ageStart;
     }

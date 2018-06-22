@@ -17,12 +17,13 @@ import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.dao.ISYSUserDAO;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
-        implements ISYSUserBO {
+public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
+        ISYSUserBO {
 
     @Autowired
     private ISYSUserDAO sysUserDAO;
@@ -44,6 +45,18 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
             data.setUserId(userId);
             data.setMobile(mobile);
             sysUserDAO.updateMobile(data);
+        }
+    }
+
+    @Override
+    public void refreshUserLock(String userId) {
+        if (StringUtils.isNotBlank(userId)) {
+            SYSUser data = getUser(userId);
+            if (!ESYSUserStatus.BLOCK.getCode().equals(data.getStatus())) {
+                data.setUserId(userId);
+                data.setStatus(ESYSUserStatus.BLOCK.getCode());
+                sysUserDAO.updateStatus(data);
+            }
         }
     }
 
@@ -79,8 +92,8 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
     }
 
     @Override
-    public void refreshStatus(String userId, EUserStatus status, String updater,
-            String remark) {
+    public void refreshStatus(String userId, EUserStatus status,
+            String updater, String remark) {
         if (StringUtils.isNotBlank(userId)) {
             SYSUser data = new SYSUser();
             data.setUserId(userId);
@@ -138,15 +151,6 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
     }
 
     @Override
-    public boolean isUserExist(String code) {
-        SYSUser condition = new SYSUser();
-        if (sysUserDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public void saveUser(SYSUser data) {
         sysUserDAO.insert(data);
     }
@@ -154,6 +158,18 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
     @Override
     public List<SYSUser> queryUserList(SYSUser condition) {
         return sysUserDAO.selectList(condition);
+    }
+
+    @Override
+    public SYSUser getUserByArchiveCode(String archiveCode) {
+        SYSUser result = null;
+        SYSUser condition = new SYSUser();
+        condition.setArchiveCode(archiveCode);
+        List<SYSUser> list = sysUserDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            result = list.get(0);
+        }
+        return result;
     }
 
     @Override
@@ -213,13 +229,13 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
             data.setPostName(post.getName());
 
             // 获取部门
-            Department department = departmentBO
-                .getDepartment(data.getDepartmentCode());
+            Department department = departmentBO.getDepartment(data
+                .getDepartmentCode());
             data.setDepartmentName(department.getName());
 
             // 获取分公司
-            Department company = departmentBO
-                .getDepartment(data.getCompanyCode());
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
             data.setCompanyName(company.getName());
         }
         return data;
@@ -227,8 +243,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
 
     @Override
     public void checkLoginPwd(String userId, String loginPwd) {
-        if (StringUtils.isNotBlank(userId)
-                && StringUtils.isNotBlank(loginPwd)) {
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(loginPwd)) {
             SYSUser condition = new SYSUser();
             condition.setUserId(userId);
             condition.setLoginPwd(MD5Util.md5(loginPwd));

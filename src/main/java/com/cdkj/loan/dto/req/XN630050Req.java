@@ -39,8 +39,19 @@ public class XN630050Req {
     @NotBlank
     private String postCode;
 
+    // 人事档案
+    private String archiveCode;
+
     // 备注（选填）
     private String remark;
+
+    public String getArchiveCode() {
+        return archiveCode;
+    }
+
+    public void setArchiveCode(String archiveCode) {
+        this.archiveCode = archiveCode;
+    }
 
     public String getPostCode() {
         return postCode;

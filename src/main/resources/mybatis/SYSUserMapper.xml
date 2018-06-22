@@ -20,9 +20,11 @@
 		<result column="role_code" property="roleCode" />
 		<result column="updater" property="updater" />
 		<result column="updateDatetime" property="update_datetime" />
+		
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
 		<result column="team_code" property="teamCode" />
+		<result column="archive_code" property="archiveCode" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -71,6 +73,9 @@
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
 			</if>
+			<if test="archiveCode != null and archiveCode != '' ">
+				AND t.archive_code = #{archiveCode}
+			</if>
 		</trim>
 	</sql>
 	
@@ -94,6 +99,7 @@
 		,t.status
 		,t.remark
 		,t.team_code
+		,t.archive_code
 		FROM
 		tsys_user t
 		<include refid="where_condition" />
@@ -133,6 +139,7 @@
 		
 		,status
 		,remark
+		,archive_code
 		)
 		VALUES(
 		#{userId}
@@ -155,6 +162,7 @@
 		
 		,#{status}
 		,#{remark}
+		,#{archiveCode}
 		)
 	</insert>
 
@@ -184,7 +192,6 @@
 		,remark = #{remark}
 		WHERE user_id = #{userId}
 	</update>
-
 
 	<update id="update_login_pwd" parameterType="sysUser">
 		UPDATE tsys_user
@@ -244,5 +251,4 @@
 		WHERE
 		user_id = #{userId}	
 	</update>	
-
 </mapper>

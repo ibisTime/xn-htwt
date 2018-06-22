@@ -147,4 +147,11 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
         }
     }
 
+    @Override
+    public void refreshBelongUser(Archive data) {
+        if (data != null) {
+            archiveDAO.updateBelongUser(data);
+        }
+    }
+
 }

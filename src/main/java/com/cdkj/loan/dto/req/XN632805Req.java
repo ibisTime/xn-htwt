@@ -22,6 +22,17 @@ public class XN632805Req extends APageReq {
 
     private String workStatus;
 
+    // 是否被分配
+    private String isDistribute;
+
+    public String getIsDistribute() {
+        return isDistribute;
+    }
+
+    public void setIsDistribute(String isDistribute) {
+        this.isDistribute = isDistribute;
+    }
+
     public String getRealName() {
         return realName;
     }
