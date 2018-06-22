@@ -31,6 +31,17 @@ public class XN632128Req {
     // 商业险
     private String carSyx;
 
+    // 其他资料
+    private String carSettleOtherPdf;
+
+    public String getCarSettleOtherPdf() {
+        return carSettleOtherPdf;
+    }
+
+    public void setCarSettleOtherPdf(String carSettleOtherPdf) {
+        this.carSettleOtherPdf = carSettleOtherPdf;
+    }
+
     public String getCode() {
         return code;
     }

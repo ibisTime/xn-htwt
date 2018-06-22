@@ -13,8 +13,13 @@ public class XN632123Req {
     @NotBlank
     private String code;// 预算单编号
 
+    // 银行视频
     @NotBlank
-    private String interviewVideo;// 面签视频
+    private String bankVideo;
+
+    // 公司视频
+    @NotBlank
+    private String companyVideo;
 
     @NotBlank
     private String interviewContract;// 面签合同
@@ -30,12 +35,20 @@ public class XN632123Req {
         this.code = code;
     }
 
-    public String getInterviewVideo() {
-        return interviewVideo;
+    public String getBankVideo() {
+        return bankVideo;
     }
 
-    public void setInterviewVideo(String interviewVideo) {
-        this.interviewVideo = interviewVideo;
+    public void setBankVideo(String bankVideo) {
+        this.bankVideo = bankVideo;
+    }
+
+    public String getCompanyVideo() {
+        return companyVideo;
+    }
+
+    public void setCompanyVideo(String companyVideo) {
+        this.companyVideo = companyVideo;
     }
 
     public String getInterviewContract() {

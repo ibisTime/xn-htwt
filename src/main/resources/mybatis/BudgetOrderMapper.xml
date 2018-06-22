@@ -7,6 +7,7 @@
 		<result column="repay_biz_code" property="repayBizCode" />
 		<result column="loan_product_code" property="loanProductCode" />
 		<result column="loan_product_name" property="loanProductName" />
+		<result column="region" property="region" />
 		<result column="loan_bank" property="loanBank" />
 		
 		<result column="gps_fee" property="gpsFee" />
@@ -21,10 +22,10 @@
 		<result column="car_brand" property="carBrand" />
 		<result column="car_series" property="carSeries" />
 		<result column="car_model" property="carModel" />
+		<result column="car_type" property="carType" />
 		
 		<result column="car_pic" property="carPic" />
 		<result column="car_hgz_pic" property="carHgzPic" />
-		<result column="car_hgz_no" property="carHgzNo" />
 		<result column="car_frame_no" property="carFrameNo" />
 		<result column="car_engine_no" property="carEngineNo" />
 		<result column="original_price" property="originalPrice" />
@@ -42,6 +43,7 @@
 		<result column="gender" property="gender" />
 		
 		<result column="marry_state" property="marryState" />
+		<result column="political" property="political" />
 		<result column="nation" property="nation" />
 		<result column="education" property="education" />
 		<result column="id_kind" property="idKind" />
@@ -50,6 +52,7 @@
 		<result column="family_number" property="familyNumber" />
 		<result column="mobile" property="mobile" />
 		<result column="now_address" property="nowAddress" />
+		<result column="is_card_mail_address" property="isCardMailAddress" />
 		<result column="post_code1" property="postCode1" />
 		<result column="residence_address" property="residenceAddress" />
 		<result column="post_code2" property="postCode2" />
@@ -59,6 +62,7 @@
 		<result column="main_income" property="mainIncome" />
 		<result column="work_company_name" property="workCompanyName" />
 		<result column="work_company_address" property="workCompanyAddress" />
+		<result column="work_is_card_mail_address" property="workIsCardMailAddress" />
 		<result column="work_company_property" property="workCompanyProperty" />
 		<result column="work_belong_industry" property="workBelongIndustry" />
 		<result column="work_profession" property="workProfession" />
@@ -82,6 +86,7 @@
 		
 		<result column="mate_zfb_jour_datetime_start" property="mateZfbJourDatetimeStart" />
 		<result column="mate_zfb_jour_datetime_end" property="mateZfbJourDatetimeEnd" />
+		<result column="mate_zfb_jour_interest" property="mateZfbJourInterest" />
 		<result column="mate_zfb_jour_income" property="mateZfbJourIncome" />
 		<result column="mate_zfb_jour_expend" property="mateZfbJourExpend" />
 		
@@ -92,6 +97,7 @@
 		<result column="mate_zfb_jour_remark" property="mateZfbJourRemark" />
 		<result column="mate_wx_jour_datetime_start" property="mateWxJourDatetimeStart" />
 		<result column="mate_wx_jour_datetime_end" property="mateWxJourDatetimeEnd" />
+		<result column="mate_wx_jour_interest" property="mateWxJourInterest" />
 		<result column="mate_wx_jour_income" property="mateWxJourIncome" />
 		<result column="mate_wx_jour_expend" property="mateWxJourExpend" />
 		
@@ -102,6 +108,7 @@
 		<result column="mate_wx_jour_remark" property="mateWxJourRemark" />
 		<result column="mate_jour_datetime_start" property="mateJourDatetimeStart" />
 		<result column="mate_jour_datetime_end" property="mateJourDatetimeEnd" />
+		<result column="mate_jour_interest" property="mateJourInterest" />
 		<result column="mate_jour_income" property="mateJourIncome" />
 		<result column="mate_jour_expend" property="mateJourExpend" />
 		
@@ -123,6 +130,7 @@
 		
 		<result column="gua_zfb_jour_datetime_start" property="guaZfbJourDatetimeStart" />
 		<result column="gua_zfb_jour_datetime_end" property="guaZfbJourDatetimeEnd" />
+		<result column="gua_zfb_jour_interest" property="guaZfbJourInterest" />
 		<result column="gua_zfb_jour_income" property="guaZfbJourIncome" />
 		<result column="gua_zfb_jour_expend" property="guaZfbJourExpend" />
 		
@@ -133,6 +141,7 @@
 		<result column="gua_zfb_jour_remark" property="guaZfbJourRemark" />
 		<result column="gua_wx_jour_datetime_start" property="guaWxJourDatetimeStart" />
 		<result column="gua_wx_jour_datetime_end" property="guaWxJourDatetimeEnd" />
+		<result column="gua_wx_jour_interest" property="guaWxJourInterest" />
 		<result column="gua_wx_jour_income" property="guaWxJourIncome" />
 		<result column="gua_wx_jour_expend" property="guaWxJourExpend" />
 		
@@ -143,6 +152,7 @@
 		<result column="gua_wx_jour_remark" property="guaWxJourRemark" />
 		<result column="gua_jour_datetime_start" property="guaJourDatetimeStart" />
 		<result column="gua_jour_datetime_end" property="guaJourDatetimeEnd" />
+		<result column="gua_jour_interest" property="guaJourInterest" />
 		<result column="gua_jour_income" property="guaJourIncome" />
 		<result column="gua_jour_expend" property="guaJourExpend" />
 		
@@ -162,6 +172,7 @@
 		<result column="emergency_mobile2" property="emergencyMobile2" />
 		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
 		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
+		<result column="zfb_jour_interest" property="zfbJourInterest" />
 		<result column="zfb_jour_income" property="zfbJourIncome" />
 		<result column="zfb_jour_expend" property="zfbJourExpend" />
 		
@@ -172,6 +183,7 @@
 		<result column="zfb_jour_remark" property="zfbJourRemark" />
 		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
 		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
+		<result column="wx_jour_interest" property="wxJourInterest" />
 		<result column="wx_jour_income" property="wxJourIncome" />
 		<result column="wx_jour_expend" property="wxJourExpend" />
 		
@@ -182,6 +194,7 @@
 		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="jour_datetime_start" property="jourDatetimeStart" />
 		<result column="jour_datetime_end" property="jourDatetimeEnd" />
+		<result column="jour_interest" property="jourInterest" />
 		<result column="jour_income" property="jourIncome" />
 		<result column="jour_expend" property="jourExpend" />
 		
@@ -194,13 +207,20 @@
 		<result column="house_contract" property="houseContract" />
 		
 		<result column="house_picture" property="housePicture" />
+		<result column="hk_book_pdf" property="hkBookPdf" />
+		<result column="id_card_pdf" property="idCardPdf" />
+		<result column="marry_pdf" property="marryPdf" />
+		<result column="other_pdf" property="otherPdf" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
-		<result column="interview_video" property="interviewVideo" />
+		<result column="bank_video" property="bankVideo" />
+		<result column="company_video" property="companyVideo" />
 		<result column="interview_contract" property="interviewContract" />
 		<result column="advance_fund_datetime" property="advanceFundDatetime" />
 		
 		<result column="advance_fund_amount" property="advanceFundAmount" />
 		<result column="bill_pdf" property="billPdf" />
+		<result column="advance_fund_amount_pdf" property="advanceFundAmountPdf" />
+		<result column="advance_fund_other_pdf" property="advanceFundOtherPdf" />
 		<result column="car_settle_datetime" property="carSettleDatetime" />
 		<result column="car_number" property="carNumber" />
 		<result column="car_invoice" property="carInvoice" />
@@ -208,6 +228,7 @@
 		<result column="car_hgz" property="carHgz" />
 		<result column="car_jqx" property="carJqx" />
 		<result column="car_syx" property="carSyx" />
+		<result column="car_settle_other_pdf" property="carSettleOtherPdf" />
 		<result column="car_regcerti" property="carRegcerti" />
 		<result column="car_pd" property="carPd" />
 		
@@ -340,6 +361,7 @@
 		,t.repay_biz_code
 		,t.loan_product_code
 		,t.loan_product_name
+		,t.region
 		,t.loan_bank
 		
 		,t.gps_fee
@@ -354,9 +376,9 @@
 		,t.car_brand
 		,t.car_series
 		,t.car_model
+		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
-		,t.car_hgz_no
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -374,6 +396,7 @@
 		,t.gender
 		
 		,t.marry_state
+		,t.political
 		,t.nation
 		,t.education
 		,t.id_kind
@@ -382,6 +405,7 @@
 		,t.family_number
 		,t.mobile
 		,t.now_address
+		,t.is_card_mail_address
 		,t.post_code1
 		,t.residence_address
 		
@@ -392,6 +416,7 @@
 		,t.work_company_name
 		
 		,t.work_company_address
+		,t.work_is_card_mail_address
 		,t.work_company_property
 		,t.work_belong_industry
 		,t.work_profession
@@ -406,6 +431,7 @@
 		
 		,t.mate_zfb_jour_datetime_start
 		,t.mate_zfb_jour_datetime_end
+		,t.mate_zfb_jour_interest
 		,t.mate_zfb_jour_income
 		,t.mate_zfb_jour_expend
 		,t.mate_zfb_jour_balance
@@ -417,6 +443,7 @@
 		
 		,t.mate_wx_jour_datetime_start
 		,t.mate_wx_jour_datetime_end
+		,t.mate_wx_jour_interest
 		,t.mate_wx_jour_income
 		,t.mate_wx_jour_expend
 		,t.mate_wx_jour_balance
@@ -427,6 +454,7 @@
 		
 		,t.mate_jour_datetime_start
 		,t.mate_jour_datetime_end
+		,t.mate_jour_interest
 		,t.mate_jour_income
 		,t.mate_jour_expend
 		,t.mate_jour_balance
@@ -455,6 +483,7 @@
 		
 		,t.gua_zfb_jour_datetime_start
 		,t.gua_zfb_jour_datetime_end
+		,t.gua_zfb_jour_interest
 		,t.gua_zfb_jour_income
 		,t.gua_zfb_jour_expend
 		,t.gua_zfb_jour_balance
@@ -465,6 +494,7 @@
 		
 		,t.gua_wx_jour_datetime_start
 		,t.gua_wx_jour_datetime_end
+		,t.gua_wx_jour_interest
 		,t.gua_wx_jour_income
 		,t.gua_wx_jour_expend
 		,t.gua_wx_jour_balance
@@ -475,6 +505,7 @@
 		
 		,t.gua_jour_datetime_start
 		,t.gua_jour_datetime_end
+		,t.gua_jour_interest
 		,t.gua_jour_income
 		,t.gua_jour_expend
 		,t.gua_jour_balance
@@ -494,6 +525,7 @@
 		
 		,t.zfb_jour_datetime_start
 		,t.zfb_jour_datetime_end
+		,t.zfb_jour_interest
 		,t.zfb_jour_income
 		,t.zfb_jour_expend
 		,t.zfb_jour_balance
@@ -504,6 +536,7 @@
 		
 		,t.wx_jour_datetime_start
 		,t.wx_jour_datetime_end
+		,t.wx_jour_interest
 		,t.wx_jour_income
 		,t.wx_jour_expend
 		,t.wx_jour_balance
@@ -514,6 +547,7 @@
 		
 		,t.jour_datetime_start
 		,t.jour_datetime_end
+		,t.jour_interest
 		,t.jour_income
 		,t.jour_expend
 		,t.jour_balance
@@ -525,13 +559,20 @@
 		
 		,t.house_contract
 		,t.house_picture
+		,t.hk_book_pdf
+		,t.id_card_pdf
+		,t.marry_pdf
+		,t.other_pdf
 		,t.is_advance_fund
-		,t.interview_video
+		,t.bank_video
+		,t.company_video
 		,t.interview_contract
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
 		,t.bill_pdf
+		,t.advance_fund_amount_pdf
+		,t.advance_fund_other_pdf
 		,t.car_settle_datetime
 		,t.car_number
 		
@@ -604,6 +645,7 @@
 		,t.repay_biz_code
 		,t.loan_product_code
 		,t.loan_product_name
+		,t.region
 		,t.loan_bank
 		
 		,t.gps_fee
@@ -618,9 +660,9 @@
 		,t.car_brand
 		,t.car_series
 		,t.car_model
+		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
-		,t.car_hgz_no
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -689,6 +731,7 @@
 		,t.repay_biz_code
 		,t.loan_product_code
 		,t.loan_product_name
+		,t.region
 		,t.loan_bank
 		
 		,t.gps_fee
@@ -703,9 +746,9 @@
 		,t.car_brand
 		,t.car_series
 		,t.car_model
+		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
-		,t.car_hgz_no
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -780,6 +823,7 @@
 		code
 		,loan_product_code
 		,loan_product_name
+		,region
 		,loan_bank
 		,gps_fee
 		,auth_fee
@@ -792,9 +836,9 @@
 		,car_brand
 		,car_series
 		,car_model
+		,car_type
 		,car_pic
 		,car_hgz_pic
-		,car_hgz_no
 		,car_frame_no
 		,car_engine_no
 		,original_price
@@ -808,12 +852,14 @@
 		,apply_user_name
 		,gender
 		,marry_state
+		,political
 		,nation
 		,education
 		,id_no
 		,family_number
 		,mobile
 		,now_address
+		,is_card_mail_address
 		,post_code1
 		,residence_address
 		,post_code2
@@ -822,6 +868,7 @@
 		,main_income
 		,work_company_name
 		,work_company_address
+		,work_is_card_mail_address
 		,work_company_property
 		,work_belong_industry
 		,work_profession
@@ -834,6 +881,7 @@
 		,month_income
 		,mate_zfb_jour_datetime_start
 		,mate_zfb_jour_datetime_end
+		,mate_zfb_jour_interest
 		,mate_zfb_jour_income
 		,mate_zfb_jour_expend
 		,mate_zfb_jour_balance
@@ -844,6 +892,7 @@
 		
 		,mate_wx_jour_datetime_start
 		,mate_wx_jour_datetime_end
+		,mate_wx_jour_interest
 		,mate_wx_jour_income
 		,mate_wx_jour_expend
 		,mate_wx_jour_balance
@@ -854,6 +903,7 @@
 		
 		,mate_jour_datetime_start
 		,mate_jour_datetime_end
+		,mate_jour_interest
 		,mate_jour_income
 		,mate_jour_expend
 		,mate_jour_balance
@@ -882,6 +932,7 @@
 		
 		,gua_zfb_jour_datetime_start
 		,gua_zfb_jour_datetime_end
+		,gua_zfb_jour_interest
 		,gua_zfb_jour_income
 		,gua_zfb_jour_expend
 		,gua_zfb_jour_balance
@@ -892,6 +943,7 @@
 		
 		,gua_wx_jour_datetime_start
 		,gua_wx_jour_datetime_end
+		,gua_wx_jour_interest
 		,gua_wx_jour_income
 		,gua_wx_jour_expend
 		,gua_wx_jour_balance
@@ -902,6 +954,7 @@
 		
 		,gua_jour_datetime_start
 		,gua_jour_datetime_end
+		,gua_jour_interest
 		,gua_jour_income
 		,gua_jour_expend
 		,gua_jour_balance
@@ -921,6 +974,7 @@
 		
 		,zfb_jour_datetime_start
 		,zfb_jour_datetime_end
+		,zfb_jour_interest
 		,zfb_jour_income
 		,zfb_jour_expend
 		,zfb_jour_balance
@@ -931,6 +985,7 @@
 		
 		,wx_jour_datetime_start
 		,wx_jour_datetime_end
+		,wx_jour_interest
 		,wx_jour_income
 		,wx_jour_expend
 		,wx_jour_balance
@@ -941,6 +996,7 @@
 		
 		,jour_datetime_start
 		,jour_datetime_end
+		,jour_interest
 		,jour_income
 		,jour_expend
 		,jour_balance
@@ -952,6 +1008,10 @@
 		
 		,house_contract
 		,house_picture
+		,hk_book_pdf
+		,id_card_pdf
+		,marry_pdf
+		,other_pdf
 		,is_advance_fund
 		
 		,sale_user_id
@@ -989,7 +1049,6 @@
 		,#{carModel}
 		,#{carPic}
 		,#{carHgzPic}
-		,#{carHgzNo}
 		,#{carFrameNo}
 		,#{carEngineNo}
 		,#{originalPrice}
@@ -1170,6 +1229,7 @@
 		SET
 		loan_product_code = #{loanProductCode}
 		,loan_product_name = #{loanProductName}
+		,region = #{region}
 		,loan_bank = #{loanBank}
 		,gps_fee = #{gpsFee}
 		,auth_fee = #{authFee}
@@ -1184,10 +1244,10 @@
 		,car_brand = #{carBrand}
 		,car_series = #{carSeries}
 		,car_model = #{carModel}
+		,car_type = #{carType}
 		,car_pic = #{carPic}
 		
 		,car_hgz_pic = #{carHgzPic}
-		,car_hgz_no = #{carHgzNo}
 		,car_frame_no = #{carFrameNo}
 		,car_engine_no = #{carEngineNo}
 		,original_price = #{originalPrice}
@@ -1203,11 +1263,13 @@
 		,apply_user_name = #{applyUserName}
 		,gender = #{gender}
 		,marry_state = #{marryState}
+		,political = #{political}
 		
 		,nation = #{nation}
 		,education = #{education}
 		,family_number = #{familyNumber}
 		,now_address = #{nowAddress}
+		,is_card_mail_address = #{isCardMailAddress}
 		,post_code1 = #{postCode1}
 		
 		,residence_address = #{residenceAddress}
@@ -1218,6 +1280,7 @@
 		
 		,work_company_name = #{workCompanyName}
 		,work_company_address = #{workCompanyAddress}
+		,work_is_card_mail_address = #{workIsCardMailAddress}
 		,work_company_property = #{workCompanyProperty}
 		,work_belong_industry = #{workBelongIndustry}
 		,work_profession = #{workProfession}
@@ -1241,6 +1304,7 @@
 		,mate_zfb_jour_datetime_start = #{mateZfbJourDatetimeStart}
 		
 		,mate_zfb_jour_datetime_end = #{mateZfbJourDatetimeEnd}
+		,mate_zfb_jour_interest = #{mateZfbJourInterest}
 		,mate_zfb_jour_income = #{mateZfbJourIncome}
 		,mate_zfb_jour_expend = #{mateZfbJourExpend}
 		,mate_zfb_jour_balance = #{mateZfbJourBalance}
@@ -1251,6 +1315,7 @@
 		,mate_zfb_jour_remark = #{mateZfbJourRemark}
 		,mate_wx_jour_datetime_start = #{mateWxJourDatetimeStart}
 		,mate_wx_jour_datetime_end = #{mateWxJourDatetimeEnd}
+		,mate_wx_jour_interest = #{mateWxJourInterest}
 		
 		,mate_wx_jour_income = #{mateWxJourIncome}
 		,mate_wx_jour_expend = #{mateWxJourExpend}
@@ -1262,6 +1327,7 @@
 		,mate_wx_jour_remark = #{mateWxJourRemark}
 		,mate_jour_datetime_start = #{mateJourDatetimeStart}
 		,mate_jour_datetime_end = #{mateJourDatetimeEnd}
+		,mate_jour_interest = #{mateJourInterest}
 		,mate_jour_income = #{mateJourIncome}
 		
 		,mate_jour_expend = #{mateJourExpend}
@@ -1283,6 +1349,7 @@
 		,gua_zfb_jour_datetime_start = #{guaZfbJourDatetimeStart}
 		
 		,gua_zfb_jour_datetime_end = #{guaZfbJourDatetimeEnd}
+		,gua_zfb_jour_interest = #{guaZfbJourInterest}
 		,gua_zfb_jour_income = #{guaZfbJourIncome}
 		,gua_zfb_jour_expend = #{guaZfbJourExpend}
 		,gua_zfb_jour_balance = #{guaZfbJourBalance}
@@ -1293,6 +1360,7 @@
 		,gua_zfb_jour_remark = #{guaZfbJourRemark}
 		,gua_wx_jour_datetime_start = #{guaWxJourDatetimeStart}
 		,gua_wx_jour_datetime_end = #{guaWxJourDatetimeEnd}
+		,gua_wx_jour_interest = #{guaWxJourInterest}
 		,gua_wx_jour_income = #{guaWxJourIncome}
 		
 		,gua_wx_jour_expend = #{guaWxJourExpend}
@@ -1304,6 +1372,7 @@
 		,gua_wx_jour_remark = #{guaWxJourRemark}
 		,gua_jour_datetime_start = #{guaJourDatetimeStart}
 		,gua_jour_datetime_end = #{guaJourDatetimeEnd}
+		,gua_jour_interest = #{guaJourInterest}
 		,gua_jour_income = #{guaJourIncome}
 		,gua_jour_expend = #{guaJourExpend}
 		
@@ -1323,6 +1392,7 @@
 		,emergency_mobile2 = #{emergencyMobile2}
 		,zfb_jour_datetime_start = #{zfbJourDatetimeStart}
 		,zfb_jour_datetime_end = #{zfbJourDatetimeEnd}
+		,zfb_jour_interest = #{zfbJourInterest}
 		,zfb_jour_income = #{zfbJourIncome}
 		,zfb_jour_expend = #{zfbJourExpend}
 		
@@ -1334,6 +1404,7 @@
 		
 		,wx_jour_datetime_start = #{wxJourDatetimeStart}
 		,wx_jour_datetime_end = #{wxJourDatetimeEnd}
+		,wx_jour_interest = #{wxJourInterest}
 		,wx_jour_income = #{wxJourIncome}
 		,wx_jour_expend = #{wxJourExpend}
 		,wx_jour_balance = #{wxJourBalance}
@@ -1345,6 +1416,7 @@
 		,jour_datetime_start = #{jourDatetimeStart}
 		
 		,jour_datetime_end = #{jourDatetimeEnd}
+		,jour_interest = #{jourInterest}
 		,jour_income = #{jourIncome}
 		,jour_expend = #{jourExpend}
 		,jour_balance = #{jourBalance}
@@ -1357,6 +1429,10 @@
 		,house_contract = #{houseContract}
 		
 		,house_picture = #{housePicture}
+		,hk_book_pdf = #{hkBookPdf}
+		,id_card_pdf = #{idCardPdf}
+		,marry_pdf = #{marryPdf}
+		,other_pdf = #{otherPdf}
 		,is_advance_fund = #{isAdvanceFund}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
@@ -1384,7 +1460,8 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
-		,interview_video = #{interviewVideo}
+		,bank_video = #{bankVideo}
+		,company_video = #{companyVideo}
 		,interview_contract = #{interviewContract}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -1416,8 +1493,13 @@
 	<update id="update_advancefund" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
+		<result column="advance_fund_amount_pdf" property="advanceFundAmountPdf" />
+		<result column="advance_fund_other_pdf" property="advanceFundOtherPdf" />
 		advance_fund_datetime = #{advanceFundDatetime}
 		,advance_fund_amount = #{advanceFundAmount}
+		,bill_pdf = #{billPdf}
+		,advance_fund_amount_pdf = #{advanceFundAmountPdf}
+		,advance_fund_other_pdf = #{advanceFundOtherPdf}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -1440,10 +1522,7 @@
 		,car_hgz = #{carHgz}
 		,car_jqx = #{carJqx}
 		,car_syx = #{carSyx}
-		,car_regcerti = #{carRegcerti}
-		,car_pd = #{carPd}
-		,car_key = #{carKey}
-		,car_big_smj = #{carBigSmj}
+		,car_settle_other_pdf = #{carSettleOtherPdf}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
