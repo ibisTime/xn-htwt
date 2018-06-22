@@ -1120,8 +1120,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         // 团队
-        BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
-        if (StringUtils.isNotBlank(bizTeam.getName())) {
+        if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
+            BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
             budgetOrder.setTeamName(bizTeam.getName());
         }
     }
