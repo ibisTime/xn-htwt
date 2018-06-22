@@ -95,13 +95,14 @@
 		SET
 		name = #{name}
 		,captain = #{captain}
+		,company_code = #{companyCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		
 		,account_no = #{accountNo}
 		,bank = #{bank}
 		,subbranch = #{subbranch}
 		,water_bill = #{waterBill}
-		,company_code = #{companyCode}
 		WHERE code = #{code}
 	</update>
 	
