@@ -25,6 +25,7 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
@@ -70,14 +71,36 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setCreateDatetme(new Date());
         data.setRoleCode(roleCode);
         data.setPostCode(postCode);
-        Department department = departmentBO.getDepartment(postCode);
-        data.setDepartmentCode(department.getParentCode());
-        Department company = departmentBO.getDepartment(department
-            .getParentCode());
+        String departmentCode = postCode;
 
-        data.setCompanyCode(company.getParentCode());
+        // 部门编号
+        while (true) {
+            Department department = departmentBO.getDepartment(departmentCode);
+            if (EDepartmentType.DEPARTMENT.getCode().equals(
+                department.getType())) {
+                departmentCode = department.getCode();
+                break;
+            } else {
+                departmentCode = department.getParentCode();
+            }
+        }
+        data.setDepartmentCode(departmentCode);
+
+        // 公司编号
+        String companyCode = departmentCode;
+        while (true) {
+            Department company = departmentBO.getDepartment(companyCode);
+            if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(
+                company.getType())) {
+                companyCode = company.getCode();
+                break;
+            } else {
+                companyCode = company.getParentCode();
+            }
+        }
+        data.setCompanyCode(companyCode);
+
         data.setStatus(EUserStatus.NORMAL.getCode());
-
         // 验证档案是否被其他人使用
         Archive archive = archiveBO.getArchive(archiveCode);
         if (StringUtils.isNotBlank(archive.getUserId())) {
