@@ -125,6 +125,10 @@ public class XN632120Req {
     @NotBlank
     private String gender;
 
+    // 年龄
+    @NotBlank
+    private String age;
+
     // 婚姻状况
     @NotBlank
     private String marryState;
@@ -1572,6 +1576,14 @@ public class XN632120Req {
 
     public void setGuaZfbJourPic(String guaZfbJourPic) {
         this.guaZfbJourPic = guaZfbJourPic;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getGuaZfbJourRemark() {

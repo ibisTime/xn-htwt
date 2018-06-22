@@ -117,6 +117,9 @@ public class BudgetOrder extends ABaseDO {
     // 性别
     private String gender;
 
+    // 年龄
+    private String age;
+
     // 婚姻状况
     private String marryState;
 
@@ -923,6 +926,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getRepayBizCode() {

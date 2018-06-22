@@ -42,6 +42,7 @@
 		<result column="apply_user_id" property="applyUserId" />
 		<result column="apply_user_name" property="applyUserName" />
 		<result column="gender" property="gender" />
+		<result column="age" property="age" />
 		
 		<result column="marry_state" property="marryState" />
 		<result column="political" property="political" />
@@ -396,6 +397,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.marry_state
 		,t.political
@@ -681,6 +683,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.id_kind
 		,t.id_no
@@ -768,6 +771,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.id_kind
 		,t.id_no
@@ -856,6 +860,7 @@
 		,settle_address
 		,apply_user_name
 		,gender
+		,age
 		,marry_state
 		,political
 		,nation
@@ -1069,6 +1074,7 @@
 		,#{settleAddress}
 		,#{applyUserName}
 		,#{gender}
+		,#{age}
 		,#{marryState}
 		,#{political}
 		,#{nation}
@@ -1287,6 +1293,7 @@
 		,settle_address = #{settleAddress}
 		,apply_user_name = #{applyUserName}
 		,gender = #{gender}
+		,age = #{age}
 		,marry_state = #{marryState}
 		,political = #{political}
 		

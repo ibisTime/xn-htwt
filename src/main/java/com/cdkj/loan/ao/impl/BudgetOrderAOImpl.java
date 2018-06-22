@@ -205,6 +205,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setSettleAddress(req.getSettleAddress());
         data.setApplyUserName(req.getApplyUserName());
         data.setGender(req.getGender());
+        data.setAge(req.getAge());
         data.setMarryState(req.getMarryState());
         data.setPolitical(req.getPolitical());
         data.setNation(req.getNation());
