@@ -81,6 +81,7 @@
 		,company_name = #{companyName}
 		,post = #{post}
 		,contact = #{contact}
+		,status = #{status}
 		WHERE code = #{code}
 	</update>
 	

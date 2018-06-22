@@ -228,25 +228,23 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdateDatetime(new Date());
         data.setWorkingYears(req.getWorkingYears());
 
+        socialRelationBO.removeSocialRelation(req.getCode());
+
         List<XN632802ReqChild> list = req.getSocialRelationList();
+
         for (XN632802ReqChild child : list) {
 
-            SocialRelation data1 = socialRelationBO.getSocialRelation(child
-                .getCode());
-            if (null != child.getIsDelete() && !"".equals(child.getIsDelete())
-                    && "0".equals(child.getIsDelete())) {
-                data1.setArchiveCode(null);
-            } else {
-                data1.setArchiveCode(req.getCode());
-            }
+            SocialRelation data1 = new SocialRelation();
             data1.setCode(child.getCode());
-            data1.setCompanyName(child.getCompanyName());
+            data1.setArchiveCode(req.getCode());
             data1.setRealName(child.getRealName());
             data1.setRelation(child.getRelation());
-            data1.setContact(child.getContact());
+            data1.setCompanyName(child.getCompanyName());
             data1.setPost(child.getPost());
-            socialRelationBO.refreshSocialRelation(data1);
 
+            data1.setContact(child.getContact());
+            data1.setStatus("1");
+            socialRelationBO.refreshSocialRelation(data1);
         }
 
         archiveBO.refreshArchive(data);
