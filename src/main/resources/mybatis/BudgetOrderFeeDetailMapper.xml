@@ -14,7 +14,9 @@
 		<result column="remark" property="remark" />
 		<result column="fee_code" property="feeCode" />
 		<result column="updater" property="updater" />
-		<result column="update_datetime" property="updateDatetime" />	
+		
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="status" property="status" />	
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -23,6 +25,9 @@
 			</if>
 			<if test="feeCode != null and feeCode != '' ">
 				AND t.fee_code = #{feeCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
 			</if>
 		</trim>
 	</sql>
@@ -39,7 +44,9 @@
 		,t.remark
 		,t.fee_code
 		,t.updater
+		
 		,t.update_datetime
+		,t.status
 		
 		FROM
 		tdq_budget_order_fee_detail t
@@ -71,7 +78,9 @@
 		,remark
 		,fee_code
 		,updater
+		
 		,update_datetime
+		,status
 		)
 		VALUES(
 		#{code}
@@ -85,7 +94,41 @@
 		,#{remark}
 		,#{feeCode}
 		,#{updater}
+		
 		,#{updateDatetime}
+		,#{status}
 		)
 	</insert>
+	
+	
+	<select id="select_budgetOrderFeeDetailByStatus" parameterType="budgetOrderFeeDetail" resultMap="budgetOrderFeeDetail_DB_Result">
+		SELECT
+		t.code
+		,t.remit_type
+		,t.remit_project
+		,t.amount
+		,t.plat_bankcard
+		
+		,t.remit_user
+		,t.reach_datetime
+		,t.remark
+		,t.fee_code
+		,t.updater
+		
+		,t.update_datetime
+		,t.status
+		
+		FROM
+		tdq_budget_order_fee_detail t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	<delete id="delete_budgetOrderFeeDetail">
+		DELETE from tdq_budget_order_fee_detail
+		WHERE code = #{code}
+	</delete>
 </mapper>

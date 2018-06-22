@@ -47,6 +47,9 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 手续费编号
     private String feeCode;
 
+    // 状态（0未提交1已提交）
+    private String status;
+
     /**************辅助字段****************/
 
     private CollectBankcard collectBankcard;
@@ -167,6 +170,14 @@ public class BudgetOrderFeeDetail extends ABaseDO {
 
     public void setUpdaterRealName(String updaterRealName) {
         this.updaterRealName = updaterRealName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

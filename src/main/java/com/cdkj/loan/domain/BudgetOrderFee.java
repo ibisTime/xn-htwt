@@ -47,7 +47,11 @@ public class BudgetOrderFee extends ABaseDO {
 
     /*-------辅助字段----------*/
 
+    // 已提交手续费明细列表
     private List<BudgetOrderFeeDetail> BudgetOrderFeeDetailList;
+
+    // 未提交手续费明细
+    private BudgetOrderFeeDetail unSubmitBudgetOrderFeeDetail;
 
     // 业务公司名
     private String companyName;
@@ -61,6 +65,15 @@ public class BudgetOrderFee extends ABaseDO {
     private String updaterRealName;
 
     private String userName;
+
+    public BudgetOrderFeeDetail getUnSubmitBudgetOrderFeeDetail() {
+        return unSubmitBudgetOrderFeeDetail;
+    }
+
+    public void setUnSubmitBudgetOrderFeeDetail(
+            BudgetOrderFeeDetail unSubmitBudgetOrderFeeDetail) {
+        this.unSubmitBudgetOrderFeeDetail = unSubmitBudgetOrderFeeDetail;
+    }
 
     public String getUserName() {
         return userName;

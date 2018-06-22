@@ -21,6 +21,7 @@ import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBudgetOrderFeeDetailStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -57,8 +58,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     public Paginable<BudgetOrderFee> queryBudgetOrderFeePage(int start,
             int limit, BudgetOrderFee condition) {
 
-        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO
-            .getPaginable(start, limit, condition);
+        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO.getPaginable(
+            start, limit, condition);
 
         List<BudgetOrderFee> list = paginable.getList();
 
@@ -81,8 +82,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(
-            BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
         return budgetOrderFeeBO.queryBudgetOrderFeeList(condition);
     }
 
@@ -101,10 +101,10 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         }
 
         // 设置业务公司真实姓名
-        Department department = departmentBO
-            .getDepartment(budgetOrderFee.getCompanyCode());
-        BudgetOrder budgetOrder = budgetOrderBO
-            .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+        Department department = departmentBO.getDepartment(budgetOrderFee
+            .getCompanyCode());
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderFee
+            .getBudgetOrder());
         SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
         budgetOrderFee.setUserName(saleUser.getRealName());
 
@@ -120,6 +120,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
         BudgetOrderFeeDetail condition = new BudgetOrderFeeDetail();
         condition.setFeeCode(code);
+        condition.setStatus(EBudgetOrderFeeDetailStatus.SUBMITTED.getCode());
         List<BudgetOrderFeeDetail> list = budgetOrderFeeDetailBO
             .queryBudgetOrderFeeDetailList(condition);
         budgetOrderFee.setCompanyName(department.getName());
@@ -129,14 +130,20 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(platBankcard);
             budgetOrderFeeDetail.setCollectBankcard(collectBankcard);
-            SYSUser updateUser = sysUserBO
-                .getUser(budgetOrderFeeDetail.getUpdater());
+            SYSUser updateUser = sysUserBO.getUser(budgetOrderFeeDetail
+                .getUpdater());
             if (null != updateUser) {
                 budgetOrderFeeDetail.setUpdater(updateUser.getRealName());
             }
 
         }
 
+        BudgetOrderFeeDetail budgetOrderFeeDetail = budgetOrderFeeDetailBO
+            .getBudgetOrderFeeDetailByStatus(code,
+                EBudgetOrderFeeDetailStatus.UNCOMMITTED.getCode());
+        // 未提交的手续费明细
+        budgetOrderFee.setUnSubmitBudgetOrderFeeDetail(budgetOrderFeeDetail);
+        // 已提交手续费明细列表
         budgetOrderFee.setBudgetOrderFeeDetailList(list);
 
         return budgetOrderFee;

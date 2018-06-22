@@ -34,9 +34,6 @@ public class XN632160Req {
     @NotBlank
     private String reachDatetime;
 
-    // 是否已结清(0 待结清 1 已结清)
-    private String isSettled;
-
     // 备注
     private String remark;
 
@@ -47,6 +44,18 @@ public class XN632160Req {
     // 手续费编号
     @NotBlank
     private String feeCode;
+
+    // 处理类型（0保存1发送）
+    @NotBlank
+    private String dealType;
+
+    public String getDealType() {
+        return dealType;
+    }
+
+    public void setDealType(String dealType) {
+        this.dealType = dealType;
+    }
 
     public String getRemitType() {
         return remitType;
@@ -94,14 +103,6 @@ public class XN632160Req {
 
     public void setReachDatetime(String reachDatetime) {
         this.reachDatetime = reachDatetime;
-    }
-
-    public String getIsSettled() {
-        return isSettled;
-    }
-
-    public void setIsSettled(String isSettled) {
-        this.isSettled = isSettled;
     }
 
     public String getRemark() {
