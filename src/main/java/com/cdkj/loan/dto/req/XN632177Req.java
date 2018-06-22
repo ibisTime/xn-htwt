@@ -16,8 +16,14 @@ public class XN632177Req extends AListReq {
     // 产品名称
     private String name;
 
+    // 类型
+    private String type;
+
     // 贷款银行
     private String loanBank;
+
+    // 是否前置
+    private String isPre;
 
     // 状态
     private String status;
@@ -28,6 +34,22 @@ public class XN632177Req extends AListReq {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getIsPre() {
+        return isPre;
+    }
+
+    public void setIsPre(String isPre) {
+        this.isPre = isPre;
     }
 
     public String getLoanBank() {

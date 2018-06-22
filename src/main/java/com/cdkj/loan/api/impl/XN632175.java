@@ -29,8 +29,10 @@ public class XN632175 extends AProcessor {
     public Object doBusiness() throws BizException {
         LoanProduct condition = new LoanProduct();
         condition.setName(req.getName());
+        condition.setType(req.getType());
         condition.setLoanBank(req.getLoanBank());
         condition.setStatus(req.getStatus());
+        condition.setIsPre(req.getIsPre());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
