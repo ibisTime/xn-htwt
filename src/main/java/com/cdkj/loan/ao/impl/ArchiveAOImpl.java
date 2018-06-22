@@ -167,7 +167,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (!archiveBO.isArchiveExist(req.getCode())) {
             throw new BizException("xn0000", "人事档案不存在");
         }
-        Archive data = new Archive();
+        Archive data = archiveBO.getArchive(req.getCode());
         data.setCode(req.getCode());
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
@@ -231,14 +231,15 @@ public class ArchiveAOImpl implements IArchiveAO {
         List<XN632802ReqChild> list = req.getSocialRelationList();
         for (XN632802ReqChild child : list) {
 
-            if (!"".equals(child.getIsDelete()) && null != child.getIsDelete()
+            SocialRelation data1 = socialRelationBO.getSocialRelation(child
+                .getCode());
+            if (null != child.getIsDelete() && !"".equals(child.getIsDelete())
                     && "0".equals(child.getIsDelete())) {
-                socialRelationBO.removeSocialRelation(child.getCode());
-                continue;
+                data1.setArchiveCode(null);
+            } else {
+                data1.setArchiveCode(req.getCode());
             }
-            SocialRelation data1 = new SocialRelation();
             data1.setCode(child.getCode());
-            data1.setArchiveCode(req.getCode());
             data1.setCompanyName(child.getCompanyName());
             data1.setRealName(child.getRealName());
             data1.setRelation(child.getRelation());
@@ -277,6 +278,7 @@ public class ArchiveAOImpl implements IArchiveAO {
 
         SocialRelation condition = new SocialRelation();
         condition.setArchiveCode(code);
+        condition.setStatus("1");
         List<SocialRelation> list = socialRelationBO
             .querySocialRelationList(condition);
 

@@ -31,6 +31,7 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public boolean isSocialRelationExist(String code) {
         SocialRelation condition = new SocialRelation();
         condition.setCode(code);
+        condition.setStatus("1");
         if (socialRelationDAO.selectTotalCount(condition) > 0) {
             return true;
         }
@@ -41,9 +42,10 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public String saveSocialRelation(SocialRelation data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.SOCIAL_RELATION.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.SOCIAL_RELATION
+                .getCode());
             data.setCode(code);
+            data.setStatus("1");
             socialRelationDAO.insert(data);
         }
         return code;
@@ -55,6 +57,7 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         if (StringUtils.isNotBlank(code)) {
             SocialRelation data = new SocialRelation();
             data.setArchiveCode(code);
+            data.setStatus("0");
             count = socialRelationDAO.delete(data);
         }
         return count;
@@ -70,8 +73,8 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     }
 
     @Override
-    public List<SocialRelation> querySocialRelationList(
-            SocialRelation condition) {
+    public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
+        condition.setStatus("1");
         return socialRelationDAO.selectList(condition);
     }
 
@@ -81,6 +84,7 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         if (StringUtils.isNotBlank(code)) {
             SocialRelation condition = new SocialRelation();
             condition.setCode(code);
+            condition.setStatus("1");
             data = socialRelationDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "社会关系不存在");

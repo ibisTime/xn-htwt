@@ -10,6 +10,7 @@
 		<result column="company_name" property="companyName" />
 		<result column="post" property="post" />
 		<result column="contact" property="contact" />
+		<result column="status" property="status" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -18,6 +19,9 @@
 			</if>
 			<if test="archiveCode != null and archiveCode != '' ">
 				AND t.archive_code = #{archiveCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
 			</if>
 		</trim>
 	</sql>
@@ -83,7 +87,7 @@
 	<update id="delete_socialRelation" parameterType="socialRelation">
 		UPDATE tp_social_relation
 		SET
-		is_delete = '0' 
+		status = '0' 
 		WHERE archive_code = #{archiveCode}
 	</update>
 	
