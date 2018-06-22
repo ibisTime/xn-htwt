@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.IGpsAO;
 import com.cdkj.loan.ao.ILoanProductAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -29,12 +28,14 @@ public class XN632177 extends AProcessor {
     public Object doBusiness() throws BizException {
         LoanProduct condition = new LoanProduct();
         condition.setName(req.getName());
+        condition.setType(req.getType());
         condition.setLoanBank(req.getLoanBank());
         condition.setStatus(req.getStatus());
+        condition.setIsPre(req.getIsPre());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
-            column = IGpsAO.DEFAULT_ORDER_COLUMN;
+            column = ILoanProductAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
         return loanProduct.queryLoanProductList(condition);
