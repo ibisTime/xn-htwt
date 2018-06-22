@@ -241,7 +241,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan.setRepayBiz(repayBizBO.getRepayBiz(repayPlan
                 .getRepayBizCode()));
             Long monthRepayAmount = repayPlan.getRepayCapital()
-                    * repayPlan.getRepayInterest();
+                    + repayPlan.getRepayInterest();
             repayPlan.setMonthRepayAmount(monthRepayAmount);
         }
         return results;
@@ -258,7 +258,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 "当前还款计划不是逾期状态");
         }
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
-        if (ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不是还款中，暂无法处理");
         }
@@ -275,6 +275,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         // 更新还款计划
         repayPlan.setOverdueDeposit(StringValidater.toLong(req
             .getOverdueDeposit()));
+        repayPlan.setOverdueAmount(0L);
         repayPlan.setDepositWay(req.getOverdueDepositWay());
         repayPlan.setOverdueHandleNote(req.getRemark());
         repayPlan.setTotalFee(totalFee);

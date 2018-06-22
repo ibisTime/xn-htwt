@@ -9,6 +9,7 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.dto.req.XN630195Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -30,7 +31,7 @@ public class XN630195 extends AProcessor {
     public Object doBusiness() throws BizException {
         BizTeam condition = new BizTeam();
         condition.setCompanyCode(req.getCompanyCode());
-        condition.setStatus("1");
+        condition.setStatus(EBoolean.YES.getCode());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IBizTeamAO.DEFAULT_ORDER_COLUMN;
