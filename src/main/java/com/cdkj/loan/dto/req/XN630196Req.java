@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN630196Req {
 
-    @NotBlank(message = "编号不能为空")
+    @NotBlank(message = "业务团队编号不能为空")
     private String code;
 
     public String getCode() {

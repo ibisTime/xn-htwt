@@ -27,16 +27,43 @@ public class XN630192Req {
     private String updater;
 
     // 收款账号
+    @NotBlank
     private String accountNo;
 
     // 收款银行
+    @NotBlank
     private String bank;
 
     // 收款支行
+    @NotBlank
     private String subbranch;
 
     // 水单
     private String waterBill;
+
+    // 区域
+    @NotBlank
+    private String region;
+
+    // 地名
+    @NotBlank
+    private String place;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
     public String getCode() {
         return code;
