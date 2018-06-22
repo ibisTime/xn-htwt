@@ -48,6 +48,12 @@ public class BizTeam extends ABaseDO {
     // 水单
     private String waterBill;
 
+    // 区域
+    private String region;
+
+    // 地名
+    private String place;
+
     /***************db  peoperties***************/
 
     private SYSUser user;
@@ -59,6 +65,22 @@ public class BizTeam extends ABaseDO {
     private String companyName;
 
     private String updaterName;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
     public String getCaptainName() {
         return captainName;

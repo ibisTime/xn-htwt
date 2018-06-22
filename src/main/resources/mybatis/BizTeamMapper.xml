@@ -14,6 +14,8 @@
 		<result column="bank" property="bank" />
 		<result column="subbranch" property="subbranch" />
 		<result column="water_bill" property="waterBill" />
+		<result column="region" property="region" />
+		<result column="place" property="place" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -44,6 +46,8 @@
 		,t.bank
 		,t.subbranch
 		,t.water_bill
+		,t.region
+		,t.place
 		FROM
 		tsys_biz_team t
 		<include refid="where_condition" />
@@ -74,6 +78,8 @@
 		,bank
 		,subbranch
 		,water_bill
+		,region
+		,place
 		)
 		VALUES(
 		#{code}
@@ -87,6 +93,8 @@
 		,#{bank}
 		,#{subbranch}
 		,#{waterBill}
+		,#{region}
+		,#{place}
 		)
 	</insert>
 
@@ -103,6 +111,8 @@
 		,bank = #{bank}
 		,subbranch = #{subbranch}
 		,water_bill = #{waterBill}
+		,region = #{region}
+		,place = #{place}
 		WHERE code = #{code}
 	</update>
 	

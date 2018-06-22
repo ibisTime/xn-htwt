@@ -36,6 +36,9 @@
 			<if test="loanBank != null and loanBank != '' ">
 				AND t.loan_bank = #{loanBank}
 			</if>
+			<if test="isPre != null and isPre != '' ">
+				AND t.is_pre = #{isPre}
+			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>

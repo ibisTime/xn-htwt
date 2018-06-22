@@ -59,4 +59,30 @@ public class BudgetOrderFeeDetailBOImpl extends
         }
         return data;
     }
+
+    @Override
+    public BudgetOrderFeeDetail getBudgetOrderFeeDetailByStatus(String code,
+            String status) {
+        BudgetOrderFeeDetail data = null;
+        if (StringUtils.isNotBlank(code) && StringUtils.isNotBlank(status)) {
+            BudgetOrderFeeDetail condition = new BudgetOrderFeeDetail();
+            condition.setFeeCode(code);
+            condition.setStatus(status);
+            data = budgetOrderFeeDetailDAO
+                .getBudgetOrderFeeDetailByStatus(condition);
+        }
+        return data;
+    }
+
+    @Override
+    public int removeBudgetOrderFeeDetail(String code) {
+        int count = 0;
+        if (StringUtils.isNotBlank(code)) {
+            BudgetOrderFeeDetail data = new BudgetOrderFeeDetail();
+            data.setCode(code);
+            count = budgetOrderFeeDetailDAO.delete(data);
+        }
+        return count;
+
+    }
 }

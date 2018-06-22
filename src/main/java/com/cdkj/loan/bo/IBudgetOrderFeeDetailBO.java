@@ -22,4 +22,10 @@ public interface IBudgetOrderFeeDetailBO extends
 
     public BudgetOrderFeeDetail getBudgetOrderFeeDetail(String code);
 
+    // 根据手续费明细状态查询
+    public BudgetOrderFeeDetail getBudgetOrderFeeDetailByStatus(String code,
+            String status);
+
+    public int removeBudgetOrderFeeDetail(String code);
+
 }
