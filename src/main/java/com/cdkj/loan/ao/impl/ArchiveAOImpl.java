@@ -229,22 +229,15 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setWorkingYears(req.getWorkingYears());
 
         socialRelationBO.removeSocialRelation(req.getCode());
-
-        List<XN632802ReqChild> list = req.getSocialRelationList();
-
-        for (XN632802ReqChild child : list) {
-
-            SocialRelation data1 = new SocialRelation();
-            data1.setCode(child.getCode());
-            data1.setArchiveCode(req.getCode());
-            data1.setRealName(child.getRealName());
-            data1.setRelation(child.getRelation());
-            data1.setCompanyName(child.getCompanyName());
-            data1.setPost(child.getPost());
-
-            data1.setContact(child.getContact());
-            data1.setStatus("1");
-            socialRelationBO.refreshSocialRelation(data1);
+        for (XN632802ReqChild xn632802ReqChild : req.getSocialRelationList()) {
+            SocialRelation socialRelation = new SocialRelation();
+            socialRelation.setArchiveCode(req.getCode());
+            socialRelation.setRealName(xn632802ReqChild.getRealName());
+            socialRelation.setRelation(xn632802ReqChild.getRelation());
+            socialRelation.setCompanyName(xn632802ReqChild.getCompanyName());
+            socialRelation.setPost(xn632802ReqChild.getPost());
+            socialRelation.setContact(xn632802ReqChild.getContact());
+            socialRelationBO.saveSocialRelation(socialRelation);
         }
 
         archiveBO.refreshArchive(data);
@@ -276,7 +269,6 @@ public class ArchiveAOImpl implements IArchiveAO {
 
         SocialRelation condition = new SocialRelation();
         condition.setArchiveCode(code);
-        condition.setStatus("1");
         List<SocialRelation> list = socialRelationBO
             .querySocialRelationList(condition);
 

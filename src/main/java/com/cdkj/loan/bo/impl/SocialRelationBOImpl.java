@@ -31,7 +31,6 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public boolean isSocialRelationExist(String code) {
         SocialRelation condition = new SocialRelation();
         condition.setCode(code);
-        condition.setStatus("1");
         if (socialRelationDAO.selectTotalCount(condition) > 0) {
             return true;
         }
@@ -45,19 +44,17 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
             code = OrderNoGenerater.generate(EGeneratePrefix.SOCIAL_RELATION
                 .getCode());
             data.setCode(code);
-            data.setStatus("1");
             socialRelationDAO.insert(data);
         }
         return code;
     }
 
     @Override
-    public int removeSocialRelation(String code) {
+    public int removeSocialRelation(String archiveCode) {
         int count = 0;
-        if (StringUtils.isNotBlank(code)) {
+        if (StringUtils.isNotBlank(archiveCode)) {
             SocialRelation data = new SocialRelation();
-            data.setArchiveCode(code);
-            data.setStatus("0");
+            data.setArchiveCode(archiveCode);
             count = socialRelationDAO.delete(data);
         }
         return count;
@@ -74,7 +71,6 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
 
     @Override
     public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
-        condition.setStatus("1");
         return socialRelationDAO.selectList(condition);
     }
 
@@ -84,7 +80,6 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         if (StringUtils.isNotBlank(code)) {
             SocialRelation condition = new SocialRelation();
             condition.setCode(code);
-            condition.setStatus("1");
             data = socialRelationDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "社会关系不存在");

@@ -33,16 +33,6 @@ public class SocialRelation extends ABaseDO {
     // 联系方式
     private String contact;
 
-    private String status;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public void setCode(String code) {
         this.code = code;
     }
