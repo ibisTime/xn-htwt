@@ -214,6 +214,12 @@ public class XN632120Req {
     // 自营公司单位面积
     private String selfCompanyArea;
 
+    // 其他工作描述
+    private String otherWorkNote;
+
+    // 工作资料上传
+    private String workAssetPdf;
+
     // 员工数量
     private String employeeQuantity;
 
@@ -1824,6 +1830,22 @@ public class XN632120Req {
 
     public void setZfbJourRemark(String zfbJourRemark) {
         this.zfbJourRemark = zfbJourRemark;
+    }
+
+    public String getOtherWorkNote() {
+        return otherWorkNote;
+    }
+
+    public void setOtherWorkNote(String otherWorkNote) {
+        this.otherWorkNote = otherWorkNote;
+    }
+
+    public String getWorkAssetPdf() {
+        return workAssetPdf;
+    }
+
+    public void setWorkAssetPdf(String workAssetPdf) {
+        this.workAssetPdf = workAssetPdf;
     }
 
     public String getWxJourDatetimeStart() {

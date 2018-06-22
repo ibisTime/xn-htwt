@@ -234,6 +234,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setWorkDatetime(DateUtil.strToDate(req.getWorkDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setSelfCompanyArea(req.getSelfCompanyArea());
+        data.setOtherWorkNote(req.getOtherWorkNote());
+        data.setWorkAssetPdf(req.getWorkAssetPdf());
         data.setEmployeeQuantity(req.getEmployeeQuantity());
 
         data.setEnterpriseMonthOutput(req.getEnterpriseMonthOutput());

@@ -69,8 +69,10 @@
 		<result column="work_belong_industry" property="workBelongIndustry" />
 		<result column="work_profession" property="workProfession" />
 		<result column="work_datetime" property="workDatetime" />
-		
+
 		<result column="self_company_area" property="selfCompanyArea" />
+		<result column="other_work_note" property="otherWorkNote" />
+		<result column="work_asset_pdf" property="workAssetPdf" />
 		<result column="employee_quantity" property="employeeQuantity" />
 		<result column="enterprise_month_output" property="enterpriseMonthOutput" />
 		<result column="position" property="position" />
@@ -426,6 +428,8 @@
 		,t.work_profession
 		,t.work_datetime
 		,t.self_company_area
+		,t.other_work_note
+		,t.work_asset_pdf
 		,t.employee_quantity
 		,t.enterprise_month_output
 		,t.position
@@ -884,6 +888,8 @@
 		,work_profession
 		,work_datetime
 		,self_company_area
+		,other_work_note
+		,work_asset_pdf
 		,employee_quantity
 		,enterprise_month_output
 		,position
@@ -1319,6 +1325,8 @@
 		
 		,work_datetime = #{workDatetime}
 		,self_company_area = #{selfCompanyArea}
+		,other_work_note = #{otherWorkNote}
+		,work_asset_pdf = #{workAssetPdf}
 		,employee_quantity = #{employeeQuantity}
 		,enterprise_month_output = #{enterpriseMonthOutput}
 		,position = #{position}
