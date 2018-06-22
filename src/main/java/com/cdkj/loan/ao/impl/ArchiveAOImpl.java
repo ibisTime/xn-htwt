@@ -85,9 +85,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -195,9 +195,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -238,6 +238,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             }
             SocialRelation data1 = new SocialRelation();
             data1.setCode(child.getCode());
+            data1.setArchiveCode(req.getCode());
             data1.setCompanyName(child.getCompanyName());
             data1.setRealName(child.getRealName());
             data1.setRelation(child.getRelation());
@@ -272,13 +273,15 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Override
     public Archive getArchive(String code) {
+        Archive archive = archiveBO.getArchive(code);
 
         SocialRelation condition = new SocialRelation();
         condition.setArchiveCode(code);
         List<SocialRelation> list = socialRelationBO
             .querySocialRelationList(condition);
-        Archive archive = archiveBO.getArchive(code);
+
         archive.setSocialRelationList(list);
+
         return archive;
     }
 

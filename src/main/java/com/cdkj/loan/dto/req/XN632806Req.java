@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632806Req {
 
-    // 订单编号（必填）
+    // 人事档案编号（必填）
     @NotBlank
     private String code;
 
