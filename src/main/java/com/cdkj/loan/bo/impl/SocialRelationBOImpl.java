@@ -41,8 +41,8 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public String saveSocialRelation(SocialRelation data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.SOCIAL_RELATION.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.SOCIAL_RELATION
+                .getCode());
             data.setCode(code);
             socialRelationDAO.insert(data);
         }
@@ -50,11 +50,11 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     }
 
     @Override
-    public int removeSocialRelation(String code) {
+    public int removeSocialRelation(String archiveCode) {
         int count = 0;
-        if (StringUtils.isNotBlank(code)) {
+        if (StringUtils.isNotBlank(archiveCode)) {
             SocialRelation data = new SocialRelation();
-            data.setArchiveCode(code);
+            data.setArchiveCode(archiveCode);
             count = socialRelationDAO.delete(data);
         }
         return count;
@@ -70,8 +70,7 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     }
 
     @Override
-    public List<SocialRelation> querySocialRelationList(
-            SocialRelation condition) {
+    public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
         return socialRelationDAO.selectList(condition);
     }
 

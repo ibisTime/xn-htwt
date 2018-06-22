@@ -80,13 +80,8 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="delete_socialRelation" parameterType="socialRelation">
-		UPDATE tp_social_relation
-		SET
-		is_delete = '0' 
+	<delete id="delete_socialRelation" parameterType="socialRelation">
+		delete from tp_social_relation
 		WHERE archive_code = #{archiveCode}
-	</update>
-	
-
-
+	</delete>
 </mapper>

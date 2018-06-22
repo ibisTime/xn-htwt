@@ -953,7 +953,6 @@ CREATE TABLE `tp_archive` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `is_delete` char(1) DEFAULT NULL COMMENT '0删除',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人事档案';
@@ -1447,7 +1446,6 @@ CREATE TABLE `tp_social_relation` (
   `company_name` varchar(255) DEFAULT NULL COMMENT '工作单位',
   `post` varchar(255) DEFAULT NULL COMMENT '担任职务',
   `contact` varchar(255) DEFAULT NULL COMMENT '联系方式',
-  `is_delete` char(1) DEFAULT NULL COMMENT '0删除1正常',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='社会关系';
 
