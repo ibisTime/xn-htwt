@@ -63,6 +63,8 @@ public class BizTeamAOImpl implements IBizTeamAO {
         data.setBank(req.getBank());
         data.setSubbranch(req.getSubbranch());
         data.setWaterBill(req.getWaterBill());
+        data.setRegion(req.getRegion());
+        data.setPlace(req.getPlace());
         return bizTeamBO.saveBizTeam(data);
     }
 
@@ -95,6 +97,8 @@ public class BizTeamAOImpl implements IBizTeamAO {
         data.setBank(req.getBank());
         data.setSubbranch(req.getSubbranch());
         data.setWaterBill(req.getWaterBill());
+        data.setRegion(req.getRegion());
+        data.setPlace(req.getPlace());
         bizTeamBO.refreshBizTeam(data);
     }
 

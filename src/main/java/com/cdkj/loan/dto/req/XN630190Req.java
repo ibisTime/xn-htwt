@@ -10,25 +10,56 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN630190Req {
 
+    // 团队名称
     @NotBlank
     private String name;
 
+    // 团队长
     @NotBlank
     private String captain;
 
+    // 更新人
     @NotBlank
     private String updater;
 
+    // 收款账号
     @NotBlank
     private String accountNo;
 
+    // 收款银行
     @NotBlank
     private String bank;
 
+    // 收款支行
     @NotBlank
     private String subbranch;
 
+    // 水单
     private String waterBill;
+
+    // 水单
+    @NotBlank
+    private String region;
+
+    // 水单
+    @NotBlank
+    private String place;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
     public String getAccountNo() {
         return accountNo;

@@ -51,4 +51,12 @@ public class BudgetOrderFeeDetailDAOImpl extends AMybatisTemplate implements
             condition, BudgetOrderFeeDetail.class);
     }
 
+    @Override
+    public BudgetOrderFeeDetail getBudgetOrderFeeDetailByStatus(
+            BudgetOrderFeeDetail condition) {
+        return super.select(
+            NAMESPACE.concat("select_budgetOrderFeeDetailByStatus"), condition,
+            BudgetOrderFeeDetail.class);
+    }
+
 }
