@@ -31,13 +31,14 @@ public class XN630105 extends AProcessor {
         condition.setLeadUserId(req.getLeadUserId());
         condition.setParentCode(req.getParentCode());
         condition.setStatus(req.getStatus());
-        condition.setKeyword(req.getKeyword());
 
+        condition.setKeyword(req.getKeyword());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IDepartmentAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
+
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
         return departmentAO.queryDepartmentPage(start, limit, condition);
