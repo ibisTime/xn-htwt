@@ -4,6 +4,11 @@ CHANGE COLUMN `type` `type` VARCHAR(32) NULL DEFAULT NULL COMMENT '类型(1=子�
 CHANGE COLUMN `lead_name` `lead_user_id` VARCHAR(32) NULL DEFAULT NULL COMMENT '负责人编号' ,
 ADD COLUMN `order_no` INT(11) NULL COMMENT '序号' AFTER `parent_code`;
 
+ALTER TABLE `tsys_user` 
+ADD COLUMN `archive_code` VARCHAR(32) NULL COMMENT '人事档案编号' AFTER `team_code`;
+
+update tsys_user tu,tp_archive tp set tu.archive_code =tp.code where tu.user_id= tp.user_id;
+
 DROP TABLE IF EXISTS `tdq_budget_order`;
 CREATE TABLE `tdq_budget_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',

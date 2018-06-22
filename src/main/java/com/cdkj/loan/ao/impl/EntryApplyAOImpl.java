@@ -14,7 +14,6 @@ import com.cdkj.loan.bo.IEntryApplyBO;
 import com.cdkj.loan.bo.IWorkExperienceBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
@@ -24,7 +23,6 @@ import com.cdkj.loan.dto.req.XN632850ReqExp;
 import com.cdkj.loan.dto.req.XN632860Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EEntryApplyStatus;
-import com.cdkj.loan.enums.ESysUserType;
 
 @Service
 public class EntryApplyAOImpl implements IEntryApplyAO {
@@ -161,14 +159,14 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
             archive.setMobileAward(entryApply.getMobileStandard());
             archive.setTaxiWard(entryApply.getTaxiStandard());
 
-            String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
-                entryApply.getMobile(), "888888", entryApply.getMobile(),
-                entryApply.getRealName(), SysConstants.COMMON_ROLE,
-                entryApply.getPosition());
-            archive.setUserId(userId);
+            // String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+            // entryApply.getMobile(), "888888", entryApply.getMobile(),
+            // entryApply.getRealName(), SysConstants.COMMON_ROLE,
+            // entryApply.getPosition());
+            // archive.setUserId(userId);
             archiveBO.saveArchive(archive);
 
-            entryApply.setUserId(userId);
+            // entryApply.setUserId(userId);
         } else {
             entryApply.setStatus(EEntryApplyStatus.AUDIT_NOT_PASS.getCode());
         }

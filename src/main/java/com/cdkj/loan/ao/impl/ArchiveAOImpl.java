@@ -8,17 +8,16 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cdkj.loan.ao.IArchiveAO;
-import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.SYSUser;
@@ -29,7 +28,6 @@ import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
 import com.cdkj.loan.dto.res.XN632803Res;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -46,9 +44,6 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Autowired
     private ISocialRelationBO socialRelationBO;
-
-    @Autowired
-    private ISYSUserAO sysUserAO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -125,23 +120,22 @@ public class ArchiveAOImpl implements IArchiveAO {
             data.setWorkingYears(workingYears);
         }
 
-        SYSUser sysUserLoginName = sysUserBO
-            .getUserByLoginName(req.getMobile());
-        SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
-
-        String userId = null;
-        if (sysUserLoginName == null && sysUserMobile == null) {
-            userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
-                req.getMobile(), "888888", req.getMobile(), req.getRealName(),
-                SysConstants.COMMON_ROLE, req.getPostCode());
-        } else {
-            if (sysUserLoginName != null) {
-                userId = sysUserLoginName.getUserId();
-            } else if (sysUserMobile != null) {
-                userId = sysUserMobile.getUserId();
-            }
-        }
-        data.setUserId(userId);
+        // SYSUser sysUserLoginName = sysUserBO
+        // .getUserByLoginName(req.getMobile());
+        // SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
+        // String userId = null;
+        // if (sysUserLoginName == null && sysUserMobile == null) {
+        // userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+        // req.getMobile(), "888888", req.getMobile(), req.getRealName(),
+        // SysConstants.COMMON_ROLE, req.getPostCode());
+        // } else {
+        // if (sysUserLoginName != null) {
+        // userId = sysUserLoginName.getUserId();
+        // } else if (sysUserMobile != null) {
+        // userId = sysUserMobile.getUserId();
+        // }
+        // }
+        // data.setUserId(userId);
         String archiveCode = archiveBO.saveArchive(data);
 
         List<XN632800ReqChild> socialRelationList = req.getSocialRelationList();
@@ -244,12 +238,12 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void dropArchive(String code) {
         if (!archiveBO.isArchiveExist(code)) {
             throw new BizException("xn0000", "人事档案不存在");
         }
         archiveBO.removeArchive(code);
-        socialRelationBO.removeSocialRelation(code);
     }
 
     @Override
@@ -278,11 +272,18 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void editLeaveArchive(Archive data) {
         if (!archiveBO.isArchiveExist(data.getCode())) {
             throw new BizException("xn0000", "人事档案不存在");
         }
         archiveBO.refreshLeaveArchive(data);
+
+        // 锁定用户
+        SYSUser sysUser = sysUserBO.getUserByArchiveCode(data.getCode());
+        if (null != sysUser) {
+            sysUserBO.refreshUserLock(sysUser.getUserId());
+        }
     }
 
     @Override
