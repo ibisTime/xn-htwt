@@ -45,7 +45,7 @@ public class LoanProduct extends ABaseDO {
     private double backRate;
 
     // 是否前置
-    private double isPre;
+    private String isPre;
 
     // 前置利率
     private double preRate;
@@ -75,11 +75,11 @@ public class LoanProduct extends ABaseDO {
         this.code = code;
     }
 
-    public double getIsPre() {
+    public String getIsPre() {
         return isPre;
     }
 
-    public void setIsPre(double isPre) {
+    public void setIsPre(String isPre) {
         this.isPre = isPre;
     }
 

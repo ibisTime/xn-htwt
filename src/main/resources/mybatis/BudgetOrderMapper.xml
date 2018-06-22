@@ -14,6 +14,7 @@
 		<result column="auth_fee" property="authFee" />
 		<result column="bank_fee" property="bankFee" />
 		<result column="company_fee" property="companyFee" />
+		<result column="team_fee" property="teamFee" />
 		<result column="credit_code" property="creditCode" />
 		
 		<result column="biz_type" property="bizType" />
@@ -368,6 +369,7 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
+		,t.team_fee
 		,t.credit_code
 		
 		,t.biz_type
@@ -652,6 +654,7 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
+		,t.team_fee
 		,t.credit_code
 		
 		,t.biz_type
@@ -738,6 +741,7 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
+		,t.team_fee
 		,t.credit_code
 		
 		,t.biz_type
@@ -829,6 +833,7 @@
 		,auth_fee
 		,bank_fee
 		,company_fee
+		,team_fee
 		,credit_code
 		,biz_type
 		,loan_period
@@ -1236,6 +1241,7 @@
 		
 		,bank_fee = #{bankFee}
 		,company_fee = #{companyFee}
+		,team_fee = #{teamFee}
 		,credit_code = #{creditCode}
 		,biz_type = #{bizType}
 		,loan_period = #{loanPeriod}

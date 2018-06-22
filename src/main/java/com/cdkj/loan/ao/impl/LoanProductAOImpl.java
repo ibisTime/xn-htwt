@@ -36,8 +36,8 @@ public class LoanProductAOImpl implements ILoanProductAO {
     @Override
     public String saveLoanProduct(XN632170Req req) {
         // 验证产品名称是否重复
-        String code = OrderNoGenerater.generate(EGeneratePrefix.LOAN_PRODUCT
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.LOAN_PRODUCT.getCode());
         LoanProduct data = new LoanProduct();
         data.setCode(code);
         data.setType(req.getType());
@@ -49,6 +49,7 @@ public class LoanProductAOImpl implements ILoanProductAO {
         data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
         data.setAuthRate(StringValidater.toDouble(req.getAuthRate()));
         data.setBackRate(StringValidater.toDouble(req.getBackRate()));
+        data.setIsPre(req.getIsPre());
         data.setPreRate(StringValidater.toDouble(req.getPreRate()));
 
         data.setStatus(EProductStatus.TO_PUBLISH.getCode());
@@ -76,6 +77,7 @@ public class LoanProductAOImpl implements ILoanProductAO {
         data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
         data.setAuthRate(StringValidater.toDouble(req.getAuthRate()));
         data.setBackRate(StringValidater.toDouble(req.getBackRate()));
+        data.setIsPre(req.getIsPre());
         data.setPreRate(StringValidater.toDouble(req.getPreRate()));
 
         data.setUpdater(req.getUpdater());
