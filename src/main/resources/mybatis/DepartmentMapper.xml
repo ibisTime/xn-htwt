@@ -40,7 +40,7 @@
 				AND t.status = #{status}
 			</if>
 			<if test="keyword != null and keyword != '' ">
-				t.name LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.lead_name LIKE "%"#{keyword}"%" 
+				AND t.name like "%"#{keyword}"%"
 			</if>
 		</trim>
 	</sql>
