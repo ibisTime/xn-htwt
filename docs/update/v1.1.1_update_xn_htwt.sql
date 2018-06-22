@@ -4,11 +4,13 @@ CHANGE COLUMN `type` `type` VARCHAR(32) NULL DEFAULT NULL COMMENT '类型(1=子�
 CHANGE COLUMN `lead_name` `lead_user_id` VARCHAR(32) NULL DEFAULT NULL COMMENT '负责人编号' ,
 ADD COLUMN `order_no` INT(11) NULL COMMENT '序号' AFTER `parent_code`;
 
+DROP TABLE IF EXISTS `tdq_budget_order`;
 CREATE TABLE `tdq_budget_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
   `loan_product_code` varchar(32) DEFAULT NULL COMMENT '贷款产品编号',
   `loan_product_name` tinytext COMMENT '贷款产品名称',
+  `region` tinytext COMMENT '所属区域',
   `loan_bank` tinytext COMMENT '贷款银行',
   `gps_fee` bigint(20) DEFAULT NULL COMMENT 'GPS费用',
   `auth_fee` bigint(20) DEFAULT NULL COMMENT '公证费',
