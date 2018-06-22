@@ -16,9 +16,9 @@ public interface IDepartmentAO {
 
     public String addDepartment(XN630100Req req);
 
-    public int dropDepartment(String code);
+    public void dropDepartment(String code);
 
-    public int editDepartment(XN630102Req req);
+    public void editDepartment(XN630102Req req);
 
     public Paginable<Department> queryDepartmentPage(int start, int limit,
             Department condition);

@@ -8,17 +8,17 @@ public class XN630102Req {
     private String code;// 编号
 
     @NotBlank
+    private String type;// 类型
+
+    @NotBlank
     private String name;// 部门名称
 
-    private String leadName;// 负责人
-
-    private String mobile;// 负责人手机号
+    private String leadUserId;// 负责人编号
 
     @NotBlank
     private String parentCode;// 上级部门编号
 
-    @NotBlank
-    private String type;// 类型
+    private String orderNo;
 
     @NotBlank
     private String updater;// 更新人
@@ -33,6 +33,14 @@ public class XN630102Req {
         this.code = code;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getName() {
         return name;
     }
@@ -41,20 +49,12 @@ public class XN630102Req {
         this.name = name;
     }
 
-    public String getLeadName() {
-        return leadName;
+    public String getLeadUserId() {
+        return leadUserId;
     }
 
-    public void setLeadName(String leadName) {
-        this.leadName = leadName;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setLeadUserId(String leadUserId) {
+        this.leadUserId = leadUserId;
     }
 
     public String getParentCode() {
@@ -63,6 +63,14 @@ public class XN630102Req {
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getUpdater() {
@@ -80,13 +88,4 @@ public class XN630102Req {
     public void setRemark(String remark) {
         this.remark = remark;
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
 }
