@@ -171,7 +171,7 @@ public class BudgetOrder extends ABaseDO {
     // 工作单位地址
     private String workCompanyAddress;
 
-    // 是否卡邮寄地址
+    // 工作单位是否卡邮寄地址
     private String workIsCardMailAddress;
 
     // 单位性质
@@ -777,6 +777,17 @@ public class BudgetOrder extends ABaseDO {
 
     // 超过一天的标志
     private String advanceFlag;
+
+    // 团队名称
+    private String teamName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public String getAdvanceFlag() {
         return advanceFlag;
