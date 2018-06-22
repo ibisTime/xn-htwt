@@ -487,7 +487,7 @@ public class BudgetOrder extends ABaseDO {
     private Date wxJourDatetimeEnd;
 
     // 微信流水结息
-    private String wxJouInterest;
+    private String wxJourInterest;
 
     // 微信收入
     private Long wxJourIncome;
@@ -2481,12 +2481,12 @@ public class BudgetOrder extends ABaseDO {
         this.zfbJourInterest = zfbJourInterest;
     }
 
-    public String getWxJouInterest() {
-        return wxJouInterest;
+    public String getWxJourInterest() {
+        return wxJourInterest;
     }
 
-    public void setWxJouInterest(String wxJouInterest) {
-        this.wxJouInterest = wxJouInterest;
+    public void setWxJourInterest(String wxJourInterest) {
+        this.wxJourInterest = wxJourInterest;
     }
 
     public String getJourInterest() {

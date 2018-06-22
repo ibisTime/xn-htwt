@@ -1040,11 +1040,13 @@
 		#{code}
 		,#{loanProductCode}
 		,#{loanProductName}
+		,#{region}
 		,#{loanBank}
 		,#{gpsFee}
 		,#{authFee}
 		,#{bankFee}
 		,#{companyFee}
+		,#{teamFee}
 		,#{creditCode}
 		,#{bizType}
 		,#{loanPeriod}
@@ -1052,6 +1054,7 @@
 		,#{carBrand}
 		,#{carSeries}
 		,#{carModel}
+		,#{carType}
 		,#{carPic}
 		,#{carHgzPic}
 		,#{carFrameNo}
@@ -1067,12 +1070,14 @@
 		,#{applyUserName}
 		,#{gender}
 		,#{marryState}
+		,#{political}
 		,#{nation}
 		,#{education}
 		,#{idNo}
 		,#{familyNumber}
 		,#{mobile}
 		,#{nowAddress}
+		,#{isCardMailAddress}
 		,#{postCode1}
 		,#{residenceAddress}
 		,#{postCode2}
@@ -1081,6 +1086,7 @@
 		,#{mainIncome}
 		,#{workCompanyName}
 		,#{workCompanyAddress}
+		,#{workIsCardMailAddress}
 		,#{workCompanyProperty}
 		,#{workBelongIndustry}
 		,#{workProfession}
@@ -1093,6 +1099,7 @@
 		,#{monthIncome}
 		,#{mateZfbJourDatetimeStart}
 		,#{mateZfbJourDatetimeEnd}
+		,#{mateZfbJourInterest}
 		,#{mateZfbJourIncome}
 		,#{mateZfbJourExpend}
 		,#{mateZfbJourBalance}
@@ -1103,6 +1110,7 @@
 		 
 		,#{mateWxJourDatetimeStart}
 		,#{mateWxJourDatetimeEnd}
+		,#{mateWxJourInterest}
 		,#{mateWxJourIncome}
 		,#{mateWxJourExpend}
 		,#{mateWxJourBalance}
@@ -1113,6 +1121,7 @@
 		
 		,#{mateJourDatetimeStart}
 		,#{mateJourDatetimeEnd}
+		,#{mateJourInterest}
 		,#{mateJourIncome}
 		,#{mateJourExpend}
 		,#{mateJourBalance}
@@ -1141,6 +1150,7 @@
 		
 		,#{guaZfbJourDatetimeStart}
 		,#{guaZfbJourDatetimeEnd}
+		,#{guaZfbJourInterest}
 		,#{guaZfbJourIncome}
 		,#{guaZfbJourExpend}
 		,#{guaZfbJourBalance}
@@ -1151,6 +1161,7 @@
 		
 		,#{guaWxJourDatetimeStart}
 		,#{guaWxJourDatetimeEnd}
+		,#{guaWxJourInterest}
 		,#{guaWxJourIncome}
 		,#{guaWxJourExpend}
 		,#{guaWxJourBalance}
@@ -1161,6 +1172,7 @@
 		
 		,#{guaJourDatetimeStart}
 		,#{guaJourDatetimeEnd}
+		,#{guaJourInterest}
 		,#{guaJourIncome}
 		,#{guaJourExpend}
 		,#{guaJourBalance}
@@ -1180,6 +1192,7 @@
 		
 		,#{zfbJourDatetimeStart}
 		,#{zfbJourDatetimeEnd}
+		,#{zfbJourInterest}
 		,#{zfbJourIncome}
 		,#{zfbJourExpend}
 		,#{zfbJourBalance}
@@ -1190,6 +1203,7 @@
 		
 		,#{wxJourDatetimeStart}
 		,#{wxJourDatetimeEnd}
+		,#{wxJourInterest}
 		,#{wxJourIncome}
 		,#{wxJourExpend}
 		,#{wxJourBalance}
@@ -1200,6 +1214,7 @@
 		 
 		,#{jourDatetimeStart}
 		,#{jourDatetimeEnd}
+		,#{jourInterest}
 		,#{jourIncome}
 		,#{jourExpend}
 		,#{jourBalance}
@@ -1210,6 +1225,10 @@
 		,#{assetPdf}
 		,#{houseContract}
 		,#{housePicture}
+		,#{hkBookPdf}
+		,#{idCardPdf}
+		,#{marryPdf}
+		,#{otherPdf}
 		,#{isAdvanceFund}
 		
 		,#{saleUserId}

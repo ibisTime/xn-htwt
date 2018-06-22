@@ -405,7 +405,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getWxJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setWxJourDatetimeEnd(DateUtil.strToDate(req.getWxJourDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setWxJouInterest(req.getWxJouInterest());
+        data.setWxJourInterest(req.getWxJourInterest());
 
         data.setWxJourIncome(StringValidater.toLong(req.getWxJourIncome()));
         data.setWxJourExpend(StringValidater.toLong(req.getWxJourExpend()));
