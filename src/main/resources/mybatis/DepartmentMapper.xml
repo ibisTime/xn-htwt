@@ -4,11 +4,12 @@
 <mapper namespace="com.cdkj.loan.dao.IDepartmentDAO">
 	<resultMap id="department_DB_Result" type="department">
 		<result column="code" property="code" />
-		<result column="name" property="name" />
-		<result column="lead_name" property="leadName" />
-		<result column="mobile" property="mobile" />
-		<result column="parent_code" property="parentCode" />
 		<result column="type" property="type" />
+		<result column="name" property="name" />
+		<result column="lead_user_id" property="leadUserId" />
+		<result column="parent_code" property="parentCode" />
+		
+		<result column="order_no" property="orderNo" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -19,9 +20,6 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="parentCode != null and parentCode != '' ">
-				AND t.parent_code = #{parentCode}
-			</if>
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
@@ -31,6 +29,13 @@
 	            	#{item}
                 </foreach> 
 			</if>
+			<if test="leadUserId != null and leadUserId != '' ">
+				AND t.lead_user_id = #{leadUserId}
+			</if>
+			<if test="parentCode != null and parentCode != '' ">
+				AND t.parent_code = #{parentCode}
+			</if>
+			
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -42,11 +47,12 @@
 	<select id="select_department" parameterType="department" resultMap="department_DB_Result">
 		SELECT
 		t.code
-		,t.name
-		,t.lead_name
-		,t.mobile
-		,t.parent_code
 		,t.type
+		,t.name
+		,t.lead_user_id
+		,t.parent_code
+		
+		,t.order_no
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -71,11 +77,12 @@
 		INSERT INTO
 		tsys_department(
 		code
-		,name
-		,lead_name
-		,mobile
-		,parent_code
 		,type
+		,name
+		,lead_user_id
+		,parent_code
+		
+		,order_no
 		,status
 		,updater
 		,update_datetime
@@ -83,11 +90,12 @@
 		)
 		VALUES(
 		#{code}
-		,#{name}
-		,#{leadName}
-		,#{mobile}
-		,#{parentCode}
 		,#{type}
+		,#{name}
+		,#{leadUserId}
+		,#{parentCode}
+		
+		,#{orderNo}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -98,12 +106,12 @@
 	<update id="update_department" parameterType="department">
 		UPDATE tsys_department
 		SET
-		name = #{name}
-		,lead_name = #{leadName}
-		,mobile = #{mobile}
+		type = #{type}
+		,name = #{name}
+		,lead_user_id = #{leadUserId}
 		,parent_code = #{parentCode}
-		,type = #{type}
-		,status = #{status}
+		,order_no = #{orderNo}
+		
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
@@ -116,8 +124,4 @@
 		status = #{status}
 		WHERE code = #{code}
 	</update>
-	
-	
-
-
 </mapper>
