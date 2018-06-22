@@ -27,6 +27,9 @@ public class BudgetOrder extends ABaseDO {
     // 产品名称
     private String loanProductName;
 
+    // 所属区域
+    private String region;
+
     // 贷款银行
     private String loanBank;
 
@@ -41,6 +44,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 公司服务费
     private Long companyFee;
+
+    // 团队服务费
+    private Long teamFee;
 
     // 征信单编号
     private String creditCode;
@@ -63,14 +69,14 @@ public class BudgetOrder extends ABaseDO {
     // 车型
     private String carModel;
 
+    // 车辆类型
+    private String carType;
+
     // 车辆照片
     private String carPic;
 
     // 合格证
     private String carHgzPic;
-
-    // 合格证号
-    private String carHgzNo;
 
     // 车架号
     private String carFrameNo;
@@ -114,6 +120,9 @@ public class BudgetOrder extends ABaseDO {
     // 婚姻状况
     private String marryState;
 
+    // 政治面貌
+    private String political;
+
     // 民族
     private String nation;
 
@@ -134,6 +143,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 现居住地址
     private String nowAddress;
+
+    // 是否卡邮寄地址
+    private String isCardMailAddress;
 
     // 邮编1
     private String postCode1;
@@ -158,6 +170,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 工作单位地址
     private String workCompanyAddress;
+
+    // 是否卡邮寄地址
+    private String workIsCardMailAddress;
 
     // 单位性质
     private String workCompanyProperty;
@@ -216,6 +231,9 @@ public class BudgetOrder extends ABaseDO {
     // 配偶支付宝流水时间止
     private Date mateZfbJourDatetimeEnd;
 
+    // 配偶支付宝流水结息
+    private String mateZfbJourInterest;
+
     // 配偶支付宝收入
     private Long mateZfbJourIncome;
 
@@ -243,6 +261,9 @@ public class BudgetOrder extends ABaseDO {
     // 配偶微信流水时间止
     private Date mateWxJourDatetimeEnd;
 
+    // 配偶微信流水结息
+    private String mateWxJourInterest;
+
     // 配偶微信收入
     private Long mateWxJourIncome;
 
@@ -269,6 +290,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 配偶流水时间止
     private Date mateJourDatetimeEnd;
+
+    // 配偶流水结息
+    private String mateJourInterest;
 
     // 配偶收入
     private Long mateJourIncome;
@@ -321,6 +345,9 @@ public class BudgetOrder extends ABaseDO {
     // 担保人支付宝流水时间止
     private Date guaZfbJourDatetimeEnd;
 
+    // 担保人支付宝流水结息
+    private String guaZfbJourInterest;
+
     // 担保人支付宝收入
     private Long guaZfbJourIncome;
 
@@ -348,6 +375,9 @@ public class BudgetOrder extends ABaseDO {
     // 担保人微信流水时间止
     private Date guaWxJourDatetimeEnd;
 
+    // 担保人微信流水结息
+    private String guaWxJourInterest;
+
     // 担保人微信收入
     private Long guaWxJourIncome;
 
@@ -374,6 +404,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 担保人流水时间止
     private Date guaJourDatetimeEnd;
+
+    // 担保人流水结息
+    private String guaJourInterest;
 
     // 担保人收入
     private Long guaJourIncome;
@@ -423,6 +456,9 @@ public class BudgetOrder extends ABaseDO {
     // 支付宝流水时间止
     private Date zfbJourDatetimeEnd;
 
+    // 支付宝流水结息
+    private String zfbJourInterest;
+
     // 支付宝收入
     private Long zfbJourIncome;
 
@@ -450,6 +486,9 @@ public class BudgetOrder extends ABaseDO {
     // 微信流水时间止
     private Date wxJourDatetimeEnd;
 
+    // 微信流水结息
+    private String wxJouInterest;
+
     // 微信收入
     private Long wxJourIncome;
 
@@ -476,6 +515,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 流水时间止
     private Date jourDatetimeEnd;
+
+    // 流水结息
+    private String jourInterest;
 
     // 收入
     private Long jourIncome;
@@ -507,11 +549,26 @@ public class BudgetOrder extends ABaseDO {
     // 房屋照片
     private String housePicture;
 
+    // 户口本资料
+    private String hkBookPdf;
+
+    // 身份证资料
+    private String idCardPdf;
+
+    // 结婚证资料
+    private String marryPdf;
+
+    // 其他资料
+    private String otherPdf;
+
     // 是否垫资
     private String isAdvanceFund;
 
-    // 面签视频
-    private String interviewVideo;
+    // 银行视频
+    private String bankVideo;
+
+    // 公司视频
+    private String companyVideo;
 
     // 面签合同
     private String interviewContract;
@@ -524,6 +581,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 水单
     private String billPdf;
+
+    // 资金划转授权书
+    private String advanceFundAmountPdf;
+
+    // 垫资其他资料
+    private String advanceFundOtherPdf;
 
     // 车辆落户日期
     private Date carSettleDatetime;
@@ -542,6 +605,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 商业险
     private String carSyx;
+
+    // 其他资料
+    private String carSettleOtherPdf;
 
     // 登记证书
     private String carRegcerti;
@@ -980,6 +1046,14 @@ public class BudgetOrder extends ABaseDO {
         return monthDeposit;
     }
 
+    public String getCarSettleOtherPdf() {
+        return carSettleOtherPdf;
+    }
+
+    public void setCarSettleOtherPdf(String carSettleOtherPdf) {
+        this.carSettleOtherPdf = carSettleOtherPdf;
+    }
+
     public void setMonthDeposit(Long monthDeposit) {
         this.monthDeposit = monthDeposit;
     }
@@ -1104,6 +1178,14 @@ public class BudgetOrder extends ABaseDO {
         this.nowAddress = nowAddress;
     }
 
+    public String getIsCardMailAddress() {
+        return isCardMailAddress;
+    }
+
+    public void setIsCardMailAddress(String isCardMailAddress) {
+        this.isCardMailAddress = isCardMailAddress;
+    }
+
     public String getPostCode1() {
         return postCode1;
     }
@@ -1142,6 +1224,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setMainAssetInclude(String mainAssetInclude) {
         this.mainAssetInclude = mainAssetInclude;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
+
+    public String getBankVideo() {
+        return bankVideo;
+    }
+
+    public void setBankVideo(String bankVideo) {
+        this.bankVideo = bankVideo;
+    }
+
+    public String getCompanyVideo() {
+        return companyVideo;
+    }
+
+    public void setCompanyVideo(String companyVideo) {
+        this.companyVideo = companyVideo;
     }
 
     public String getMainIncome() {
@@ -1264,6 +1370,22 @@ public class BudgetOrder extends ABaseDO {
         this.mateCompanyAddress = mateCompanyAddress;
     }
 
+    public String getAdvanceFundAmountPdf() {
+        return advanceFundAmountPdf;
+    }
+
+    public void setAdvanceFundAmountPdf(String advanceFundAmountPdf) {
+        this.advanceFundAmountPdf = advanceFundAmountPdf;
+    }
+
+    public String getAdvanceFundOtherPdf() {
+        return advanceFundOtherPdf;
+    }
+
+    public void setAdvanceFundOtherPdf(String advanceFundOtherPdf) {
+        this.advanceFundOtherPdf = advanceFundOtherPdf;
+    }
+
     public String getMateCompanyContactNo() {
         return mateCompanyContactNo;
     }
@@ -1330,6 +1452,38 @@ public class BudgetOrder extends ABaseDO {
 
     public String getEmergencyName1() {
         return emergencyName1;
+    }
+
+    public String getHkBookPdf() {
+        return hkBookPdf;
+    }
+
+    public void setHkBookPdf(String hkBookPdf) {
+        this.hkBookPdf = hkBookPdf;
+    }
+
+    public String getIdCardPdf() {
+        return idCardPdf;
+    }
+
+    public void setIdCardPdf(String idCardPdf) {
+        this.idCardPdf = idCardPdf;
+    }
+
+    public String getMarryPdf() {
+        return marryPdf;
+    }
+
+    public void setMarryPdf(String marryPdf) {
+        this.marryPdf = marryPdf;
+    }
+
+    public String getOtherPdf() {
+        return otherPdf;
+    }
+
+    public void setOtherPdf(String otherPdf) {
+        this.otherPdf = otherPdf;
     }
 
     public void setEmergencyName1(String emergencyName1) {
@@ -1464,14 +1618,6 @@ public class BudgetOrder extends ABaseDO {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getInterviewVideo() {
-        return interviewVideo;
-    }
-
-    public void setInterviewVideo(String interviewVideo) {
-        this.interviewVideo = interviewVideo;
-    }
-
     public String getInterviewContract() {
         return interviewContract;
     }
@@ -1582,6 +1728,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarKey(String carKey) {
         this.carKey = carKey;
+    }
+
+    public String getWorkIsCardMailAddress() {
+        return workIsCardMailAddress;
+    }
+
+    public void setWorkIsCardMailAddress(String workIsCardMailAddress) {
+        this.workIsCardMailAddress = workIsCardMailAddress;
     }
 
     public String getCarBigSmj() {
@@ -1832,6 +1986,14 @@ public class BudgetOrder extends ABaseDO {
         this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
+    public String getPolitical() {
+        return political;
+    }
+
+    public void setPolitical(String political) {
+        this.political = political;
+    }
+
     public String getCarModel() {
         return carModel;
     }
@@ -1854,14 +2016,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarHgzPic(String carHgzPic) {
         this.carHgzPic = carHgzPic;
-    }
-
-    public String getCarHgzNo() {
-        return carHgzNo;
-    }
-
-    public void setCarHgzNo(String carHgzNo) {
-        this.carHgzNo = carHgzNo;
     }
 
     public String getCarFrameNo() {
@@ -1982,6 +2136,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setMateWxJourExpend(Long mateWxJourExpend) {
         this.mateWxJourExpend = mateWxJourExpend;
+    }
+
+    public Long getTeamFee() {
+        return teamFee;
+    }
+
+    public void setTeamFee(Long teamFee) {
+        this.teamFee = teamFee;
     }
 
     public Long getMateWxJourBalance() {
@@ -2252,6 +2414,78 @@ public class BudgetOrder extends ABaseDO {
         return guaJourDatetimeStart;
     }
 
+    public String getMateZfbJourInterest() {
+        return mateZfbJourInterest;
+    }
+
+    public void setMateZfbJourInterest(String mateZfbJourInterest) {
+        this.mateZfbJourInterest = mateZfbJourInterest;
+    }
+
+    public String getMateWxJourInterest() {
+        return mateWxJourInterest;
+    }
+
+    public void setMateWxJourInterest(String mateWxJourInterest) {
+        this.mateWxJourInterest = mateWxJourInterest;
+    }
+
+    public String getMateJourInterest() {
+        return mateJourInterest;
+    }
+
+    public void setMateJourInterest(String mateJourInterest) {
+        this.mateJourInterest = mateJourInterest;
+    }
+
+    public String getGuaZfbJourInterest() {
+        return guaZfbJourInterest;
+    }
+
+    public void setGuaZfbJourInterest(String guaZfbJourInterest) {
+        this.guaZfbJourInterest = guaZfbJourInterest;
+    }
+
+    public String getGuaWxJourInterest() {
+        return guaWxJourInterest;
+    }
+
+    public void setGuaWxJourInterest(String guaWxJourInterest) {
+        this.guaWxJourInterest = guaWxJourInterest;
+    }
+
+    public String getGuaJourInterest() {
+        return guaJourInterest;
+    }
+
+    public void setGuaJourInterest(String guaJourInterest) {
+        this.guaJourInterest = guaJourInterest;
+    }
+
+    public String getZfbJourInterest() {
+        return zfbJourInterest;
+    }
+
+    public void setZfbJourInterest(String zfbJourInterest) {
+        this.zfbJourInterest = zfbJourInterest;
+    }
+
+    public String getWxJouInterest() {
+        return wxJouInterest;
+    }
+
+    public void setWxJouInterest(String wxJouInterest) {
+        this.wxJouInterest = wxJouInterest;
+    }
+
+    public String getJourInterest() {
+        return jourInterest;
+    }
+
+    public void setJourInterest(String jourInterest) {
+        this.jourInterest = jourInterest;
+    }
+
     public void setGuaJourDatetimeStart(Date guaJourDatetimeStart) {
         this.guaJourDatetimeStart = guaJourDatetimeStart;
     }
@@ -2326,6 +2560,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGuaAssetPdf(String guaAssetPdf) {
         this.guaAssetPdf = guaAssetPdf;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public Date getZfbJourDatetimeStart() {

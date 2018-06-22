@@ -41,6 +41,10 @@ public class XN632170Req {
     @NotBlank
     private String backRate;
 
+    // 是否前置
+    @NotBlank
+    private String isPre;
+
     // 前置利率
     @NotBlank
     private String preRate;
@@ -55,6 +59,14 @@ public class XN632170Req {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getIsPre() {
+        return isPre;
+    }
+
+    public void setIsPre(String isPre) {
+        this.isPre = isPre;
     }
 
     public String getName() {
