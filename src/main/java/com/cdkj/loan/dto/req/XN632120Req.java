@@ -20,8 +20,14 @@ public class XN632120Req {
     @NotBlank
     private String loanProductCode;
 
+    // 所属区域
+    private String region;
+
     // 公司手续费
     private String companyFee;
+
+    // 团队服务费
+    private String teamFee;
 
     // 是否垫资
     @NotBlank
@@ -54,6 +60,10 @@ public class XN632120Req {
     // 车型
     @NotBlank
     private String carModel;
+
+    // 车辆类型
+    @NotBlank
+    private String carType;
 
     // 车辆照片
     @NotBlank
@@ -119,6 +129,10 @@ public class XN632120Req {
     @NotBlank
     private String marryState;
 
+    // 政治面貌
+    @NotBlank
+    private String political;
+
     // 民族
     @NotBlank
     private String nation;
@@ -142,6 +156,9 @@ public class XN632120Req {
     // 现居住地址
     @NotBlank
     private String nowAddress;
+
+    // 是否卡邮寄地址
+    private String isCardMailAddress;
 
     // 邮编1
     @NotBlank
@@ -174,6 +191,9 @@ public class XN632120Req {
     // 工作单位地址
     @NotBlank
     private String workCompanyAddress;
+
+    // 是否卡邮寄地址
+    private String workIsCardMailAddress;
 
     // 单位性质
     private String workCompanyProperty;
@@ -232,6 +252,9 @@ public class XN632120Req {
     // 配偶支付宝流水时间止
     private String mateZfbJourDatetimeEnd;
 
+    // 配偶支付宝流水结息
+    private String mateZfbJourInterest;
+
     // 配偶支付宝收入
     private String mateZfbJourIncome;
 
@@ -259,6 +282,9 @@ public class XN632120Req {
     // 配偶微信流水时间止
     private String mateWxJourDatetimeEnd;
 
+    // 配偶微信流水结息
+    private String mateWxJourInterest;
+
     // 配偶微信收入
     private String mateWxJourIncome;
 
@@ -285,6 +311,9 @@ public class XN632120Req {
 
     // 配偶流水时间止
     private String mateJourDatetimeEnd;
+
+    // 配偶流水结息
+    private String mateJourInterest;
 
     // 配偶收入
     private String mateJourIncome;
@@ -337,6 +366,9 @@ public class XN632120Req {
     // 担保人支付宝流水时间止
     private String guaZfbJourDatetimeEnd;
 
+    // 担保人支付宝流水结息
+    private String guaZfbJourInterest;
+
     // 担保人支付宝收入
     private String guaZfbJourIncome;
 
@@ -364,6 +396,9 @@ public class XN632120Req {
     // 担保人微信流水时间止
     private String guaWxJourDatetimeEnd;
 
+    // 担保人微信流水结息
+    private String guaWxJourInterest;
+
     // 担保人微信收入
     private String guaWxJourIncome;
 
@@ -390,6 +425,9 @@ public class XN632120Req {
 
     // 担保人流水时间止
     private String guaJourDatetimeEnd;
+
+    // 担保人流水结息
+    private String guaJourInterest;
 
     // 担保人收入
     private String guaJourIncome;
@@ -439,6 +477,9 @@ public class XN632120Req {
     // 支付宝流水时间止
     private String zfbJourDatetimeEnd;
 
+    // 支付宝流水结息
+    private String zfbJourInterest;
+
     // 支付宝收入
     private String zfbJourIncome;
 
@@ -466,6 +507,9 @@ public class XN632120Req {
     // 微信流水时间止
     private String wxJourDatetimeEnd;
 
+    // 微信流水结息
+    private String wxJourInterest;
+
     // 微信收入
     private String wxJourIncome;
 
@@ -492,6 +536,9 @@ public class XN632120Req {
 
     // 流水时间止
     private String jourDatetimeEnd;
+
+    // 流水结息
+    private String jourInterest;
 
     // 收入
     private String jourIncome;
@@ -522,6 +569,50 @@ public class XN632120Req {
 
     // 房屋照片
     private String housePicture;
+
+    // 户口本资料
+    private String hkBookPdf;
+
+    // 身份证资料
+    private String idCardPdf;
+
+    // 结婚证资料
+    private String marryPdf;
+
+    // 其他资料
+    private String otherPdf;
+
+    public String getHkBookPdf() {
+        return hkBookPdf;
+    }
+
+    public void setHkBookPdf(String hkBookPdf) {
+        this.hkBookPdf = hkBookPdf;
+    }
+
+    public String getIdCardPdf() {
+        return idCardPdf;
+    }
+
+    public void setIdCardPdf(String idCardPdf) {
+        this.idCardPdf = idCardPdf;
+    }
+
+    public String getMarryPdf() {
+        return marryPdf;
+    }
+
+    public void setMarryPdf(String marryPdf) {
+        this.marryPdf = marryPdf;
+    }
+
+    public String getOtherPdf() {
+        return otherPdf;
+    }
+
+    public void setOtherPdf(String otherPdf) {
+        this.otherPdf = otherPdf;
+    }
 
     public String getCompanyFee() {
         return companyFee;
@@ -1283,6 +1374,14 @@ public class XN632120Req {
         this.mateWxJourMonthExpend = mateWxJourMonthExpend;
     }
 
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
+
     public String getMateWxJourPic() {
         return mateWxJourPic;
     }
@@ -1379,6 +1478,14 @@ public class XN632120Req {
         this.mateAssetPdf = mateAssetPdf;
     }
 
+    public String getIsCardMailAddress() {
+        return isCardMailAddress;
+    }
+
+    public void setIsCardMailAddress(String isCardMailAddress) {
+        this.isCardMailAddress = isCardMailAddress;
+    }
+
     public String getGuaZfbJourDatetimeStart() {
         return guaZfbJourDatetimeStart;
     }
@@ -1415,6 +1522,14 @@ public class XN632120Req {
         return guaZfbJourBalance;
     }
 
+    public String getWorkIsCardMailAddress() {
+        return workIsCardMailAddress;
+    }
+
+    public void setWorkIsCardMailAddress(String workIsCardMailAddress) {
+        this.workIsCardMailAddress = workIsCardMailAddress;
+    }
+
     public void setGuaZfbJourBalance(String guaZfbJourBalance) {
         this.guaZfbJourBalance = guaZfbJourBalance;
     }
@@ -1437,6 +1552,22 @@ public class XN632120Req {
 
     public String getGuaZfbJourPic() {
         return guaZfbJourPic;
+    }
+
+    public String getPolitical() {
+        return political;
+    }
+
+    public void setPolitical(String political) {
+        this.political = political;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public void setGuaZfbJourPic(String guaZfbJourPic) {
@@ -1485,6 +1616,14 @@ public class XN632120Req {
 
     public String getGuaWxJourBalance() {
         return guaWxJourBalance;
+    }
+
+    public String getTeamFee() {
+        return teamFee;
+    }
+
+    public void setTeamFee(String teamFee) {
+        this.teamFee = teamFee;
     }
 
     public void setGuaWxJourBalance(String guaWxJourBalance) {
@@ -1693,6 +1832,78 @@ public class XN632120Req {
 
     public String getWxJourIncome() {
         return wxJourIncome;
+    }
+
+    public String getMateZfbJourInterest() {
+        return mateZfbJourInterest;
+    }
+
+    public void setMateZfbJourInterest(String mateZfbJourInterest) {
+        this.mateZfbJourInterest = mateZfbJourInterest;
+    }
+
+    public String getMateWxJourInterest() {
+        return mateWxJourInterest;
+    }
+
+    public void setMateWxJourInterest(String mateWxJourInterest) {
+        this.mateWxJourInterest = mateWxJourInterest;
+    }
+
+    public String getMateJourInterest() {
+        return mateJourInterest;
+    }
+
+    public void setMateJourInterest(String mateJourInterest) {
+        this.mateJourInterest = mateJourInterest;
+    }
+
+    public String getGuaZfbJourInterest() {
+        return guaZfbJourInterest;
+    }
+
+    public void setGuaZfbJourInterest(String guaZfbJourInterest) {
+        this.guaZfbJourInterest = guaZfbJourInterest;
+    }
+
+    public String getGuaWxJourInterest() {
+        return guaWxJourInterest;
+    }
+
+    public void setGuaWxJourInterest(String guaWxJourInterest) {
+        this.guaWxJourInterest = guaWxJourInterest;
+    }
+
+    public String getGuaJourInterest() {
+        return guaJourInterest;
+    }
+
+    public void setGuaJourInterest(String guaJourInterest) {
+        this.guaJourInterest = guaJourInterest;
+    }
+
+    public String getZfbJourInterest() {
+        return zfbJourInterest;
+    }
+
+    public void setZfbJourInterest(String zfbJourInterest) {
+        this.zfbJourInterest = zfbJourInterest;
+    }
+
+    public String getWxJourInterest() {
+        return wxJourInterest;
+    }
+
+    public void setWxJourInterest(String wxJourInterest) {
+        this.wxJourInterest = wxJourInterest;
+    }
+
+    public String getJourInterest() {
+        return jourInterest;
+    }
+
+    public void setJourInterest(String jourInterest) {
+        this.jourInterest = jourInterest;
     }
 
     public void setWxJourIncome(String wxJourIncome) {

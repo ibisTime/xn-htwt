@@ -167,7 +167,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (!archiveBO.isArchiveExist(req.getCode())) {
             throw new BizException("xn0000", "人事档案不存在");
         }
-        Archive data = new Archive();
+        Archive data = archiveBO.getArchive(req.getCode());
         data.setCode(req.getCode());
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
@@ -228,24 +228,16 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdateDatetime(new Date());
         data.setWorkingYears(req.getWorkingYears());
 
-        List<XN632802ReqChild> list = req.getSocialRelationList();
-        for (XN632802ReqChild child : list) {
-
-            if (!"".equals(child.getIsDelete()) && null != child.getIsDelete()
-                    && "0".equals(child.getIsDelete())) {
-                socialRelationBO.removeSocialRelation(child.getCode());
-                continue;
-            }
-            SocialRelation data1 = new SocialRelation();
-            data1.setCode(child.getCode());
-            data1.setArchiveCode(req.getCode());
-            data1.setCompanyName(child.getCompanyName());
-            data1.setRealName(child.getRealName());
-            data1.setRelation(child.getRelation());
-            data1.setContact(child.getContact());
-            data1.setPost(child.getPost());
-            socialRelationBO.refreshSocialRelation(data1);
-
+        socialRelationBO.removeSocialRelation(req.getCode());
+        for (XN632802ReqChild xn632802ReqChild : req.getSocialRelationList()) {
+            SocialRelation socialRelation = new SocialRelation();
+            socialRelation.setArchiveCode(req.getCode());
+            socialRelation.setRealName(xn632802ReqChild.getRealName());
+            socialRelation.setRelation(xn632802ReqChild.getRelation());
+            socialRelation.setCompanyName(xn632802ReqChild.getCompanyName());
+            socialRelation.setPost(xn632802ReqChild.getPost());
+            socialRelation.setContact(xn632802ReqChild.getContact());
+            socialRelationBO.saveSocialRelation(socialRelation);
         }
 
         archiveBO.refreshArchive(data);

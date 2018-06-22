@@ -28,6 +28,28 @@ public class XN632125Req {
     @NotBlank
     private String billPdf;
 
+    // 资金划转授权书
+    private String advanceFundAmountPdf;
+
+    // 垫资其他资料
+    private String advanceFundOtherPdf;
+
+    public String getAdvanceFundAmountPdf() {
+        return advanceFundAmountPdf;
+    }
+
+    public void setAdvanceFundAmountPdf(String advanceFundAmountPdf) {
+        this.advanceFundAmountPdf = advanceFundAmountPdf;
+    }
+
+    public String getAdvanceFundOtherPdf() {
+        return advanceFundOtherPdf;
+    }
+
+    public void setAdvanceFundOtherPdf(String advanceFundOtherPdf) {
+        this.advanceFundOtherPdf = advanceFundOtherPdf;
+    }
+
     public String getCode() {
         return code;
     }

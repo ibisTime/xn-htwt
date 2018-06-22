@@ -4,21 +4,15 @@ import java.util.List;
 
 public class XN630106Req {
 
-    private String parentCode;// 上级部门编号
-
     private List<String> typeList; // 类型列表
+
+    private String leadUserId;// 负责人编号
+
+    private String parentCode;// 上级部门编号
 
     private String status;// 状态
 
     private String keyword;// 关键字
-
-    public String getParentCode() {
-        return parentCode;
-    }
-
-    public void setParentCode(String parentCode) {
-        this.parentCode = parentCode;
-    }
 
     public List<String> getTypeList() {
         return typeList;
@@ -26,6 +20,22 @@ public class XN630106Req {
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public String getLeadUserId() {
+        return leadUserId;
+    }
+
+    public void setLeadUserId(String leadUserId) {
+        this.leadUserId = leadUserId;
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
     }
 
     public String getStatus() {
@@ -43,5 +53,4 @@ public class XN630106Req {
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
-
 }

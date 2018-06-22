@@ -27,7 +27,7 @@ public class XN632817 extends AProcessor {
         condition.setRealName(req.getRealName());
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
-        condition.setIsDelete("1");
+        condition.setStatus("1");
         return archiveAO.queryArchiveList(condition);
     }
 

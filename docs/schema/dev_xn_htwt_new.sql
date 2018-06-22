@@ -953,7 +953,6 @@ CREATE TABLE `tp_archive` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `is_delete` char(1) DEFAULT NULL COMMENT '0删除',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人事档案';
@@ -1447,7 +1446,6 @@ CREATE TABLE `tp_social_relation` (
   `company_name` varchar(255) DEFAULT NULL COMMENT '工作单位',
   `post` varchar(255) DEFAULT NULL COMMENT '担任职务',
   `contact` varchar(255) DEFAULT NULL COMMENT '联系方式',
-  `is_delete` char(1) DEFAULT NULL COMMENT '0删除1正常',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='社会关系';
 
@@ -1900,18 +1898,19 @@ CREATE TABLE `tsys_config` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tsys_department`;
 CREATE TABLE `tsys_department` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `name` varchar(255) DEFAULT NULL COMMENT '部门名称',
-  `type` varchar(32) DEFAULT NULL COMMENT '类型(1=子公司，2=部门，3=岗位)',
-  `lead_name` varchar(255) DEFAULT NULL COMMENT '负责人',
-  `mobile` varchar(16) DEFAULT NULL COMMENT '负责人手机号',
-  `parent_code` varchar(32) DEFAULT NULL COMMENT '上级部门编号',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`) COMMENT '部门表'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `type` VARCHAR(32) NULL COMMENT '类型(1=子公司，2=部门，3=岗位)',
+  `name` VARCHAR(255) NULL COMMENT '部门名称',
+  `lead_user_id` VARCHAR(255) NULL COMMENT '负责人用户编号',
+  `parent_code` VARCHAR(32) NULL COMMENT '上级部门编号',
+  
+  `order_no` int(11) NULL COMMENT '序号',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`)  COMMENT '部门表'
+)  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
 -- ----------------------------
 --  Table structure for `tsys_dict`

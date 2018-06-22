@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632125Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
@@ -33,7 +34,7 @@ public interface IBudgetOrderAO {
             String approveResult, String approveNote);
 
     // 面签
-    public void interview(String code, String interviewVideo,
+    public void interview(String code, String bankVideo, String companyVideo,
             String interviewContract, String operator);
 
     // 业务总监审核
@@ -41,8 +42,7 @@ public interface IBudgetOrderAO {
             String approveResult, String approveNote);
 
     // 财务确认垫资
-    public void advanceFund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount, String billPdf);
+    public void advanceFund(XN632125Req req);
 
     // 安装GPS
     public void installGps(String code, String operator,
@@ -102,8 +102,8 @@ public interface IBudgetOrderAO {
     public void cancelFinanceAudit(XN632192Req req);
 
     // 垫资超过1天未放款客户
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
-            int limit, BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
 
     public void doSmsInterviewInform(String budgetOrderCode);
 
