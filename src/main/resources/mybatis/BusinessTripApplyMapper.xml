@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBusinessTripApplyDAO">
+	<resultMap id="businessTripApply_DB_Result" type="businessTripApply">
+		<result column="code" property="code" />
+		<result column="apply_user_code" property="applyUserCode" />
+		<result column="job_no" property="jobNo" />
+		<result column="department_code" property="departmentCode" />
+		<result column="post_code" property="postCode" />
+		<result column="apply_datetime" property="applyDatetime" />
+		<result column="trip_datetime_start" property="tripDatetimeStart" />
+		<result column="trip_datetime_end" property="tripDatetimeEnd" />
+		<result column="trip_reason" property="tripReason" />
+		<result column="trip_line" property="tripLine" />
+		<result column="aircraft_fee_standard" property="aircraftFeeStandard" />
+		<result column="aircraft_days" property="aircraftDays" />
+		<result column="aircraft_budget" property="aircraftBudget" />
+		<result column="train_fee_standard" property="trainFeeStandard" />
+		<result column="train_days" property="trainDays" />
+		<result column="train_budget" property="trainBudget" />
+		<result column="urban_fee_standart" property="urbanFeeStandart" />
+		<result column="urban_days" property="urbanDays" />
+		<result column="urban_budget" property="urbanBudget" />
+		<result column="hotel_cost" property="hotelCost" />
+		<result column="food_subsidy" property="foodSubsidy" />
+		<result column="entertainment_cost" property="entertainmentCost" />
+		<result column="other" property="other" />
+		<result column="subtotal" property="subtotal" />
+		<result column="spare_cash" property="spareCash" />
+		<result column="cost_total" property="costTotal" />
+		<result column="department_manager_code" property="departmentManagerCode" />
+		<result column="finance_manager_code" property="financeManagerCode" />
+		<result column="general_manager_code" property="generalManagerCode" />
+		<result column="cur_node_code" property="curNodeCode" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="apply_note" property="applyNote" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="applyUserCode != null and applyUserCode != '' ">
+				AND t.apply_user_code = #{applyUserCode}
+			</if>
+			<if test="jobNo != null and jobNo != '' ">
+				AND t.job_no = #{jobNo}
+			</if>
+			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+				AND t.apply_datetime &gt;= #{applyDatetimeStart}
+			</if>
+			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+				AND t.apply_datetime &lt;= #{applyDatetimeEnd}
+			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_businessTripApply" parameterType="businessTripApply" resultMap="businessTripApply_DB_Result">
+		SELECT
+		t.code
+		,t.apply_user_code
+		,t.job_no
+		,t.department_code
+		,t.post_code
+		,t.apply_datetime
+		,t.trip_datetime_start
+		,t.trip_datetime_end
+		,t.trip_reason
+		,t.trip_line
+		,t.aircraft_fee_standard
+		,t.aircraft_days
+		,t.aircraft_budget
+		,t.train_fee_standard
+		,t.train_days
+		,t.train_budget
+		,t.urban_fee_standart
+		,t.urban_days
+		,t.urban_budget
+		,t.hotel_cost
+		,t.food_subsidy
+		,t.entertainment_cost
+		,t.other
+		,t.subtotal
+		,t.spare_cash
+		,t.cost_total
+		,t.department_manager_code
+		,t.finance_manager_code
+		,t.general_manager_code
+		,t.cur_node_code
+		,t.updater
+		,t.update_datetime
+		,t.apply_note
+		,t.remark
+		FROM
+		tp_business_trip_apply t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_businessTripApply_count" parameterType="businessTripApply"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tp_business_trip_apply t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_businessTripApply" parameterType="businessTripApply">
+		INSERT INTO
+		tp_business_trip_apply(
+		code
+		,apply_user_code
+		,job_no
+		,department_code
+		,post_code
+		,apply_datetime
+		,trip_datetime_start
+		,trip_datetime_end
+		,trip_reason
+		,trip_line
+		,aircraft_fee_standard
+		,aircraft_days
+		,aircraft_budget
+		,train_fee_standard
+		,train_days
+		,train_budget
+		,urban_fee_standart
+		,urban_days
+		,urban_budget
+		,hotel_cost
+		,food_subsidy
+		,entertainment_cost
+		,other
+		,subtotal
+		,spare_cash
+		,cost_total
+		,department_manager_code
+		,finance_manager_code
+		,general_manager_code
+		,cur_node_code
+		,updater
+		,update_datetime
+		,apply_note
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{applyUserCode}
+		,#{jobNo}
+		,#{departmentCode}
+		,#{postCode}
+		,#{applyDatetime}
+		,#{tripDatetimeStart}
+		,#{tripDatetimeEnd}
+		,#{tripReason}
+		,#{tripLine}
+		,#{aircraftFeeStandard}
+		,#{aircraftDays}
+		,#{aircraftBudget}
+		,#{trainFeeStandard}
+		,#{trainDays}
+		,#{trainBudget}
+		,#{urbanFeeStandart}
+		,#{urbanDays}
+		,#{urbanBudget}
+		,#{hotelCost}
+		,#{foodSubsidy}
+		,#{entertainmentCost}
+		,#{other}
+		,#{subtotal}
+		,#{spareCash}
+		,#{costTotal}
+		,#{departmentManagerCode}
+		,#{financeManagerCode}
+		,#{generalManagerCode}
+		,#{curNodeCode}
+		,#{updater}
+		,#{updateDatetime}
+		,#{applyNote}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_businessTripApply" parameterType="businessTripApply">
+		UPDATE tp_business_trip_apply
+		SET
+		apply_user_code = #{applyUserCode}
+		,job_no = #{jobNo}
+		,department_code = #{departmentCode}
+		,post_code = #{postCode}
+		,apply_datetime = #{applyDatetime}
+		,trip_datetime_start = #{tripDatetimeStart}
+		,trip_datetime_end = #{tripDatetimeEnd}
+		,trip_reason = #{tripReason}
+		,trip_line = #{tripLine}
+		,aircraft_fee_standard = #{aircraftFeeStandard}
+		,aircraft_days = #{aircraftDays}
+		,aircraft_budget = #{aircraftBudget}
+		,train_fee_standard = #{trainFeeStandard}
+		,train_days = #{trainDays}
+		,train_budget = #{trainBudget}
+		,urban_fee_standart = #{urbanFeeStandart}
+		,urban_days = #{urbanDays}
+		,urban_budget = #{urbanBudget}
+		,hotel_cost = #{hotelCost}
+		,food_subsidy = #{foodSubsidy}
+		,entertainment_cost = #{entertainmentCost}
+		,other = #{other}
+		,subtotal = #{subtotal}
+		,spare_cash = #{spareCash}
+		,cost_total = #{costTotal}
+		,department_manager_code = #{departmentManagerCode}
+		,finance_manager_code = #{financeManagerCode}
+		,general_manager_code = #{generalManagerCode}
+		,cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,apply_note = #{applyNote}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_department_audit" parameterType="businessTripApply">
+		UPDATE tp_business_trip_apply
+		SET
+		cur_node_code = #{curNodeCode}
+		,department_manager_code = #{departmentManagerCode}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_finance_audit" parameterType="businessTripApply">
+		UPDATE tp_business_trip_apply
+		SET
+		cur_node_code = #{curNodeCode}
+		,finance_manager_code = #{financeManagerCode}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_general_audit" parameterType="businessTripApply">
+		UPDATE tp_business_trip_apply
+		SET
+		cur_node_code = #{curNodeCode}
+		,general_manager_code = #{generalManagerCode}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<select id="select_businessTripApply_byRoleCode" parameterType="businessTripApply" resultMap="businessTripApply_DB_Result">
+		SELECT
+		t.code
+		,t.apply_user_code
+		,t.job_no
+		,t.department_code
+		,t.post_code
+		,t.apply_datetime
+		,t.trip_datetime_start
+		,t.trip_datetime_end
+		,t.trip_reason
+		,t.trip_line
+		,t.aircraft_fee_standard
+		,t.aircraft_days
+		,t.aircraft_budget
+		,t.train_fee_standard
+		,t.train_days
+		,t.train_budget
+		,t.urban_fee_standart
+		,t.urban_days
+		,t.urban_budget
+		,t.hotel_cost
+		,t.food_subsidy
+		,t.entertainment_cost
+		,t.other
+		,t.subtotal
+		,t.spare_cash
+		,t.cost_total
+		,t.department_manager_code
+		,t.finance_manager_code
+		,t.general_manager_code
+		,t.cur_node_code
+		,t.updater
+		,t.update_datetime
+		,t.apply_note
+		,t.remark
+		FROM
+		tp_business_trip_apply t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_businessTripApply_count_byRoleCode" parameterType="businessTripApply"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code FROM tp_business_trip_apply t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />) tb
+	</select>
+
+</mapper>

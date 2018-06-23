@@ -101,9 +101,9 @@
 			     <when test='isDistribute == "1"'>
 				 	AND t.user_id is not NULL
 				 </when>
-				 <otherwise>
-					AND t.user_id is NULL
-				 </otherwise>
+				 <when test='isDistribute == "0"'>
+				 	AND t.user_id is NULL
+				 </when>
 			</choose>
 		</trim>
 	</sql>

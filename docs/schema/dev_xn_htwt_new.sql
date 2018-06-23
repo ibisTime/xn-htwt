@@ -2038,3 +2038,47 @@ CREATE TABLE `tsys_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+--  Table structure for `tsys_user`
+-- ----------------------------
+CREATE TABLE `dev_xn_htwt`.`tp_business_trip_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `apply_user_code` VARCHAR(32) NULL COMMENT '申请人编号',
+  `job_no` VARCHAR(32) NULL COMMENT '工号',
+  `department_code` VARCHAR(32) NULL COMMENT '部门编号',
+  `post_code` VARCHAR(32) NULL COMMENT '职位编号',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  `trip_datetime_start` DATETIME NULL COMMENT '出差时间起',
+  `trip_datetime_end` DATETIME NULL COMMENT '出差时间止',
+  `trip_reason` VARCHAR(255) NULL COMMENT '出差事由',
+  `trip_line` VARCHAR(255) NULL COMMENT '出差线路',
+  `aircraft_fee_standard` VARCHAR(255) NULL COMMENT '飞机票费用标准',
+  `aircraft_days` VARCHAR(255) NULL COMMENT '飞机票天数',
+  `aircraft_budget` BIGINT NULL COMMENT '飞机票预算金额',
+  `train_fee_standard` VARCHAR(255) NULL COMMENT '火车票费用标准',
+  `train_days` VARCHAR(255) NULL COMMENT '火车票天数',
+  `train_budget` BIGINT NULL COMMENT '火车票预算金额',
+  `urban_fee_standart` VARCHAR(255) NULL COMMENT '市内交通费用标准',
+  `urban_days` VARCHAR(255) NULL COMMENT '市内交通天数',
+  `urban_budget` BIGINT NULL COMMENT '市内交通预算金额',
+  `hotel_cost` BIGINT NULL COMMENT '住宿费',
+  `food_subsidy` BIGINT NULL COMMENT '伙食补助',
+  `entertainment_cost` BIGINT NULL COMMENT '招待费',
+  `other` VARCHAR(255) NULL,
+  `subtotal` BIGINT NULL COMMENT '小计',
+  `spare_cash` BIGINT NULL COMMENT '备用金',
+  `cost_total` BIGINT NULL COMMENT '费用合计',
+  `department_manager_code` VARCHAR(32) NULL COMMENT '部门主管编号',
+  `finance_manager_code` VARCHAR(32) NULL COMMENT '财务主管编号',
+  `general_manager_code` VARCHAR(32) NULL COMMENT '总经理编号',
+  `cur_node_code` VARCHAR(32) NULL COMMENT '节点',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `apply_note` VARCHAR(255) NULL COMMENT '申请说明',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '出差申请';
+
