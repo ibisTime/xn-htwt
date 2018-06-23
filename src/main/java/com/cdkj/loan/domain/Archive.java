@@ -214,6 +214,17 @@ public class Archive extends ABaseDO {
     // 档案是否被分配
     private String isDistribute;
 
+    // 工作状态
+    private List<String> workStatusList;
+
+    public List<String> getWorkStatusList() {
+        return workStatusList;
+    }
+
+    public void setWorkStatusList(List<String> workStatusList) {
+        this.workStatusList = workStatusList;
+    }
+
     public String getIsDistribute() {
         return isDistribute;
     }
