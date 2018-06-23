@@ -25,7 +25,7 @@ public class XN632792 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         busBorrowAO.returnBusBorrow(req.getCode(), req.getDriveKil(),
-            req.getRemark());
+            req.getUpdater(), req.getRemark());
         return new BooleanRes(true);
     }
 

@@ -3,16 +3,21 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBusBorrowAO;
+import com.cdkj.loan.bo.IBusBO;
 import com.cdkj.loan.bo.IBusBorrowBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bus;
 import com.cdkj.loan.domain.BusBorrow;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632790Req;
 import com.cdkj.loan.enums.EApproveResult;
@@ -27,7 +32,13 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
     private IBusBorrowBO busBorrowBO;
 
     @Autowired
+    private IBusBO busBO;
+
+    @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     public String addBusBorrow(XN632790Req req) {
@@ -67,7 +78,8 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
     }
 
     @Override
-    public void returnBusBorrow(String code, String driveKil, String remark) {
+    public void returnBusBorrow(String code, String driveKil, String updater,
+            String remark) {
         BusBorrow condition = busBorrowBO.getBusBorrow(code);
         if (!EBusBorrowStatus.TO_RETURN.getCode()
             .equals(condition.getStatus())) {
@@ -77,6 +89,8 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
         condition.setStatus(EBusBorrowStatus.RETURN_TO_AUDIT.getCode());
         condition.setDriveKil(StringValidater.toDouble(driveKil));
         condition.setReturnDatetime(new Date());
+        condition.setUpdater(updater);
+        condition.setUpdateDatetime(new Date());
         condition.setRemark(remark);
         busBorrowBO.returnBusBorrow(condition);
     }
@@ -104,17 +118,45 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
     @Override
     public Paginable<BusBorrow> queryBusBorrowPage(int start, int limit,
             BusBorrow condition) {
-        return busBorrowBO.getPaginable(start, limit, condition);
+        Paginable<BusBorrow> paginable = busBorrowBO.getPaginable(start, limit,
+            condition);
+        for (BusBorrow busBorrow : paginable.getList()) {
+            initBudgetOrder(busBorrow);
+        }
+        return paginable;
     }
 
     @Override
     public List<BusBorrow> queryBusBorrowList(BusBorrow condition) {
-        return busBorrowBO.queryBusBorrowList(condition);
+        List<BusBorrow> queryBusBorrowList = busBorrowBO
+            .queryBusBorrowList(condition);
+        for (BusBorrow busBorrow : queryBusBorrowList) {
+            initBudgetOrder(busBorrow);
+        }
+        return queryBusBorrowList;
     }
 
     @Override
     public BusBorrow getBusBorrow(String code) {
-        return busBorrowBO.getBusBorrow(code);
+        BusBorrow busBorrow = busBorrowBO.getBusBorrow(code);
+        initBudgetOrder(busBorrow);
+        return busBorrow;
+    }
+
+    private void initBudgetOrder(BusBorrow busBorrow) {
+        if (StringUtils.isNotBlank(busBorrow.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(busBorrow.getUpdater());
+            busBorrow.setUpdaterName(user.getRealName());
+        }
+        if (StringUtils.isNotBlank(busBorrow.getDepartmentCode())) {
+            Department department = departmentBO
+                .getDepartment(busBorrow.getDepartmentCode());
+            busBorrow.setDepartmentName(department.getName());
+        }
+        if (StringUtils.isNotBlank(busBorrow.getBusCode())) {
+            Bus bus = busBO.getBus(busBorrow.getBusCode());
+            busBorrow.setBusMobile(bus.getModel());
+        }
     }
 
 }

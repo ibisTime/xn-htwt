@@ -130,6 +130,8 @@
 		status = #{status}
 		,drive_kil = #{driveKil}
 		,return_datetime = #{returnDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
