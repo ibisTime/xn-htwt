@@ -29,7 +29,7 @@ import com.cdkj.loan.enums.EBusinessTripApplyNode;
 import com.cdkj.loan.exception.BizException;
 
 /**
- * 
+ * 出差申请
  * @author: jiafr 
  * @since: 2018年6月23日 下午3:15:51 
  * @history:
