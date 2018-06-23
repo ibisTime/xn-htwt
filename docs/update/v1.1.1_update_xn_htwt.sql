@@ -1,3 +1,6 @@
+ALTER TABLE `tdq_credit` 
+ADD COLUMN `team_code` VARCHAR(32) NULL COMMENT '团队编号' AFTER `sale_user_id`;
+
 ALTER TABLE `tsys_department` 
 DROP COLUMN `mobile`,
 CHANGE COLUMN `type` `type` VARCHAR(32) NULL DEFAULT NULL COMMENT '类型(1=子公司，2=部门，3=岗位)' AFTER `code`,

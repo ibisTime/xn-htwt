@@ -13,13 +13,10 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class XN632110Req {
 
-    @NotBlank
     private String loanBankCode;
 
-    @NotBlank
     private String loanAmount;
 
-    @NotBlank
     private String bizType;
 
     private String secondCarReport;

@@ -45,6 +45,9 @@ public class Credit extends ABaseDO {
     // 业务员编号
     private String saleUserId;
 
+    // 团队编号
+    private String teamCode;
+
     // 申请时间
     private Date applyDatetime;
 
@@ -76,6 +79,14 @@ public class Credit extends ABaseDO {
 
     // 征信人员信息
     private List<CreditUser> creditUserList;
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
 
     public String getCode() {
         return code;

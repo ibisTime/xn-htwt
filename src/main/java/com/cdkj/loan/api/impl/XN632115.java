@@ -3,7 +3,6 @@ package com.cdkj.loan.api.impl;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.ICreditAO;
-import com.cdkj.loan.ao.IReqBudgetAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
@@ -29,17 +28,19 @@ public class XN632115 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Credit condition = new Credit();
-        condition.setSaleUserId(req.getUserId());
+        condition.setSaleUserId(req.getSaleUserId());
+        condition.setTeamCode(req.getTeamCode());
         condition.setBudgetCode(req.getBudgetOrderCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
+        condition.setCurNodeCode(req.getCurNodeCode());
         condition.setRoleCode(req.getRoleCode());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IReqBudgetAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = ICreditAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());

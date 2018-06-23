@@ -300,6 +300,9 @@
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
 			</if>
+			<if test="teamCode != null and teamCode != ''">
+				AND t.team_code = #{teamCode}
+			</if>
 			<if test="applyUserId != null and applyUserId != '' ">
 				AND t.apply_user_id = #{applyUserId}
 			</if>
@@ -347,9 +350,6 @@
 			</if>
 			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
 				AND t.back_advance_status = #{backAdvanceStatus}
-			</if>
-			<if test="teamCode != null and teamCode != ''">
-				AND t.team_code = #{teamCode}
 			</if>
 			<if test="applyUserName != null and applyUserName != ''">
 				AND t.apply_user_name like "%"#{applyUserName}"%"
@@ -1474,7 +1474,6 @@
 		,is_advance_fund = #{isAdvanceFund}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
-		,team_code = #{teamCode}
 		WHERE code = #{code}
 	</update>
 	

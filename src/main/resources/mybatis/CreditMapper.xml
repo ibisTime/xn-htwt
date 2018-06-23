@@ -3,21 +3,21 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICreditDAO">
 	<resultMap id="credit_DB_Result" type="credit">
-	
 		<result column="code" property="code" />
 		<result column="loan_bank_code" property="loanBankCode" />
 		<result column="loan_amount" property="loanAmount" />
 		<result column="biz_type" property="bizType" />
 		<result column="second_car_report" property="secondCarReport" />
+		
 		<result column="xsz_front" property="xszFront" />
 		<result column="xsz_reverse" property="xszReverse" />
-		
 		<result column="budget_code" property="budgetCode" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
+		
+		<result column="team_code" property="teamCode" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
-
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -33,6 +33,9 @@
 			</if>
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
+			</if>
+			<if test="teamCode != null and teamCode != '' ">
+				AND t.team_code = #{teamCode}
 			</if>
 			<if test="applyDatetime != null and applyDatetime != '' ">
 				AND t.apply_datetime = #{applyDatetime}
@@ -81,6 +84,7 @@
 		,t.company_code
 		,t.sale_user_id
 
+		,t.team_code
 		,t.cur_node_code		
 		,t.apply_datetime
 		from tdq_credit t
@@ -112,6 +116,7 @@
 		,t.company_code
 		,t.sale_user_id
 
+		,t.team_code
 		,t.cur_node_code		
 		,t.apply_datetime
 		from tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
@@ -142,6 +147,7 @@
 		,xsz_reverse	
 		,company_code
 		,sale_user_id
+		,team_code
 		,cur_node_code	
 			
 		,apply_datetime
@@ -157,6 +163,7 @@
 		,#{xszReverse}
 		,#{companyCode}
 		,#{saleUserId}
+		,#{teamCode}
 		,#{curNodeCode}
 		
 		,#{applyDatetime}
