@@ -164,3 +164,18 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806231539201248617','admin',now(),'');
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806231540188028655','admin',now(),'');
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806231540385099307','admin',now(),'');
+
+/*
+-- Query: SELECT 'RO201800000000000001' role_code,code as menu_code ,'admin' updater, now() as update_datetime,'' remark FROM tsys_menu where code ='SM201806051500108276452' or code in 
+(SELECT code  FROM tsys_menu where parent_code ='SM201806051500108276452')
+or code in 
+(SELECT code  FROM tsys_menu where parent_code in (SELECT code  FROM tsys_menu where parent_code ='SM201806051500108276452'))
+-- Date: 2018-06-23 23:13
+*/
+INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806051500108276452','admin','2018-06-23 15:11:09','');
+INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806062003322256748','admin','2018-06-23 15:11:09','');
+INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806062003487726270','admin','2018-06-23 15:11:09','');
+INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806062004128529788','admin','2018-06-23 15:11:09','');
+INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806231911426804498','admin','2018-06-23 15:11:09','');
+INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806231912209182943','admin','2018-06-23 15:11:09','');
+
