@@ -190,7 +190,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setCarModel(req.getCarModel());
         data.setCarType(req.getCarType());
         data.setCarPic(req.getCarPic());
-        data.setCarHgzPic(req.getCarHgzPic());
         data.setCarFrameNo(req.getCarFrameNo());
         data.setCarEngineNo(req.getCarEngineNo());
         data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
@@ -205,6 +204,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setSettleAddress(req.getSettleAddress());
         data.setApplyUserName(req.getApplyUserName());
         data.setGender(req.getGender());
+        data.setAge(req.getAge());
         data.setMarryState(req.getMarryState());
         data.setPolitical(req.getPolitical());
         data.setNation(req.getNation());
@@ -233,6 +233,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setWorkDatetime(DateUtil.strToDate(req.getWorkDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setSelfCompanyArea(req.getSelfCompanyArea());
+        data.setOtherWorkNote(req.getOtherWorkNote());
+        data.setWorkAssetPdf(req.getWorkAssetPdf());
         data.setEmployeeQuantity(req.getEmployeeQuantity());
 
         data.setEnterpriseMonthOutput(req.getEnterpriseMonthOutput());
@@ -757,7 +759,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         // budgetOrder.setCarNumber(req.getCarNumber());
         budgetOrder.setCarInvoice(req.getCarInvoice());
-        budgetOrder.setCarHgz(req.getCarHgz());
         budgetOrder.setCarJqx(req.getCarJqx());
         budgetOrder.setCarSyx(req.getCarSyx());
         budgetOrder.setCarSettleOtherPdf(req.getCarSettleOtherPdf());

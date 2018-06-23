@@ -26,7 +26,6 @@
 		<result column="car_type" property="carType" />
 		
 		<result column="car_pic" property="carPic" />
-		<result column="car_hgz_pic" property="carHgzPic" />
 		<result column="car_frame_no" property="carFrameNo" />
 		<result column="car_engine_no" property="carEngineNo" />
 		<result column="original_price" property="originalPrice" />
@@ -42,6 +41,7 @@
 		<result column="apply_user_id" property="applyUserId" />
 		<result column="apply_user_name" property="applyUserName" />
 		<result column="gender" property="gender" />
+		<result column="age" property="age" />
 		
 		<result column="marry_state" property="marryState" />
 		<result column="political" property="political" />
@@ -68,8 +68,10 @@
 		<result column="work_belong_industry" property="workBelongIndustry" />
 		<result column="work_profession" property="workProfession" />
 		<result column="work_datetime" property="workDatetime" />
-		
+
 		<result column="self_company_area" property="selfCompanyArea" />
+		<result column="other_work_note" property="otherWorkNote" />
+		<result column="work_asset_pdf" property="workAssetPdf" />
 		<result column="employee_quantity" property="employeeQuantity" />
 		<result column="enterprise_month_output" property="enterpriseMonthOutput" />
 		<result column="position" property="position" />
@@ -380,7 +382,6 @@
 		,t.car_model
 		,t.car_type
 		,t.car_pic
-		,t.car_hgz_pic
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -396,6 +397,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.marry_state
 		,t.political
@@ -424,6 +426,8 @@
 		,t.work_profession
 		,t.work_datetime
 		,t.self_company_area
+		,t.other_work_note
+		,t.work_asset_pdf
 		,t.employee_quantity
 		,t.enterprise_month_output
 		,t.position
@@ -665,7 +669,6 @@
 		,t.car_model
 		,t.car_type
 		,t.car_pic
-		,t.car_hgz_pic
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -681,6 +684,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.id_kind
 		,t.id_no
@@ -752,7 +756,6 @@
 		,t.car_model
 		,t.car_type
 		,t.car_pic
-		,t.car_hgz_pic
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -768,6 +771,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.id_kind
 		,t.id_no
@@ -843,7 +847,6 @@
 		,car_model
 		,car_type
 		,car_pic
-		,car_hgz_pic
 		,car_frame_no
 		,car_engine_no
 		,original_price
@@ -856,6 +859,7 @@
 		,settle_address
 		,apply_user_name
 		,gender
+		,age
 		,marry_state
 		,political
 		,nation
@@ -879,6 +883,8 @@
 		,work_profession
 		,work_datetime
 		,self_company_area
+		,other_work_note
+		,work_asset_pdf
 		,employee_quantity
 		,enterprise_month_output
 		,position
@@ -1056,7 +1062,6 @@
 		,#{carModel}
 		,#{carType}
 		,#{carPic}
-		,#{carHgzPic}
 		,#{carFrameNo}
 		,#{carEngineNo}
 		,#{originalPrice}
@@ -1069,6 +1074,7 @@
 		,#{settleAddress}
 		,#{applyUserName}
 		,#{gender}
+		,#{age}
 		,#{marryState}
 		,#{political}
 		,#{nation}
@@ -1272,7 +1278,6 @@
 		,car_type = #{carType}
 		,car_pic = #{carPic}
 		
-		,car_hgz_pic = #{carHgzPic}
 		,car_frame_no = #{carFrameNo}
 		,car_engine_no = #{carEngineNo}
 		,original_price = #{originalPrice}
@@ -1287,6 +1292,7 @@
 		,settle_address = #{settleAddress}
 		,apply_user_name = #{applyUserName}
 		,gender = #{gender}
+		,age = #{age}
 		,marry_state = #{marryState}
 		,political = #{political}
 		
@@ -1312,6 +1318,8 @@
 		
 		,work_datetime = #{workDatetime}
 		,self_company_area = #{selfCompanyArea}
+		,other_work_note = #{otherWorkNote}
+		,work_asset_pdf = #{workAssetPdf}
 		,employee_quantity = #{employeeQuantity}
 		,enterprise_month_output = #{enterpriseMonthOutput}
 		,position = #{position}

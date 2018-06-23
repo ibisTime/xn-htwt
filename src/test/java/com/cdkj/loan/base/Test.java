@@ -9,23 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "askForApply";
+    private static String key = "bus";
 
     // 实体名称
-    private static String keyName = "领导请示申请";
+    private static String keyName = "公车";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_ask_for_apply";
+    private static String dbname = "tp_bus";
 
-    private static String[] DBwords = { "code", "apply_user", "apply_datetime",
-            "lead_user_id", "content", "status", "updater", "update_datetime",
-            "remark" };
+    private static String[] DBwords = { "code", "model", "number",
+            " insurance_end_datetime", " park_location", " pic", "status",
+            "updater", "update_datetime", "remark" };
 
-    private static String[] DBwordsName = { "编号", "申请人", "申请时间", "请示领导", "请示内容",
-            " 状态", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "编号", "车辆型号", "车牌号", "保险到期日",
+            "停放位置", "车辆照片", "领用状态", "更新人", "更新时间", "备注" };
 
     private static String[] DOwords = getDOwords();
 
@@ -35,35 +35,35 @@ public class Test {
     public static void main(String[] args) {
 
         File DOMAINfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/domain",
+            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/domain",
             Key + ".java");
 
         File Mapperfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/resources/mybatis",
+            "D:/Users/CYL/git/xn-htwt/src/main/resources/mybatis",
             Key + "Mapper.xml");
 
         File IDAOfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao",
+            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao",
             "I" + Key + "DAO.java");
 
         File DAOImplfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao/impl",
+            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao/impl",
             Key + "DAOImpl.java");
 
         File IBOfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo",
+            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo",
             "I" + Key + "BO.java");
 
         File BOImplfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo/impl",
+            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo/impl",
             Key + "BOImpl.java");
 
         File IAOfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao",
+            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao",
             "I" + Key + "AO.java");
 
         File AOImplfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao/impl",
+            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao/impl",
             Key + "AOImpl.java");
         try {
             DOMAINfile.createNewFile();

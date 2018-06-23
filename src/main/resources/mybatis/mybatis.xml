@@ -148,5 +148,8 @@
 		<typeAlias alias="dayRest" type="com.cdkj.loan.domain.DayRest" />
 		<typeAlias alias="repoint" type="com.cdkj.loan.domain.Repoint" />
 		<typeAlias alias="overdueRepay" type="com.cdkj.loan.domain.OverdueRepay" />
+		
+		<typeAlias alias="bus" type="com.cdkj.loan.domain.Bus" />
+		<typeAlias alias="busBorrow" type="com.cdkj.loan.domain.BusBorrow" />
 	</typeAliases>
 </configuration>

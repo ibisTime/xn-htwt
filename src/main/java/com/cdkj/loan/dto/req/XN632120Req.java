@@ -69,14 +69,6 @@ public class XN632120Req {
     @NotBlank
     private String carPic;
 
-    // 合格证
-    @NotBlank
-    private String carHgzPic;
-
-    // 合格证号
-    @NotBlank
-    private String carHgzNo;
-
     // 车架号
     @NotBlank
     private String carFrameNo;
@@ -124,6 +116,10 @@ public class XN632120Req {
     // 性别
     @NotBlank
     private String gender;
+
+    // 年龄
+    @NotBlank
+    private String age;
 
     // 婚姻状况
     @NotBlank
@@ -209,6 +205,12 @@ public class XN632120Req {
 
     // 自营公司单位面积
     private String selfCompanyArea;
+
+    // 其他工作描述
+    private String otherWorkNote;
+
+    // 工作资料上传
+    private String workAssetPdf;
 
     // 员工数量
     private String employeeQuantity;
@@ -1190,22 +1192,6 @@ public class XN632120Req {
         this.carPic = carPic;
     }
 
-    public String getCarHgzPic() {
-        return carHgzPic;
-    }
-
-    public void setCarHgzPic(String carHgzPic) {
-        this.carHgzPic = carHgzPic;
-    }
-
-    public String getCarHgzNo() {
-        return carHgzNo;
-    }
-
-    public void setCarHgzNo(String carHgzNo) {
-        this.carHgzNo = carHgzNo;
-    }
-
     public String getCarFrameNo() {
         return carFrameNo;
     }
@@ -1574,6 +1560,14 @@ public class XN632120Req {
         this.guaZfbJourPic = guaZfbJourPic;
     }
 
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
     public String getGuaZfbJourRemark() {
         return guaZfbJourRemark;
     }
@@ -1812,6 +1806,22 @@ public class XN632120Req {
 
     public void setZfbJourRemark(String zfbJourRemark) {
         this.zfbJourRemark = zfbJourRemark;
+    }
+
+    public String getOtherWorkNote() {
+        return otherWorkNote;
+    }
+
+    public void setOtherWorkNote(String otherWorkNote) {
+        this.otherWorkNote = otherWorkNote;
+    }
+
+    public String getWorkAssetPdf() {
+        return workAssetPdf;
+    }
+
+    public void setWorkAssetPdf(String workAssetPdf) {
+        this.workAssetPdf = workAssetPdf;
     }
 
     public String getWxJourDatetimeStart() {
