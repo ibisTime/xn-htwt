@@ -46,15 +46,9 @@ ADD COLUMN `company_video` tinytext DEFAULT NULL COMMENT '公司视频' AFTER `b
 ADD COLUMN `advance_fund_amount_pdf` tinytext DEFAULT NULL COMMENT '资金划转授权书' AFTER `bill_pdf`,
 ADD COLUMN `advance_fund_other_pdf` tinytext DEFAULT NULL COMMENT '垫资其他资料' AFTER `advance_fund_amount_pdf`,
 DROP COLUMN `car_hgz`,
-ADD COLUMN `car_settle_other_pdf` tinytext DEFAULT NULL COMMENT '其他资料' AFTER `car_syx`;
-CHANGE COLUMN `employee_quantity` `employee_quantity` INT(11) NULL DEFAULT NULL COMMENT '员工数量' ;
+ADD COLUMN `car_settle_other_pdf` tinytext DEFAULT NULL COMMENT '其他资料' AFTER `car_syx`,
+CHANGE COLUMN `employee_quantity` `employee_quantity` INT(11) NULL DEFAULT NULL COMMENT '员工数量' ,
 CHANGE COLUMN `family_number` `family_number` INT(11) NULL DEFAULT NULL COMMENT '家庭人口' ;
-
-ALTER TABLE `tp_archive` 
-DROP COLUMN `is_delete`;
-
-ALTER TABLE `tp_social_relation` 
-DROP COLUMN `is_delete`;
 
 ALTER TABLE `tsys_biz_team` 
 ADD COLUMN `region` VARCHAR(255) NULL AFTER `water_bill`,
