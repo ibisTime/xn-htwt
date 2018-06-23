@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -22,7 +24,7 @@ public class BusBorrow extends ABaseDO {
     private String applyUser;
 
     // 申请时间
-    private String applyDatetime;
+    private Date applyDatetime;
 
     // 领用说明
     private String applyNote;
@@ -31,16 +33,16 @@ public class BusBorrow extends ABaseDO {
     private String departmentCode;
 
     // 使用时间起
-    private String useDatetimeStart;
+    private Date useDatetimeStart;
 
     // 使用时间止
-    private String useDatetimeEnd;
+    private Date useDatetimeEnd;
 
     // 行驶公里数
-    private String driveKil;
+    private double driveKil;
 
     // 归还时间
-    private String returnDatetime;
+    private Date returnDatetime;
 
     // 状态
     private String status;
@@ -49,7 +51,7 @@ public class BusBorrow extends ABaseDO {
     private String updater;
 
     // 更新时间
-    private String updateDatetime;
+    private Date updateDatetime;
 
     // 备注
     private String remark;
@@ -78,84 +80,84 @@ public class BusBorrow extends ABaseDO {
         return applyUser;
     }
 
-    public void setApplyDatetime(String applyDatetime) {
-        this.applyDatetime = applyDatetime;
-    }
-
-    public String getApplyDatetime() {
+    public Date getApplyDatetime() {
         return applyDatetime;
     }
 
-    public void setApplyNote(String applyNote) {
-        this.applyNote = applyNote;
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
     public String getApplyNote() {
         return applyNote;
     }
 
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
+    public void setApplyNote(String applyNote) {
+        this.applyNote = applyNote;
     }
 
     public String getDepartmentCode() {
         return departmentCode;
     }
 
-    public void setUseDatetimeStart(String useDatetimeStart) {
-        this.useDatetimeStart = useDatetimeStart;
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
-    public String getUseDatetimeStart() {
+    public Date getUseDatetimeStart() {
         return useDatetimeStart;
     }
 
-    public void setUseDatetimeEnd(String useDatetimeEnd) {
-        this.useDatetimeEnd = useDatetimeEnd;
+    public void setUseDatetimeStart(Date useDatetimeStart) {
+        this.useDatetimeStart = useDatetimeStart;
     }
 
-    public String getUseDatetimeEnd() {
+    public Date getUseDatetimeEnd() {
         return useDatetimeEnd;
     }
 
-    public String getDriveKil() {
+    public void setUseDatetimeEnd(Date useDatetimeEnd) {
+        this.useDatetimeEnd = useDatetimeEnd;
+    }
+
+    public double getDriveKil() {
         return driveKil;
     }
 
-    public void setDriveKil(String driveKil) {
+    public void setDriveKil(double driveKil) {
         this.driveKil = driveKil;
     }
 
-    public String getReturnDatetime() {
+    public Date getReturnDatetime() {
         return returnDatetime;
     }
 
-    public void setReturnDatetime(String returnDatetime) {
+    public void setReturnDatetime(Date returnDatetime) {
         this.returnDatetime = returnDatetime;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setUpdater(String updater) {
-        this.updater = updater;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getUpdater() {
         return updater;
     }
 
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
-    public String getUpdateDatetime() {
+    public Date getUpdateDatetime() {
         return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public void setRemark(String remark) {

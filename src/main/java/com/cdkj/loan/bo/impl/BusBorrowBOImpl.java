@@ -33,6 +33,21 @@ public class BusBorrowBOImpl extends PaginableBOImpl<BusBorrow>
     }
 
     @Override
+    public void auditBusBorrow(BusBorrow condition) {
+        busBorrowDAO.updateStatus(condition);
+    }
+
+    @Override
+    public void returnBusBorrow(BusBorrow condition) {
+        busBorrowDAO.returnBusBorrow(condition);
+    }
+
+    @Override
+    public void auditBusBorrowReturn(BusBorrow condition) {
+        busBorrowDAO.auditBusBorrowReturn(condition);
+    }
+
+    @Override
     public List<BusBorrow> queryBusBorrowList(BusBorrow condition) {
         return busBorrowDAO.selectList(condition);
     }
@@ -50,4 +65,5 @@ public class BusBorrowBOImpl extends PaginableBOImpl<BusBorrow>
         }
         return data;
     }
+
 }

@@ -13,4 +13,10 @@ public interface IBusBorrowBO extends IPaginableBO<BusBorrow> {
 
     public BusBorrow getBusBorrow(String code);
 
+    public void auditBusBorrow(BusBorrow data);
+
+    public void returnBusBorrow(BusBorrow data);
+
+    public void auditBusBorrowReturn(BusBorrow condition);
+
 }

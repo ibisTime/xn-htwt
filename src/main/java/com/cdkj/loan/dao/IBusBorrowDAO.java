@@ -5,5 +5,11 @@ import com.cdkj.loan.domain.BusBorrow;
 
 //dao层 
 public interface IBusBorrowDAO extends IBaseDAO<BusBorrow> {
-	String NAMESPACE = IBusBorrowDAO.class.getName().concat(".");
+    String NAMESPACE = IBusBorrowDAO.class.getName().concat(".");
+
+    void updateStatus(BusBorrow data);
+
+    void returnBusBorrow(BusBorrow condition);
+
+    void auditBusBorrowReturn(BusBorrow condition);
 }
