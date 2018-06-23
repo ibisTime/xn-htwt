@@ -69,10 +69,6 @@ public class XN632120Req {
     @NotBlank
     private String carPic;
 
-    // 合格证
-    @NotBlank
-    private String carHgzPic;
-
     // 合格证号
     @NotBlank
     private String carHgzNo;
@@ -1198,14 +1194,6 @@ public class XN632120Req {
 
     public void setCarPic(String carPic) {
         this.carPic = carPic;
-    }
-
-    public String getCarHgzPic() {
-        return carHgzPic;
-    }
-
-    public void setCarHgzPic(String carHgzPic) {
-        this.carHgzPic = carHgzPic;
     }
 
     public String getCarHgzNo() {

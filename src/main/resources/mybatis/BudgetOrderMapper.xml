@@ -26,7 +26,6 @@
 		<result column="car_type" property="carType" />
 		
 		<result column="car_pic" property="carPic" />
-		<result column="car_hgz_pic" property="carHgzPic" />
 		<result column="car_frame_no" property="carFrameNo" />
 		<result column="car_engine_no" property="carEngineNo" />
 		<result column="original_price" property="originalPrice" />
@@ -383,7 +382,6 @@
 		,t.car_model
 		,t.car_type
 		,t.car_pic
-		,t.car_hgz_pic
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -671,7 +669,6 @@
 		,t.car_model
 		,t.car_type
 		,t.car_pic
-		,t.car_hgz_pic
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -759,7 +756,6 @@
 		,t.car_model
 		,t.car_type
 		,t.car_pic
-		,t.car_hgz_pic
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -851,7 +847,6 @@
 		,car_model
 		,car_type
 		,car_pic
-		,car_hgz_pic
 		,car_frame_no
 		,car_engine_no
 		,original_price
@@ -1067,7 +1062,6 @@
 		,#{carModel}
 		,#{carType}
 		,#{carPic}
-		,#{carHgzPic}
 		,#{carFrameNo}
 		,#{carEngineNo}
 		,#{originalPrice}
@@ -1284,7 +1278,6 @@
 		,car_type = #{carType}
 		,car_pic = #{carPic}
 		
-		,car_hgz_pic = #{carHgzPic}
 		,car_frame_no = #{carFrameNo}
 		,car_engine_no = #{carEngineNo}
 		,original_price = #{originalPrice}

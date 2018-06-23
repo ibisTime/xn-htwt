@@ -75,9 +75,6 @@ public class BudgetOrder extends ABaseDO {
     // 车辆照片
     private String carPic;
 
-    // 合格证
-    private String carHgzPic;
-
     // 车架号
     private String carFrameNo;
 
@@ -2052,14 +2049,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarPic(String carPic) {
         this.carPic = carPic;
-    }
-
-    public String getCarHgzPic() {
-        return carHgzPic;
-    }
-
-    public void setCarHgzPic(String carHgzPic) {
-        this.carHgzPic = carHgzPic;
     }
 
     public String getCarFrameNo() {
