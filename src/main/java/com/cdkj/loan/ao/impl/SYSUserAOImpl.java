@@ -71,34 +71,9 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setCreateDatetme(new Date());
         data.setRoleCode(roleCode);
         data.setPostCode(postCode);
-        String departmentCode = postCode;
-
-        // 部门编号
-        while (true) {
-            Department department = departmentBO.getDepartment(departmentCode);
-            if (EDepartmentType.DEPARTMENT.getCode().equals(
-                department.getType())) {
-                departmentCode = department.getCode();
-                break;
-            } else {
-                departmentCode = department.getParentCode();
-            }
-        }
-        data.setDepartmentCode(departmentCode);
-
-        // 公司编号
-        String companyCode = departmentCode;
-        while (true) {
-            Department company = departmentBO.getDepartment(companyCode);
-            if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(
-                company.getType())) {
-                companyCode = company.getCode();
-                break;
-            } else {
-                companyCode = company.getParentCode();
-            }
-        }
-        data.setCompanyCode(companyCode);
+        data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
+        data.setCompanyCode(departmentBO.getCompanyByDepartment(data
+            .getDepartmentCode()));
 
         data.setStatus(EUserStatus.NORMAL.getCode());
         // 验证档案是否被其他人使用
@@ -244,11 +219,36 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     public void doModifyPost(String userId, String postCode, String updater,
             String remark) {
-        Department post = departmentBO.getDepartment(postCode);// 岗位
-        Department department = departmentBO
-            .getDepartment(post.getParentCode());// 部门
-        sysUserBO.refreshPost(userId, postCode, department.getCode(),
-            department.getParentCode(), updater, remark);
+        Department post = departmentBO.getDepartment(postCode);
+
+        // 部门编号
+        String departmentCode = post.getParentCode();
+        while (true) {
+            Department department = departmentBO.getDepartment(departmentCode);
+            if (EDepartmentType.DEPARTMENT.getCode().equals(
+                department.getType())) {
+                departmentCode = department.getCode();
+                break;
+            } else {
+                departmentCode = department.getParentCode();
+            }
+        }
+
+        // 公司编号
+        String companyCode = departmentCode;
+        while (true) {
+            Department company = departmentBO.getDepartment(companyCode);
+            if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(
+                company.getType())) {
+                companyCode = company.getCode();
+                break;
+            } else {
+                companyCode = company.getParentCode();
+            }
+        }
+
+        sysUserBO.refreshPost(userId, postCode, departmentCode, companyCode,
+            updater, remark);
     }
 
     @Override

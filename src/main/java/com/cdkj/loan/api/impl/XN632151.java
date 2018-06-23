@@ -6,6 +6,7 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632151Req;
 import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -26,7 +27,7 @@ public class XN632151 extends AProcessor {
     public Object doBusiness() throws BizException {
         logisticsAO.receiveLogistics(req.getCode(), req.getOperater(),
             req.getRemark());
-        return new BooleanRes(true);
+        return new BooleanRes(true, EBoolean.YES.getCode());
     }
 
     @Override

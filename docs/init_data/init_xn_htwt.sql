@@ -38,6 +38,8 @@ INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`rema
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000NQZY','内勤专员','2','admin',now(),'业务部');
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000ZHRY','驻行人员','2','admin',now(),'业务部');
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000PTYG','普通员工','2','admin',now(),'');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301244280427951','团队长','2','admin',now(),'');
+
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805291328573573955','内勤主管','2','hrf',now(),'业务部');
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805291831307966076','区域经理','2','hrf',now(),'业务部');
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300223484146418','市场总监','2','hrf',now(),'业务部');

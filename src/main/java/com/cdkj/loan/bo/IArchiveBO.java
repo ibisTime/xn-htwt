@@ -15,6 +15,10 @@ public interface IArchiveBO extends IPaginableBO<Archive> {
 
     public boolean isArchiveExist(String code);
 
+    public void checkArchiveByMobile(String mobile, String code);
+
+    public void checkArchiveByIdNo(String idNo, String code);
+
     public String saveArchive(Archive data);
 
     public void removeArchive(String code);

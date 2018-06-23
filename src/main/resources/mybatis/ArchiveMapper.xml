@@ -79,6 +79,12 @@
 			<if test="workStatus != null and workStatus != '' ">
 				AND t.work_status = #{workStatus}
 			</if>
+			<if test="workStatusList != null and workStatusList.size() != 0 ">
+				AND t.work_status in 
+                <foreach item="item" index="index" collection="workStatusList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
 			<if test="entryDatetimeStart != null and entryDatetimeStart != '' ">
 				AND t.entry_datetime &gt;= #{entryDatetimeStart}
 			</if>

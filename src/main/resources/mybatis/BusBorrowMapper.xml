@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBusBorrowDAO">
+	<resultMap id="busBorrow_DB_Result" type="busBorrow">
+		<result column="code" property="code" />
+		<result column="bus_code" property="busCode" />
+		<result column="apply_user" property="applyUser" />
+		<result column="apply_datetime" property="applyDatetime" />
+		<result column="apply_note" property="applyNote" />
+		<result column="department_code" property="departmentCode" />
+		<result column="use_datetime_start" property="useDatetimeStart" />
+		<result column="use_datetime_end" property="useDatetimeEnd" />
+		<result column="drive_kil" property="driveKil" />
+		<result column="return_datetime" property="returnDatetime" />
+		<result column="status" property="status" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
+			</if>
+			<if test="busCode != null and busCode != '' ">
+				AND t.bus_code = #{busCode}
+			</if>
+			<if test="departmentCode != null and departmentCode != '' ">
+				AND t.department_code = #{departmentCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_busBorrow" parameterType="busBorrow" resultMap="busBorrow_DB_Result">
+		SELECT
+		t.code
+		,t.bus_code
+		,t.apply_user
+		,t.apply_datetime
+		,t.apply_note
+		,t.department_code
+		,t.use_datetime_start
+		,t.use_datetime_end
+		,t.drive_kil
+		,t.return_datetime
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		FROM
+		tp_bus_borrow t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_busBorrow_count" parameterType="busBorrow"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tp_bus_borrow t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_busBorrow" parameterType="busBorrow">
+		INSERT INTO
+		tp_bus_borrow(
+		code
+		,bus_code
+		,apply_user
+		,apply_datetime
+		,apply_note
+		,department_code
+		,use_datetime_start
+		,use_datetime_end
+		,status
+		)
+		VALUES(
+		#{code}
+		,#{busCode}
+		,#{applyUser}
+		,#{applyDatetime}
+		,#{applyNote}
+		,#{departmentCode}
+		,#{useDatetimeStart}
+		,#{useDatetimeEnd}
+		,#{status}
+		)
+	</insert>
+
+	<update id="update_busBorrow" parameterType="busBorrow">
+		UPDATE tp_bus_borrow
+		SET
+		bus_code = #{busCode}
+		,apply_user = #{applyUser}
+		,apply_datetime = #{applyDatetime}
+		,apply_note = #{applyNote}
+		,department_code = #{departmentCode}
+		,use_datetime_start = #{useDatetimeStart}
+		,use_datetime_end = #{useDatetimeEnd}
+		,drive_kil = #{driveKil}
+		,return_datetime = #{returnDatetime}
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_status" parameterType="busBorrow">
+		UPDATE tp_bus_borrow
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_returnBusBorrow" parameterType="busBorrow">
+		UPDATE tp_bus_borrow
+		SET
+		status = #{status}
+		,drive_kil = #{driveKil}
+		,return_datetime = #{returnDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_auditBusBorrowReturn" parameterType="busBorrow">
+		UPDATE tp_bus_borrow
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+</mapper>

@@ -42,6 +42,7 @@
 		<result column="apply_user_id" property="applyUserId" />
 		<result column="apply_user_name" property="applyUserName" />
 		<result column="gender" property="gender" />
+		<result column="age" property="age" />
 		
 		<result column="marry_state" property="marryState" />
 		<result column="political" property="political" />
@@ -68,8 +69,10 @@
 		<result column="work_belong_industry" property="workBelongIndustry" />
 		<result column="work_profession" property="workProfession" />
 		<result column="work_datetime" property="workDatetime" />
-		
+
 		<result column="self_company_area" property="selfCompanyArea" />
+		<result column="other_work_note" property="otherWorkNote" />
+		<result column="work_asset_pdf" property="workAssetPdf" />
 		<result column="employee_quantity" property="employeeQuantity" />
 		<result column="enterprise_month_output" property="enterpriseMonthOutput" />
 		<result column="position" property="position" />
@@ -297,6 +300,9 @@
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
 			</if>
+			<if test="teamCode != null and teamCode != ''">
+				AND t.team_code = #{teamCode}
+			</if>
 			<if test="applyUserId != null and applyUserId != '' ">
 				AND t.apply_user_id = #{applyUserId}
 			</if>
@@ -344,9 +350,6 @@
 			</if>
 			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
 				AND t.back_advance_status = #{backAdvanceStatus}
-			</if>
-			<if test="teamCode != null and teamCode != ''">
-				AND t.team_code = #{teamCode}
 			</if>
 			<if test="applyUserName != null and applyUserName != ''">
 				AND t.apply_user_name like "%"#{applyUserName}"%"
@@ -396,6 +399,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.marry_state
 		,t.political
@@ -424,6 +428,8 @@
 		,t.work_profession
 		,t.work_datetime
 		,t.self_company_area
+		,t.other_work_note
+		,t.work_asset_pdf
 		,t.employee_quantity
 		,t.enterprise_month_output
 		,t.position
@@ -576,10 +582,9 @@
 		,t.advance_fund_amount_pdf
 		,t.advance_fund_other_pdf
 		,t.car_settle_datetime
-		,t.car_number
 		
+		,t.car_number
 		,t.car_invoice
-		,t.car_hgz
 		,t.car_jqx
 		,t.car_syx
 		,t.car_regcerti
@@ -681,6 +686,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.id_kind
 		,t.id_no
@@ -768,6 +774,7 @@
 		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		,t.age
 		
 		,t.id_kind
 		,t.id_no
@@ -856,6 +863,7 @@
 		,settle_address
 		,apply_user_name
 		,gender
+		,age
 		,marry_state
 		,political
 		,nation
@@ -879,6 +887,8 @@
 		,work_profession
 		,work_datetime
 		,self_company_area
+		,other_work_note
+		,work_asset_pdf
 		,employee_quantity
 		,enterprise_month_output
 		,position
@@ -1056,7 +1066,6 @@
 		,#{carModel}
 		,#{carType}
 		,#{carPic}
-		,#{carHgzPic}
 		,#{carFrameNo}
 		,#{carEngineNo}
 		,#{originalPrice}
@@ -1069,6 +1078,7 @@
 		,#{settleAddress}
 		,#{applyUserName}
 		,#{gender}
+		,#{age}
 		,#{marryState}
 		,#{political}
 		,#{nation}
@@ -1271,8 +1281,8 @@
 		,car_model = #{carModel}
 		,car_type = #{carType}
 		,car_pic = #{carPic}
-		
 		,car_hgz_pic = #{carHgzPic}
+		
 		,car_frame_no = #{carFrameNo}
 		,car_engine_no = #{carEngineNo}
 		,original_price = #{originalPrice}
@@ -1287,6 +1297,7 @@
 		,settle_address = #{settleAddress}
 		,apply_user_name = #{applyUserName}
 		,gender = #{gender}
+		,age = #{age}
 		,marry_state = #{marryState}
 		,political = #{political}
 		
@@ -1312,6 +1323,8 @@
 		
 		,work_datetime = #{workDatetime}
 		,self_company_area = #{selfCompanyArea}
+		,other_work_note = #{otherWorkNote}
+		,work_asset_pdf = #{workAssetPdf}
 		,employee_quantity = #{employeeQuantity}
 		,enterprise_month_output = #{enterpriseMonthOutput}
 		,position = #{position}
@@ -1461,7 +1474,6 @@
 		,is_advance_fund = #{isAdvanceFund}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
-		,team_code = #{teamCode}
 		WHERE code = #{code}
 	</update>
 	

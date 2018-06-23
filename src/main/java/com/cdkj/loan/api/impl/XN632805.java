@@ -37,6 +37,7 @@ public class XN632805 extends AProcessor {
 
         condition.setEntryDatetimeEnd(req.getEntryDatetimeEnd());
         condition.setWorkStatus(req.getWorkStatus());
+        condition.setWorkStatusList(req.getWorkStatusList());
         condition.setStatus(EBoolean.YES.getCode());
         condition.setIsDistribute(req.getIsDistribute());
 

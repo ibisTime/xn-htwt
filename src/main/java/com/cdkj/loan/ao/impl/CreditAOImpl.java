@@ -37,6 +37,7 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -94,10 +95,11 @@ public class CreditAOImpl implements ICreditAO {
 
         credit.setXszReverse(req.getXszReverse());
         credit.setCompanyCode(sysUser.getCompanyCode());
-        credit.setSaleUserId(req.getOperator());
+        credit.setSaleUserId(sysUser.getUserId());
+        credit.setTeamCode(sysUser.getTeamCode());
         credit.setApplyDatetime(new Date());
-        credit.setSaleUserName(sysUser.getRealName());
 
+        credit.setSaleUserName(sysUser.getRealName());
         ECreditNode currentNode = ECreditNode.FILLIN_CREDIT;
         credit.setCurNodeCode(currentNode.getCode());
         // 设置节点
@@ -243,8 +245,10 @@ public class CreditAOImpl implements ICreditAO {
         credit.setCompanyName(department.getName());
 
         // 获取银行信息
-        Bank bank = bankBO.getBank(credit.getLoanBankCode());
-        credit.setLoanBankName(bank.getBankName());
+        if (StringUtils.isNotBlank(credit.getLoanBankCode())) {
+            Bank bank = bankBO.getBank(credit.getLoanBankCode());
+            credit.setLoanBankName(bank.getBankName());
+        }
 
         CreditUser condition = new CreditUser();
         condition.setCreditCode(credit.getCode());
@@ -259,27 +263,11 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     public Paginable<Credit> queryCreditPage(int start, int limit,
             Credit condition) {
-
         Paginable<Credit> paginable = creditBO.getPaginable(start, limit,
             condition);
-
         List<Credit> list = paginable.getList();
-
         for (Credit credit : list) {
-
-            // 从征信人员表查申请人的客户姓名 手机号 身份证号
-            credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
-                credit.getCode(), ELoanRole.APPLY_USER));
-            // 从部门表查业务公司名
-            Department department = departmentBO.getDepartment(credit
-                .getCompanyCode());
-            if (null != department) {
-                credit.setCompanyName(department.getName());
-            }
-
-            // 从用户表查业务员姓名
-            SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
-            credit.setSaleUserName(user.getRealName());
+            initCredit(credit);
         }
         return paginable;
     }
@@ -287,26 +275,34 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     public Paginable<Credit> queryCreditPageByRoleCode(int start, int limit,
             Credit condition) {
+        if (ESysRole.getMap().get(condition.getRoleCode()) == null) {
+            condition.setTeamCode(null);
+        }
         Paginable<Credit> result = creditBO.getPaginableByRoleCode(start,
             limit, condition);
         List<Credit> list = result.getList();
         for (Credit credit : list) {
-            // 从征信人员表查申请人的客户姓名 手机号 身份证号
-            credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
-                credit.getCode(), ELoanRole.APPLY_USER));
-            // 从部门表查业务公司名
-            Department department = departmentBO.getDepartment(credit
-                .getCompanyCode());
-            if (null != department) {
-                credit.setCompanyName(department.getName());
-            }
-
-            // 从用户表查业务员姓名
-            SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
-            credit.setSaleUserName(user.getRealName());
+            initCredit(credit);
         }
 
         return result;
+    }
+
+    private void initCredit(Credit credit) {
+        // 从征信人员表查申请人的客户姓名 手机号 身份证号
+        credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
+            credit.getCode(), ELoanRole.APPLY_USER));
+
+        // 从用户表查业务员姓名
+        SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
+        credit.setSaleUserName(user.getRealName());
+
+        // 从部门表查业务公司名
+        Department department = departmentBO.getDepartment(credit
+            .getCompanyCode());
+        if (null != department) {
+            credit.setCompanyName(department.getName());
+        }
     }
 
     @Override

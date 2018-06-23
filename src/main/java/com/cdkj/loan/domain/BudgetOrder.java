@@ -117,6 +117,9 @@ public class BudgetOrder extends ABaseDO {
     // 性别
     private String gender;
 
+    // 年龄
+    private String age;
+
     // 婚姻状况
     private String marryState;
 
@@ -188,6 +191,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 自营公司单位面积
     private String selfCompanyArea;
+
+    // 其他工作描述
+    private String otherWorkNote;
+
+    // 工作资料上传
+    private String workAssetPdf;
 
     // 员工数量
     private String employeeQuantity;
@@ -597,16 +606,13 @@ public class BudgetOrder extends ABaseDO {
     // 发票
     private String carInvoice;
 
-    // 合格证
-    private String carHgz;
-
     // 交强险
     private String carJqx;
 
     // 商业险
     private String carSyx;
 
-    // 其他资料
+    // 车辆落户其他资料
     private String carSettleOtherPdf;
 
     // 登记证书
@@ -923,6 +929,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getRepayBizCode() {
@@ -1325,6 +1339,22 @@ public class BudgetOrder extends ABaseDO {
         this.postTitle = postTitle;
     }
 
+    public String getOtherWorkNote() {
+        return otherWorkNote;
+    }
+
+    public void setOtherWorkNote(String otherWorkNote) {
+        this.otherWorkNote = otherWorkNote;
+    }
+
+    public String getWorkAssetPdf() {
+        return workAssetPdf;
+    }
+
+    public void setWorkAssetPdf(String workAssetPdf) {
+        this.workAssetPdf = workAssetPdf;
+    }
+
     public String getMonthIncome() {
         return monthIncome;
     }
@@ -1693,14 +1723,6 @@ public class BudgetOrder extends ABaseDO {
         this.carInvoice = carInvoice;
     }
 
-    public String getCarHgz() {
-        return carHgz;
-    }
-
-    public void setCarHgz(String carHgz) {
-        this.carHgz = carHgz;
-    }
-
     public String getCarJqx() {
         return carJqx;
     }
@@ -2021,14 +2043,6 @@ public class BudgetOrder extends ABaseDO {
         this.carPic = carPic;
     }
 
-    public String getCarHgzPic() {
-        return carHgzPic;
-    }
-
-    public void setCarHgzPic(String carHgzPic) {
-        this.carHgzPic = carHgzPic;
-    }
-
     public String getCarFrameNo() {
         return carFrameNo;
     }
@@ -2103,6 +2117,14 @@ public class BudgetOrder extends ABaseDO {
 
     public String getMateZfbJourPic() {
         return mateZfbJourPic;
+    }
+
+    public String getCarHgzPic() {
+        return carHgzPic;
+    }
+
+    public void setCarHgzPic(String carHgzPic) {
+        this.carHgzPic = carHgzPic;
     }
 
     public void setMateZfbJourPic(String mateZfbJourPic) {

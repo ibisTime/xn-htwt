@@ -17,7 +17,6 @@ public class XN632120Req {
     private String dealType;
 
     // 贷款产品编号
-    @NotBlank
     private String loanProductCode;
 
     // 所属区域
@@ -30,166 +29,126 @@ public class XN632120Req {
     private String teamFee;
 
     // 是否垫资
-    @NotBlank
     private String isAdvanceFund;
 
     // 征信单编号
-    @NotBlank
     private String creditCode;
 
     // 业务种类
-    @NotBlank
     private String bizType;
 
     // 贷款期限
-    @NotBlank
     private String loanPeriod;
 
     // 开票单位
-    @NotBlank
     private String invoiceCompany;
 
     // 品牌
-    @NotBlank
     private String carBrand;
 
     // 车系
-    @NotBlank
     private String carSeries;
 
     // 车型
-    @NotBlank
     private String carModel;
 
     // 车辆类型
-    @NotBlank
     private String carType;
 
     // 车辆照片
-    @NotBlank
     private String carPic;
 
     // 合格证
-    @NotBlank
     private String carHgzPic;
 
-    // 合格证号
-    @NotBlank
-    private String carHgzNo;
-
     // 车架号
-    @NotBlank
     private String carFrameNo;
 
     // 发动机号
-    @NotBlank
     private String carEngineNo;
 
     // 市场指导价
-    @NotBlank
     private String originalPrice;
 
     // 开票价
-    @NotBlank
     private String invoicePrice;
 
     // 颜色
-    @NotBlank
     private String carColor;
 
     // 月供保证金
-    @NotBlank
     private String monthDeposit;
 
     // 首付金额
-    @NotBlank
     private String firstAmount;
 
     // 首付比例
-    @NotBlank
     private String firstRate;
 
     // 贷款额
-    @NotBlank
     private String loanAmount;
 
     // 落户地点
-    @NotBlank
     private String settleAddress;
 
     // 申请人姓名
-    @NotBlank
     private String applyUserName;
 
     // 性别
-    @NotBlank
     private String gender;
 
+    // 年龄
+    private String age;
+
     // 婚姻状况
-    @NotBlank
     private String marryState;
 
     // 政治面貌
-    @NotBlank
     private String political;
 
     // 民族
-    @NotBlank
     private String nation;
 
     // 学历
-    @NotBlank
     private String education;
 
     // 身份证号
-    @NotBlank
     private String idNo;
 
     // 家庭人口
-    @NotBlank
     private String familyNumber;
 
     // 手机号
-    @NotBlank
     private String mobile;
 
     // 现居住地址
-    @NotBlank
     private String nowAddress;
 
     // 是否卡邮寄地址
     private String isCardMailAddress;
 
     // 邮编1
-    @NotBlank
     private String postCode1;
 
     // 户口所在地
-    @NotBlank
     private String residenceAddress;
 
     // 邮编2
-    @NotBlank
     private String postCode2;
 
     // 家庭主要财产
-    @NotBlank
     private String familyMainAsset;
 
     // 主要财产包括
-    @NotBlank
     private String mainAssetInclude;
 
     // 主要收入来源
-    @NotBlank
     private String mainIncome;
 
     // 工作单位名称
-    @NotBlank
     private String workCompanyName;
 
     // 工作单位地址
-    @NotBlank
     private String workCompanyAddress;
 
     // 是否卡邮寄地址
@@ -209,6 +168,12 @@ public class XN632120Req {
 
     // 自营公司单位面积
     private String selfCompanyArea;
+
+    // 其他工作描述
+    private String otherWorkNote;
+
+    // 工作资料上传
+    private String workAssetPdf;
 
     // 员工数量
     private String employeeQuantity;
@@ -1190,22 +1155,6 @@ public class XN632120Req {
         this.carPic = carPic;
     }
 
-    public String getCarHgzPic() {
-        return carHgzPic;
-    }
-
-    public void setCarHgzPic(String carHgzPic) {
-        this.carHgzPic = carHgzPic;
-    }
-
-    public String getCarHgzNo() {
-        return carHgzNo;
-    }
-
-    public void setCarHgzNo(String carHgzNo) {
-        this.carHgzNo = carHgzNo;
-    }
-
     public String getCarFrameNo() {
         return carFrameNo;
     }
@@ -1574,6 +1523,14 @@ public class XN632120Req {
         this.guaZfbJourPic = guaZfbJourPic;
     }
 
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
     public String getGuaZfbJourRemark() {
         return guaZfbJourRemark;
     }
@@ -1750,6 +1707,14 @@ public class XN632120Req {
         this.zfbJourDatetimeStart = zfbJourDatetimeStart;
     }
 
+    public String getCarHgzPic() {
+        return carHgzPic;
+    }
+
+    public void setCarHgzPic(String carHgzPic) {
+        this.carHgzPic = carHgzPic;
+    }
+
     public String getZfbJourDatetimeEnd() {
         return zfbJourDatetimeEnd;
     }
@@ -1812,6 +1777,22 @@ public class XN632120Req {
 
     public void setZfbJourRemark(String zfbJourRemark) {
         this.zfbJourRemark = zfbJourRemark;
+    }
+
+    public String getOtherWorkNote() {
+        return otherWorkNote;
+    }
+
+    public void setOtherWorkNote(String otherWorkNote) {
+        this.otherWorkNote = otherWorkNote;
+    }
+
+    public String getWorkAssetPdf() {
+        return workAssetPdf;
+    }
+
+    public void setWorkAssetPdf(String workAssetPdf) {
+        this.workAssetPdf = workAssetPdf;
     }
 
     public String getWxJourDatetimeStart() {

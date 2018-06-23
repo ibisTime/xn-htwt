@@ -1,3 +1,6 @@
+ALTER TABLE `tdq_credit` 
+ADD COLUMN `team_code` VARCHAR(32) NULL COMMENT '团队编号' AFTER `sale_user_id`;
+
 ALTER TABLE `tsys_department` 
 DROP COLUMN `mobile`,
 CHANGE COLUMN `type` `type` VARCHAR(32) NULL DEFAULT NULL COMMENT '类型(1=子公司，2=部门，3=岗位)' AFTER `code`,
@@ -45,6 +48,7 @@ CREATE TABLE `tdq_budget_order` (
   `apply_user_id` tinytext COMMENT '申请人编号',
   `apply_user_name` tinytext COMMENT '申请人姓名',
   `gender` tinytext COMMENT '性别',
+  `age` INT(11) DEFAULT NULL COMMENT '年龄',
   `marry_state` tinytext COMMENT '婚姻状况',
   `political` tinytext COMMENT '政治面貌',
   `nation` tinytext COMMENT '民族',
@@ -69,6 +73,8 @@ CREATE TABLE `tdq_budget_order` (
   `work_profession` tinytext COMMENT '职业',
   `work_datetime` datetime DEFAULT NULL COMMENT '何时进入现单位工作',
   `self_company_area` tinytext COMMENT '自营公司单位面积',
+  `other_work_note` tinytext COMMENT '其他工作描述',
+  `work_asset_pdf` tinytext COMMENT '工作资料上传',
   `employee_quantity` varchar(255) DEFAULT NULL COMMENT '员工数量',
   `enterprise_month_output` tinytext COMMENT '企业月产值',
   `position` tinytext COMMENT '职位',
@@ -205,7 +211,6 @@ CREATE TABLE `tdq_budget_order` (
   `car_settle_datetime` datetime DEFAULT NULL COMMENT '车辆落户日期',
   `car_number` tinytext COMMENT '车牌号',
   `car_invoice` tinytext COMMENT '车辆发票',
-  `car_hgz` tinytext COMMENT '合格证',
   `car_jqx` tinytext COMMENT '交强险',
   `car_syx` tinytext COMMENT '商业险',
   `car_settle_other_pdf` tinytext COMMENT '其他资料',

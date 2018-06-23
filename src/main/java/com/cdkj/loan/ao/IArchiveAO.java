@@ -22,8 +22,6 @@ public interface IArchiveAO {
 
     public String addArchive(XN632800Req req);
 
-    public void dropArchive(String code);
-
     public void editArchive(XN632802Req req);
 
     public Paginable<Archive> queryArchivePage(int start, int limit,
