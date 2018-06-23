@@ -17,6 +17,7 @@ import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.dao.ISYSUserDAO;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
@@ -257,6 +258,22 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
     }
 
     @Override
+    public void checkMobile(String mobile, String userId) {
+        SYSUser condition = new SYSUser();
+        condition.setMobile(mobile);
+        List<SYSUser> list = queryUserList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            SYSUser sysUser = list.get(0);
+            if (StringUtils.isNotBlank(userId)) {
+                if (!sysUser.getUserId().equals(userId)) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "手机号已存在");
+                }
+            }
+        }
+    }
+
+    @Override
     public void refreshTeam(String userId, String teamCode, String updater) {
         if (StringUtils.isNotBlank(userId)) {
             SYSUser data = new SYSUser();
@@ -267,4 +284,12 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
             sysUserDAO.updateTeam(data);
         }
     }
+
+    @Override
+    public void refreshMobileDepartment(SYSUser data) {
+        if (null != data) {
+            sysUserDAO.updateMoibleDepartment(data);
+        }
+    }
+
 }

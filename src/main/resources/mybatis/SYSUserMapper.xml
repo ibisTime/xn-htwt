@@ -166,22 +166,18 @@
 		)
 	</insert>
 
-	<update id="update_sysUser" parameterType="sysUser">
+	<update id="update_sysUser_mobileDepartment" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
-		photo = #{photo}
-		,login_name = #{loginName}
-		,mobile = #{mobile}
+		mobile = #{mobile}
 		,real_name = #{realName}
-		,login_pwd = #{loginPwd}
-		,login_pwd_strength = #{loginPwdStrength}
-		,create_datetme = #{createDatetme}
-		,role_code = #{roleCode}
-		,status = #{status}
+		,post_code = #{postCode}
+		,department_code = #{departmentCode}
+		,company_code = #{companyCode}
+		
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE user_id = #{userId}
 	</update>
-	
 		
 	<update id="update_status" parameterType="sysUser">
 		UPDATE tsys_user

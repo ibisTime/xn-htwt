@@ -242,6 +242,17 @@ public class ArchiveAOImpl implements IArchiveAO {
 
         // 判断是否有用户更新
         if (StringUtils.isNotBlank(data.getUserId())) {
+            // 验证手机号
+            sysUserBO.checkMobile(data.getMobile(), data.getUserId());
+
+            SYSUser sysUser = sysUserBO.getUser(data.getUserId());
+            sysUser.setMobile(data.getMobile());
+            sysUser.setRealName(data.getRealName());
+            sysUser.setPostCode(data.getPostCode());
+            sysUser.setDepartmentCode(data.getDepartmentCode());
+            sysUser.setCompanyCode(departmentBO.getCompanyByDepartment(data
+                .getDepartmentCode()));
+            sysUserBO.refreshMobileDepartment(sysUser);
         }
     }
 
