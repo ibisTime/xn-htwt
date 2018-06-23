@@ -208,7 +208,6 @@ CREATE TABLE `tdq_budget_order` (
   `car_settle_datetime` datetime DEFAULT NULL COMMENT '车辆落户日期',
   `car_number` tinytext COMMENT '车牌号',
   `car_invoice` tinytext COMMENT '车辆发票',
-  `car_hgz` tinytext COMMENT '合格证',
   `car_jqx` tinytext COMMENT '交强险',
   `car_syx` tinytext COMMENT '商业险',
   `car_settle_other_pdf` tinytext COMMENT '其他资料',

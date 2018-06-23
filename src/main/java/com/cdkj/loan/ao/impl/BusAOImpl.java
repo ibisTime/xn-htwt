@@ -11,8 +11,8 @@ import com.cdkj.loan.bo.IBusBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.Bus;
-import com.cdkj.loan.dto.req.XN632690Req;
-import com.cdkj.loan.dto.req.XN632692Req;
+import com.cdkj.loan.dto.req.XN632780Req;
+import com.cdkj.loan.dto.req.XN632782Req;
 import com.cdkj.loan.enums.EBusStatus;
 
 //CHECK ��鲢��ע�� 
@@ -23,7 +23,7 @@ public class BusAOImpl implements IBusAO {
     private IBusBO busBO;
 
     @Override
-    public String addBus(XN632690Req req) {
+    public String addBus(XN632780Req req) {
         Bus data = new Bus();
         data.setModel(req.getModel());
         data.setNumber(req.getNumber());
@@ -44,7 +44,7 @@ public class BusAOImpl implements IBusAO {
     }
 
     @Override
-    public void editBus(XN632692Req req) {
+    public void editBus(XN632782Req req) {
         Bus condition = busBO.getBus(req.getCode());
         condition.setModel(req.getModel());
         condition.setNumber(req.getNumber());

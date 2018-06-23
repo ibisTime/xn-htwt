@@ -609,7 +609,7 @@ public class BudgetOrder extends ABaseDO {
     // 商业险
     private String carSyx;
 
-    // 其他资料
+    // 车辆落户其他资料
     private String carSettleOtherPdf;
 
     // 登记证书

@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN632690Req {
+public class XN632780Req {
 
     // 车辆型号
     @NotBlank
