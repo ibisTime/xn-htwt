@@ -23,6 +23,15 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
+			</if>
+			<if test="departmentCode != null and departmentCode != '' ">
+				AND t.department_code = #{departmentCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_busBorrow" parameterType="busBorrow" resultMap="busBorrow_DB_Result">
@@ -68,12 +77,7 @@
 		,department_code
 		,use_datetime_start
 		,use_datetime_end
-		,drive_kil
-		,return_datetime
 		,status
-		,updater
-		,update_datetime
-		,remark
 		)
 		VALUES(
 		#{code}
@@ -84,12 +88,7 @@
 		,#{departmentCode}
 		,#{useDatetimeStart}
 		,#{useDatetimeEnd}
-		,#{driveKil}
-		,#{returnDatetime}
 		,#{status}
-		,#{updater}
-		,#{updateDatetime}
-		,#{remark}
 		)
 	</insert>
 
@@ -112,5 +111,34 @@
 		WHERE code = #{code}
 	</update>
 
+	<update id="update_status" parameterType="busBorrow">
+		UPDATE tp_bus_borrow
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_returnBusBorrow" parameterType="busBorrow">
+		UPDATE tp_bus_borrow
+		SET
+		status = #{status}
+		,drive_kil = #{driveKil}
+		,return_datetime = #{returnDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_auditBusBorrowReturn" parameterType="busBorrow">
+		UPDATE tp_bus_borrow
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
 
 </mapper>
