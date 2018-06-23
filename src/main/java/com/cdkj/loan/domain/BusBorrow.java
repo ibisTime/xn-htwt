@@ -56,6 +56,41 @@ public class BusBorrow extends ABaseDO {
     // 备注
     private String remark;
 
+    /*--------辅助字段----------*/
+
+    // 更新人姓名
+    private String updaterName;
+
+    // 部门名称
+    private String departmentName;
+
+    // 公车车型
+    private String busMobile;
+
+    public String getBusMobile() {
+        return busMobile;
+    }
+
+    public void setBusMobile(String busMobile) {
+        this.busMobile = busMobile;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

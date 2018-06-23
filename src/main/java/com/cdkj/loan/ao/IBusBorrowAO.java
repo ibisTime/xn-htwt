@@ -26,7 +26,8 @@ public interface IBusBorrowAO {
             String updater, String remark);
 
     // 归还
-    public void returnBusBorrow(String code, String driveKil, String remark);
+    public void returnBusBorrow(String code, String driveKil, String updater,
+            String remark);
 
     // 归还审核
     public void auditBusBorrowReturn(String code, String approveResult,

@@ -616,5 +616,38 @@ CREATE TABLE `tp_work_experience` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作经历';
 
+DROP TABLE IF EXISTS `tp_bus`;
+CREATE TABLE `tp_bus` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `model` varchar(32) DEFAULT NULL COMMENT '车辆型号',
+  `number` varchar(32) DEFAULT NULL COMMENT '车牌号',
+  `insurance_end_datetime` datetime DEFAULT NULL COMMENT '保险到期日',
+  `park_location` varchar(255) DEFAULT NULL COMMENT '停放位置',
+  `pic` varchar(255) DEFAULT NULL COMMENT '车辆照片',
+  `status` varchar(4) DEFAULT NULL COMMENT '领用状态',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公车';
 
+
+DROP TABLE IF EXISTS `tp_bus_borrow`;
+CREATE TABLE `tp_bus_borrow` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `bus_code` varchar(32) DEFAULT NULL COMMENT '公车编号',
+  `apply_user` varchar(32) DEFAULT NULL COMMENT '申领人',
+  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
+  `apply_note` varchar(255) DEFAULT NULL COMMENT '领用说明',
+  `department_code` varchar(32) DEFAULT NULL COMMENT '所属部门',
+  `use_datetime_start` datetime DEFAULT NULL COMMENT '使用时间起',
+  `use_datetime_end` datetime DEFAULT NULL COMMENT '使用时间止',
+  `drive_kil` double DEFAULT NULL COMMENT '行驶公里数',
+  `return_datetime` datetime DEFAULT NULL COMMENT '归还时间',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公车借用';
 

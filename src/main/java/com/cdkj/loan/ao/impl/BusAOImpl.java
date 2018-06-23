@@ -52,7 +52,6 @@ public class BusAOImpl implements IBusAO {
             req.getInsuranceEndDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setParkLocation(req.getParkLocation());
         condition.setPic(req.getPic());
-        condition.setStatus(req.getStatus());
         condition.setUpdater(req.getUpdater());
         condition.setUpdateDatetime(new Date());
         condition.setRemark(req.getRemark());

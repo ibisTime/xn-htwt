@@ -14,9 +14,6 @@ public class XN632790Req {
     // 申领人
     private String applyUser;
 
-    // 申请时间
-    private String applyDatetime;
-
     // 领用说明
     private String applyNote;
 
@@ -50,14 +47,6 @@ public class XN632790Req {
 
     public void setApplyUser(String applyUser) {
         this.applyUser = applyUser;
-    }
-
-    public String getApplyDatetime() {
-        return applyDatetime;
-    }
-
-    public void setApplyDatetime(String applyDatetime) {
-        this.applyDatetime = applyDatetime;
     }
 
     public String getApplyNote() {

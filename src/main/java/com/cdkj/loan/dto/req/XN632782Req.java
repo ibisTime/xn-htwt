@@ -28,10 +28,6 @@ public class XN632782Req {
     @NotBlank
     private String pic;
 
-    // 领用状态
-    @NotBlank
-    private String status;
-
     // 更新人
     @NotBlank
     private String updater;
@@ -85,14 +81,6 @@ public class XN632782Req {
 
     public void setPic(String pic) {
         this.pic = pic;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getUpdater() {

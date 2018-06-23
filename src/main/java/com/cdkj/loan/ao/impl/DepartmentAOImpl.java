@@ -17,6 +17,7 @@ import com.cdkj.loan.dto.req.XN630100Req;
 import com.cdkj.loan.dto.req.XN630102Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EDepartmentStatus;
+import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -34,9 +35,12 @@ public class DepartmentAOImpl implements IDepartmentAO {
         Department data = new Department();
         data.setType(req.getType());
         data.setName(req.getName());
-        SYSUser sysUser = sysUserBO.getUser(req.getLeadUserId());
-        if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "负责人已被注销");
+        if (!EDepartmentType.POSITION.getCode().equals(req.getType())) {
+            SYSUser sysUser = sysUserBO.getUser(req.getLeadUserId());
+            if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "负责人已被注销");
+            }
         }
 
         data.setLeadUserId(req.getLeadUserId());
@@ -73,8 +77,8 @@ public class DepartmentAOImpl implements IDepartmentAO {
     @Override
     public void dropDepartment(String code) {
         Department department = departmentBO.getDepartment(code);
-        if (EDepartmentStatus.UNAVAILABLE.getCode().equals(
-            department.getStatus())) {
+        if (EDepartmentStatus.UNAVAILABLE.getCode()
+            .equals(department.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前职能部门已被删除");
         }

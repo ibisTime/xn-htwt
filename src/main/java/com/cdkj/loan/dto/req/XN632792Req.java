@@ -12,6 +12,9 @@ public class XN632792Req {
     @NotBlank
     private String driveKil;
 
+    // 更新人
+    private String updater;
+
     private String remark;// 备注
 
     public String getCode() {
@@ -28,6 +31,14 @@ public class XN632792Req {
 
     public void setDriveKil(String driveKil) {
         this.driveKil = driveKil;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
     public String getRemark() {
