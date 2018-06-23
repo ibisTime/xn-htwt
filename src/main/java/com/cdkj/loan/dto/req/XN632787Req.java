@@ -1,11 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632787Req extends APageReq {
-
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 6508191870600343779L;
+public class XN632787Req {
 
     // 领用状态
     private String status;
