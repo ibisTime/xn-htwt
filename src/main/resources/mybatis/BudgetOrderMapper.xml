@@ -1066,6 +1066,7 @@
 		,#{carModel}
 		,#{carType}
 		,#{carPic}
+		,#{carHgzPic}
 		,#{carFrameNo}
 		,#{carEngineNo}
 		,#{originalPrice}
@@ -1102,6 +1103,8 @@
 		,#{workProfession}
 		,#{workDatetime}
 		,#{selfCompanyArea}
+		,#{otherWorkNote}
+		,#{workAssetPdf}
 		,#{employeeQuantity}
 		,#{enterpriseMonthOutput}
 		,#{position}
