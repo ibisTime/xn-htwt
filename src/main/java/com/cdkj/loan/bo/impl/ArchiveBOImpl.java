@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +42,42 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void checkArchiveByMobile(String mobile, String code) {
+        if (StringUtils.isNotBlank(mobile)) {
+            Archive condition = new Archive();
+            condition.setMobile(mobile);
+            List<Archive> list = archiveDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                Archive archive = list.get(0);
+                if (StringUtils.isNotBlank(code)) {
+                    if (!code.equals(archive.getCode())) {
+                        throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                            "手机号已在其他档案中存在");
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void checkArchiveByIdNo(String idNo, String code) {
+        if (StringUtils.isNotBlank(idNo)) {
+            Archive condition = new Archive();
+            condition.setIdNo(idNo);
+            List<Archive> list = archiveDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                Archive archive = list.get(0);
+                if (StringUtils.isNotBlank(code)) {
+                    if (!code.equals(archive.getCode())) {
+                        throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                            "身份证号已在其他档案中存在");
+                    }
+                }
+            }
+        }
     }
 
     @Override

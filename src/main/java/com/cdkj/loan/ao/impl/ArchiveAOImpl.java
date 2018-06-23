@@ -53,6 +53,10 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Override
     public String addArchive(XN632800Req req) {
+        // 判断身份证和手机号是否存在，已存在就报错
+        archiveBO.checkArchiveByMobile(req.getMobile(), null);
+        archiveBO.checkArchiveByIdNo(req.getIdNo(), null);
+
         Archive data = new Archive();
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
@@ -158,10 +162,10 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Override
     public void editArchive(XN632802Req req) {
-        if (!archiveBO.isArchiveExist(req.getCode())) {
-            throw new BizException("xn0000", "人事档案不存在");
-        }
         Archive data = archiveBO.getArchive(req.getCode());
+        archiveBO.checkArchiveByMobile(req.getMobile(), data.getCode());
+        archiveBO.checkArchiveByIdNo(req.getIdNo(), data.getCode());
+
         data.setCode(req.getCode());
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
@@ -235,15 +239,10 @@ public class ArchiveAOImpl implements IArchiveAO {
         }
 
         archiveBO.refreshArchive(data);
-    }
 
-    @Override
-    @Transactional
-    public void dropArchive(String code) {
-        if (!archiveBO.isArchiveExist(code)) {
-            throw new BizException("xn0000", "人事档案不存在");
+        // 判断是否有用户更新
+        if (StringUtils.isNotBlank(data.getUserId())) {
         }
-        archiveBO.removeArchive(code);
     }
 
     @Override

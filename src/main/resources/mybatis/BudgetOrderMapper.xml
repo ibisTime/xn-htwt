@@ -582,10 +582,9 @@
 		,t.advance_fund_amount_pdf
 		,t.advance_fund_other_pdf
 		,t.car_settle_datetime
-		,t.car_number
 		
+		,t.car_number
 		,t.car_invoice
-		,t.car_hgz
 		,t.car_jqx
 		,t.car_syx
 		,t.car_regcerti

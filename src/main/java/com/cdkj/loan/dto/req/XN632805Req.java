@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 /**
  * 分页查询人事档案
  * @author: jiafr 
@@ -22,8 +24,18 @@ public class XN632805Req extends APageReq {
 
     private String workStatus;
 
+    private List<String> workStatusList;
+
     // 是否被分配
     private String isDistribute;
+
+    public List<String> getWorkStatusList() {
+        return workStatusList;
+    }
+
+    public void setWorkStatusList(List<String> workStatusList) {
+        this.workStatusList = workStatusList;
+    }
 
     public String getIsDistribute() {
         return isDistribute;
