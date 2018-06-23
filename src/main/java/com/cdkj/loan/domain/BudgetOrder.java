@@ -75,6 +75,9 @@ public class BudgetOrder extends ABaseDO {
     // 车辆照片
     private String carPic;
 
+    // 合格证
+    private String carHgzPic;
+
     // 车架号
     private String carFrameNo;
 
@@ -2114,6 +2117,14 @@ public class BudgetOrder extends ABaseDO {
 
     public String getMateZfbJourPic() {
         return mateZfbJourPic;
+    }
+
+    public String getCarHgzPic() {
+        return carHgzPic;
+    }
+
+    public void setCarHgzPic(String carHgzPic) {
+        this.carHgzPic = carHgzPic;
     }
 
     public void setMateZfbJourPic(String mateZfbJourPic) {

@@ -69,6 +69,10 @@ public class XN632120Req {
     @NotBlank
     private String carPic;
 
+    // 合格证
+    @NotBlank
+    private String carHgzPic;
+
     // 车架号
     @NotBlank
     private String carFrameNo;
@@ -1742,6 +1746,14 @@ public class XN632120Req {
 
     public void setZfbJourDatetimeStart(String zfbJourDatetimeStart) {
         this.zfbJourDatetimeStart = zfbJourDatetimeStart;
+    }
+
+    public String getCarHgzPic() {
+        return carHgzPic;
+    }
+
+    public void setCarHgzPic(String carHgzPic) {
+        this.carHgzPic = carHgzPic;
     }
 
     public String getZfbJourDatetimeEnd() {
