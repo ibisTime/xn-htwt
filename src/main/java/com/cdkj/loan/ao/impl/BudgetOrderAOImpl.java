@@ -531,11 +531,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data.setCompanyCode(budgetOrder.getCompanyCode());
             data.setUserId(budgetOrder.getSaleUserId());
 
-            // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费
+            // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+团队服务费
             data.setShouldAmount(budgetOrder.getBankFee()
                     + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
                     + budgetOrder.getMonthDeposit()
-                    + budgetOrder.getCompanyFee());
+                    + budgetOrder.getCompanyFee() + budgetOrder.getTeamFee());
             data.setRealAmount(0L);
             data.setIsSettled(EBoolean.NO.getCode());
 
