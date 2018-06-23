@@ -17,7 +17,6 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632790Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EBusBorrowReturnStatus;
 import com.cdkj.loan.enums.EBusBorrowStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -57,7 +56,7 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
                 "当前状态不是待审核状态，不能操作！");
         }
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            condition.setStatus(EBusBorrowReturnStatus.TO_RETURN.getCode());
+            condition.setStatus(EBusBorrowStatus.TO_RETURN.getCode());
         } else {
             condition.setStatus(EBusBorrowStatus.AUDIT_NOT_PASS.getCode());
         }
@@ -70,12 +69,12 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
     @Override
     public void returnBusBorrow(String code, String driveKil, String remark) {
         BusBorrow condition = busBorrowBO.getBusBorrow(code);
-        if (!EBusBorrowReturnStatus.TO_RETURN.getCode()
+        if (!EBusBorrowStatus.TO_RETURN.getCode()
             .equals(condition.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前状态不是待归还状态，不能操作！");
         }
-        condition.setStatus(EBusBorrowReturnStatus.TO_AUDIT.getCode());
+        condition.setStatus(EBusBorrowStatus.RETURN_TO_AUDIT.getCode());
         condition.setDriveKil(StringValidater.toDouble(driveKil));
         condition.setReturnDatetime(new Date());
         condition.setRemark(remark);
@@ -86,16 +85,15 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
     public void auditBusBorrowReturn(String code, String approveResult,
             String updater, String remark) {
         BusBorrow condition = busBorrowBO.getBusBorrow(code);
-        if (!EBusBorrowReturnStatus.TO_AUDIT.getCode()
+        if (!EBusBorrowStatus.RETURN_TO_AUDIT.getCode()
             .equals(condition.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前状态不是待审核状态，不能操作！");
+                "当前状态不是归还待审核状态，不能操作！");
         }
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            condition
-                .setStatus(EBusBorrowReturnStatus.ALREADY_RETURN.getCode());
+            condition.setStatus(EBusBorrowStatus.ALREADY_RETURN.getCode());
         } else {
-            condition.setStatus(EBusBorrowReturnStatus.TO_RETURN.getCode());
+            condition.setStatus(EBusBorrowStatus.TO_RETURN.getCode());
         }
         condition.setUpdater(updater);
         condition.setUpdateDatetime(new Date());
