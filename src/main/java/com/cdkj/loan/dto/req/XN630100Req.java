@@ -15,6 +15,7 @@ public class XN630100Req {
     @NotBlank
     private String parentCode;// 上级部门编号
 
+    @NotBlank
     private String orderNo;// 序号
 
     @NotBlank
