@@ -47,6 +47,8 @@ ADD COLUMN `advance_fund_amount_pdf` tinytext DEFAULT NULL COMMENT '资金划转
 ADD COLUMN `advance_fund_other_pdf` tinytext DEFAULT NULL COMMENT '垫资其他资料' AFTER `advance_fund_amount_pdf`,
 DROP COLUMN `car_hgz`,
 ADD COLUMN `car_settle_other_pdf` tinytext DEFAULT NULL COMMENT '其他资料' AFTER `car_syx`;
+CHANGE COLUMN `employee_quantity` `employee_quantity` INT(11) NULL DEFAULT NULL COMMENT '员工数量' ;
+CHANGE COLUMN `family_number` `family_number` INT(11) NULL DEFAULT NULL COMMENT '家庭人口' ;
 
 ALTER TABLE `tp_archive` 
 DROP COLUMN `is_delete`;
