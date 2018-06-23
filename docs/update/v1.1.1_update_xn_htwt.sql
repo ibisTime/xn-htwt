@@ -47,6 +47,8 @@ ADD COLUMN `advance_fund_amount_pdf` tinytext DEFAULT NULL COMMENT '资金划转
 ADD COLUMN `advance_fund_other_pdf` tinytext DEFAULT NULL COMMENT '垫资其他资料' AFTER `advance_fund_amount_pdf`,
 DROP COLUMN `car_hgz`,
 ADD COLUMN `car_settle_other_pdf` tinytext DEFAULT NULL COMMENT '其他资料' AFTER `car_syx`;
+CHANGE COLUMN `employee_quantity` `employee_quantity` INT(11) NULL DEFAULT NULL COMMENT '员工数量' ;
+CHANGE COLUMN `family_number` `family_number` INT(11) NULL DEFAULT NULL COMMENT '家庭人口' ;
 
 ALTER TABLE `tp_archive` 
 DROP COLUMN `is_delete`;
@@ -179,3 +181,14 @@ INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark
 INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806231911426804498','admin','2018-06-23 15:11:09','');
 INSERT INTO `TABLE` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806231912209182943','admin','2018-06-23 15:11:09','');
 
+
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'payment_project','交款项目','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','payment_project','1','gps','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','payment_project','2','月供保证金','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','payment_project','3','公证费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','payment_project','4','服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'fee','服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee','1','银行服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee','2','公司服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee','3','团队服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
