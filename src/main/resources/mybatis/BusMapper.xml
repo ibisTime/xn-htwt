@@ -76,6 +76,12 @@
 		,#{remark}
 		)
 	</insert>
+	
+	<delete id="delete_bus" parameterType="bus">
+		DELETE FROM tp_bus
+		WHERE
+		code = #{code}
+	</delete>
 
 	<update id="update_bus" parameterType="bus">
 		UPDATE tp_bus

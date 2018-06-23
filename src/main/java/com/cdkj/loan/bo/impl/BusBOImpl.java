@@ -31,6 +31,18 @@ public class BusBOImpl extends PaginableBOImpl<Bus> implements IBusBO {
     }
 
     @Override
+    public int removeBus(String code) {
+        Bus data = new Bus();
+        data.setCode(code);
+        return busDAO.delete(data);
+    }
+
+    @Override
+    public void refreshBus(Bus condition) {
+        busDAO.update(condition);
+    }
+
+    @Override
     public List<Bus> queryBusList(Bus condition) {
         return busDAO.selectList(condition);
     }
@@ -48,4 +60,5 @@ public class BusBOImpl extends PaginableBOImpl<Bus> implements IBusBO {
         }
         return data;
     }
+
 }

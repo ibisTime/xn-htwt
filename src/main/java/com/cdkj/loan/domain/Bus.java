@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -22,7 +24,7 @@ public class Bus extends ABaseDO {
     private String number;
 
     // 保险到期日
-    private String insuranceEndDatetime;
+    private Date insuranceEndDatetime;
 
     // 停放位置
     private String parkLocation;
@@ -37,7 +39,7 @@ public class Bus extends ABaseDO {
     private String updater;
 
     // 更新时间
-    private String updateDatetime;
+    private Date updateDatetime;
 
     // 备注
     private String remark;
@@ -64,14 +66,6 @@ public class Bus extends ABaseDO {
 
     public String getNumber() {
         return number;
-    }
-
-    public String getInsuranceEndDatetime() {
-        return insuranceEndDatetime;
-    }
-
-    public void setInsuranceEndDatetime(String insuranceEndDatetime) {
-        this.insuranceEndDatetime = insuranceEndDatetime;
     }
 
     public String getParkLocation() {
@@ -106,12 +100,20 @@ public class Bus extends ABaseDO {
         return updater;
     }
 
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
+    public Date getInsuranceEndDatetime() {
+        return insuranceEndDatetime;
     }
 
-    public String getUpdateDatetime() {
+    public void setInsuranceEndDatetime(Date insuranceEndDatetime) {
+        this.insuranceEndDatetime = insuranceEndDatetime;
+    }
+
+    public Date getUpdateDatetime() {
         return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public void setRemark(String remark) {

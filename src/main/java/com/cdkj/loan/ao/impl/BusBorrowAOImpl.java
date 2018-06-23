@@ -10,7 +10,6 @@ import com.cdkj.loan.bo.IBusBorrowBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BusBorrow;
 
-//CHECK ��鲢��ע�� 
 @Service
 public class BusBorrowAOImpl implements IBusBorrowAO {
 

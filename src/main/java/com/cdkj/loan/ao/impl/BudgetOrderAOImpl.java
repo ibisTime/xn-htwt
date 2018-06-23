@@ -759,7 +759,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         // budgetOrder.setCarNumber(req.getCarNumber());
         budgetOrder.setCarInvoice(req.getCarInvoice());
-        budgetOrder.setCarHgz(req.getCarHgz());
         budgetOrder.setCarJqx(req.getCarJqx());
         budgetOrder.setCarSyx(req.getCarSyx());
         budgetOrder.setCarSettleOtherPdf(req.getCarSettleOtherPdf());

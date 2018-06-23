@@ -603,9 +603,6 @@ public class BudgetOrder extends ABaseDO {
     // 发票
     private String carInvoice;
 
-    // 合格证
-    private String carHgz;
-
     // 交强险
     private String carJqx;
 
@@ -1721,14 +1718,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarInvoice(String carInvoice) {
         this.carInvoice = carInvoice;
-    }
-
-    public String getCarHgz() {
-        return carHgz;
-    }
-
-    public void setCarHgz(String carHgz) {
-        this.carHgz = carHgz;
     }
 
     public String getCarJqx() {
