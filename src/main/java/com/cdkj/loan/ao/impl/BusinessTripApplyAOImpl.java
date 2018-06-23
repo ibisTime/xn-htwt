@@ -303,7 +303,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
         if (StringUtils.isNotBlank(data.getPostCode())) {
             Department post = departmentBO.getDepartment(data.getPostCode());
-            data.setDepartmentName(post.getName());
+            data.setPostName((post.getName()));
         }
         return data;
 
