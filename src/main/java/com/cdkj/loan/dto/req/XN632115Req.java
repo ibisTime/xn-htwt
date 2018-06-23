@@ -15,8 +15,11 @@ public class XN632115Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
-    // 客户姓名
-    private String userId;
+    // 业务员编号
+    private String saleUserId;
+
+    // 团队编号
+    private String teamCode;
 
     // 预算单编号
     private String budgetOrderCode;
@@ -27,16 +30,35 @@ public class XN632115Req extends APageReq {
     // 申请日期结束
     private String applyDatetimeEnd;
 
+    // 节点编号
+    private String curNodeCode;
+
     // 角色编号
     @NotBlank
     private String roleCode;
 
-    public String getUserId() {
-        return userId;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
     }
 
     public String getBudgetOrderCode() {
@@ -70,5 +92,4 @@ public class XN632115Req extends APageReq {
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
     }
-
 }
