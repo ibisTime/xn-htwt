@@ -7,6 +7,9 @@ public class XN632795Req extends APageReq {
      */
     private static final long serialVersionUID = 422824266187827209L;
 
+    // 公车编号
+    private String busCode;
+
     // 申领人
     private String applyUser;
 
@@ -15,6 +18,14 @@ public class XN632795Req extends APageReq {
 
     // 状态
     private String status;
+
+    public String getBusCode() {
+        return busCode;
+    }
+
+    public void setBusCode(String busCode) {
+        this.busCode = busCode;
+    }
 
     public String getApplyUser() {
         return applyUser;

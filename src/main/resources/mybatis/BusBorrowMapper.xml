@@ -26,6 +26,9 @@
 			<if test="applyUser != null and applyUser != '' ">
 				AND t.apply_user = #{applyUser}
 			</if>
+			<if test="busCode != null and busCode != '' ">
+				AND t.bus_code = #{busCode}
+			</if>
 			<if test="departmentCode != null and departmentCode != '' ">
 				AND t.department_code = #{departmentCode}
 			</if>

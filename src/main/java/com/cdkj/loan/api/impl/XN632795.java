@@ -28,6 +28,7 @@ public class XN632795 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         BusBorrow condition = new BusBorrow();
+        condition.setBusCode(req.getBusCode());
         condition.setApplyUser(req.getApplyUser());
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setStatus(req.getStatus());
