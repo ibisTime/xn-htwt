@@ -114,8 +114,10 @@ public class DepartmentAOImpl implements IDepartmentAO {
     }
 
     private void initDepartment(Department department) {
-        SYSUser leadUser = sysUserBO.getUser(department.getLeadUserId());
-        department.setLeadMobile(leadUser.getMobile());
-        department.setLeadName(leadUser.getRealName());
+        if (!EDepartmentType.POSITION.getCode().equals(department.getType())) {
+            SYSUser leadUser = sysUserBO.getUser(department.getLeadUserId());
+            department.setLeadMobile(leadUser.getMobile());
+            department.setLeadName(leadUser.getRealName());
+        }
     }
 }
