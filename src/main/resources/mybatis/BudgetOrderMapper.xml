@@ -229,7 +229,6 @@
 		<result column="car_number" property="carNumber" />
 		<result column="car_invoice" property="carInvoice" />
 		
-		<result column="car_hgz" property="carHgz" />
 		<result column="car_jqx" property="carJqx" />
 		<result column="car_syx" property="carSyx" />
 		<result column="car_settle_other_pdf" property="carSettleOtherPdf" />
@@ -1557,7 +1556,6 @@
 		SET
 		car_settle_datetime = #{carSettleDatetime}
 		,car_invoice = #{carInvoice}
-		,car_hgz = #{carHgz}
 		,car_jqx = #{carJqx}
 		,car_syx = #{carSyx}
 		,car_settle_other_pdf = #{carSettleOtherPdf}
