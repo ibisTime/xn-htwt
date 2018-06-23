@@ -118,7 +118,7 @@ public class BudgetOrder extends ABaseDO {
     private String gender;
 
     // 年龄
-    private String age;
+    private Integer age;
 
     // 婚姻状况
     private String marryState;
@@ -139,7 +139,7 @@ public class BudgetOrder extends ABaseDO {
     private String idNo;
 
     // 家庭人口
-    private String familyNumber;
+    private Integer familyNumber;
 
     // 手机号
     private String mobile;
@@ -199,7 +199,7 @@ public class BudgetOrder extends ABaseDO {
     private String workAssetPdf;
 
     // 员工数量
-    private String employeeQuantity;
+    private Integer employeeQuantity;
 
     // 企业月产值
     private String enterpriseMonthOutput;
@@ -931,11 +931,11 @@ public class BudgetOrder extends ABaseDO {
         this.code = code;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -1179,14 +1179,6 @@ public class BudgetOrder extends ABaseDO {
         this.idNo = idNo;
     }
 
-    public String getFamilyNumber() {
-        return familyNumber;
-    }
-
-    public void setFamilyNumber(String familyNumber) {
-        this.familyNumber = familyNumber;
-    }
-
     public String getMobile() {
         return mobile;
     }
@@ -1307,11 +1299,19 @@ public class BudgetOrder extends ABaseDO {
         this.selfCompanyArea = selfCompanyArea;
     }
 
-    public String getEmployeeQuantity() {
+    public Integer getFamilyNumber() {
+        return familyNumber;
+    }
+
+    public void setFamilyNumber(Integer familyNumber) {
+        this.familyNumber = familyNumber;
+    }
+
+    public Integer getEmployeeQuantity() {
         return employeeQuantity;
     }
 
-    public void setEmployeeQuantity(String employeeQuantity) {
+    public void setEmployeeQuantity(Integer employeeQuantity) {
         this.employeeQuantity = employeeQuantity;
     }
 
