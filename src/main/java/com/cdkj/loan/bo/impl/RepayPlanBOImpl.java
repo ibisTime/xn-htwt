@@ -45,6 +45,15 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode, ERepayPlanNode repayPlanNode) {
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
+        condition.setCurNodeCode(repayPlanNode.getCode());
+        return repayPlanDAO.selectList(condition);
+    }
+
+    @Override
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode) {
         RepayPlan condition = new RepayPlan();
@@ -280,10 +289,10 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public int getTotalCount(String repayPlanCode, ERepayPlanNode repayPlanNode) {
+    public int getTotalCount(String repayBizCode, ERepayPlanNode curNodeCode) {
         RepayPlan condition = new RepayPlan();
-        condition.setCode(repayPlanCode);
-        condition.setCurNodeCode(repayPlanCode);
+        condition.setRepayBizCode(repayBizCode);
+        condition.setCurNodeCode(curNodeCode.getCode());
         return (int) repayPlanDAO.selectTotalCount(condition);
     }
 
