@@ -151,6 +151,13 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         // 已提交手续费明细列表
         budgetOrderFee.setBudgetOrderFeeDetailList(list);
 
+        // 预算单
+        if (StringUtils.isNotBlank(budgetOrderFee.getBudgetOrder())) {
+            BudgetOrder order = budgetOrderBO
+                .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+            budgetOrderFee.setBudgetOrderObject(order);
+        }
+
         return budgetOrderFee;
     }
 }

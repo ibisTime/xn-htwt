@@ -66,6 +66,17 @@ public class BudgetOrderFee extends ABaseDO {
 
     private String userName;
 
+    // 预算单
+    private BudgetOrder budgetOrderObject;
+
+    public BudgetOrder getBudgetOrderObject() {
+        return budgetOrderObject;
+    }
+
+    public void setBudgetOrderObject(BudgetOrder budgetOrderObject) {
+        this.budgetOrderObject = budgetOrderObject;
+    }
+
     public BudgetOrderFeeDetail getUnSubmitBudgetOrderFeeDetail() {
         return unSubmitBudgetOrderFeeDetail;
     }
