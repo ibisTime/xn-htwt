@@ -28,6 +28,9 @@ public class Logistics extends ABaseDO {
     // 用户编号
     private String userId;
 
+    // 团队编号
+    private String teamCode;
+
     // 业务节点1
     private String fromNodeCode;
 
@@ -58,6 +61,9 @@ public class Logistics extends ABaseDO {
     // 收件时间
     private Date receiptDatetime;
 
+    // 收件人(gps 落地具体某个人/ 非gps默认0)
+    private String receiver;
+
     // 状态(0 待发件 1已发件待收件 2已收件审核 3已收件待补件)
     private String status;
 
@@ -68,6 +74,22 @@ public class Logistics extends ABaseDO {
 
     // 用户姓名
     private String userName;
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 
     public String getCode() {
         return code;
