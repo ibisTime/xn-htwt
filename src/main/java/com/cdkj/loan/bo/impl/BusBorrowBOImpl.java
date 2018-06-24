@@ -60,7 +60,7 @@ public class BusBorrowBOImpl extends PaginableBOImpl<BusBorrow>
             condition.setCode(code);
             data = busBorrowDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "公车不存在");
             }
         }
         return data;

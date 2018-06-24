@@ -70,6 +70,9 @@ ALTER TABLE `tdq_logistics`
 ADD COLUMN `team_code` VARCHAR(32) NULL COMMENT '团队编号' AFTER `user_id`,
 ADD COLUMN `receiver` VARCHAR(32) NULL COMMENT '收件人(gps 落地具体某个人/ 非gps默认0)' AFTER `receipt_datetime`;
 
+ALTER TABLE `tdq_loan_product`
+ADD COLUMN `is_pre` VARCHAR(32) NULL COMMENT '是否前置' AFTER `back_rate`,
+
 CREATE TABLE `tp_business_trip_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user_code` varchar(32) DEFAULT NULL COMMENT '申请人编号',

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN632795Req extends APageReq {
 
     /** 
@@ -16,8 +18,8 @@ public class XN632795Req extends APageReq {
     // 所属部门
     private String departmentCode;
 
-    // 状态
-    private String status;
+    // 状态List
+    private List<String> statusList;
 
     public String getBusCode() {
         return busCode;
@@ -43,12 +45,12 @@ public class XN632795Req extends APageReq {
         this.departmentCode = departmentCode;
     }
 
-    public String getStatus() {
-        return status;
+    public List<String> getStatusList() {
+        return statusList;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
 }

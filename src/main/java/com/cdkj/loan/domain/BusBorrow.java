@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -72,6 +73,17 @@ public class BusBorrow extends ABaseDO {
 
     // 公车车牌号
     private String busNumber;
+
+    // 状态List
+    private List<String> statusList;
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public String getBusNumber() {
         return busNumber;
