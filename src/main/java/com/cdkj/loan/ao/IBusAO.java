@@ -15,7 +15,7 @@ public interface IBusAO {
 
     public String addBus(XN632780Req req);
 
-    public int dropBus(String code);
+    public int dropBus(String code, String updater, String remark);
 
     public void editBus(XN632782Req req);
 

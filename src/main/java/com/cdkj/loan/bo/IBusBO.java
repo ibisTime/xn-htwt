@@ -11,10 +11,10 @@ public interface IBusBO extends IPaginableBO<Bus> {
 
     public void refreshBus(Bus condition);
 
-    public int removeBus(String code);
-
     public List<Bus> queryBusList(Bus condition);
 
     public Bus getBus(String code);
+
+    public int removeBus(Bus bus);
 
 }
