@@ -3,14 +3,17 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBusAO;
 import com.cdkj.loan.bo.IBusBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.Bus;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632780Req;
 import com.cdkj.loan.dto.req.XN632782Req;
 import com.cdkj.loan.enums.EBusStatus;
@@ -21,6 +24,9 @@ public class BusAOImpl implements IBusAO {
 
     @Autowired
     private IBusBO busBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addBus(XN632780Req req) {
@@ -65,7 +71,11 @@ public class BusAOImpl implements IBusAO {
 
     @Override
     public Paginable<Bus> queryBusPage(int start, int limit, Bus condition) {
-        return busBO.getPaginable(start, limit, condition);
+        Paginable<Bus> paginable = busBO.getPaginable(start, limit, condition);
+        for (Bus bus : paginable.getList()) {
+            initBus(bus);
+        }
+        return paginable;
     }
 
     @Override
@@ -75,7 +85,16 @@ public class BusAOImpl implements IBusAO {
 
     @Override
     public Bus getBus(String code) {
-        return busBO.getBus(code);
+        Bus bus = busBO.getBus(code);
+        initBus(bus);
+        return bus;
+    }
+
+    private void initBus(Bus bus) {
+        if (StringUtils.isNotBlank(bus.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(bus.getUpdater());
+            bus.setUpdaterName(user.getRealName());
+        }
     }
 
 }
