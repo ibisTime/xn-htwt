@@ -7,6 +7,7 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.dto.req.XN630197Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -27,7 +28,7 @@ public class XN630197 extends AProcessor {
     public Object doBusiness() throws BizException {
         BizTeam condition = new BizTeam();
         condition.setCompanyCode(req.getCompanyCode());
-        condition.setStatus("1");
+        condition.setStatus(EBoolean.YES.getCode());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBizTeamAO.DEFAULT_ORDER_COLUMN;

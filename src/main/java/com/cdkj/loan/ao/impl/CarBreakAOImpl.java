@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarBreakAO;
-import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.ICarBreakBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -31,7 +31,7 @@ public class CarBreakAOImpl implements ICarBreakAO {
     private ICarBreakBO carBreakBO;
 
     @Autowired
-    private IArchiveBO archiveBO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addCarBreak(XN632630Req req) {
@@ -84,8 +84,7 @@ public class CarBreakAOImpl implements ICarBreakAO {
             condition);
         List<CarBreak> carBreakList = page.getList();
         for (CarBreak carBreak : carBreakList) {
-            carBreak.setApplyUserArchive(
-                archiveBO.getArchiveByUserid(carBreak.getUserId()));
+            carBreak.setUser(sysUserBO.getUser(carBreak.getUserId()));
         }
         return page;
 
@@ -99,8 +98,7 @@ public class CarBreakAOImpl implements ICarBreakAO {
     @Override
     public CarBreak getCarBreak(String code) {
         CarBreak carBreak = carBreakBO.getCarBreak(code);
-        carBreak.setApplyUserArchive(
-            archiveBO.getArchiveByUserid(carBreak.getUserId()));
+        carBreak.setUser(sysUserBO.getUser(carBreak.getUserId()));
         return carBreak;
     }
 }
