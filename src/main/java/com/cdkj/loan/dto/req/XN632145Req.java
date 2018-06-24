@@ -17,11 +17,21 @@ public class XN632145Req extends APageReq {
 
     private String saleUserId;// 业务员用户编号
 
+    private String companyCode;// 公司编号
+
     private String teamCode;// 团队编号
 
     private String curNodeCode;// 当前节点编号
 
     private String isAdvanceFund;// 是否垫资
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public String getTeamCode() {
         return teamCode;
