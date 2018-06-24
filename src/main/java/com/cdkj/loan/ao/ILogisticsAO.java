@@ -5,6 +5,7 @@ import java.util.List;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.dto.req.XN632150Req;
+import com.cdkj.loan.dto.res.BooleanRes;
 
 /**
  * 资料传递
@@ -17,7 +18,8 @@ public interface ILogisticsAO {
 
     public void sendLogistics(XN632150Req req);
 
-    public void receiveLogistics(String code, String operator, String remark);
+    public BooleanRes receiveLogistics(String code, String operator,
+            String remark);
 
     public void sendAgainLogistics(String code, String operator, String remark);
 

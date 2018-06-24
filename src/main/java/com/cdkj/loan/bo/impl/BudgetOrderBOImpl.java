@@ -23,6 +23,7 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EIDKind;
@@ -81,6 +82,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setCreditCode(credit.getCode());
             data.setBizType(credit.getBizType());
             data.setLoanAmount(credit.getLoanAmount());
+            data.setLoanBank(credit.getLoanBankCode());
             data.setApplyUserName(applyCreditUser.getUserName());
             data.setMobile(applyCreditUser.getMobile());
             data.setIdNo(applyCreditUser.getIdNo());
@@ -283,7 +285,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
      * @see com.cdkj.loan.bo.IBudgetOrderBO#logicOrder(com.cdkj.loan.domain.BudgetOrder)
      */
     @Override
-    public void logicOrder(String code, String operator) {
+    public String logicOrder(String code, String operator) {
+        String result = EBoolean.NO.getCode();
+
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
@@ -297,11 +301,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                     nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
                     nodeFlow.getFileList());
+                result = EBoolean.YES.getCode();
             } else {
                 throw new BizException("xn0000", "当前节点材料清单不存在");
             }
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
+
+        return result;
         // 日志记录
         // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
         // budgetOrder.getCurNodeCode());

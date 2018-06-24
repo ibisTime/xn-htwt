@@ -21,7 +21,9 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
+import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -98,7 +100,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Override
     @Transactional
-    public void receiveLogistics(String code, String operator, String remark) {
+    public BooleanRes receiveLogistics(String code, String operator,
+            String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
@@ -114,12 +117,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 "发件人团队人员不能收件！");
         }
 
+        String result = EBoolean.NO.getCode();
         logisticsBO.receiveLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
-            budgetOrderBO.logicOrder(data.getBizCode(), operator);
+            result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.receiveGps(data.getBizCode());
         }
+        return new BooleanRes(true, result);
     }
 
     @Override
