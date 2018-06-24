@@ -100,7 +100,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Override
     @Transactional
-    public void receiveLogistics(String code, String operator, String remark) {
+    public void receiveLogistics(String code, String receiver, String operator,
+            String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
