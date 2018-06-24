@@ -531,22 +531,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             LoanProduct loanProduct = loanProductBO.getLoanProduct(budgetOrder
                 .getLoanProductCode());
             if (StringUtils.isNotBlank(budgetOrder.getTeamCode())) {
-                BizTeam bizTeam = bizTeamBO.getBizTeam(budgetOrder
-                    .getTeamCode());
-
                 // 生成返点支付数据
                 Repoint repoint = new Repoint();
                 // 应返金额=准入单的贷款金额*准入单的贷款产品的返点比例
                 Long loanAmount = budgetOrder.getLoanAmount();
+                BizTeam bizTeam = bizTeamBO.getBizTeam(budgetOrder
+                    .getTeamCode());
                 repoint.setTeamCode(budgetOrder.getTeamCode());
+                repoint.setCaptain(bizTeam.getCaptain());
                 repoint.setBizCode(budgetOrder.getCode());
                 repoint.setAccountNo(bizTeam.getAccountNo());
+
                 repoint.setBank(bizTeam.getBank());
                 repoint.setSubbranch(bizTeam.getSubbranch());
-
                 double backRate = loanProduct.getBackRate();
                 long shouldAmount = AmountUtil.mul(loanAmount, backRate);
                 repoint.setShouldAmount(shouldAmount);
+
                 repoint.setStatus(ERepointStatus.TODO.getCode());
                 repoint.setUpdater(operator);
                 repoint.setUpdateDatetime(new Date());
