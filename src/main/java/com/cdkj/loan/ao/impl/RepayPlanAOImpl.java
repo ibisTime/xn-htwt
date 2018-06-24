@@ -188,6 +188,15 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款计划不是逾期状态");
         }
+
+        // 判断当前还款计划是否有多条红名单处理中，有则不能处理
+        int count = repayPlanBO.getTotalCount(repayPlan.getRepayBizCode(),
+            ERepayPlanNode.QKCSB_APPLY_TC);
+        if (count >= 1) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "之前逾期还款计划还未处理完！");
+        }
+
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
         if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),

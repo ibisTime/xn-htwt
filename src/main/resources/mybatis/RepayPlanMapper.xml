@@ -87,7 +87,7 @@
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
 			<if test="overdueHandler != null and overdueHandler != '' ">
-				AND t.codoverdue_handlere = #{overdueHandler}
+				AND t.overdue_handler = #{overdueHandler}
 			</if>
 			<if test="repayStartDatetime != null and repayStartDatetime != '' ">
 				<![CDATA[AND t.repay_datetime >= #{repayStartDatetime}]]>
@@ -460,6 +460,9 @@
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
+		,overplus_amount = #{overplusAmount}
+		,overdue_amount = #{overdueAmount}
+		,real_repay_amount = #{realRepayAmount}
 		WHERE code = #{code}
 	</update>
 	
@@ -479,10 +482,10 @@
 	</update>
 	
 	<update id="update_settleDaily" parameterType="repayPlan">
-		UPDATE tdh_repay_plan t 
+		UPDATE tdh_repay_plan 
 		SET
-		t.cur_node_code = #{curNodeCode}
-		,t.overplus_amount = #{overplusAmount}
+		cur_node_code = #{curNodeCode}
+		,overplus_amount = #{overplusAmount}
 		,real_repay_amount = #{realRepayAmount}
 		WHERE code = #{code}
 	</update>

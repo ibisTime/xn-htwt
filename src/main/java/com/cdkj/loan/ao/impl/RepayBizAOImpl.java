@@ -595,23 +595,51 @@ public class RepayBizAOImpl implements IRepayBizAO {
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             if (ERepayPlanSuggest.SIX_SAFEGUARDS.getCode().equals(
                 repayPlan.getSuggest())) {
+                // 还款计划处理
+                repayPlan.setOverdueAmount(0L);
+                repayPlan.setOverplusAmount(0L);
+                repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
                 repayPlanBO.financeApprove(repayPlan);
 
-                repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
+                // 还款业务处理
+                if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {
+                    repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK
+                        .getCode());
+                } else {
+                    repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
+                }
                 repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() - 1);
+
+                repayBiz.setRestAmount(repayBiz.getRestAmount()
+                        - repayPlan.getRepayAmount());
                 repayBiz.setOverdueAmount(repayBiz.getOverdueAmount()
                         - repayPlan.getOverdueAmount());
                 repayBiz.setUpdater(req.getOperator());
                 repayBiz.setUpdateDatetime(new Date());
                 repayBizBO.financeApprove(repayBiz);
             } else {
+                // 还款计划处理
+                repayPlan.setOverdueAmount(0L);
+                repayPlan.setOverplusAmount(0L);
+                repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
                 repayPlanBO.financeApprove(repayPlan);
 
+                // 剩下还款计划还清
+                List<RepayPlan> repayPlanList = repayPlanBO
+                    .queryRepayPlanListByRepayBizCode(repayBiz.getCode(),
+                        ERepayPlanNode.TO_REPAY);
+                for (RepayPlan domain : repayPlanList) {
+                    repayPlanBO.refreshSettleDaily(domain,
+                        domain.getRepayAmount());
+                }
+
+                // 还款业务处理
                 repayBiz.setCurNodeCode(ERepayBizNode.RELEASE_MORTGAGE
                     .getCode());
                 repayBiz.setCurOverdueCount(0);
+                repayBiz.setRestAmount(0L);
                 repayBiz.setOverdueAmount(0L);
                 repayBiz.setUpdater(req.getOperator());
                 repayBiz.setUpdateDatetime(new Date());

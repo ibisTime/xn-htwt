@@ -125,18 +125,10 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
         }
     }
 
-    /** 
-     * @param overdueMenu
-     * @param repayBiz
-     * @param overDueRepayPlan 
-     * @create: 2018年6月12日 上午6:17:54 xieyj
-     * @history: 
-     */
+    // 更新还款业务和还款计划金额
     private void refreshRepayInfo(OverdueMenu overdueMenu, RepayBiz repayBiz,
             RepayPlan overDueRepayPlan) {
-        long totalRepayAmount = overDueRepayPlan.getRepayCapital()
-                + overDueRepayPlan.getRepayInterest();
-        overDueRepayPlan.setOverdueAmount(totalRepayAmount);
+        overDueRepayPlan.setOverdueAmount(overDueRepayPlan.getRepayAmount());
         repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新还款计划逾期金额
 
         // 更新还款业务逾期金额

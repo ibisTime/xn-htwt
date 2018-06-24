@@ -16,6 +16,9 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
 
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode, ERepayPlanNode repayPlanNode);
+
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode);
 
@@ -71,7 +74,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     // 财务经理审核
     public void financeApprove(RepayPlan repayPlan);
 
-    public int getTotalCount(String repayPlanCode, ERepayPlanNode repayPlanNode);
+    public int getTotalCount(String repayBizCode, ERepayPlanNode repayPlanNode);
 
     // 缴纳清收成本
     public void payFee(RepayPlan repayPlan);
