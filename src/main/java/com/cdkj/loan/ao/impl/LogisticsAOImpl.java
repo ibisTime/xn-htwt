@@ -21,6 +21,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -60,15 +61,24 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Override
     @Transactional
     public void sendLogistics(XN632150Req req) {
-        Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
-                    data.getStatus())) {
-            throw new BizException("xn0000", "资料不是待发货状态!");
+        Logistics logistics = logisticsBO.getLogistics(req.getCode());
+        if (!ELogisticsStatus.TO_SEND.getCode().equals(logistics.getStatus())
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
+                    .equals(logistics.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待发货状态!");
+        }
+        // 操作人
+        SYSUser condition = new SYSUser();
+        condition.setUserId(req.getOperater());
+        condition.setTeamCode(logistics.getTeamCode());
+        long count = sysUserBO.getTotalCount(condition);
+        if (count <= 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "操作人不属于发件人所属团队，不能操作！");
         }
 
         // 发件
-        Logistics logistics = new Logistics();
         logistics.setCode(req.getCode());
         logistics.setSendFileList(req.getSendFileList());
         logistics.setSendType(req.getSendType());
@@ -81,11 +91,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
         logisticsBO.sendLogistics(logistics);
 
-        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
-            gpsApplyBO.sendGps(data.getBizCode(), logistics.getSendDatetime());
+        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
+            gpsApplyBO.sendGps(logistics.getBizCode(),
+                logistics.getSendDatetime());
         }
 
-        // 操作人
     }
 
     @Override
@@ -94,6 +104,15 @@ public class LogisticsAOImpl implements ILogisticsAO {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
+        }
+        // 操作人
+        SYSUser condition = new SYSUser();
+        condition.setUserId(operator);
+        condition.setTeamCode(data.getTeamCode());
+        long count = sysUserBO.getTotalCount(condition);
+        if (count <= 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "发件人团队人员不能收件！");
         }
         logisticsBO.receiveLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
@@ -104,7 +123,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator, String remark) {
+    public void sendAgainLogistics(String code, String operator,
+            String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
