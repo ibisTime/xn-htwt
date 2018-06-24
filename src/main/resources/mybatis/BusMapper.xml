@@ -80,11 +80,16 @@
 		)
 	</insert>
 	
-	<delete id="delete_bus" parameterType="bus">
-		DELETE FROM tp_bus
+	<update id="delete_bus" parameterType="bus">
+		UPDATE tp_bus
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE
 		code = #{code}
-	</delete>
+	</update>
 
 	<update id="update_bus" parameterType="bus">
 		UPDATE tp_bus

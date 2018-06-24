@@ -23,7 +23,7 @@ public class XN632781 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        busAO.dropBus(req.getCode());
+        busAO.dropBus(req.getCode(), req.getUpdater(), req.getRemark());
         return new BooleanRes(true);
     }
 

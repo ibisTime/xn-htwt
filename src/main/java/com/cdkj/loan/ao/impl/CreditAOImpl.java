@@ -207,7 +207,12 @@ public class CreditAOImpl implements ICreditAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "征信申请人只能填写一条数据");
                 }
-                CreditUser creditUser = new CreditUser();
+                if (StringUtils.isBlank(child.getCreditUserCode())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "要修改的征信人员编号不能为空！");
+                }
+                CreditUser creditUser = creditUserBO
+                    .getCreditUser(child.getCreditUserCode());
                 creditUser.setUserName(child.getUserName());
                 creditUser.setLoanRole(child.getLoanRole());
                 creditUser.setRelation(child.getRelation());

@@ -7,7 +7,7 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EBusStatus {
-    NO_COLLAR("0", "未领用"), COLLAR_DURING("1", "领用中");
+    NO_COLLAR("0", "未领用"), COLLAR_DURING("1", "领用中"), CANCELLATION("2", "已注销");
 
     EBusStatus(String code, String value) {
         this.code = code;

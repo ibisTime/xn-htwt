@@ -39,8 +39,13 @@ public class BusAOImpl implements IBusAO {
     }
 
     @Override
-    public int dropBus(String code) {
-        return busBO.removeBus(code);
+    public int dropBus(String code, String updater, String remark) {
+        Bus bus = busBO.getBus(code);
+        bus.setStatus(EBusStatus.CANCELLATION.getCode());
+        bus.setUpdater(updater);
+        bus.setUpdateDatetime(new Date());
+        bus.setRemark(remark);
+        return busBO.removeBus(bus);
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBusDAO;
 import com.cdkj.loan.domain.Bus;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -31,10 +32,8 @@ public class BusBOImpl extends PaginableBOImpl<Bus> implements IBusBO {
     }
 
     @Override
-    public int removeBus(String code) {
-        Bus data = new Bus();
-        data.setCode(code);
-        return busDAO.delete(data);
+    public int removeBus(Bus bus) {
+        return busDAO.delete(bus);
     }
 
     @Override
@@ -55,7 +54,8 @@ public class BusBOImpl extends PaginableBOImpl<Bus> implements IBusBO {
             condition.setCode(code);
             data = busDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "公车不存在！");
             }
         }
         return data;
