@@ -9,8 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.BudgetOrder;
 
 @Repository("budgetOrderDAOImpl")
-public class BudgetOrderDAOImpl extends AMybatisTemplate implements
-        IBudgetOrderDAO {
+public class BudgetOrderDAOImpl extends AMybatisTemplate
+        implements IBudgetOrderDAO {
 
     @Override
     public int insert(BudgetOrder data) {
@@ -111,15 +111,15 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     @Override
     public List<BudgetOrder> selectList(BudgetOrder condition) {
-        return super.selectList(NAMESPACE.concat("select_budgetOrderList"),
+        return super.selectList(NAMESPACE.concat("select_budgetOrder"),
             condition, BudgetOrder.class);
     }
 
     @Override
     public List<BudgetOrder> selectList(BudgetOrder condition, int start,
             int count) {
-        return super.selectList(NAMESPACE.concat("select_budgetOrderList"),
-            start, count, condition, BudgetOrder.class);
+        return super.selectList(NAMESPACE.concat("select_budgetOrder"), start,
+            count, condition, BudgetOrder.class);
     }
 
     @Override

@@ -56,8 +56,8 @@ public class CarBreak extends ABaseDO {
     // 备注
     private String remark;
 
-    // 违章人档案
-    private Archive applyUserArchive;
+    // 用户
+    private SYSUser user;
 
     public Date getApplyDatetime() {
         return applyDatetime;
@@ -171,12 +171,12 @@ public class CarBreak extends ABaseDO {
         this.remark = remark;
     }
 
-    public Archive getApplyUserArchive() {
-        return applyUserArchive;
+    public SYSUser getUser() {
+        return user;
     }
 
-    public void setApplyUserArchive(Archive applyUserArchive) {
-        this.applyUserArchive = applyUserArchive;
+    public void setUser(SYSUser user) {
+        this.user = user;
     }
 
 }

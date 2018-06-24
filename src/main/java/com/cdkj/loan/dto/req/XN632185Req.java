@@ -16,6 +16,9 @@ public class XN632185Req extends APageReq {
     // 业务编号
     private String bizCode;
 
+    // 是否垫资
+    private String isAdvanceFund;
+
     // 申请时间起
     private String startDatetime;
 
@@ -28,6 +31,14 @@ public class XN632185Req extends APageReq {
 
     public void setApplyUserName(String applyUserName) {
         this.applyUserName = applyUserName;
+    }
+
+    public String getIsAdvanceFund() {
+        return isAdvanceFund;
+    }
+
+    public void setIsAdvanceFund(String isAdvanceFund) {
+        this.isAdvanceFund = isAdvanceFund;
     }
 
     public String getBizCode() {

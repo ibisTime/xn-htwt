@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IAskForApplyAO;
-import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IAskForApplyBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.AskForApply;
 import com.cdkj.loan.dto.req.XN632650Req;
@@ -22,7 +22,7 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
     private IAskForApplyBO askForApplyBO;
 
     @Autowired
-    private IArchiveBO archiveBO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addAskForApply(XN632650Req req) {
@@ -56,11 +56,11 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
         Paginable<AskForApply> paginable = askForApplyBO.getPaginable(start,
             limit, condition);
         for (AskForApply askForApply : paginable.getList()) {
-            String realName = archiveBO
-                .getArchiveByUserid(askForApply.getApplyUser()).getRealName();
+            String realName = sysUserBO.getUser(askForApply.getApplyUser())
+                .getRealName();
             askForApply.setApplyUserName(realName);
-            String leadUserName = archiveBO
-                .getArchiveByUserid(askForApply.getLeadUserId()).getRealName();
+            String leadUserName = sysUserBO.getUser(askForApply.getLeadUserId())
+                .getRealName();
             askForApply.setLeadUserName(leadUserName);
         }
         return paginable;
@@ -74,11 +74,11 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
     @Override
     public AskForApply getAskForApply(String code) {
         AskForApply askForApply = askForApplyBO.getAskForApply(code);
-        String realName = archiveBO
-            .getArchiveByUserid(askForApply.getApplyUser()).getRealName();
+        String realName = sysUserBO.getUser(askForApply.getApplyUser())
+            .getRealName();
         askForApply.setApplyUserName(realName);
-        String leadUserName = archiveBO
-            .getArchiveByUserid(askForApply.getLeadUserId()).getRealName();
+        String leadUserName = sysUserBO.getUser(askForApply.getLeadUserId())
+            .getRealName();
         askForApply.setLeadUserName(leadUserName);
         return askForApply;
     }

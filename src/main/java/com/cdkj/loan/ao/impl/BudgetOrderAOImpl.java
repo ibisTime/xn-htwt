@@ -175,10 +175,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long companyFee = null;
         if (EBoolean.YES.getCode().equals(loanProduct.getIsPre())) {
             companyFee = AmountUtil.mul(loanAmount, loanProduct.getPreRate());
+        } else {
+            Long amount1 = AmountUtil.mul(loanAmount,
+                (loanProduct.getYearRate() * 3 - 0.09));
+            companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
         }
-        Long amount1 = AmountUtil.mul(loanAmount,
-            (loanProduct.getYearRate() * 3 - 9) / 100);
-        companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
         data.setCompanyFee(companyFee);
         data.setTeamFee(StringValidater.toLong(req.getTeamFee()));
 
@@ -803,6 +804,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是确认提交银行节点，不能操作");
         }
+        if (EBudgetFrozenStatus.FROZEN.getCode()
+            .equals(budgetOrder.getFrozenStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前预算单已被冻结，不能操作");
+        }
 
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
@@ -1203,6 +1209,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void applyCancel(XN632190Req req) {
 
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        int compareTo = EBudgetOrderNode.COMMITBANK.getCode()
+            .compareTo(budgetOrder.getCurNodeCode());
+        if (compareTo <= 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点已经过提交银行节点，不能申请作废！");
+        }
+
         budgetOrder.setRemark(req.getRemark());
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
         budgetOrder.setCancelNodeCode(budgetOrder.getCurNodeCode());
