@@ -17,6 +17,7 @@ public class XN632151Req {
     private String remark;
 
     // 操作人
+    @NotBlank
     private String operater;
 
     public String getOperater() {

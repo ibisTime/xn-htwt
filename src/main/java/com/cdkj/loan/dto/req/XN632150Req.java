@@ -35,6 +35,7 @@ public class XN632150Req {
     private String sendNote;
 
     // 操作人
+    @NotBlank
     private String operater;
 
     public String getOperater() {

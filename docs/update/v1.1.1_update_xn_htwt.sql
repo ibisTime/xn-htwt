@@ -1,6 +1,10 @@
 ALTER TABLE `tdq_credit` 
 ADD COLUMN `team_code` VARCHAR(32) NULL COMMENT '团队编号' AFTER `sale_user_id`;
 
+ALTER TABLE `tdq_loan_product` 
+CHANGE COLUMN `loan_bank` `loan_bank` VARCHAR(255) NULL DEFAULT NULL COMMENT '贷款银行' AFTER `back_rate`,
+ADD COLUMN `is_pre` CHAR(1) NULL COMMENT '是否前置' AFTER `loan_bank`;
+
 update tdq_credit tc,tsys_user tu set tc.team_code=tu.team_code where tc.sale_user_id=tu.user_id;
 
 ALTER TABLE `tsys_department` 
@@ -103,6 +107,38 @@ CREATE TABLE `tp_business_trip_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出差申请';
+
+CREATE TABLE `tp_bus` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `model` varchar(32) DEFAULT NULL COMMENT '车辆型号',
+  `number` varchar(32) DEFAULT NULL COMMENT '车牌号',
+  `insurance_end_datetime` datetime DEFAULT NULL COMMENT '保险到期日',
+  `park_location` varchar(255) DEFAULT NULL COMMENT '停放位置',
+  `pic` varchar(255) DEFAULT NULL COMMENT '车辆照片',
+  `status` varchar(4) DEFAULT NULL COMMENT '领用状态',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公车';
+
+CREATE TABLE `tp_bus_borrow` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `bus_code` varchar(32) DEFAULT NULL COMMENT '公车编号',
+  `apply_user` varchar(32) DEFAULT NULL COMMENT '申领人',
+  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
+  `apply_note` varchar(255) DEFAULT NULL COMMENT '领用说明',
+  `department_code` varchar(32) DEFAULT NULL COMMENT '所属部门',
+  `use_datetime_start` datetime DEFAULT NULL COMMENT '使用时间起',
+  `use_datetime_end` datetime DEFAULT NULL COMMENT '使用时间止',
+  `drive_kil` double DEFAULT NULL COMMENT '行驶公里数',
+  `return_datetime` datetime DEFAULT NULL COMMENT '归还时间',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公车借用';
 
 /*
 -- Query: SELECT `code`,`name`,`type`,`remark` FROM tsys_node where type='009'
@@ -247,6 +283,39 @@ ALTER TABLE `tdh_repay_plan`
 CHANGE COLUMN `repay_interest` `repay_interest` BIGINT(20) NULL DEFAULT NULL COMMENT '本期利息' ,
 ADD COLUMN `month_repay_amount` BIGINT(20) NULL COMMENT '还款金额' AFTER `repay_interest`;
 
+delete from tsys_menu where code in('SM201806082250402178394','SM201806082258364384563','SM201806082259103138937','SM201806082259536645110','SM201806082300058567560','SM201806082300333927480','SM201806082300569115566','SM201806082301163207610');
+/*
+-- Query: SELECT code,name,type,url,order_no,'admin' updater, now() as update_datetime,remark,parent_code FROM tsys_menu where code ='SM201806082250402178394' or code in 
+(SELECT code  FROM tsys_menu where parent_code ='SM201806082250402178394')
+or code in 
+(SELECT code  FROM tsys_menu where parent_code in (SELECT code  FROM tsys_menu where parent_code ='SM201806082250402178394'))
+-- Date: 2018-06-25 02:48
+*/
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082250402178394','GPS设备管理','1','#','4','admin',now(),'','SM201806070023189526060');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082258364384563','GPS库存管理','1','/postloantools/manageGps.htm','1','admin',now(),'','SM201806082250402178394');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082259103138937','GPS申领','1','/postloantools/applyGps.htm','2','admin',now(),'','SM201806082250402178394');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082259536645110','新增','2','/add','1','admin',now(),'','SM201806082258364384563');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082300058567560','详情','2','/detail','2','admin',now(),'','SM201806082258364384563');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082300333927480','申领','2','/apply','1','admin',now(),'','SM201806082259103138937');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082300569115566','审核','2','/check','2','admin',now(),'','SM201806082259103138937');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806082301163207610','详情','2','/detail','3','admin',now(),'','SM201806082259103138937');
+
+delete from tsys_menu_role where menu_code in('SM201806082250402178394','SM201806082258364384563','SM201806082259103138937','SM201806082259536645110','SM201806082300058567560','SM201806082300333927480','SM201806082300569115566','SM201806082301163207610');
+/*
+-- Query: SELECT 'RO201800000000000001' role_code,code as menu_code ,'admin' updater, now() as update_datetime,'' remark FROM tsys_menu where code ='SM201806082250402178394' or code in 
+(SELECT code  FROM tsys_menu where parent_code ='SM201806082250402178394')
+or code in 
+(SELECT code  FROM tsys_menu where parent_code in (SELECT code  FROM tsys_menu where parent_code ='SM201806082250402178394'))
+-- Date: 2018-06-25 02:49
+*/
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082250402178394','admin',now(),'');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082258364384563','admin',now(),'');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082259103138937','admin',now(),'');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082259536645110','admin',now(),'');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082300058567560','admin',now(),'');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082300333927480','admin',now(),'');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082300569115566','admin',now(),'');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806082301163207610','admin',now(),'');
 
 delete from tsys_dict;
 
@@ -685,6 +754,7 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','node_type','005','商品还款业务','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','node_type','006','商品还款计划','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','node_type','007','客户作废','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','node_type','009','出差申请','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'cost_status','清收成本状态','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','cost_status','0','待收款','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','cost_status','1','已收款','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
@@ -719,3 +789,18 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','remit_project','3','银行服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','remit_project','4','公司服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','remit_project','5','团队服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
+delete from tsys_role where code ='SR201805291831307966076';
+update tsys_menu_role set role_code='SR201805301244280427951' where role_code ='SR201805291831307966076';
+
+/*
+-- Query: SELECT `code`,`name`,`type`,`url`,`order_no`,`updater`,now() `update_datetime`,`remark`,`parent_code` FROM tsys_menu where code ='SM201806221601282435066'
+-- Date: 2018-06-25 04:33
+*/
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806221601282435066','新增','2','/add','1','U201806061344020605969','2018-06-24 20:33:11','数据字典管理','SM201804242145538683194');
+
+/*
+-- Query: SELECT 'RO201800000000000001' role_code,code as menu_code ,'admin' updater, now() as update_datetime,'' remark FROM tsys_menu where code ='SM201806221601282435066'
+-- Date: 2018-06-25 04:35
+*/
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201806221601282435066','admin','2018-06-24 20:35:06','');
