@@ -67,4 +67,7 @@ public class SysConstants {
     public static String TX_SECRET_KEY = "tx_secret_key";// 私钥
 
     public static String TX_ACCOUNT_TYPE = "tx_account_type";// 账号类型
+
+    // 每次处理的条数
+    public static String REPAYPLAN_STEP = "repayplan_step";// 每次处理的条数
 }

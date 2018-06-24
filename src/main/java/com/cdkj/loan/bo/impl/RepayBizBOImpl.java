@@ -17,6 +17,7 @@ import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
@@ -29,7 +30,6 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
-import com.cdkj.loan.enums.ESysUser;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -75,26 +75,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
-        return repayBizDAO.selectList(condition);
-    }
-
-    @Override
-    public RepayBiz getRepayBiz(String code) {
-        RepayBiz data = null;
-        if (StringUtils.isNotBlank(code)) {
-            RepayBiz condition = new RepayBiz();
-            condition.setCode(code);
-            data = repayBizDAO.select(condition);
-            if (data == null) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "还款业务编号" + code + "不存在");
-            }
-        }
-        return data;
-    }
-
-    @Override
     public RepayBiz generateCarLoanRepayBiz(BudgetOrder budgetOrder,
             String userId, String bankcardCode, String operator) {
         RepayBiz repayBiz = new RepayBiz();
@@ -122,9 +102,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setBankRate(0.0);// 作废
 
         repayBiz.setBankFkDatetime(budgetOrder.getBankFkDatetime());
-        Date now = new Date();
-        repayBiz.setLoanStartDatetime(now);
-        Date addMonths = DateUtils.addMonths(now, repayBiz.getPeriods());
+        Date loanDate = DateUtil.getTodayStart();
+        repayBiz.setLoanStartDatetime(loanDate);
+        Date addMonths = DateUtils.addMonths(loanDate, repayBiz.getPeriods());
         repayBiz.setLoanEndDatetime(addMonths);
         repayBiz.setFxDeposit(0L);
 
@@ -156,16 +136,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void refreshRepayCarLoan(String repayBizCode, Long realWithholdAmount) {
-        RepayBiz repayBiz = getRepayBiz(repayBizCode);
-        repayBiz.setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
-        if (repayBiz.getRestAmount() == 0) {
-            repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());// 到清欠催收部审核节点
-            repayBiz.setRemark("清欠催收部待审核");
-        }
-        repayBiz.setUpdater(ESysUser.SYS_USER_HTWT.getCode());
+    public void refreshRepayCarAll(RepayBiz repayBiz) {
+        repayBiz.setRestAmount(0L);
+        repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());// 到清欠催收部审核节点
+        repayBiz.setRestPeriods(0);
+        repayBiz.setRemark("清欠催收部待审核");
         repayBiz.setUpdateDatetime(new Date());
-
         repayBizDAO.updateRepayAll(repayBiz);
     }
 
@@ -185,6 +161,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
             Long realWithholdAmount) {
         repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());
         repayBiz.setIsAdvanceSettled(EBoolean.YES.getCode());
+        repayBiz.setRestPeriods(0);
         repayBiz.setRestAmount(0L);
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark("已结清，待清欠催收部审核");
@@ -260,10 +237,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount) {
+    public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount,
+            int restPeriods) {
         if (repayBiz != null && realWithholdAmount != null) {
             repayBiz.setRestAmount(repayBiz.getRestAmount()
                     - realWithholdAmount);
+            repayBiz.setRestPeriods(repayBiz.getRestPeriods() - restPeriods);
             repayBizDAO.updateRepayBizRestAmount(repayBiz);
         }
     }
@@ -274,24 +253,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public void refreshAdvanceRepayProduct(RepayBiz repayBiz,
             Long realWithholdAmount) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /** 
-     * @see com.cdkj.loan.bo.IRepayBizBO#refreshRepayAllCarProduct(java.lang.String)
-     */
-    @Override
-    public void refreshRepayAllCarProduct(String repayBizCode) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /** 
-     * @see com.cdkj.loan.bo.IRepayBizBO#confirmSettledCarProduct(com.cdkj.loan.domain.RepayBiz)
-     */
-    @Override
-    public void confirmSettledCarProduct(RepayBiz repayBiz) {
         // TODO Auto-generated method stub
 
     }
@@ -413,6 +374,31 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
+    public void repayOverdue(RepayBiz repayBiz) {
+        repayBizDAO.repayOverDue(repayBiz);
+    }
+
+    @Override
+    public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
+        return repayBizDAO.selectList(condition);
+    }
+
+    @Override
+    public RepayBiz getRepayBiz(String code) {
+        RepayBiz data = null;
+        if (StringUtils.isNotBlank(code)) {
+            RepayBiz condition = new RepayBiz();
+            condition.setCode(code);
+            data = repayBizDAO.select(condition);
+            if (data == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "还款业务编号" + code + "不存在");
+            }
+        }
+        return data;
+    }
+
+    @Override
     public Paginable<RepayBiz> getPaginableByRoleCode(int start, int limit,
             RepayBiz condition) {
         prepare(condition);
@@ -425,8 +411,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void repayOverdue(RepayBiz repayBiz) {
-        repayBizDAO.repayOverDue(repayBiz);
-    }
+    public void refreshRepayAllProduct(String repayBizCode, Long realPayAmount) {
+        // TODO Auto-generated method stub
 
+    }
 }

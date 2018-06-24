@@ -42,6 +42,9 @@ public class RepayPlan extends ABaseDO {
     // 本期利息
     private Long repayInterest;
 
+    // 本期还款金额
+    private Long repayAmount;
+
     // 已还金额
     private Long payedAmount;
 
@@ -153,7 +156,7 @@ public class RepayPlan extends ABaseDO {
     // 团队买断扣除金额
     private Long buyOutAmount;
 
-    // ****** 辅助字段 ******
+    // ************************db properties************************
     // 还款计划开始时间
     private Date repayStartDatetime;
 
@@ -178,14 +181,19 @@ public class RepayPlan extends ABaseDO {
     // 未结清贷款金额
     private Long unsettledLoan;
 
-    // 本月还款金额
-    private Long monthRepayAmount;
-
     // 还款卡号
     private String bankcardNumber;
 
     // 角色编号
     private String roleCode;
+
+    public Long getRepayAmount() {
+        return repayAmount;
+    }
+
+    public void setRepayAmount(Long repayAmount) {
+        this.repayAmount = repayAmount;
+    }
 
     public String getRefType() {
         return refType;
@@ -401,14 +409,6 @@ public class RepayPlan extends ABaseDO {
 
     public void setBankcardNumber(String bankcardNumber) {
         this.bankcardNumber = bankcardNumber;
-    }
-
-    public Long getMonthRepayAmount() {
-        return monthRepayAmount;
-    }
-
-    public void setMonthRepayAmount(Long monthRepayAmount) {
-        this.monthRepayAmount = monthRepayAmount;
     }
 
     public Long getUnsettledLoan() {

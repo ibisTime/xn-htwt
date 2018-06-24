@@ -41,4 +41,6 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int repayAmount(RepayPlan repayPlan);
 
+    public int updateSettleDaily(RepayPlan data);
+
 }

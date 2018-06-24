@@ -20,12 +20,12 @@ public interface IRepayPlanAO {
     public Paginable<RepayPlan> queryRepayPlanPageByRoleCode(int start,
             int limit, RepayPlan condition);
 
-    // 按月还款
-    public void repayMonthly(String code, String operator);
-
     // 当月还款名单
     public Object queryCurrentMonthRepayPage(int start, int limit,
             RepayPlan condition);
+
+    // 获取未结清贷款
+    public Long getUnsettledLoan();
 
     // 逾期处理
     public void overdueHandle(XN630532Req req);
@@ -35,11 +35,12 @@ public interface IRepayPlanAO {
             String operator);
 
     // 记黑名单
-    public void ToBlack(String code);
-
-    public Long getUnsettledLoan();
+    public void transferBlackByProduct(String code);
 
     // 缴纳代偿金额
-    public void repayAmount(String code, String operator, String payType);
+    public void chargeRepayAmount(String code, String operator, String payType);
+
+    // 每天凌晨定时更新还款计划状态为已结清
+    public void doSettleDaily();
 
 }

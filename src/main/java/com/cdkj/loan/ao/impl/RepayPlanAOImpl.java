@@ -3,6 +3,9 @@ package com.cdkj.loan.ao.impl;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,7 @@ import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.dto.req.XN630535Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -43,6 +47,9 @@ import com.cdkj.loan.exception.BizException;
 
 @Service
 public class RepayPlanAOImpl implements IRepayPlanAO {
+
+    private static final Logger logger = LoggerFactory
+        .getLogger(RepayPlanAOImpl.class);
 
     @Autowired
     private IRepayPlanBO repayPlanBO;
@@ -89,11 +96,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
         }
 
-        // RepayPlan repayPlan = repayPlanBO.getRepayPlan(condition.getCode());
-        // Cost cost = new Cost();
-        // cost.setRepayPlanCode(condition.getCode());
-        // List<Cost> list = costBO.queryCostList(cost);
-        // repayPlan.setCostList(list);
         return results;
     }
 
@@ -132,81 +134,13 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         return repayPlan;
     }
 
-    @Override
-    @Transactional
-    public void repayMonthly(String code, String operator) {
-
-        // 查询还款计划
-        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
-
-        // 查询还款业务
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
-
-        // 校验是否是待还款节点
-        if (!ERepayPlanNode.TO_REPAY.getCode().equals(
-            repayPlan.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "本期还款计划不处于待还款节点");
-        }
-
-        // 检查是否有未还清的还款计划
-        if (repayPlanBO.checkPreUnpay(repayPlan.getRepayBizCode(),
-            repayPlan.getCurPeriods())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "本期之前您还有未还款的计划");
-        }
-
-        // 本次应扣款的金额
-        Long shouldWithholdAmount = repayPlan.getOverplusAmount();
-        // 还款卡获取
-        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-        // 宝付代扣发起，返回本次真实扣成功的金额
-        Long realWithholdAmount = baofuWithhold(bankcard, shouldWithholdAmount);
-        // 该还款计划本次代扣完成后剩余应还金额
-        Long overplusAmount = shouldWithholdAmount - realWithholdAmount;
-        if (overplusAmount <= 0) {// 本次计划还清了
-            repayAll(repayPlan, repayBiz, realWithholdAmount);
-        } else { // 扣了一部分
-            repayPart(repayPlan, repayBiz, realWithholdAmount);
-        }
-    }
-
-    private void repayPart(RepayPlan repayPlan, RepayBiz repayBiz,
-            Long realWithholdAmount) {
-        // 还剩多少 付了多少
-        // 1、更新本次还款计划的剩余应还款金额和已支付金额
-        repayPlanBO.repayPartSuccess(repayPlan, realWithholdAmount);
-
-        // 2、更新还款业务的剩余总额
-        repayBizBO.refreshRestAmount(repayBiz, realWithholdAmount);
-    }
-
-    private void repayAll(RepayPlan repayPlan, RepayBiz repayBiz,
-            Long realWithholdAmount) {
-        // 更新还款计划
-        repayPlanBO.repaySuccess(repayPlan, realWithholdAmount);
-
-        // 更新还款业务剩余金额,并判断是否全部缴清
-        repayBizBO.refreshRepayCarLoan(repayPlan.getRepayBizCode(),
-            realWithholdAmount);
-
-        // repayBizBO.refreshRestAmount(repayBiz, realWithholdAmount);
-        // // 检查是否已经全部正常还款
-        // if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode(),
-        // repayPlan.getCode())) {
-        // }
-
-        // 增加信用分
-        addCreditScore(repayPlan, repayBiz);
-    }
-
-    private void addCreditScore(RepayPlan repayPlan, RepayBiz repayBiz) {
+    private void addCreditScore(RepayPlan repayPlan) {
         // 加信用分
         Account account = accountBO.getAccountByUser(repayPlan.getUserId(),
             ECurrency.XYF.getCode());
 
         // 判断是汽车还是商品
-        String refType = repayBiz.getRefType();
+        String refType = repayPlan.getRefType();
         BigDecimal changeScore = null;
         if (refType.equals(ERepayBizType.CAR.getCode())) {
             changeScore = sysConfigBO
@@ -240,9 +174,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
             repayPlan.setRepayBiz(repayBizBO.getRepayBiz(repayPlan
                 .getRepayBizCode()));
-            Long monthRepayAmount = repayPlan.getRepayCapital()
-                    + repayPlan.getRepayInterest();
-            repayPlan.setMonthRepayAmount(monthRepayAmount);
         }
         return results;
     }
@@ -315,7 +246,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     }
 
     @Override
-    public void repayAmount(String code, String operator, String payType) {
+    public void chargeRepayAmount(String code, String operator, String payType) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setRealRepayAmount(repayPlan.getOverdueAmount());
         repayPlan.setIsRepay(EResultStatus.YES.getCode());
@@ -324,7 +255,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     }
 
     @Override
-    public void ToBlack(String code) {
+    public void transferBlackByProduct(String code) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK.getCode());
         repayPlanBO.refreshToBlackProduct(repayPlan);
@@ -362,4 +293,57 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         return paginable;
     }
 
+    @Override
+    public void doSettleDaily() {
+        logger.info("***************开始扫结束还款计划***************");
+        SYSConfig sysConfig = sysConfigBO
+            .getSYSConfig(SysConstants.REPAYPLAN_STEP);
+        int step = Integer.valueOf(sysConfig.getCvalue()); // 每次处理的条数
+        while (true) {
+            RepayPlan condition = new RepayPlan();
+            // 10号还款，11号凌晨算正常还款
+            condition.setRepayEndDatetime(DateUtil.getRelativeDateOfDays(
+                DateUtil.getTodayStart(), -1));
+            condition.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
+            Paginable<RepayPlan> page = repayPlanBO.getPaginable(0, step,
+                condition);
+            if (null != page) {
+                List<RepayPlan> list = page.getList();
+                if (CollectionUtils.isNotEmpty(list)) {
+                    doDailyRepayPlan(list);
+                    if (list.size() < step) {// 最后一批
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+        logger.info("***************结束扫结束还款计划***************");
+    }
+
+    // 逻辑:
+    // 1、将本月还款计划更新为已还款
+    // 2、如果最后一期还款计划已完成，将还款业务节点更改为提交结算单
+    private void doDailyRepayPlan(List<RepayPlan> list) {
+        for (RepayPlan repayPlan : list) {
+            // 还款计划结算
+            repayPlanBO.refreshSettleDaily(repayPlan,
+                repayPlan.getRepayAmount());
+
+            // 还款业务处理
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan
+                .getRepayBizCode());
+            // 还款计划进行到最后一期，更新还款业务
+            if (repayPlan.getPeriods() == repayPlan.getCurPeriods()) {
+                repayBizBO.refreshRepayCarAll(repayBiz);
+            } else {
+                repayBizBO.refreshRestAmount(repayBiz,
+                    repayPlan.getRepayAmount(), 1);
+            }
+
+            // 用户增加信用分
+            addCreditScore(repayPlan);
+        }
+    }
 }

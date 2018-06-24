@@ -1,3 +1,4 @@
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('repayplan','repayplan_step','50','admin',now(),'还款计划每次处理的条数','CD-CHTWT000020','CD-CHTWT000020');
 
 /*
 -- Query: SELECT * FROM xn_htwt_online.tb_collect_bankcard
