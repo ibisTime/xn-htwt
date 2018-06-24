@@ -67,6 +67,17 @@ public class BusBorrow extends ABaseDO {
     // 公车车型
     private String busMobile;
 
+    // 公车车牌号
+    private String busNumber;
+
+    public String getBusNumber() {
+        return busNumber;
+    }
+
+    public void setBusNumber(String busNumber) {
+        this.busNumber = busNumber;
+    }
+
     public String getBusMobile() {
         return busMobile;
     }

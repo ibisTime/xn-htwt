@@ -356,12 +356,6 @@
 			<if test="frozenStatus != null and frozenStatus != ''">
 				AND t.frozen_status = #{frozenStatus}
 			</if>
-			<if test="companyName != null and companyName != ''">
-				AND t.company_name like "%"#{companyName}"%"
-			</if>
-			<if test="saleUserName != null and saleUserName != ''">
-				AND t.sale_user_name like "%"#{saleUserName}"%"
-			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">

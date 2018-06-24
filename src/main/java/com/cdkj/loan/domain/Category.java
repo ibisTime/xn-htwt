@@ -1,11 +1,3 @@
-/**
- * @Title Category.java 
- * @Package com.xnjr.mall.domain 
- * @Description 
- * @author haiqingzheng  
- * @date 2016年11月16日 上午11:11:51 
- * @version V1.0   
- */
 package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;

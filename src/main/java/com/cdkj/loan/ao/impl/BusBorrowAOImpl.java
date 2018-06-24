@@ -156,6 +156,7 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
         if (StringUtils.isNotBlank(busBorrow.getBusCode())) {
             Bus bus = busBO.getBus(busBorrow.getBusCode());
             busBorrow.setBusMobile(bus.getModel());
+            busBorrow.setBusNumber(bus.getNumber());
         }
     }
 

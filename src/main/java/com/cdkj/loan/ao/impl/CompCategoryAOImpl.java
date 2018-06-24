@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,7 +86,9 @@ public class CompCategoryAOImpl implements ICompCategoryAO {
     }
 
     private void initCompCategory(CompCategory compCategory) {
-        SYSUser sysUser = sysUserBO.getUser(compCategory.getUpdater());
-        compCategory.setUpdaterName(sysUser.getRealName());
+        if (StringUtils.isNotBlank(compCategory.getUpdater())) {
+            SYSUser sysUser = sysUserBO.getUser(compCategory.getUpdater());
+            compCategory.setUpdaterName(sysUser.getRealName());
+        }
     }
 }

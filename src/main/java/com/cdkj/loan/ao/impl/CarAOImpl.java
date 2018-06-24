@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Car;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
 import com.cdkj.loan.enums.EBrandStatus;
@@ -103,8 +105,7 @@ public class CarAOImpl implements ICarAO {
     public Paginable<Car> queryCarPage(int start, int limit, Car condition) {
         Paginable<Car> paginable = carBO.getPaginable(start, limit, condition);
         for (Car car : paginable.getList()) {
-            String realName = sysUserBO.getUser(car.getUpdater()).getRealName();
-            car.setUpdaterName(realName);
+            initCar(car);
         }
         return paginable;
     }
@@ -112,8 +113,7 @@ public class CarAOImpl implements ICarAO {
     @Override
     public Car getCar(String code) {
         Car car = carBO.getCar(code);
-        String realName = sysUserBO.getUser(car.getUpdater()).getRealName();
-        car.setUpdaterName(realName);
+        initCar(car);
         return car;
     }
 
@@ -121,10 +121,16 @@ public class CarAOImpl implements ICarAO {
     public List<Car> queryCarList(Car condition) {
         List<Car> queryCar = carBO.queryCar(condition);
         for (Car car : queryCar) {
-            String realName = sysUserBO.getUser(car.getUpdater()).getRealName();
-            car.setUpdaterName(realName);
+            initCar(car);
         }
         return queryCar;
+    }
+
+    private void initCar(Car car) {
+        if (StringUtils.isNotBlank(car.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(car.getUpdater());
+            car.setUpdaterName(user.getRealName());
+        }
     }
 
 }
