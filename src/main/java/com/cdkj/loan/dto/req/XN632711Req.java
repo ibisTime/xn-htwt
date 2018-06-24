@@ -16,12 +16,24 @@ public class XN632711Req {
     @NotBlank
     private String code;
 
+    // 操作人
+    @NotBlank
+    private String operater;
+
     // 备注
     private String remark;
 
     // GPS列表
     @NotEmpty
     private List<XN632711ReqChild> gpsList;
+
+    public String getOperater() {
+        return operater;
+    }
+
+    public void setOperater(String operater) {
+        this.operater = operater;
+    }
 
     public String getCode() {
         return code;

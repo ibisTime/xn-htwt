@@ -13,8 +13,20 @@ public class XN632712Req {
     @NotBlank
     private String code;
 
+    // 操作人
+    @NotBlank
+    private String operater;
+
     // 备注
     private String remark;
+
+    public String getOperater() {
+        return operater;
+    }
+
+    public void setOperater(String operater) {
+        this.operater = operater;
+    }
 
     public String getCode() {
         return code;

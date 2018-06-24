@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.exception.BizException;
@@ -46,11 +47,35 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         data.setType(type);
         data.setBizCode(bizCode);
         data.setUserId(userId);
+        // 找到团队
 
         data.setFromNodeCode(fromNodeCode);
         data.setToNodeCode(toNodeCode);
         data.setRefFileList(refFileList);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
+        data.setReceiver(EBoolean.NO.getCode());
+        logisticsDAO.insert(data);
+        return code;
+    }
+
+    @Override
+    public String saveLogistics(String type, String bizCode, String userId,
+            String fromNodeCode, String toNodeCode, String refFileList,
+            String receiver) {
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
+        Logistics data = new Logistics();
+        data.setCode(code);
+        data.setType(type);
+        data.setBizCode(bizCode);
+        data.setUserId(userId);
+        // 找到团队
+
+        data.setFromNodeCode(fromNodeCode);
+        data.setToNodeCode(toNodeCode);
+        data.setRefFileList(refFileList);
+        data.setStatus(ELogisticsStatus.TO_SEND.getCode());
+        data.setReceiver(receiver);
         logisticsDAO.insert(data);
         return code;
     }
