@@ -607,8 +607,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getNodeFlowByCurrentNode(EBudgetOrderNode.BIZ_CHARGE_APPROVE
                 .getCode());
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode()).getNextNode());
+            if (EBoolean.NO.getCode().equals(budgetOrder.getIsAdvanceFund())) {// 不垫资，直接跳到gps
+                budgetOrder.setCurNodeCode(EBudgetOrderNode.GPSAZ.getCode());
+            } else {
+                budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode())
+                    .getNextNode());
+            }
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode()).getBackNode());
@@ -1172,15 +1177,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public void applyCancel(XN632190Req req) {
-
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-        int compareTo = EBudgetOrderNode.COMMITBANK.getCode().compareTo(
-            budgetOrder.getCurNodeCode());
-        if (compareTo <= 0) {
+
+        if (EBudgetOrderNode.COMMITBANK.getCode().compareTo(
+            budgetOrder.getCurNodeCode()) <= 0) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点已经过提交银行节点，不能申请作废！");
         }
-
         budgetOrder.setRemark(req.getRemark());
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
         budgetOrder.setCancelNodeCode(budgetOrder.getCurNodeCode());

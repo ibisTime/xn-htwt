@@ -3,20 +3,21 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cdkj.loan.ao.IUserAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
-import com.cdkj.loan.exception.BizException;
 
 /**
  * 资料传递
@@ -35,7 +36,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     private IBudgetOrderBO budgetOrderBO;
 
     @Autowired
-    private IUserAO userAO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
@@ -48,6 +49,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         data.setBizCode(bizCode);
         data.setUserId(userId);
         // 找到团队
+        SYSUser sysUser = sysUserBO.getUser(userId);
+        data.setTeamCode(sysUser.getTeamCode());
 
         data.setFromNodeCode(fromNodeCode);
         data.setToNodeCode(toNodeCode);
@@ -59,9 +62,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     }
 
     @Override
-    public String saveLogistics(String type, String bizCode, String userId,
-            String fromNodeCode, String toNodeCode, String refFileList,
-            String receiver) {
+    public String saveLogisticsGps(String type, String bizCode, String userId,
+            String refFileList, String receiver) {
         String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
             .getCode());
         Logistics data = new Logistics();
@@ -69,13 +71,14 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         data.setType(type);
         data.setBizCode(bizCode);
         data.setUserId(userId);
-        // 找到团队
 
-        data.setFromNodeCode(fromNodeCode);
-        data.setToNodeCode(toNodeCode);
+        // 找到团队
+        SYSUser sysUser = sysUserBO.getUser(userId);
+        data.setTeamCode(sysUser.getTeamCode());
         data.setRefFileList(refFileList);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
         data.setReceiver(receiver);
+
         logisticsDAO.insert(data);
         return code;
     }
@@ -87,45 +90,36 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
 
     @Override
     public void receiveLogistics(String code, String remark) {
-        if (null == code) {
-            throw new BizException("xn0000", "请填写编号");
+        if (StringUtils.isNotBlank(code)) {
+            Logistics condition = new Logistics();
+            condition.setCode(code);
+            condition.setRemark(remark);
+            condition.setReceiptDatetime(new Date());
+            condition.setStatus(ELogisticsStatus.RECEIVED.getCode());
+            logisticsDAO.updateLogisticsReceive(condition);
         }
-
-        if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(
-            getLogistics(code).getStatus())) {
-            throw new BizException("xn0000", "资料不是待收件状态。");
-        }
-
-        Logistics condition = new Logistics();
-        condition.setCode(code);
-        condition.setRemark(remark);
-        condition.setReceiptDatetime(new Date());
-        condition.setStatus(ELogisticsStatus.RECEIVED.getCode());
-        logisticsDAO.updateLogisticsReceive(condition);
     }
 
     @Override
     public void sendAgainLogistics(String code, String remark) {
-        if (null == code) {
-            throw new BizException("xn0000", "请填写编号");
+        if (StringUtils.isNotBlank(code)) {
+            Logistics data = new Logistics();
+            data.setCode(code);
+            data.setRemark(remark);
+            data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+            logisticsDAO.updateLogisticsReceive(data);
         }
-
-        Logistics data = new Logistics();
-        data.setCode(code);
-        data.setRemark(remark);
-        data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
-        logisticsDAO.updateLogisticsReceive(data);
     }
 
     @Override
     public Logistics getLogistics(String code) {
-        if (null == code) {
-            throw new BizException("xn0000", "请填写编号");
+        Logistics logistics = null;
+        if (StringUtils.isNotBlank(code)) {
+            Logistics data = new Logistics();
+            data.setCode(code);
+            logistics = logisticsDAO.select(data);
         }
-
-        Logistics data = new Logistics();
-        data.setCode(code);
-        return logisticsDAO.select(data);
+        return logistics;
     }
 
     @Override

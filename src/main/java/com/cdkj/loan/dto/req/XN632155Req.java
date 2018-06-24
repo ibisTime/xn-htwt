@@ -18,11 +18,19 @@ public class XN632155Req extends APageReq {
     // 用户编号
     private String userId;
 
-    // 业务节点
-    private String bizNodeCode;
-
     // 状态
     private String status;
+
+    // 收件人
+    private String receiver;
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 
     public String getBizCode() {
         return bizCode;
@@ -38,14 +46,6 @@ public class XN632155Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getBizNodeCode() {
-        return bizNodeCode;
-    }
-
-    public void setBizNodeCode(String bizNodeCode) {
-        this.bizNodeCode = bizNodeCode;
     }
 
     public String getStatus() {

@@ -63,8 +63,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void sendLogistics(XN632150Req req) {
         Logistics logistics = logisticsBO.getLogistics(req.getCode());
         if (!ELogisticsStatus.TO_SEND.getCode().equals(logistics.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
-                    .equals(logistics.getStatus())) {
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
+                    logistics.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待发货状态!");
         }
@@ -75,11 +75,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
         long count = sysUserBO.getTotalCount(condition);
         if (count <= 0) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "操作人不属于发件人所属团队，不能操作！");
+                "操作人不是指定发送资料的团队人员，不能操作！");
         }
 
         // 发件
-        logistics.setCode(req.getCode());
         logistics.setSendFileList(req.getSendFileList());
         logistics.setSendType(req.getSendType());
         logistics.setLogisticsCompany(req.getLogisticsCompany());
@@ -95,18 +94,17 @@ public class LogisticsAOImpl implements ILogisticsAO {
             gpsApplyBO.sendGps(logistics.getBizCode(),
                 logistics.getSendDatetime());
         }
-
     }
 
     @Override
     @Transactional
-    public void receiveLogistics(String code, String receiver, String operator,
-            String remark) {
+    public void receiveLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
         }
-        // 操作人
+
+        // 操作人入参验证
         SYSUser condition = new SYSUser();
         condition.setUserId(operator);
         condition.setTeamCode(data.getTeamCode());
@@ -115,6 +113,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "发件人团队人员不能收件！");
         }
+
         logisticsBO.receiveLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             budgetOrderBO.logicOrder(data.getBizCode(), operator);
@@ -124,18 +123,34 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator,
-            String remark) {
+    public void sendAgainLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
         }
+
+        // 操作人入参验证
+        SYSUser condition = new SYSUser();
+        condition.setUserId(operator);
+        condition.setTeamCode(data.getTeamCode());
+        long count = sysUserBO.getTotalCount(condition);
+        if (count <= 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "发件人团队人员不能收件！");
+        }
+
         logisticsBO.sendAgainLogistics(code, remark);
     }
 
     @Override
     public Paginable<Logistics> queryLogisticsPage(int start, int limit,
             Logistics condition) {
+        if (StringUtils.isNotBlank(condition.getUserId())) {
+            SYSUser sysUser = sysUserBO.getUser(condition.getUserId());
+            condition.setTeamCode(sysUser.getTeamCode());
+            condition.setUserId(null);
+        }
+
         Paginable<Logistics> page = logisticsBO.getPaginable(start, limit,
             condition);
         List<Logistics> logisticsList = page.getList();

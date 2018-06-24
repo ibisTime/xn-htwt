@@ -25,6 +25,17 @@ public class XN632157Req extends AListReq {
     // 状态
     private String status;
 
+    // 收件人
+    private String receiver;
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
     public String getBizCode() {
         return bizCode;
     }
