@@ -33,12 +33,12 @@ public class XN632145 extends AProcessor {
         condition.setSaleUserId(req.getSaleUserId());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setTeamCode(req.getTeamCode());
-        condition.setApplyUserName(req.getCustomerName());
-        condition.setApplyDatetimeStart(DateUtil.getFrontDate(
-            req.getApplyDatetimeStart(), false));
+        condition.setApplyUserName(req.getApplyUserName());
+        condition.setApplyDatetimeStart(
+            DateUtil.getFrontDate(req.getApplyDatetimeStart(), false));
 
-        condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
-            req.getApplyDatetimeEnd(), true));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getApplyDatetimeEnd(), true));
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
 

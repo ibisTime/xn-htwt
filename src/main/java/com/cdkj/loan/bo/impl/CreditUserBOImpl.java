@@ -43,6 +43,16 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     }
 
     @Override
+    public void removeCreditUserByCreditCode(String creditCode) {
+        CreditUser creditUser = new CreditUser();
+        creditUser.setCreditCode(creditCode);
+        List<CreditUser> list = creditUserDAO.selectList(creditUser);
+        for (CreditUser data : list) {
+            creditUserDAO.delete(data);
+        }
+    }
+
+    @Override
     public CreditUser getCreditUser(String code) {
 
         CreditUser data = null;
@@ -56,13 +66,6 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
             }
         }
         return data;
-    }
-
-    @Override
-    public void refreshCreditUser(CreditUser creditUser) {
-        if (StringUtils.isNotBlank(creditUser.getCode())) {
-            creditUserDAO.updateCreditUser(creditUser);
-        }
     }
 
     @Override

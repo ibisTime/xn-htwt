@@ -11,11 +11,11 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     // 新增征信人员
     public void saveCreditUser(CreditUser creditUser);
 
+    // 删除征信人员
+    public void removeCreditUserByCreditCode(String creditCode);
+
     // 查询征信人员
     public CreditUser getCreditUser(String code);
-
-    // 修改征信人员信息
-    public void refreshCreditUser(CreditUser creditUser);
 
     // 录入银行征信结果
     public void inputBankCreditResult(CreditUser creditUser);

@@ -9,7 +9,7 @@ public class XN632145Req extends APageReq {
 
     private String code;// 业务编号
 
-    private String customerName;// 客户姓名
+    private String applyUserName;// 客户姓名
 
     private String applyDatetimeStart;// 申请时间起始
 
@@ -49,12 +49,12 @@ public class XN632145Req extends APageReq {
         this.saleUserId = saleUserId;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getApplyUserName() {
+        return applyUserName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
     }
 
     public String getCode() {

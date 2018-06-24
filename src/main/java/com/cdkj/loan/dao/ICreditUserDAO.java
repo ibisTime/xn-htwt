@@ -13,9 +13,6 @@ public interface ICreditUserDAO extends IBaseDAO<CreditUser> {
 
     String NAMESPACE = ICreditUserDAO.class.getName().concat(".");
 
-    // 修改征信人员信息
-    public void updateCreditUser(CreditUser creditUser);
-
     // 录入银行征信结果
     public void inputBankCreditResult(CreditUser creditUser);
 }
