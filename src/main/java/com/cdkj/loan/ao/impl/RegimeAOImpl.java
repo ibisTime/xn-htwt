@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,16 +90,18 @@ public class RegimeAOImpl implements IRegimeAO {
         Regime regime = regimeBO.getRegime(code);
         ScopePeople scopePeople = new ScopePeople();
         scopePeople.setRefCode(code);
-        regime.setScopePeopleList(scopePeopleBO
-            .queryScopePeopleList(scopePeople));
+        regime.setScopePeopleList(
+            scopePeopleBO.queryScopePeopleList(scopePeople));
         initRegime(regime);
 
         return regime;
     }
 
     private void initRegime(Regime regime) {
-        SYSUser sysUser = sysUserBO.getUser(regime.getUpdater());
-        regime.setUpdaterName(sysUser.getRealName());
+        if (StringUtils.isNotBlank(regime.getUpdater())) {
+            SYSUser sysUser = sysUserBO.getUser(regime.getUpdater());
+            regime.setUpdaterName(sysUser.getRealName());
+        }
     }
 
     @Override

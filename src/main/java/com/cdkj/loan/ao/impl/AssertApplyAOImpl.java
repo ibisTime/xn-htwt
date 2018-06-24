@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -149,8 +150,8 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 .queryAssertUserList(condition2);
 
             for (AssertUser assertUser : assertUserList) {
-                Archive archive = archiveBO.getArchiveByUserid(assertUser
-                    .getUserId());
+                Archive archive = archiveBO
+                    .getArchiveByUserid(assertUser.getUserId());
                 assertUser.setArchive(archive);
             }
 
@@ -174,7 +175,9 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
     }
 
     private void initAssertApply(AssertApply assertApply) {
-        SYSUser sysUser = sysUserBO.getUser(assertApply.getApplyUser());
-        assertApply.setApplyUserName(sysUser.getRealName());
+        if (StringUtils.isNotBlank(assertApply.getApplyUser())) {
+            SYSUser sysUser = sysUserBO.getUser(assertApply.getApplyUser());
+            assertApply.setApplyUserName(sysUser.getRealName());
+        }
     }
 }

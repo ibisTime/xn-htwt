@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,12 +57,7 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
         Paginable<AskForApply> paginable = askForApplyBO.getPaginable(start,
             limit, condition);
         for (AskForApply askForApply : paginable.getList()) {
-            String realName = sysUserBO.getUser(askForApply.getApplyUser())
-                .getRealName();
-            askForApply.setApplyUserName(realName);
-            String leadUserName = sysUserBO.getUser(askForApply.getLeadUserId())
-                .getRealName();
-            askForApply.setLeadUserName(leadUserName);
+            initAskForApply(askForApply);
         }
         return paginable;
     }
@@ -74,13 +70,21 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
     @Override
     public AskForApply getAskForApply(String code) {
         AskForApply askForApply = askForApplyBO.getAskForApply(code);
-        String realName = sysUserBO.getUser(askForApply.getApplyUser())
-            .getRealName();
-        askForApply.setApplyUserName(realName);
-        String leadUserName = sysUserBO.getUser(askForApply.getLeadUserId())
-            .getRealName();
-        askForApply.setLeadUserName(leadUserName);
+        initAskForApply(askForApply);
         return askForApply;
+    }
+
+    private void initAskForApply(AskForApply askForApply) {
+        if (StringUtils.isNotBlank(askForApply.getApplyUser())) {
+            String realName = sysUserBO.getUser(askForApply.getApplyUser())
+                .getRealName();
+            askForApply.setApplyUserName(realName);
+        }
+        if (StringUtils.isNotBlank(askForApply.getLeadUserId())) {
+            String leadUserName = sysUserBO.getUser(askForApply.getLeadUserId())
+                .getRealName();
+            askForApply.setLeadUserName(leadUserName);
+        }
     }
 
 }

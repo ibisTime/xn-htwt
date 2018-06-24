@@ -142,8 +142,8 @@ public class BizTeamAOImpl implements IBizTeamAO {
         condition.setTeamCode(bizTeam.getCode());
         List<SYSUser> userList = sysUserBO.queryUserList(condition);
         for (SYSUser sysUser : userList) {
-            Department department = departmentBO.getDepartment(sysUser
-                .getCompanyCode());
+            Department department = departmentBO
+                .getDepartment(sysUser.getCompanyCode());
             sysUser.setCompanyName(department.getName());
         }
         bizTeam.setUserList(userList);
@@ -154,16 +154,22 @@ public class BizTeamAOImpl implements IBizTeamAO {
     private void initBizTeam(BizTeam bizTeam) {
 
         String captain = bizTeam.getCaptain();
-        SYSUser user = sysUserBO.getUser(captain);
-        bizTeam.setCaptainName(user.getRealName());
+        if (StringUtils.isNotBlank(captain)) {
+            SYSUser user = sysUserBO.getUser(captain);
+            bizTeam.setCaptainName(user.getRealName());
+        }
 
         String companyCode = bizTeam.getCompanyCode();
-        Department department = departmentBO.getDepartment(companyCode);
-        bizTeam.setCompanyName(department.getName());
+        if (StringUtils.isNotBlank(companyCode)) {
+            Department department = departmentBO.getDepartment(companyCode);
+            bizTeam.setCompanyName(department.getName());
+        }
 
         String updater = bizTeam.getUpdater();
-        SYSUser updateUser = sysUserBO.getUser(updater);
-        bizTeam.setUpdaterName(updateUser.getRealName());
+        if (StringUtils.isNotBlank(updater)) {
+            SYSUser updateUser = sysUserBO.getUser(updater);
+            bizTeam.setUpdaterName(updateUser.getRealName());
+        }
 
     }
 }
