@@ -60,7 +60,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
             String userId);
 
     // 物流流转
-    public void logicOrder(String code, String operator);
+    public String logicOrder(String code, String operator);
 
     public Paginable<BudgetOrder> getPaginableByRoleCode(int start,
             int pageSize, BudgetOrder condition);
