@@ -134,23 +134,6 @@
 		)
 	</insert>
 	
-	<update id="update_creditUser" parameterType="creditUser">
-		UPDATE tdq_credit_user
-		SET
-		user_name=#{userName}
-		,relation=#{relation}
-		,loan_role=#{loanRole}
-		,mobile=#{mobile}
-		,id_no=#{idNo}
-		
-		,id_no_front=#{idNoFront}
-		,id_no_reverse=#{idNoReverse}
-		,auth_pdf=#{authPdf}
-		,interview_pic=#{interviewPic}
-		WHERE
-		code = #{code}
-	</update>
-	
 	<update id="update_bankCreditResult" parameterType="creditUser">
 		UPDATE tdq_credit_user
 		SET
@@ -159,4 +142,9 @@
 		WHERE 
 		code = #{code}
 	</update>
+	
+	<delete id="delete_creditUser" parameterType="creditUser">
+		DELETE FROM tdq_credit_user 
+		WHERE code = #{code} 
+	</delete>
 </mapper>
