@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -17,6 +18,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
@@ -50,6 +52,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private IBankBO bankBO;
+
     @Override
     public String saveBudgetOrder(Credit credit) {
         List<CreditUser> creditUserList = credit.getCreditUserList();
@@ -81,8 +86,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setCode(code);
             data.setCreditCode(credit.getCode());
             data.setBizType(credit.getBizType());
+
             data.setLoanAmount(credit.getLoanAmount());
             data.setLoanBank(credit.getLoanBankCode());
+            Bank bank = bankBO.getBank(credit.getLoanBankCode());
+            data.setRepayBankCode(bank.getCode());
+            data.setRepayBankName(bank.getBankName());
+
+            data.setRepaySubbranch(bank.getSubbranch());
             data.setApplyUserName(applyCreditUser.getUserName());
             data.setMobile(applyCreditUser.getMobile());
             data.setIdNo(applyCreditUser.getIdNo());
@@ -109,18 +120,6 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             data.setTeamCode(user.getTeamCode());
 
-            budgetOrderDAO.insert(data);
-        }
-        return code;
-    }
-
-    @Override
-    public String saveBudgetOrder(BudgetOrder data) {
-        String code = null;
-        if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGETORDER
-                .getCode());
-            data.setCode(code);
             budgetOrderDAO.insert(data);
         }
         return code;

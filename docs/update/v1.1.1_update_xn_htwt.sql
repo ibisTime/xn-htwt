@@ -1,3 +1,8 @@
+ALTER TABLE `tdq_budget_order_fee_detail` 
+ADD COLUMN `status` VARCHAR(32) NULL COMMENT '状态' AFTER `reach_datetime`;
+
+update tdq_budget_order_fee_detail set status ='1';
+
 ALTER TABLE `tdq_credit` 
 ADD COLUMN `team_code` VARCHAR(32) NULL COMMENT '团队编号' AFTER `sale_user_id`;
 
@@ -284,7 +289,9 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 
 ALTER TABLE `tdh_repay_plan` 
 CHANGE COLUMN `repay_interest` `repay_interest` BIGINT(20) NULL DEFAULT NULL COMMENT '本期利息' ,
-ADD COLUMN `month_repay_amount` BIGINT(20) NULL COMMENT '还款金额' AFTER `repay_interest`;
+ADD COLUMN `repay_amount` BIGINT(20) NULL COMMENT '还款金额' AFTER `repay_interest`;
+
+update tdh_repay_plan set repay_amount = repay_interest+repay_capital;
 
 delete from tsys_menu where code in('SM201806082250402178394','SM201806082258364384563','SM201806082259103138937','SM201806082259536645110','SM201806082300058567560','SM201806082300333927480','SM201806082300569115566','SM201806082301163207610');
 /*

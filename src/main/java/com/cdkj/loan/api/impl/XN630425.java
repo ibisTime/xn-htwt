@@ -14,7 +14,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 分页查询
+ * 车辆分页查询
  * @author: CYL 
  * @since: 2018年4月24日 下午5:39:28 
  * @history:

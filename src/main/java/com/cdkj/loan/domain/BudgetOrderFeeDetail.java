@@ -35,6 +35,9 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 到账时间
     private Date reachDatetime;
 
+    // 状态（0未提交1已提交）
+    private String status;
+
     // 更新人
     private String updater;
 
@@ -46,9 +49,6 @@ public class BudgetOrderFeeDetail extends ABaseDO {
 
     // 手续费编号
     private String feeCode;
-
-    // 状态（0未提交1已提交）
-    private String status;
 
     /**************辅助字段****************/
 

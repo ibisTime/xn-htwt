@@ -1035,6 +1035,10 @@
 		,sale_user_id
 		,team_code
 		,company_code
+		,repay_bank_code
+		,repay_bank_name
+		,repay_subbranch
+		
 		,apply_datetime
 		,back_advance_status
 		
@@ -1251,6 +1255,10 @@
 		,#{saleUserId}
 		,#{teamCode}
 		,#{companyCode}
+		,#{repayBankCode}
+		,#{repayBankName}
+		,#{repaySubbranch}
+				
 		,#{applyDatetime}
 		,#{backAdvanceStatus}
 		,#{backAdvanceAmount}

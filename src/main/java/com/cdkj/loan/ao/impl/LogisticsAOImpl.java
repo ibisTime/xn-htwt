@@ -72,7 +72,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
         // 操作人
         SYSUser condition = new SYSUser();
-        condition.setUserId(req.getOperater());
+        condition.setUserId(req.getOperator());
         condition.setTeamCode(logistics.getTeamCode());
         long count = sysUserBO.getTotalCount(condition);
         if (count <= 0) {
@@ -112,9 +112,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
         condition.setUserId(operator);
         condition.setTeamCode(data.getTeamCode());
         long count = sysUserBO.getTotalCount(condition);
-        if (count <= 0) {
+        if (count > 0) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "发件人团队人员不能收件！");
+                "发件人团队成员不能收件！");
         }
 
         String result = EBoolean.NO.getCode();

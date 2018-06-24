@@ -11,8 +11,6 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public String saveBudgetOrder(Credit credit);
 
-    public String saveBudgetOrder(BudgetOrder data);
-
     public void refreshBudgetOrder(BudgetOrder data);
 
     public void refreshriskApprove(BudgetOrder budgetOrder);
