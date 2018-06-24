@@ -16,9 +16,8 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode, String refFileList);
 
-    public String saveLogistics(String type, String bizCode, String userId,
-            String fromNodeCode, String toNodeCode, String refFileList,
-            String receiver);
+    public String saveLogisticsGps(String type, String bizCode, String userId,
+            String refFileList, String receiver);
 
     // 发货
     public void sendLogistics(Logistics data);

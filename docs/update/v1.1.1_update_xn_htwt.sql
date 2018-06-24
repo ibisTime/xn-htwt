@@ -63,7 +63,6 @@ ALTER TABLE `tsys_biz_team`
 ADD COLUMN `region` VARCHAR(255) NULL AFTER `water_bill`,
 ADD COLUMN `place` VARCHAR(255) NULL AFTER `region`;
 
-
 ALTER TABLE `tdq_logistics`
 ADD COLUMN `team_code` VARCHAR(32) NULL COMMENT '团队编号' AFTER `user_id`,
 ADD COLUMN `receiver` VARCHAR(32) NULL COMMENT '收件人(gps 落地具体某个人/ 非gps默认0)' AFTER `receipt_datetime`;
@@ -117,7 +116,7 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_02','部门
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_03','财务主管审核','009',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_04','总经理审核','009',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_05','审核通过','009',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_06','修改申请','009',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_06','审核不通过','009',NULL);
 
 /*
 -- Query: SELECT `type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark` FROM tsys_node_flow where type='009'

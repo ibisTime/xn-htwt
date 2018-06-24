@@ -7,18 +7,21 @@
 		<result column="type" property="type" />
 		<result column="biz_code" property="bizCode" />
 		<result column="user_id" property="userId" />
-		<result column="from_node_code" property="fromNodeCode" />
+		<result column="team_code" property="teamCode" />
 		
+		<result column="from_node_code" property="fromNodeCode" />
 		<result column="to_node_code" property="toNodeCode" />
 		<result column="ref_file_list" property="refFileList" />
 		<result column="send_file_list" property="sendFileList" />
 		<result column="send_type" property="sendType" />
+		
 		<result column="logistics_company" property="logisticsCompany" />
 		<result column="logistics_code" property="logisticsCode" />
-		
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="send_note" property="sendNote" />
 		<result column="receipt_datetime" property="receiptDatetime" />
+		
+		<result column="receiver" property="receiver" />
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
 	</resultMap>
@@ -43,6 +46,13 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
+			
+			<if test="teamCode != null and teamCode != '' ">
+				AND t.team_code = #{teamCode}
+			</if>
+			<if test="receiver != null and receiver != '' ">
+				AND t.receiver = #{receiver}
+			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -55,18 +65,20 @@
 		,t.type
 		,t.biz_code
 		,t.user_id
+		,t.team_code
 		,t.from_node_code
-		,t.to_node_code
 		
+		,t.to_node_code
 		,t.ref_file_list
 		,t.send_file_list
 		,t.send_type
 		,t.logistics_company
-		,t.logistics_code
 		
+		,t.logistics_code
 		,t.send_datetime
 		,t.send_note
 		,t.receipt_datetime
+		,t.receiver
 		,t.status
 		,t.remark
 		FROM
@@ -90,10 +102,12 @@
 		,type
 		,biz_code
 		,user_id
+		,team_code
 		,from_node_code
 		
 		,to_node_code
 		,ref_file_list
+		,receiver
 		,status
 		)
 		VALUES(
@@ -101,10 +115,12 @@
 		,#{type}
 		,#{bizCode}
 		,#{userId}
+		,#{teamCode}
 		,#{fromNodeCode}
 		
 		,#{toNodeCode}
 		,#{refFileList}
+		,#{receiver}
 		,#{status}
 		)
 	</insert>

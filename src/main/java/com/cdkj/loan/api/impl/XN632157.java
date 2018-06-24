@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.IGpsAO;
 import com.cdkj.loan.ao.ILogisticsAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -30,12 +29,12 @@ public class XN632157 extends AProcessor {
         Logistics condition = new Logistics();
         condition.setBizCode(req.getBizCode());
         condition.setUserId(req.getUserId());
-        // condition.setBizNodeCode(req.getBizNodeCode());
         condition.setStatus(req.getStatus());
+        condition.setReceiver(req.getReceiver());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
-            column = IGpsAO.DEFAULT_ORDER_COLUMN;
+            column = ILogisticsAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
         return logisticsAO.queryLogisticsList(condition);

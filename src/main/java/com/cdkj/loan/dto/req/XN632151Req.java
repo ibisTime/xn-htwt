@@ -16,9 +16,6 @@ public class XN632151Req {
     // 备注
     private String remark;
 
-    // 收件人(gps 落地具体某个人/ 非gps默认0)
-    private String receiver;
-
     // 操作人
     private String operater;
 
@@ -28,14 +25,6 @@ public class XN632151Req {
 
     public void setOperater(String operater) {
         this.operater = operater;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
     }
 
     public String getCode() {
