@@ -19,7 +19,7 @@ public class BusDAOImpl extends AMybatisTemplate implements IBusDAO {
 
     @Override
     public int delete(Bus data) {
-        return super.delete(NAMESPACE.concat("delete_bus"), data);
+        return super.update(NAMESPACE.concat("delete_bus"), data);
     }
 
     @Override
