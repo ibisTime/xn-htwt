@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IBudgetOrderFeeDetailAO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeDetailBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderFeeDetail;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632160Req;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderFeeDetailStatus;
@@ -34,6 +37,9 @@ public class BudgetOrderFeeDetailAOImpl implements IBudgetOrderFeeDetailAO {
 
     @Autowired
     private IBudgetOrderFeeBO budgetOrderFeeBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     @Transactional
@@ -60,9 +66,8 @@ public class BudgetOrderFeeDetailAOImpl implements IBudgetOrderFeeDetailAO {
                 .getBudgetOrderFeeDetailByStatus(req.getFeeCode(),
                     EBudgetOrderFeeDetailStatus.UNCOMMITTED.getCode());
             if (null != unSubmitBudgetOrderFeeDetail) {
-                budgetOrderFeeDetailBO
-                    .removeBudgetOrderFeeDetail(unSubmitBudgetOrderFeeDetail
-                        .getCode());
+                budgetOrderFeeDetailBO.removeBudgetOrderFeeDetail(
+                    unSubmitBudgetOrderFeeDetail.getCode());
             }
             data.setStatus(EBudgetOrderFeeDetailStatus.UNCOMMITTED.getCode());
 
@@ -73,8 +78,8 @@ public class BudgetOrderFeeDetailAOImpl implements IBudgetOrderFeeDetailAO {
             data.setStatus(EBudgetOrderFeeDetailStatus.SUBMITTED.getCode());
             BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
                 .getBudgetOrderFee(req.getFeeCode());
-            budgetOrderFee.setRealAmount(budgetOrderFee.getRealAmount()
-                    + data.getAmount());
+            budgetOrderFee.setRealAmount(
+                budgetOrderFee.getRealAmount() + data.getAmount());
             if (budgetOrderFee.getRealAmount().longValue() >= budgetOrderFee
                 .getShouldAmount().longValue()) {
                 budgetOrderFee.setIsSettled(EBoolean.YES.getCode());
@@ -93,7 +98,12 @@ public class BudgetOrderFeeDetailAOImpl implements IBudgetOrderFeeDetailAO {
     @Override
     public Paginable<BudgetOrderFeeDetail> queryBudgetOrderFeeDetailPage(
             int start, int limit, BudgetOrderFeeDetail condition) {
-        return budgetOrderFeeDetailBO.getPaginable(start, limit, condition);
+        Paginable<BudgetOrderFeeDetail> paginable = budgetOrderFeeDetailBO
+            .getPaginable(start, limit, condition);
+        for (BudgetOrderFeeDetail budgetOrderFeeDetail : paginable.getList()) {
+            initBudgetOrderFeeDetail(budgetOrderFeeDetail);
+        }
+        return paginable;
     }
 
     @Override
@@ -104,6 +114,18 @@ public class BudgetOrderFeeDetailAOImpl implements IBudgetOrderFeeDetailAO {
 
     @Override
     public BudgetOrderFeeDetail getBudgetOrderFeeDetail(String code) {
-        return budgetOrderFeeDetailBO.getBudgetOrderFeeDetail(code);
+        BudgetOrderFeeDetail budgetOrderFeeDetail = budgetOrderFeeDetailBO
+            .getBudgetOrderFeeDetail(code);
+        initBudgetOrderFeeDetail(budgetOrderFeeDetail);
+        return budgetOrderFeeDetail;
+    }
+
+    private void initBudgetOrderFeeDetail(
+            BudgetOrderFeeDetail budgetOrderFeeDetail) {
+        if (StringUtils.isNotBlank(budgetOrderFeeDetail.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(budgetOrderFeeDetail.getUpdater());
+            budgetOrderFeeDetail.setUpdaterRealName(user.getRealName());
+        }
+
     }
 }
