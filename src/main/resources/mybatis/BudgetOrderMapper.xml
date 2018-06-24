@@ -299,6 +299,9 @@
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
 			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
+			</if>
 			<if test="teamCode != null and teamCode != ''">
 				AND t.team_code = #{teamCode}
 			</if>

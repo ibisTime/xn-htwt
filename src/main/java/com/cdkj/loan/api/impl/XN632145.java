@@ -31,6 +31,7 @@ public class XN632145 extends AProcessor {
         BudgetOrder condition = new BudgetOrder();
         condition.setCode(req.getCode());
         condition.setSaleUserId(req.getSaleUserId());
+        condition.setCompanyCode(req.getCompanyCode());
         condition.setTeamCode(req.getTeamCode());
         condition.setApplyUserName(req.getCustomerName());
         condition.setApplyDatetimeStart(DateUtil.getFrontDate(
