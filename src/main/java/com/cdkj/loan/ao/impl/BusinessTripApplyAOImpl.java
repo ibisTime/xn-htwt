@@ -60,10 +60,14 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
         BusinessTripApply data = new BusinessTripApply();
         data.setApplyUserCode(req.getApplyUserCode());
+        SYSUser sysUser = sysUserBO.getUser(req.getApplyUserCode());
+        data.setDepartmentCode(sysUser.getDepartmentCode());
+        data.setPostCode(sysUser.getPostCode());
         Archive archive = archiveBO.getArchiveByUserid(data.getApplyUserCode());
-        data.setJobNo(archive.getJobNo());
-        data.setDepartmentCode(archive.getDepartmentCode());
-        data.setPostCode(archive.getPostCode());
+        if (archive != null) {
+            data.setJobNo(archive.getJobNo());
+        }
+
         data.setApplyDatetime(new Date());
         data.setTripDatetimeStart(DateUtil.strToDate(
             req.getTripDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));

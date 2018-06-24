@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IRegimeAO;
-import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IRegimeBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IScopePeopleBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Regime;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632730Req;
 import com.cdkj.loan.dto.req.XN632731Req;
@@ -35,7 +36,7 @@ public class RegimeAOImpl implements IRegimeAO {
     private IScopePeopleBO scopePeopleBO;
 
     @Autowired
-    private IArchiveBO archiveBO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     @Transactional
@@ -69,9 +70,7 @@ public class RegimeAOImpl implements IRegimeAO {
         Paginable<Regime> paginable = regimeBO.getPaginable(start, limit,
             condition);
         for (Regime regime : paginable.getList()) {
-            String realName = archiveBO.getArchiveByUserid(regime.getUpdater())
-                .getRealName();
-            regime.setUpdaterName(realName);
+            initRegime(regime);
         }
         return paginable;
     }
@@ -80,9 +79,7 @@ public class RegimeAOImpl implements IRegimeAO {
     public List<Regime> queryRegimeList(Regime condition) {
         List<Regime> queryRegimeList = regimeBO.queryRegimeList(condition);
         for (Regime regime : queryRegimeList) {
-            String realName = archiveBO.getArchiveByUserid(regime.getUpdater())
-                .getRealName();
-            regime.setUpdaterName(realName);
+            initRegime(regime);
         }
         return queryRegimeList;
     }
@@ -92,12 +89,16 @@ public class RegimeAOImpl implements IRegimeAO {
         Regime regime = regimeBO.getRegime(code);
         ScopePeople scopePeople = new ScopePeople();
         scopePeople.setRefCode(code);
-        regime.setScopePeopleList(
-            scopePeopleBO.queryScopePeopleList(scopePeople));
-        String realName = archiveBO.getArchiveByUserid(regime.getUpdater())
-            .getRealName();
-        regime.setUpdaterName(realName);
+        regime.setScopePeopleList(scopePeopleBO
+            .queryScopePeopleList(scopePeople));
+        initRegime(regime);
+
         return regime;
+    }
+
+    private void initRegime(Regime regime) {
+        SYSUser sysUser = sysUserBO.getUser(regime.getUpdater());
+        regime.setUpdaterName(sysUser.getRealName());
     }
 
     @Override
