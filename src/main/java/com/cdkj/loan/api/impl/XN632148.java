@@ -32,7 +32,7 @@ public class XN632148 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setTeamCode(req.getTeamCode());
-        condition.setApplyUserName(req.getCustomerName());
+        condition.setApplyUserNameForQuery(req.getCustomerName());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(

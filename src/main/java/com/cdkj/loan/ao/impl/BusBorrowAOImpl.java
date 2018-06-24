@@ -148,6 +148,10 @@ public class BusBorrowAOImpl implements IBusBorrowAO {
             SYSUser user = sysUserBO.getUser(busBorrow.getUpdater());
             busBorrow.setUpdaterName(user.getRealName());
         }
+        if (StringUtils.isNotBlank(busBorrow.getApplyUser())) {
+            SYSUser user = sysUserBO.getUser(busBorrow.getApplyUser());
+            busBorrow.setApplyUserName(user.getRealName());
+        }
         if (StringUtils.isNotBlank(busBorrow.getDepartmentCode())) {
             Department department = departmentBO
                 .getDepartment(busBorrow.getDepartmentCode());

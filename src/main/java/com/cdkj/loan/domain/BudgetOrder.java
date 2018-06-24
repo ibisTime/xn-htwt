@@ -787,6 +787,17 @@ public class BudgetOrder extends ABaseDO {
     // 团队名称
     private String teamName;
 
+    // 申请人姓名模糊差查
+    private String applyUserNameForQuery;
+
+    public String getApplyUserNameForQuery() {
+        return applyUserNameForQuery;
+    }
+
+    public void setApplyUserNameForQuery(String applyUserNameForQuery) {
+        this.applyUserNameForQuery = applyUserNameForQuery;
+    }
+
     public String getTeamName() {
         return teamName;
     }
