@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import java.util.Date;
+
 import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
@@ -33,6 +35,8 @@ public class XN632810 extends AProcessor {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setHeirPeople(req.getHeirPeople());
         data.setLeaveReason(req.getLeaveReason());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
         archiveAO.editLeaveArchive(data);
 

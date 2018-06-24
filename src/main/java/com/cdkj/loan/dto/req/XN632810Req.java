@@ -25,6 +25,10 @@ public class XN632810Req {
     @NotBlank
     private String leaveReason;
 
+    // 更新人
+    @NotBlank
+    private String updater;
+
     private String remark;
 
     public String getRealName() {
@@ -65,6 +69,14 @@ public class XN632810Req {
 
     public void setLeaveReason(String leaveReason) {
         this.leaveReason = leaveReason;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
     public String getRemark() {
