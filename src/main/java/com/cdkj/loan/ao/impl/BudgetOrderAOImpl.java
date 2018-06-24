@@ -177,7 +177,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             companyFee = AmountUtil.mul(loanAmount, loanProduct.getPreRate());
         }
         Long amount1 = AmountUtil.mul(loanAmount,
-            (loanProduct.getYearRate() * 3 - 9) / 100);
+            (loanProduct.getYearRate() * 3 - 0.09));
         companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
         data.setCompanyFee(companyFee);
         data.setTeamFee(StringValidater.toLong(req.getTeamFee()));
