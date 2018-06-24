@@ -309,7 +309,7 @@
 				AND t.apply_user_id = #{applyUserId}
 			</if>
 			<if test="applyUserName != null and applyUserName != '' ">
-				AND t.apply_user_name = #{applyUserName}
+				AND t.apply_user_name like "%"#{applyUserName}"%"
 			</if>
 			<if test="idNo != null and idNo != '' ">
 				AND t.id_no = #{idNo}
