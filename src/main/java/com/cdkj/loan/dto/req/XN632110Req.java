@@ -3,7 +3,6 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 征信新增
@@ -31,6 +30,8 @@ public class XN632110Req {
     @NotBlank
     private String buttonCode;
 
+    private List<XN632110ReqCreditUser> creditUserList;
+
     public String getButtonCode() {
         return buttonCode;
     }
@@ -38,9 +39,6 @@ public class XN632110Req {
     public void setButtonCode(String buttonCode) {
         this.buttonCode = buttonCode;
     }
-
-    @NotEmpty
-    private List<XN632110ReqCreditUser> creditUserList;
 
     public String getOperator() {
         return operator;
