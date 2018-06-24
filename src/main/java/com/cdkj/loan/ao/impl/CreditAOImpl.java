@@ -197,32 +197,34 @@ public class CreditAOImpl implements ICreditAO {
         // 修改征信人员
         List<XN632112ReqCreditUser> list = req.getCreditUserList();
         int applyUserCount = 0;// 申请人角色条数
-        for (XN632112ReqCreditUser child : list) {
-            if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
-                applyUserCount++;
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (XN632112ReqCreditUser child : list) {
+                if (ELoanRole.APPLY_USER.getCode()
+                    .equals(child.getLoanRole())) {
+                    applyUserCount++;
+                }
+                if (applyUserCount > 1) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "征信申请人只能填写一条数据");
+                }
+                CreditUser creditUser = new CreditUser();
+                creditUser.setUserName(child.getUserName());
+                creditUser.setLoanRole(child.getLoanRole());
+                creditUser.setRelation(child.getRelation());
+                creditUser.setMobile(child.getMobile());
+                creditUser.setIdNo(child.getIdNo());
+
+                creditUser.setIdNoFront(child.getIdNoFront());
+                creditUser.setIdNoReverse(child.getIdNoReverse());
+                creditUser.setAuthPdf(child.getAuthPdf());
+                creditUser.setInterviewPic(child.getInterviewPic());
+                creditUserBO.refreshCreditUser(creditUser);
             }
-            if (applyUserCount > 1) {
+            if (applyUserCount <= 0) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "征信申请人只能填写一条数据");
+                    "请填写征信申请人贷款角色数据");
             }
-            CreditUser creditUser = new CreditUser();
-            creditUser.setUserName(child.getUserName());
-            creditUser.setLoanRole(child.getLoanRole());
-            creditUser.setRelation(child.getRelation());
-            creditUser.setMobile(child.getMobile());
-            creditUser.setIdNo(child.getIdNo());
-
-            creditUser.setIdNoFront(child.getIdNoFront());
-            creditUser.setIdNoReverse(child.getIdNoReverse());
-            creditUser.setAuthPdf(child.getAuthPdf());
-            creditUser.setInterviewPic(child.getInterviewPic());
-            creditUserBO.refreshCreditUser(creditUser);
         }
-        if (applyUserCount <= 0) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "请填写征信申请人贷款角色数据");
-        }
-
         // 日志记录
         ECreditNode currentNode = ECreditNode.getMap()
             .get(credit.getCurNodeCode());
