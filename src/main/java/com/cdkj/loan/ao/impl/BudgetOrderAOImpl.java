@@ -175,10 +175,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long companyFee = null;
         if (EBoolean.YES.getCode().equals(loanProduct.getIsPre())) {
             companyFee = AmountUtil.mul(loanAmount, loanProduct.getPreRate());
+        } else {
+            Long amount1 = AmountUtil.mul(loanAmount,
+                (loanProduct.getYearRate() * 3 - 0.09));
+            companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
         }
-        Long amount1 = AmountUtil.mul(loanAmount,
-            (loanProduct.getYearRate() * 3 - 0.09));
-        companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
         data.setCompanyFee(companyFee);
         data.setTeamFee(StringValidater.toLong(req.getTeamFee()));
 
@@ -802,6 +803,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是确认提交银行节点，不能操作");
+        }
+        if (EBudgetFrozenStatus.FROZEN.getCode()
+            .equals(budgetOrder.getFrozenStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前预算单已被冻结，不能操作");
         }
 
         // 之前节点
