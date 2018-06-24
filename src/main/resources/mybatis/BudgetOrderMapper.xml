@@ -353,8 +353,8 @@
 			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
 				AND t.back_advance_status = #{backAdvanceStatus}
 			</if>
-			<if test="applyUserName != null and applyUserName != ''">
-				AND t.apply_user_name like "%"#{applyUserName}"%"
+			<if test="applyUserNameForQuery != null and applyUserNameForQuery != ''">
+				AND t.apply_user_name like "%"#{applyUserNameForQuery}"%"
 			</if>
 			<if test="frozenStatus != null and frozenStatus != ''">
 				AND t.frozen_status = #{frozenStatus}

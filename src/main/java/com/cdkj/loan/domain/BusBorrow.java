@@ -61,6 +61,9 @@ public class BusBorrow extends ABaseDO {
     // 更新人姓名
     private String updaterName;
 
+    // 申领人姓名
+    private String applyUserName;
+
     // 部门名称
     private String departmentName;
 
@@ -76,6 +79,14 @@ public class BusBorrow extends ABaseDO {
 
     public void setBusNumber(String busNumber) {
         this.busNumber = busNumber;
+    }
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
     }
 
     public String getBusMobile() {
