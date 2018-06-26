@@ -71,15 +71,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 "资料不是待发货状态!");
         }
         // 操作人
-        SYSUser condition = new SYSUser();
-        condition.setUserId(req.getOperator());
-        condition.setTeamCode(logistics.getTeamCode());
-        long count = sysUserBO.getTotalCount(condition);
-        if (count <= 0) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "操作人不是指定发送资料的团队人员，不能操作！");
+        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
+            if (logistics.getReceiver().equals(req.getOperator())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "gps申领人不能发");
+            }
         }
-
         // 发件
         logistics.setSendFileList(req.getSendFileList());
         logistics.setSendType(req.getSendType());
@@ -107,15 +104,18 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException("xn0000", "资料不是待收件状态!");
         }
 
-        // 操作人入参验证
-        SYSUser condition = new SYSUser();
-        condition.setUserId(operator);
-        condition.setTeamCode(data.getTeamCode());
-        long count = sysUserBO.getTotalCount(condition);
-        if (count > 0) {
+        if (data.getUserId().equals(operator)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "发件人团队成员不能收件！");
+                "收件人不能和发件人同一人！");
         }
+        // SYSUser condition = new SYSUser();
+        // condition.setUserId(operator);
+        // condition.setTeamCode(data.getTeamCode());
+        // long count = sysUserBO.getTotalCount(condition);
+        // if (count > 0) {
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // "发件人团队成员不能收件！");
+        // }
 
         String result = EBoolean.NO.getCode();
         logisticsBO.receiveLogistics(code, remark);

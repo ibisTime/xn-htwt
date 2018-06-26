@@ -288,7 +288,6 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         String result = EBoolean.NO.getCode();
 
         BudgetOrder budgetOrder = getBudgetOrder(code);
-        // String preCurrentNode = budgetOrder.getCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
             .getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
@@ -297,9 +296,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             nodeFlow.getCurrentNode())) {
             if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                    budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                    nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
-                    nodeFlow.getFileList());
+                    budgetOrder.getCode(), operator, nodeFlow.getCurrentNode(),
+                    nodeFlow.getNextNode(), nodeFlow.getFileList());
                 result = EBoolean.YES.getCode();
             } else {
                 throw new BizException("xn0000", "当前节点材料清单不存在");

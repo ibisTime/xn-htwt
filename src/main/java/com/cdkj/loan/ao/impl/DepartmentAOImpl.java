@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,8 +78,8 @@ public class DepartmentAOImpl implements IDepartmentAO {
     @Override
     public void dropDepartment(String code) {
         Department department = departmentBO.getDepartment(code);
-        if (EDepartmentStatus.UNAVAILABLE.getCode()
-            .equals(department.getStatus())) {
+        if (EDepartmentStatus.UNAVAILABLE.getCode().equals(
+            department.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前职能部门已被删除");
         }
@@ -115,9 +116,12 @@ public class DepartmentAOImpl implements IDepartmentAO {
 
     private void initDepartment(Department department) {
         if (!EDepartmentType.POSITION.getCode().equals(department.getType())) {
-            SYSUser leadUser = sysUserBO.getUser(department.getLeadUserId());
-            department.setLeadMobile(leadUser.getMobile());
-            department.setLeadName(leadUser.getRealName());
+            if (StringUtils.isNotBlank(department.getLeadUserId())) {
+                SYSUser leadUser = sysUserBO
+                    .getUser(department.getLeadUserId());
+                department.setLeadMobile(leadUser.getMobile());
+                department.setLeadName(leadUser.getRealName());
+            }
         }
     }
 }

@@ -924,8 +924,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String fileList = currentNodeFlow.getFileList();
         if (StringUtils.isNotBlank(fileList)) {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                preCurrentNode, currentNodeFlow.getNextNode(), fileList);
+                budgetOrder.getCode(), operator, preCurrentNode,
+                currentNodeFlow.getNextNode(), fileList);
         } else {
             throw new BizException("xn0000", "当前节点材料清单不存在");
         }

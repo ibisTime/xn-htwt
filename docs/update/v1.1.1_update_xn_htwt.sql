@@ -10,15 +10,21 @@ ALTER TABLE `tdq_loan_product`
 CHANGE COLUMN `loan_bank` `loan_bank` VARCHAR(255) NULL DEFAULT NULL COMMENT '贷款银行' AFTER `back_rate`,
 ADD COLUMN `is_pre` CHAR(1) NULL COMMENT '是否前置' AFTER `loan_bank`;
 
+update tdq_loan_product set is_pre='1';
+
 update tdq_credit tc,tsys_user tu set tc.team_code=tu.team_code where tc.sale_user_id=tu.user_id;
 
 ALTER TABLE `tsys_department` 
 DROP COLUMN `mobile`,
 CHANGE COLUMN `type` `type` VARCHAR(32) NULL DEFAULT NULL COMMENT '类型(1=子公司，2=部门，3=岗位)' AFTER `code`,
-CHANGE COLUMN `lead_name` `lead_user_id` VARCHAR(32) NULL DEFAULT NULL COMMENT '负责人编号' ,
+ADD COLUMN  `lead_user_id` VARCHAR(32) NULL DEFAULT NULL COMMENT '负责人编号' AFTER `lead_name`,
 ADD COLUMN `order_no` INT(11) NULL COMMENT '序号' AFTER `parent_code`;
 
-update tsys_department td,tsys_user tu set td.lead_user_id=tu.user_id;
+update tsys_department td,tsys_user tu set td.lead_user_id=tu.user_id where td.lead_name=tu.real_name;
+
+ALTER TABLE `tsys_department` 
+DROP COLUMN `lead_name`;
+
 
 ALTER TABLE `tsys_user` 
 ADD COLUMN `archive_code` VARCHAR(32) NULL COMMENT '人事档案编号' AFTER `team_code`;
@@ -75,9 +81,7 @@ ALTER TABLE `tdq_logistics`
 ADD COLUMN `team_code` VARCHAR(32) NULL COMMENT '团队编号' AFTER `user_id`,
 ADD COLUMN `receiver` VARCHAR(32) NULL COMMENT '收件人(gps 落地具体某个人/ 非gps默认0)' AFTER `receipt_datetime`;
 
-ALTER TABLE `tdq_loan_product`
-ADD COLUMN `is_pre` VARCHAR(32) NULL COMMENT '是否前置' AFTER `back_rate`,
-
+DROP TABLE IF EXISTS `tp_business_trip_apply`;
 CREATE TABLE `tp_business_trip_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user_code` varchar(32) DEFAULT NULL COMMENT '申请人编号',
@@ -116,6 +120,7 @@ CREATE TABLE `tp_business_trip_apply` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出差申请';
 
+DROP TABLE IF EXISTS `tp_bus`;
 CREATE TABLE `tp_bus` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `model` varchar(32) DEFAULT NULL COMMENT '车辆型号',
@@ -130,6 +135,7 @@ CREATE TABLE `tp_bus` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公车';
 
+DROP TABLE IF EXISTS `tp_bus_borrow`;
 CREATE TABLE `tp_bus_borrow` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `bus_code` varchar(32) DEFAULT NULL COMMENT '公车编号',
