@@ -70,6 +70,12 @@
 			<if test="realName != null and realName != '' ">
 				AND t.real_name = #{realName}
 			</if>
+			<if test="idNo != null and idNo != '' ">
+				AND t.id_no = #{idNo}
+			</if>
+			<if test="mobile != null and mobile != '' ">
+				AND t.mobile = #{mobile}
+			</if>
 			<if test="departmentCode != null and departmentCode != '' ">
 				AND t.department_code = #{departmentCode}
 			</if>
