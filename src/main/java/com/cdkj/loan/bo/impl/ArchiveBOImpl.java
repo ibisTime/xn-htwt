@@ -14,6 +14,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IArchiveDAO;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -49,6 +50,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
         if (StringUtils.isNotBlank(mobile)) {
             Archive condition = new Archive();
             condition.setMobile(mobile);
+            condition.setStatus(EBoolean.YES.getCode());
             List<Archive> list = archiveDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 Archive archive = list.get(0);
@@ -67,6 +69,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
         if (StringUtils.isNotBlank(idNo)) {
             Archive condition = new Archive();
             condition.setIdNo(idNo);
+            condition.setStatus(EBoolean.YES.getCode());
             List<Archive> list = archiveDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 Archive archive = list.get(0);
