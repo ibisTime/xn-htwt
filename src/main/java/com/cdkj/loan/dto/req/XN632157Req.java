@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 /**
  * 列表查询资料传递
  * @author: silver 
@@ -27,6 +29,17 @@ public class XN632157Req extends AListReq {
 
     // 收件人
     private String receiver;
+
+    // 状态List
+    private List<String> statusList;
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public String getReceiver() {
         return receiver;
