@@ -796,11 +796,21 @@ public class BudgetOrder extends ABaseDO {
     // 团队名称
     private String teamName;
 
+    private String keyword;
+
     // 申请人姓名模糊差查
     private String applyUserNameForQuery;
 
     // 业务编号模糊差查
     private String repayBizCodeForQuery;
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public String getRepayBizCodeForQuery() {
         return repayBizCodeForQuery;
