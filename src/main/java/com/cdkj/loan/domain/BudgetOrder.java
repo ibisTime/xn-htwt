@@ -576,11 +576,23 @@ public class BudgetOrder extends ABaseDO {
     // 银行视频
     private String bankVideo;
 
+    // 银行面签照片
+    private String bankPhoto;
+
     // 公司视频
     private String companyVideo;
 
-    // 面签合同
-    private String interviewContract;
+    // 公司合同
+    private String companyContract;
+
+    // 银行合同
+    private String bankContract;
+
+    // 其他视频
+    private String otherVideo;
+
+    // 面签其他资料
+    private String interviewOtherPdf;
 
     // 垫资日期
     private Date advanceFundDatetime;
@@ -593,9 +605,6 @@ public class BudgetOrder extends ABaseDO {
 
     // 资金划转授权书
     private String advanceFundAmountPdf;
-
-    // 垫资其他资料
-    private String advanceFundOtherPdf;
 
     // 车辆落户日期
     private Date carSettleDatetime;
@@ -1430,12 +1439,12 @@ public class BudgetOrder extends ABaseDO {
         this.advanceFundAmountPdf = advanceFundAmountPdf;
     }
 
-    public String getAdvanceFundOtherPdf() {
-        return advanceFundOtherPdf;
+    public String getOtherVideo() {
+        return otherVideo;
     }
 
-    public void setAdvanceFundOtherPdf(String advanceFundOtherPdf) {
-        this.advanceFundOtherPdf = advanceFundOtherPdf;
+    public void setOtherVideo(String otherVideo) {
+        this.otherVideo = otherVideo;
     }
 
     public String getMateCompanyContactNo() {
@@ -1670,12 +1679,36 @@ public class BudgetOrder extends ABaseDO {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getInterviewContract() {
-        return interviewContract;
+    public String getBankPhoto() {
+        return bankPhoto;
     }
 
-    public void setInterviewContract(String interviewContract) {
-        this.interviewContract = interviewContract;
+    public void setBankPhoto(String bankPhoto) {
+        this.bankPhoto = bankPhoto;
+    }
+
+    public String getCompanyContract() {
+        return companyContract;
+    }
+
+    public void setCompanyContract(String companyContract) {
+        this.companyContract = companyContract;
+    }
+
+    public String getBankContract() {
+        return bankContract;
+    }
+
+    public void setBankContract(String bankContract) {
+        this.bankContract = bankContract;
+    }
+
+    public String getInterviewOtherPdf() {
+        return interviewOtherPdf;
+    }
+
+    public void setInterviewOtherPdf(String interviewOtherPdf) {
+        this.interviewOtherPdf = interviewOtherPdf;
     }
 
     public Date getAdvanceFundDatetime() {
