@@ -2511,6 +2511,7 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_20','抵押
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_21','抵押完成','002',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_22','确认入档','002',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_23','还款计划','002',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_24','区域经理审核','002',NULL);
 
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_01','还款中','003',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_02','清欠催收部审核','003',NULL);
@@ -2578,7 +2579,8 @@ INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`fil
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_02','001_03',NULL,'电饭锅',NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_03','001_09','001_04',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_04','001_02','',NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_01','002_02',NULL,NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_01','002_24',NULL,NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_24','002_02','002_04',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_02','002_03','002_04',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_03','002_05','002_04',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_04','002_02','',NULL,NULL);
