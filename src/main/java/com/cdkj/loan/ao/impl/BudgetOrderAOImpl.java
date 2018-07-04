@@ -601,6 +601,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setBankVideo(req.getBankVideo());
+        budgetOrder.setBankPhoto(req.getBankPhoto());
         budgetOrder.setCompanyVideo(req.getCompanyVideo());
         budgetOrder.setCompanyContract(req.getCompanyContract());
         budgetOrder.setBankContract(req.getBankContract());
