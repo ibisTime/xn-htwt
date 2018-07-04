@@ -11,6 +11,9 @@ public class XN632148Req extends APageReq {
 
     private String code;// 业务编号
 
+    // 还款业务编号
+    private String repayBizCode;
+
     private String applyUserName;// 客户姓名
 
     private String applyDatetimeStart;// 申请时间起始
@@ -36,6 +39,14 @@ public class XN632148Req extends APageReq {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
+    }
+
+    public String getRepayBizCode() {
+        return repayBizCode;
+    }
+
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getTeamCode() {

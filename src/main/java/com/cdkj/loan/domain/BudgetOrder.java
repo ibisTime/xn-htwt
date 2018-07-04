@@ -799,6 +799,17 @@ public class BudgetOrder extends ABaseDO {
     // 申请人姓名模糊差查
     private String applyUserNameForQuery;
 
+    // 业务编号模糊差查
+    private String repayBizCodeForQuery;
+
+    public String getRepayBizCodeForQuery() {
+        return repayBizCodeForQuery;
+    }
+
+    public void setRepayBizCodeForQuery(String repayBizCodeForQuery) {
+        this.repayBizCodeForQuery = repayBizCodeForQuery;
+    }
+
     public String getApplyUserNameForQuery() {
         return applyUserNameForQuery;
     }

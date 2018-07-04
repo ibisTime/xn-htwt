@@ -294,6 +294,9 @@
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
 			</if>
+			<if test="repayBizCodeForQuery != null and repayBizCodeForQuery != '' ">
+				AND t.repay_biz_code like "%"#{repayBizCodeForQuery}"%"
+			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
@@ -312,8 +315,8 @@
 			<if test="applyUserId != null and applyUserId != '' ">
 				AND t.apply_user_id = #{applyUserId}
 			</if>
-			<if test="applyUserName != null and applyUserName != '' ">
-				AND t.apply_user_name like "%"#{applyUserName}"%"
+			<if test="applyUserNameForQuery != null and applyUserNameForQuery != '' ">
+				AND t.apply_user_name like "%"#{applyUserNameForQuery}"%"
 			</if>
 			<if test="idNo != null and idNo != '' ">
 				AND t.id_no = #{idNo}
@@ -357,11 +360,11 @@
 			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
 				AND t.back_advance_status = #{backAdvanceStatus}
 			</if>
-			<if test="applyUserNameForQuery != null and applyUserNameForQuery != ''">
-				AND t.apply_user_name like "%"#{applyUserNameForQuery}"%"
-			</if>
 			<if test="frozenStatus != null and frozenStatus != ''">
 				AND t.frozen_status = #{frozenStatus}
+			</if>
+			<if test="keyword != null and keyword != '' ">
+				AND t.apply_user_name LIKE "%"#{keyword}"%" OR t.repay_biz_code LIKE "%"#{keyword}"%" 
 			</if>
 		</trim>
 	</sql>
