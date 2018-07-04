@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632125Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
@@ -34,8 +35,7 @@ public interface IBudgetOrderAO {
             String approveResult, String approveNote);
 
     // 面签
-    public void interview(String code, String bankVideo, String companyVideo,
-            String interviewContract, String operator);
+    public void interview(XN632123Req req);
 
     // 业务总监审核
     public void bizChargeApprove(String code, String operator,

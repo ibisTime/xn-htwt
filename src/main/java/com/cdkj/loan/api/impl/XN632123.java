@@ -24,9 +24,7 @@ public class XN632123 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.interview(req.getCode(), req.getBankVideo(),
-            req.getCompanyVideo(), req.getInterviewContract(),
-            req.getOperator());
+        budgetOrderAO.interview(req);
         return new BooleanRes(true);
     }
 

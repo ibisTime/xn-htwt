@@ -217,8 +217,13 @@
 		<result column="other_pdf" property="otherPdf" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="bank_video" property="bankVideo" />
+		<result column="bank_photo" property="bankPhoto" />
 		<result column="company_video" property="companyVideo" />
+		<result column="company_contract" property="companyContract" />
+		<result column="bank_contract" property="bankContract" />
 		<result column="interview_contract" property="interviewContract" />
+		<result column="other_video" property="otherVideo" />
+		<result column="interview_other_pdf" property="interviewOtherPdf" />
 		<result column="advance_fund_datetime" property="advanceFundDatetime" />
 		
 		<result column="advance_fund_amount" property="advanceFundAmount" />
@@ -575,8 +580,12 @@
 		,t.other_pdf
 		,t.is_advance_fund
 		,t.bank_video
+		,t.bank_photo
 		,t.company_video
-		,t.interview_contract
+		,t.company_contract
+		,t.bank_contract
+		,t.other_video
+		,t.interview_other_pdf
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
@@ -1513,9 +1522,13 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,bank_video = #{bankVideo}
+		,bank_photo = #{bankPhoto}
 		,company_video = #{companyVideo}
-		,interview_contract = #{interviewContract}
-		,remark = #{remark}
+		,company_contract = #{companyContract}
+		,bank_contract = #{bankContract}
+		,advance_fund_amount_pdf = #{advanceFundAmountPdf}
+		,other_video = #{otherVideo}
+		,interview_other_pdf = #{interviewOtherPdf}
 		WHERE code = #{code}
 	</update>
 	
@@ -1548,8 +1561,6 @@
 		advance_fund_datetime = #{advanceFundDatetime}
 		,advance_fund_amount = #{advanceFundAmount}
 		,bill_pdf = #{billPdf}
-		,advance_fund_amount_pdf = #{advanceFundAmountPdf}
-		,advance_fund_other_pdf = #{advanceFundOtherPdf}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}

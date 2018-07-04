@@ -17,12 +17,27 @@ public class XN632123Req {
     @NotBlank
     private String bankVideo;
 
+    // 银行面签照片
+    private String bankPhoto;
+
     // 公司视频
     @NotBlank
     private String companyVideo;
 
-    @NotBlank
-    private String interviewContract;// 面签合同
+    // 公司合同
+    private String companyContract;
+
+    // 银行合同
+    private String bankContract;
+
+    // 资金划转授权书
+    private String advanceFundAmountPdf;
+
+    // 其他视频
+    private String otherVideo;
+
+    // 面签其他资料
+    private String interviewOtherPdf;
 
     @NotBlank
     private String operator;// 操作人
@@ -33,6 +48,54 @@ public class XN632123Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getOtherVideo() {
+        return otherVideo;
+    }
+
+    public void setOtherVideo(String otherVideo) {
+        this.otherVideo = otherVideo;
+    }
+
+    public String getBankPhoto() {
+        return bankPhoto;
+    }
+
+    public void setBankPhoto(String bankPhoto) {
+        this.bankPhoto = bankPhoto;
+    }
+
+    public String getCompanyContract() {
+        return companyContract;
+    }
+
+    public void setCompanyContract(String companyContract) {
+        this.companyContract = companyContract;
+    }
+
+    public String getBankContract() {
+        return bankContract;
+    }
+
+    public void setBankContract(String bankContract) {
+        this.bankContract = bankContract;
+    }
+
+    public String getAdvanceFundAmountPdf() {
+        return advanceFundAmountPdf;
+    }
+
+    public void setAdvanceFundAmountPdf(String advanceFundAmountPdf) {
+        this.advanceFundAmountPdf = advanceFundAmountPdf;
+    }
+
+    public String getInterviewOtherPdf() {
+        return interviewOtherPdf;
+    }
+
+    public void setInterviewOtherPdf(String interviewOtherPdf) {
+        this.interviewOtherPdf = interviewOtherPdf;
     }
 
     public String getBankVideo() {
@@ -49,14 +112,6 @@ public class XN632123Req {
 
     public void setCompanyVideo(String companyVideo) {
         this.companyVideo = companyVideo;
-    }
-
-    public String getInterviewContract() {
-        return interviewContract;
-    }
-
-    public void setInterviewContract(String interviewContract) {
-        this.interviewContract = interviewContract;
     }
 
     public String getOperator() {
