@@ -4,7 +4,8 @@ DROP COLUMN `interview_contract`,
 ADD COLUMN `company_contract` tinytext DEFAULT NULL COMMENT '公司合同' AFTER `bank_photo`,
 ADD COLUMN `bank_contract` tinytext DEFAULT NULL COMMENT '银行合同' AFTER `company_contract`,
 ADD COLUMN `other_video` tinytext DEFAULT NULL COMMENT '其他视频' AFTER `bank_contract`,
-ADD COLUMN `interview_other_pdf` tinytext DEFAULT NULL COMMENT '面签其他资料' AFTER `other_video`;
+ADD COLUMN `interview_other_pdf` tinytext DEFAULT NULL COMMENT '面签其他资料' AFTER `other_video`,
+DROP COLUMN `advance_fund_other_pdf`;
 
 
 

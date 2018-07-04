@@ -229,7 +229,6 @@
 		<result column="advance_fund_amount" property="advanceFundAmount" />
 		<result column="bill_pdf" property="billPdf" />
 		<result column="advance_fund_amount_pdf" property="advanceFundAmountPdf" />
-		<result column="advance_fund_other_pdf" property="advanceFundOtherPdf" />
 		<result column="car_settle_datetime" property="carSettleDatetime" />
 		<result column="car_number" property="carNumber" />
 		<result column="car_invoice" property="carInvoice" />
@@ -591,7 +590,6 @@
 		,t.advance_fund_amount
 		,t.bill_pdf
 		,t.advance_fund_amount_pdf
-		,t.advance_fund_other_pdf
 		,t.car_settle_datetime
 		
 		,t.car_number
