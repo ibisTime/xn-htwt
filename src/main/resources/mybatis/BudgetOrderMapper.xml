@@ -785,26 +785,228 @@
 		,t.gender
 		,t.age
 		
+		,t.marry_state
+		,t.political
+		,t.nation
+		,t.education
 		,t.id_kind
 		,t.id_no
+		
+		,t.family_number
 		,t.mobile
+		,t.now_address
+		,t.is_card_mail_address
+		,t.post_code1
+		,t.residence_address
+		
+		,t.post_code2
+		,t.family_main_asset
+		,t.main_asset_include
+		,t.main_income
+		,t.work_company_name
+		
+		,t.work_company_address
+		,t.work_is_card_mail_address
+		,t.work_company_property
+		,t.work_belong_industry
+		,t.work_profession
+		,t.work_datetime
+		,t.self_company_area
+		,t.other_work_note
+		,t.work_asset_pdf
+		,t.employee_quantity
+		,t.enterprise_month_output
+		,t.position
+		
+		,t.post_title
+		,t.month_income
+		
+		,t.mate_zfb_jour_datetime_start
+		,t.mate_zfb_jour_datetime_end
+		,t.mate_zfb_jour_interest
+		,t.mate_zfb_jour_income
+		,t.mate_zfb_jour_expend
+		,t.mate_zfb_jour_balance
+		,t.mate_zfb_jour_month_income
+		,t.mate_zfb_jour_month_expend
+		,t.mate_zfb_jour_month_expend
+		,t.mate_zfb_jour_pic
+		,t.mate_zfb_jour_remark
+		
+		,t.mate_wx_jour_datetime_start
+		,t.mate_wx_jour_datetime_end
+		,t.mate_wx_jour_interest
+		,t.mate_wx_jour_income
+		,t.mate_wx_jour_expend
+		,t.mate_wx_jour_balance
+		,t.mate_wx_jour_month_income
+		,t.mate_wx_jour_month_expend
+		,t.mate_wx_jour_pic
+		,t.mate_wx_jour_remark
+		
+		,t.mate_jour_datetime_start
+		,t.mate_jour_datetime_end
+		,t.mate_jour_interest
+		,t.mate_jour_income
+		,t.mate_jour_expend
+		,t.mate_jour_balance
+		,t.mate_jour_month_income
+		,t.mate_jour_month_expend
+		,t.mate_jour_pic
+		,t.mate_jour_remark
+		,t.mate_asset_pdf
+		
+		,t.mate_name
+		,t.mate_mobile
+		,t.mate_id_no
+		
+		,t.mate_education
+		,t.mate_company_name
+		,t.mate_company_address
+		,t.mate_company_contact_no
+		,t.gua_name
+		
+		,t.gua_mobile
+		,t.gua_id_no
+		,t.gua_phone
+		,t.gua_company_name
+		,t.gua_company_address
+		,t.gua_house_asset_address
+		
+		,t.gua_zfb_jour_datetime_start
+		,t.gua_zfb_jour_datetime_end
+		,t.gua_zfb_jour_interest
+		,t.gua_zfb_jour_income
+		,t.gua_zfb_jour_expend
+		,t.gua_zfb_jour_balance
+		,t.gua_zfb_jour_month_income
+		,t.gua_zfb_jour_month_expend
+		,t.gua_zfb_jour_pic
+		,t.gua_zfb_jour_remark
+		
+		,t.gua_wx_jour_datetime_start
+		,t.gua_wx_jour_datetime_end
+		,t.gua_wx_jour_interest
+		,t.gua_wx_jour_income
+		,t.gua_wx_jour_expend
+		,t.gua_wx_jour_balance
+		,t.gua_wx_jour_month_income
+		,t.gua_wx_jour_month_expend
+		,t.gua_wx_jour_pic
+		,t.gua_wx_jour_remark
+		
+		,t.gua_jour_datetime_start
+		,t.gua_jour_datetime_end
+		,t.gua_jour_interest
+		,t.gua_jour_income
+		,t.gua_jour_expend
+		,t.gua_jour_balance
+		,t.gua_jour_month_income
+		,t.gua_jour_month_expend
+		,t.gua_jour_pic
+		,t.gua_jour_remark
+		,t.gua_asset_pdf
+		
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		,t.emergency_name2
+		
+		,t.emergency_relation2
+		,t.emergency_mobile2
+		
+		,t.zfb_jour_datetime_start
+		,t.zfb_jour_datetime_end
+		,t.zfb_jour_interest
+		,t.zfb_jour_income
+		,t.zfb_jour_expend
+		,t.zfb_jour_balance
+		,t.zfb_jour_month_income
+		,t.zfb_jour_month_expend
+		,t.zfb_jour_pic
+		,t.zfb_jour_remark
+		
+		,t.wx_jour_datetime_start
+		,t.wx_jour_datetime_end
+		,t.wx_jour_interest
+		,t.wx_jour_income
+		,t.wx_jour_expend
+		,t.wx_jour_balance
+		,t.wx_jour_month_income
+		,t.wx_jour_month_expend
+		,t.wx_jour_pic
+		,t.wx_jour_remark
+		
+		,t.jour_datetime_start
+		,t.jour_datetime_end
+		,t.jour_interest
+		,t.jour_income
+		,t.jour_expend
+		,t.jour_balance
+		,t.jour_month_income
+		,t.jour_month_expend
+		,t.jour_pic
+		,t.jour_remark
+		,t.asset_pdf
+		
+		,t.house_contract
+		,t.house_picture
+		,t.hk_book_pdf
+		,t.id_card_pdf
+		,t.marry_pdf
+		,t.other_pdf
+		,t.is_advance_fund
+		,t.bank_video
+		,t.bank_photo
+		,t.company_video
+		,t.company_contract
+		,t.bank_contract
+		,t.other_video
+		,t.interview_other_pdf
+		
+		,t.advance_fund_datetime
+		,t.advance_fund_amount
+		,t.bill_pdf
+		,t.advance_fund_amount_pdf
+		,t.car_settle_datetime
+		
 		,t.car_number
 		,t.car_invoice
+		,t.car_jqx
+		,t.car_syx
+		,t.car_regcerti
 		
+		,t.car_pd
+		,t.car_key
+		,t.car_big_smj
+		,t.bank_commit_datetime
+		,t.bank_commit_note
+		
+		,t.bank_fk_datetime
 		,t.repay_bank_code
 		,t.repay_bank_name
 		,t.repay_subbranch
 		,t.repay_bankcard_number
-		,t.repay_bill_date
 		
+		,t.repay_bill_date
 		,t.repay_bank_date
 		,t.repay_company_date
 		,t.repay_first_month_amount
 		,t.repay_first_month_datetime
-		,t.repay_month_amount
 		
-		,t.bank_fk_datetime
-		,t.is_advance_fund
+		,t.repay_month_amount
+		,t.receipt_bank_code
+		,t.receipt_bank_name
+		,t.receipt_bankcard_number
+		,t.receipt_pdf
+		
+		,t.receipt_remark
+		,t.pledge_datetime
+		,t.green_big_smj
+		,t.pledge_bank_commit_datetime
+		,t.pledge_bank_commit_note
+		
+		,t.enter_location
 		,t.sale_user_id
 		,t.team_code
 		,t.company_code
