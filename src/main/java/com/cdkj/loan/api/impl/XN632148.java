@@ -40,8 +40,8 @@ public class XN632148 extends AProcessor {
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setCurNodeCode(req.getCurNodeCode());
 
+        condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setRoleCode(req.getRoleCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         String orderColumn = req.getOrderColumn();

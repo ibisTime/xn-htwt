@@ -1,6 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.List;
 
 public class XN632145Req extends APageReq {
 
@@ -26,7 +25,7 @@ public class XN632145Req extends APageReq {
 
     private String teamCode;// 团队编号
 
-    private List<String> curNodeCodeList;// 当前节点编号
+    private String curNodeCode;// 当前节点编号
 
     private String isAdvanceFund;// 是否垫资
 
@@ -78,12 +77,12 @@ public class XN632145Req extends APageReq {
         this.code = code;
     }
 
-    public List<String> getCurNodeCodeList() {
-        return curNodeCodeList;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setCurNodeCodeList(List<String> curNodeCodeList) {
-        this.curNodeCodeList = curNodeCodeList;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
     public String getApplyDatetimeStart() {
