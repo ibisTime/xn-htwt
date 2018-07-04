@@ -801,6 +801,8 @@ public class BudgetOrder extends ABaseDO {
     // 申请人姓名模糊差查
     private String applyUserNameForQuery;
 
+    private List<String> curNodeCodeList;
+
     // 业务编号模糊差查
     private String repayBizCodeForQuery;
 
@@ -2906,6 +2908,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBackAdvanceWaterBill(String backAdvanceWaterBill) {
         this.backAdvanceWaterBill = backAdvanceWaterBill;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
 }

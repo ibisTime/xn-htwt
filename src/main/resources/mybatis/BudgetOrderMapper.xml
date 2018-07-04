@@ -345,8 +345,11 @@
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>
-			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
+			<if test="curNodeCodeList != null and curNodeCodeList != '' ">
+				AND t.cur_node_code in 
+				<foreach collection="curNodeCodeList" index="curNodeCode" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
 			</if>
 			<if test="curNodeCodeDz != null and curNodeCodeDz != '' ">
 				<![CDATA[AND t.cur_node_code >= #{curNodeCodeDz}]]>
