@@ -26,7 +26,6 @@ import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EDepartmentType;
-import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserStatus;
@@ -61,7 +60,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
-        data.setType(ESysUserType.Plat.getCode());
+        data.setType(type);
         data.setLoginName(loginName);
         data.setMobile(mobile);
         data.setRealName(realName);
@@ -72,8 +71,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setRoleCode(roleCode);
         data.setPostCode(postCode);
         data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
-        data.setCompanyCode(departmentBO.getCompanyByDepartment(data
-            .getDepartmentCode()));
+        data.setCompanyCode(
+            departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
 
         data.setStatus(EUserStatus.NORMAL.getCode());
         // 验证档案是否被其他人使用
@@ -114,7 +113,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         }
         SYSUser user = userList2.get(0);
         if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该用户操作存在异常");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该用户操作存在异常");
         }
         return user.getUserId();
     }
@@ -232,8 +232,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         String departmentCode = post.getParentCode();
         while (true) {
             Department department = departmentBO.getDepartment(departmentCode);
-            if (EDepartmentType.DEPARTMENT.getCode().equals(
-                department.getType())) {
+            if (EDepartmentType.DEPARTMENT.getCode()
+                .equals(department.getType())) {
                 departmentCode = department.getCode();
                 break;
             } else {
@@ -245,8 +245,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         String companyCode = departmentCode;
         while (true) {
             Department company = departmentBO.getDepartment(companyCode);
-            if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(
-                company.getType())) {
+            if (EDepartmentType.SUBBRANCH_COMPANY.getCode()
+                .equals(company.getType())) {
                 companyCode = company.getCode();
                 break;
             } else {
@@ -276,9 +276,9 @@ public class SYSUserAOImpl implements ISYSUserAO {
                 || EUserStatus.Ren_Locked.getCode().equals(user.getStatus())
                 || EUserStatus.TO_APPROVE.getCode().equals(user.getStatus())
                 || EUserStatus.APPROVE_NO.getCode().equals(user.getStatus())) {
-            throw new BizException("xn805050", "该账号"
-                    + EUserStatus.getMap().get(user.getStatus()).getValue()
-                    + "，请联系工作人员");
+            throw new BizException("xn805050",
+                "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
+                        + "，请联系工作人员");
         }
         // 短信验证码是否正确
         // smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063");
@@ -300,8 +300,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
             SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
-                && condition.getCreateDatetimeEnd().before(
-                    condition.getCreateDatetimeStart())) {
+                && condition.getCreateDatetimeEnd()
+                    .before(condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         Paginable<SYSUser> page = sysUserBO.getPaginable(start, limit,
@@ -309,20 +309,20 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
         for (SYSUser sysUser : page.getList()) {
             if (StringUtils.isNotBlank(sysUser.getPostCode())) {
-                sysUser.setPostName(departmentBO.getDepartment(
-                    sysUser.getPostCode()).getName());
+                sysUser.setPostName(departmentBO
+                    .getDepartment(sysUser.getPostCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
-                sysUser.setDepartmentName(departmentBO.getDepartment(
-                    sysUser.getDepartmentCode()).getName());
+                sysUser.setDepartmentName(departmentBO
+                    .getDepartment(sysUser.getDepartmentCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
-                sysUser.setCompanyName(departmentBO.getDepartment(
-                    sysUser.getCompanyCode()).getName());
+                sysUser.setCompanyName(departmentBO
+                    .getDepartment(sysUser.getCompanyCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
-                sysUser.setTeamName(bizTeamBO.getBizTeam(sysUser.getTeamCode())
-                    .getName());
+                sysUser.setTeamName(
+                    bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
             }
         }
         return page;
@@ -332,8 +332,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
     public List<SYSUser> queryUserList(SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
-                && condition.getCreateDatetimeEnd().before(
-                    condition.getCreateDatetimeStart())) {
+                && condition.getCreateDatetimeEnd()
+                    .before(condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         return sysUserBO.queryUserList(condition);
@@ -343,16 +343,16 @@ public class SYSUserAOImpl implements ISYSUserAO {
     public SYSUser getUser(String userId) {
         SYSUser sysUser = sysUserBO.getUser(userId);
         if (StringUtils.isNotBlank(sysUser.getPostCode())) {
-            sysUser.setPostName(departmentBO.getDepartment(
-                sysUser.getPostCode()).getName());
+            sysUser.setPostName(
+                departmentBO.getDepartment(sysUser.getPostCode()).getName());
         }
         if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
-            sysUser.setDepartmentName(departmentBO.getDepartment(
-                sysUser.getDepartmentCode()).getName());
+            sysUser.setDepartmentName(departmentBO
+                .getDepartment(sysUser.getDepartmentCode()).getName());
         }
         if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
-            sysUser.setCompanyName(departmentBO.getDepartment(
-                sysUser.getCompanyCode()).getName());
+            sysUser.setCompanyName(
+                departmentBO.getDepartment(sysUser.getCompanyCode()).getName());
         }
         return sysUser;
     }

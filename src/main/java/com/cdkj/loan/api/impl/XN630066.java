@@ -30,10 +30,11 @@ public class XN630066 extends AProcessor {
         SYSUser condition = new SYSUser();
         condition.setStatus(ESYSUserStatus.NORMAL.getCode());
         condition.setKeyword(req.getKeyword());
-        condition.setCreateDatetimeStart(DateUtil.getFrontDate(
-            req.getCreateDatetimeStart(), false));
-        condition.setCreateDatetimeEnd(DateUtil.getFrontDate(
-            req.getCreateDatetimeEnd(), true));
+        condition.setType(req.getType());
+        condition.setCreateDatetimeStart(
+            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
+        condition.setCreateDatetimeEnd(
+            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

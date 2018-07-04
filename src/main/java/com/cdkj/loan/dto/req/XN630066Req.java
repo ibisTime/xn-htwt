@@ -15,12 +15,23 @@ public class XN630066Req extends APageReq {
     // （选填） 关键字
     private String keyword;
 
+    // 类型
+    private String type;
+
     public String getKeyword() {
         return keyword;
     }
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }
