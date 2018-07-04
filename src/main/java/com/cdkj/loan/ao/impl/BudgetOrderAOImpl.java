@@ -474,8 +474,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.AREA_APPROVE.getCode().equals(
-            budgetOrder.getCurNodeCode())) {
+        if (!EBudgetOrderNode.AREA_APPROVE.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是区域经理审核节点，不能操作");
         }
@@ -483,18 +483,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
         } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getBackNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshAreaApprove(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-            budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
@@ -1227,6 +1227,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryCreditUserList(creditUser);
         credit.setCreditUserList(queryCreditUserList);
 
+        SYSUser user = sysUserBO.getUser(budgetOrder.getSaleUserId());
+        budgetOrder.setRoleCode(user.getRoleCode());
         budgetOrder.setCredit(credit);
         return budgetOrder;
     }
