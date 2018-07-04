@@ -13,6 +13,9 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void refreshBudgetOrder(BudgetOrder data);
 
+    // 准入单区域经理审核
+    public void refreshAreaApprove(BudgetOrder data);
+
     public void refreshriskApprove(BudgetOrder budgetOrder);
 
     public void interview(BudgetOrder budgetOrder);

@@ -1704,6 +1704,14 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_area_approve">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_riskApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
@@ -1912,4 +1920,6 @@
 		,frozen_status = #{frozenStatus}
 		WHERE code = #{code}
 	</update>
+	
+
 </mapper>

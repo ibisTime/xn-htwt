@@ -26,6 +26,10 @@ public interface IBudgetOrderAO {
     // 填写准入申请单
     public void editBudgetOrder(XN632120Req req);
 
+    // 区域经理审核
+    public void areaApprove(String code, String approveResult,
+            String approveNote, String operator);
+
     // 风控专员审核
     public void riskApprove(String code, String approveResult,
             String approveNote, String operator);
@@ -102,8 +106,8 @@ public interface IBudgetOrderAO {
     public void cancelFinanceAudit(XN632192Req req);
 
     // 垫资超过1天未放款客户
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 
     public void doSmsInterviewInform(String budgetOrderCode);
 
