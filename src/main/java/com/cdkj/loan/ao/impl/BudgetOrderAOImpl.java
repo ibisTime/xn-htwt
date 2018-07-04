@@ -456,6 +456,39 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    public void areaApprove(String code, String approveResult,
+            String approveNote, String operator) {
+
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        if (!EBudgetOrderNode.AREA_APPROVE.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是区域经理审核节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preCurrentNode).getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preCurrentNode).getBackNode());
+        }
+        budgetOrder.setRemark(approveNote);
+        budgetOrderBO.refreshAreaApprove(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
+
+    }
+
+    @Override
     @Transactional
     public void riskApprove(String code, String approveResult,
             String approveNote, String operator) {
@@ -1295,4 +1328,5 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             "您的车贷准入申请单正在面签，请您现在打开APP，点击\"我的\"->\"开始面签\"，输入房间号[" + roomCode
                     + "]，进入房间并完成面签。");
     }
+
 }

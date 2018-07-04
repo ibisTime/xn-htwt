@@ -133,6 +133,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
+    public void refreshAreaApprove(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterAreaApprove(data);
+        }
+    }
+
+    @Override
     public void refreshriskApprove(BudgetOrder data) {
         if (StringUtils.isNotBlank(data.getCode())) {
             budgetOrderDAO.updaterIskApprove(data);
@@ -360,4 +367,5 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
 
         budgetOrderDAO.cancelFinanceAudit(budgetOrder);
     }
+
 }
