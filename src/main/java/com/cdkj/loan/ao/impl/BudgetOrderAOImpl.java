@@ -182,7 +182,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
         }
         data.setCompanyFee(companyFee);
-        data.setTeamFee(StringValidater.toLong(req.getTeamFee()));
+        data.setFee(StringValidater.toLong(req.getFee()));
 
         data.setBizType(req.getBizType());
         data.setLoanPeriod(req.getLoanPeriod());
@@ -234,8 +234,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setWorkCompanyProperty(req.getWorkCompanyProperty());
         data.setWorkBelongIndustry(req.getWorkBelongIndustry());
         data.setWorkProfession(req.getWorkProfession());
-        data.setWorkDatetime(DateUtil.strToDate(req.getWorkDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setWorkDatetime(req.getWorkDatetime());
         data.setSelfCompanyArea(req.getSelfCompanyArea());
         data.setOtherWorkNote(req.getOtherWorkNote());
         data.setWorkAssetPdf(req.getWorkAssetPdf());
@@ -262,6 +261,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             DateUtil.strToDate(req.getMateZfbJourDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setMateZfbJourInterest(req.getMateZfbJourInterest());
+        data.setMateZfbInterest1(
+            StringValidater.toLong(req.getMateZfbInterest1()));
+        data.setMateZfbInterest2(
+            StringValidater.toLong(req.getMateZfbInterest2()));
 
         data.setMateZfbJourIncome(
             StringValidater.toLong(req.getMateZfbJourIncome()));
@@ -283,6 +286,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMateWxJourDatetimeEnd(DateUtil.strToDate(
             req.getMateWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setMateWxJourInterest(req.getMateWxJourInterest());
+        data.setMateWxInterest1(
+            StringValidater.toLong(req.getMateWxInterest1()));
+        data.setMateWxInterest2(
+            StringValidater.toLong(req.getMateWxInterest2()));
 
         data.setMateWxJourIncome(
             StringValidater.toLong(req.getMateWxJourIncome()));
@@ -302,6 +309,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMateJourDatetimeEnd(DateUtil.strToDate(
             req.getMateJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setMateJourInterest(req.getMateJourInterest());
+        data.setMateInterest1(StringValidater.toLong(req.getMateInterest1()));
+        data.setMateInterest2(StringValidater.toLong(req.getMateInterest2()));
 
         data.setMateJourIncome(StringValidater.toLong(req.getMateJourIncome()));
         data.setMateJourExpend(StringValidater.toLong(req.getMateJourExpend()));
@@ -331,6 +340,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setGuaZfbJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGuaZfbJourInterest(req.getGuaZfbJourInterest());
+        data.setGuaZfbInterest1(
+            StringValidater.toLong(req.getGuaZfbInterest1()));
+        data.setGuaZfbInterest2(
+            StringValidater.toLong(req.getGuaZfbInterest2()));
 
         data.setGuaZfbJourIncome(
             StringValidater.toLong(req.getGuaZfbJourIncome()));
@@ -352,6 +365,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setGuaWxJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGuaWxJourInterest(req.getGuaWxJourInterest());
+        data.setGuaWxInterest1(StringValidater.toLong(req.getGuaWxInterest1()));
+        data.setGuaWxInterest2(StringValidater.toLong(req.getGuaWxInterest2()));
 
         data.setGuaWxJourIncome(
             StringValidater.toLong(req.getGuaWxJourIncome()));
@@ -372,6 +387,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setGuaJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGuaJourInterest(req.getGuaJourInterest());
+        data.setGuaInterest1(StringValidater.toLong(req.getGuaInterest1()));
+        data.setGuaInterest2(StringValidater.toLong(req.getGuaInterest2()));
 
         data.setGuaJourIncome(StringValidater.toLong(req.getGuaJourIncome()));
         data.setGuaJourExpend(StringValidater.toLong(req.getGuaJourExpend()));
@@ -397,6 +414,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setZfbJourDatetimeEnd(DateUtil.strToDate(
             req.getZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setZfbJourInterest(req.getZfbJourInterest());
+        data.setZfbInterest1(StringValidater.toLong(req.getZfbInterest1()));
+        data.setZfbInterest2(StringValidater.toLong(req.getZfbInterest2()));
 
         data.setZfbJourIncome(StringValidater.toLong(req.getZfbJourIncome()));
         data.setZfbJourExpend(StringValidater.toLong(req.getZfbJourExpend()));
@@ -413,6 +432,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setWxJourDatetimeEnd(DateUtil.strToDate(req.getWxJourDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setWxJourInterest(req.getWxJourInterest());
+        data.setWxInterest1(StringValidater.toLong(req.getWxInterest1()));
+        data.setWxInterest2(StringValidater.toLong(req.getWxInterest2()));
 
         data.setWxJourIncome(StringValidater.toLong(req.getWxJourIncome()));
         data.setWxJourExpend(StringValidater.toLong(req.getWxJourExpend()));
@@ -429,6 +450,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setJourDatetimeEnd(DateUtil.strToDate(req.getJourDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setJourInterest(req.getJourInterest());
+        data.setInterest1(StringValidater.toLong(req.getInterest1()));
+        data.setInterest2(StringValidater.toLong(req.getInterest2()));
 
         data.setJourIncome(StringValidater.toLong(req.getJourIncome()));
         data.setJourExpend(StringValidater.toLong(req.getJourExpend()));
@@ -566,11 +589,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data.setCompanyCode(budgetOrder.getCompanyCode());
             data.setUserId(budgetOrder.getSaleUserId());
 
-            // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+团队服务费
+            // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+服务费
             data.setShouldAmount(budgetOrder.getBankFee()
                     + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
                     + budgetOrder.getMonthDeposit()
-                    + budgetOrder.getCompanyFee() + budgetOrder.getTeamFee());
+                    + budgetOrder.getCompanyFee() + budgetOrder.getFee());
             data.setRealAmount(0L);
             data.setIsSettled(EBoolean.NO.getCode());
 
