@@ -150,8 +150,9 @@
 		<typeAlias alias="overdueRepay" type="com.cdkj.loan.domain.OverdueRepay" />
 
 		<typeAlias alias="businessTripApply" type="com.cdkj.loan.domain.BusinessTripApply" />
-
 		
+		<typeAlias alias="investigateReport" type="com.cdkj.loan.domain.InvestigateReport" />
+
 		<typeAlias alias="bus" type="com.cdkj.loan.domain.Bus" />
 		<typeAlias alias="busBorrow" type="com.cdkj.loan.domain.BusBorrow" />
 

@@ -9,23 +9,45 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "bus";
+    private static String key = "investigateReport";
 
     // 实体名称
-    private static String keyName = "公车";
+    private static String keyName = "调查报告";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_bus";
+    private static String dbname = "tdq_investigate_report";
 
-    private static String[] DBwords = { "code", "model", "number",
-            " insurance_end_datetime", " park_location", " pic", "status",
-            "updater", "update_datetime", "remark" };
+    private static String[] DBwords = { "code", "budget_order_code",
+            "repay_biz_code", "company_ode", "biz_ype", "apply_user_name",
+            "apply_datetime", "loan_bank", "loan_amount", "loan_period",
+            "is_advance_fund", "sale_user_id", "gua_mode",
+            "customer_information", "bank_credit_result_pdf",
+            "price_approval_pdf", "car_168_price", "apply_work_and_jour",
+            "jour_pic", "jour_remark", "zfb_jour_pic", "zfb_jour_remark",
+            "wx_jour_pic", "wx_jour_pdf", "house_contract", "home_visit",
+            "basics_information", "xsz_pdf", "xsz_car_pdf", "frame_no",
+            "nameplate", "forward_pdf", "queen_pdf", "left_pdf", "right_pdf",
+            "lf45_pdf", "rf45_pdf", "lg45_pdf", "rr45_pdf", "engine_pdf",
+            "szm_pdf", "gears_pdf", "functional_zone_pdf", "odometer_pdf",
+            "front_row_pdf", "rock_row_pdf", "trunk_pdf", "louver_pdf",
+            "bank_row_pdf", "check_approve_pdf", "check_approve_link",
+            "third_valuation_pdf", "check_approve_software",
+            "used_car_current_rate", "information_source", "valuation",
+            "cur_node_code", "updater", "update_datetime", "remark" };
 
-    private static String[] DBwordsName = { "编号", "车辆型号", "车牌号", "保险到期日",
-            "停放位置", "车辆照片", "领用状态", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "编号", "预算单编号", "业务编号", "业务公司",
+            "业务种类", "客户姓名", "申请时间", "贷款银行", "贷款金额", "贷款期数", "是否垫资", "业务员",
+            "担保方式", "申请人征信情况", "申请人贷款车辆价格核准情况", "车行168车价", "申请人工作情况及流水反映",
+            "银行流水", "银行流水情况", "支付宝流水", "支付宝流水情况", "微信流水", "微信流水情况", "房产情况及家访",
+            "家访地址", "家访照片", "车辆基础信息", "行驶证主副页", "行驶证车辆照片页", "车架号", "车辆铭牌",
+            "车辆照片正前", "车辆照片正后", "车辆照片正左", "车辆照片正右", "车辆照片左前45o", "车辆照片右前45o",
+            "车辆照片左后45o", "车辆照片右后45o", "车辆照片发动机仓", "车辆中控台照片", "车辆档位照片",
+            "车辆功能区里照片", "车辆里程表照片", "车辆前排内饰照片", "车辆中排内饰照片", "车辆后备箱照片", "车辆天窗照片",
+            "车辆后排娱乐系统照片", "车辆核准截图", "核准链接", "第三方评估价截图", "核准软件",
+            "二手车市场成交价最低及最高截图", "信息源", "评估价", "节点编号", "更新人", "更新时间", "备注" };
 
     private static String[] DOwords = getDOwords();
 
