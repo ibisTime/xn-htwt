@@ -264,6 +264,11 @@ public class CreditAOImpl implements ICreditAO {
             Bank bank = bankBO.getBank(credit.getLoanBankCode());
             credit.setLoanBankName(bank.getBankName());
         }
+        // 转义录入征信结果的驻行人员
+        if (StringUtils.isNotBlank(credit.getOperator())) {
+            SYSUser user = sysUserBO.getUser(credit.getOperator());
+            credit.setOperatorName(user.getRealName());
+        }
 
         CreditUser condition = new CreditUser();
         condition.setCreditCode(credit.getCode());
@@ -369,7 +374,9 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         if (!ECreditNode.INPUT_CREDIT_RESULT.getCode().equals(
-            credit.getCurNodeCode())) {
+            credit.getCurNodeCode())
+                && !ECreditNode.AUDIT_NO_PASS.getCode().equals(
+                    credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是录入银行征信结果节点，不能操作");
         }
@@ -379,7 +386,7 @@ public class CreditAOImpl implements ICreditAO {
             // 确认 录入征信结果
             credit.setCurNodeCode((nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurNodeCode)).getNextNode());
-            credit.setUpdater(req.getOperator());
+            credit.setOperator(req.getOperator());
             List<XN632111ReqCreditUser> creditResult = req.getCreditResult();
             for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
                 CreditUser creditUser = creditUserBO
@@ -409,13 +416,20 @@ public class CreditAOImpl implements ICreditAO {
     public void cancelCredit(String code, String operator) {
 
         Credit credit = creditBO.getCredit(code);
-        String preCurNodeCode = credit.getCurNodeCode();
-        credit.setCurNodeCode(ECreditNode.CANCEL.getCode());
-        creditBO.cancelCredit(credit);
 
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.CREDIT, code,
-            preCurNodeCode, ECreditNode.CANCEL.getCode(),
-            ECreditNode.CANCEL.getValue(), operator);
+        if (ECreditNode.FILLIN_CREDIT.getCode().equals(credit.getCurNodeCode())
+                || ECreditNode.INPUT_CREDIT_RESULT.getCode().equals(
+                    credit.getCurNodeCode())) {
+            String preCurNodeCode = credit.getCurNodeCode();
+            credit.setCurNodeCode(ECreditNode.CANCEL.getCode());
+            creditBO.cancelCredit(credit);
 
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.CREDIT,
+                code, preCurNodeCode, ECreditNode.CANCEL.getCode(),
+                ECreditNode.CANCEL.getValue(), operator);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "已录入征信结果，不能撤回!");
+        }
     }
 }

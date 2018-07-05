@@ -20,7 +20,7 @@
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="note" property="note" />
-		<result column="updater" property="updater" />
+		<result column="operator" property="operator" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -102,7 +102,7 @@
 		,t.cur_node_code		
 		,t.apply_datetime
 		,t.note
-		,t.updater
+		,t.operator
 		from tdq_credit t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -137,7 +137,7 @@
 		,t.cur_node_code		
 		,t.apply_datetime
 		,t.note
-		,t.updater
+		,t.operator
 		from tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -231,7 +231,7 @@
 		UPDATE tdq_credit
 		SET
 		cur_node_code = #{curNodeCode}
-		,updater = #{updater}
+		,operator = #{operator}
 		WHERE code = #{code}
 	</update>
 	

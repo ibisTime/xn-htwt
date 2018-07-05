@@ -60,7 +60,8 @@ public class Credit extends ABaseDO {
     // 征信说明
     private String note;
 
-    private String updater;
+    // 录入征信结果的驻行人员
+    private String operator;
 
     // ****************db properties*******************
 
@@ -94,6 +95,17 @@ public class Credit extends ABaseDO {
     // 筛选未通过
     private String noPass;
 
+    // 筛选未通过
+    private String operatorName;
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
+
     public String getNoPass() {
         return noPass;
     }
@@ -110,12 +122,12 @@ public class Credit extends ABaseDO {
         this.keyWord = keyWord;
     }
 
-    public String getUpdater() {
-        return updater;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setUpdater(String updater) {
-        this.updater = updater;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getUserName() {

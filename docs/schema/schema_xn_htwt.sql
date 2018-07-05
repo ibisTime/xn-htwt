@@ -611,7 +611,7 @@ CREATE TABLE `tdq_credit` (
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点编号',
   `note` varchar(255) DEFAULT NULL COMMENT '征信说明',
-  `updater` varchar(255) DEFAULT NULL COMMENT '操作人',
+  `operator` varchar(255) DEFAULT NULL COMMENT '操作人(录入征信结果的驻行人员)',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -2482,11 +2482,13 @@ INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`statu
 -- Query: SELECT * FROM tsys_node
 -- Date: 2018-05-31 09:26
 */
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_01','填写征信单','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_01','发起征信查询','001',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_02','录入征信结果','001',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_03','风控专员审核','001',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_04','风控专员审核不通过','001',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_09','征信单完成','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_04','征信完成','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_05','征信退回，重新发起征信','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_06','风控专员审核不通过，重新录入征信结果','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_07','征信撤回，重新发起征信','001',NULL);
 
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_01','填写准入申请单','002',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_02','风控专员审核','002',NULL);
@@ -2575,11 +2577,13 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_06','修改
 -- Query: SELECT `type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark` FROM tsys_node_flow
 -- Date: 2018-06-01 08:32
 */
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_01','001_02',NULL,'担保合同,抵押合同',NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_02','001_03','001_05','电饭锅',NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_03','001_09','001_04',NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_04','001_02',NULL,NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_05','001_01',NULL,NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_01','001_02',NULL,NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_02','001_03','001_05',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_03','001_04','001_06',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_05','001_02',NULL,NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_06','001_03',NULL,NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('001','001_07','001_02',NULL,NULL,NULL);
+
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_01','002_24',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_24','002_02','002_04',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('002','002_02','002_03','002_04',NULL,NULL);
