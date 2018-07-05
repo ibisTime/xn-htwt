@@ -71,8 +71,8 @@
 				AND trn.role_code = #{roleCode}
 			</if>
 			<if test="keyWord != null and keyWord != '' ">
-				AND t.user_name LIKE "%"#{keyword}"%" OR t.code LIKE "%"#{keyword}"%" 
-				OR t.team_code LIKE "%"#{keyword}"%" OR t.budget_code LIKE "%"#{keyword}"%" 
+				AND t.user_name LIKE "%"#{keyWord}"%" OR t.code LIKE "%"#{keyWord}"%" 
+				OR t.team_code LIKE "%"#{keyWord}"%" OR t.budget_code LIKE "%"#{keyWord}"%" 
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
