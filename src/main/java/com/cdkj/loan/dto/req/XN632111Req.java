@@ -23,6 +23,17 @@ public class XN632111Req {
     // 征信结果
     private List<XN632111ReqCreditUser> creditResult;
 
+    // 1确认 0退回
+    private String dealType;
+
+    public String getDealType() {
+        return dealType;
+    }
+
+    public void setDealType(String dealType) {
+        this.dealType = dealType;
+    }
+
     public String getCreditCode() {
         return creditCode;
     }

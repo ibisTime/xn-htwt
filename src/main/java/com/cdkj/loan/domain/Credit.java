@@ -45,6 +45,9 @@ public class Credit extends ABaseDO {
     // 业务员编号
     private String saleUserId;
 
+    // 客户姓名
+    private String userName;
+
     // 团队编号
     private String teamCode;
 
@@ -53,6 +56,11 @@ public class Credit extends ABaseDO {
 
     // 当前节点编号
     private String curNodeCode;
+
+    // 征信说明
+    private String note;
+
+    private String updater;
 
     // ****************db properties*******************
 
@@ -79,6 +87,44 @@ public class Credit extends ABaseDO {
 
     // 征信人员信息
     private List<CreditUser> creditUserList;
+
+    // 关键字
+    private String keyWord;
+
+    // 筛选未通过
+    private String noPass;
+
+    public String getNoPass() {
+        return noPass;
+    }
+
+    public void setNoPass(String noPass) {
+        this.noPass = noPass;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getTeamCode() {
         return teamCode;
@@ -246,6 +292,14 @@ public class Credit extends ABaseDO {
 
     public void setCreditUserList(List<CreditUser> creditUserList) {
         this.creditUserList = creditUserList;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
 }

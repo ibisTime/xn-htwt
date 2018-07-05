@@ -7,6 +7,10 @@ ADD COLUMN `other_video` tinytext DEFAULT NULL COMMENT '其他视频' AFTER `ban
 ADD COLUMN `interview_other_pdf` tinytext DEFAULT NULL COMMENT '面签其他资料' AFTER `other_video`,
 DROP COLUMN `advance_fund_other_pdf`;
 
+ALTER TABLE `dev_xn_htwt`.`tdq_credit` 
+ADD COLUMN `note` VARCHAR(255) NULL COMMENT '征信说明' AFTER `cur_node_code`;
+
+
 
 
 

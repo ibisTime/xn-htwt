@@ -15,6 +15,9 @@ public class XN632115Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    // 客户姓名
+    private String userName;
+
     // 业务员编号
     private String saleUserId;
 
@@ -36,6 +39,35 @@ public class XN632115Req extends APageReq {
     // 角色编号
     @NotBlank
     private String roleCode;
+
+    // 征信是否通过 0未通过1已通过
+    private String isPass;
+
+    private String keyWord;
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getIsPass() {
+        return isPass;
+    }
+
+    public void setIsPass(String isPass) {
+        this.isPass = isPass;
+    }
 
     public String getCurNodeCode() {
         return curNodeCode;
