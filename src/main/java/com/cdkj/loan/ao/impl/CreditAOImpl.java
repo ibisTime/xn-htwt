@@ -124,6 +124,8 @@ public class CreditAOImpl implements ICreditAO {
                 if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
                     applyUserCount++;
                     credit.setUserName(child.getUserName());// 征信单设置客户姓名（征信人员的申请人）
+                    credit.setMobile(child.getMobile());
+                    credit.setIdNo(child.getIdNo());
                 }
                 if (applyUserCount > 1) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -150,7 +152,7 @@ public class CreditAOImpl implements ICreditAO {
             }
         }
 
-        creditBO.setUserName(credit);
+        creditBO.setApplyUserInfo(credit);
 
         // 日志记录
         sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,

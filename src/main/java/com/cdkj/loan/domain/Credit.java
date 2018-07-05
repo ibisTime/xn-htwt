@@ -48,6 +48,12 @@ public class Credit extends ABaseDO {
     // 客户姓名
     private String userName;
 
+    // 客户姓名
+    private String mobile;
+
+    // 客户姓名
+    private String idNo;
+
     // 团队编号
     private String teamCode;
 
@@ -312,6 +318,22 @@ public class Credit extends ABaseDO {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
 }

@@ -608,6 +608,8 @@ CREATE TABLE `tdq_credit` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司',
   `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员编号',
   `user_name` VARCHAR(255) DEFAULT NULL COMMENT '客户姓名',
+  `mobile` VARCHAR(32) DEFAULT NULL COMMENT '手机号',
+  `id_no` VARCHAR(32) DEFAULT NULL COMMENT '身份证号',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点编号',
   `note` varchar(255) DEFAULT NULL COMMENT '征信说明',

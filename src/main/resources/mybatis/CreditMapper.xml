@@ -16,6 +16,8 @@
 		<result column="sale_user_id" property="saleUserId" />
 		
 		<result column="user_name" property="userName" />
+		<result column="mobile" property="mobile" />
+		<result column="id_no" property="idNo" />
 		<result column="team_code" property="teamCode" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
@@ -70,9 +72,9 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
-			<if test="keyWord != null and keyWord != '' ">
-				AND t.user_name LIKE "%"#{keyWord}"%" OR t.code LIKE "%"#{keyWord}"%" 
-				OR t.team_code LIKE "%"#{keyWord}"%" OR t.budget_code LIKE "%"#{keyWord}"%" 
+			<if test="keyWord != null and keyWord != '' "><!-- 客户姓名 手机号 身份证号 -->
+				AND t.user_name LIKE "%"#{keyWord}"%" OR t.mobile LIKE "%"#{keyWord}"%" 
+				OR t.id_no LIKE "%"#{keyWord}"%"
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
@@ -98,6 +100,8 @@
 		,t.sale_user_id
 
 		,t.user_name
+		,t.mobile
+		,t.id_no
 		,t.team_code
 		,t.cur_node_code		
 		,t.apply_datetime
@@ -133,6 +137,8 @@
 		,t.sale_user_id
 
 		,t.user_name
+		,t.mobile
+		,t.id_no
 		,t.team_code
 		,t.cur_node_code		
 		,t.apply_datetime
@@ -224,6 +230,8 @@
 		UPDATE tdq_credit
 		SET
 		user_name = #{userName}
+		,mobile = #{mobile}
+		,id_no = #{idNo}
 		WHERE code = #{code}
 	</update>
 	

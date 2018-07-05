@@ -98,9 +98,9 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     }
 
     @Override
-    public void setUserName(Credit credit) {
+    public void setApplyUserInfo(Credit credit) {
         if (null != credit) {
-            creditDAO.setUserName(credit);
+            creditDAO.setApplyUserInfo(credit);
         }
     }
 
