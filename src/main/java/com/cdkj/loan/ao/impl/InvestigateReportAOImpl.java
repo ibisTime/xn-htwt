@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +8,30 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IInvestigateReportAO;
 import com.cdkj.loan.bo.IInvestigateReportBO;
+import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.InvestigateReport;
+import com.cdkj.loan.dto.req.XN632200Req;
+import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.EInvestigateReportNode;
+import com.cdkj.loan.exception.BizException;
 
-//CHECK ��鲢��ע�� 
 @Service
 public class InvestigateReportAOImpl implements IInvestigateReportAO {
 
     @Autowired
     private IInvestigateReportBO investigateReportBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     @Override
     public String addInvestigateReport(InvestigateReport data) {
@@ -23,8 +39,132 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     }
 
     @Override
-    public int editInvestigateReport(InvestigateReport data) {
-        return investigateReportBO.refreshInvestigateReport(data);
+    public void approveInvestigateReport(XN632200Req req) {
+        InvestigateReport data = investigateReportBO
+            .getInvestigateReport(req.getCode());
+        if (!EInvestigateReportNode.COMMIT_APPLY.getCode()
+            .equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是提交调查申请节点，不能操作！");
+        }
+
+        // 之前节点
+        String curNodeCode = data.getCurNodeCode();
+
+        data.setGuaMode(req.getGuaMode());
+        data.setCustomerInformation(req.getCustomerInformation());
+        data.setPriceApprovalPdf(req.getPriceApprovalPdf());
+        data.setCar168Price(StringValidater.toLong(req.getCar168Price()));
+        data.setApplyWorkAndJour(req.getApplyWorkAndJour());
+        data.setJourPic(req.getJourPic());
+        data.setZfbJourPic(req.getZfbJourPic());
+        data.setWxJourPic(req.getWxJourPic());
+        data.setHomeVisit(req.getHomeVisit());
+        data.setBasicsInformation(req.getBasicsInformation());
+        data.setXszPdf(req.getXszPdf());
+        data.setXszCarPdf(req.getXszCarPdf());
+        data.setFrameNo(req.getFrameNo());
+        data.setNameplate(req.getNameplate());
+        data.setForwardPdf(req.getForwardPdf());
+        data.setQueenPdf(req.getQueenPdf());
+        data.setLeftPdf(req.getLeftPdf());
+        data.setRightPdf(req.getRightPdf());
+        data.setLf45Pdf(req.getLf45Pdf());
+        data.setLg45Pdf(req.getLg45Pdf());
+        data.setRr45Pdf(req.getRr45Pdf());
+        data.setEnginePdf(req.getEnginePdf());
+        data.setSzmPdf(req.getSzmPdf());
+        data.setGearsPdf(req.getGearsPdf());
+        data.setFunctionalZonePdf(req.getFunctionalZonePdf());
+        data.setOdometerPdf(req.getOdometerPdf());
+        data.setFrontRowPdf(req.getFrontRowPdf());
+        data.setRockRowPdf(req.getRockRowPdf());
+        data.setTrunkPdf(req.getTrunkPdf());
+        data.setLouverPdf(req.getLouverPdf());
+        data.setBankRowPdf(req.getBankRowPdf());
+        data.setCheckApprovePdf(req.getCheckApprovePdf());
+        data.setCheckApproveLink(req.getCheckApproveLink());
+        data.setThirdValuationPdf(req.getThirdValuationPdf());
+        data.setCheckApproveSoftware(req.getCheckApproveSoftware());
+        data.setUsedCarCurrentRate(req.getUsedCarCurrentRate());
+        data.setInformationSource(req.getInformationSource());
+        data.setValuation(StringValidater.toLong(req.getValuation()));
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            data.setCurNodeCode(EInvestigateReportNode.RISK_APPROVE.getCode());
+        }
+        investigateReportBO.refreshInvestigateReport(data);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(data.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
+            currentNode.getCode(), currentNode.getValue(), req.getUpdater());
+    }
+
+    @Override
+    public void riskApprove(String code, String approveResult,
+            String approveNote, String updater) {
+        InvestigateReport data = investigateReportBO.getInvestigateReport(code);
+        if (!EInvestigateReportNode.RISK_APPROVE.getCode()
+            .equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是风控专员审核节点，不能操作！");
+        }
+        // 之前节点
+        String curNodeCode = data.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+        } else {
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getBackNode());
+        }
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
+        data.setRemark(approveNote);
+        investigateReportBO.riskApprove(data);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(data.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
+            currentNode.getCode(), currentNode.getValue(), updater);
+    }
+
+    @Override
+    public void approveByBankCheck(String code, String approveResult,
+            String approveNote, String updater) {
+        InvestigateReport data = investigateReportBO.getInvestigateReport(code);
+        if (!EInvestigateReportNode.MORTGAGE_APPROVE.getCode()
+            .equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是驻行人员审核节点，不能操作！");
+        }
+
+        // 之前节点
+        String curNodeCode = data.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+        } else {
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getBackNode());
+        }
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
+        data.setRemark(approveNote);
+        investigateReportBO.riskApprove(data);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(data.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
+            currentNode.getCode(), currentNode.getValue(), updater);
     }
 
     @Override
@@ -43,4 +183,5 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     public InvestigateReport getInvestigateReport(String code) {
         return investigateReportBO.getInvestigateReport(code);
     }
+
 }

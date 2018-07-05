@@ -46,7 +46,7 @@ CREATE TABLE `tdq_investigate_report` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `budget_order_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
-  `company_ode` tinytext DEFAULT NULL COMMENT '业务公司',
+  `company_code` tinytext DEFAULT NULL COMMENT '业务公司',
   `biz_ype` varchar(4) DEFAULT NULL COMMENT '业务种类',
   `apply_user_name` tinytext DEFAULT NULL COMMENT '客户姓名',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',

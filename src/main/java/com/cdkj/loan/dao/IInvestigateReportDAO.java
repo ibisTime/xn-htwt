@@ -8,4 +8,7 @@ public interface IInvestigateReportDAO extends IBaseDAO<InvestigateReport> {
     String NAMESPACE = IInvestigateReportDAO.class.getName().concat(".");
 
     int update(InvestigateReport data);
+
+    // 风控专员审核
+    void riskApprove(InvestigateReport data);
 }

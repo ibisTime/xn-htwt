@@ -16,4 +16,7 @@ public interface IInvestigateReportBO extends IPaginableBO<InvestigateReport> {
 
     public InvestigateReport getInvestigateReport(String code);
 
+    // 风控专员审核
+    public void riskApprove(InvestigateReport data);
+
 }

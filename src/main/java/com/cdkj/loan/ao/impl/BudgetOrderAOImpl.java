@@ -22,6 +22,7 @@ import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
+import com.cdkj.loan.bo.IInvestigateReportBO;
 import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -45,6 +46,7 @@ import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
@@ -74,8 +76,10 @@ import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
+import com.cdkj.loan.enums.EInvestigateReportNode;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanProductStatus;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.enums.ESysRole;
@@ -147,6 +151,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ISmsOutBO smsOutBO;
+
+    @Autowired
+    private IInvestigateReportBO investigateReportBO;
 
     @Override
     @Transactional
@@ -631,6 +638,63 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 repoint.setUpdater(operator);
                 repoint.setUpdateDatetime(new Date());
                 repointBO.saveRepoint(repoint);
+
+                // 生成调查报告
+                InvestigateReport investigateReport = new InvestigateReport();
+                investigateReport.setBudgetOrderCode(budgetOrder.getCode());
+                investigateReport
+                    .setRepayBizCode(budgetOrder.getRepayBizCode());
+                investigateReport.setCompanyCode(budgetOrder.getCompanyCode());
+                investigateReport.setBizYpe(budgetOrder.getBizType());
+                investigateReport
+                    .setApplyUserName(budgetOrder.getApplyUserName());
+                investigateReport.setLoanBank(budgetOrder.getLoanBank());
+                investigateReport.setLoanPeriod(budgetOrder.getLoanPeriod());
+                investigateReport
+                    .setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
+                investigateReport.setSaleUserId(budgetOrder.getSaleUserId());
+                SYSUser user = sysUserBO.getUser(budgetOrder.getApplyUserId());
+                String customerInformation = "借款人:"
+                        + budgetOrder.getApplyUserName() + ","
+                        + budgetOrder.getAge() + ","
+                        + budgetOrder.getMarryState() + "," + "性别："
+                        + budgetOrder.getGender() + "," + "学历："
+                        + budgetOrder.getEducation() + "," + "民族："
+                        + budgetOrder.getNation() + "," + "身份证号："
+                        + budgetOrder.getIdNo() + "," + "政治面貌："
+                        + budgetOrder.getPolitical() + "," + "户口所在地："
+                        + budgetOrder.getResidenceAddress() + "," + "现在家庭住址："
+                        + budgetOrder.getNowAddress() + "," + "联系电话："
+                        + budgetOrder.getMobile() + "," + "家有"
+                        + budgetOrder.getFamilyNumber() + "口人，" + "邮编："
+                        + budgetOrder.getPostCode1() + "," + "借款人无重大疾病，身体健康";
+                investigateReport.setCustomerInformation(customerInformation);
+                CreditUser domain = creditUserBO.getCreditUserByCreditCode(
+                    budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+                investigateReport
+                    .setBankCreditResultPdf(domain.getBankCreditResultPdf());
+                investigateReport.setJourRemark(budgetOrder.getJourRemark());
+                investigateReport
+                    .setZfbJourRemark(budgetOrder.getZfbJourRemark());
+                investigateReport
+                    .setWxJourRemark(budgetOrder.getWxJourRemark());
+                investigateReport
+                    .setHouseContract(budgetOrder.getHouseContract());
+                investigateReport.setHomeVisit(budgetOrder.getHousePicture());
+                String basicsInformation = "品牌：" + budgetOrder.getCarBrand()
+                        + "," + "车型：" + budgetOrder.getCarModel() + ","
+                        + "新手指导价" + budgetOrder.getOriginalPrice() + ","
+                        + "落户地点：" + budgetOrder.getSettleAddress();
+                investigateReport.setBasicsInformation(basicsInformation);
+                investigateReport.setCurNodeCode(
+                    EInvestigateReportNode.COMMIT_APPLY.getCode());
+                String irCode = investigateReportBO
+                    .saveInvestigateReport(investigateReport);
+
+                // 日志记录
+                sysBizLogBO.saveSYSBizLog(irCode, EBizLogType.INVESTIGATEREPORT,
+                    irCode, investigateReport.getCurNodeCode(), approveNote,
+                    operator);
             }
 
         } else {
