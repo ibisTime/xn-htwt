@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IInvestigateReportDAO">
+	<resultMap id="investigateReport_DB_Result" type="investigateReport">
+		<result column="code" property="code" />
+		<result column="budget_order_code" property="budgetOrderCode" />
+		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="company_ode" property="companyOde" />
+		<result column="biz_ype" property="bizYpe" />
+		<result column="apply_user_name" property="applyUserName" />
+		<result column="apply_datetime" property="applyDatetime" />
+		<result column="loan_bank" property="loanBank" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="loan_period" property="loanPeriod" />
+		<result column="is_advance_fund" property="isAdvanceFund" />
+		<result column="sale_user_id" property="saleUserId" />
+		<result column="gua_mode" property="guaMode" />
+		<result column="customer_information" property="customerInformation" />
+		<result column="bank_credit_result_pdf" property="bankCreditResultPdf" />
+		<result column="price_approval_pdf" property="priceApprovalPdf" />
+		<result column="car_168_price" property="car168Price" />
+		<result column="apply_work_and_jour" property="applyWorkAndJour" />
+		<result column="jour_pic" property="jourPic" />
+		<result column="jour_remark" property="jourRemark" />
+		<result column="zfb_jour_pic" property="zfbJourPic" />
+		<result column="zfb_jour_remark" property="zfbJourRemark" />
+		<result column="wx_jour_pic" property="wxJourPic" />
+		<result column="wx_jour_pdf" property="wxJourPdf" />
+		<result column="house_contract" property="houseContract" />
+		<result column="home_visit" property="homeVisit" />
+		<result column="basics_information" property="basicsInformation" />
+		<result column="xsz_pdf" property="xszPdf" />
+		<result column="xsz_car_pdf" property="xszCarPdf" />
+		<result column="frame_no" property="frameNo" />
+		<result column="nameplate" property="nameplate" />
+		<result column="forward_pdf" property="forwardPdf" />
+		<result column="queen_pdf" property="queenPdf" />
+		<result column="left_pdf" property="leftPdf" />
+		<result column="right_pdf" property="rightPdf" />
+		<result column="lf45_pdf" property="lf45Pdf" />
+		<result column="rf45_pdf" property="rf45Pdf" />
+		<result column="lg45_pdf" property="lg45Pdf" />
+		<result column="rr45_pdf" property="rr45Pdf" />
+		<result column="engine_pdf" property="enginePdf" />
+		<result column="szm_pdf" property="szmPdf" />
+		<result column="gears_pdf" property="gearsPdf" />
+		<result column="functional_zone_pdf" property="functionalZonePdf" />
+		<result column="odometer_pdf" property="odometerPdf" />
+		<result column="front_row_pdf" property="frontRowPdf" />
+		<result column="rock_row_pdf" property="rockRowPdf" />
+		<result column="trunk_pdf" property="trunkPdf" />
+		<result column="louver_pdf" property="louverPdf" />
+		<result column="bank_row_pdf" property="bankRowPdf" />
+		<result column="check_approve_pdf" property="checkApprovePdf" />
+		<result column="check_approve_link" property="checkApproveLink" />
+		<result column="third_valuation_pdf" property="thirdValuationPdf" />
+		<result column="check_approve_software" property="checkApproveSoftware" />
+		<result column="used_car_current_rate" property="usedCarCurrentRate" />
+		<result column="information_source" property="informationSource" />
+		<result column="valuation" property="valuation" />
+		<result column="cur_node_code" property="curNodeCode" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_investigateReport" parameterType="investigateReport" resultMap="investigateReport_DB_Result">
+		SELECT
+		t.code
+		,t.budget_order_code
+		,t.repay_biz_code
+		,t.company_ode
+		,t.biz_ype
+		,t.apply_user_name
+		,t.apply_datetime
+		,t.loan_bank
+		,t.loan_amount
+		,t.loan_period
+		,t.is_advance_fund
+		,t.sale_user_id
+		,t.gua_mode
+		,t.customer_information
+		,t.bank_credit_result_pdf
+		,t.price_approval_pdf
+		,t.car_168_price
+		,t.apply_work_and_jour
+		,t.jour_pic
+		,t.jour_remark
+		,t.zfb_jour_pic
+		,t.zfb_jour_remark
+		,t.wx_jour_pic
+		,t.wx_jour_pdf
+		,t.house_contract
+		,t.home_visit
+		,t.basics_information
+		,t.xsz_pdf
+		,t.xsz_car_pdf
+		,t.frame_no
+		,t.nameplate
+		,t.forward_pdf
+		,t.queen_pdf
+		,t.left_pdf
+		,t.right_pdf
+		,t.lf45_pdf
+		,t.rf45_pdf
+		,t.lg45_pdf
+		,t.rr45_pdf
+		,t.engine_pdf
+		,t.szm_pdf
+		,t.gears_pdf
+		,t.functional_zone_pdf
+		,t.odometer_pdf
+		,t.front_row_pdf
+		,t.rock_row_pdf
+		,t.trunk_pdf
+		,t.louver_pdf
+		,t.bank_row_pdf
+		,t.check_approve_pdf
+		,t.check_approve_link
+		,t.third_valuation_pdf
+		,t.check_approve_software
+		,t.used_car_current_rate
+		,t.information_source
+		,t.valuation
+		,t.cur_node_code
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		FROM
+		tdq_investigate_report t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_investigateReport_count" parameterType="investigateReport"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_investigate_report t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_investigateReport" parameterType="investigateReport">
+		INSERT INTO
+		tdq_investigate_report(
+		code
+		,budget_order_code
+		,repay_biz_code
+		,company_ode
+		,biz_ype
+		,apply_user_name
+		,apply_datetime
+		,loan_bank
+		,loan_amount
+		,loan_period
+		,is_advance_fund
+		,sale_user_id
+		,gua_mode
+		,customer_information
+		,bank_credit_result_pdf
+		,price_approval_pdf
+		,car_168_price
+		,apply_work_and_jour
+		,jour_pic
+		,jour_remark
+		,zfb_jour_pic
+		,zfb_jour_remark
+		,wx_jour_pic
+		,wx_jour_pdf
+		,house_contract
+		,home_visit
+		,basics_information
+		,xsz_pdf
+		,xsz_car_pdf
+		,frame_no
+		,nameplate
+		,forward_pdf
+		,queen_pdf
+		,left_pdf
+		,right_pdf
+		,lf45_pdf
+		,rf45_pdf
+		,lg45_pdf
+		,rr45_pdf
+		,engine_pdf
+		,szm_pdf
+		,gears_pdf
+		,functional_zone_pdf
+		,odometer_pdf
+		,front_row_pdf
+		,rock_row_pdf
+		,trunk_pdf
+		,louver_pdf
+		,bank_row_pdf
+		,check_approve_pdf
+		,check_approve_link
+		,third_valuation_pdf
+		,check_approve_software
+		,used_car_current_rate
+		,information_source
+		,valuation
+		,cur_node_code
+		,updater
+		,update_datetime
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{budgetOrderCode}
+		,#{repayBizCode}
+		,#{companyOde}
+		,#{bizYpe}
+		,#{applyUserName}
+		,#{applyDatetime}
+		,#{loanBank}
+		,#{loanAmount}
+		,#{loanPeriod}
+		,#{isAdvanceFund}
+		,#{saleUserId}
+		,#{guaMode}
+		,#{customerInformation}
+		,#{bankCreditResultPdf}
+		,#{priceApprovalPdf}
+		,#{car168Price}
+		,#{applyWorkAndJour}
+		,#{jourPic}
+		,#{jourRemark}
+		,#{zfbJourPic}
+		,#{zfbJourRemark}
+		,#{wxJourPic}
+		,#{wxJourPdf}
+		,#{houseContract}
+		,#{homeVisit}
+		,#{basicsInformation}
+		,#{xszPdf}
+		,#{xszCarPdf}
+		,#{frameNo}
+		,#{nameplate}
+		,#{forwardPdf}
+		,#{queenPdf}
+		,#{leftPdf}
+		,#{rightPdf}
+		,#{lf45Pdf}
+		,#{rf45Pdf}
+		,#{lg45Pdf}
+		,#{rr45Pdf}
+		,#{enginePdf}
+		,#{szmPdf}
+		,#{gearsPdf}
+		,#{functionalZonePdf}
+		,#{odometerPdf}
+		,#{frontRowPdf}
+		,#{rockRowPdf}
+		,#{trunkPdf}
+		,#{louverPdf}
+		,#{bankRowPdf}
+		,#{checkApprovePdf}
+		,#{checkApproveLink}
+		,#{thirdValuationPdf}
+		,#{checkApproveSoftware}
+		,#{usedCarCurrentRate}
+		,#{informationSource}
+		,#{valuation}
+		,#{curNodeCode}
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_investigateReport" parameterType="investigateReport">
+		UPDATE tdq_investigate_report
+		SET
+		budget_order_code = #{budgetOrderCode}
+		,repay_biz_code = #{repayBizCode}
+		,company_ode = #{companyOde}
+		,biz_ype = #{bizYpe}
+		,apply_user_name = #{applyUserName}
+		,apply_datetime = #{applyDatetime}
+		,loan_bank = #{loanBank}
+		,loan_amount = #{loanAmount}
+		,loan_period = #{loanPeriod}
+		,is_advance_fund = #{isAdvanceFund}
+		,sale_user_id = #{saleUserId}
+		,gua_mode = #{guaMode}
+		,customer_information = #{customerInformation}
+		,bank_credit_result_pdf = #{bankCreditResultPdf}
+		,price_approval_pdf = #{priceApprovalPdf}
+		,car_168_price = #{car168Price}
+		,apply_work_and_jour = #{applyWorkAndJour}
+		,jour_pic = #{jourPic}
+		,jour_remark = #{jourRemark}
+		,zfb_jour_pic = #{zfbJourPic}
+		,zfb_jour_remark = #{zfbJourRemark}
+		,wx_jour_pic = #{wxJourPic}
+		,wx_jour_pdf = #{wxJourPdf}
+		,house_contract = #{houseContract}
+		,home_visit = #{homeVisit}
+		,basics_information = #{basicsInformation}
+		,xsz_pdf = #{xszPdf}
+		,xsz_car_pdf = #{xszCarPdf}
+		,frame_no = #{frameNo}
+		,nameplate = #{nameplate}
+		,forward_pdf = #{forwardPdf}
+		,queen_pdf = #{queenPdf}
+		,left_pdf = #{leftPdf}
+		,right_pdf = #{rightPdf}
+		,lf45_pdf = #{lf45Pdf}
+		,rf45_pdf = #{rf45Pdf}
+		,lg45_pdf = #{lg45Pdf}
+		,rr45_pdf = #{rr45Pdf}
+		,engine_pdf = #{enginePdf}
+		,szm_pdf = #{szmPdf}
+		,gears_pdf = #{gearsPdf}
+		,functional_zone_pdf = #{functionalZonePdf}
+		,odometer_pdf = #{odometerPdf}
+		,front_row_pdf = #{frontRowPdf}
+		,rock_row_pdf = #{rockRowPdf}
+		,trunk_pdf = #{trunkPdf}
+		,louver_pdf = #{louverPdf}
+		,bank_row_pdf = #{bankRowPdf}
+		,check_approve_pdf = #{checkApprovePdf}
+		,check_approve_link = #{checkApproveLink}
+		,third_valuation_pdf = #{thirdValuationPdf}
+		,check_approve_software = #{checkApproveSoftware}
+		,used_car_current_rate = #{usedCarCurrentRate}
+		,information_source = #{informationSource}
+		,valuation = #{valuation}
+		,cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
