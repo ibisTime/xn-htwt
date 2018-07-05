@@ -31,7 +31,7 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
     // 征信撤回
     public int cancelCredit(Credit data);
 
-    public int setUserName(Credit data);
+    public int setApplyUserInfo(Credit data);
 
     public int refreshInputBankCreditResult(Credit data);
 

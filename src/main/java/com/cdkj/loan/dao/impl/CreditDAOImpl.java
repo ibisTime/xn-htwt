@@ -83,9 +83,10 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
     }
 
     @Override
-    public int setUserName(Credit data) {
+    public int setApplyUserInfo(Credit data) {
 
-        return super.update(NAMESPACE.concat("update_set_user_name"), data);
+        return super.update(NAMESPACE.concat("update_set_apply_user_info"),
+            data);
     }
 
     @Override

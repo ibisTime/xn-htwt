@@ -34,7 +34,7 @@ public interface ICreditBO extends IPaginableBO<Credit> {
     // 征信撤回
     public void cancelCredit(Credit credit);
 
-    public void setUserName(Credit credit);
+    public void setApplyUserInfo(Credit credit);
 
     public void refreshInputBankCreditResult(Credit credit);
 
