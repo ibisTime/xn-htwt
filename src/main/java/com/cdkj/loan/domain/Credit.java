@@ -95,7 +95,7 @@ public class Credit extends ABaseDO {
     // 筛选未通过
     private String noPass;
 
-    // 筛选未通过
+    // 录入征信结果的驻行人员姓名
     private String operatorName;
 
     public String getOperatorName() {

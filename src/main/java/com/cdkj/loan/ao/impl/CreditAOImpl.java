@@ -323,6 +323,13 @@ public class CreditAOImpl implements ICreditAO {
         if (null != department) {
             credit.setCompanyName(department.getName());
         }
+
+        // 录入银行征信结果的驻行人员
+        SYSUser operator = sysUserBO.getUser(credit.getOperator());
+        if (null != operator) {
+            credit.setOperatorName(operator.getRealName());
+        }
+
     }
 
     @Override
