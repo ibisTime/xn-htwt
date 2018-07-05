@@ -26,6 +26,7 @@ import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EDepartmentType;
+import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserStatus;
@@ -60,7 +61,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
-        data.setType(type);
+        data.setType(ESysUserType.Plat.getCode());
         data.setLoginName(loginName);
         data.setMobile(mobile);
         data.setRealName(realName);

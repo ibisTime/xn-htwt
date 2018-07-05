@@ -25,8 +25,8 @@ public class XN632120Req {
     // 公司手续费
     private String companyFee;
 
-    // 团队服务费
-    private String teamFee;
+    // 服务费
+    private String fee;
 
     // 是否垫资
     private String isAdvanceFund;
@@ -220,6 +220,12 @@ public class XN632120Req {
     // 配偶支付宝流水结息
     private String mateZfbJourInterest;
 
+    // 配偶支付宝流水结息
+    private String mateZfbInterest1;
+
+    // 配偶支付宝流水结息
+    private String mateZfbInterest2;
+
     // 配偶支付宝收入
     private String mateZfbJourIncome;
 
@@ -250,6 +256,12 @@ public class XN632120Req {
     // 配偶微信流水结息
     private String mateWxJourInterest;
 
+    // 配偶微信流水结息
+    private String mateWxInterest1;
+
+    // 配偶微信流水结息
+    private String mateWxInterest2;
+
     // 配偶微信收入
     private String mateWxJourIncome;
 
@@ -279,6 +291,12 @@ public class XN632120Req {
 
     // 配偶流水结息
     private String mateJourInterest;
+
+    // 配偶结息1
+    private String mateInterest1;
+
+    // 配偶结息2
+    private String mateInterest2;
 
     // 配偶收入
     private String mateJourIncome;
@@ -334,6 +352,12 @@ public class XN632120Req {
     // 担保人支付宝流水结息
     private String guaZfbJourInterest;
 
+    // 担保人支付宝流水结息
+    private String guaZfbInterest1;
+
+    // 担保人支付宝流水结息
+    private String guaZfbInterest2;
+
     // 担保人支付宝收入
     private String guaZfbJourIncome;
 
@@ -364,6 +388,12 @@ public class XN632120Req {
     // 担保人微信流水结息
     private String guaWxJourInterest;
 
+    // 担保人微信流水结息
+    private String guaWxInterest1;
+
+    // 担保人微信流水结息
+    private String guaWxInterest2;
+
     // 担保人微信收入
     private String guaWxJourIncome;
 
@@ -393,6 +423,12 @@ public class XN632120Req {
 
     // 担保人流水结息
     private String guaJourInterest;
+
+    // 担保人结息1
+    private String guaInterest1;
+
+    // 担保人结息2
+    private String guaInterest2;
 
     // 担保人收入
     private String guaJourIncome;
@@ -445,6 +481,12 @@ public class XN632120Req {
     // 支付宝流水结息
     private String zfbJourInterest;
 
+    // 支付宝流水结息
+    private String zfbInterest1;
+
+    // 支付宝流水结息
+    private String zfbInterest2;
+
     // 支付宝收入
     private String zfbJourIncome;
 
@@ -475,6 +517,12 @@ public class XN632120Req {
     // 微信流水结息
     private String wxJourInterest;
 
+    // 微信流水结息
+    private String wxInterest1;
+
+    // 微信流水结息
+    private String wxInterest2;
+
     // 微信收入
     private String wxJourIncome;
 
@@ -504,6 +552,12 @@ public class XN632120Req {
 
     // 流水结息
     private String jourInterest;
+
+    // 结息1
+    private String interest1;
+
+    // 结息2
+    private String interest2;
 
     // 收入
     private String jourIncome;
@@ -1367,6 +1421,102 @@ public class XN632120Req {
         return mateJourIncome;
     }
 
+    public String getMateZfbInterest1() {
+        return mateZfbInterest1;
+    }
+
+    public void setMateZfbInterest1(String mateZfbInterest1) {
+        this.mateZfbInterest1 = mateZfbInterest1;
+    }
+
+    public String getMateZfbInterest2() {
+        return mateZfbInterest2;
+    }
+
+    public void setMateZfbInterest2(String mateZfbInterest2) {
+        this.mateZfbInterest2 = mateZfbInterest2;
+    }
+
+    public String getMateWxInterest1() {
+        return mateWxInterest1;
+    }
+
+    public void setMateWxInterest1(String mateWxInterest1) {
+        this.mateWxInterest1 = mateWxInterest1;
+    }
+
+    public String getMateWxInterest2() {
+        return mateWxInterest2;
+    }
+
+    public void setMateWxInterest2(String mateWxInterest2) {
+        this.mateWxInterest2 = mateWxInterest2;
+    }
+
+    public String getGuaZfbInterest1() {
+        return guaZfbInterest1;
+    }
+
+    public void setGuaZfbInterest1(String guaZfbInterest1) {
+        this.guaZfbInterest1 = guaZfbInterest1;
+    }
+
+    public String getGuaZfbInterest2() {
+        return guaZfbInterest2;
+    }
+
+    public void setGuaZfbInterest2(String guaZfbInterest2) {
+        this.guaZfbInterest2 = guaZfbInterest2;
+    }
+
+    public String getGuaWxInterest1() {
+        return guaWxInterest1;
+    }
+
+    public void setGuaWxInterest1(String guaWxInterest1) {
+        this.guaWxInterest1 = guaWxInterest1;
+    }
+
+    public String getGuaWxInterest2() {
+        return guaWxInterest2;
+    }
+
+    public void setGuaWxInterest2(String guaWxInterest2) {
+        this.guaWxInterest2 = guaWxInterest2;
+    }
+
+    public String getZfbInterest1() {
+        return zfbInterest1;
+    }
+
+    public void setZfbInterest1(String zfbInterest1) {
+        this.zfbInterest1 = zfbInterest1;
+    }
+
+    public String getZfbInterest2() {
+        return zfbInterest2;
+    }
+
+    public void setZfbInterest2(String zfbInterest2) {
+        this.zfbInterest2 = zfbInterest2;
+    }
+
+    public String getWxInterest1() {
+        return wxInterest1;
+    }
+
+    public void setWxInterest1(String wxInterest1) {
+        this.wxInterest1 = wxInterest1;
+    }
+
+    public String getWxInterest2() {
+        return wxInterest2;
+    }
+
+    public void setWxInterest2(String wxInterest2) {
+        this.wxInterest2 = wxInterest2;
+    }
+
     public void setMateJourIncome(String mateJourIncome) {
         this.mateJourIncome = mateJourIncome;
     }
@@ -1409,6 +1559,54 @@ public class XN632120Req {
 
     public void setMateJourPic(String mateJourPic) {
         this.mateJourPic = mateJourPic;
+    }
+
+    public String getMateInterest1() {
+        return mateInterest1;
+    }
+
+    public void setMateInterest1(String mateInterest1) {
+        this.mateInterest1 = mateInterest1;
+    }
+
+    public String getMateInterest2() {
+        return mateInterest2;
+    }
+
+    public void setMateInterest2(String mateInterest2) {
+        this.mateInterest2 = mateInterest2;
+    }
+
+    public String getGuaInterest1() {
+        return guaInterest1;
+    }
+
+    public void setGuaInterest1(String guaInterest1) {
+        this.guaInterest1 = guaInterest1;
+    }
+
+    public String getGuaInterest2() {
+        return guaInterest2;
+    }
+
+    public void setGuaInterest2(String guaInterest2) {
+        this.guaInterest2 = guaInterest2;
+    }
+
+    public String getInterest1() {
+        return interest1;
+    }
+
+    public void setInterest1(String interest1) {
+        this.interest1 = interest1;
+    }
+
+    public String getInterest2() {
+        return interest2;
+    }
+
+    public void setInterest2(String interest2) {
+        this.interest2 = interest2;
     }
 
     public String getMateJourRemark() {
@@ -1575,12 +1773,12 @@ public class XN632120Req {
         return guaWxJourBalance;
     }
 
-    public String getTeamFee() {
-        return teamFee;
+    public String getFee() {
+        return fee;
     }
 
-    public void setTeamFee(String teamFee) {
-        this.teamFee = teamFee;
+    public void setFee(String fee) {
+        this.fee = fee;
     }
 
     public void setGuaWxJourBalance(String guaWxJourBalance) {

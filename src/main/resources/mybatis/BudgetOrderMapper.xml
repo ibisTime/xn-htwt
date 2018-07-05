@@ -14,7 +14,7 @@
 		<result column="auth_fee" property="authFee" />
 		<result column="bank_fee" property="bankFee" />
 		<result column="company_fee" property="companyFee" />
-		<result column="team_fee" property="teamFee" />
+		<result column="fee" property="fee" />
 		<result column="credit_code" property="creditCode" />
 		
 		<result column="biz_type" property="bizType" />
@@ -91,6 +91,8 @@
 		<result column="mate_zfb_jour_datetime_start" property="mateZfbJourDatetimeStart" />
 		<result column="mate_zfb_jour_datetime_end" property="mateZfbJourDatetimeEnd" />
 		<result column="mate_zfb_jour_interest" property="mateZfbJourInterest" />
+		<result column="mate_zfb_interest1" property="mateZfbInterest1" />
+		<result column="mate_zfb_interest2" property="mateZfbInterest2" />
 		<result column="mate_zfb_jour_income" property="mateZfbJourIncome" />
 		<result column="mate_zfb_jour_expend" property="mateZfbJourExpend" />
 		
@@ -102,6 +104,8 @@
 		<result column="mate_wx_jour_datetime_start" property="mateWxJourDatetimeStart" />
 		<result column="mate_wx_jour_datetime_end" property="mateWxJourDatetimeEnd" />
 		<result column="mate_wx_jour_interest" property="mateWxJourInterest" />
+		<result column="mate_wx_interest1" property="mateWxInterest1" />
+		<result column="mate_wx_interest2" property="mateWxInterest2" />
 		<result column="mate_wx_jour_income" property="mateWxJourIncome" />
 		<result column="mate_wx_jour_expend" property="mateWxJourExpend" />
 		
@@ -113,6 +117,8 @@
 		<result column="mate_jour_datetime_start" property="mateJourDatetimeStart" />
 		<result column="mate_jour_datetime_end" property="mateJourDatetimeEnd" />
 		<result column="mate_jour_interest" property="mateJourInterest" />
+		<result column="mate_interest1" property="mateInterest1" />
+		<result column="mate_interest2" property="mateInterest2" />
 		<result column="mate_jour_income" property="mateJourIncome" />
 		<result column="mate_jour_expend" property="mateJourExpend" />
 		
@@ -135,6 +141,8 @@
 		<result column="gua_zfb_jour_datetime_start" property="guaZfbJourDatetimeStart" />
 		<result column="gua_zfb_jour_datetime_end" property="guaZfbJourDatetimeEnd" />
 		<result column="gua_zfb_jour_interest" property="guaZfbJourInterest" />
+		<result column="gua_zfb_interest1" property="guaZfbInterest1" />
+		<result column="gua_zfb_interest2" property="guaZfbInterest2" />
 		<result column="gua_zfb_jour_income" property="guaZfbJourIncome" />
 		<result column="gua_zfb_jour_expend" property="guaZfbJourExpend" />
 		
@@ -146,6 +154,8 @@
 		<result column="gua_wx_jour_datetime_start" property="guaWxJourDatetimeStart" />
 		<result column="gua_wx_jour_datetime_end" property="guaWxJourDatetimeEnd" />
 		<result column="gua_wx_jour_interest" property="guaWxJourInterest" />
+		<result column="gua_wx_interest1" property="guaWxInterest1" />
+		<result column="gua_wx_interest2" property="guaWxInterest2" />
 		<result column="gua_wx_jour_income" property="guaWxJourIncome" />
 		<result column="gua_wx_jour_expend" property="guaWxJourExpend" />
 		
@@ -157,6 +167,8 @@
 		<result column="gua_jour_datetime_start" property="guaJourDatetimeStart" />
 		<result column="gua_jour_datetime_end" property="guaJourDatetimeEnd" />
 		<result column="gua_jour_interest" property="guaJourInterest" />
+		<result column="gua_interest1" property="guaInterest1" />
+		<result column="gua_interest2" property="guaInterest2" />
 		<result column="gua_jour_income" property="guaJourIncome" />
 		<result column="gua_jour_expend" property="guaJourExpend" />
 		
@@ -177,6 +189,8 @@
 		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
 		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
 		<result column="zfb_jour_interest" property="zfbJourInterest" />
+		<result column="zfb_interest1" property="zfbInterest1" />
+		<result column="zfb_interest2" property="zfbInterest2" />
 		<result column="zfb_jour_income" property="zfbJourIncome" />
 		<result column="zfb_jour_expend" property="zfbJourExpend" />
 		
@@ -188,6 +202,8 @@
 		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
 		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
 		<result column="wx_jour_interest" property="wxJourInterest" />
+		<result column="wx_interest1" property="wxInterest1" />
+		<result column="wx_interest2" property="wxInterest2" />
 		<result column="wx_jour_income" property="wxJourIncome" />
 		<result column="wx_jour_expend" property="wxJourExpend" />
 		
@@ -199,6 +215,8 @@
 		<result column="jour_datetime_start" property="jourDatetimeStart" />
 		<result column="jour_datetime_end" property="jourDatetimeEnd" />
 		<result column="jour_interest" property="jourInterest" />
+		<result column="interest1" property="interest1" />
+		<result column="interest2" property="interest2" />
 		<result column="jour_income" property="jourIncome" />
 		<result column="jour_expend" property="jourExpend" />
 		
@@ -384,7 +402,7 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
-		,t.team_fee
+		,t.fee
 		,t.credit_code
 		
 		,t.biz_type
@@ -452,6 +470,8 @@
 		,t.mate_zfb_jour_datetime_start
 		,t.mate_zfb_jour_datetime_end
 		,t.mate_zfb_jour_interest
+		,t.mate_zfb_interest1
+		,t.mate_zfb_interest2
 		,t.mate_zfb_jour_income
 		,t.mate_zfb_jour_expend
 		,t.mate_zfb_jour_balance
@@ -464,6 +484,8 @@
 		,t.mate_wx_jour_datetime_start
 		,t.mate_wx_jour_datetime_end
 		,t.mate_wx_jour_interest
+		,t.mate_wx_interest1
+		,t.mate_wx_interest2
 		,t.mate_wx_jour_income
 		,t.mate_wx_jour_expend
 		,t.mate_wx_jour_balance
@@ -475,6 +497,8 @@
 		,t.mate_jour_datetime_start
 		,t.mate_jour_datetime_end
 		,t.mate_jour_interest
+		,t.mate_interest1
+		,t.mate_interest2
 		,t.mate_jour_income
 		,t.mate_jour_expend
 		,t.mate_jour_balance
@@ -504,6 +528,8 @@
 		,t.gua_zfb_jour_datetime_start
 		,t.gua_zfb_jour_datetime_end
 		,t.gua_zfb_jour_interest
+		,t.gua_zfb_interest1
+		,t.gua_zfb_interest2
 		,t.gua_zfb_jour_income
 		,t.gua_zfb_jour_expend
 		,t.gua_zfb_jour_balance
@@ -515,6 +541,8 @@
 		,t.gua_wx_jour_datetime_start
 		,t.gua_wx_jour_datetime_end
 		,t.gua_wx_jour_interest
+		,t.gua_wx_interest1
+		,t.gua_wx_interest2
 		,t.gua_wx_jour_income
 		,t.gua_wx_jour_expend
 		,t.gua_wx_jour_balance
@@ -526,6 +554,8 @@
 		,t.gua_jour_datetime_start
 		,t.gua_jour_datetime_end
 		,t.gua_jour_interest
+		,t.gua_interest1
+		,t.gua_interest2
 		,t.gua_jour_income
 		,t.gua_jour_expend
 		,t.gua_jour_balance
@@ -546,6 +576,8 @@
 		,t.zfb_jour_datetime_start
 		,t.zfb_jour_datetime_end
 		,t.zfb_jour_interest
+		,t.zfb_interest1
+		,t.zfb_interest2
 		,t.zfb_jour_income
 		,t.zfb_jour_expend
 		,t.zfb_jour_balance
@@ -557,6 +589,8 @@
 		,t.wx_jour_datetime_start
 		,t.wx_jour_datetime_end
 		,t.wx_jour_interest
+		,t.wx_interest1
+		,t.wx_interest2
 		,t.wx_jour_income
 		,t.wx_jour_expend
 		,t.wx_jour_balance
@@ -568,6 +602,8 @@
 		,t.jour_datetime_start
 		,t.jour_datetime_end
 		,t.jour_interest
+		,t.interest1
+		,t.interest2
 		,t.jour_income
 		,t.jour_expend
 		,t.jour_balance
@@ -674,7 +710,7 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
-		,t.team_fee
+		,t.fee
 		,t.credit_code
 		
 		,t.biz_type
@@ -762,7 +798,7 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
-		,t.team_fee
+		,t.fee
 		,t.credit_code
 		
 		,t.biz_type
@@ -830,6 +866,8 @@
 		,t.mate_zfb_jour_datetime_start
 		,t.mate_zfb_jour_datetime_end
 		,t.mate_zfb_jour_interest
+		,t.mate_zfb_interest1
+		,t.mate_zfb_interest2
 		,t.mate_zfb_jour_income
 		,t.mate_zfb_jour_expend
 		,t.mate_zfb_jour_balance
@@ -842,6 +880,8 @@
 		,t.mate_wx_jour_datetime_start
 		,t.mate_wx_jour_datetime_end
 		,t.mate_wx_jour_interest
+		,t.mate_wx_interest1
+		,t.mate_wx_interest2
 		,t.mate_wx_jour_income
 		,t.mate_wx_jour_expend
 		,t.mate_wx_jour_balance
@@ -853,6 +893,8 @@
 		,t.mate_jour_datetime_start
 		,t.mate_jour_datetime_end
 		,t.mate_jour_interest
+		,t.mate_interest1
+		,t.mate_interest2
 		,t.mate_jour_income
 		,t.mate_jour_expend
 		,t.mate_jour_balance
@@ -882,6 +924,8 @@
 		,t.gua_zfb_jour_datetime_start
 		,t.gua_zfb_jour_datetime_end
 		,t.gua_zfb_jour_interest
+		,t.gua_zfb_interest1
+		,t.gua_zfb_interest2
 		,t.gua_zfb_jour_income
 		,t.gua_zfb_jour_expend
 		,t.gua_zfb_jour_balance
@@ -893,6 +937,8 @@
 		,t.gua_wx_jour_datetime_start
 		,t.gua_wx_jour_datetime_end
 		,t.gua_wx_jour_interest
+		,t.gua_wx_interest1
+		,t.gua_wx_interest2
 		,t.gua_wx_jour_income
 		,t.gua_wx_jour_expend
 		,t.gua_wx_jour_balance
@@ -904,6 +950,8 @@
 		,t.gua_jour_datetime_start
 		,t.gua_jour_datetime_end
 		,t.gua_jour_interest
+		,t.gua_interest1
+		,t.gua_interest2
 		,t.gua_jour_income
 		,t.gua_jour_expend
 		,t.gua_jour_balance
@@ -924,6 +972,8 @@
 		,t.zfb_jour_datetime_start
 		,t.zfb_jour_datetime_end
 		,t.zfb_jour_interest
+		,t.zfb_interest1
+		,t.zfb_interest2
 		,t.zfb_jour_income
 		,t.zfb_jour_expend
 		,t.zfb_jour_balance
@@ -935,6 +985,8 @@
 		,t.wx_jour_datetime_start
 		,t.wx_jour_datetime_end
 		,t.wx_jour_interest
+		,t.wx_interest1
+		,t.wx_interest2
 		,t.wx_jour_income
 		,t.wx_jour_expend
 		,t.wx_jour_balance
@@ -946,6 +998,8 @@
 		,t.jour_datetime_start
 		,t.jour_datetime_end
 		,t.jour_interest
+		,t.interest1
+		,t.interest2
 		,t.jour_income
 		,t.jour_expend
 		,t.jour_balance
@@ -1057,7 +1111,7 @@
 		,auth_fee
 		,bank_fee
 		,company_fee
-		,team_fee
+		,fee
 		,credit_code
 		,biz_type
 		,loan_period
@@ -1115,6 +1169,8 @@
 		,mate_zfb_jour_datetime_start
 		,mate_zfb_jour_datetime_end
 		,mate_zfb_jour_interest
+		,mate_zfb_interest1
+		,mate_zfb_interest2
 		,mate_zfb_jour_income
 		,mate_zfb_jour_expend
 		,mate_zfb_jour_balance
@@ -1126,6 +1182,8 @@
 		,mate_wx_jour_datetime_start
 		,mate_wx_jour_datetime_end
 		,mate_wx_jour_interest
+		,mate_wx_interest1
+		,mate_wx_interest2
 		,mate_wx_jour_income
 		,mate_wx_jour_expend
 		,mate_wx_jour_balance
@@ -1137,6 +1195,8 @@
 		,mate_jour_datetime_start
 		,mate_jour_datetime_end
 		,mate_jour_interest
+		,mate_interest1
+		,mate_interest2
 		,mate_jour_income
 		,mate_jour_expend
 		,mate_jour_balance
@@ -1166,6 +1226,8 @@
 		,gua_zfb_jour_datetime_start
 		,gua_zfb_jour_datetime_end
 		,gua_zfb_jour_interest
+		,gua_zfb_interest1
+		,gua_zfb_interest2
 		,gua_zfb_jour_income
 		,gua_zfb_jour_expend
 		,gua_zfb_jour_balance
@@ -1177,6 +1239,8 @@
 		,gua_wx_jour_datetime_start
 		,gua_wx_jour_datetime_end
 		,gua_wx_jour_interest
+		,gua_wx_interest1
+		,gua_wx_interest2
 		,gua_wx_jour_income
 		,gua_wx_jour_expend
 		,gua_wx_jour_balance
@@ -1188,6 +1252,8 @@
 		,gua_jour_datetime_start
 		,gua_jour_datetime_end
 		,gua_jour_interest
+		,gua_interest1
+		,gua_interest2
 		,gua_jour_income
 		,gua_jour_expend
 		,gua_jour_balance
@@ -1208,6 +1274,8 @@
 		,zfb_jour_datetime_start
 		,zfb_jour_datetime_end
 		,zfb_jour_interest
+		,zfb_interest1
+		,zfb_interest2
 		,zfb_jour_income
 		,zfb_jour_expend
 		,zfb_jour_balance
@@ -1219,6 +1287,8 @@
 		,wx_jour_datetime_start
 		,wx_jour_datetime_end
 		,wx_jour_interest
+		,wx_interest1
+		,wx_interest2
 		,wx_jour_income
 		,wx_jour_expend
 		,wx_jour_balance
@@ -1230,6 +1300,8 @@
 		,jour_datetime_start
 		,jour_datetime_end
 		,jour_interest
+		,interest1
+		,interest2
 		,jour_income
 		,jour_expend
 		,jour_balance
@@ -1278,7 +1350,7 @@
 		,#{authFee}
 		,#{bankFee}
 		,#{companyFee}
-		,#{teamFee}
+		,#{fee}
 		,#{creditCode}
 		,#{bizType}
 		,#{loanPeriod}
@@ -1336,6 +1408,8 @@
 		,#{mateZfbJourDatetimeStart}
 		,#{mateZfbJourDatetimeEnd}
 		,#{mateZfbJourInterest}
+		,#{mateZfbInterest1}
+		,#{mateZfbInterest2}
 		,#{mateZfbJourIncome}
 		,#{mateZfbJourExpend}
 		,#{mateZfbJourBalance}
@@ -1347,6 +1421,8 @@
 		,#{mateWxJourDatetimeStart}
 		,#{mateWxJourDatetimeEnd}
 		,#{mateWxJourInterest}
+		,#{mateWxInterest1}
+		,#{mateWxInterest2}
 		,#{mateWxJourIncome}
 		,#{mateWxJourExpend}
 		,#{mateWxJourBalance}
@@ -1358,6 +1434,8 @@
 		,#{mateJourDatetimeStart}
 		,#{mateJourDatetimeEnd}
 		,#{mateJourInterest}
+		,#{mateInterest1}
+		,#{mateInterest2}
 		,#{mateJourIncome}
 		,#{mateJourExpend}
 		,#{mateJourBalance}
@@ -1387,6 +1465,8 @@
 		,#{guaZfbJourDatetimeStart}
 		,#{guaZfbJourDatetimeEnd}
 		,#{guaZfbJourInterest}
+		,#{guaZfbInterest1}
+		,#{guaZfbInterest2}
 		,#{guaZfbJourIncome}
 		,#{guaZfbJourExpend}
 		,#{guaZfbJourBalance}
@@ -1398,6 +1478,8 @@
 		,#{guaWxJourDatetimeStart}
 		,#{guaWxJourDatetimeEnd}
 		,#{guaWxJourInterest}
+		,#{guaWxInterest1}
+		,#{guaWxInterest2}
 		,#{guaWxJourIncome}
 		,#{guaWxJourExpend}
 		,#{guaWxJourBalance}
@@ -1409,6 +1491,8 @@
 		,#{guaJourDatetimeStart}
 		,#{guaJourDatetimeEnd}
 		,#{guaJourInterest}
+		,#{guaInterest1}
+		,#{guaInterest2}
 		,#{guaJourIncome}
 		,#{guaJourExpend}
 		,#{guaJourBalance}
@@ -1429,6 +1513,8 @@
 		,#{zfbJourDatetimeStart}
 		,#{zfbJourDatetimeEnd}
 		,#{zfbJourInterest}
+		,#{zfbInterest1}
+		,#{zfbInterest2}
 		,#{zfbJourIncome}
 		,#{zfbJourExpend}
 		,#{zfbJourBalance}
@@ -1440,6 +1526,8 @@
 		,#{wxJourDatetimeStart}
 		,#{wxJourDatetimeEnd}
 		,#{wxJourInterest}
+		,#{wxInterest1}
+		,#{wxInterest2}
 		,#{wxJourIncome}
 		,#{wxJourExpend}
 		,#{wxJourBalance}
@@ -1451,6 +1539,8 @@
 		,#{jourDatetimeStart}
 		,#{jourDatetimeEnd}
 		,#{jourInterest}
+		,#{interest1}
+		,#{interest2}
 		,#{jourIncome}
 		,#{jourExpend}
 		,#{jourBalance}
@@ -1500,7 +1590,7 @@
 		
 		,bank_fee = #{bankFee}
 		,company_fee = #{companyFee}
-		,team_fee = #{teamFee}
+		,fee = #{fee}
 		,credit_code = #{creditCode}
 		,biz_type = #{bizType}
 		,loan_period = #{loanPeriod}
@@ -1573,6 +1663,8 @@
 		
 		,mate_zfb_jour_datetime_end = #{mateZfbJourDatetimeEnd}
 		,mate_zfb_jour_interest = #{mateZfbJourInterest}
+		,mate_zfb_interest1 = #{mateZfbInterest1}
+		,mate_zfb_interest2 = #{mateZfbInterest2}
 		,mate_zfb_jour_income = #{mateZfbJourIncome}
 		,mate_zfb_jour_expend = #{mateZfbJourExpend}
 		,mate_zfb_jour_balance = #{mateZfbJourBalance}
@@ -1584,6 +1676,8 @@
 		,mate_wx_jour_datetime_start = #{mateWxJourDatetimeStart}
 		,mate_wx_jour_datetime_end = #{mateWxJourDatetimeEnd}
 		,mate_wx_jour_interest = #{mateWxJourInterest}
+		,mate_wx_interest1 = #{mateWxInterest1}
+		,mate_wx_interest2 = #{mateWxInterest2}
 		
 		,mate_wx_jour_income = #{mateWxJourIncome}
 		,mate_wx_jour_expend = #{mateWxJourExpend}
@@ -1596,6 +1690,8 @@
 		,mate_jour_datetime_start = #{mateJourDatetimeStart}
 		,mate_jour_datetime_end = #{mateJourDatetimeEnd}
 		,mate_jour_interest = #{mateJourInterest}
+		,mate_interest1 = #{mateInterest1}
+		,mate_interest2 = #{mateInterest2}
 		,mate_jour_income = #{mateJourIncome}
 		
 		,mate_jour_expend = #{mateJourExpend}
@@ -1618,6 +1714,8 @@
 		
 		,gua_zfb_jour_datetime_end = #{guaZfbJourDatetimeEnd}
 		,gua_zfb_jour_interest = #{guaZfbJourInterest}
+		,gua_zfb_interest1 = #{guaZfbInterest1}
+		,gua_zfb_interest2 = #{guaZfbInterest2}
 		,gua_zfb_jour_income = #{guaZfbJourIncome}
 		,gua_zfb_jour_expend = #{guaZfbJourExpend}
 		,gua_zfb_jour_balance = #{guaZfbJourBalance}
@@ -1629,6 +1727,8 @@
 		,gua_wx_jour_datetime_start = #{guaWxJourDatetimeStart}
 		,gua_wx_jour_datetime_end = #{guaWxJourDatetimeEnd}
 		,gua_wx_jour_interest = #{guaWxJourInterest}
+		,gua_wx_interest1 = #{guaWxInterest1}
+		,gua_wx_interest2 = #{guaWxInterest2}
 		,gua_wx_jour_income = #{guaWxJourIncome}
 		
 		,gua_wx_jour_expend = #{guaWxJourExpend}
@@ -1641,6 +1741,8 @@
 		,gua_jour_datetime_start = #{guaJourDatetimeStart}
 		,gua_jour_datetime_end = #{guaJourDatetimeEnd}
 		,gua_jour_interest = #{guaJourInterest}
+		,gua_interest1 = #{guaInterest1}
+		,gua_interest2 = #{guaInterest2}
 		,gua_jour_income = #{guaJourIncome}
 		,gua_jour_expend = #{guaJourExpend}
 		
@@ -1661,6 +1763,8 @@
 		,zfb_jour_datetime_start = #{zfbJourDatetimeStart}
 		,zfb_jour_datetime_end = #{zfbJourDatetimeEnd}
 		,zfb_jour_interest = #{zfbJourInterest}
+		,zfb_interest1 = #{zfbInterest1}
+		,zfb_interest2 = #{zfbInterest2}
 		,zfb_jour_income = #{zfbJourIncome}
 		,zfb_jour_expend = #{zfbJourExpend}
 		
@@ -1673,6 +1777,8 @@
 		,wx_jour_datetime_start = #{wxJourDatetimeStart}
 		,wx_jour_datetime_end = #{wxJourDatetimeEnd}
 		,wx_jour_interest = #{wxJourInterest}
+		,wx_interest1 = #{wxInterest1}
+		,wx_interest2 = #{wxInterest2}
 		,wx_jour_income = #{wxJourIncome}
 		,wx_jour_expend = #{wxJourExpend}
 		,wx_jour_balance = #{wxJourBalance}
@@ -1685,6 +1791,8 @@
 		
 		,jour_datetime_end = #{jourDatetimeEnd}
 		,jour_interest = #{jourInterest}
+		,interest1 = #{interest1}
+		,interest2 = #{interest2}
 		,jour_income = #{jourIncome}
 		,jour_expend = #{jourExpend}
 		,jour_balance = #{jourBalance}

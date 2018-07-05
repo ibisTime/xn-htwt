@@ -45,8 +45,8 @@ public class BudgetOrder extends ABaseDO {
     // 公司服务费
     private Long companyFee;
 
-    // 团队服务费
-    private Long teamFee;
+    // 服务费
+    private Long fee;
 
     // 征信单编号
     private String creditCode;
@@ -187,7 +187,7 @@ public class BudgetOrder extends ABaseDO {
     private String workProfession;
 
     // 何时进入现单位工作
-    private Date workDatetime;
+    private String workDatetime;
 
     // 自营公司单位面积
     private String selfCompanyArea;
@@ -243,6 +243,12 @@ public class BudgetOrder extends ABaseDO {
     // 配偶支付宝流水结息
     private String mateZfbJourInterest;
 
+    // 配偶支付宝结息1
+    private Long mateZfbInterest1;
+
+    // 配偶支付宝结息2
+    private Long mateZfbInterest2;
+
     // 配偶支付宝收入
     private Long mateZfbJourIncome;
 
@@ -273,6 +279,12 @@ public class BudgetOrder extends ABaseDO {
     // 配偶微信流水结息
     private String mateWxJourInterest;
 
+    // 配偶微信结息1
+    private Long mateWxInterest1;
+
+    // 配偶微信结息2
+    private Long mateWxInterest2;
+
     // 配偶微信收入
     private Long mateWxJourIncome;
 
@@ -302,6 +314,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 配偶流水结息
     private String mateJourInterest;
+
+    // 配偶结息1
+    private Long mateInterest1;
+
+    // 配偶结息2
+    private Long mateInterest2;
 
     // 配偶收入
     private Long mateJourIncome;
@@ -357,6 +375,12 @@ public class BudgetOrder extends ABaseDO {
     // 担保人支付宝流水结息
     private String guaZfbJourInterest;
 
+    // 担保人支付宝结息1
+    private Long guaZfbInterest1;
+
+    // 担保人支付宝结息2
+    private Long guaZfbInterest2;
+
     // 担保人支付宝收入
     private Long guaZfbJourIncome;
 
@@ -387,6 +411,12 @@ public class BudgetOrder extends ABaseDO {
     // 担保人微信流水结息
     private String guaWxJourInterest;
 
+    // 担保人微信结息1
+    private Long guaWxInterest1;
+
+    // 担保人微信结息2
+    private Long guaWxInterest2;
+
     // 担保人微信收入
     private Long guaWxJourIncome;
 
@@ -416,6 +446,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 担保人流水结息
     private String guaJourInterest;
+
+    // 担保人结息1
+    private Long guaInterest1;
+
+    // 担保人结息2
+    private Long guaInterest2;
 
     // 担保人收入
     private Long guaJourIncome;
@@ -468,6 +504,12 @@ public class BudgetOrder extends ABaseDO {
     // 支付宝流水结息
     private String zfbJourInterest;
 
+    // 支付宝结息1
+    private Long zfbInterest1;
+
+    // 支付宝结息2
+    private Long zfbInterest2;
+
     // 支付宝收入
     private Long zfbJourIncome;
 
@@ -498,6 +540,12 @@ public class BudgetOrder extends ABaseDO {
     // 微信流水结息
     private String wxJourInterest;
 
+    // 微信结息1
+    private Long wxInterest1;
+
+    // 微信结息2
+    private Long wxInterest2;
+
     // 微信收入
     private Long wxJourIncome;
 
@@ -527,6 +575,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 流水结息
     private String jourInterest;
+
+    // 结息1
+    private Long interest1;
+
+    // 结息2
+    private Long interest2;
 
     // 收入
     private Long jourIncome;
@@ -1554,6 +1608,54 @@ public class BudgetOrder extends ABaseDO {
         this.idCardPdf = idCardPdf;
     }
 
+    public Long getMateInterest1() {
+        return mateInterest1;
+    }
+
+    public void setMateInterest1(Long mateInterest1) {
+        this.mateInterest1 = mateInterest1;
+    }
+
+    public Long getMateInterest2() {
+        return mateInterest2;
+    }
+
+    public void setMateInterest2(Long mateInterest2) {
+        this.mateInterest2 = mateInterest2;
+    }
+
+    public Long getGuaInterest1() {
+        return guaInterest1;
+    }
+
+    public void setGuaInterest1(Long guaInterest1) {
+        this.guaInterest1 = guaInterest1;
+    }
+
+    public Long getGuaInterest2() {
+        return guaInterest2;
+    }
+
+    public void setGuaInterest2(Long guaInterest2) {
+        this.guaInterest2 = guaInterest2;
+    }
+
+    public Long getInterest1() {
+        return interest1;
+    }
+
+    public void setInterest1(Long interest1) {
+        this.interest1 = interest1;
+    }
+
+    public Long getInterest2() {
+        return interest2;
+    }
+
+    public void setInterest2(Long interest2) {
+        this.interest2 = interest2;
+    }
+
     public String getMarryPdf() {
         return marryPdf;
     }
@@ -1572,6 +1674,102 @@ public class BudgetOrder extends ABaseDO {
 
     public void setEmergencyName1(String emergencyName1) {
         this.emergencyName1 = emergencyName1;
+    }
+
+    public Long getMateZfbInterest1() {
+        return mateZfbInterest1;
+    }
+
+    public void setMateZfbInterest1(Long mateZfbInterest1) {
+        this.mateZfbInterest1 = mateZfbInterest1;
+    }
+
+    public Long getMateZfbInterest2() {
+        return mateZfbInterest2;
+    }
+
+    public void setMateZfbInterest2(Long mateZfbInterest2) {
+        this.mateZfbInterest2 = mateZfbInterest2;
+    }
+
+    public Long getMateWxInterest1() {
+        return mateWxInterest1;
+    }
+
+    public void setMateWxInterest1(Long mateWxInterest1) {
+        this.mateWxInterest1 = mateWxInterest1;
+    }
+
+    public Long getMateWxInterest2() {
+        return mateWxInterest2;
+    }
+
+    public void setMateWxInterest2(Long mateWxInterest2) {
+        this.mateWxInterest2 = mateWxInterest2;
+    }
+
+    public Long getGuaZfbInterest1() {
+        return guaZfbInterest1;
+    }
+
+    public void setGuaZfbInterest1(Long guaZfbInterest1) {
+        this.guaZfbInterest1 = guaZfbInterest1;
+    }
+
+    public Long getGuaZfbInterest2() {
+        return guaZfbInterest2;
+    }
+
+    public void setGuaZfbInterest2(Long guaZfbInterest2) {
+        this.guaZfbInterest2 = guaZfbInterest2;
+    }
+
+    public Long getGuaWxInterest1() {
+        return guaWxInterest1;
+    }
+
+    public void setGuaWxInterest1(Long guaWxInterest1) {
+        this.guaWxInterest1 = guaWxInterest1;
+    }
+
+    public Long getGuaWxInterest2() {
+        return guaWxInterest2;
+    }
+
+    public void setGuaWxInterest2(Long guaWxInterest2) {
+        this.guaWxInterest2 = guaWxInterest2;
+    }
+
+    public Long getZfbInterest1() {
+        return zfbInterest1;
+    }
+
+    public void setZfbInterest1(Long zfbInterest1) {
+        this.zfbInterest1 = zfbInterest1;
+    }
+
+    public Long getZfbInterest2() {
+        return zfbInterest2;
+    }
+
+    public void setZfbInterest2(Long zfbInterest2) {
+        this.zfbInterest2 = zfbInterest2;
+    }
+
+    public Long getWxInterest1() {
+        return wxInterest1;
+    }
+
+    public void setWxInterest1(Long wxInterest1) {
+        this.wxInterest1 = wxInterest1;
+    }
+
+    public Long getWxInterest2() {
+        return wxInterest2;
+    }
+
+    public void setWxInterest2(Long wxInterest2) {
+        this.wxInterest2 = wxInterest2;
     }
 
     public String getEmergencyRelation1() {
@@ -2238,12 +2436,12 @@ public class BudgetOrder extends ABaseDO {
         this.mateWxJourExpend = mateWxJourExpend;
     }
 
-    public Long getTeamFee() {
-        return teamFee;
+    public Long getFee() {
+        return fee;
     }
 
-    public void setTeamFee(Long teamFee) {
-        this.teamFee = teamFee;
+    public void setFee(Long fee) {
+        this.fee = fee;
     }
 
     public Long getMateWxJourBalance() {
@@ -2854,11 +3052,11 @@ public class BudgetOrder extends ABaseDO {
         this.workProfession = workProfession;
     }
 
-    public Date getWorkDatetime() {
+    public String getWorkDatetime() {
         return workDatetime;
     }
 
-    public void setWorkDatetime(Date workDatetime) {
+    public void setWorkDatetime(String workDatetime) {
         this.workDatetime = workDatetime;
     }
 
