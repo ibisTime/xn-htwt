@@ -77,4 +77,22 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
             start, pageSize, condition, Credit.class);
     }
 
+    @Override
+    public int cancelCredit(Credit data) {
+        return super.update(NAMESPACE.concat("update_cancel_credit"), data);
+    }
+
+    @Override
+    public int setUserName(Credit data) {
+
+        return super.update(NAMESPACE.concat("update_set_user_name"), data);
+    }
+
+    @Override
+    public int refreshInputBankCreditResult(Credit data) {
+        return super.update(
+            NAMESPACE.concat("update_input_bank_credit_result"), data);
+
+    }
+
 }

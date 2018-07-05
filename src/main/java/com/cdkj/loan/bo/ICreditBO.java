@@ -31,4 +31,11 @@ public interface ICreditBO extends IPaginableBO<Credit> {
     public Paginable<Credit> getPaginableByRoleCode(int start, int limit,
             Credit condition);
 
+    // 征信撤回
+    public void cancelCredit(Credit credit);
+
+    public void setUserName(Credit credit);
+
+    public void refreshInputBankCreditResult(Credit credit);
+
 }

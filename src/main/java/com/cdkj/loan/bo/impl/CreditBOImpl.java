@@ -90,4 +90,25 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         }
     }
 
+    @Override
+    public void cancelCredit(Credit credit) {
+        if (null != credit) {
+            creditDAO.cancelCredit(credit);
+        }
+    }
+
+    @Override
+    public void setUserName(Credit credit) {
+        if (null != credit) {
+            creditDAO.setUserName(credit);
+        }
+    }
+
+    @Override
+    public void refreshInputBankCreditResult(Credit credit) {
+        if (null != credit) {
+            creditDAO.refreshInputBankCreditResult(credit);
+        }
+    }
+
 }

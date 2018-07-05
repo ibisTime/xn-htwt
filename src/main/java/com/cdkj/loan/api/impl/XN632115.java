@@ -9,6 +9,8 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.dto.req.XN632115Req;
+import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -29,15 +31,21 @@ public class XN632115 extends AProcessor {
     public Object doBusiness() throws BizException {
         Credit condition = new Credit();
         condition.setSaleUserId(req.getSaleUserId());
+        condition.setUserName(req.getUserName());
         condition.setTeamCode(req.getTeamCode());
         condition.setBudgetCode(req.getBudgetOrderCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-
-        condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setKeyWord(req.getKeyWord());
         condition.setRoleCode(req.getRoleCode());
+        if (EBoolean.YES.getCode().equals(req.getIsPass())) {
+            condition.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
+        } else {
+            condition.setNoPass(ECreditNode.ACHIEVE.getCode());
+        }
+
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ICreditAO.DEFAULT_ORDER_COLUMN;

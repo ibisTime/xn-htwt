@@ -15,9 +15,12 @@
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
 		
+		<result column="user_name" property="userName" />
 		<result column="team_code" property="teamCode" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="note" property="note" />
+		<result column="updater" property="updater" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -33,6 +36,9 @@
 			</if>
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
+			</if>
+			<if test="userName != null and userName != '' ">
+				AND t.user_name like "%"#{userName}"%"
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
@@ -58,8 +64,15 @@
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
+			<if test="noPass != null and noPass != '' ">
+				AND t.cur_node_code != #{noPass}
+			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
+			</if>
+			<if test="keyWord != null and keyWord != '' ">
+				AND t.user_name LIKE "%"#{keyword}"%" OR t.code LIKE "%"#{keyword}"%" 
+				OR t.team_code LIKE "%"#{keyword}"%" OR t.budget_code LIKE "%"#{keyword}"%" 
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
@@ -84,9 +97,12 @@
 		,t.company_code
 		,t.sale_user_id
 
+		,t.user_name
 		,t.team_code
 		,t.cur_node_code		
 		,t.apply_datetime
+		,t.note
+		,t.updater
 		from tdq_credit t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -116,9 +132,12 @@
 		,t.company_code
 		,t.sale_user_id
 
+		,t.user_name
 		,t.team_code
 		,t.cur_node_code		
 		,t.apply_datetime
+		,t.note
+		,t.updater
 		from tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -148,9 +167,10 @@
 		,company_code
 		,sale_user_id
 		,team_code
+		
 		,cur_node_code	
-			
 		,apply_datetime
+		,note
 		)
 		VALUES(
 		#{code}
@@ -164,9 +184,10 @@
 		,#{companyCode}
 		,#{saleUserId}
 		,#{teamCode}
-		,#{curNodeCode}
 		
+		,#{curNodeCode}		
 		,#{applyDatetime}
+		,#{note}
 		)
 	</insert>
 	
@@ -189,6 +210,28 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,budget_code = #{budgetCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_cancel_credit" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_set_user_name" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		user_name = #{userName}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_input_bank_credit_result" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
 		WHERE code = #{code}
 	</update>
 	

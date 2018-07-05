@@ -43,4 +43,7 @@ public interface ICreditAO {
     // 录入银行征信结果
     public void inputBankCreditResult(XN632111Req req);
 
+    // 征信撤回
+    public void cancelCredit(String code, String operator);
+
 }

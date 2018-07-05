@@ -30,7 +30,18 @@ public class XN632110Req {
     @NotBlank
     private String buttonCode;
 
+    // 征信说明
+    private String note;
+
     private List<XN632110ReqCreditUser> creditUserList;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public String getButtonCode() {
         return buttonCode;

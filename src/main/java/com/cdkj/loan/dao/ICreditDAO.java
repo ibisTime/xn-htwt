@@ -28,4 +28,11 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
     public List<Credit> selectReqBudgetByRoleCodeList(Credit condition,
             int start, int pageSize);
 
+    // 征信撤回
+    public int cancelCredit(Credit data);
+
+    public int setUserName(Credit data);
+
+    public int refreshInputBankCreditResult(Credit data);
+
 }

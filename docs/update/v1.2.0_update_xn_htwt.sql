@@ -27,6 +27,10 @@ ADD COLUMN `wx_interest2` bigint(20) DEFAULT NULL COMMENT '微信结息2' AFTER 
 ADD COLUMN `interest1` bigint(20) DEFAULT NULL COMMENT '结息1' AFTER `jour_interest`,
 ADD COLUMN `interest2` bigint(20) DEFAULT NULL COMMENT '结息2' AFTER `interest1`;
 
+ALTER TABLE `dev_xn_htwt`.`tdq_credit` 
+ADD COLUMN `note` VARCHAR(255) NULL COMMENT '征信说明' AFTER `cur_node_code`;
+
+
 
 /*
 -- Query: SELECT code,name,type,url,order_no,'admin' updater, now() as update_datetime,remark,parent_code FROM tsys_menu where code ='SM201807041817130182597'

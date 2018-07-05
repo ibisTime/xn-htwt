@@ -607,8 +607,11 @@ CREATE TABLE `tdq_credit` (
   `budget_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
   `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司',
   `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员编号',
+  `user_name` VARCHAR(255) DEFAULT NULL COMMENT '客户姓名',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点编号',
+  `note` varchar(255) DEFAULT NULL COMMENT '征信说明',
+  `updater` varchar(255) DEFAULT NULL COMMENT '操作人',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
