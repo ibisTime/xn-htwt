@@ -40,6 +40,14 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807041817130182597','U201806200828281617971',now(),NULL);
 
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_01','提交调查申请','010',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_02','风控专员审核','010',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_03','驻行人员审核','010',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_04','已完成','010',NULL);
+
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('010','010_01','010_02',NULL,NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('010','010_02','010_03','010_01',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('010','010_03','010_04','010_02',NULL,NULL);
 
 DROP TABLE IF EXISTS `tdq_investigate_report`;
 CREATE TABLE `tdq_investigate_report` (
