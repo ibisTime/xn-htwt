@@ -67,9 +67,6 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         data.setPriceApprovalPdf(req.getPriceApprovalPdf());
         data.setCar168Price(StringValidater.toLong(req.getCar168Price()));
         data.setApplyWorkAndJour(req.getApplyWorkAndJour());
-        data.setJourPic(req.getJourPic());
-        data.setZfbJourPic(req.getZfbJourPic());
-        data.setWxJourPic(req.getWxJourPic());
         data.setHomeVisit(req.getHomeVisit());
         data.setBasicsInformation(req.getBasicsInformation());
         data.setXszPdf(req.getXszPdf());
