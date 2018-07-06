@@ -18,4 +18,7 @@ public interface ISYSBizLogAO {
 
     public SYSBizLog getSYSBizLog(int id);
 
+    public Paginable<SYSBizLog> querySYSBizLogPageByRoleCode(int start,
+            int limit, SYSBizLog condition);
+
 }
