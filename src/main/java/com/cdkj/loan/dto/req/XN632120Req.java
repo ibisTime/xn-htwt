@@ -25,8 +25,8 @@ public class XN632120Req {
     // 公司手续费
     private String companyFee;
 
-    // 服务费
-    private String fee;
+    // 团队服务费
+    private String teamFee;
 
     // 是否垫资
     private String isAdvanceFund;
@@ -1773,12 +1773,12 @@ public class XN632120Req {
         return guaWxJourBalance;
     }
 
-    public String getFee() {
-        return fee;
+    public String getTeamFee() {
+        return teamFee;
     }
 
-    public void setFee(String fee) {
-        this.fee = fee;
+    public void setTeamFee(String teamFee) {
+        this.teamFee = teamFee;
     }
 
     public void setGuaWxJourBalance(String guaWxJourBalance) {

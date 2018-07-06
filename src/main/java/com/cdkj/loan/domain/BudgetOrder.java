@@ -45,8 +45,8 @@ public class BudgetOrder extends ABaseDO {
     // 公司服务费
     private Long companyFee;
 
-    // 服务费
-    private Long fee;
+    // 团队服务费
+    private Long teamFee;
 
     // 征信单编号
     private String creditCode;
@@ -2436,12 +2436,12 @@ public class BudgetOrder extends ABaseDO {
         this.mateWxJourExpend = mateWxJourExpend;
     }
 
-    public Long getFee() {
-        return fee;
+    public Long getTeamFee() {
+        return teamFee;
     }
 
-    public void setFee(Long fee) {
-        this.fee = fee;
+    public void setTeamFee(Long teamFee) {
+        this.teamFee = teamFee;
     }
 
     public Long getMateWxJourBalance() {

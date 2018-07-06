@@ -190,7 +190,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
         }
         data.setCompanyFee(companyFee);
-        data.setFee(StringValidater.toLong(req.getFee()));
+        data.setTeamFee(StringValidater.toLong(req.getTeamFee()));
 
         data.setBizType(req.getBizType());
         data.setLoanPeriod(req.getLoanPeriod());
@@ -601,7 +601,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data.setShouldAmount(budgetOrder.getBankFee()
                     + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
                     + budgetOrder.getMonthDeposit()
-                    + budgetOrder.getCompanyFee() + budgetOrder.getFee());
+                    + budgetOrder.getCompanyFee() + budgetOrder.getTeamFee());
             data.setRealAmount(0L);
             data.setIsSettled(EBoolean.NO.getCode());
 
