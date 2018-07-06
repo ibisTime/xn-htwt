@@ -26,7 +26,7 @@
 		<result column="zfb_jour_pic" property="zfbJourPic" />
 		<result column="zfb_jour_remark" property="zfbJourRemark" />
 		<result column="wx_jour_pic" property="wxJourPic" />
-		<result column="wx_jour_pdf" property="wxJourPdf" />
+		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="house_contract" property="houseContract" />
 		<result column="home_visit" property="homeVisit" />
 		<result column="home_photo" property="homePhoto" />
@@ -115,7 +115,7 @@
 		,t.zfb_jour_pic
 		,t.zfb_jour_remark
 		,t.wx_jour_pic
-		,t.wx_jour_pdf
+		,t.wx_jour_remark
 		,t.house_contract
 		,t.home_visit
 		,t.home_photo
@@ -195,7 +195,7 @@
 		,zfb_jour_pic
 		,zfb_jour_remark
 		,wx_jour_pic
-		,wx_jour_pdf
+		,wx_jour_remark
 		,house_contract
 		,home_visit
 		,home_photo
@@ -258,7 +258,7 @@
 		,#{zfbJourPic}
 		,#{zfbJourRemark}
 		,#{wxJourPic}
-		,#{wxJourPdf}
+		,#{wxJourRemark}
 		,#{houseContract}
 		,#{homeVisit}
 		,#{homePhoto}
