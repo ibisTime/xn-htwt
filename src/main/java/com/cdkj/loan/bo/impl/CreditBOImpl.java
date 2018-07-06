@@ -15,7 +15,9 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditDAO;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.exception.BizException;
 
 /**
  * 征信单
@@ -46,9 +48,17 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
 
     @Override
     public Credit getCredit(String code) {
-        Credit condition = new Credit();
-        condition.setCode(code);
-        return creditDAO.select(condition);
+        Credit data = null;
+        if (StringUtils.isNotBlank(code)) {
+            Credit condition = new Credit();
+            condition.setCode(code);
+            data = creditDAO.select(condition);
+            if (null == data) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信单不存在！");
+            }
+        }
+        return data;
     }
 
     @Override
