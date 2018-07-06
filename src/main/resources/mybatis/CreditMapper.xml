@@ -226,7 +226,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_set_user_name" parameterType="credit">
+	<update id="update_set_apply_user_info" parameterType="credit">
 		UPDATE tdq_credit
 		SET
 		user_name = #{userName}
