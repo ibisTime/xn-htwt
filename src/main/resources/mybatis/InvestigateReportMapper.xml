@@ -21,11 +21,29 @@
 		<result column="price_approval_pdf" property="priceApprovalPdf" />
 		<result column="car_168_price" property="car168Price" />
 		<result column="apply_work_and_jour" property="applyWorkAndJour" />
-		<result column="jour_pic" property="jourPic" />
+		<result column="jour_datetime_start" property="jourDatetimeStart" />
+		<result column="jour_datetime_end" property="jourDatetimeEnd" />
+		<result column="jour_income" property="jourIncome" />
+		<result column="jour_expend" property="jourExpend" />
+		<result column="jour_balance" property="jourBalance" />
+		<result column="jour_month_income" property="jourMonthIncome" />
+		<result column="jour_month_expend" property="jourMonthExpend" />
 		<result column="jour_remark" property="jourRemark" />
-		<result column="zfb_jour_pic" property="zfbJourPic" />
+		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
+		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
+		<result column="zfb_jour_income" property="zfbJourIncome" />
+		<result column="zfb_jour_expend" property="zfbJourExpend" />
+		<result column="zfb_jour_balance" property="zfbJourBalance" />
+		<result column="zfb_jour_month_income" property="zfbJourMonthIncome" />
+		<result column="zfb_jour_month_expend" property="zfbJourMonthExpend" />
 		<result column="zfb_jour_remark" property="zfbJourRemark" />
-		<result column="wx_jour_pic" property="wxJourPic" />
+		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
+		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
+		<result column="wx_jour_income" property="wxJourIncome" />
+		<result column="wx_jour_expend" property="wxJourExpend" />
+		<result column="wx_jour_balance" property="wxJourBalance" />
+		<result column="wx_jour_month_income" property="wxJourMonthIncome" />
+		<result column="wx_jour_month_expend" property="wxJourMonthExpend" />
 		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="house_contract" property="houseContract" />
 		<result column="home_visit" property="homeVisit" />
@@ -110,11 +128,29 @@
 		,t.price_approval_pdf
 		,t.car_168_price
 		,t.apply_work_and_jour
-		,t.jour_pic
+		,t.jour_datetime_start
+		,t.jour_datetime_end
+		,t.jour_income
+		,t.jour_expend
+		,t.jour_balance
+		,t.jour_month_income
+		,t.jour_month_expend
 		,t.jour_remark
-		,t.zfb_jour_pic
+		,t.zfb_jour_datetime_start
+		,t.zfb_jour_datetime_end
+		,t.zfb_jour_income
+		,t.zfb_jour_expend
+		,t.zfb_jour_balance
+		,t.zfb_jour_month_income
+		,t.zfb_jour_month_expend
 		,t.zfb_jour_remark
-		,t.wx_jour_pic
+		,t.wx_jour_datetime_start
+		,t.wx_jour_datetime_end
+		,t.wx_jour_income
+		,t.wx_jour_expend
+		,t.wx_jour_balance
+		,t.wx_jour_month_income
+		,t.wx_jour_month_expend
 		,t.wx_jour_remark
 		,t.house_contract
 		,t.home_visit
@@ -190,11 +226,29 @@
 		,price_approval_pdf
 		,car_168_price
 		,apply_work_and_jour
-		,jour_pic
+		,jour_datetime_start
+		,jour_datetime_end
+		,jour_income
+		,jour_expend
+		,jour_balance
+		,jour_month_income
+		,jour_month_expend
 		,jour_remark
-		,zfb_jour_pic
+		,zfb_jour_datetime_start
+		,zfb_jour_datetime_end
+		,zfb_jour_income
+		,zfb_jour_expend
+		,zfb_jour_balance
+		,zfb_jour_month_income
+		,zfb_jour_month_expend
 		,zfb_jour_remark
-		,wx_jour_pic
+		,wx_jour_datetime_start
+		,wx_jour_datetime_end
+		,wx_jour_income
+		,wx_jour_expend
+		,wx_jour_balance
+		,wx_jour_month_income
+		,wx_jour_month_expend
 		,wx_jour_remark
 		,house_contract
 		,home_visit
@@ -253,11 +307,29 @@
 		,#{priceApprovalPdf}
 		,#{car168Price}
 		,#{applyWorkAndJour}
-		,#{jourPic}
+		,#{jourDatetimeStart}
+		,#{jourDatetimeEnd}
+		,#{jourIncome}
+		,#{jourExpend}
+		,#{jourBalance}
+		,#{jourMonthIncome}
+		,#{jourMonthExpend}
 		,#{jourRemark}
-		,#{zfbJourPic}
+		,#{zfbJourDatetimeStart}
+		,#{zfbJourDatetimeEnd}
+		,#{zfbJourIncome}
+		,#{zfbJourExpend}
+		,#{zfbJourBalance}
+		,#{zfbJourMonthIncome}
+		,#{zfbJourMonthExpend}
 		,#{zfbJourRemark}
-		,#{wxJourPic}
+		,#{wxJourDatetimeStart}
+		,#{wxJourDatetimeEnd}
+		,#{wxJourIncome}
+		,#{wxJourExpend}
+		,#{wxJourBalance}
+		,#{wxJourMonthIncome}
+		,#{wxJourMonthExpend}
 		,#{wxJourRemark}
 		,#{houseContract}
 		,#{homeVisit}

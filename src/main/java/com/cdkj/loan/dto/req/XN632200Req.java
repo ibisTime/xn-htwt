@@ -20,15 +20,6 @@ public class XN632200Req {
     // 申请人工作情况及流水反映
     private String applyWorkAndJour;
 
-    // 银行流水
-    private String jourPic;
-
-    // 支付宝流水
-    private String zfbJourPic;
-
-    // 微信流水
-    private String wxJourPic;
-
     // 家访地址
     private String homeVisit;
 
@@ -182,30 +173,6 @@ public class XN632200Req {
 
     public void setApplyWorkAndJour(String applyWorkAndJour) {
         this.applyWorkAndJour = applyWorkAndJour;
-    }
-
-    public String getJourPic() {
-        return jourPic;
-    }
-
-    public void setJourPic(String jourPic) {
-        this.jourPic = jourPic;
-    }
-
-    public String getZfbJourPic() {
-        return zfbJourPic;
-    }
-
-    public void setZfbJourPic(String zfbJourPic) {
-        this.zfbJourPic = zfbJourPic;
-    }
-
-    public String getWxJourPic() {
-        return wxJourPic;
-    }
-
-    public void setWxJourPic(String wxJourPic) {
-        this.wxJourPic = wxJourPic;
     }
 
     public String getHomeVisit() {

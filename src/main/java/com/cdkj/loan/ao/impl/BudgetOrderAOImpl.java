@@ -675,11 +675,54 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
                 investigateReport
                     .setBankCreditResultPdf(domain.getBankCreditResultPdf());
-                investigateReport.setJourRemark(budgetOrder.getJourRemark());
+                investigateReport
+                    .setJourDatetimeStart(budgetOrder.getJourDatetimeStart());
+                investigateReport
+                    .setZfbJourDatetimeEnd(budgetOrder.getZfbJourDatetimeEnd());
+
+                investigateReport
+                    .setZfbJourIncome(budgetOrder.getZfbJourIncome());
+                investigateReport
+                    .setZfbJourExpend(budgetOrder.getZfbJourExpend());
+                investigateReport
+                    .setZfbJourBalance(budgetOrder.getZfbJourBalance());
+                investigateReport
+                    .setZfbJourMonthIncome(budgetOrder.getZfbJourMonthIncome());
+                investigateReport
+                    .setZfbJourMonthExpend(budgetOrder.getZfbJourMonthExpend());
                 investigateReport
                     .setZfbJourRemark(budgetOrder.getZfbJourRemark());
+
+                investigateReport.setWxJourDatetimeStart(
+                    budgetOrder.getWxJourDatetimeStart());
+                investigateReport
+                    .setWxJourDatetimeEnd(budgetOrder.getWxJourDatetimeEnd());
+                investigateReport
+                    .setWxJourIncome(budgetOrder.getWxJourIncome());
+                investigateReport
+                    .setWxJourExpend(budgetOrder.getWxJourExpend());
+                investigateReport
+                    .setWxJourBalance(budgetOrder.getWxJourBalance());
+                investigateReport
+                    .setWxJourMonthIncome(budgetOrder.getWxJourMonthIncome());
+                investigateReport
+                    .setWxJourMonthExpend(budgetOrder.getWxJourMonthExpend());
                 investigateReport
                     .setWxJourRemark(budgetOrder.getWxJourRemark());
+
+                investigateReport
+                    .setJourDatetimeStart(budgetOrder.getJourDatetimeStart());
+                investigateReport
+                    .setJourDatetimeEnd(budgetOrder.getJourDatetimeEnd());
+                investigateReport.setJourIncome(budgetOrder.getJourIncome());
+                investigateReport.setJourExpend(budgetOrder.getJourExpend());
+                investigateReport.setJourBalance(budgetOrder.getJourBalance());
+                investigateReport
+                    .setJourMonthIncome(budgetOrder.getJourMonthIncome());
+                investigateReport
+                    .setJourMonthExpend(budgetOrder.getJourMonthExpend());
+                investigateReport.setJourRemark(budgetOrder.getJourRemark());
+
                 investigateReport
                     .setHouseContract(budgetOrder.getHouseContract());
                 investigateReport.setHomeVisit(budgetOrder.getHousePicture());

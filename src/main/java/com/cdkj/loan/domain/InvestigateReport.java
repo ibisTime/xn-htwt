@@ -68,20 +68,74 @@ public class InvestigateReport extends ABaseDO {
     // 申请人工作情况及流水反映
     private String applyWorkAndJour;
 
-    // 银行流水
-    private String jourPic;
+    // 流水时间起
+    private Date jourDatetimeStart;
+
+    // 流水时间止
+    private Date jourDatetimeEnd;
+
+    // 收入
+    private Long jourIncome;
+
+    // 支出
+    private Long jourExpend;
+
+    // 帐户余额
+    private Long jourBalance;
+
+    // 月均收入
+    private Long jourMonthIncome;
+
+    // 月均支出
+    private Long jourMonthExpend;
 
     // 银行流水情况
     private String jourRemark;
 
-    // 支付宝流水
-    private String zfbJourPic;
+    // 支付宝流水时间起
+    private Date zfbJourDatetimeStart;
+
+    // 支付宝流水时间止
+    private Date zfbJourDatetimeEnd;
+
+    // 支付宝收入
+    private Long zfbJourIncome;
+
+    // 支付宝支出
+    private Long zfbJourExpend;
+
+    // 支付宝帐户余额
+    private Long zfbJourBalance;
+
+    // 支付宝月均收入
+    private Long zfbJourMonthIncome;
+
+    // 支付宝月均支出
+    private Long zfbJourMonthExpend;
 
     // 支付宝流水情况
     private String zfbJourRemark;
 
-    // 微信流水
-    private String wxJourPic;
+    // 微信流水时间起
+    private Date wxJourDatetimeStart;
+
+    // 微信流水时间止
+    private Date wxJourDatetimeEnd;
+
+    // 微信收入
+    private Long wxJourIncome;
+
+    // 微信支出
+    private Long wxJourExpend;
+
+    // 微信帐户余额
+    private Long wxJourBalance;
+
+    // 微信月均收入
+    private Long wxJourMonthIncome;
+
+    // 微信月均支出
+    private Long wxJourMonthExpend;
 
     // 微信流水情况
     private String wxJourRemark;
@@ -363,28 +417,12 @@ public class InvestigateReport extends ABaseDO {
         return applyWorkAndJour;
     }
 
-    public void setJourPic(String jourPic) {
-        this.jourPic = jourPic;
-    }
-
-    public String getJourPic() {
-        return jourPic;
-    }
-
     public void setJourRemark(String jourRemark) {
         this.jourRemark = jourRemark;
     }
 
     public String getJourRemark() {
         return jourRemark;
-    }
-
-    public void setZfbJourPic(String zfbJourPic) {
-        this.zfbJourPic = zfbJourPic;
-    }
-
-    public String getZfbJourPic() {
-        return zfbJourPic;
     }
 
     public void setZfbJourRemark(String zfbJourRemark) {
@@ -395,12 +433,172 @@ public class InvestigateReport extends ABaseDO {
         return zfbJourRemark;
     }
 
-    public void setWxJourPic(String wxJourPic) {
-        this.wxJourPic = wxJourPic;
+    public Date getJourDatetimeStart() {
+        return jourDatetimeStart;
     }
 
-    public String getWxJourPic() {
-        return wxJourPic;
+    public void setJourDatetimeStart(Date jourDatetimeStart) {
+        this.jourDatetimeStart = jourDatetimeStart;
+    }
+
+    public Date getJourDatetimeEnd() {
+        return jourDatetimeEnd;
+    }
+
+    public void setJourDatetimeEnd(Date jourDatetimeEnd) {
+        this.jourDatetimeEnd = jourDatetimeEnd;
+    }
+
+    public Long getJourIncome() {
+        return jourIncome;
+    }
+
+    public void setJourIncome(Long jourIncome) {
+        this.jourIncome = jourIncome;
+    }
+
+    public Long getJourExpend() {
+        return jourExpend;
+    }
+
+    public void setJourExpend(Long jourExpend) {
+        this.jourExpend = jourExpend;
+    }
+
+    public Long getJourBalance() {
+        return jourBalance;
+    }
+
+    public void setJourBalance(Long jourBalance) {
+        this.jourBalance = jourBalance;
+    }
+
+    public Long getJourMonthIncome() {
+        return jourMonthIncome;
+    }
+
+    public void setJourMonthIncome(Long jourMonthIncome) {
+        this.jourMonthIncome = jourMonthIncome;
+    }
+
+    public Long getJourMonthExpend() {
+        return jourMonthExpend;
+    }
+
+    public void setJourMonthExpend(Long jourMonthExpend) {
+        this.jourMonthExpend = jourMonthExpend;
+    }
+
+    public Date getZfbJourDatetimeStart() {
+        return zfbJourDatetimeStart;
+    }
+
+    public void setZfbJourDatetimeStart(Date zfbJourDatetimeStart) {
+        this.zfbJourDatetimeStart = zfbJourDatetimeStart;
+    }
+
+    public Date getZfbJourDatetimeEnd() {
+        return zfbJourDatetimeEnd;
+    }
+
+    public void setZfbJourDatetimeEnd(Date zfbJourDatetimeEnd) {
+        this.zfbJourDatetimeEnd = zfbJourDatetimeEnd;
+    }
+
+    public Long getZfbJourIncome() {
+        return zfbJourIncome;
+    }
+
+    public void setZfbJourIncome(Long zfbJourIncome) {
+        this.zfbJourIncome = zfbJourIncome;
+    }
+
+    public Long getZfbJourExpend() {
+        return zfbJourExpend;
+    }
+
+    public void setZfbJourExpend(Long zfbJourExpend) {
+        this.zfbJourExpend = zfbJourExpend;
+    }
+
+    public Long getZfbJourBalance() {
+        return zfbJourBalance;
+    }
+
+    public void setZfbJourBalance(Long zfbJourBalance) {
+        this.zfbJourBalance = zfbJourBalance;
+    }
+
+    public Long getZfbJourMonthIncome() {
+        return zfbJourMonthIncome;
+    }
+
+    public void setZfbJourMonthIncome(Long zfbJourMonthIncome) {
+        this.zfbJourMonthIncome = zfbJourMonthIncome;
+    }
+
+    public Long getZfbJourMonthExpend() {
+        return zfbJourMonthExpend;
+    }
+
+    public void setZfbJourMonthExpend(Long zfbJourMonthExpend) {
+        this.zfbJourMonthExpend = zfbJourMonthExpend;
+    }
+
+    public Date getWxJourDatetimeStart() {
+        return wxJourDatetimeStart;
+    }
+
+    public void setWxJourDatetimeStart(Date wxJourDatetimeStart) {
+        this.wxJourDatetimeStart = wxJourDatetimeStart;
+    }
+
+    public Date getWxJourDatetimeEnd() {
+        return wxJourDatetimeEnd;
+    }
+
+    public void setWxJourDatetimeEnd(Date wxJourDatetimeEnd) {
+        this.wxJourDatetimeEnd = wxJourDatetimeEnd;
+    }
+
+    public Long getWxJourIncome() {
+        return wxJourIncome;
+    }
+
+    public void setWxJourIncome(Long wxJourIncome) {
+        this.wxJourIncome = wxJourIncome;
+    }
+
+    public Long getWxJourExpend() {
+        return wxJourExpend;
+    }
+
+    public void setWxJourExpend(Long wxJourExpend) {
+        this.wxJourExpend = wxJourExpend;
+    }
+
+    public Long getWxJourBalance() {
+        return wxJourBalance;
+    }
+
+    public void setWxJourBalance(Long wxJourBalance) {
+        this.wxJourBalance = wxJourBalance;
+    }
+
+    public Long getWxJourMonthIncome() {
+        return wxJourMonthIncome;
+    }
+
+    public void setWxJourMonthIncome(Long wxJourMonthIncome) {
+        this.wxJourMonthIncome = wxJourMonthIncome;
+    }
+
+    public Long getWxJourMonthExpend() {
+        return wxJourMonthExpend;
+    }
+
+    public void setWxJourMonthExpend(Long wxJourMonthExpend) {
+        this.wxJourMonthExpend = wxJourMonthExpend;
     }
 
     public String getWxJourRemark() {
