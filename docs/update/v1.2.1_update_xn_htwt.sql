@@ -1,13 +1,6 @@
 ALTER TABLE `tdq_budget_order` 
-ADD COLUMN `bank_photo` tinytext DEFAULT NULL COMMENT '银行面签照片' AFTER `bank_video`,
-DROP COLUMN `interview_contract`,
-ADD COLUMN `company_contract` tinytext DEFAULT NULL COMMENT '公司合同' AFTER `bank_photo`,
-ADD COLUMN `bank_contract` tinytext DEFAULT NULL COMMENT '银行合同' AFTER `company_contract`,
-ADD COLUMN `other_video` tinytext DEFAULT NULL COMMENT '其他视频' AFTER `bank_contract`,
-ADD COLUMN `interview_other_pdf` tinytext DEFAULT NULL COMMENT '面签其他资料' AFTER `other_video`,
-DROP COLUMN `advance_fund_other_pdf`,
 CHANGE COLUMN `work_datetime` `work_datetime` tinytext NULL DEFAULT NULL COMMENT '何时进入现单位工作' ,
-CHANGE COLUMN `team_fee` `fee` bigint(20) NULL DEFAULT NULL COMMENT '服务费' ,
+
 ADD COLUMN `mate_zfb_interest1` bigint(20) DEFAULT NULL COMMENT '配偶支付宝结息1' AFTER `mate_zfb_jour_interest`,
 ADD COLUMN `mate_zfb_interest2` bigint(20) DEFAULT NULL COMMENT '配偶支付宝结息2' AFTER `mate_zfb_interest1`,
 ADD COLUMN `mate_wx_interest1` bigint(20) DEFAULT NULL COMMENT '配偶微信结息1' AFTER `mate_wx_jour_interest`,
@@ -27,18 +20,32 @@ ADD COLUMN `wx_interest2` bigint(20) DEFAULT NULL COMMENT '微信结息2' AFTER 
 ADD COLUMN `interest1` bigint(20) DEFAULT NULL COMMENT '结息1' AFTER `jour_interest`,
 ADD COLUMN `interest2` bigint(20) DEFAULT NULL COMMENT '结息2' AFTER `interest1`;
 
-ALTER TABLE `dev_xn_htwt`.`tdq_credit` 
+ALTER TABLE `tdq_credit` 
 ADD COLUMN `note` VARCHAR(255) NULL COMMENT '征信说明' AFTER `cur_node_code`;
+ADD COLUMN `user_name` VARCHAR(255) DEFAULT NULL COMMENT '客户姓名' AFTER `sale_user_id`,
+ADD COLUMN `mobile` VARCHAR(32) DEFAULT NULL COMMENT '手机号' AFTER `user_name`,
+ADD COLUMN `id_no` VARCHAR(32) DEFAULT NULL COMMENT '身份证号' AFTER `mobile`,
+ADD COLUMN `operator` varchar(255) DEFAULT NULL COMMENT '操作人(录入征信结果的驻行人员)' AFTER `note`;
 
+update tdq_credit tc,tdq_credit_user tcu
+set tc.user_name=tcu.user_name,
+tc.mobile=tcu.mobile,
+tc.id_no =tcu.id_no
+where tc.code =tcu.credit_code and tcu.loan_role='1'
 
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061110269813332','调查报告','1','/loanstools/investigateReport.htm','0','U201806060409046595411','2018-07-06 15:06:04','贷前工具','SM201805291053375683183');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061110459494752','申请','2','/apply','1','U201806060409046595411','2018-07-06 11:12:33','调查报告','SM201807061110269813332');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061111121668399','风控专员审核','2','/checkCommissioner','2','U201806060409046595411','2018-07-06 11:12:28','调查报告','SM201807061110269813332');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061112014755232','驻行人员审核','2','/checkStationed','3','U201806060409046595411','2018-07-06 11:12:23','调查报告','SM201807061110269813332');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061144057545778','详情','2','/detail','4','U201806060409046595411','2018-07-06 11:44:05','','SM201807061110269813332');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061518231844745','资料补录','2','/record','5','U201806061344020605969','2018-07-06 15:18:44','银行放款','SM201805291023424289358');
 
-/*
--- Query: SELECT code,name,type,url,order_no,'admin' updater, now() as update_datetime,remark,parent_code FROM tsys_menu where code ='SM201807041817130182597'
--- Date: 2018-07-05 00:50
-*/
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807041817130182597','区域经理审核','2','/regionalManager','12','admin','2018-07-04 16:51:06','准入审查','SM201805291013406492370');
-
-INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807041817130182597','U201806200828281617971',now(),NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061110269813332', 'U201806061344020605969', '2018-07-06 16:23:45', NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061110459494752', 'U201806061344020605969', '2018-07-06 16:23:45', NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061111121668399', 'U201806061344020605969', '2018-07-06 16:23:46', NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061112014755232', 'U201806061344020605969', '2018-07-06 16:23:46', NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061144057545778', 'U201806061344020605969', '2018-07-06 16:23:46', NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061518231844745', 'U201806061344020605969', '2018-07-06 16:23:47', NULL);
 
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_01','提交调查申请','010',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_02','风控专员审核','010',NULL);
@@ -133,4 +140,48 @@ CREATE TABLE `tdq_investigate_report` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='调查报告';
 
+insert into `tdq_investigate_report` (`code`, `budget_order_code`, `repay_biz_code`, `company_code`, `biz_type`, `apply_user_name`, `apply_datetime`, `loan_bank`, `loan_amount`, `loan_period`, `is_advance_fund`, `sale_user_id`, `jour_datetime_start`, `jour_datetime_end`, `jour_income`, `jour_expend`, `jour_balance`, `jour_month_income`, `jour_month_expend`, `jour_remark`, `zfb_jour_datetime_start`, `zfb_jour_datetime_end`, `zfb_jour_income`, `zfb_jour_expend`, `zfb_jour_balance`, `zfb_jour_month_income`, `zfb_jour_month_expend`, `zfb_jour_remark`, `wx_jour_datetime_start`, `wx_jour_datetime_end`, `wx_jour_income`, `wx_jour_expend`, `wx_jour_balance`, `wx_jour_month_income`, `wx_jour_month_expend`, `wx_jour_remark`, `house_contract`, `house_picture`, `cur_node_code`) 
+select `code`,`code`,`repay_biz_code`,`company_code`,`biz_type`,`apply_user_name`,`apply_datetime`,`loan_bank`, `loan_amount`, `loan_period`, `is_advance_fund`, `sale_user_id`, `jour_datetime_start`, `jour_datetime_end`, `jour_income`, `jour_expend`, `jour_balance`, `jour_month_income`, `jour_month_expend`, `jour_remark`, `zfb_jour_datetime_start`, `zfb_jour_datetime_end`, `zfb_jour_income`, `zfb_jour_expend`, `zfb_jour_balance`, `zfb_jour_month_income`, `zfb_jour_month_expend`, `zfb_jour_remark`, `wx_jour_datetime_start`, `wx_jour_datetime_end`, `wx_jour_income`, `wx_jour_expend`, `wx_jour_balance`, `wx_jour_month_income`, `wx_jour_month_expend`, `wx_jour_remark`, `house_contract`, `house_picture`, `cur_node_code` from `tdq_budget_order` where cur_node_code >'002_04';
 
+SET 
+  SQL_SAFE_UPDATES = 0; 
+UPDATE 
+  tdq_investigate_report tr, 
+  tdq_budget_order tbo 
+SET 
+  tr.`customer_information` = CONCAT(
+    '借款人:', tbo.apply_user_name, 
+    ', ', age, '岁, ', CASE WHEN marry_state = '4' THEN '丧偶' WHEN marry_state = '1' THEN '未婚' WHEN marry_state = '2' THEN '已婚' WHEN marry_state = '3' THEN '离异' END, 
+    ', ', '性别：', CASE WHEN gender = '1' THEN '男' WHEN gender = '0' THEN '女' END, 
+    ', ', '学历：', CASE WHEN education = '0' THEN '高中及以下' WHEN education = '1' THEN '博士及以上' WHEN education = '2' THEN '硕士' WHEN education = '3' THEN '大学本科' WHEN education = '4' THEN '大学专科' END, 
+    ', ', '民族：', tbo.nation, ', ', 
+    '身份证号：', tbo.id_no, ', ', 
+    '政治面貌：', tbo.political, 
+    ', ', '户口所在地：', tbo.residence_address, 
+    ', ', '现在家庭住址：', tbo.now_address, 
+    ', ', '联系电话：', tbo.mobile, 
+    '口人，', '邮编：', tbo.post_code1, 
+    ',', '借款人无重大疾病，身体健康'
+  ) 
+WHERE 
+  tr.budget_order_code = tbo.code;
+
+
+SET 
+  SQL_SAFE_UPDATES = 0; 
+UPDATE 
+  tdq_investigate_report tr, 
+  tdq_budget_order tbo 
+SET 
+  tr.`basics_information` = CONCAT(
+    '品牌：', tbo.car_brand, ', ', 
+    '车型：', tbo.car_model, ', ', 
+    '新手指导价', tbo.original_price, 
+    ', ', '落户地点：', tbo.settle_address, 
+    ', '
+  ) 
+WHERE 
+  tr.budget_order_code = tbo.code;
+  
+
+update tdq_investigate_report set cur_node_code='010_01';
