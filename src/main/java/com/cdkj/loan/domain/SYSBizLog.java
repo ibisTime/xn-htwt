@@ -49,6 +49,86 @@ public class SYSBizLog extends ABaseDO {
 
     private String operatorMobileForQuery;// 操作人手机号模糊查
 
+    private String roleCode;
+
+    private String teamCode;
+
+    private String userName;
+
+    private String curNodeCode;
+
+    private String companyName;
+
+    private String flowTypeCode;
+
+    private String updateDatetime;
+
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getFlowTypeCode() {
+        return flowTypeCode;
+    }
+
+    public void setFlowTypeCode(String flowTypeCode) {
+        this.flowTypeCode = flowTypeCode;
+    }
+
+    public String getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(String updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dao;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.SYSBizLog;
 
@@ -10,4 +12,9 @@ public interface ISYSBizLogDAO extends IBaseDAO<SYSBizLog> {
     public int updateSpeedtime(SYSBizLog data);
 
     public SYSBizLog selectSysBizLogLatest(SYSBizLog condition);
+
+    public long selectTotalCountByRoleCode(SYSBizLog condition);
+
+    public List<SYSBizLog> selectListByRoleCode(SYSBizLog condition, int start,
+            int pageSize);
 }
