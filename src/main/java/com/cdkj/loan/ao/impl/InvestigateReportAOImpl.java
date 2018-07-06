@@ -3,15 +3,20 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IInvestigateReportAO;
+import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IInvestigateReportBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.enums.EApproveResult;
@@ -32,6 +37,12 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IBankBO bankBO;
 
     @Override
     public String addInvestigateReport(InvestigateReport data) {
@@ -170,7 +181,12 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     @Override
     public Paginable<InvestigateReport> queryInvestigateReportPage(int start,
             int limit, InvestigateReport condition) {
-        return investigateReportBO.getPaginable(start, limit, condition);
+        Paginable<InvestigateReport> paginable = investigateReportBO
+            .getPaginable(start, limit, condition);
+        for (InvestigateReport investigateReport : paginable.getList()) {
+            initInvestigateReport(investigateReport);
+        }
+        return paginable;
     }
 
     @Override
@@ -181,7 +197,23 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
 
     @Override
     public InvestigateReport getInvestigateReport(String code) {
-        return investigateReportBO.getInvestigateReport(code);
+        InvestigateReport investigateReport = investigateReportBO
+            .getInvestigateReport(code);
+        initInvestigateReport(investigateReport);
+        return investigateReport;
     }
 
+    private void initInvestigateReport(InvestigateReport investigateReport) {
+        // 公司
+        if (StringUtils.isNotBlank(investigateReport.getCompanyCode())) {
+            Department department = departmentBO
+                .getDepartment(investigateReport.getCompanyCode());
+            investigateReport.setCompanyName(department.getName());
+        }
+        // 贷款银行
+        if (StringUtils.isNotBlank(investigateReport.getLoanBank())) {
+            Bank loanBank = bankBO.getBank(investigateReport.getLoanBank());
+            investigateReport.setLoanBankName(loanBank.getBankName());
+        }
+    }
 }

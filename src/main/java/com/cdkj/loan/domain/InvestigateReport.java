@@ -205,6 +205,28 @@ public class InvestigateReport extends ABaseDO {
     // 申请时间止
     private Date applyDatetimeEnd;
 
+    // 业务公司
+    private String companyName;
+
+    // 贷款银行名称
+    private String loanBankName;
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public Date getApplyDatetimeStart() {
         return applyDatetimeStart;
     }

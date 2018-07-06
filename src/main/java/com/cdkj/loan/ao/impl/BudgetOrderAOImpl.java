@@ -1472,9 +1472,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.COMMITBANK.getCode()
             .equals(budgetOrder.getCurNodeCode())
-                || !EBudgetOrderNode.ENTRYLOAN.getCode()
+                && !EBudgetOrderNode.ENTRYLOAN.getCode()
                     .equals(budgetOrder.getCurNodeCode())
-                || !EBudgetOrderNode.CONFIRMLOAN.getCode()
+                && !EBudgetOrderNode.CONFIRMLOAN.getCode()
                     .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点为" + budgetOrder.getCurNodeCode() + ",不能补录！");
