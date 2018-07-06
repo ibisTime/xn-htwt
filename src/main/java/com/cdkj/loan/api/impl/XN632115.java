@@ -42,7 +42,8 @@ public class XN632115 extends AProcessor {
         condition.setRoleCode(req.getRoleCode());
         if (EBoolean.YES.getCode().equals(req.getIsPass())) {
             condition.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
-        } else {
+        }
+        if (EBoolean.NO.getCode().equals(req.getIsPass())) {
             condition.setNoPass(ECreditNode.ACHIEVE.getCode());
         }
 

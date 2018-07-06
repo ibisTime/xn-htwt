@@ -368,7 +368,7 @@ public class CreditAOImpl implements ICreditAO {
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-            credit.getCode(), req.getApproveNote(), req.getOperator());
+            credit.getCurNodeCode(), req.getApproveNote(), req.getOperator());
 
     }
 
@@ -426,19 +426,19 @@ public class CreditAOImpl implements ICreditAO {
 
         Credit credit = creditBO.getCredit(code);
 
-        if (ECreditNode.FILLIN_CREDIT.getCode().equals(credit.getCurNodeCode())
-                || ECreditNode.INPUT_CREDIT_RESULT.getCode().equals(
-                    credit.getCurNodeCode())) {
-            String preCurNodeCode = credit.getCurNodeCode();
-            credit.setCurNodeCode(ECreditNode.CANCEL.getCode());
-            creditBO.cancelCredit(credit);
-
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.CREDIT,
-                code, preCurNodeCode, ECreditNode.CANCEL.getCode(),
-                ECreditNode.CANCEL.getValue(), operator);
-        } else {
+        if (ECreditNode.AUDIT.getCode().equals(credit.getCurNodeCode())
+                || ECreditNode.ACHIEVE.getCode()
+                    .equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "已录入征信结果，不能撤回!");
         }
+        String preCurNodeCode = credit.getCurNodeCode();
+        credit.setCurNodeCode(ECreditNode.CANCEL.getCode());
+        creditBO.cancelCredit(credit);
+
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.CREDIT, code,
+            preCurNodeCode, ECreditNode.CANCEL.getCode(),
+            ECreditNode.CANCEL.getValue(), operator);
+
     }
 }
