@@ -6,7 +6,7 @@
 		<result column="code" property="code" />
 		<result column="budget_order_code" property="budgetOrderCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
-		<result column="company_ode" property="companyOde" />
+		<result column="company_code" property="companyCode" />
 		<result column="biz_ype" property="bizYpe" />
 		<result column="apply_user_name" property="applyUserName" />
 		<result column="apply_datetime" property="applyDatetime" />
@@ -29,6 +29,7 @@
 		<result column="wx_jour_pdf" property="wxJourPdf" />
 		<result column="house_contract" property="houseContract" />
 		<result column="home_visit" property="homeVisit" />
+		<result column="home_photo" property="homePhoto" />
 		<result column="basics_information" property="basicsInformation" />
 		<result column="xsz_pdf" property="xszPdf" />
 		<result column="xsz_car_pdf" property="xszCarPdf" />
@@ -69,6 +70,24 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="applyUserName != null and applyUserName != '' ">
+				AND t.apply_user_name = #{applyUserName}
+			</if>
+			<if test="repayBizCode != null and repayBizCode != '' ">
+				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
+				AND t.is_advance_fund = #{isAdvanceFund}
+			</if>
+			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+			</if>
+			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_investigateReport" parameterType="investigateReport" resultMap="investigateReport_DB_Result">
@@ -76,7 +95,7 @@
 		t.code
 		,t.budget_order_code
 		,t.repay_biz_code
-		,t.company_ode
+		,t.company_code
 		,t.biz_ype
 		,t.apply_user_name
 		,t.apply_datetime
@@ -99,6 +118,7 @@
 		,t.wx_jour_pdf
 		,t.house_contract
 		,t.home_visit
+		,t.home_photo
 		,t.basics_information
 		,t.xsz_pdf
 		,t.xsz_car_pdf
@@ -155,7 +175,7 @@
 		code
 		,budget_order_code
 		,repay_biz_code
-		,company_ode
+		,company_code
 		,biz_ype
 		,apply_user_name
 		,apply_datetime
@@ -178,6 +198,7 @@
 		,wx_jour_pdf
 		,house_contract
 		,home_visit
+		,home_photo
 		,basics_information
 		,xsz_pdf
 		,xsz_car_pdf
@@ -217,7 +238,7 @@
 		#{code}
 		,#{budgetOrderCode}
 		,#{repayBizCode}
-		,#{companyOde}
+		,#{companyCode}
 		,#{bizYpe}
 		,#{applyUserName}
 		,#{applyDatetime}
@@ -240,6 +261,7 @@
 		,#{wxJourPdf}
 		,#{houseContract}
 		,#{homeVisit}
+		,#{homePhoto}
 		,#{basicsInformation}
 		,#{xszPdf}
 		,#{xszCarPdf}
@@ -280,30 +302,14 @@
 	<update id="update_investigateReport" parameterType="investigateReport">
 		UPDATE tdq_investigate_report
 		SET
-		budget_order_code = #{budgetOrderCode}
-		,repay_biz_code = #{repayBizCode}
-		,company_ode = #{companyOde}
-		,biz_ype = #{bizYpe}
-		,apply_user_name = #{applyUserName}
-		,apply_datetime = #{applyDatetime}
-		,loan_bank = #{loanBank}
-		,loan_amount = #{loanAmount}
-		,loan_period = #{loanPeriod}
-		,is_advance_fund = #{isAdvanceFund}
-		,sale_user_id = #{saleUserId}
-		,gua_mode = #{guaMode}
+		gua_mode = #{guaMode}
 		,customer_information = #{customerInformation}
-		,bank_credit_result_pdf = #{bankCreditResultPdf}
 		,price_approval_pdf = #{priceApprovalPdf}
 		,car_168_price = #{car168Price}
 		,apply_work_and_jour = #{applyWorkAndJour}
 		,jour_pic = #{jourPic}
-		,jour_remark = #{jourRemark}
 		,zfb_jour_pic = #{zfbJourPic}
-		,zfb_jour_remark = #{zfbJourRemark}
 		,wx_jour_pic = #{wxJourPic}
-		,wx_jour_pdf = #{wxJourPdf}
-		,house_contract = #{houseContract}
 		,home_visit = #{homeVisit}
 		,basics_information = #{basicsInformation}
 		,xsz_pdf = #{xszPdf}
@@ -336,6 +342,15 @@
 		,information_source = #{informationSource}
 		,valuation = #{valuation}
 		,cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_riskApprove" parameterType="investigateReport">
+		UPDATE tdq_investigate_report
+		SET
+		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

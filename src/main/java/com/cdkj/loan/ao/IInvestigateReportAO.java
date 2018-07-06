@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.InvestigateReport;
+import com.cdkj.loan.dto.req.XN632200Req;
 
 @Component
 public interface IInvestigateReportAO {
@@ -13,7 +14,8 @@ public interface IInvestigateReportAO {
 
     public String addInvestigateReport(InvestigateReport data);
 
-    public int editInvestigateReport(InvestigateReport data);
+    // 调查报告申请
+    public void approveInvestigateReport(XN632200Req req);
 
     public Paginable<InvestigateReport> queryInvestigateReportPage(int start,
             int limit, InvestigateReport condition);
@@ -22,5 +24,13 @@ public interface IInvestigateReportAO {
             InvestigateReport condition);
 
     public InvestigateReport getInvestigateReport(String code);
+
+    // 风控专员审核
+    public void riskApprove(String code, String approveResult,
+            String approveNote, String updater);
+
+    // 驻行人员审核
+    public void approveByBankCheck(String code, String approveResult,
+            String approveNote, String updater);
 
 }

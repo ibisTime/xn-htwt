@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IInvestigateReportDAO;
 import com.cdkj.loan.domain.InvestigateReport;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -42,6 +43,11 @@ public class InvestigateReportBOImpl extends PaginableBOImpl<InvestigateReport>
     }
 
     @Override
+    public void riskApprove(InvestigateReport data) {
+        investigateReportDAO.riskApprove(data);
+    }
+
+    @Override
     public List<InvestigateReport> queryInvestigateReportList(
             InvestigateReport condition) {
         return investigateReportDAO.selectList(condition);
@@ -55,7 +61,8 @@ public class InvestigateReportBOImpl extends PaginableBOImpl<InvestigateReport>
             condition.setCode(code);
             data = investigateReportDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "调查报告不存在！");
             }
         }
         return data;

@@ -1,675 +1,712 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
 * 调查报告
 * @author: CYunlai 
-* @since: 2018-07-05 17:02:44
+* @since: 2018-07-05 17:40:20
 * @history:
 */
 public class InvestigateReport extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 预算单编号
-	private String budgetOrderCode;
+    // 预算单编号
+    private String budgetOrderCode;
 
-	// 业务编号
-	private String repayBizCode;
+    // 业务编号
+    private String repayBizCode;
 
-	// 业务公司
-	private String companyOde;
+    // 业务公司
+    private String companyCode;
 
-	// 业务种类
-	private String bizYpe;
+    // 业务种类
+    private String bizYpe;
 
-	// 客户姓名
-	private String applyUserName;
+    // 客户姓名
+    private String applyUserName;
 
-	// 申请时间
-	private String applyDatetime;
+    // 申请时间
+    private Date applyDatetime;
 
-	// 贷款银行
-	private String loanBank;
+    // 贷款银行
+    private String loanBank;
 
-	// 贷款金额
-	private String loanAmount;
+    // 贷款金额
+    private Long loanAmount;
 
-	// 贷款期数
-	private String loanPeriod;
+    // 贷款期数
+    private String loanPeriod;
 
-	// 是否垫资
-	private String isAdvanceFund;
+    // 是否垫资
+    private String isAdvanceFund;
 
-	// 业务员
-	private String saleUserId;
+    // 业务员
+    private String saleUserId;
 
-	// 担保方式
-	private String guaMode;
+    // 担保方式
+    private String guaMode;
 
-	// 申请人征信情况
-	private String customerInformation;
+    // 客户基本情况
+    private String customerInformation;
 
-	// 申请人贷款车辆价格核准情况
-	private String bankCreditResultPdf;
+    // 申请人征信情况
+    private String bankCreditResultPdf;
 
-	// 车行168车价
-	private String priceApprovalPdf;
+    // 申请人贷款车辆价格核准情况
+    private String priceApprovalPdf;
 
-	// 申请人工作情况及流水反映
-	private String car168Price;
+    // 车行168车价
+    private Long car168Price;
 
-	// 银行流水
-	private String applyWorkAndJour;
+    // 申请人工作情况及流水反映
+    private String applyWorkAndJour;
 
-	// 银行流水情况
-	private String jourPic;
+    // 银行流水
+    private String jourPic;
 
-	// 支付宝流水
-	private String jourRemark;
+    // 银行流水情况
+    private String jourRemark;
 
-	// 支付宝流水情况
-	private String zfbJourPic;
+    // 支付宝流水
+    private String zfbJourPic;
 
-	// 微信流水
-	private String zfbJourRemark;
+    // 支付宝流水情况
+    private String zfbJourRemark;
 
-	// 微信流水情况
-	private String wxJourPic;
+    // 微信流水
+    private String wxJourPic;
 
-	// 房产情况及家访
-	private String wxJourPdf;
+    // 微信流水情况
+    private String wxJourRemark;
 
-	// 家访地址
-	private String houseContract;
+    // 房产情况及家访
+    private String houseContract;
 
-	// 家访照片
-	private String homeVisit;
+    // 家访地址
+    private String homeVisit;
 
-	// 车辆基础信息
-	private String basicsInformation;
+    // 家访照片
+    private String homePhoto;
 
-	// 行驶证主副页
-	private String xszPdf;
+    // 车辆基础信息
+    private String basicsInformation;
 
-	// 行驶证车辆照片页
-	private String xszCarPdf;
+    // 行驶证主副页
+    private String xszPdf;
 
-	// 车架号
-	private String frameNo;
+    // 行驶证车辆照片页
+    private String xszCarPdf;
 
-	// 车辆铭牌
-	private String nameplate;
+    // 车架号
+    private String frameNo;
 
-	// 车辆照片正前
-	private String forwardPdf;
+    // 车辆铭牌
+    private String nameplate;
 
-	// 车辆照片正后
-	private String queenPdf;
+    // 车辆照片正前
+    private String forwardPdf;
 
-	// 车辆照片正左
-	private String leftPdf;
+    // 车辆照片正后
+    private String queenPdf;
 
-	// 车辆照片正右
-	private String rightPdf;
+    // 车辆照片正左
+    private String leftPdf;
 
-	// 车辆照片左前45o
-	private String lf45Pdf;
+    // 车辆照片正右
+    private String rightPdf;
 
-	// 车辆照片右前45o
-	private String rf45Pdf;
+    // 车辆照片左前45o
+    private String lf45Pdf;
 
-	// 车辆照片左后45o
-	private String lg45Pdf;
+    // 车辆照片右前45o
+    private String rf45Pdf;
 
-	// 车辆照片右后45o
-	private String rr45Pdf;
+    // 车辆照片左后45o
+    private String lg45Pdf;
 
-	// 车辆照片发动机仓
-	private String enginePdf;
+    // 车辆照片右后45o
+    private String rr45Pdf;
 
-	// 车辆中控台照片
-	private String szmPdf;
+    // 车辆照片发动机仓
+    private String enginePdf;
 
-	// 车辆档位照片
-	private String gearsPdf;
+    // 车辆中控台照片
+    private String szmPdf;
 
-	// 车辆功能区里照片
-	private String functionalZonePdf;
+    // 车辆档位照片
+    private String gearsPdf;
 
-	// 车辆里程表照片
-	private String odometerPdf;
+    // 车辆功能区里照片
+    private String functionalZonePdf;
 
-	// 车辆前排内饰照片
-	private String frontRowPdf;
+    // 车辆里程表照片
+    private String odometerPdf;
 
-	// 车辆中排内饰照片
-	private String rockRowPdf;
+    // 车辆前排内饰照片
+    private String frontRowPdf;
 
-	// 车辆后备箱照片
-	private String trunkPdf;
+    // 车辆中排内饰照片
+    private String rockRowPdf;
 
-	// 车辆天窗照片
-	private String louverPdf;
+    // 车辆后备箱照片
+    private String trunkPdf;
 
-	// 车辆后排娱乐系统照片
-	private String bankRowPdf;
+    // 车辆天窗照片
+    private String louverPdf;
 
-	// 车辆核准截图
-	private String checkApprovePdf;
+    // 车辆后排娱乐系统照片
+    private String bankRowPdf;
 
-	// 核准链接
-	private String checkApproveLink;
+    // 车辆核准截图
+    private String checkApprovePdf;
 
-	// 第三方评估价截图
-	private String thirdValuationPdf;
+    // 核准链接
+    private String checkApproveLink;
 
-	// 核准软件
-	private String checkApproveSoftware;
+    // 第三方评估价截图
+    private String thirdValuationPdf;
 
-	// 二手车市场成交价最低及最高截图
-	private String usedCarCurrentRate;
+    // 核准软件
+    private String checkApproveSoftware;
 
-	// 信息源
-	private String informationSource;
+    // 二手车市场成交价最低及最高截图
+    private String usedCarCurrentRate;
 
-	// 评估价
-	private String valuation;
+    // 信息源
+    private String informationSource;
 
-	// 节点编号
-	private String curNodeCode;
+    // 评估价
+    private Long valuation;
 
-	// 更新人
-	private String updater;
+    // 节点编号
+    private String curNodeCode;
 
-	// 更新时间
-	private String updateDatetime;
+    // 更新人
+    private String updater;
 
-	// 备注
-	private String remark;
+    // 更新时间
+    private Date updateDatetime;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    // 备注
+    private String remark;
 
-	public String getCode() {
-		return code;
-	}
+    /*----------辅助字段--------*/
 
-	public void setBudgetOrderCode(String budgetOrderCode) {
-		this.budgetOrderCode = budgetOrderCode;
-	}
+    // 申请时间起
+    private Date applyDatetimeStart;
 
-	public String getBudgetOrderCode() {
-		return budgetOrderCode;
-	}
+    // 申请时间止
+    private Date applyDatetimeEnd;
 
-	public void setRepayBizCode(String repayBizCode) {
-		this.repayBizCode = repayBizCode;
-	}
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
 
-	public String getRepayBizCode() {
-		return repayBizCode;
-	}
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
 
-	public void setCompanyOde(String companyOde) {
-		this.companyOde = companyOde;
-	}
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
 
-	public String getCompanyOde() {
-		return companyOde;
-	}
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
 
-	public void setBizYpe(String bizYpe) {
-		this.bizYpe = bizYpe;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getBizYpe() {
-		return bizYpe;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setApplyUserName(String applyUserName) {
-		this.applyUserName = applyUserName;
-	}
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
+    }
 
-	public String getApplyUserName() {
-		return applyUserName;
-	}
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
 
-	public void setApplyDatetime(String applyDatetime) {
-		this.applyDatetime = applyDatetime;
-	}
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
+    }
 
-	public String getApplyDatetime() {
-		return applyDatetime;
-	}
+    public String getRepayBizCode() {
+        return repayBizCode;
+    }
 
-	public void setLoanBank(String loanBank) {
-		this.loanBank = loanBank;
-	}
+    public String getCompanyCode() {
+        return companyCode;
+    }
 
-	public String getLoanBank() {
-		return loanBank;
-	}
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
-	public void setLoanAmount(String loanAmount) {
-		this.loanAmount = loanAmount;
-	}
+    public void setBizYpe(String bizYpe) {
+        this.bizYpe = bizYpe;
+    }
 
-	public String getLoanAmount() {
-		return loanAmount;
-	}
+    public String getBizYpe() {
+        return bizYpe;
+    }
 
-	public void setLoanPeriod(String loanPeriod) {
-		this.loanPeriod = loanPeriod;
-	}
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
 
-	public String getLoanPeriod() {
-		return loanPeriod;
-	}
+    public String getApplyUserName() {
+        return applyUserName;
+    }
 
-	public void setIsAdvanceFund(String isAdvanceFund) {
-		this.isAdvanceFund = isAdvanceFund;
-	}
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
+    }
 
-	public String getIsAdvanceFund() {
-		return isAdvanceFund;
-	}
+    public String getLoanBank() {
+        return loanBank;
+    }
 
-	public void setSaleUserId(String saleUserId) {
-		this.saleUserId = saleUserId;
-	}
+    public void setLoanPeriod(String loanPeriod) {
+        this.loanPeriod = loanPeriod;
+    }
 
-	public String getSaleUserId() {
-		return saleUserId;
-	}
+    public String getLoanPeriod() {
+        return loanPeriod;
+    }
 
-	public void setGuaMode(String guaMode) {
-		this.guaMode = guaMode;
-	}
+    public void setIsAdvanceFund(String isAdvanceFund) {
+        this.isAdvanceFund = isAdvanceFund;
+    }
 
-	public String getGuaMode() {
-		return guaMode;
-	}
+    public String getIsAdvanceFund() {
+        return isAdvanceFund;
+    }
 
-	public void setCustomerInformation(String customerInformation) {
-		this.customerInformation = customerInformation;
-	}
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
+    }
 
-	public String getCustomerInformation() {
-		return customerInformation;
-	}
+    public String getSaleUserId() {
+        return saleUserId;
+    }
 
-	public void setBankCreditResultPdf(String bankCreditResultPdf) {
-		this.bankCreditResultPdf = bankCreditResultPdf;
-	}
+    public void setGuaMode(String guaMode) {
+        this.guaMode = guaMode;
+    }
 
-	public String getBankCreditResultPdf() {
-		return bankCreditResultPdf;
-	}
+    public String getGuaMode() {
+        return guaMode;
+    }
 
-	public void setPriceApprovalPdf(String priceApprovalPdf) {
-		this.priceApprovalPdf = priceApprovalPdf;
-	}
+    public void setCustomerInformation(String customerInformation) {
+        this.customerInformation = customerInformation;
+    }
 
-	public String getPriceApprovalPdf() {
-		return priceApprovalPdf;
-	}
+    public String getCustomerInformation() {
+        return customerInformation;
+    }
 
-	public void setCar168Price(String car168Price) {
-		this.car168Price = car168Price;
-	}
+    public void setBankCreditResultPdf(String bankCreditResultPdf) {
+        this.bankCreditResultPdf = bankCreditResultPdf;
+    }
 
-	public String getCar168Price() {
-		return car168Price;
-	}
+    public String getBankCreditResultPdf() {
+        return bankCreditResultPdf;
+    }
 
-	public void setApplyWorkAndJour(String applyWorkAndJour) {
-		this.applyWorkAndJour = applyWorkAndJour;
-	}
+    public void setPriceApprovalPdf(String priceApprovalPdf) {
+        this.priceApprovalPdf = priceApprovalPdf;
+    }
 
-	public String getApplyWorkAndJour() {
-		return applyWorkAndJour;
-	}
+    public String getPriceApprovalPdf() {
+        return priceApprovalPdf;
+    }
 
-	public void setJourPic(String jourPic) {
-		this.jourPic = jourPic;
-	}
+    public void setApplyWorkAndJour(String applyWorkAndJour) {
+        this.applyWorkAndJour = applyWorkAndJour;
+    }
 
-	public String getJourPic() {
-		return jourPic;
-	}
+    public String getApplyWorkAndJour() {
+        return applyWorkAndJour;
+    }
 
-	public void setJourRemark(String jourRemark) {
-		this.jourRemark = jourRemark;
-	}
+    public void setJourPic(String jourPic) {
+        this.jourPic = jourPic;
+    }
 
-	public String getJourRemark() {
-		return jourRemark;
-	}
+    public String getJourPic() {
+        return jourPic;
+    }
 
-	public void setZfbJourPic(String zfbJourPic) {
-		this.zfbJourPic = zfbJourPic;
-	}
+    public void setJourRemark(String jourRemark) {
+        this.jourRemark = jourRemark;
+    }
 
-	public String getZfbJourPic() {
-		return zfbJourPic;
-	}
+    public String getJourRemark() {
+        return jourRemark;
+    }
 
-	public void setZfbJourRemark(String zfbJourRemark) {
-		this.zfbJourRemark = zfbJourRemark;
-	}
+    public void setZfbJourPic(String zfbJourPic) {
+        this.zfbJourPic = zfbJourPic;
+    }
 
-	public String getZfbJourRemark() {
-		return zfbJourRemark;
-	}
+    public String getZfbJourPic() {
+        return zfbJourPic;
+    }
 
-	public void setWxJourPic(String wxJourPic) {
-		this.wxJourPic = wxJourPic;
-	}
+    public void setZfbJourRemark(String zfbJourRemark) {
+        this.zfbJourRemark = zfbJourRemark;
+    }
 
-	public String getWxJourPic() {
-		return wxJourPic;
-	}
+    public String getZfbJourRemark() {
+        return zfbJourRemark;
+    }
 
-	public void setWxJourPdf(String wxJourPdf) {
-		this.wxJourPdf = wxJourPdf;
-	}
+    public void setWxJourPic(String wxJourPic) {
+        this.wxJourPic = wxJourPic;
+    }
 
-	public String getWxJourPdf() {
-		return wxJourPdf;
-	}
+    public String getWxJourPic() {
+        return wxJourPic;
+    }
 
-	public void setHouseContract(String houseContract) {
-		this.houseContract = houseContract;
-	}
+    public String getWxJourRemark() {
+        return wxJourRemark;
+    }
 
-	public String getHouseContract() {
-		return houseContract;
-	}
+    public void setWxJourRemark(String wxJourRemark) {
+        this.wxJourRemark = wxJourRemark;
+    }
 
-	public void setHomeVisit(String homeVisit) {
-		this.homeVisit = homeVisit;
-	}
+    public void setHouseContract(String houseContract) {
+        this.houseContract = houseContract;
+    }
 
-	public String getHomeVisit() {
-		return homeVisit;
-	}
+    public String getHouseContract() {
+        return houseContract;
+    }
 
-	public void setBasicsInformation(String basicsInformation) {
-		this.basicsInformation = basicsInformation;
-	}
+    public void setHomeVisit(String homeVisit) {
+        this.homeVisit = homeVisit;
+    }
 
-	public String getBasicsInformation() {
-		return basicsInformation;
-	}
+    public String getHomeVisit() {
+        return homeVisit;
+    }
 
-	public void setXszPdf(String xszPdf) {
-		this.xszPdf = xszPdf;
-	}
+    public void setHomePhoto(String homePhoto) {
+        this.homePhoto = homePhoto;
+    }
 
-	public String getXszPdf() {
-		return xszPdf;
-	}
+    public String getHomePhoto() {
+        return homePhoto;
+    }
 
-	public void setXszCarPdf(String xszCarPdf) {
-		this.xszCarPdf = xszCarPdf;
-	}
+    public void setBasicsInformation(String basicsInformation) {
+        this.basicsInformation = basicsInformation;
+    }
 
-	public String getXszCarPdf() {
-		return xszCarPdf;
-	}
+    public String getBasicsInformation() {
+        return basicsInformation;
+    }
 
-	public void setFrameNo(String frameNo) {
-		this.frameNo = frameNo;
-	}
+    public void setXszPdf(String xszPdf) {
+        this.xszPdf = xszPdf;
+    }
 
-	public String getFrameNo() {
-		return frameNo;
-	}
+    public String getXszPdf() {
+        return xszPdf;
+    }
 
-	public void setNameplate(String nameplate) {
-		this.nameplate = nameplate;
-	}
+    public void setXszCarPdf(String xszCarPdf) {
+        this.xszCarPdf = xszCarPdf;
+    }
 
-	public String getNameplate() {
-		return nameplate;
-	}
+    public String getXszCarPdf() {
+        return xszCarPdf;
+    }
 
-	public void setForwardPdf(String forwardPdf) {
-		this.forwardPdf = forwardPdf;
-	}
+    public void setFrameNo(String frameNo) {
+        this.frameNo = frameNo;
+    }
 
-	public String getForwardPdf() {
-		return forwardPdf;
-	}
+    public String getFrameNo() {
+        return frameNo;
+    }
 
-	public void setQueenPdf(String queenPdf) {
-		this.queenPdf = queenPdf;
-	}
+    public void setNameplate(String nameplate) {
+        this.nameplate = nameplate;
+    }
 
-	public String getQueenPdf() {
-		return queenPdf;
-	}
+    public String getNameplate() {
+        return nameplate;
+    }
 
-	public void setLeftPdf(String leftPdf) {
-		this.leftPdf = leftPdf;
-	}
+    public void setForwardPdf(String forwardPdf) {
+        this.forwardPdf = forwardPdf;
+    }
 
-	public String getLeftPdf() {
-		return leftPdf;
-	}
+    public String getForwardPdf() {
+        return forwardPdf;
+    }
 
-	public void setRightPdf(String rightPdf) {
-		this.rightPdf = rightPdf;
-	}
+    public void setQueenPdf(String queenPdf) {
+        this.queenPdf = queenPdf;
+    }
 
-	public String getRightPdf() {
-		return rightPdf;
-	}
+    public String getQueenPdf() {
+        return queenPdf;
+    }
 
-	public void setLf45Pdf(String lf45Pdf) {
-		this.lf45Pdf = lf45Pdf;
-	}
+    public void setLeftPdf(String leftPdf) {
+        this.leftPdf = leftPdf;
+    }
 
-	public String getLf45Pdf() {
-		return lf45Pdf;
-	}
+    public String getLeftPdf() {
+        return leftPdf;
+    }
 
-	public void setRf45Pdf(String rf45Pdf) {
-		this.rf45Pdf = rf45Pdf;
-	}
+    public void setRightPdf(String rightPdf) {
+        this.rightPdf = rightPdf;
+    }
 
-	public String getRf45Pdf() {
-		return rf45Pdf;
-	}
+    public String getRightPdf() {
+        return rightPdf;
+    }
 
-	public void setLg45Pdf(String lg45Pdf) {
-		this.lg45Pdf = lg45Pdf;
-	}
+    public void setLf45Pdf(String lf45Pdf) {
+        this.lf45Pdf = lf45Pdf;
+    }
 
-	public String getLg45Pdf() {
-		return lg45Pdf;
-	}
+    public String getLf45Pdf() {
+        return lf45Pdf;
+    }
 
-	public void setRr45Pdf(String rr45Pdf) {
-		this.rr45Pdf = rr45Pdf;
-	}
+    public void setRf45Pdf(String rf45Pdf) {
+        this.rf45Pdf = rf45Pdf;
+    }
 
-	public String getRr45Pdf() {
-		return rr45Pdf;
-	}
+    public String getRf45Pdf() {
+        return rf45Pdf;
+    }
 
-	public void setEnginePdf(String enginePdf) {
-		this.enginePdf = enginePdf;
-	}
+    public void setLg45Pdf(String lg45Pdf) {
+        this.lg45Pdf = lg45Pdf;
+    }
 
-	public String getEnginePdf() {
-		return enginePdf;
-	}
+    public String getLg45Pdf() {
+        return lg45Pdf;
+    }
 
-	public void setSzmPdf(String szmPdf) {
-		this.szmPdf = szmPdf;
-	}
+    public void setRr45Pdf(String rr45Pdf) {
+        this.rr45Pdf = rr45Pdf;
+    }
 
-	public String getSzmPdf() {
-		return szmPdf;
-	}
+    public String getRr45Pdf() {
+        return rr45Pdf;
+    }
 
-	public void setGearsPdf(String gearsPdf) {
-		this.gearsPdf = gearsPdf;
-	}
+    public void setEnginePdf(String enginePdf) {
+        this.enginePdf = enginePdf;
+    }
 
-	public String getGearsPdf() {
-		return gearsPdf;
-	}
+    public String getEnginePdf() {
+        return enginePdf;
+    }
 
-	public void setFunctionalZonePdf(String functionalZonePdf) {
-		this.functionalZonePdf = functionalZonePdf;
-	}
+    public void setSzmPdf(String szmPdf) {
+        this.szmPdf = szmPdf;
+    }
 
-	public String getFunctionalZonePdf() {
-		return functionalZonePdf;
-	}
+    public String getSzmPdf() {
+        return szmPdf;
+    }
 
-	public void setOdometerPdf(String odometerPdf) {
-		this.odometerPdf = odometerPdf;
-	}
+    public void setGearsPdf(String gearsPdf) {
+        this.gearsPdf = gearsPdf;
+    }
 
-	public String getOdometerPdf() {
-		return odometerPdf;
-	}
+    public String getGearsPdf() {
+        return gearsPdf;
+    }
 
-	public void setFrontRowPdf(String frontRowPdf) {
-		this.frontRowPdf = frontRowPdf;
-	}
+    public void setFunctionalZonePdf(String functionalZonePdf) {
+        this.functionalZonePdf = functionalZonePdf;
+    }
 
-	public String getFrontRowPdf() {
-		return frontRowPdf;
-	}
+    public String getFunctionalZonePdf() {
+        return functionalZonePdf;
+    }
 
-	public void setRockRowPdf(String rockRowPdf) {
-		this.rockRowPdf = rockRowPdf;
-	}
+    public void setOdometerPdf(String odometerPdf) {
+        this.odometerPdf = odometerPdf;
+    }
 
-	public String getRockRowPdf() {
-		return rockRowPdf;
-	}
+    public String getOdometerPdf() {
+        return odometerPdf;
+    }
 
-	public void setTrunkPdf(String trunkPdf) {
-		this.trunkPdf = trunkPdf;
-	}
+    public void setFrontRowPdf(String frontRowPdf) {
+        this.frontRowPdf = frontRowPdf;
+    }
 
-	public String getTrunkPdf() {
-		return trunkPdf;
-	}
+    public String getFrontRowPdf() {
+        return frontRowPdf;
+    }
 
-	public void setLouverPdf(String louverPdf) {
-		this.louverPdf = louverPdf;
-	}
+    public void setRockRowPdf(String rockRowPdf) {
+        this.rockRowPdf = rockRowPdf;
+    }
 
-	public String getLouverPdf() {
-		return louverPdf;
-	}
+    public String getRockRowPdf() {
+        return rockRowPdf;
+    }
 
-	public void setBankRowPdf(String bankRowPdf) {
-		this.bankRowPdf = bankRowPdf;
-	}
+    public void setTrunkPdf(String trunkPdf) {
+        this.trunkPdf = trunkPdf;
+    }
 
-	public String getBankRowPdf() {
-		return bankRowPdf;
-	}
+    public String getTrunkPdf() {
+        return trunkPdf;
+    }
 
-	public void setCheckApprovePdf(String checkApprovePdf) {
-		this.checkApprovePdf = checkApprovePdf;
-	}
+    public void setLouverPdf(String louverPdf) {
+        this.louverPdf = louverPdf;
+    }
 
-	public String getCheckApprovePdf() {
-		return checkApprovePdf;
-	}
+    public String getLouverPdf() {
+        return louverPdf;
+    }
 
-	public void setCheckApproveLink(String checkApproveLink) {
-		this.checkApproveLink = checkApproveLink;
-	}
+    public void setBankRowPdf(String bankRowPdf) {
+        this.bankRowPdf = bankRowPdf;
+    }
 
-	public String getCheckApproveLink() {
-		return checkApproveLink;
-	}
+    public String getBankRowPdf() {
+        return bankRowPdf;
+    }
 
-	public void setThirdValuationPdf(String thirdValuationPdf) {
-		this.thirdValuationPdf = thirdValuationPdf;
-	}
+    public void setCheckApprovePdf(String checkApprovePdf) {
+        this.checkApprovePdf = checkApprovePdf;
+    }
 
-	public String getThirdValuationPdf() {
-		return thirdValuationPdf;
-	}
+    public String getCheckApprovePdf() {
+        return checkApprovePdf;
+    }
 
-	public void setCheckApproveSoftware(String checkApproveSoftware) {
-		this.checkApproveSoftware = checkApproveSoftware;
-	}
+    public void setCheckApproveLink(String checkApproveLink) {
+        this.checkApproveLink = checkApproveLink;
+    }
 
-	public String getCheckApproveSoftware() {
-		return checkApproveSoftware;
-	}
+    public String getCheckApproveLink() {
+        return checkApproveLink;
+    }
 
-	public void setUsedCarCurrentRate(String usedCarCurrentRate) {
-		this.usedCarCurrentRate = usedCarCurrentRate;
-	}
+    public void setThirdValuationPdf(String thirdValuationPdf) {
+        this.thirdValuationPdf = thirdValuationPdf;
+    }
 
-	public String getUsedCarCurrentRate() {
-		return usedCarCurrentRate;
-	}
+    public String getThirdValuationPdf() {
+        return thirdValuationPdf;
+    }
 
-	public void setInformationSource(String informationSource) {
-		this.informationSource = informationSource;
-	}
+    public void setCheckApproveSoftware(String checkApproveSoftware) {
+        this.checkApproveSoftware = checkApproveSoftware;
+    }
 
-	public String getInformationSource() {
-		return informationSource;
-	}
+    public String getCheckApproveSoftware() {
+        return checkApproveSoftware;
+    }
 
-	public void setValuation(String valuation) {
-		this.valuation = valuation;
-	}
+    public void setUsedCarCurrentRate(String usedCarCurrentRate) {
+        this.usedCarCurrentRate = usedCarCurrentRate;
+    }
 
-	public String getValuation() {
-		return valuation;
-	}
+    public String getUsedCarCurrentRate() {
+        return usedCarCurrentRate;
+    }
 
-	public void setCurNodeCode(String curNodeCode) {
-		this.curNodeCode = curNodeCode;
-	}
+    public void setInformationSource(String informationSource) {
+        this.informationSource = informationSource;
+    }
 
-	public String getCurNodeCode() {
-		return curNodeCode;
-	}
+    public String getInformationSource() {
+        return informationSource;
+    }
 
-	public void setUpdater(String updater) {
-		this.updater = updater;
-	}
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
 
-	public String getUpdater() {
-		return updater;
-	}
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
+    }
 
-	public void setUpdateDatetime(String updateDatetime) {
-		this.updateDatetime = updateDatetime;
-	}
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
 
-	public String getUpdateDatetime() {
-		return updateDatetime;
-	}
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public Long getCar168Price() {
+        return car168Price;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public void setCar168Price(Long car168Price) {
+        this.car168Price = car168Price;
+    }
+
+    public Long getValuation() {
+        return valuation;
+    }
+
+    public void setValuation(Long valuation) {
+        this.valuation = valuation;
+    }
+
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
 
 }

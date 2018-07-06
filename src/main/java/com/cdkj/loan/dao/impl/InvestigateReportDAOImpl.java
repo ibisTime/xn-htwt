@@ -8,6 +8,7 @@ import com.cdkj.loan.dao.IInvestigateReportDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.InvestigateReport;
 
+//CHECK 。。。 
 @Repository("investigateReportDAOImpl")
 public class InvestigateReportDAOImpl extends AMybatisTemplate
         implements IInvestigateReportDAO {
@@ -25,6 +26,11 @@ public class InvestigateReportDAOImpl extends AMybatisTemplate
     @Override
     public int update(InvestigateReport data) {
         return super.update(NAMESPACE.concat("update_investigateReport"), data);
+    }
+
+    @Override
+    public void riskApprove(InvestigateReport data) {
+        super.update(NAMESPACE.concat("update_riskApprove"), data);
     }
 
     @Override

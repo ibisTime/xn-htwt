@@ -35,6 +35,16 @@ public class XN632148Req extends APageReq {
     @NotBlank
     private String roleCode;// 角色编号
 
+    private String keyword; // 关键字
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
     public String getCompanyCode() {
         return companyCode;
     }
