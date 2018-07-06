@@ -106,7 +106,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             // 收件人必须是申领人
-            if (operator != data.getReceiver()) {
+            if (operator.equals(data.getReceiver())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "必须由GPS申领人收件！");
             }
