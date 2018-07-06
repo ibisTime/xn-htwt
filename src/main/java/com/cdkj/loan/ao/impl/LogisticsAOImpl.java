@@ -74,7 +74,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             if (logistics.getReceiver().equals(req.getOperator())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "gps申领人不能发");
+                    "gps申领人不能发件！");
             }
         }
         // 发件
@@ -161,7 +161,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
             Logistics condition) {
         if (StringUtils.isNotBlank(condition.getUserId())) {
             SYSUser sysUser = sysUserBO.getUser(condition.getUserId());
-            condition.setTeamCode(sysUser.getTeamCode());
+            if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
+                condition.setTeamCode(sysUser.getTeamCode());
+            }
             condition.setUserId(null);
         }
 
