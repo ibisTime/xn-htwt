@@ -368,7 +368,7 @@ public class CreditAOImpl implements ICreditAO {
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-            credit.getCode(), req.getApproveNote(), req.getOperator());
+            credit.getCurNodeCode(), req.getApproveNote(), req.getOperator());
 
     }
 
