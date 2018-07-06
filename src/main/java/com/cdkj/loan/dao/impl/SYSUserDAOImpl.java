@@ -84,4 +84,9 @@ public class SYSUserDAOImpl extends AMybatisTemplate implements ISYSUserDAO {
     public void updateMoibleDepartment(SYSUser data) {
         super.update(NAMESPACE.concat("update_sysUser_mobileDepartment"), data);
     }
+
+    @Override
+    public void updateUserByteamCode(SYSUser data) {
+        super.update(NAMESPACE.concat("update_sysUser_teamCode"), data);
+    }
 }

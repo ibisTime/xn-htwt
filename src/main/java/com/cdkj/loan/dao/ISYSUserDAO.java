@@ -30,4 +30,7 @@ public interface ISYSUserDAO extends IBaseDAO<SYSUser> {
 
     // 更新手机号和部门
     public void updateMoibleDepartment(SYSUser data);
+
+    // 修改团队编号
+    public void updateUserByteamCode(SYSUser user);
 }

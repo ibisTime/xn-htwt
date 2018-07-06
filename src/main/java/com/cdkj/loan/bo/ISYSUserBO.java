@@ -8,8 +8,8 @@ import com.cdkj.loan.enums.EUserStatus;
 
 public interface ISYSUserBO extends IPaginableBO<SYSUser> {
 
-    public void refreshStatus(String userId, EUserStatus status,
-            String updater, String remark);
+    public void refreshStatus(String userId, EUserStatus status, String updater,
+            String remark);
 
     public void refreshUserLock(String userId);
 
@@ -55,4 +55,7 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
     public void refreshTeam(String userId, String teamCode, String updater);
 
     public void refreshMobileDepartment(SYSUser sysUser);
+
+    // 修改团队编号
+    public void refreshUserByteamCode(SYSUser user);
 }
