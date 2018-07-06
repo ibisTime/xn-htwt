@@ -760,7 +760,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                 investigateReport
                     .setHouseContract(budgetOrder.getHouseContract());
-                investigateReport.setHomePhoto(budgetOrder.getHousePicture());
+                investigateReport
+                    .setHousePicture(budgetOrder.getHousePicture());
                 String basicsInformation = "品牌：" + budgetOrder.getCarBrand()
                         + "," + "车型：" + budgetOrder.getCarModel() + ","
                         + "新手指导价" + budgetOrder.getOriginalPrice() + ","

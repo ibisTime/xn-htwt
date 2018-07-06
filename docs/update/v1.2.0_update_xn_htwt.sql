@@ -95,7 +95,7 @@ CREATE TABLE `tdq_investigate_report` (
   `wx_jour_remark` tinytext DEFAULT NULL COMMENT '微信流水情况',
   `house_contract` tinytext DEFAULT NULL COMMENT '房产情况及家访',
   `home_visit` tinytext DEFAULT NULL COMMENT '家访地址',
-  `home_photo` tinytext DEFAULT NULL COMMENT '家访照片',
+  `house_picture` tinytext DEFAULT NULL COMMENT '家访照片',
   `basics_information` text DEFAULT NULL COMMENT '车辆基础信息',
   `xsz_pdf` tinytext DEFAULT NULL COMMENT '行驶证主副页',
   `xsz_car_pdf` tinytext DEFAULT NULL COMMENT '行驶证车辆照片页',
