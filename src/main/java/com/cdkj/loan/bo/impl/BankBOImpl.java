@@ -42,12 +42,16 @@ public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
 
     @Override
     public Bank getBank(String code) {
-        if (StringUtils.isBlank(code)) {
-            throw new BizException("xn0000", "贷款银行不能为空！");
+        Bank data = null;
+        if (StringUtils.isNotBlank(code)) {
+            Bank condition = new Bank();
+            condition.setCode(code);
+            data = bankDAO.select(condition);
+            if (null == data) {
+                throw new BizException("xn0000", "贷款银行为空！");
+            }
         }
-        Bank condition = new Bank();
-        condition.setCode(code);
-        return bankDAO.select(condition);
+        return data;
     }
 
     @Override

@@ -161,35 +161,45 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void editBudgetOrder(XN632120Req req) {
         BudgetOrder data = budgetOrderBO.getBudgetOrder(req.getCode());
 
-        // 上架贷款产品信息
-        LoanProduct loanProduct = loanProductBO
-            .getLoanProduct(req.getLoanProductCode());
-        if (!ELoanProductStatus.PUBLISH_YES.getCode()
-            .equals(loanProduct.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "贷款商品未上架");
-        }
-        data.setLoanProductCode(loanProduct.getCode());
-        data.setLoanProductName(loanProduct.getName());
-        data.setRegion(req.getRegion());
-        data.setLoanBank(loanProduct.getLoanBank());
-        data.setGpsFee(loanProduct.getGpsFee());
-        // 公证费=贷款额*公证费比例
         Long loanAmount = StringValidater.toLong(req.getLoanAmount());
-        data.setAuthFee(AmountUtil.mul(loanAmount, loanProduct.getAuthRate()));
-        // 银行服务费=前置*贷款额/（1+前置）
-        Long amount = AmountUtil.mul(loanAmount, loanProduct.getPreRate());
-        data.setBankFee(
-            AmountUtil.div(amount, (1.0 + loanProduct.getPreRate())));
-        // 根据是否前置计算公司服务费
-        Long companyFee = null;
-        if (EBoolean.YES.getCode().equals(loanProduct.getIsPre())) {
-            companyFee = AmountUtil.mul(loanAmount, loanProduct.getPreRate());
-        } else {
-            Long amount1 = AmountUtil.mul(loanAmount,
-                (loanProduct.getYearRate() * 3 - 0.09));
-            companyFee = AmountUtil.div(amount1, loanProduct.getPreRate() + 1);
+        data.setLoanAmount(loanAmount);
+        if (EDealType.SEND.getCode().equals(req.getDealType())) {
+            // 上架贷款产品信息
+            LoanProduct loanProduct = loanProductBO
+                .getLoanProduct(req.getLoanProductCode());
+            if (!ELoanProductStatus.PUBLISH_YES.getCode()
+                .equals(loanProduct.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "贷款商品未上架");
+            }
+            data.setLoanProductCode(loanProduct.getCode());
+            data.setLoanProductName(loanProduct.getName());
+            data.setRegion(req.getRegion());
+            data.setLoanBank(loanProduct.getLoanBank());
+            data.setGpsFee(loanProduct.getGpsFee());
+            // 公证费=贷款额*公证费比例
+
+            data.setAuthFee(
+                AmountUtil.mul(loanAmount, loanProduct.getAuthRate()));
+            // 银行服务费=前置*贷款额/（1+前置）
+            Long amount = AmountUtil.mul(loanAmount, loanProduct.getPreRate());
+            data.setBankFee(
+                AmountUtil.div(amount, (1.0 + loanProduct.getPreRate())));
+            // 根据是否前置计算公司服务费
+            Long companyFee = null;
+            if (EBoolean.YES.getCode().equals(loanProduct.getIsPre())) {
+                companyFee = AmountUtil.mul(loanAmount,
+                    loanProduct.getPreRate());
+            } else {
+                Long amount1 = AmountUtil.mul(loanAmount,
+                    (loanProduct.getYearRate() * 3 - 0.09));
+                companyFee = AmountUtil.div(amount1,
+                    loanProduct.getPreRate() + 1);
+            }
+            data.setCompanyFee(companyFee);
+
         }
-        data.setCompanyFee(companyFee);
+
         data.setTeamFee(StringValidater.toLong(req.getTeamFee()));
 
         data.setBizType(req.getBizType());
@@ -211,7 +221,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMonthDeposit(StringValidater.toLong(req.getMonthDeposit()));
         data.setFirstAmount(StringValidater.toLong(req.getFirstAmount()));
         data.setFirstRate(StringValidater.toDouble(req.getFirstRate()));
-        data.setLoanAmount(loanAmount);
 
         data.setSettleAddress(req.getSettleAddress());
         data.setApplyUserName(req.getApplyUserName());

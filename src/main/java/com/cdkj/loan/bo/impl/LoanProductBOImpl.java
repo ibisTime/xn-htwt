@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -76,13 +77,13 @@ public class LoanProductBOImpl extends PaginableBOImpl<LoanProduct> implements
 
     @Override
     public LoanProduct getLoanProduct(String code) {
-        if (null == code) {
-            throw new BizException("xn0000", "产品编号不能为空");
+        LoanProduct data = null;
+        if (StringUtils.isNotBlank(code)) {
+            LoanProduct condition = new LoanProduct();
+            condition.setCode(code);
+            loanProductDAO.select(condition);
         }
-
-        LoanProduct condition = new LoanProduct();
-        condition.setCode(code);
-        return loanProductDAO.select(condition);
+        return data;
     }
 
     @Override
