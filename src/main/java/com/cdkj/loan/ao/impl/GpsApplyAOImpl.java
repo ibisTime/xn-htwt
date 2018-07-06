@@ -95,8 +95,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gpsBO.applyGps(gps);
         }
         // 产生物流单
-        logisticsBO.saveLogisticsGps(ELogisticsType.GPS.getCode(),
-            data.getCode(), req.getOperater(), "GPS物流传递", data.getApplyUser());
+        logisticsBO
+            .saveLogisticsGps(ELogisticsType.GPS.getCode(), data.getCode(),
+                data.getApplyUser(), "GPS物流传递", data.getApplyUser());
     }
 
     @Override
