@@ -104,10 +104,19 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException("xn0000", "资料不是待收件状态!");
         }
 
-        // if (data.getUserId().equals(operator)) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "收件人不能和发件人同一人！");
-        // }
+        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
+            // 收件人必须是申领人
+            if (operator != data.getReceiver()) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "必须由GPS申领人收件！");
+            }
+        } else {
+            if (data.getUserId().equals(operator)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "收件人不能和发件人同一人！");
+            }
+        }
+
         // SYSUser condition = new SYSUser();
         // condition.setUserId(operator);
         // condition.setTeamCode(data.getTeamCode());
