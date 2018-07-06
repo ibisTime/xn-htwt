@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBizTeamAO;
-import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -38,9 +37,6 @@ public class BizTeamAOImpl implements IBizTeamAO {
     private ISYSUserBO sysUserBO;
 
     @Autowired
-    private IAccountBO accountBO;
-
-    @Autowired
     private IDepartmentBO departmentBO;
 
     @Override
@@ -50,7 +46,6 @@ public class BizTeamAOImpl implements IBizTeamAO {
         if (StringUtils.isBlank(captain.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请先设置队长职位");
         }
-
         BizTeam data = new BizTeam();
         data.setName(req.getName());
         data.setCaptain(req.getCaptain());
@@ -65,7 +60,13 @@ public class BizTeamAOImpl implements IBizTeamAO {
         data.setWaterBill(req.getWaterBill());
         data.setRegion(req.getRegion());
         data.setPlace(req.getPlace());
-        return bizTeamBO.saveBizTeam(data);
+        String code = bizTeamBO.saveBizTeam(data);
+
+        // 保存团队长的teamCode
+        SYSUser user = sysUserBO.getUser(req.getCaptain());
+        user.setTeamName(code);
+        sysUserBO.refreshUserByteamCode(user);
+        return code;
     }
 
     private void doCheckCaptainOnlyOne(String captain) {
@@ -86,9 +87,21 @@ public class BizTeamAOImpl implements IBizTeamAO {
         if (StringUtils.isBlank(captain.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请先设置队长职位");
         }
+        // 原团队长
+        String preCaptain = data.getCaptain();
 
         data.setName(req.getName());
         data.setCaptain(req.getCaptain());
+        // 保存团队长的teamCode
+        SYSUser user = sysUserBO.getUser(req.getCaptain());
+        user.setTeamName(req.getCode());
+        sysUserBO.refreshUserByteamCode(user);
+
+        // 去掉原团队长的团队编号
+        SYSUser puser = sysUserBO.getUser(preCaptain);
+        puser.setTeamCode(null);
+        sysUserBO.refreshUserByteamCode(user);
+
         data.setCompanyCode(captain.getCompanyCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());

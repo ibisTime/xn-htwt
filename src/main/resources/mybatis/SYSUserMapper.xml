@@ -247,4 +247,12 @@
 		WHERE
 		user_id = #{userId}	
 	</update>	
+	
+	<update id="update_sysUser_teamCode" parameterType="sysUser">
+		UPDATE tsys_user
+		SET
+		team_code = #{teamCode}
+		WHERE
+		user_id = #{userId}	
+	</update>	
 </mapper>
