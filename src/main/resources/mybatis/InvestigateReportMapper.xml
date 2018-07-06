@@ -379,9 +379,6 @@
 		,price_approval_pdf = #{priceApprovalPdf}
 		,car_168_price = #{car168Price}
 		,apply_work_and_jour = #{applyWorkAndJour}
-		,jour_pic = #{jourPic}
-		,zfb_jour_pic = #{zfbJourPic}
-		,wx_jour_pic = #{wxJourPic}
 		,home_visit = #{homeVisit}
 		,basics_information = #{basicsInformation}
 		,xsz_pdf = #{xszPdf}
