@@ -15,6 +15,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.enums.EBizLogType;
@@ -74,8 +75,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         if (EBizLogType.CREDIT.getCode().equals(data.getRefType())) {
             Credit credit = creditBO.getCredit(data.getRefOrder());
             userName = credit.getUserName();
-            companyName = departmentBO.getCompanyByDepartment(credit
+            Department department = departmentBO.getDepartment(credit
                 .getCompanyCode());
+            companyName = department.getName();
 
         }
         if (EBizLogType.BUDGET_ORDER.getCode().equals(data.getRefType())
@@ -84,14 +86,18 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getRefType());
             userName = budgetOrder.getApplyUserName();
-            companyName = departmentBO.getCompanyByDepartment(budgetOrder
+            Department department = departmentBO.getDepartment(budgetOrder
                 .getCompanyCode());
+            companyName = department.getName();
+            data.setLoanBank(budgetOrder.getLoanBank());
+            data.setBizType(budgetOrder.getBizType());
         }
         if (EBizLogType.REQ_BUDGET.getCode().equals(data.getRefType())) {
             ReqBudget reqBudget = reqBudgetBO.getReqBudget(data.getRefOrder());
             userName = reqBudget.getApplyUser();
-            companyName = departmentBO.getCompanyByDepartment(reqBudget
+            Department department = departmentBO.getDepartment(reqBudget
                 .getCompanyCode());
+            companyName = department.getName();
         }
 
         if (EBizLogType.BACK_ADVANCE_FUND.getCode().equals(data.getRefType())) {

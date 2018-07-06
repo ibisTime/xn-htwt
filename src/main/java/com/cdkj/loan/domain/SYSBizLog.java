@@ -65,6 +65,26 @@ public class SYSBizLog extends ABaseDO {
 
     private String code;
 
+    private String loanBank;
+
+    private String bizType;
+
+    public String getLoanBank() {
+        return loanBank;
+    }
+
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
+    }
+
+    public String getBizType() {
+        return bizType;
+    }
+
+    public void setBizType(String bizType) {
+        this.bizType = bizType;
+    }
+
     public String getCode() {
         return code;
     }
