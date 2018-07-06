@@ -81,7 +81,10 @@ public class LoanProductBOImpl extends PaginableBOImpl<LoanProduct> implements
         if (StringUtils.isNotBlank(code)) {
             LoanProduct condition = new LoanProduct();
             condition.setCode(code);
-            loanProductDAO.select(condition);
+            data = loanProductDAO.select(condition);
+            if (null == data) {
+                throw new BizException("xn0000", "贷款产品不存在");
+            }
         }
         return data;
     }
