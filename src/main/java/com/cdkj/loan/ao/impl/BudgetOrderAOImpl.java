@@ -61,6 +61,7 @@ import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
+import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
@@ -653,7 +654,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 investigateReport
                     .setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
                 investigateReport.setSaleUserId(budgetOrder.getSaleUserId());
-                SYSUser user = sysUserBO.getUser(budgetOrder.getApplyUserId());
                 String customerInformation = "借款人:"
                         + budgetOrder.getApplyUserName() + ","
                         + budgetOrder.getAge() + ","
@@ -1463,6 +1463,221 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         smsOutBO.sendSmsOut(data.getMobile(),
             "您的车贷准入申请单正在面签，请您现在打开APP，点击\"我的\"->\"开始面签\"，输入房间号[" + roomCode
                     + "]，进入房间并完成面签。");
+    }
+
+    @Override
+    public void dataSupplement(XN632141Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        if (!EBudgetOrderNode.COMMITBANK.getCode()
+            .equals(budgetOrder.getCurNodeCode())
+                || !EBudgetOrderNode.ENTRYLOAN.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                || !EBudgetOrderNode.CONFIRMLOAN.getCode()
+                    .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点为" + budgetOrder.getCurNodeCode() + ",不能补录！");
+        }
+
+        budgetOrder.setMateName(req.getMateName());
+        budgetOrder.setMateMobile(req.getMateMobile());
+        budgetOrder.setMateIdNo(req.getMateIdNo());
+        budgetOrder.setMateEducation(req.getMateEducation());
+        budgetOrder.setMateCompanyName(req.getMateCompanyName());
+
+        budgetOrder.setMateCompanyAddress(req.getMateCompanyAddress());
+        budgetOrder.setMateCompanyContactNo(req.getMateCompanyContactNo());
+        budgetOrder.setMateZfbJourDatetimeStart(
+            DateUtil.strToDate(req.getMateZfbJourDatetimeStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setMateZfbJourDatetimeEnd(
+            DateUtil.strToDate(req.getMateZfbJourDatetimeEnd(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setMateZfbJourInterest(req.getMateZfbJourInterest());
+
+        budgetOrder.setMateZfbInterest1(
+            StringValidater.toLong(req.getMateZfbInterest1()));
+        budgetOrder.setMateZfbInterest2(
+            StringValidater.toLong(req.getMateZfbInterest2()));
+        budgetOrder.setMateZfbJourIncome(
+            StringValidater.toLong(req.getMateZfbJourIncome()));
+        budgetOrder.setMateZfbJourExpend(
+            StringValidater.toLong(req.getMateZfbJourExpend()));
+        budgetOrder.setMateZfbJourBalance(
+            StringValidater.toLong(req.getMateZfbJourBalance()));
+
+        budgetOrder.setMateZfbJourMonthIncome(
+            StringValidater.toLong(req.getMateZfbJourMonthIncome()));
+        budgetOrder.setMateZfbJourMonthExpend(
+            StringValidater.toLong(req.getMateZfbJourMonthExpend()));
+        budgetOrder.setMateZfbJourPic(req.getMateZfbJourPic());
+        budgetOrder.setMateZfbJourRemark(req.getMateZfbJourRemark());
+        budgetOrder.setMateWxJourDatetimeStart(
+            DateUtil.strToDate(req.getMateWxJourDatetimeStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        budgetOrder.setMateWxJourDatetimeEnd(DateUtil.strToDate(
+            req.getMateWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setMateWxJourInterest(req.getMateWxJourInterest());
+        budgetOrder.setMateWxInterest1(
+            StringValidater.toLong(req.getMateWxInterest1()));
+        budgetOrder.setMateWxInterest2(
+            StringValidater.toLong(req.getMateWxInterest2()));
+        budgetOrder.setMateWxJourIncome(
+            StringValidater.toLong(req.getMateWxJourIncome()));
+
+        budgetOrder.setMateWxJourExpend(
+            StringValidater.toLong(req.getMateWxJourExpend()));
+        budgetOrder.setMateWxJourBalance(
+            StringValidater.toLong(req.getMateWxJourBalance()));
+        budgetOrder.setMateWxJourMonthIncome(
+            StringValidater.toLong(req.getMateWxJourMonthIncome()));
+        budgetOrder.setMateWxJourMonthExpend(
+            StringValidater.toLong(req.getMateWxJourMonthExpend()));
+        budgetOrder.setMateWxJourPic(req.getMateWxJourPic());
+
+        budgetOrder.setMateWxJourRemark(req.getMateWxJourRemark());
+        budgetOrder.setMateJourDatetimeStart(DateUtil.strToDate(
+            req.getMateJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setMateJourDatetimeEnd(DateUtil.strToDate(
+            req.getMateJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setMateJourInterest(req.getMateJourInterest());
+        budgetOrder
+            .setMateInterest1(StringValidater.toLong(req.getMateInterest1()));
+
+        budgetOrder
+            .setMateInterest2(StringValidater.toLong(req.getMateInterest2()));
+        budgetOrder
+            .setMateJourIncome(StringValidater.toLong(req.getMateJourIncome()));
+        budgetOrder
+            .setMateJourExpend(StringValidater.toLong(req.getMateJourExpend()));
+        budgetOrder.setMateJourBalance(
+            StringValidater.toLong(req.getMateJourBalance()));
+        budgetOrder.setMateJourMonthIncome(
+            StringValidater.toLong(req.getMateJourMonthIncome()));
+
+        budgetOrder.setMateJourMonthExpend(
+            StringValidater.toLong(req.getMateJourMonthExpend()));
+        budgetOrder.setMateJourPic(req.getMateJourPic());
+        budgetOrder.setMateJourRemark(req.getMateJourRemark());
+        budgetOrder.setMateAssetPdf(req.getMateAssetPdf());
+        budgetOrder.setGuaName(req.getGuaName());
+
+        budgetOrder.setGuaMobile(req.getGuaMobile());
+        budgetOrder.setGuaIdNo(req.getGuaIdNo());
+        budgetOrder.setGuaPhone(req.getGuaPhone());
+        budgetOrder.setGuaCompanyName(req.getGuaCompanyName());
+        budgetOrder.setGuaCompanyAddress(req.getGuaCompanyAddress());
+
+        budgetOrder.setGuaHouseAssetAddress(req.getGuaHouseAssetAddress());
+        budgetOrder.setGuaZfbJourDatetimeStart(
+            DateUtil.strToDate(req.getGuaZfbJourDatetimeStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setGuaZfbJourDatetimeEnd(DateUtil.strToDate(
+            req.getGuaZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setGuaZfbJourInterest(req.getGuaZfbJourInterest());
+        budgetOrder.setGuaZfbInterest1(
+            StringValidater.toLong(req.getGuaZfbInterest1()));
+
+        budgetOrder.setGuaZfbInterest2(
+            StringValidater.toLong(req.getGuaZfbInterest2()));
+        budgetOrder.setGuaZfbJourIncome(
+            StringValidater.toLong(req.getGuaZfbJourIncome()));
+        budgetOrder.setGuaZfbJourExpend(
+            StringValidater.toLong(req.getGuaZfbJourExpend()));
+        budgetOrder.setGuaZfbJourBalance(
+            StringValidater.toLong(req.getGuaZfbJourBalance()));
+        budgetOrder.setGuaZfbJourMonthIncome(
+            StringValidater.toLong(req.getGuaZfbJourMonthIncome()));
+
+        budgetOrder.setGuaZfbJourMonthExpend(
+            StringValidater.toLong(req.getGuaZfbJourMonthExpend()));
+        budgetOrder.setGuaZfbJourPic(req.getGuaZfbJourPic());
+        budgetOrder.setGuaZfbJourRemark(req.getGuaZfbJourRemark());
+        budgetOrder.setGuaWxJourDatetimeStart(
+            DateUtil.strToDate(req.getGuaWxJourDatetimeStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setGuaWxJourDatetimeEnd(DateUtil.strToDate(
+            req.getGuaWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        budgetOrder.setGuaWxJourInterest(req.getGuaWxJourInterest());
+        budgetOrder
+            .setGuaWxInterest1(StringValidater.toLong(req.getGuaWxInterest1()));
+        budgetOrder
+            .setGuaWxInterest2(StringValidater.toLong(req.getGuaWxInterest2()));
+        budgetOrder.setGuaWxJourIncome(
+            StringValidater.toLong(req.getGuaWxJourIncome()));
+        budgetOrder.setGuaWxJourExpend(
+            StringValidater.toLong(req.getGuaWxJourExpend()));
+
+        budgetOrder.setGuaWxJourBalance(
+            StringValidater.toLong(req.getGuaWxJourBalance()));
+        budgetOrder.setGuaWxJourMonthIncome(
+            StringValidater.toLong(req.getGuaWxJourMonthIncome()));
+        budgetOrder.setGuaWxJourMonthExpend(
+            StringValidater.toLong(req.getGuaWxJourMonthExpend()));
+        budgetOrder.setGuaWxJourPic(req.getGuaWxJourPic());
+        budgetOrder.setGuaWxJourRemark(req.getGuaWxJourRemark());
+
+        budgetOrder.setGuaJourDatetimeStart(DateUtil.strToDate(
+            req.getGuaJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setGuaJourDatetimeEnd(DateUtil.strToDate(
+            req.getGuaJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setGuaJourInterest(req.getGuaJourInterest());
+        budgetOrder
+            .setGuaInterest1(StringValidater.toLong(req.getGuaInterest1()));
+        budgetOrder
+            .setGuaInterest2(StringValidater.toLong(req.getGuaInterest2()));
+
+        budgetOrder
+            .setGuaJourIncome(StringValidater.toLong(req.getGuaJourIncome()));
+        budgetOrder
+            .setGuaJourExpend(StringValidater.toLong(req.getGuaJourExpend()));
+        budgetOrder
+            .setGuaJourBalance(StringValidater.toLong(req.getGuaJourBalance()));
+        budgetOrder.setGuaJourMonthIncome(
+            StringValidater.toLong(req.getGuaJourMonthIncome()));
+        budgetOrder.setGuaJourMonthExpend(
+            StringValidater.toLong(req.getGuaJourMonthExpend()));
+
+        budgetOrder.setGuaJourPic(req.getGuaJourPic());
+        budgetOrder.setGuaJourRemark(req.getGuaJourRemark());
+        budgetOrder.setGuaAssetPdf(req.getGuaAssetPdf());
+        budgetOrder.setZfbJourDatetimeStart(DateUtil.strToDate(
+            req.getZfbJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setZfbJourDatetimeEnd(DateUtil.strToDate(
+            req.getZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        budgetOrder.setZfbJourInterest(req.getZfbJourInterest());
+        budgetOrder
+            .setZfbInterest1(StringValidater.toLong(req.getZfbInterest1()));
+        budgetOrder
+            .setZfbInterest2(StringValidater.toLong(req.getZfbInterest2()));
+        budgetOrder.setZfbJourPic(req.getZfbJourPic());
+        budgetOrder.setZfbJourRemark(req.getZfbJourRemark());
+
+        budgetOrder.setWxJourDatetimeStart(DateUtil.strToDate(
+            req.getWxJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setWxJourDatetimeEnd(DateUtil.strToDate(
+            req.getWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setWxJourInterest(req.getWxJourInterest());
+        budgetOrder
+            .setWxInterest1(StringValidater.toLong(req.getWxInterest1()));
+        budgetOrder
+            .setWxInterest2(StringValidater.toLong(req.getWxInterest2()));
+
+        budgetOrder.setWxJourPic(req.getWxJourPic());
+        budgetOrder.setWxJourRemark(req.getWxJourRemark());
+        budgetOrder.setJourDatetimeStart(DateUtil.strToDate(
+            req.getJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setJourDatetimeEnd(DateUtil.strToDate(
+            req.getJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setJourInterest(req.getJourInterest());
+
+        budgetOrder.setInterest1(StringValidater.toLong(req.getInterest1()));
+        budgetOrder.setInterest2(StringValidater.toLong(req.getInterest2()));
+        budgetOrder.setJourPic(req.getJourPic());
+        budgetOrder.setJourRemark(req.getJourRemark());
+        budgetOrderBO.dataSupplement(budgetOrder);
     }
 
 }

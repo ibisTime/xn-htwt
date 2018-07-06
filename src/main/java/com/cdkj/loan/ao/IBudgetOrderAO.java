@@ -14,6 +14,7 @@ import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
+import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
@@ -106,9 +107,12 @@ public interface IBudgetOrderAO {
     public void cancelFinanceAudit(XN632192Req req);
 
     // 垫资超过1天未放款客户
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
-            int limit, BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
 
     public void doSmsInterviewInform(String budgetOrderCode);
+
+    // 资料补录
+    public void dataSupplement(XN632141Req req);
 
 }

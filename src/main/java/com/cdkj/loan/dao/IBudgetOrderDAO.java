@@ -62,4 +62,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     void cancelFinanceAudit(BudgetOrder data);
 
+    // 资料补录
+    void dataSupplement(BudgetOrder budgetOrder);
+
 }
