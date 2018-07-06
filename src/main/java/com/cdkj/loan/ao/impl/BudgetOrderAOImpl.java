@@ -640,20 +640,46 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 investigateReport.setIsAdvanceFund(budgetOrder
                     .getIsAdvanceFund());
                 investigateReport.setSaleUserId(budgetOrder.getSaleUserId());
+                String gender = budgetOrder.getGender();
+                if (gender == "1") {
+                    gender = "男";
+                } else {
+                    gender = "女";
+                }
+                String education = budgetOrder.getEducation();
+                if (education == "1") {
+                    education = "博士及以上";
+                } else if (education == "2") {
+                    education = "硕士";
+                } else if (education == "3") {
+                    education = "大学本科";
+                } else if (education == "4") {
+                    education = "大学专科";
+                } else {
+                    education = "高中及以下";
+                }
+                String marryState = budgetOrder.getMarryState();
+                if (marryState == "1") {
+                    marryState = "未婚";
+                } else if (marryState == "2") {
+                    marryState = "已婚";
+                } else if (marryState == "3") {
+                    marryState = "离异";
+                } else {
+                    marryState = "丧偶";
+                }
                 String customerInformation = "借款人:"
-                        + budgetOrder.getApplyUserName() + ","
-                        + budgetOrder.getAge() + ","
-                        + budgetOrder.getMarryState() + "," + "性别："
-                        + budgetOrder.getGender() + "," + "学历："
-                        + budgetOrder.getEducation() + "," + "民族："
-                        + budgetOrder.getNation() + "," + "身份证号："
-                        + budgetOrder.getIdNo() + "," + "政治面貌："
-                        + budgetOrder.getPolitical() + "," + "户口所在地："
-                        + budgetOrder.getResidenceAddress() + "," + "现在家庭住址："
-                        + budgetOrder.getNowAddress() + "," + "联系电话："
-                        + budgetOrder.getMobile() + "," + "家有"
+                        + budgetOrder.getApplyUserName() + ", "
+                        + budgetOrder.getAge() + "岁, " + marryState + ", "
+                        + "性别：" + gender + ", " + "学历：" + education + ", "
+                        + "民族：" + budgetOrder.getNation() + ", " + "身份证号："
+                        + budgetOrder.getIdNo() + ", " + "政治面貌："
+                        + budgetOrder.getPolitical() + ", " + "户口所在地："
+                        + budgetOrder.getResidenceAddress() + ", " + "现在家庭住址："
+                        + budgetOrder.getNowAddress() + ", " + "联系电话："
+                        + budgetOrder.getMobile() + ", " + "家有"
                         + budgetOrder.getFamilyNumber() + "口人，" + "邮编："
-                        + budgetOrder.getPostCode1() + "," + "借款人无重大疾病，身体健康";
+                        + budgetOrder.getPostCode1() + ",   " + "借款人无重大疾病，身体健康";
                 investigateReport.setCustomerInformation(customerInformation);
                 CreditUser domain = creditUserBO.getCreditUserByCreditCode(
                     budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);

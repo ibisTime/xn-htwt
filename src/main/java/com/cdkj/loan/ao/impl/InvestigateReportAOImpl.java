@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IInvestigateReportAO;
 import com.cdkj.loan.bo.IBankBO;
@@ -22,7 +23,6 @@ import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EInvestigateReportNode;
 import com.cdkj.loan.exception.BizException;
 
@@ -50,6 +50,7 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     }
 
     @Override
+    @Transactional
     public void approveInvestigateReport(XN632200Req req) {
         InvestigateReport data = investigateReportBO
             .getInvestigateReport(req.getCode());
@@ -100,19 +101,21 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-            data.setCurNodeCode(EInvestigateReportNode.RISK_APPROVE.getCode());
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
         }
         investigateReportBO.refreshInvestigateReport(data);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+        EInvestigateReportNode currentNode = EInvestigateReportNode.getMap()
             .get(data.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            currentNode.getCode(), currentNode.getValue(), req.getUpdater());
+        sysBizLogBO.saveSYSBizLog(data.getCode(), EBizLogType.INVESTIGATEREPORT,
+            data.getCode(), currentNode.getCode(), currentNode.getValue(),
+            req.getUpdater());
     }
 
     @Override
+    @Transactional
     public void riskApprove(String code, String approveResult,
             String approveNote, String updater) {
         InvestigateReport data = investigateReportBO.getInvestigateReport(code);
@@ -136,7 +139,7 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         investigateReportBO.riskApprove(data);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+        EInvestigateReportNode currentNode = EInvestigateReportNode.getMap()
             .get(data.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
@@ -144,6 +147,7 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     }
 
     @Override
+    @Transactional
     public void approveByBankCheck(String code, String approveResult,
             String approveNote, String updater) {
         InvestigateReport data = investigateReportBO.getInvestigateReport(code);
@@ -168,7 +172,7 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         investigateReportBO.riskApprove(data);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+        EInvestigateReportNode currentNode = EInvestigateReportNode.getMap()
             .get(data.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
