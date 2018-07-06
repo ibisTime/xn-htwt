@@ -27,7 +27,7 @@ public class InvestigateReport extends ABaseDO {
     private String companyCode;
 
     // 业务种类
-    private String bizYpe;
+    private String bizType;
 
     // 客户姓名
     private String applyUserName;
@@ -253,12 +253,12 @@ public class InvestigateReport extends ABaseDO {
         this.companyCode = companyCode;
     }
 
-    public void setBizYpe(String bizYpe) {
-        this.bizYpe = bizYpe;
+    public String getBizType() {
+        return bizType;
     }
 
-    public String getBizYpe() {
-        return bizYpe;
+    public void setBizType(String bizType) {
+        this.bizType = bizType;
     }
 
     public void setApplyUserName(String applyUserName) {

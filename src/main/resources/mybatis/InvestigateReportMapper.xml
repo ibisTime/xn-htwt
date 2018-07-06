@@ -7,7 +7,7 @@
 		<result column="budget_order_code" property="budgetOrderCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
 		<result column="company_code" property="companyCode" />
-		<result column="biz_ype" property="bizYpe" />
+		<result column="biz_type" property="bizType" />
 		<result column="apply_user_name" property="applyUserName" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="loan_bank" property="loanBank" />
@@ -96,7 +96,7 @@
 		,t.budget_order_code
 		,t.repay_biz_code
 		,t.company_code
-		,t.biz_ype
+		,t.biz_type
 		,t.apply_user_name
 		,t.apply_datetime
 		,t.loan_bank
@@ -176,7 +176,7 @@
 		,budget_order_code
 		,repay_biz_code
 		,company_code
-		,biz_ype
+		,biz_type
 		,apply_user_name
 		,apply_datetime
 		,loan_bank
@@ -239,7 +239,7 @@
 		,#{budgetOrderCode}
 		,#{repayBizCode}
 		,#{companyCode}
-		,#{bizYpe}
+		,#{bizType}
 		,#{applyUserName}
 		,#{applyDatetime}
 		,#{loanBank}

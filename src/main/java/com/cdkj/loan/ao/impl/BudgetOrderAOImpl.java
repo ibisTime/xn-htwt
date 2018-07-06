@@ -646,10 +646,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 investigateReport
                     .setRepayBizCode(budgetOrder.getRepayBizCode());
                 investigateReport.setCompanyCode(budgetOrder.getCompanyCode());
-                investigateReport.setBizYpe(budgetOrder.getBizType());
+                investigateReport.setBizType(budgetOrder.getBizType());
                 investigateReport
                     .setApplyUserName(budgetOrder.getApplyUserName());
+                investigateReport.setApplyDatetime(new Date());
                 investigateReport.setLoanBank(budgetOrder.getLoanBank());
+                investigateReport.setLoanAmount(budgetOrder.getLoanAmount());
                 investigateReport.setLoanPeriod(budgetOrder.getLoanPeriod());
                 investigateReport
                     .setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
