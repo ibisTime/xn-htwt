@@ -9,11 +9,13 @@ import com.cdkj.loan.ao.ISYSBizLogAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.IDepartmentBO;
+import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.enums.EBizLogType;
 
@@ -31,6 +33,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private IReqBudgetBO reqBudgetBO;
 
     @Override
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition) {
@@ -73,7 +78,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
 
         }
-        if (EBizLogType.BUDGET_ORDER.getCode().equals(data.getRefType())) {
+        if (EBizLogType.BUDGET_ORDER.getCode().equals(data.getRefType())
+                || EBizLogType.BUDGET_CANCEL.getCode()
+                    .equals(data.getRefType())) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getRefType());
             userName = budgetOrder.getApplyUserName();
@@ -81,11 +88,12 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
         }
         if (EBizLogType.REQ_BUDGET.getCode().equals(data.getRefType())) {
-
+            ReqBudget reqBudget = reqBudgetBO.getReqBudget(data.getRefOrder());
+            userName = reqBudget.getApplyUser();
+            companyName = departmentBO.getCompanyByDepartment(reqBudget
+                .getCompanyCode());
         }
-        if (EBizLogType.BUDGET_CANCEL.getCode().equals(data.getRefType())) {
 
-        }
         if (EBizLogType.BACK_ADVANCE_FUND.getCode().equals(data.getRefType())) {
 
         }
