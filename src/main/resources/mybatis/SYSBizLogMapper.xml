@@ -66,7 +66,7 @@
 				AND trn.role_code = #{roleCode}
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
-				AND trn.role_code in (SELECT role_code FROM tsys_user where team_code = #{teamCode})
+				AND EXISTS(SELECT 1 FROM tsys_user  WHERE role_code = trn.role_code AND team_code = #{teamCode})
 			</if>
 		</trim>
 	</sql>
@@ -103,7 +103,7 @@
 		<include refid="where_condition" />
 	</select>
 	
-		<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		SELECT
 		distinct
 		t.id
