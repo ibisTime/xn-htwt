@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -15,6 +16,7 @@ import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.dao.ISYSUserDAO;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -31,6 +33,9 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
 
     @Override
     public void resetAdminLoginPwd(SYSUser user, String loginPwd) {
@@ -277,12 +282,18 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
     @Override
     public void refreshTeam(String userId, String teamCode, String updater) {
         if (StringUtils.isNotBlank(userId)) {
-            SYSUser data = new SYSUser();
-            data.setUserId(userId);
-            data.setTeamCode(teamCode);
-            data.setUpdater(updater);
-            data.setUpdateDatetime(new Date());
-            sysUserDAO.updateTeam(data);
+            SYSUser user = getUser(userId);
+            // 所在团队
+            BizTeam bizTeam = bizTeamBO.getBizTeam(user.getTeamCode());
+            if (user.equals(bizTeam.getCaptain())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "该用户为团队长，不能删除！");
+            }
+
+            user.setTeamCode(teamCode);
+            user.setUpdater(updater);
+            user.setUpdateDatetime(new Date());
+            sysUserDAO.updateTeam(user);
         }
     }
 
