@@ -285,7 +285,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
             SYSUser user = getUser(userId);
             // 所在团队
             BizTeam bizTeam = bizTeamBO.getBizTeam(user.getTeamCode());
-            if (user.equals(bizTeam.getCaptain())) {
+            if (userId.equals(bizTeam.getCaptain())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "该用户为团队长，不能删除！");
             }
