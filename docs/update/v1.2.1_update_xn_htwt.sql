@@ -33,6 +33,13 @@ tc.mobile=tcu.mobile,
 tc.id_no =tcu.id_no
 where tc.code =tcu.credit_code and tcu.loan_role='1'
 
+ALTER TABLE `tdq_budget_order` 
+CHANGE COLUMN `bank_photo` `bank_photo` text NULL DEFAULT NULL COMMENT '银行面签照片' ;
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','node_type','010','调查报告','admin','2018-06-11 23:42:18',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('002_24','区域经理审核','002',NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('002','002_01','002_24',NULL,NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('002','002_24','002_02','002_04',NULL,NULL);
+
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061110269813332','调查报告','1','/loanstools/investigateReport.htm','0','U201806060409046595411','2018-07-06 15:06:04','贷前工具','SM201805291053375683183');
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061110459494752','申请','2','/apply','1','U201806060409046595411','2018-07-06 11:12:33','调查报告','SM201807061110269813332');
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061111121668399','风控专员审核','2','/checkCommissioner','2','U201806060409046595411','2018-07-06 11:12:28','调查报告','SM201807061110269813332');
