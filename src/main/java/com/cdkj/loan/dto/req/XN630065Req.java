@@ -18,6 +18,17 @@ public class XN630065Req extends APageReq {
     // 真实姓名
     private String realName;
 
+    // 登录名
+    private String loginName;
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
     public String getRealName() {
         return realName;
     }

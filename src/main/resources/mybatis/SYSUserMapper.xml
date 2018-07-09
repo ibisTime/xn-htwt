@@ -35,8 +35,8 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
-			<if test="loginName != null and loginName != '' ">
-				AND t.login_name = #{loginName}
+			<if test="loginNameQuery != null and loginNameQuery != '' ">
+				AND t.login_name like "%"#{loginNameQuery}"%"
 			</if>
 			<if test="mobile != null and mobile != '' ">
 				AND t.mobile = #{mobile}

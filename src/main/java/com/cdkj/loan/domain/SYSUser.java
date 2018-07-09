@@ -89,6 +89,17 @@ public class SYSUser extends ABaseDO {
     // 真实姓名模糊查
     private String realNameQuery;
 
+    // 登录名模糊查
+    private String loginNameQuery;
+
+    public String getLoginNameQuery() {
+        return loginNameQuery;
+    }
+
+    public void setLoginNameQuery(String loginNameQuery) {
+        this.loginNameQuery = loginNameQuery;
+    }
+
     public String getRealNameQuery() {
         return realNameQuery;
     }
