@@ -39,7 +39,7 @@ public class SYSUser extends ABaseDO {
     private String loginPwdStrength;
 
     // 注册时间
-    private Date createDatetme;
+    private Date createDatetime;
 
     // 公司编号
     private String companyCode;
@@ -85,6 +85,17 @@ public class SYSUser extends ABaseDO {
     private String companyName;
 
     private String teamName;
+
+    // 真实姓名模糊查
+    private String realNameQuery;
+
+    public String getRealNameQuery() {
+        return realNameQuery;
+    }
+
+    public void setRealNameQuery(String realNameQuery) {
+        this.realNameQuery = realNameQuery;
+    }
 
     public String getArchiveCode() {
         return archiveCode;
@@ -214,12 +225,12 @@ public class SYSUser extends ABaseDO {
         return loginPwdStrength;
     }
 
-    public void setCreateDatetme(Date createDatetme) {
-        this.createDatetme = createDatetme;
+    public Date getCreateDatetime() {
+        return createDatetime;
     }
 
-    public Date getCreateDatetme() {
-        return createDatetme;
+    public void setCreateDatetime(Date createDatetime) {
+        this.createDatetime = createDatetime;
     }
 
     public String getDepartmentCode() {

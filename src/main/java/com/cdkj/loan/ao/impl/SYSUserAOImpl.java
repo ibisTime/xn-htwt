@@ -68,7 +68,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setLoginPwd(MD5Util.md5(loginPwd));
         data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
 
-        data.setCreateDatetme(new Date());
+        data.setCreateDatetime(new Date());
         data.setRoleCode(roleCode);
         data.setPostCode(postCode);
         data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));

@@ -1,67 +1,9 @@
-ALTER TABLE `tdq_budget_order` 
-CHANGE COLUMN `work_datetime` `work_datetime` tinytext NULL DEFAULT NULL COMMENT '何时进入现单位工作' ,
-
-ADD COLUMN `mate_zfb_interest1` bigint(20) DEFAULT NULL COMMENT '配偶支付宝结息1' AFTER `mate_zfb_jour_interest`,
-ADD COLUMN `mate_zfb_interest2` bigint(20) DEFAULT NULL COMMENT '配偶支付宝结息2' AFTER `mate_zfb_interest1`,
-ADD COLUMN `mate_wx_interest1` bigint(20) DEFAULT NULL COMMENT '配偶微信结息1' AFTER `mate_wx_jour_interest`,
-ADD COLUMN `mate_wx_interest2` bigint(20) DEFAULT NULL COMMENT '配偶微信结息2' AFTER `mate_wx_interest1`,
-ADD COLUMN `mate_interest1` bigint(20) DEFAULT NULL COMMENT '配偶结息1' AFTER `mate_jour_interest`,
-ADD COLUMN `mate_interest2` bigint(20) DEFAULT NULL COMMENT '配偶结息2' AFTER `mate_interest1`,
-ADD COLUMN `gua_zfb_interest1` bigint(20) DEFAULT NULL COMMENT '担保人支付宝结息1' AFTER `gua_zfb_jour_interest`,
-ADD COLUMN `gua_zfb_interest2` bigint(20) DEFAULT NULL COMMENT '担保人支付宝结息2' AFTER `gua_zfb_interest1`,
-ADD COLUMN `gua_wx_interest1` bigint(20) DEFAULT NULL COMMENT '担保人微信结息1' AFTER `gua_wx_jour_interest`,
-ADD COLUMN `gua_wx_interest2` bigint(20) DEFAULT NULL COMMENT '担保人微信结息2' AFTER `gua_wx_interest1`,
-ADD COLUMN `gua_interest1` bigint(20) DEFAULT NULL COMMENT '担保人结息1' AFTER `gua_jour_interest`,
-ADD COLUMN `gua_interest2` bigint(20) DEFAULT NULL COMMENT '担保人结息2' AFTER `gua_interest1`,
-ADD COLUMN `zfb_interest1` bigint(20) DEFAULT NULL COMMENT '支付宝结息1' AFTER `zfb_jour_interest`,
-ADD COLUMN `zfb_interest2` bigint(20) DEFAULT NULL COMMENT '支付宝结息2' AFTER `zfb_interest1`,
-ADD COLUMN `wx_interest1` bigint(20) DEFAULT NULL COMMENT '微信结息1' AFTER `wx_jour_interest`,
-ADD COLUMN `wx_interest2` bigint(20) DEFAULT NULL COMMENT '微信结息2' AFTER `wx_interest1`,
-ADD COLUMN `interest1` bigint(20) DEFAULT NULL COMMENT '结息1' AFTER `jour_interest`,
-ADD COLUMN `interest2` bigint(20) DEFAULT NULL COMMENT '结息2' AFTER `interest1`;
-
-ALTER TABLE `tdq_credit` 
-ADD COLUMN `note` VARCHAR(255) NULL COMMENT '征信说明' AFTER `cur_node_code`;
-ADD COLUMN `user_name` VARCHAR(255) DEFAULT NULL COMMENT '客户姓名' AFTER `sale_user_id`,
-ADD COLUMN `mobile` VARCHAR(32) DEFAULT NULL COMMENT '手机号' AFTER `user_name`,
-ADD COLUMN `id_no` VARCHAR(32) DEFAULT NULL COMMENT '身份证号' AFTER `mobile`,
-ADD COLUMN `operator` varchar(255) DEFAULT NULL COMMENT '操作人(录入征信结果的驻行人员)' AFTER `note`;
 
 update tdq_credit tc,tdq_credit_user tcu
 set tc.user_name=tcu.user_name,
 tc.mobile=tcu.mobile,
 tc.id_no =tcu.id_no
 where tc.code =tcu.credit_code and tcu.loan_role='1'
-
-ALTER TABLE `tdq_budget_order` 
-CHANGE COLUMN `bank_photo` `bank_photo` text NULL DEFAULT NULL COMMENT '银行面签照片' ;
-insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','node_type','010','调查报告','admin','2018-06-11 23:42:18',NULL,'CD-HTWT000020','CD-HTWT000020');
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('002_24','区域经理审核','002',NULL);
-insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('002','002_01','002_24',NULL,NULL,NULL);
-insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('002','002_24','002_02','002_04',NULL,NULL);
-
-insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061110269813332','调查报告','1','/loanstools/investigateReport.htm','0','U201806060409046595411','2018-07-06 15:06:04','贷前工具','SM201805291053375683183');
-insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061110459494752','申请','2','/apply','1','U201806060409046595411','2018-07-06 11:12:33','调查报告','SM201807061110269813332');
-insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061111121668399','风控专员审核','2','/checkCommissioner','2','U201806060409046595411','2018-07-06 11:12:28','调查报告','SM201807061110269813332');
-insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061112014755232','驻行人员审核','2','/checkStationed','3','U201806060409046595411','2018-07-06 11:12:23','调查报告','SM201807061110269813332');
-insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061144057545778','详情','2','/detail','4','U201806060409046595411','2018-07-06 11:44:05','','SM201807061110269813332');
-insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807061518231844745','资料补录','2','/record','5','U201806061344020605969','2018-07-06 15:18:44','银行放款','SM201805291023424289358');
-
-insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061110269813332', 'U201806061344020605969', '2018-07-06 16:23:45', NULL);
-insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061110459494752', 'U201806061344020605969', '2018-07-06 16:23:45', NULL);
-insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061111121668399', 'U201806061344020605969', '2018-07-06 16:23:46', NULL);
-insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061112014755232', 'U201806061344020605969', '2018-07-06 16:23:46', NULL);
-insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061144057545778', 'U201806061344020605969', '2018-07-06 16:23:46', NULL);
-insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001', 'SM201807061518231844745', 'U201806061344020605969', '2018-07-06 16:23:47', NULL);
-
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_01','提交调查申请','010',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_02','风控专员审核','010',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_03','驻行人员审核','010',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_04','已完成','010',NULL);
-
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('010','010_01','010_02',NULL,NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('010','010_02','010_03','010_01',NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('010','010_03','010_04','010_02',NULL,NULL);
 
 DROP TABLE IF EXISTS `tdq_investigate_report`;
 CREATE TABLE `tdq_investigate_report` (
@@ -192,3 +134,8 @@ WHERE
   
 
 update tdq_investigate_report set cur_node_code='010_01';
+
+
+ALTER TABLE `tsys_user` 
+CHANGE COLUMN `create_datetme` `create_datetime` DATETIME NULL DEFAULT NULL COMMENT '注册时间' ;
+

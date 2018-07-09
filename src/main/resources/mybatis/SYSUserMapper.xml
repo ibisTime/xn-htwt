@@ -41,8 +41,8 @@
 			<if test="mobile != null and mobile != '' ">
 				AND t.mobile = #{mobile}
 			</if>
-			<if test="realName != null and realName != '' ">
-				AND t.realName = #{realName}
+			<if test="realNameQuery != null and realNameQuery != '' ">
+				AND t.realName like "%"#{realNameQuery}"%"
 			</if>
 			
 			<if test="loginPwd != null and loginPwd != '' ">
@@ -87,7 +87,7 @@
 		,t.login_name
 		,t.mobile
 		,t.real_name
-		,t.create_datetme
+		,t.create_datetime
 		,t.company_code
 		,t.department_code
 		,t.post_code
@@ -128,7 +128,7 @@
 		,real_name
 		,login_pwd
 		,login_pwd_strength
-		,create_datetme
+		,create_datetime
 		,company_code
 		
 		,department_code
