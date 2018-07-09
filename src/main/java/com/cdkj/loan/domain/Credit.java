@@ -110,6 +110,15 @@ public class Credit extends ABaseDO {
     // 客户姓名
     private String userNameQuery;
 
+    // 团队名称
+    private String teamName;
+
+    // 节点操作人
+    private String updaterName;
+
+    // 节点日期
+    private String updateDatetime;
+
     public String getUserNameQuery() {
         return userNameQuery;
     }
@@ -125,15 +134,6 @@ public class Credit extends ABaseDO {
     public void setBudgetCodeQuery(String budgetCodeQuery) {
         this.budgetCodeQuery = budgetCodeQuery;
     }
-
-    // 团队名称
-    private String teamName;
-
-    // 节点操作人
-    private String updaterName;
-
-    // 节点日期
-    private String updateDatetime;
 
     public String getUpdaterName() {
         return updaterName;
