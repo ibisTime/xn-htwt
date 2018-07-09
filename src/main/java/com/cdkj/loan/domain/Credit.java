@@ -48,10 +48,10 @@ public class Credit extends ABaseDO {
     // 客户姓名
     private String userName;
 
-    // 客户姓名
+    // 手机号
     private String mobile;
 
-    // 客户姓名
+    // 身份证号
     private String idNo;
 
     // 团队编号
