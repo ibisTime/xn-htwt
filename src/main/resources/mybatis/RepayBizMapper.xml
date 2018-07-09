@@ -73,8 +73,8 @@
 			<if test="idNo != null and idNo != '' ">
 				AND t.id_no = #{idNo}
 			</if>
-			<if test="keyWord != null and keyWord != '' ">
-				AND t.real_name like "%"#{keyWord}"%" OR  t.id_no like "%"#{keyWord}"%"
+			<if test="keyword != null and keyword != '' ">
+				AND t.real_name like "%"#{keyword}"%" OR  t.id_no like "%"#{keyword}"%"
 			</if>
 			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
 				AND t.cur_node_code in 
