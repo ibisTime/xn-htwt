@@ -147,7 +147,7 @@ public class InvestigateReport extends ABaseDO {
     private String homeVisit;
 
     // 家访照片
-    private String homePhoto;
+    private String housePicture;
 
     // 车辆基础信息
     private String basicsInformation;
@@ -625,12 +625,12 @@ public class InvestigateReport extends ABaseDO {
         return homeVisit;
     }
 
-    public void setHomePhoto(String homePhoto) {
-        this.homePhoto = homePhoto;
+    public String getHousePicture() {
+        return housePicture;
     }
 
-    public String getHomePhoto() {
-        return homePhoto;
+    public void setHousePicture(String housePicture) {
+        this.housePicture = housePicture;
     }
 
     public void setBasicsInformation(String basicsInformation) {

@@ -47,7 +47,7 @@
 		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="house_contract" property="houseContract" />
 		<result column="home_visit" property="homeVisit" />
-		<result column="home_photo" property="homePhoto" />
+		<result column="house_picture" property="housePicture" />
 		<result column="basics_information" property="basicsInformation" />
 		<result column="xsz_pdf" property="xszPdf" />
 		<result column="xsz_car_pdf" property="xszCarPdf" />
@@ -154,7 +154,7 @@
 		,t.wx_jour_remark
 		,t.house_contract
 		,t.home_visit
-		,t.home_photo
+		,t.house_picture
 		,t.basics_information
 		,t.xsz_pdf
 		,t.xsz_car_pdf
@@ -252,7 +252,7 @@
 		,wx_jour_remark
 		,house_contract
 		,home_visit
-		,home_photo
+		,house_picture
 		,basics_information
 		,xsz_pdf
 		,xsz_car_pdf
@@ -333,7 +333,7 @@
 		,#{wxJourRemark}
 		,#{houseContract}
 		,#{homeVisit}
-		,#{homePhoto}
+		,#{housePicture}
 		,#{basicsInformation}
 		,#{xszPdf}
 		,#{xszCarPdf}
