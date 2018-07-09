@@ -21,6 +21,17 @@ public class XN632735Req extends APageReq {
     // 名称
     private String name;
 
+    // 状态
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getType() {
         return type;
     }
