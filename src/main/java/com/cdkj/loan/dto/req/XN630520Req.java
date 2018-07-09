@@ -18,6 +18,16 @@ public class XN630520Req extends APageReq {
 
     private String curNodeCode;// 节点
 
+    private String realName;// 姓名
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
     public String getCurNodeCode() {
         return curNodeCode;
     }
