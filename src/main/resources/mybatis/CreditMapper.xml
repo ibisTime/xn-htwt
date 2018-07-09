@@ -30,8 +30,8 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="budgetCode != null and budgetCode != '' ">
-				AND t.budget_code = #{budgetCode}
+			<if test="budgetCodeQuery != null and budgetCodeQuery != '' ">
+				AND t.budget_code like "%"#{budgetCodeQuery}"%"
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}

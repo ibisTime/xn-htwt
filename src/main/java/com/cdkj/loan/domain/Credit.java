@@ -104,6 +104,17 @@ public class Credit extends ABaseDO {
     // 录入征信结果的驻行人员姓名
     private String operatorName;
 
+    // 预算单编号
+    private String budgetCodeQuery;
+
+    public String getBudgetCodeQuery() {
+        return budgetCodeQuery;
+    }
+
+    public void setBudgetCodeQuery(String budgetCodeQuery) {
+        this.budgetCodeQuery = budgetCodeQuery;
+    }
+
     public String getOperatorName() {
         return operatorName;
     }
