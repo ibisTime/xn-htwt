@@ -126,6 +126,39 @@ public class Credit extends ABaseDO {
         this.budgetCodeQuery = budgetCodeQuery;
     }
 
+    // 团队名称
+    private String teamName;
+
+    // 节点操作人
+    private String updaterName;
+
+    // 节点日期
+    private String updateDatetime;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
+    public String getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(String updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
     public String getOperatorName() {
         return operatorName;
     }
