@@ -29,6 +29,7 @@ public class XN630065 extends AProcessor {
     public Object doBusiness() throws BizException {
         SYSUser condition = new SYSUser();
         condition.setKeyword(req.getKeyword());
+        condition.setRealNameQuery(req.getRealName());
         condition.setCreateDatetimeStart(
             DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
         condition.setCreateDatetimeEnd(
