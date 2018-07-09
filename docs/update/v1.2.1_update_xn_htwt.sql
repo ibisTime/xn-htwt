@@ -192,3 +192,16 @@ WHERE
   
 
 update tdq_investigate_report set cur_node_code='010_01';
+
+
+
+
+ALTER TABLE `tdq_budget_order` 
+CHANGE COLUMN `bank_video` `bank_video` TEXT NULL DEFAULT NULL COMMENT '银行视频' ,
+CHANGE COLUMN `bank_photo` `bank_photo` TEXT NULL DEFAULT NULL COMMENT '银行面签照片' ,
+CHANGE COLUMN `company_video` `company_video` TEXT NULL DEFAULT NULL COMMENT '公司视频' ,
+CHANGE COLUMN `company_contract` `company_contract` TEXT NULL DEFAULT NULL COMMENT '公司合同' ,
+CHANGE COLUMN `bank_contract` `bank_contract` TEXT NULL DEFAULT NULL COMMENT '银行合同' ,
+CHANGE COLUMN `other_video` `other_video` TEXT NULL DEFAULT NULL COMMENT '其他视频' ,
+CHANGE COLUMN `interview_other_pdf` `interview_other_pdf` TEXT NULL DEFAULT NULL COMMENT '面签其他资料' ;
+
