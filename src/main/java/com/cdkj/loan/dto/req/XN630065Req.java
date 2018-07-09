@@ -15,7 +15,7 @@ public class XN630065Req extends APageReq {
     // （选填） 关键字
     private String keyword;
 
-    // 真实姓名模糊查
+    // 真实姓名
     private String realName;
 
     public String getRealName() {

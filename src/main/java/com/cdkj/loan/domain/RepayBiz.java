@@ -191,7 +191,7 @@ public class RepayBiz extends ABaseDO {
     // 银行放款日期
     private Date bankFkDatetimeEnd;
 
-    private String keyWord;// 关键字
+    private String keyword;// 关键字
 
     private RepayPlan overdueRepayPlan;
 
@@ -237,12 +237,12 @@ public class RepayBiz extends ABaseDO {
         this.curNodeCodeList = curNodeCodeList;
     }
 
-    public String getKeyWord() {
-        return keyWord;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public Date getBankFkDatetimeStart() {

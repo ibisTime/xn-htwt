@@ -18,6 +18,17 @@ public class XN630066Req extends APageReq {
     // 类型
     private String type;
 
+    // 真实姓名
+    private String realName;
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
     public String getKeyword() {
         return keyword;
     }

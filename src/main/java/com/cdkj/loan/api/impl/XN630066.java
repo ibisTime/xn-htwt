@@ -31,6 +31,7 @@ public class XN630066 extends AProcessor {
         condition.setStatus(ESYSUserStatus.NORMAL.getCode());
         condition.setKeyword(req.getKeyword());
         condition.setType(req.getType());
+        condition.setRealNameQuery(req.getRealName());
         condition.setCreateDatetimeStart(
             DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
         condition.setCreateDatetimeEnd(
