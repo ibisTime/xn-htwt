@@ -21,6 +21,17 @@ public class XN632725Req extends APageReq {
     // 发布部门
     private String publishDepartmentCode;
 
+    //
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getTitle() {
         return title;
     }
