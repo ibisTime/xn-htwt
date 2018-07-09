@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -123,5 +124,16 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
+    }
+
+    @Override
+    public SYSBizLog getLatestOperateRecordByBizCode(String bizCode) {
+        SYSBizLog sysBizLog = null;
+        if (StringUtils.isNotBlank(bizCode)) {
+            SYSBizLog condition = new SYSBizLog();
+            condition.setRefOrder(bizCode);
+            sysBizLog = sysBizLogDAO.getLatestOperateRecordByBizCode(condition);
+        }
+        return sysBizLog;
     }
 }

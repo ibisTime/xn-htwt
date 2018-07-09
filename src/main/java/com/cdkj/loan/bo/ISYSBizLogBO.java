@@ -24,4 +24,7 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
     public Paginable<SYSBizLog> getPaginableByRoleCode(int start, int limit,
             SYSBizLog condition);
+
+    // 获取操作日志中最新操作记录
+    public SYSBizLog getLatestOperateRecordByBizCode(String bizCode);
 }

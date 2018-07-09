@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -19,11 +20,14 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
@@ -74,6 +78,9 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
 
     @Override
     public String addCredit(XN632110Req req) {
@@ -252,25 +259,9 @@ public class CreditAOImpl implements ICreditAO {
     public Credit getCreditAndCreditUser(String code) {
         Credit credit = creditBO.getCredit(code);
 
-        if (null == credit) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "根据征信单编号查询不到征信单");
-        }
-
         Department department = departmentBO.getDepartment(credit
             .getCompanyCode());
         credit.setCompanyName(department.getName());
-
-        // 获取银行信息
-        if (StringUtils.isNotBlank(credit.getLoanBankCode())) {
-            Bank bank = bankBO.getBank(credit.getLoanBankCode());
-            credit.setLoanBankName(bank.getBankName());
-        }
-        // 转义录入征信结果的驻行人员
-        if (StringUtils.isNotBlank(credit.getOperator())) {
-            SYSUser user = sysUserBO.getUser(credit.getOperator());
-            credit.setOperatorName(user.getRealName());
-        }
 
         CreditUser condition = new CreditUser();
         condition.setCreditCode(credit.getCode());
@@ -308,30 +299,6 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         return result;
-    }
-
-    private void initCredit(Credit credit) {
-        // 从征信人员表查申请人的客户姓名 手机号 身份证号
-        credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
-            credit.getCode(), ELoanRole.APPLY_USER));
-
-        // 从用户表查业务员姓名
-        SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
-        credit.setSaleUserName(user.getRealName());
-
-        // 从部门表查业务公司名
-        Department department = departmentBO.getDepartment(credit
-            .getCompanyCode());
-        if (null != department) {
-            credit.setCompanyName(department.getName());
-        }
-
-        // 录入银行征信结果的驻行人员
-        SYSUser operator = sysUserBO.getUser(credit.getOperator());
-        if (null != operator) {
-            credit.setOperatorName(operator.getRealName());
-        }
-
     }
 
     @Override
@@ -440,5 +407,46 @@ public class CreditAOImpl implements ICreditAO {
             preCurNodeCode, ECreditNode.CANCEL.getCode(),
             ECreditNode.CANCEL.getValue(), operator);
 
+    }
+
+    private void initCredit(Credit credit) {
+        // 从征信人员表查申请人的客户姓名 手机号 身份证号
+        credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
+            credit.getCode(), ELoanRole.APPLY_USER));
+        // 从用户表查业务员姓名
+        SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
+        credit.setSaleUserName(user.getRealName());
+        // 从部门表查业务公司名
+        Department department = departmentBO.getDepartment(credit
+            .getCompanyCode());
+        if (null != department) {
+            credit.setCompanyName(department.getName());
+        }
+        // 录入银行征信结果的驻行人员
+        if (StringUtils.isNotBlank(credit.getOperator())) {
+            SYSUser operator = sysUserBO.getUser(credit.getOperator());
+            credit.setOperatorName(operator.getRealName());
+        }
+        // 业务团队名称
+        if (StringUtils.isNotBlank(credit.getTeamCode())) {
+            BizTeam team = bizTeamBO.getBizTeam(credit.getTeamCode());
+            credit.setTeamName(team.getName());
+        }
+        // 获取操作日志中最新操作记录
+        if (StringUtils.isNotBlank(credit.getCode())) {
+            SYSBizLog sysBizLog = sysBizLogBO
+                .getLatestOperateRecordByBizCode(credit.getCode());
+            credit.setUpdaterName(sysBizLog.getOperatorName());
+            credit
+                .setUpdateDatetime(DateUtil.dateToStr(
+                    sysBizLog.getStartDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+        }
+        // 获取银行信息
+        if (StringUtils.isNotBlank(credit.getLoanBankCode())) {
+            Bank bank = bankBO.getBank(credit.getLoanBankCode());
+            credit.setLoanBankName(bank.getBankName());
+
+        }
     }
 }
