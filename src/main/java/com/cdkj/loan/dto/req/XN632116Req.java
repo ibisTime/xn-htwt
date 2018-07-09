@@ -16,6 +16,9 @@ public class XN632116Req extends APageReq {
     // 业务员编号
     private String saleUserId;
 
+    // 客户姓名
+    private String userName;
+
     // 团队编号
     private String teamCode;
 
@@ -37,6 +40,14 @@ public class XN632116Req extends APageReq {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getSaleUserId() {

@@ -96,7 +96,7 @@ public class Credit extends ABaseDO {
     private List<CreditUser> creditUserList;
 
     // 关键字
-    private String keyWord;
+    private String keyword;
 
     // 筛选未通过
     private String noPass;
@@ -106,6 +106,17 @@ public class Credit extends ABaseDO {
 
     // 预算单编号
     private String budgetCodeQuery;
+
+    // 客户姓名
+    private String userNameQuery;
+
+    public String getUserNameQuery() {
+        return userNameQuery;
+    }
+
+    public void setUserNameQuery(String userNameQuery) {
+        this.userNameQuery = userNameQuery;
+    }
 
     public String getBudgetCodeQuery() {
         return budgetCodeQuery;
@@ -131,12 +142,12 @@ public class Credit extends ABaseDO {
         this.noPass = noPass;
     }
 
-    public String getKeyWord() {
-        return keyWord;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getOperator() {

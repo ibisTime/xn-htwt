@@ -31,14 +31,14 @@ public class XN632115 extends AProcessor {
     public Object doBusiness() throws BizException {
         Credit condition = new Credit();
         condition.setSaleUserId(req.getSaleUserId());
-        condition.setUserName(req.getUserName());
+        condition.setUserNameQuery(req.getUserName());
         condition.setTeamCode(req.getTeamCode());
         condition.setBudgetCodeQuery(req.getBudgetOrderCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setKeyWord(req.getKeyWord());
+        condition.setKeyword(req.getKeyword());
         condition.setRoleCode(req.getRoleCode());
         if (EBoolean.YES.getCode().equals(req.getIsPass())) {
             condition.setCurNodeCode(ECreditNode.ACHIEVE.getCode());

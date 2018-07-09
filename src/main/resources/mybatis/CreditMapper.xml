@@ -39,8 +39,8 @@
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
 			</if>
-			<if test="userName != null and userName != '' ">
-				AND t.user_name like "%"#{userName}"%"
+			<if test="userNameQuery != null and userNameQuery != '' ">
+				AND t.user_name like "%"#{userNameQuery}"%"
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
@@ -72,9 +72,9 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
-			<if test="keyWord != null and keyWord != '' "><!-- 客户姓名 手机号 身份证号 -->
-				AND t.user_name LIKE "%"#{keyWord}"%" OR t.mobile LIKE "%"#{keyWord}"%" 
-				OR t.id_no LIKE "%"#{keyWord}"%"
+			<if test="keyword != null and keyword != '' "><!-- 客户姓名 手机号 身份证号 -->
+				AND t.user_name LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" 
+				OR t.id_no LIKE "%"#{keyword}"%"
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>

@@ -43,14 +43,14 @@ public class XN632115Req extends APageReq {
     // 征信是否通过 0未通过1已通过
     private String isPass;
 
-    private String keyWord;
+    private String keyword;
 
-    public String getKeyWord() {
-        return keyWord;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getUserName() {
