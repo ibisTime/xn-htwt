@@ -41,6 +41,7 @@ public class XN630060Req {
     private String roleCode;
 
     // 更新人
+    @NotBlank
     private String updater;
 
     // 备注

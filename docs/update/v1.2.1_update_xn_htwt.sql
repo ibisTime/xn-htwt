@@ -139,3 +139,6 @@ update tdq_investigate_report set cur_node_code='010_01';
 ALTER TABLE `tsys_user` 
 CHANGE COLUMN `create_datetme` `create_datetime` DATETIME NULL DEFAULT NULL COMMENT '注册时间' ;
 
+ALTER TABLE `tdq_credit_user` 
+ADD COLUMN `credit_card_occupation` double NULL COMMENT '信用卡占比' AFTER `interview_pic`;
+

@@ -47,6 +47,9 @@ public class CreditUser extends ABaseDO {
     // 面签照片
     private String interviewPic;
 
+    // 信用卡占比
+    private Double creditCardOccupation;
+
     // 银行征信结果
     private String bankCreditResultPdf;
 
@@ -62,6 +65,14 @@ public class CreditUser extends ABaseDO {
 
     public void setBankCreditResultRemark(String bankCreditResultRemark) {
         this.bankCreditResultRemark = bankCreditResultRemark;
+    }
+
+    public Double getCreditCardOccupation() {
+        return creditCardOccupation;
+    }
+
+    public void setCreditCardOccupation(Double creditCardOccupation) {
+        this.creditCardOccupation = creditCardOccupation;
     }
 
     public List<CreditUser> getCreditUserList() {
