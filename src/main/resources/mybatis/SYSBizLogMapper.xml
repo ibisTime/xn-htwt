@@ -230,4 +230,35 @@
 		WHERE  
 		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime
 	</select>
+	
+	<select id="select_sysBizLog_byBizOrderType" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+		SELECT
+		t.id
+		,t.parent_order
+		,t.ref_type
+		,t.ref_order
+		,t.deal_node
+		,t.deal_note
+		,t.status
+		,t.operate_role
+		,t.operator
+		,t.operator_name
+		,t.operator_mobile
+		,t.start_datetime
+		,t.end_datetime
+		,t.speed_time
+		FROM
+		tsys_biz_log t  
+		WHERE t.ref_order LIKE CONCAT(#{bizOrderType},'%') GROUP BY t.ref_order
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_sysBizLog_count_byBizOrderType" parameterType="sysBizLog"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT * FROM tsys_biz_log WHERE ref_order LIKE #{bizOrderType}'%' GROUP BY ref_order) tb
+	</select>
 </mapper>
