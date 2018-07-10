@@ -30,6 +30,7 @@ public class XN630065 extends AProcessor {
         SYSUser condition = new SYSUser();
         condition.setKeyword(req.getKeyword());
         condition.setRealNameQuery(req.getRealName());
+        condition.setLoginNameQuery(req.getLoginName());
         condition.setCreateDatetimeStart(
             DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
         condition.setCreateDatetimeEnd(
