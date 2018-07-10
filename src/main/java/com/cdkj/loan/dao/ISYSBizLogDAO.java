@@ -19,4 +19,9 @@ public interface ISYSBizLogDAO extends IBaseDAO<SYSBizLog> {
             int pageSize);
 
     public SYSBizLog getLatestOperateRecordByBizCode(SYSBizLog condition);
+
+    public long selectTotalCountByBizOrderType(SYSBizLog condition);
+
+    public List<SYSBizLog> selectListByBizOrderType(SYSBizLog condition,
+            int start, int pageSize);
 }

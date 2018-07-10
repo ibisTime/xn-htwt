@@ -67,7 +67,17 @@ public class SYSBizLog extends ABaseDO {
 
     private String loanBank;
 
-    private String bizType;
+    private String bizType;// 新车二手车
+
+    private String bizOrderType;// 征信 准入 还款
+
+    public String getBizOrderType() {
+        return bizOrderType;
+    }
+
+    public void setBizOrderType(String bizOrderType) {
+        this.bizOrderType = bizOrderType;
+    }
 
     public String getLoanBank() {
         return loanBank;

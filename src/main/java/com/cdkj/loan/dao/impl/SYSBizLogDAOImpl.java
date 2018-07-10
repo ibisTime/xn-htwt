@@ -78,4 +78,19 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
             condition, SYSBizLog.class);
     }
 
+    @Override
+    public long selectTotalCountByBizOrderType(SYSBizLog condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_sysBizLog_count_byBizOrderType"),
+            condition);
+    }
+
+    @Override
+    public List<SYSBizLog> selectListByBizOrderType(SYSBizLog condition,
+            int start, int pageSize) {
+        return super.selectList(
+            NAMESPACE.concat("select_sysBizLog_byBizOrderType"), start,
+            pageSize, condition, SYSBizLog.class);
+    }
+
 }

@@ -136,4 +136,18 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         }
         return sysBizLog;
     }
+
+    @Override
+    public Paginable<SYSBizLog> getPaginableByBizOrderType(int start,
+            int limit, SYSBizLog condition) {
+        prepare(condition);
+        long totalCount = sysBizLogDAO
+            .selectTotalCountByBizOrderType(condition);
+        Paginable<SYSBizLog> page = new Page<SYSBizLog>(start, limit,
+            totalCount);
+        List<SYSBizLog> dataList = sysBizLogDAO.selectListByBizOrderType(
+            condition, page.getStart(), page.getPageSize());
+        page.setList(dataList);
+        return page;
+    }
 }
