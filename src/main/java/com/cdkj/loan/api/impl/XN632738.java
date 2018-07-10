@@ -32,6 +32,7 @@ public class XN632738 extends AProcessor {
         NoticeRead condition = new NoticeRead();
         condition.setUserId(req.getUserId());
         condition.setRefType(ENoticeRegime.REMIGE.getCode());
+        condition.setStatus(req.getStatus());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
