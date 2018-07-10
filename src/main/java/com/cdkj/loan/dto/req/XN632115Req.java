@@ -15,6 +15,9 @@ public class XN632115Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    // 征信单编号
+    private String code;
+
     // 客户姓名
     private String userName;
 
@@ -44,6 +47,14 @@ public class XN632115Req extends APageReq {
     private String isPass;
 
     private String keyword;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getKeyword() {
         return keyword;
