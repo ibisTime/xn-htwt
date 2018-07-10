@@ -30,6 +30,7 @@ public class XN632115 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Credit condition = new Credit();
+        condition.setCode(req.getCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setUserNameQuery(req.getUserName());
         condition.setTeamCode(req.getTeamCode());

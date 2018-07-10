@@ -36,7 +36,7 @@ public class XN630170 extends AProcessor {
         condition.setOrder(column, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return sysBizLogAO.querySYSRolePageByBizOrderType(start, limit,
+        return sysBizLogAO.querySYSBizLogPageByBizOrderType(start, limit,
             condition);
     }
 

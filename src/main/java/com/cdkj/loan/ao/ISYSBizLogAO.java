@@ -21,7 +21,7 @@ public interface ISYSBizLogAO {
     public Paginable<SYSBizLog> querySYSBizLogPageByRoleCode(int start,
             int limit, SYSBizLog condition);
 
-    public Object querySYSRolePageByBizOrderType(int start, int limit,
+    public Object querySYSBizLogPageByBizOrderType(int start, int limit,
             SYSBizLog condition);
 
     public Object querySYSRoleListByRefOrder(SYSBizLog condition);

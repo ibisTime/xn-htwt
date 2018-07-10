@@ -63,7 +63,7 @@ public class SYSBizLog extends ABaseDO {
 
     private String updateDatetime;
 
-    private String code;
+    private String code;// bizCode
 
     private String loanBank;
 

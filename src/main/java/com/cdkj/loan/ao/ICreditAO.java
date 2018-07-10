@@ -46,4 +46,6 @@ public interface ICreditAO {
     // 征信撤回
     public void cancelCredit(String code, String operator);
 
+    public void initCredit(Credit credit);
+
 }
