@@ -58,4 +58,7 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
 
     // 修改团队编号
     public void refreshUserByteamCode(SYSUser user);
+
+    // 修改用户
+    public void refreshUser(SYSUser user);
 }

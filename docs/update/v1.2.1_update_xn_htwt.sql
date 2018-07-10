@@ -99,17 +99,17 @@ UPDATE
   tdq_budget_order tbo 
 SET 
   tr.`customer_information` = CONCAT(
-    '借款人:', tbo.apply_user_name, 
-    ', ', age, '岁, ', CASE WHEN marry_state = '4' THEN '丧偶' WHEN marry_state = '1' THEN '未婚' WHEN marry_state = '2' THEN '已婚' WHEN marry_state = '3' THEN '离异' END, 
-    ', ', '性别：', CASE WHEN gender = '1' THEN '男' WHEN gender = '0' THEN '女' END, 
+    '借款人:', IFNULL(tbo.apply_user_name,'--'), 
+    ', ', IFNULL(age,'--'), '岁, ', CASE WHEN marry_state = '4' THEN '丧偶' WHEN marry_state = '1' THEN '未婚' WHEN marry_state = '2' THEN '已婚' WHEN marry_state = '3' THEN '离异' END, 
+    ', ', '性别：', CASE WHEN gender = '1' THEN '男' WHEN gender = '2' THEN '女' END, 
     ', ', '学历：', CASE WHEN education = '0' THEN '高中及以下' WHEN education = '1' THEN '博士及以上' WHEN education = '2' THEN '硕士' WHEN education = '3' THEN '大学本科' WHEN education = '4' THEN '大学专科' END, 
-    ', ', '民族：', tbo.nation, ', ', 
-    '身份证号：', tbo.id_no, ', ', 
-    '政治面貌：', tbo.political, 
-    ', ', '户口所在地：', tbo.residence_address, 
-    ', ', '现在家庭住址：', tbo.now_address, 
-    ', ', '联系电话：', tbo.mobile, 
-    '口人，', '邮编：', tbo.post_code1, 
+    ', ', '民族：', IFNULL(tbo.nation,'--'), ', ', 
+    '身份证号：', IFNULL(tbo.id_no,'--'), ', ', 
+    '政治面貌：', IFNULL(tbo.political,'--'), 
+    ', ', '户口所在地：', IFNULL(tbo.residence_address,'--'), 
+    ', ', '现在家庭住址：', IFNULL(tbo.now_address,'--'), 
+    ', ', '联系电话：', IFNULL(tbo.mobile,'--'), 
+    '口人，', '邮编：', IFNULL(tbo.post_code1,'--'), 
     ',', '借款人无重大疾病，身体健康'
   ) 
 WHERE 

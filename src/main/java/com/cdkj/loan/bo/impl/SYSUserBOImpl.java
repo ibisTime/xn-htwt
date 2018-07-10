@@ -311,4 +311,9 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
         sysUserDAO.updateUserByteamCode(user);
     }
 
+    @Override
+    public void refreshUser(SYSUser user) {
+        sysUserDAO.updateUser(user);
+    }
+
 }

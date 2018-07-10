@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN630060Req;
 
 @Component
 public interface ISYSUserAO {
@@ -64,5 +65,8 @@ public interface ISYSUserAO {
 
     // 设置团队
     public void doModifyTeam(String userId, String teamCode, String updater);
+
+    // 修改用户
+    public void doEditUser(XN630060Req req);
 
 }
