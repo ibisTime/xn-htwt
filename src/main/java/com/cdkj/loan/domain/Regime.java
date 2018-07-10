@@ -50,6 +50,17 @@ public class Regime extends ABaseDO {
     // 更新人姓名
     private String updaterName;
 
+    // 用户编号
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUpdaterName() {
         return updaterName;
     }

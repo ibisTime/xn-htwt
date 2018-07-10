@@ -32,12 +32,16 @@
 			<if test="name != null and name != '' ">
 				AND t.name like "%"#{name}"%"
 			</if>
+			<if test="userId != null and userId != '' ">
+				AND tnr.user_id = #{userId}
+			</if>
 		</trim>
 	</sql>
 
 	<select id="select_Regime" parameterType="Regime"
 		resultMap="Regime_DB_Result">
 		SELECT
+		DISTINCT
 		t.code
 		,t.type
 		,t.regime_code
@@ -49,7 +53,7 @@
 		,t.update_datetime
 		,t.remark
 		FROM
-		tp_comp_regime t
+		tp_comp_regime t left join tp_notice_read tnr on t.code=tnr.notice_code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -60,8 +64,8 @@
 
 	<select id="select_Regime_count" parameterType="Regime"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tp_comp_regime t
-		<include refid="where_condition" />
+		SELECT count(1) FROM (SELECT DISTINCT code FROM tp_comp_regime t left join tp_notice_read tnr on t.code=tnr.notice_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_Regime" parameterType="Regime">

@@ -24,6 +24,17 @@ public class XN632735Req extends APageReq {
     // 状态
     private String status;
 
+    // 用户编号
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getStatus() {
         return status;
     }
