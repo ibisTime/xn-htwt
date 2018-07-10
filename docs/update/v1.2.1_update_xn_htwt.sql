@@ -132,7 +132,6 @@ SET
 WHERE 
   tr.budget_order_code = tbo.code;
   
-
 update tdq_investigate_report set cur_node_code='010_01';
 
 
