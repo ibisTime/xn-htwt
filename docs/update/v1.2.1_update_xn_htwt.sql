@@ -142,3 +142,7 @@ CHANGE COLUMN `create_datetme` `create_datetime` DATETIME NULL DEFAULT NULL COMM
 ALTER TABLE `tdq_credit_user` 
 ADD COLUMN `credit_card_occupation` double NULL COMMENT '信用卡占比' AFTER `interview_pic`;
 
+ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `drive_license` tinytext DEFAULT NULL COMMENT '行驶证' AFTER `car_hgz_pic`,
+ADD COLUMN `evaluate_column` tinytext DEFAULT NULL COMMENT '评估栏' AFTER `drive_license`;
+

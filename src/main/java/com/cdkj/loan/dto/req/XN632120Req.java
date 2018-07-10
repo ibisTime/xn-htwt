@@ -61,6 +61,12 @@ public class XN632120Req {
     // 合格证
     private String carHgzPic;
 
+    // 行驶证
+    private String driveLicense;
+
+    // 评估栏
+    private String evaluateColumn;
+
     // 车架号
     private String carFrameNo;
 
@@ -1999,6 +2005,22 @@ public class XN632120Req {
 
     public void setWxJourDatetimeStart(String wxJourDatetimeStart) {
         this.wxJourDatetimeStart = wxJourDatetimeStart;
+    }
+
+    public String getDriveLicense() {
+        return driveLicense;
+    }
+
+    public void setDriveLicense(String driveLicense) {
+        this.driveLicense = driveLicense;
+    }
+
+    public String getEvaluateColumn() {
+        return evaluateColumn;
+    }
+
+    public void setEvaluateColumn(String evaluateColumn) {
+        this.evaluateColumn = evaluateColumn;
     }
 
     public String getWxJourDatetimeEnd() {
