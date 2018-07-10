@@ -34,7 +34,7 @@ public class XN632805 extends AProcessor {
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
         condition.setEntryDatetimeStart(req.getEntryDatetimeStart());
-
+        condition.setKeyword(req.getKeyword());
         condition.setEntryDatetimeEnd(req.getEntryDatetimeEnd());
         condition.setWorkStatus(req.getWorkStatus());
         condition.setWorkStatusList(req.getWorkStatusList());

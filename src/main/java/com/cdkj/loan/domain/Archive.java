@@ -220,6 +220,16 @@ public class Archive extends ABaseDO {
     // 姓名模糊查
     private String realNameQuery;
 
+    private String keyword; // 关键字
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
     public String getRealNameQuery() {
         return realNameQuery;
     }
