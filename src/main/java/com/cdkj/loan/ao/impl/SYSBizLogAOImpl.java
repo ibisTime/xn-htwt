@@ -19,9 +19,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.RepayBiz;
-import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSBizLog;
-import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBizOrderType;
 
 @Service
@@ -67,31 +65,47 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         Paginable<SYSBizLog> paginable = sysBizLogBO.getPaginableByRoleCode(
             start, limit, condition);
         List<SYSBizLog> list = paginable.getList();
+        ArrayList<SYSBizLog> resList = new ArrayList<SYSBizLog>();
         for (SYSBizLog sysBizLog : list) {
-            todoThing(sysBizLog);
+            SYSBizLog latestOperateRecordByBizCode = sysBizLogBO
+                .getLatestOperateRecordByBizCode(sysBizLog.getRefOrder());
+            todoThing(latestOperateRecordByBizCode);
+            resList.add(latestOperateRecordByBizCode);
+        }
+        list.removeAll(list);
+        for (SYSBizLog sysBizLog : resList) {
+            list.add(sysBizLog);
         }
         return paginable;
     }
 
     private SYSBizLog todoThing(SYSBizLog data) {
 
-        data.setCode(data.getRefOrder());
+        String refOrder = data.getRefOrder().substring(0, 1);
 
+        data.setCode(data.getRefOrder());
         String userName = "";
         String companyName = "";
-        if (EBizLogType.CREDIT.getCode().equals(data.getRefType())) {
+        if ("C".equals(refOrder)) {
             Credit credit = creditBO.getCredit(data.getRefOrder());
             userName = credit.getUserName();
             Department department = departmentBO.getDepartment(credit
                 .getCompanyCode());
             companyName = department.getName();
-
         }
-        if (EBizLogType.BUDGET_ORDER.getCode().equals(data.getRefType())
-                || EBizLogType.BUDGET_CANCEL.getCode()
-                    .equals(data.getRefType())) {
+        if ("R".equals(refOrder)) {
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getRefOrder());
+            userName = repayBiz.getRealName();
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(repayBiz
+                .getBudgetOrderCode());
+            userName = budgetOrder.getApplyUserName();
+            Department department = departmentBO.getDepartment(budgetOrder
+                .getCompanyCode());
+            companyName = department.getName();
+        }
+        if ("B".equals(refOrder)) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
-                .getRefType());
+                .getRefOrder());
             userName = budgetOrder.getApplyUserName();
             Department department = departmentBO.getDepartment(budgetOrder
                 .getCompanyCode());
@@ -99,23 +113,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             data.setLoanBank(budgetOrder.getLoanBank());
             data.setBizType(budgetOrder.getBizType());
         }
-        if (EBizLogType.REQ_BUDGET.getCode().equals(data.getRefType())) {
-            ReqBudget reqBudget = reqBudgetBO.getReqBudget(data.getRefOrder());
-            userName = reqBudget.getApplyUser();
-            Department department = departmentBO.getDepartment(reqBudget
-                .getCompanyCode());
-            companyName = department.getName();
-        }
 
-        if (EBizLogType.BACK_ADVANCE_FUND.getCode().equals(data.getRefType())) {
-
-        }
-        if (EBizLogType.BUSINESS_TRIP_APPLY.getCode().equals(data.getRefType())) {
-
-        }
-        if (EBizLogType.INVESTIGATEREPORT.getCode().equals(data.getRefType())) {
-
-        }
         data.setUserName(userName);
         data.setCurNodeCode(data.getDealNode());
         data.setCompanyName(companyName);

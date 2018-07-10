@@ -122,7 +122,7 @@
 		,t.speed_time
 		FROM
 		tsys_biz_log t left join tsys_role_node trn on t.deal_node = trn.node_code
-		<include refid="where_condition" />
+		<include refid="where_condition" /> group by t.ref_order
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
 				t.${order}
@@ -134,7 +134,7 @@
 	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM (SELECT distinct t.id FROM tsys_biz_log t left join tsys_role_node trn on t.deal_node = trn.node_code
-		<include refid="where_condition" />) tb
+		<include refid="where_condition" /> group by t.ref_order) tb
 	</select>
 	
 	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">

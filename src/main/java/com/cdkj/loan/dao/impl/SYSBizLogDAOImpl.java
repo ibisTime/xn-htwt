@@ -72,7 +72,6 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
 
     @Override
     public SYSBizLog getLatestOperateRecordByBizCode(SYSBizLog condition) {
-
         return super.select(
             NAMESPACE.concat("select_latest_operate_record_by_bizCode"),
             condition, SYSBizLog.class);
