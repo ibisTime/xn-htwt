@@ -261,8 +261,6 @@
 		mobile = #{mobile}
 		,photo = #{photo}
 		,login_name = #{loginName}
-		,login_pwd = #{loginPwd}
-		,login_pwd_strength = #{loginPwdStrength}
 		,real_name = #{realName}
 		,company_code = #{companyCode}
 		,department_code = #{departmentCode}

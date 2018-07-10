@@ -25,9 +25,6 @@ public class XN630060Req {
     // 真实姓名
     private String realName;
 
-    // 登录密码
-    private String loginPwd;
-
     // 公司编号
     private String companyCode;
 
@@ -77,14 +74,6 @@ public class XN630060Req {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getLoginPwd() {
-        return loginPwd;
-    }
-
-    public void setLoginPwd(String loginPwd) {
-        this.loginPwd = loginPwd;
     }
 
     public String getCompanyCode() {

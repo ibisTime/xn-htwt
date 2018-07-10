@@ -381,9 +381,6 @@ public class SYSUserAOImpl implements ISYSUserAO {
         user.setMobile(req.getMobile());
         user.setRealName(req.getRealName());
         user.setRoleCode(req.getRoleCode());
-        user.setLoginPwd(MD5Util.md5(req.getLoginPwd()));
-        user.setLoginPwdStrength(
-            PwdUtil.calculateSecurityLevel(req.getLoginPwd()));
         user.setCompanyCode(req.getCompanyCode());
         user.setDepartmentCode(req.getDepartmentCode());
         user.setPostCode(req.getPostCode());
