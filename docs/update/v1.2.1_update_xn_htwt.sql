@@ -92,6 +92,10 @@ CREATE TABLE `tdq_investigate_report` (
 insert into `tdq_investigate_report` (`code`, `budget_order_code`, `repay_biz_code`, `company_code`, `biz_type`, `apply_user_name`, `apply_datetime`, `loan_bank`, `loan_amount`, `loan_period`, `is_advance_fund`, `sale_user_id`, `jour_datetime_start`, `jour_datetime_end`, `jour_income`, `jour_expend`, `jour_balance`, `jour_month_income`, `jour_month_expend`, `jour_remark`, `zfb_jour_datetime_start`, `zfb_jour_datetime_end`, `zfb_jour_income`, `zfb_jour_expend`, `zfb_jour_balance`, `zfb_jour_month_income`, `zfb_jour_month_expend`, `zfb_jour_remark`, `wx_jour_datetime_start`, `wx_jour_datetime_end`, `wx_jour_income`, `wx_jour_expend`, `wx_jour_balance`, `wx_jour_month_income`, `wx_jour_month_expend`, `wx_jour_remark`, `house_contract`, `house_picture`, `cur_node_code`) 
 select `code`,`code`,`repay_biz_code`,`company_code`,`biz_type`,`apply_user_name`,`apply_datetime`,`loan_bank`, `loan_amount`, `loan_period`, `is_advance_fund`, `sale_user_id`, `jour_datetime_start`, `jour_datetime_end`, `jour_income`, `jour_expend`, `jour_balance`, `jour_month_income`, `jour_month_expend`, `jour_remark`, `zfb_jour_datetime_start`, `zfb_jour_datetime_end`, `zfb_jour_income`, `zfb_jour_expend`, `zfb_jour_balance`, `zfb_jour_month_income`, `zfb_jour_month_expend`, `zfb_jour_remark`, `wx_jour_datetime_start`, `wx_jour_datetime_end`, `wx_jour_income`, `wx_jour_expend`, `wx_jour_balance`, `wx_jour_month_income`, `wx_jour_month_expend`, `wx_jour_remark`, `house_contract`, `house_picture`, `cur_node_code` from `tdq_budget_order` where cur_node_code >'002_04';
 
+update tdq_budget_order tbo,tdq_credit tc,tdq_credit_user tcu,tdq_investigate_report td
+set td.bank_credit_result_pdf=tcu.bank_credit_result_pdf 
+where tbo.credit_code=tc.credit_code and tc.code = tcu.credit_code and tcu.loan_role='1';
+
 SET 
   SQL_SAFE_UPDATES = 0; 
 UPDATE 
@@ -144,4 +148,50 @@ ADD COLUMN `credit_card_occupation` double NULL COMMENT '信用卡占比' AFTER 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `drive_license` tinytext DEFAULT NULL COMMENT '行驶证' AFTER `car_hgz_pic`,
 ADD COLUMN `evaluate_column` tinytext DEFAULT NULL COMMENT '评估栏' AFTER `drive_license`;
+ADD COLUMN `pledge_user` tinytext DEFAULT NULL COMMENT '代理人' AFTER `receipt_remark`;
+ADD COLUMN `pledge_address` tinytext DEFAULT NULL COMMENT '抵押地点' AFTER `pledge_user`;
 
+
+update tdq_budget_order set cur_node_code='001_04'  where cur_node_code = '001_09';
+UPDATE `tsys_node` SET `name`='征信完成' WHERE `code`='001_04';
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('001_05','征信退回，重新发起征信','001',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('001_06','风控专员审核不通过，重新录入征信结果','001',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('001_07','征信撤回，重新发起征信','001',NULL);
+DELETE FROM `tsys_node` WHERE `code`='001_09';
+
+UPDATE `tsys_node_flow` SET `back_node`='001_05' WHERE `id`='2';
+UPDATE `tsys_node_flow` SET `next_node`='001_04', `back_node`='001_06' WHERE `id`='3';
+UPDATE `tsys_node_flow` SET `current_node`='001_05' WHERE `id`='4';
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('001','001_06','001_03',NULL,NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('001','001_07','001_02',NULL,NULL,NULL);
+
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807091714310483767','修改','2','/edit','2','USYS201800000000001','2018-07-09 17:14:31','备注','SM201804242142138278448');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102043576641325','流转日志','1','#','11','USYS201800000000001','2018-07-10 20:43:57','','SM201804241904336827315');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102044526018761','征信流转日志','1','/circulationLog/creditBill.htm','1','USYS201800000000001','2018-07-10 20:46:56','流转日志','SM201807102043576641325');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102045311413044','准入流转日志','1','/circulationLog/admittanceBill.htm','2','USYS201800000000001','2018-07-10 20:46:50','流转日志','SM201807102043576641325');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102046287846153','贷后流转日志','1','/circulationLog/repayment.htm','3','USYS201800000000001','2018-07-10 20:46:28','流转日志','SM201807102043576641325');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102047529834350','详情','2','/detail','1','USYS201800000000001','2018-07-10 20:47:52','备注','SM201807102044526018761');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102048112414996','详情','2','/detail','1','USYS201800000000001','2018-07-10 20:48:11','','SM201807102045311413044');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102048299301602','详情','2','/detail','1','USYS201800000000001','2018-07-10 20:48:29','','SM201807102046287846153');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102222115797443','征信统计表','1','#','3','USYS201800000000001','2018-07-10 22:22:11','统计分析','SM201805171730323054680');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223052449230','进度日报表','1','#','4','USYS201800000000001','2018-07-10 22:23:05','统计分析','SM201805171730323054680');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223342132405','贷后统计表','1','#','5','USYS201800000000001','2018-07-10 22:23:34','统计分析','SM201805171730323054680');
+
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807091714310483767','U201806061344020605969','2018-07-10 20:48:55',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102043576641325','U201806061344020605969','2018-07-10 20:48:56',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102044526018761','U201806061344020605969','2018-07-10 20:48:56',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102047529834350','U201806061344020605969','2018-07-10 20:48:56',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102045311413044','U201806061344020605969','2018-07-10 20:48:56',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102048112414996','U201806061344020605969','2018-07-10 20:48:56',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102046287846153','U201806061344020605969','2018-07-10 20:48:56',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102048299301602','U201806061344020605969','2018-07-10 20:48:56',NULL);
+
+insert into `tsys_role` (`code`, `name`, `level`, `updater`, `update_datetime`, `remark`) values('SR20180000000000000NQZY','内勤专员','2','admin','2018-06-06 14:25:16','业务部');
+insert into `tsys_role` (`code`, `name`, `level`, `updater`, `update_datetime`, `remark`) values('SR201805301329400862085','征信查询','2','admin','2018-06-01 03:00:24','驻行组');
+insert into `tsys_role` (`code`, `name`, `level`, `updater`, `update_datetime`, `remark`) values('SR201805301330468769509','工行归档','2','admin','2018-05-30 13:30:46','驻行组');
+insert into `tsys_role` (`code`, `name`, `level`, `updater`, `update_datetime`, `remark`) values('SR201805301451155408105','测试','2','admin','2018-05-31 11:50:03','测试账号');
+
+DELETE FROM `tsys_dict` WHERE `id`='583';
+DELETE FROM `tsys_dict` WHERE `id`='584';
+DELETE FROM `tsys_dict` WHERE `id`='585';
+DELETE FROM `tsys_dict` WHERE `id`='586';

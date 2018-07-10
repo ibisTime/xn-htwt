@@ -16,6 +16,12 @@ public class XN632131Req {
     @NotBlank
     private String operator;// 操作人
 
+    // 代理人
+    private String pledgeUser;
+
+    // 抵押地点
+    private String pledgeAddress;
+
     // 抵押日期
     private String pledgeDatetime;
 
@@ -28,6 +34,22 @@ public class XN632131Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getPledgeUser() {
+        return pledgeUser;
+    }
+
+    public void setPledgeUser(String pledgeUser) {
+        this.pledgeUser = pledgeUser;
+    }
+
+    public String getPledgeAddress() {
+        return pledgeAddress;
+    }
+
+    public void setPledgeAddress(String pledgeAddress) {
+        this.pledgeAddress = pledgeAddress;
     }
 
     public String getOperator() {
