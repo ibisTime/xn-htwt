@@ -41,6 +41,8 @@ public class XN632115 extends AProcessor {
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setKeyword(req.getKeyword());
         condition.setRoleCode(req.getRoleCode());
+        condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setCurNodeCodeList(req.getCurNodeCodeList());
         if (EBoolean.YES.getCode().equals(req.getIsPass())) {
             condition.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
         }

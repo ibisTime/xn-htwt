@@ -659,6 +659,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setRepayBizCode(budgetOrder.getRepayBizCode());
                 investigateReport.setCompanyCode(budgetOrder.getCompanyCode());
                 investigateReport.setBizType(budgetOrder.getBizType());
+                investigateReport.setTeamCode(budgetOrder.getTeamCode());
                 investigateReport
                     .setApplyUserName(budgetOrder.getApplyUserName());
                 investigateReport.setApplyDatetime(new Date());
@@ -711,8 +712,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 investigateReport.setCustomerInformation(customerInformation);
                 CreditUser domain = creditUserBO.getCreditUserByCreditCode(
                     budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
-                investigateReport
-                    .setBankCreditResultPdf(domain.getBankCreditResultPdf());
+                investigateReport.setBankCreditResultRemark(
+                    domain.getBankCreditResultRemark());
                 investigateReport
                     .setJourDatetimeStart(budgetOrder.getJourDatetimeStart());
                 investigateReport

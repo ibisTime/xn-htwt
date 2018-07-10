@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -47,6 +49,16 @@ public class XN632115Req extends APageReq {
     private String isPass;
 
     private String keyword;
+
+    private List<String> curNodeCodeList;
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
 
     public String getCode() {
         return code;
