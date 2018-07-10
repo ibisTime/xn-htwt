@@ -67,8 +67,8 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="realName != null and realName != '' ">
-				AND t.real_name = #{realName}
+			<if test="realNameQuery != null and realNameQuery != '' ">
+				AND t.real_name like "%"#{realNameQuery}"%"
 			</if>
 			<if test="idNo != null and idNo != '' ">
 				AND t.id_no = #{idNo}

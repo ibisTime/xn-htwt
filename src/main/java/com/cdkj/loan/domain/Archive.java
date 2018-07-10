@@ -217,6 +217,17 @@ public class Archive extends ABaseDO {
     // 工作状态
     private List<String> workStatusList;
 
+    // 姓名模糊查
+    private String realNameQuery;
+
+    public String getRealNameQuery() {
+        return realNameQuery;
+    }
+
+    public void setRealNameQuery(String realNameQuery) {
+        this.realNameQuery = realNameQuery;
+    }
+
     public List<String> getWorkStatusList() {
         return workStatusList;
     }
