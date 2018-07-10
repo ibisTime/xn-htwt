@@ -32,6 +32,7 @@ public class XN632735 extends AProcessor {
         condition.setRegimeCode(req.getRegimeCode());
         condition.setName(req.getName());
         condition.setStatus(req.getStatus());
+        condition.setUserId(req.getUserId());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

@@ -38,11 +38,15 @@
 			<if test="publishDepartmentCode != null and publishDepartmentCode != '' ">
 				AND t.publish_department_code = #{publishDepartmentCode}
 			</if>
+			<if test="userId != null and userId != '' ">
+				AND tnr.user_id = #{userId}
+			</if>
 		</trim>
 	</sql>
 	
 	<select id="select_notice" parameterType="notice" resultMap="notice_DB_Result">
 		SELECT
+		distinct
 		t.code
 		,t.title
 		,t.type
@@ -57,7 +61,7 @@
 		,t.update_datetime
 		,t.remark
 		FROM
-		tp_notice t
+		tp_notice t left join tp_notice_read tnr on t.code=tnr.notice_code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -68,8 +72,8 @@
 
 	<select id="select_notice_count" parameterType="notice"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tp_notice t
-		<include refid="where_condition" />
+		SELECT count(1) FROM (SELECT DISTINCT code FROM tp_notice t left join tp_notice_read tnr on t.code = tnr.notice_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_notice" parameterType="notice">

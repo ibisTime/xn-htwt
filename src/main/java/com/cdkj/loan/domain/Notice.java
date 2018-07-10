@@ -51,8 +51,21 @@ public class Notice extends ABaseDO {
     // 发布部门
     private String publishDepartmentName;
 
+    /****************db properties**************/
+
     // 公告范围
     private List<ScopePeople> scopePeopleList;
+
+    // 用户编号
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public void setCode(String code) {
         this.code = code;

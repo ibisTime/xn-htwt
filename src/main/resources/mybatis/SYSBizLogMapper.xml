@@ -222,12 +222,12 @@
 	</update>
 	
 	<select id="select_latest_operate_record_by_bizCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-	SELECT a.* FROM 
-	tsys_biz_log a,
-	(SELECT ref_order,max(start_datetime) as start_datetime FROM tsys_biz_log  
-	WHERE 
-	ref_order=#{refOrder}) b 
-	WHERE  
-	a.ref_order=b.ref_order and a.start_datetime=b.start_datetime
+		SELECT a.* FROM 
+		tsys_biz_log a,
+		(SELECT ref_order,max(start_datetime) as start_datetime FROM tsys_biz_log  
+		WHERE 
+		ref_order=#{refOrder}) b 
+		WHERE  
+		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime
 	</select>
 </mapper>
