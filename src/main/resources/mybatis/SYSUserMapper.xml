@@ -150,7 +150,7 @@
 		,#{realName}
 		,#{loginPwd}
 		,#{loginPwdStrength}
-		,#{createDatetme}
+		,#{createDatetime}
 		,#{companyCode}
 		
 		,#{departmentCode}
