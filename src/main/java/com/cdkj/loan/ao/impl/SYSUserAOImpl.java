@@ -24,6 +24,7 @@ import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN630060Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESysUserType;
@@ -361,6 +362,32 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     public void doModifyTeam(String userId, String teamCode, String updater) {
         sysUserBO.refreshTeam(userId, teamCode, updater);
+    }
+
+    @Override
+    public void doEditUser(XN630060Req req) {
+        SYSUser user = sysUserBO.getUser(req.getUserId());
+        user.setPhoto(req.getPhoto());
+        user.setLoginName(req.getLoginName());
+
+        SYSUser sysUser = new SYSUser();
+        sysUser.setMobile(req.getMobile());
+        List<SYSUser> userList = queryUserList(sysUser);
+        if (CollectionUtils.isNotEmpty(userList)
+                && !user.getMobile().equals(req.getMobile())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该手机号已存在，请重新输入！");
+        }
+        user.setMobile(req.getMobile());
+        user.setRealName(req.getRealName());
+        user.setRoleCode(req.getRoleCode());
+        user.setCompanyCode(req.getCompanyCode());
+        user.setDepartmentCode(req.getDepartmentCode());
+        user.setPostCode(req.getPostCode());
+        user.setUpdater(req.getUpdater());
+        user.setUpdateDatetime(new Date());
+        user.setRemark(req.getRemark());
+        sysUserBO.refreshUser(user);
     }
 
 }

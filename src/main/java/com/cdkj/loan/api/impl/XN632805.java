@@ -30,11 +30,11 @@ public class XN632805 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Archive condition = new Archive();
-        condition.setRealName(req.getRealName());
+        condition.setRealNameQuery(req.getRealName());
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
         condition.setEntryDatetimeStart(req.getEntryDatetimeStart());
-
+        condition.setKeyword(req.getKeyword());
         condition.setEntryDatetimeEnd(req.getEntryDatetimeEnd());
         condition.setWorkStatus(req.getWorkStatus());
         condition.setWorkStatusList(req.getWorkStatusList());

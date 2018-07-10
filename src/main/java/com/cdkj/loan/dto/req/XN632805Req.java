@@ -29,6 +29,16 @@ public class XN632805Req extends APageReq {
     // 是否被分配
     private String isDistribute;
 
+    private String keyword; // 关键字
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
     public List<String> getWorkStatusList() {
         return workStatusList;
     }

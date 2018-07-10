@@ -18,6 +18,10 @@ public class XN632111ReqCreditUser {
     @NotBlank
     private String bankCreditResultPdf;
 
+    // 信用卡占比
+    @NotBlank
+    private String creditCardOccupation;
+
     // 银行征信结果说明
     @NotBlank
     private String bankCreditResultRemark;
@@ -28,6 +32,14 @@ public class XN632111ReqCreditUser {
 
     public void setCreditUserCode(String creditUserCode) {
         this.creditUserCode = creditUserCode;
+    }
+
+    public String getCreditCardOccupation() {
+        return creditCardOccupation;
+    }
+
+    public void setCreditCardOccupation(String creditCardOccupation) {
+        this.creditCardOccupation = creditCardOccupation;
     }
 
     public String getBankCreditResultPdf() {

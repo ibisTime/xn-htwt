@@ -27,6 +27,8 @@
 		
 		<result column="car_pic" property="carPic" />
 		<result column="car_hgz_pic" property="carHgzPic" />
+		<result column="drive_license" property="driveLicense" />
+		<result column="evaluate_column" property="evaluateColumn" />
 		<result column="car_frame_no" property="carFrameNo" />
 		<result column="car_engine_no" property="carEngineNo" />
 		<result column="original_price" property="originalPrice" />
@@ -414,6 +416,8 @@
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
+		,t.drive_license
+		,t.evaluate_column
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -722,6 +726,8 @@
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
+		,t.drive_license
+		,t.evaluate_column
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -810,6 +816,8 @@
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
+		,t.drive_license
+		,t.evaluate_column
 		,t.car_frame_no
 		,t.car_engine_no
 		,t.original_price
@@ -1122,6 +1130,8 @@
 		,car_type
 		,car_pic
 		,car_hgz_pic
+		,drive_license
+		,evaluate_column
 		,car_frame_no
 		,car_engine_no
 		,original_price
@@ -1361,6 +1371,8 @@
 		,#{carType}
 		,#{carPic}
 		,#{carHgzPic}
+		,#{driveLicense}
+		,#{evaluateColumn}
 		,#{carFrameNo}
 		,#{carEngineNo}
 		,#{originalPrice}
@@ -1602,6 +1614,8 @@
 		,car_type = #{carType}
 		,car_pic = #{carPic}
 		,car_hgz_pic = #{carHgzPic}
+		,drive_license = #{driveLicense}
+		,evaluate_column = #{evaluateColumn}
 		
 		,car_frame_no = #{carFrameNo}
 		,car_engine_no = #{carEngineNo}

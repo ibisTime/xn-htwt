@@ -254,4 +254,21 @@
 		WHERE
 		user_id = #{userId}	
 	</update>	
+	
+	<update id="update_sysUser" parameterType="sysUser">
+		UPDATE tsys_user
+		SET
+		mobile = #{mobile}
+		,photo = #{photo}
+		,login_name = #{loginName}
+		,real_name = #{realName}
+		,company_code = #{companyCode}
+		,department_code = #{departmentCode}
+		,post_code = #{postCode}
+		,role_code = #{roleCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE user_id = #{userId}
+	</update>
 </mapper>

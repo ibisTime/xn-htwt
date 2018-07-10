@@ -67,8 +67,8 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="realName != null and realName != '' ">
-				AND t.real_name = #{realName}
+			<if test="realNameQuery != null and realNameQuery != '' ">
+				AND t.real_name like "%"#{realNameQuery}"%"
 			</if>
 			<if test="idNo != null and idNo != '' ">
 				AND t.id_no = #{idNo}
@@ -108,6 +108,9 @@
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
+			</if>
+			<if test="keyword != null and keyword != '' ">
+				AND t.real_name LIKE "%"#{keyword}"%" OR t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.job_no LIKE "%"#{keyword}"%"
 			</if>
 			<choose>
 			     <when test='isDistribute == "1"'>

@@ -16,6 +16,7 @@
 		<result column="auth_pdf" property="authPdf" />
 		
 		<result column="interview_pic" property="interviewPic" />
+		<result column="credit_card_occupation" property="creditCardOccupation" />
         <result column="bank_credit_result_pdf" property="bankCreditResultPdf" />
         <result column="bank_credit_result_remark" property="bankCreditResultRemark" />
 	</resultMap>
@@ -137,7 +138,8 @@
 	<update id="update_bankCreditResult" parameterType="creditUser">
 		UPDATE tdq_credit_user
 		SET
-		bank_credit_result_pdf = #{bankCreditResultPdf}
+		credit_card_occupation = #{creditCardOccupation}
+		,bank_credit_result_pdf = #{bankCreditResultPdf}
 		,bank_credit_result_remark = #{bankCreditResultRemark}
 		WHERE 
 		code = #{code}
