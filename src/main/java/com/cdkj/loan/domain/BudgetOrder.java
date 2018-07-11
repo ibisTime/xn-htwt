@@ -908,6 +908,28 @@ public class BudgetOrder extends ABaseDO {
     // 未作废节点
     private String curNodeCodeNoCancel;
 
+    // 资料快递
+    private String informationExpress;
+
+    // 收件日期
+    private Date receiptDatetime;
+
+    public Date getReceiptDatetime() {
+        return receiptDatetime;
+    }
+
+    public void setReceiptDatetime(Date receiptDatetime) {
+        this.receiptDatetime = receiptDatetime;
+    }
+
+    public String getInformationExpress() {
+        return informationExpress;
+    }
+
+    public void setInformationExpress(String informationExpress) {
+        this.informationExpress = informationExpress;
+    }
+
     public String getCurNodeCodeNoCancel() {
         return curNodeCodeNoCancel;
     }
