@@ -400,6 +400,9 @@
 			<if test="curNodeCodeNoEnter != null and curNodeCodeNoEnter != ''">
 				AND t.cur_node_code != #{curNodeCodeNoEnter}
 			</if>
+			<if test="curNodeCodeNoCancel != null and curNodeCodeNoCancel != ''">
+				AND t.cur_node_code != #{curNodeCodeNoCancel}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">

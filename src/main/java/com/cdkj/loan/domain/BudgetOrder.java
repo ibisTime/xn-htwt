@@ -902,6 +902,28 @@ public class BudgetOrder extends ABaseDO {
     // 未入档节点
     private String curNodeCodeNoEnter;
 
+    // 抵押情况
+    private String pledgeStatus;
+
+    // 未作废节点
+    private String curNodeCodeNoCancel;
+
+    public String getCurNodeCodeNoCancel() {
+        return curNodeCodeNoCancel;
+    }
+
+    public void setCurNodeCodeNoCancel(String curNodeCodeNoCancel) {
+        this.curNodeCodeNoCancel = curNodeCodeNoCancel;
+    }
+
+    public String getPledgeStatus() {
+        return pledgeStatus;
+    }
+
+    public void setPledgeStatus(String pledgeStatus) {
+        this.pledgeStatus = pledgeStatus;
+    }
+
     public String getCurNodeCodeNoEnter() {
         return curNodeCodeNoEnter;
     }

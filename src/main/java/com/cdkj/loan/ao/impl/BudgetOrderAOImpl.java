@@ -69,6 +69,7 @@ import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632913Req;
+import com.cdkj.loan.dto.req.XN632914Req;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBackAdvanceStatus;
@@ -1842,8 +1843,61 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             condition);
         if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
             for (BudgetOrder budgetOrder : page.getList()) {
+                if (StringUtils.isNotBlank(req.getEnterStatus())) {
+                    if (req.getEnterStatus().equals(EBoolean.YES.getCode())) {
+                        budgetOrder.setEnterStatus(EBoolean.YES.getCode());// 已入档
+                    } else {
+                        budgetOrder.setEnterStatus(EBoolean.NO.getCode());// 未入档
+                    }
+                }
                 initBudgetOrder(budgetOrder);
             }
+        }
+        return page;
+    }
+
+    @Override
+    public Object queryBudgetOrderPageForLoanLater(XN632914Req req) {
+        BudgetOrder condition = new BudgetOrder();
+        condition.setApplyUserNameForQuery(req.getUserName());
+        condition.setRegion(req.getRegion());
+        condition.setLoanBank(req.getLoanBank());
+        if (StringUtils.isNotBlank(req.getPledgeStatus())) {
+            if (EBoolean.YES.getCode().equals(req.getPledgeStatus())) {
+                // 抵押未完成 TODO
+            }
+        }
+        condition.setCurNodeCode(req.getCurNodeCode());
+        if (StringUtils.isNotBlank(req.getIsCancel())) {
+            if (EBoolean.YES.getCode().equals(req.getIsCancel())) {
+                // 作废
+                condition.setCurNodeCode(EBudgetOrderNode.CANCEL_END.getCode());
+            } else {
+                condition.setCurNodeCodeNoCancel(EBudgetOrderNode.CANCEL_END
+                    .getCode());
+            }
+        }
+
+        String orderColumn = req.getOrderColumn();
+        if (StringUtils.isBlank(orderColumn)) {
+            orderColumn = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;
+        }
+        condition.setOrder(orderColumn, req.getOrderDir());
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
+
+        Paginable<BudgetOrder> page = budgetOrderBO.getPaginable(start, limit,
+            condition);
+        List<BudgetOrder> list = page.getList();
+        for (BudgetOrder budgetOrder : list) {
+            if (StringUtils.isNotBlank(req.getIsCancel())) {// 是否作废
+                if (req.getIsCancel().equals(EBoolean.YES.getCode())) {
+                    budgetOrder.setIsCancel(EBoolean.YES.getCode());// 是
+                } else {
+                    budgetOrder.setIsCancel(EBoolean.NO.getCode());// 否
+                }
+            }
+            initBudgetOrder(budgetOrder);
         }
         return page;
     }
