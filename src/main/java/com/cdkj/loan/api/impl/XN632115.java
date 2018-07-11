@@ -43,13 +43,15 @@ public class XN632115 extends AProcessor {
         condition.setRoleCode(req.getRoleCode());
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
-        if (EBoolean.YES.getCode().equals(req.getIsPass())) {
-            condition.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
+        if (StringUtils.isNotBlank(req.getIsPass())) {
+            if (EBoolean.YES.getCode().equals(req.getIsPass())) {
+                condition.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
+            }
+            if (EBoolean.NO.getCode().equals(req.getIsPass())) {
+                condition.setNoPass(ECreditNode.ACHIEVE.getCode());
+            }
         }
-        if (EBoolean.NO.getCode().equals(req.getIsPass())) {
-            condition.setNoPass(ECreditNode.ACHIEVE.getCode());
-        }
-
+        condition.setIsCancel(req.getIsCancel());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ICreditAO.DEFAULT_ORDER_COLUMN;
