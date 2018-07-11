@@ -32,6 +32,7 @@ public class XN802015 extends AProcessor {
         condition.setBankName(req.getBankName());
         condition.setBankcardNumber(req.getBankcardNumber());
         condition.setStatus(req.getStatus());
+        condition.setRealName(req.getRealName());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBankcardAO.DEFAULT_ORDER_COLUMN;
