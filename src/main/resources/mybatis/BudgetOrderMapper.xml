@@ -394,6 +394,12 @@
 			<if test="keyword != null and keyword != '' ">
 				AND t.region LIKE "%"#{keyword}"%" OR t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.car_brand LIKE "%"#{keyword}"%"
 			</if>
+			<if test="curNodeCode != null and curNodeCode != ''">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="curNodeCodeNoEnter != null and curNodeCodeNoEnter != ''">
+				AND t.cur_node_code != #{curNodeCodeNoEnter}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">

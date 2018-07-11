@@ -20,6 +20,7 @@ import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
+import com.cdkj.loan.dto.req.XN632913Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -122,5 +123,8 @@ public interface IBudgetOrderAO {
     // 业务报表
     public Object queryBudgetOrderPageForBizReport(int start, int limit,
             BudgetOrder condition);
+
+    // 进度报表
+    public Object queryBudgetOrderPageForProgress(XN632913Req req);
 
 }

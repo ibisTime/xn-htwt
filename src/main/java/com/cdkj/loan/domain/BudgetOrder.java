@@ -893,8 +893,30 @@ public class BudgetOrder extends ABaseDO {
     // 刷卡总金额 = 贷款金额+刷卡总手续费
     private String cardTotalAmount;
 
-    // 是否作废
+    // 是否作废（按节点判断的）
     private String isCancel;
+
+    // 入档情况（按节点判断的）
+    private String enterStatus;
+
+    // 未入档节点
+    private String curNodeCodeNoEnter;
+
+    public String getCurNodeCodeNoEnter() {
+        return curNodeCodeNoEnter;
+    }
+
+    public void setCurNodeCodeNoEnter(String curNodeCodeNoEnter) {
+        this.curNodeCodeNoEnter = curNodeCodeNoEnter;
+    }
+
+    public String getEnterStatus() {
+        return enterStatus;
+    }
+
+    public void setEnterStatus(String enterStatus) {
+        this.enterStatus = enterStatus;
+    }
 
     public String getIsCancel() {
         return isCancel;
