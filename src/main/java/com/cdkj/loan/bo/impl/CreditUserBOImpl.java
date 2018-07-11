@@ -24,8 +24,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
-        implements ICreditUserBO {
+public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
+        ICreditUserBO {
 
     @Autowired
     private ICreditUserDAO creditUserDAO;
@@ -34,8 +34,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     public void saveCreditUser(CreditUser creditUser) {
         String code = null;
         if (creditUser != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.CREDITUSER.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
+                .getCode());
             creditUser.setCode(code);
             creditUserDAO.insert(creditUser);
         }
@@ -91,11 +91,11 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
 
     @Override
     public CreditUser getCreditUserByCreditCode(String creditCode,
-            ELoanRole creditUserRelation) {
+            ELoanRole creditUserLoanRole) {
         CreditUser creditUser = null;
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
-        condition.setRelation(creditUserRelation.getCode());
+        condition.setLoanRole(creditUserLoanRole.getCode());
 
         List<CreditUser> list = creditUserDAO.selectList(condition);
         if (CollectionUtils.isNotEmpty(list)) {

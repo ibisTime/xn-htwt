@@ -115,7 +115,12 @@ public interface IBudgetOrderAO {
     // 资料补录
     public void dataSupplement(XN632141Req req);
 
+    // 团队报表
     public Paginable<BudgetOrder> queryBudgetOrderPageByTeamCode(int start,
             int limit, BudgetOrder condition);
+
+    // 业务报表
+    public Object queryBudgetOrderPageForBizReport(int start, int limit,
+            BudgetOrder condition);
 
 }

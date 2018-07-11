@@ -51,6 +51,7 @@ import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
+import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -1733,7 +1734,52 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             int limit, BudgetOrder condition) {
         Paginable<BudgetOrder> page = budgetOrderBO.getPaginableByTeamCode(
             start, limit, condition);
+        List<BudgetOrder> list = page.getList();
+        for (BudgetOrder budgetOrder : list) {
+            initTeamReport(budgetOrder);
+        }
         return page;
+    }
+
+    private BudgetOrder initTeamReport(BudgetOrder budgetOrder) {
+        CreditUser user = creditUserBO.getCreditUserByCreditCode(
+            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        budgetOrder.setContactNo(user.getMobile());// 联系电话
+        SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
+        budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
+        SYSBizLog bizLog = sysBizLogBO
+            .getLatestOperateRecordByBizCode(budgetOrder.getCode());
+        if (null != bizLog) {
+            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
+        }
+        return budgetOrder;
+    }
+
+    @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPageForBizReport(int start,
+            int limit, BudgetOrder condition) {
+        Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginable(start,
+            limit, condition);
+        List<BudgetOrder> list = paginable.getList();
+        for (BudgetOrder budgetOrder : list) {
+            initBizReport(budgetOrder);
+        }
+        return paginable;
+    }
+
+    private BudgetOrder initBizReport(BudgetOrder budgetOrder) {
+        SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
+        budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
+        SYSBizLog bizLog = sysBizLogBO
+            .getLatestOperateRecordByBizCode(budgetOrder.getCode());
+        if (null != bizLog) {
+            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
+        }
+        CreditUser user = creditUserBO.getCreditUserByCreditCode(
+            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        budgetOrder.setContactNo(user.getMobile());// 联系电话
+
+        return budgetOrder;
     }
 
 }
