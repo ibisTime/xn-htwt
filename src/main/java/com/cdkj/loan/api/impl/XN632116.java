@@ -32,10 +32,11 @@ public class XN632116 extends AProcessor {
         condition.setTeamCode(req.getTeamCode());
         condition.setUserNameQuery(req.getUserName());
         condition.setBudgetCode(req.getBudgetOrderCode());
-        condition.setApplyDatetimeStart(
-            DateUtil.getFrontDate(req.getApplyDatetimeStart(), false));
-        condition.setApplyDatetimeEnd(
-            DateUtil.getFrontDate(req.getApplyDatetimeEnd(), true));
+        condition.setApplyDatetimeStart(DateUtil.getFrontDate(
+            req.getApplyDatetimeStart(), false));
+        condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
+            req.getApplyDatetimeEnd(), true));
+        condition.setIsCancel(req.getIsCancel());
 
         condition.setCurNodeCode(req.getCurNodeCode());
         String orderColumn = req.getOrderColumn();
