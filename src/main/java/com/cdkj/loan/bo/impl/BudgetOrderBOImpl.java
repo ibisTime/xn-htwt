@@ -34,8 +34,8 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -62,16 +62,18 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         CreditUser ghrCreditUser = null;
         CreditUser guaCreditUser = null;
         for (CreditUser creditUser : creditUserList) {
-            if (applyCreditUser == null && ELoanRole.APPLY_USER.getCode()
-                .equals(creditUser.getLoanRole())) {
+            if (applyCreditUser == null
+                    && ELoanRole.APPLY_USER.getCode().equals(
+                        creditUser.getLoanRole())) {
                 applyCreditUser = creditUser;
             }
-            if (ghrCreditUser == null && ELoanRole.GHR.getCode()
-                .equals(creditUser.getLoanRole())) {
+            if (ghrCreditUser == null
+                    && ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
                 ghrCreditUser = creditUser;
             }
-            if (guaCreditUser == null && ELoanRole.GUARANTOR.getCode()
-                .equals(creditUser.getLoanRole())) {
+            if (guaCreditUser == null
+                    && ELoanRole.GUARANTOR.getCode().equals(
+                        creditUser.getLoanRole())) {
                 guaCreditUser = creditUser;
             }
         }
@@ -79,8 +81,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         String code = null;
         if (credit != null) {
             BudgetOrder data = new BudgetOrder();
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.BUDGETORDER.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGETORDER
+                .getCode());
             data.setCode(code);
             data.setCreditCode(credit.getCode());
             data.setBizType(credit.getBizType());
@@ -293,12 +295,12 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         String result = EBoolean.NO.getCode();
 
         BudgetOrder budgetOrder = getBudgetOrder(code);
-        NodeFlow nodeFlow = nodeFlowBO
-            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
 
-        if (EBudgetOrderNode.DHAPPROVEDATA.getCode()
-            .equals(nodeFlow.getCurrentNode())) {
+        if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
+            nodeFlow.getCurrentNode())) {
             if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), operator, nodeFlow.getCurrentNode(),
@@ -369,6 +371,20 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Override
     public void dataSupplement(BudgetOrder budgetOrder) {
         budgetOrderDAO.dataSupplement(budgetOrder);
+    }
+
+    @Override
+    public Paginable<BudgetOrder> getPaginableByTeamCode(int start, int limit,
+            BudgetOrder condition) {
+        prepare(condition);
+        long totalCount = budgetOrderDAO.selectTotalCountByTeamCode(condition);
+        Paginable<BudgetOrder> page = new Page<BudgetOrder>(start, limit,
+            totalCount);
+        List<BudgetOrder> dataList = budgetOrderDAO
+            .selectBudgetOrderListByTeamCode(condition, page.getStart(),
+                page.getPageSize());
+        page.setList(dataList);
+        return page;
     }
 
 }

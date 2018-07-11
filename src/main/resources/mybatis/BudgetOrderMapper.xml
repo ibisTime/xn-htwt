@@ -2182,5 +2182,38 @@
 		WHERE code = #{code}
 	</update>
 	
+	
+	<select id="select_budgetOrder_byTeamCode" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		t.code
+		,t.sale_user_id
+		,t.original_price
+		,t.sale_user_id
+		,t.apply_user_name
+		,t.id_no
+		,t.loan_period
+		,t.car_brand
+		,t.loan_amount
+		,t.repay_first_month_amount
+		,t.repay_month_amount
+		,t.credit_card_no
+		,t.repay_bank_date
+		,t.biz_type
+		FROM
+		tdq_budget_order t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_budgetOrder_count_byTeamCode" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_budget_order t
+		<include refid="where_condition" />
+	</select>
+	
 
 </mapper>

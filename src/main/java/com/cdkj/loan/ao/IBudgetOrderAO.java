@@ -107,12 +107,15 @@ public interface IBudgetOrderAO {
     public void cancelFinanceAudit(XN632192Req req);
 
     // 垫资超过1天未放款客户
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 
     public void doSmsInterviewInform(String budgetOrderCode);
 
     // 资料补录
     public void dataSupplement(XN632141Req req);
+
+    public Paginable<BudgetOrder> queryBudgetOrderPageByTeamCode(int start,
+            int limit, BudgetOrder condition);
 
 }
