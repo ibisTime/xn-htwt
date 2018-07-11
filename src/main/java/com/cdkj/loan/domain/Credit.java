@@ -119,6 +119,16 @@ public class Credit extends ABaseDO {
     // 节点日期
     private String updateDatetime;
 
+    private List<String> curNodeCodeList;
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
     public String getUserNameQuery() {
         return userNameQuery;
     }

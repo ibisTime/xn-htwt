@@ -59,6 +59,7 @@ import com.cdkj.loan.dto.req.XN632125Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.dto.req.XN632141Req;
@@ -633,6 +634,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setRepayBizCode(budgetOrder.getRepayBizCode());
                 investigateReport.setCompanyCode(budgetOrder.getCompanyCode());
                 investigateReport.setBizType(budgetOrder.getBizType());
+                investigateReport.setTeamCode(budgetOrder.getTeamCode());
                 investigateReport.setApplyUserName(budgetOrder
                     .getApplyUserName());
                 investigateReport.setApplyDatetime(new Date());
@@ -685,8 +687,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 investigateReport.setCustomerInformation(customerInformation);
                 CreditUser domain = creditUserBO.getCreditUserByCreditCode(
                     budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
-                investigateReport.setBankCreditResultPdf(domain
-                    .getBankCreditResultPdf());
+                investigateReport.setBankCreditResultRemark(domain
+                    .getBankCreditResultRemark());
                 investigateReport.setJourDatetimeStart(budgetOrder
                     .getJourDatetimeStart());
                 investigateReport.setZfbJourDatetimeEnd(budgetOrder
@@ -1105,9 +1107,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void entryMortgage(String code, String operator,
-            String pledgeDatetime, String greenBigSmj) {
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+    public void entryMortgage(XN632131Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.ENTRYMORTGAGE.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -1118,9 +1119,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         NodeFlow currentNodeFlow = nodeFlowBO
             .getNodeFlowByCurrentNode(preCurrentNode);
         budgetOrder.setCurNodeCode(currentNodeFlow.getNextNode());
-        budgetOrder.setPledgeDatetime(DateUtil.strToDate(pledgeDatetime,
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setGreenBigSmj(greenBigSmj);
+        budgetOrder.setPledgeUser(req.getPledgeUser());
+        budgetOrder.setPledgeAddress(req.getPledgeAddress());
+        budgetOrder.setPledgeDatetime(DateUtil.strToDate(
+            req.getPledgeDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setGreenBigSmj(req.getGreenBigSmj());
         budgetOrderBO.entryMortgage(budgetOrder);
 
         // 获取参考材料
@@ -1128,7 +1131,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String fileList = currentNodeFlow.getFileList();
         if (StringUtils.isNotBlank(fileList)) {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), operator, preCurrentNode,
+                budgetOrder.getCode(), req.getOperator(), preCurrentNode,
                 currentNodeFlow.getNextNode(), fileList);
         } else {
             throw new BizException("xn0000", "当前节点材料清单不存在");
@@ -1139,7 +1142,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override

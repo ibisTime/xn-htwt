@@ -10,15 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IInvestigateReportAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IInvestigateReportBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -43,6 +47,12 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addInvestigateReport(InvestigateReport data) {
@@ -215,6 +225,17 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         if (StringUtils.isNotBlank(investigateReport.getLoanBank())) {
             Bank loanBank = bankBO.getBank(investigateReport.getLoanBank());
             investigateReport.setLoanBankName(loanBank.getBankName());
+        }
+        // 业务团队
+        if (StringUtils.isNotBlank(investigateReport.getTeamCode())) {
+            BizTeam bizTeam = bizTeamBO
+                .getBizTeam(investigateReport.getTeamCode());
+            investigateReport.setTeamName(bizTeam.getName());
+        }
+        // 业务员姓名
+        if (StringUtils.isNotBlank(investigateReport.getSaleUserId())) {
+            SYSUser user = sysUserBO.getUser(investigateReport.getSaleUserId());
+            investigateReport.setSaleUserName(user.getRealName());
         }
     }
 }

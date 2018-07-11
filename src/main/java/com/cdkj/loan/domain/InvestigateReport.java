@@ -23,6 +23,9 @@ public class InvestigateReport extends ABaseDO {
     // 业务编号
     private String repayBizCode;
 
+    // 团队编号
+    private String teamCode;
+
     // 业务公司
     private String companyCode;
 
@@ -57,7 +60,7 @@ public class InvestigateReport extends ABaseDO {
     private String customerInformation;
 
     // 申请人征信情况
-    private String bankCreditResultPdf;
+    private String bankCreditResultRemark;
 
     // 申请人贷款车辆价格核准情况
     private String priceApprovalPdf;
@@ -265,6 +268,28 @@ public class InvestigateReport extends ABaseDO {
     // 贷款银行名称
     private String loanBankName;
 
+    // 团队名称
+    private String teamName;
+
+    // 业务员姓名
+    private String saleUserName;
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
     public String getLoanBankName() {
         return loanBankName;
     }
@@ -393,12 +418,12 @@ public class InvestigateReport extends ABaseDO {
         return customerInformation;
     }
 
-    public void setBankCreditResultPdf(String bankCreditResultPdf) {
-        this.bankCreditResultPdf = bankCreditResultPdf;
+    public String getBankCreditResultRemark() {
+        return bankCreditResultRemark;
     }
 
-    public String getBankCreditResultPdf() {
-        return bankCreditResultPdf;
+    public void setBankCreditResultRemark(String bankCreditResultRemark) {
+        this.bankCreditResultRemark = bankCreditResultRemark;
     }
 
     public void setPriceApprovalPdf(String priceApprovalPdf) {
@@ -703,6 +728,14 @@ public class InvestigateReport extends ABaseDO {
 
     public String getRightPdf() {
         return rightPdf;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
     }
 
     public void setLf45Pdf(String lf45Pdf) {

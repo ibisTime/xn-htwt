@@ -25,8 +25,7 @@ public class XN632131 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.entryMortgage(req.getCode(), req.getOperator(),
-            req.getPledgeDatetime(), req.getGreenBigSmj());
+        budgetOrderAO.entryMortgage(req);
         return new BooleanRes(true, EBoolean.YES.getCode());
     }
 

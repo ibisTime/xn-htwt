@@ -12,6 +12,7 @@ import com.cdkj.loan.dto.req.XN632125Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.dto.req.XN632141Req;
@@ -79,8 +80,7 @@ public interface IBudgetOrderAO {
     public void archive(String code, String operator, String enterLocation);
 
     // 录入抵押信息
-    public void entryMortgage(String code, String operator,
-            String pledgeDatetime, String greenBigSmj);
+    public void entryMortgage(XN632131Req req);
 
     // 抵押确认提交银行
     public void mortgageCommitBank(String code, String operator,

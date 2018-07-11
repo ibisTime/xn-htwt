@@ -750,6 +750,12 @@ public class BudgetOrder extends ABaseDO {
     // 收款备注
     private String receiptRemark;
 
+    // 代理人
+    private String pledgeUser;
+
+    // 抵押地点
+    private String pledgeAddress;
+
     // 抵押日期
     private Date pledgeDatetime;
 
@@ -1760,6 +1766,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setZfbInterest2(Long zfbInterest2) {
         this.zfbInterest2 = zfbInterest2;
+    }
+
+    public String getPledgeUser() {
+        return pledgeUser;
+    }
+
+    public void setPledgeUser(String pledgeUser) {
+        this.pledgeUser = pledgeUser;
+    }
+
+    public String getPledgeAddress() {
+        return pledgeAddress;
+    }
+
+    public void setPledgeAddress(String pledgeAddress) {
+        this.pledgeAddress = pledgeAddress;
     }
 
     public Long getWxInterest1() {
