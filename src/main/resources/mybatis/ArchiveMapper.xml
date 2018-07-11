@@ -110,7 +110,7 @@
 				AND t.status = #{status}
 			</if>
 			<if test="keyword != null and keyword != '' ">
-				AND t.real_name LIKE "%"#{keyword}"%" OR t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.job_no LIKE "%"#{keyword}"%"
+				AND (t.real_name LIKE "%"#{keyword}"%" OR t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.job_no LIKE "%"#{keyword}"%")
 			</if>
 			<choose>
 			     <when test='isDistribute == "1"'>

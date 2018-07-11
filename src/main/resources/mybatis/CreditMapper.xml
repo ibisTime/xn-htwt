@@ -71,8 +71,8 @@
 				AND trn.role_code = #{roleCode}
 			</if>
 			<if test="keyword != null and keyword != '' "><!-- 客户姓名 手机号 身份证号 -->
-				AND t.user_name LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" 
-				OR t.id_no LIKE "%"#{keyword}"%"
+				AND (t.user_name LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" 
+				OR t.id_no LIKE "%"#{keyword}"%")
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>

@@ -31,8 +31,8 @@
 			</if>
 			
 			<if test="keyword != null and keyword != '' ">
-				AND t.login_name like "%"#{keyword}"%" OR  t.mobile like "%"#{keyword}"%"
-				OR t.real_name like "%"#{realName}"%"
+				AND (t.login_name like "%"#{keyword}"%" OR  t.mobile like "%"#{keyword}"%"
+				OR t.real_name like "%"#{realName}"%")
 			</if>
 			
 			
