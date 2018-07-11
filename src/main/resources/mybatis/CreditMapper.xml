@@ -31,11 +31,17 @@
 			<if test="budgetCodeQuery != null and budgetCodeQuery != '' ">
 				AND t.budget_code like "%"#{budgetCodeQuery}"%"
 			</if>
+			<if test="budgetCode != null and budgetCode != '' ">
+				AND t.budget_code= #{budgetCode}
+			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
 			</if>
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
+			</if>
+			<if test="userName != null and userName != '' ">
+				AND t.user_name = #{userName}
 			</if>
 			<if test="userNameQuery != null and userNameQuery != '' ">
 				AND t.user_name like "%"#{userNameQuery}"%"
