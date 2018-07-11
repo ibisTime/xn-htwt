@@ -23,6 +23,18 @@ public class XN632812Req {
 
     private String remark;
 
+    // 更新人
+    @NotBlank
+    private String updater;
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
     public String getCode() {
         return code;
     }

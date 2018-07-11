@@ -28,6 +28,7 @@ import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
 import com.cdkj.loan.dto.res.XN632803Res;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EWorkStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -287,7 +288,16 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (!archiveBO.isArchiveExist(data.getCode())) {
             throw new BizException("xn0000", "人事档案不存在");
         }
-        archiveBO.refreshLeaveArchive(data);
+        Archive archive = archiveBO.getArchive(data.getCode());
+        archive.setRealName(data.getRealName());
+        archive.setLeaveDatetime(data.getLeaveDatetime());
+        archive.setHeirPeople(data.getHeirPeople());
+        archive.setLeaveReason(data.getLeaveReason());
+        archive.setUpdater(data.getUpdater());
+        archive.setUpdateDatetime(new Date());
+        archive.setRemark(data.getRemark());
+        archive.setWorkStatus(EWorkStatus.LEAVE.getCode());
+        archiveBO.refreshLeaveArchive(archive);
 
         // 锁定用户
         SYSUser sysUser = sysUserBO.getUserByArchiveCode(data.getCode());

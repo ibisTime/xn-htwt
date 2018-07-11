@@ -394,6 +394,7 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
+		,work_status = #{workStatus}
 		WHERE code = #{code}
 	</update>
 	

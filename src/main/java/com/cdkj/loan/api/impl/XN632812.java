@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import java.util.Date;
+
 import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
@@ -34,6 +36,8 @@ public class XN632812 extends AProcessor {
         data.setHeirPeople(req.getHeirPeople());
         data.setLeaveReason(req.getLeaveReason());
         data.setRemark(req.getRemark());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
         archiveAO.editLeaveArchive(data);
 
         return new BooleanRes(true);

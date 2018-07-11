@@ -76,7 +76,7 @@ public class XN632800Req {
     @NotBlank
     private String education;
 
-    // 状态
+    // 工作状态
     @NotBlank
     private String workStatus;
 
