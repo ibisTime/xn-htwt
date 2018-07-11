@@ -19,7 +19,6 @@ public class XN632111ReqCreditUser {
     private String bankCreditResultPdf;
 
     // 信用卡占比
-    @NotBlank
     private String creditCardOccupation;
 
     // 银行征信结果说明
