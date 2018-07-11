@@ -35,6 +35,7 @@ public class XN630065 extends AProcessor {
             DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
         condition.setCreateDatetimeEnd(
             DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
+        condition.setRoleCode(req.getRoleCode());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

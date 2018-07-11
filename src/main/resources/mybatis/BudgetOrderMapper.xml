@@ -255,6 +255,8 @@
 		
 		<result column="car_jqx" property="carJqx" />
 		<result column="car_syx" property="carSyx" />
+		<result column="policy_datetime" property="policyDatetime" />
+		<result column="policy_due_date" property="policyDueDate" />
 		<result column="car_settle_other_pdf" property="carSettleOtherPdf" />
 		<result column="car_regcerti" property="carRegcerti" />
 		<result column="car_pd" property="carPd" />
@@ -644,6 +646,8 @@
 		,t.car_invoice
 		,t.car_jqx
 		,t.car_syx
+		,t.policy_datetime
+		,t.policy_due_date
 		,t.car_regcerti
 		
 		,t.car_pd
@@ -1046,6 +1050,8 @@
 		,t.car_invoice
 		,t.car_jqx
 		,t.car_syx
+		,t.policy_datetime
+		,t.policy_due_date
 		,t.car_regcerti
 		
 		,t.car_pd
@@ -1924,6 +1930,8 @@
 		,car_invoice = #{carInvoice}
 		,car_jqx = #{carJqx}
 		,car_syx = #{carSyx}
+		,policy_datetime = #{policyDatetime}
+		,policy_due_date = #{policyDueDate}
 		,car_settle_other_pdf = #{carSettleOtherPdf}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}

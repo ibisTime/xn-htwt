@@ -945,6 +945,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarInvoice(req.getCarInvoice());
         budgetOrder.setCarJqx(req.getCarJqx());
         budgetOrder.setCarSyx(req.getCarSyx());
+        budgetOrder.setPolicyDatetime(DateUtil.strToDate(
+            req.getPolicyDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setPolicyDueDate(DateUtil.strToDate(req.getPolicyDueDate(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setCarSettleOtherPdf(req.getCarSettleOtherPdf());
 
         NodeFlow nodeFlow = nodeFlowBO
