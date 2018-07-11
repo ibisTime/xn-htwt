@@ -21,6 +21,17 @@ public class XN630065Req extends APageReq {
     // 登录名
     private String loginName;
 
+    // 角色编号
+    private String roleCode;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public String getLoginName() {
         return loginName;
     }
