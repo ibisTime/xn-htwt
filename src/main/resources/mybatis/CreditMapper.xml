@@ -9,8 +9,6 @@
 		<result column="biz_type" property="bizType" />
 		<result column="second_car_report" property="secondCarReport" />
 		
-		<result column="xsz_front" property="xszFront" />
-		<result column="xsz_reverse" property="xszReverse" />
 		<result column="budget_code" property="budgetCode" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
@@ -57,12 +55,6 @@
 			<if test="loanAmount != null and loanAmount != '' ">
 				AND t.loan_amount = #{loanAmount}
 			</if>
-			<if test="xszFront != null and xszFront != '' ">
-				AND t.xsz_front = #{xszFront}
-			</if>
-			<if test="xszReverse != null and xszReverse != '' ">
-				AND t.xsz_reverse = #{xszReverse}
-			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
@@ -99,8 +91,6 @@
 		,t.biz_type
 		,t.second_car_report
 		
-		,t.xsz_front
-		,t.xsz_reverse
 		,t.budget_code		
 		,t.company_code
 		,t.sale_user_id
@@ -136,8 +126,6 @@
 		,t.biz_type
 		,t.second_car_report
 		
-		,t.xsz_front
-		,t.xsz_reverse
 		,t.budget_code		
 		,t.company_code
 		,t.sale_user_id
@@ -174,8 +162,6 @@
 		,biz_type
 		,second_car_report
 		
-		,xsz_front
-		,xsz_reverse	
 		,company_code
 		,sale_user_id
 		,team_code
@@ -191,8 +177,6 @@
 		,#{bizType}
 		,#{secondCarReport}
 		
-		,#{xszFront}
-		,#{xszReverse}
 		,#{companyCode}
 		,#{saleUserId}
 		,#{teamCode}
@@ -210,8 +194,6 @@
 		,loan_amount = #{loanAmount}
 		,biz_type = #{bizType}
 		,second_car_report = #{secondCarReport}
-		,xsz_front = #{xszFront}
-		,xsz_reverse = #{xszReverse}
 		,cur_node_code= #{curNodeCode}
 		WHERE
 		code = #{code}

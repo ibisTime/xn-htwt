@@ -20,10 +20,6 @@ public class XN632110Req {
 
     private String secondCarReport;
 
-    private String xszFront;
-
-    private String xszReverse;
-
     @NotBlank
     private String operator;
 
@@ -81,22 +77,6 @@ public class XN632110Req {
 
     public void setLoanAmount(String loanAmount) {
         this.loanAmount = loanAmount;
-    }
-
-    public String getXszFront() {
-        return xszFront;
-    }
-
-    public void setXszFront(String xszFront) {
-        this.xszFront = xszFront;
-    }
-
-    public String getXszReverse() {
-        return xszReverse;
-    }
-
-    public void setXszReverse(String xszReverse) {
-        this.xszReverse = xszReverse;
     }
 
     public List<XN632110ReqCreditUser> getCreditUserList() {

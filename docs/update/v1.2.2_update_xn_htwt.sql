@@ -146,6 +146,14 @@ ADD COLUMN `policy_due_date` datetime DEFAULT NULL COMMENT '保单到期日' AFT
 CHANGE COLUMN `drive_license` `drive_license_front` TINYTEXT NULL DEFAULT NULL COMMENT '行驶证正面' ;
 ADD COLUMN `drive_license_reverse` TINYTEXT DEFAULT NULL COMMENT '行驶证反面' AFTER `drive_license_front`;
 
+update tdq_budget_order tbo,tdq_credit tc
+set tbo.drive_license_front=tc.xsz_front and tbo.drive_license_reverse=tc.xsz_reverse
+where tbo.credit_code=tc.code;
+
+ALTER TABLE `tdq_credit` 
+DROP COLUMN `xsz_reverse`,
+DROP COLUMN `xsz_front`;
+
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171747477945012';
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171749254406565';
