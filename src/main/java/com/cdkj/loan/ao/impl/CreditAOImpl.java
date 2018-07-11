@@ -374,6 +374,8 @@ public class CreditAOImpl implements ICreditAO {
                     .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
                 creditUser.setBankCreditResultPdf(
                     xn632111ReqCreditUser.getBankCreditResultPdf());
+                creditUser.setCreditCardOccupation(StringValidater
+                    .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
                 creditUser.setBankCreditResultRemark(
                     xn632111ReqCreditUser.getBankCreditResultRemark());
                 creditUserBO.inputBankCreditResult(creditUser);

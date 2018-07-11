@@ -157,6 +157,9 @@ DROP COLUMN `xsz_front`;
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171747477945012';
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171749254406565';
+DELETE FROM `tsys_menu` WHERE `code`='SM201807102222115797443';
+DELETE FROM `tsys_menu` WHERE `code`='SM201807102223052449230';
+DELETE FROM `tsys_menu` WHERE `code`='SM201807102223342132405';
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102222115797443','征信统计表','1','/statistic/creditReport.htm','3','U201806060409046595411','2018-07-10 23:30:54','统计分析','SM201805171730323054680');
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223052449230','进度日报表','1','/statistic/dayReport.htm','4','U201806061344020605969','2018-07-10 23:58:49','统计分析','SM201805171730323054680');
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223342132405','贷后统计表','1','/statistic/postloanReport.htm','5','U201806060409046595411','2018-07-11 13:59:22','统计分析','SM201805171730323054680');
