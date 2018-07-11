@@ -331,17 +331,22 @@ public class CreditAOImpl implements ICreditAO {
             // 准入单编号回写征信单
             credit.setBudgetCode(budgetCode);
 
+            // 日志记录
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.CREDIT.getCode(),
+                credit.getCode(), preCurrentNode);
+
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getBackNode());
+
+            // 日志记录
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
+                EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
+                credit.getCurNodeCode(), req.getApproveNote(),
+                req.getOperator());
         }
 
         creditBO.refreshCreditNode(credit);
-
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
-            EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-            credit.getCurNodeCode(), req.getApproveNote(), req.getOperator());
 
     }
 

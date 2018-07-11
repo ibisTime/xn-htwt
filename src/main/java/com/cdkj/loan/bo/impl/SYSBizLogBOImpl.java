@@ -63,7 +63,8 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode);
     }
 
-    private void refreshPreSYSBizLog(String refType, String refOrder,
+    @Override
+    public void refreshPreSYSBizLog(String refType, String refOrder,
             String dealNode) {
         SYSBizLog data = getSYSBizLoglatest(refType, refOrder, dealNode);
 
