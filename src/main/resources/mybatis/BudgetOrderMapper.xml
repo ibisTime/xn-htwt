@@ -27,7 +27,8 @@
 		
 		<result column="car_pic" property="carPic" />
 		<result column="car_hgz_pic" property="carHgzPic" />
-		<result column="drive_license" property="driveLicense" />
+		<result column="drive_license_front" property="driveLicenseFront" />
+		<result column="drive_license_reverse" property="driveLicenseReverse" />
 		<result column="evaluate_column" property="evaluateColumn" />
 		<result column="car_frame_no" property="carFrameNo" />
 		<result column="car_engine_no" property="carEngineNo" />
@@ -420,7 +421,8 @@
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
-		,t.drive_license
+		,t.drive_license_front
+		,t.drive_license_reverse
 		,t.evaluate_column
 		,t.car_frame_no
 		,t.car_engine_no
@@ -734,7 +736,8 @@
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
-		,t.drive_license
+		,t.drive_license_front
+		,t.drive_license_reverse
 		,t.evaluate_column
 		,t.car_frame_no
 		,t.car_engine_no
@@ -824,7 +827,8 @@
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
-		,t.drive_license
+		,t.drive_license_front
+		,t.drive_license_reverse
 		,t.evaluate_column
 		,t.car_frame_no
 		,t.car_engine_no
@@ -1142,7 +1146,8 @@
 		,car_type
 		,car_pic
 		,car_hgz_pic
-		,drive_license
+		,drive_license_front
+		,drive_license_reverse
 		,evaluate_column
 		,car_frame_no
 		,car_engine_no
@@ -1383,7 +1388,8 @@
 		,#{carType}
 		,#{carPic}
 		,#{carHgzPic}
-		,#{driveLicense}
+		,#{driveLicenseFront}
+		,#{driveLicenseReverse}
 		,#{evaluateColumn}
 		,#{carFrameNo}
 		,#{carEngineNo}
@@ -1626,7 +1632,8 @@
 		,car_type = #{carType}
 		,car_pic = #{carPic}
 		,car_hgz_pic = #{carHgzPic}
-		,drive_license = #{driveLicense}
+		,drive_license_front = #{driveLicenseFront}
+		,drive_license_reverse = #{driveLicenseReverse}
 		,evaluate_column = #{evaluateColumn}
 		
 		,car_frame_no = #{carFrameNo}

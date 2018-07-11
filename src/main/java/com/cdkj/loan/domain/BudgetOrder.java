@@ -78,8 +78,11 @@ public class BudgetOrder extends ABaseDO {
     // 合格证
     private String carHgzPic;
 
-    // 行驶证
-    private String driveLicense;
+    // 行驶证正面
+    private String driveLicenseFront;
+
+    // 行驶证反面
+    private String driveLicenseReverse;
 
     // 评估栏
     private String evaluateColumn;
@@ -2925,12 +2928,20 @@ public class BudgetOrder extends ABaseDO {
         this.guaJourBalance = guaJourBalance;
     }
 
-    public String getDriveLicense() {
-        return driveLicense;
+    public String getDriveLicenseFront() {
+        return driveLicenseFront;
     }
 
-    public void setDriveLicense(String driveLicense) {
-        this.driveLicense = driveLicense;
+    public void setDriveLicenseFront(String driveLicenseFront) {
+        this.driveLicenseFront = driveLicenseFront;
+    }
+
+    public String getDriveLicenseReverse() {
+        return driveLicenseReverse;
+    }
+
+    public void setDriveLicenseReverse(String driveLicenseReverse) {
+        this.driveLicenseReverse = driveLicenseReverse;
     }
 
     public String getEvaluateColumn() {
