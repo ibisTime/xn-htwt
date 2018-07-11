@@ -48,9 +48,21 @@ public class XN632115Req extends APageReq {
     // 征信是否通过 0未通过1已通过
     private String isPass;
 
+    // 关键字
     private String keyword;
 
     private List<String> curNodeCodeList;
+
+    // 是否作废
+    private String isCancel;
+
+    public String getIsCancel() {
+        return isCancel;
+    }
+
+    public void setIsCancel(String isCancel) {
+        this.isCancel = isCancel;
+    }
 
     public List<String> getCurNodeCodeList() {
         return curNodeCodeList;

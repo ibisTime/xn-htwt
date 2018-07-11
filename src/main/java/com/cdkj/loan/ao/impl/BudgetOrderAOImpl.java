@@ -1794,7 +1794,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         cardTotalFee = bankFee + teamFee + companyFee;// 刷卡总手续费=团队服务费+银行服务费+公司服务费
         budgetOrder.setCardTotalFee(String.valueOf(cardTotalFee));
         // 刷卡总金额 = 贷款金额+刷卡总手续费
-        Long cardTotalAmount = budgetOrder.getLoanAmount() + cardTotalFee;
+        long loanAmount = 0;
+        if (null != budgetOrder.getLoanAmount()) {
+            loanAmount = budgetOrder.getLoanAmount();
+        }
+        Long cardTotalAmount = loanAmount + cardTotalFee;
         budgetOrder.setCardTotalAmount(String.valueOf(cardTotalAmount));
         return budgetOrder;
     }
