@@ -84,4 +84,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 资料补录
     public void dataSupplement(BudgetOrder budgetOrder);
 
+    // 团队报表
+    public Paginable<BudgetOrder> getPaginableByTeamCode(int start, int limit,
+            BudgetOrder condition);
+
 }

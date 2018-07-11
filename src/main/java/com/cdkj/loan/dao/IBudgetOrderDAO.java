@@ -65,4 +65,9 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 资料补录
     void dataSupplement(BudgetOrder budgetOrder);
 
+    long selectTotalCountByTeamCode(BudgetOrder condition);
+
+    List<BudgetOrder> selectBudgetOrderListByTeamCode(BudgetOrder condition,
+            int start, int pageSize);
+
 }
