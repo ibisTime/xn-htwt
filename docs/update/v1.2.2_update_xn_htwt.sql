@@ -26,7 +26,7 @@ CREATE TABLE `tdq_investigate_report` (
   `jour_balance` bigint(20) DEFAULT NULL COMMENT '帐户余额',
   `jour_month_income` bigint(20) DEFAULT NULL COMMENT '月均收入',
   `jour_month_expend` bigint(20) DEFAULT NULL COMMENT '月均支出',
-  `jour_remark` tinytext DEFAULT NULL COMMENT '银行流水情况',
+  `jour_remark` text DEFAULT NULL COMMENT '银行流水情况',
   `zfb_jour_datetime_start` datetime DEFAULT NULL COMMENT '支付宝流水时间起',
   `zfb_jour_datetime_end` datetime DEFAULT NULL COMMENT '支付宝流水时间止',
   `zfb_jour_income` bigint(20) DEFAULT NULL COMMENT '支付宝收入',
@@ -34,7 +34,7 @@ CREATE TABLE `tdq_investigate_report` (
   `zfb_jour_balance` bigint(20) DEFAULT NULL COMMENT '支付宝帐户余额',
   `zfb_jour_month_income` bigint(20) DEFAULT NULL COMMENT '支付宝月均收入',
   `zfb_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '支付宝月均支出',
-  `zfb_jour_remark` tinytext DEFAULT NULL COMMENT '支付宝流水情况',
+  `zfb_jour_remark` text DEFAULT NULL COMMENT '支付宝流水情况',
   `wx_jour_datetime_start` datetime DEFAULT NULL COMMENT '微信流水时间起',
   `wx_jour_datetime_end` datetime DEFAULT NULL COMMENT '微信流水时间止',
   `wx_jour_income` bigint(20) DEFAULT NULL COMMENT '微信收入',
@@ -42,38 +42,38 @@ CREATE TABLE `tdq_investigate_report` (
   `wx_jour_balance` bigint(20) DEFAULT NULL COMMENT '微信帐户余额',
   `wx_jour_month_income` bigint(20) DEFAULT NULL COMMENT '微信月均收入',
   `wx_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '微信月均支出',
-  `wx_jour_remark` tinytext DEFAULT NULL COMMENT '微信流水情况',
-  `house_contract` tinytext DEFAULT NULL COMMENT '房产情况及家访',
+  `wx_jour_remark` text DEFAULT NULL COMMENT '微信流水情况',
+  `house_contract` text DEFAULT NULL COMMENT '房产情况及家访',
   `home_visit` tinytext DEFAULT NULL COMMENT '家访地址',
-  `house_picture` tinytext DEFAULT NULL COMMENT '家访照片',
+  `house_picture` text DEFAULT NULL COMMENT '家访照片',
   `basics_information` text DEFAULT NULL COMMENT '车辆基础信息',
-  `xsz_pdf` tinytext DEFAULT NULL COMMENT '行驶证主副页',
-  `xsz_car_pdf` tinytext DEFAULT NULL COMMENT '行驶证车辆照片页',
+  `xsz_pdf` text DEFAULT NULL COMMENT '行驶证主副页',
+  `xsz_car_pdf` text DEFAULT NULL COMMENT '行驶证车辆照片页',
   `frame_no` tinytext DEFAULT NULL COMMENT '车架号',
   `nameplate` tinytext DEFAULT NULL COMMENT '车辆铭牌',
-  `forward_pdf` tinytext DEFAULT NULL COMMENT '车辆照片正前',
-  `queen_pdf` tinytext DEFAULT NULL COMMENT '车辆照片正后',
-  `left_pdf` tinytext DEFAULT NULL COMMENT '车辆照片正左',
-  `right_pdf` tinytext DEFAULT NULL COMMENT '车辆照片正右',
-  `lf45_pdf` tinytext DEFAULT NULL COMMENT '车辆照片左前45º',
-  `rf45_pdf` tinytext DEFAULT NULL COMMENT '车辆照片右前45º',
-  `lg45_pdf` tinytext DEFAULT NULL COMMENT '车辆照片左后45º',
-  `rr45_pdf` tinytext DEFAULT NULL COMMENT '车辆照片右后45º',
-  `engine_pdf` tinytext DEFAULT NULL COMMENT '车辆照片发动机仓',
-  `szm_pdf` tinytext DEFAULT NULL COMMENT '车辆中控台照片',
-  `gears_pdf` tinytext DEFAULT NULL COMMENT '车辆档位照片',
-  `functional_zone_pdf` tinytext DEFAULT NULL COMMENT '车辆功能区里照片',
-  `odometer_pdf` tinytext DEFAULT NULL COMMENT '车辆里程表照片',
-  `front_row_pdf` tinytext DEFAULT NULL COMMENT '车辆前排内饰照片',
-  `rock_row_pdf` tinytext DEFAULT NULL COMMENT '车辆中排内饰照片',
-  `trunk_pdf` tinytext DEFAULT NULL COMMENT '车辆后备箱照片',
-  `louver_pdf` tinytext DEFAULT NULL COMMENT '车辆天窗照片',
-  `bank_row_pdf` tinytext DEFAULT NULL COMMENT '车辆后排娱乐系统照片',
-  `check_approve_pdf` tinytext DEFAULT NULL COMMENT '车辆核准截图',
+  `forward_pdf` text DEFAULT NULL COMMENT '车辆照片正前',
+  `queen_pdf` text DEFAULT NULL COMMENT '车辆照片正后',
+  `left_pdf` text DEFAULT NULL COMMENT '车辆照片正左',
+  `right_pdf` text DEFAULT NULL COMMENT '车辆照片正右',
+  `lf45_pdf` text DEFAULT NULL COMMENT '车辆照片左前45º',
+  `rf45_pdf` text DEFAULT NULL COMMENT '车辆照片右前45º',
+  `lg45_pdf` text DEFAULT NULL COMMENT '车辆照片左后45º',
+  `rr45_pdf` text DEFAULT NULL COMMENT '车辆照片右后45º',
+  `engine_pdf` text DEFAULT NULL COMMENT '车辆照片发动机仓',
+  `szm_pdf` text DEFAULT NULL COMMENT '车辆中控台照片',
+  `gears_pdf` text DEFAULT NULL COMMENT '车辆档位照片',
+  `functional_zone_pdf` text DEFAULT NULL COMMENT '车辆功能区里照片',
+  `odometer_pdf` text DEFAULT NULL COMMENT '车辆里程表照片',
+  `front_row_pdf` text DEFAULT NULL COMMENT '车辆前排内饰照片',
+  `rock_row_pdf` text DEFAULT NULL COMMENT '车辆中排内饰照片',
+  `trunk_pdf` text DEFAULT NULL COMMENT '车辆后备箱照片',
+  `louver_pdf` text DEFAULT NULL COMMENT '车辆天窗照片',
+  `bank_row_pdf` text DEFAULT NULL COMMENT '车辆后排娱乐系统照片',
+  `check_approve_pdf` text DEFAULT NULL COMMENT '车辆核准截图',
   `check_approve_link` tinytext DEFAULT NULL COMMENT '核准链接',
-  `third_valuation_pdf` tinytext DEFAULT NULL COMMENT '第三方评估价截图',
-  `check_approve_software` tinytext DEFAULT NULL COMMENT '核准软件',
-  `used_car_current_rate` tinytext DEFAULT NULL COMMENT '二手车市场成交价最低及最高截图',
+  `third_valuation_pdf` text DEFAULT NULL COMMENT '第三方评估价截图',
+  `check_approve_software` text DEFAULT NULL COMMENT '核准软件',
+  `used_car_current_rate` text DEFAULT NULL COMMENT '二手车市场成交价最低及最高截图',
   `information_source` tinytext DEFAULT NULL COMMENT '信息源',
   `valuation` bigint(20) DEFAULT NULL COMMENT '评估价',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
@@ -143,4 +143,20 @@ CHANGE COLUMN `create_datetme` `create_datetime` DATETIME NULL DEFAULT NULL COMM
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `policy_datetime` datetime DEFAULT NULL COMMENT '保单日期' AFTER `car_syx`,
 ADD COLUMN `policy_due_date` datetime DEFAULT NULL COMMENT '保单到期日' AFTER `policy_datetime`;
+CHANGE COLUMN `drive_license` `drive_license_front` TINYTEXT NULL DEFAULT NULL COMMENT '行驶证正面' ;
+ADD COLUMN `drive_license_reverse` TINYTEXT DEFAULT NULL COMMENT '行驶证反面' AFTER `drive_license_front`;
 
+
+DELETE FROM `tsys_menu` WHERE `code`='SM201805171747477945012';
+DELETE FROM `tsys_menu` WHERE `code`='SM201805171749254406565';
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102222115797443','征信统计表','1','/statistic/creditReport.htm','3','U201806060409046595411','2018-07-10 23:30:54','统计分析','SM201805171730323054680');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223052449230','进度日报表','1','/statistic/dayReport.htm','4','U201806061344020605969','2018-07-10 23:58:49','统计分析','SM201805171730323054680');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223342132405','贷后统计表','1','/statistic/postloanReport.htm','5','U201806060409046595411','2018-07-11 13:59:22','统计分析','SM201805171730323054680');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807111339063962570','业务报表','1','/statistic/businessReport.htm','6','U201806060409046595411','2018-07-11 14:59:28','','SM201805171730323054680');
+insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807111345256256205','团队报表','1','/statistic/teamReport.htm','7','U201806060409046595411','2018-07-11 14:59:33','','SM201805171730323054680');
+
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807111345256256205','U201806060409046595411','2018-07-11 15:09:11',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807111339063962570','U201806060409046595411','2018-07-11 15:09:11',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102222115797443','U201806060409046595411','2018-07-11 15:09:11',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102223342132405','U201806060409046595411','2018-07-11 15:09:11',NULL);
+insert into `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`, `remark`) values('RO201800000000000001','SM201807102223052449230','U201806060409046595411','2018-07-11 15:09:11',NULL);
