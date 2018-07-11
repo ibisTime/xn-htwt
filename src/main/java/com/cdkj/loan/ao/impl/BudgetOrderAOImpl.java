@@ -491,14 +491,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode()).getNextNode();
             node = EBudgetOrderNode.getMap().get(nextNode);
+            // 日志记录
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+                EBizLogType.BUDGET_ORDER, data.getCode(),
+                data.getCurNodeCode(), node.getCode(), node.getValue(),
+                req.getOperator());
+            /*
+             * // 日志记录 sysBizLogBO.saveSYSBizLog(data.getCode(),
+             * EBizLogType.BUDGET_ORDER, data.getCode(), node.getCode(),
+             * node.getValue(), req.getOperator());
+             */
         }
-
         data.setCurNodeCode(node.getCode());
         budgetOrderBO.refreshBudgetOrder(data);
-
-        // 日志记录
-        sysBizLogBO.saveSYSBizLog(data.getCode(), EBizLogType.BUDGET_ORDER,
-            data.getCode(), node.getCode(), node.getValue(), req.getOperator());
     }
 
     @Override
