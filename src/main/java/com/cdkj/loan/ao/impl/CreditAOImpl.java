@@ -258,11 +258,13 @@ public class CreditAOImpl implements ICreditAO {
     public Credit getCreditAndCreditUser(String code) {
         Credit credit = creditBO.getCredit(code);
 
-        if (StringUtils.isNotBlank(credit.getCompanyCode())) {
-            Department department = departmentBO
-                .getDepartment(credit.getCompanyCode());
-            credit.setCompanyName(department.getName());
+        Department department = departmentBO
+            .getDepartment(credit.getCompanyCode());
+        if (department == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "征信单无岗位，请先设置岗位！");
         }
+        credit.setCompanyName(department.getName());
 
         CreditUser condition = new CreditUser();
         condition.setCreditCode(credit.getCode());

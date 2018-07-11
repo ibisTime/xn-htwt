@@ -381,9 +381,13 @@ public class SYSUserAOImpl implements ISYSUserAO {
         user.setMobile(req.getMobile());
         user.setRealName(req.getRealName());
         user.setRoleCode(req.getRoleCode());
-        user.setCompanyCode(req.getCompanyCode());
-        user.setDepartmentCode(req.getDepartmentCode());
         user.setPostCode(req.getPostCode());
+        String departmentCode = departmentBO
+            .getDepartmentByPost(req.getPostCode());
+        user.setDepartmentCode(departmentCode);
+        String companyCode = departmentBO
+            .getCompanyByDepartment(departmentCode);
+        user.setCompanyCode(companyCode);
         user.setUpdater(req.getUpdater());
         user.setUpdateDatetime(new Date());
         user.setRemark(req.getRemark());
