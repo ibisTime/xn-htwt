@@ -72,7 +72,13 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     @Override
     public Paginable<SYSBizLog> querySYSBizLogPage(int start, int limit,
             SYSBizLog condition) {
-        return sysBizLogBO.getPaginable(start, limit, condition);
+        Paginable<SYSBizLog> paginable = sysBizLogBO.getPaginable(start, limit,
+            condition);
+        List<SYSBizLog> list = paginable.getList();
+        for (SYSBizLog sysBizLog : list) {
+            init(sysBizLog);
+        }
+        return paginable;
     }
 
     @Override
@@ -190,10 +196,15 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     public Object querySYSRoleListByRefOrder(SYSBizLog condition) {
         List<SYSBizLog> list = sysBizLogBO.querySYSBizLogList(condition);
         for (SYSBizLog sysBizLog : list) {
-            SYSUser user = sysUserBO.getUser(sysBizLog.getOperator());
-            sysBizLog.setOperatorName(user.getRealName());
+            init(sysBizLog);
         }
         return list;
+    }
+
+    private SYSBizLog init(SYSBizLog sysBizLog) {
+        SYSUser user = sysUserBO.getUser(sysBizLog.getOperator());
+        sysBizLog.setOperatorName(user.getRealName());
+        return sysBizLog;
     }
 
 }
