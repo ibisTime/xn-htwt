@@ -890,6 +890,17 @@ public class BudgetOrder extends ABaseDO {
     // 刷卡总金额 = 贷款金额+刷卡总手续费
     private String cardTotalAmount;
 
+    // 是否作废
+    private String isCancel;
+
+    public String getIsCancel() {
+        return isCancel;
+    }
+
+    public void setIsCancel(String isCancel) {
+        this.isCancel = isCancel;
+    }
+
     public String getCardTotalAmount() {
         return cardTotalAmount;
     }
