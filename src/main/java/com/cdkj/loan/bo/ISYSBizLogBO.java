@@ -30,4 +30,7 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
     public Paginable<SYSBizLog> getPaginableByBizOrderType(int start,
             int limit, SYSBizLog condition);
+
+    public void refreshPreSYSBizLog(String refType, String refOrder,
+            String dealNode);
 }
