@@ -121,6 +121,17 @@ public class Credit extends ABaseDO {
 
     private List<String> curNodeCodeList;
 
+    // 是否作废
+    private String isCancel;
+
+    public String getIsCancel() {
+        return isCancel;
+    }
+
+    public void setIsCancel(String isCancel) {
+        this.isCancel = isCancel;
+    }
+
     public List<String> getCurNodeCodeList() {
         return curNodeCodeList;
     }

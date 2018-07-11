@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
@@ -65,8 +66,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void sendLogistics(XN632150Req req) {
         Logistics logistics = logisticsBO.getLogistics(req.getCode());
         if (!ELogisticsStatus.TO_SEND.getCode().equals(logistics.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
-                    logistics.getStatus())) {
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
+                    .equals(logistics.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待发货状态!");
         }
@@ -137,7 +138,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator, String remark) {
+    public void sendAgainLogistics(String code, String operator,
+            String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
@@ -180,6 +182,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (StringUtils.isNotBlank(logistics.getUserId())) {
             SYSUser sysUser = sysUserBO.getUser(logistics.getUserId());
             logistics.setUserName(sysUser.getRealName());
+        }
+        if (StringUtils.isNotBlank(logistics.getBizCode())) {
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(logistics.getBizCode());
+            logistics.setCustomerName(budgetOrder.getApplyUserName());
         }
     }
 
