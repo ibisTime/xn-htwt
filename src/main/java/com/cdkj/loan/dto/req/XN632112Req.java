@@ -28,12 +28,6 @@ public class XN632112Req {
     // 二手车评估报告
     private String secondCarReport;
 
-    // 行驶证正面
-    private String xszFront;
-
-    // 行驶证反面
-    private String xszReverse;
-
     private List<XN632112ReqCreditUser> creditUserList;
 
     // 操作按钮
@@ -82,22 +76,6 @@ public class XN632112Req {
 
     public void setSecondCarReport(String secondCarReport) {
         this.secondCarReport = secondCarReport;
-    }
-
-    public String getXszFront() {
-        return xszFront;
-    }
-
-    public void setXszFront(String xszFront) {
-        this.xszFront = xszFront;
-    }
-
-    public String getXszReverse() {
-        return xszReverse;
-    }
-
-    public void setXszReverse(String xszReverse) {
-        this.xszReverse = xszReverse;
     }
 
     public List<XN632112ReqCreditUser> getCreditUserList() {

@@ -142,13 +142,24 @@ CHANGE COLUMN `create_datetme` `create_datetime` DATETIME NULL DEFAULT NULL COMM
 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `policy_datetime` datetime DEFAULT NULL COMMENT '保单日期' AFTER `car_syx`,
-ADD COLUMN `policy_due_date` datetime DEFAULT NULL COMMENT '保单到期日' AFTER `policy_datetime`;
-CHANGE COLUMN `drive_license` `drive_license_front` TINYTEXT NULL DEFAULT NULL COMMENT '行驶证正面' ;
+ADD COLUMN `policy_due_date` datetime DEFAULT NULL COMMENT '保单到期日' AFTER `policy_datetime`,
+CHANGE COLUMN `drive_license` `drive_license_front` TINYTEXT NULL DEFAULT NULL COMMENT '行驶证正面' ,
 ADD COLUMN `drive_license_reverse` TINYTEXT DEFAULT NULL COMMENT '行驶证反面' AFTER `drive_license_front`;
+
+update tdq_budget_order tbo,tdq_credit tc
+set tbo.drive_license_front=tc.xsz_front and tbo.drive_license_reverse=tc.xsz_reverse
+where tbo.credit_code=tc.code;
+
+ALTER TABLE `tdq_credit` 
+DROP COLUMN `xsz_reverse`,
+DROP COLUMN `xsz_front`;
 
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171747477945012';
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171749254406565';
+DELETE FROM `tsys_menu` WHERE `code`='SM201807102222115797443';
+DELETE FROM `tsys_menu` WHERE `code`='SM201807102223052449230';
+DELETE FROM `tsys_menu` WHERE `code`='SM201807102223342132405';
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102222115797443','征信统计表','1','/statistic/creditReport.htm','3','U201806060409046595411','2018-07-10 23:30:54','统计分析','SM201805171730323054680');
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223052449230','进度日报表','1','/statistic/dayReport.htm','4','U201806061344020605969','2018-07-10 23:58:49','统计分析','SM201805171730323054680');
 insert into `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`, `remark`, `parent_code`) values('SM201807102223342132405','贷后统计表','1','/statistic/postloanReport.htm','5','U201806060409046595411','2018-07-11 13:59:22','统计分析','SM201805171730323054680');

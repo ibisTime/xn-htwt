@@ -29,6 +29,7 @@ public class XN632205 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         InvestigateReport condition = new InvestigateReport();
+        condition.setCode(req.getCode());
         condition.setRepayBizCode(req.getRepayBizCode());
         condition.setApplyUserName(req.getApplyUserName());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());

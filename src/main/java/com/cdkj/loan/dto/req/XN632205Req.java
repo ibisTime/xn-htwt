@@ -7,6 +7,9 @@ public class XN632205Req extends APageReq {
      */
     private static final long serialVersionUID = 163932874954488442L;
 
+    // 编号
+    private String code;
+
     // 业务编号
     private String repayBizCode;
 
@@ -40,6 +43,14 @@ public class XN632205Req extends APageReq {
 
     public String getApplyDatetimeStart() {
         return applyDatetimeStart;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public void setApplyDatetimeStart(String applyDatetimeStart) {
