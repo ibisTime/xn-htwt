@@ -29,7 +29,7 @@ public class SYSBizLog extends ABaseDO {
 
     private String operator;// 操作人
 
-    private String operatorName;// 操作人姓名
+    private String operatorName;// 操作人姓名(实际是登录名)
 
     private String operatorMobile;// 操作人手机号
 
