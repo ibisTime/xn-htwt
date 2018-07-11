@@ -17,8 +17,8 @@ import java.util.Map;
  * @history:
  */
 public enum ESysRole {
-    SALE("SR201800000000000000YWY", "业务员编号"), YWNQ("SR20180000000000000NQZY",
-            "内勤专员"), LEADER("SR201805301244280427951", "团队长");
+    SALE("SR201800000000000000YWY", "信贷专员"), YWNQ("SR20180000000000000NQZY",
+            "团队内勤"), LEADER("SR201805301244280427951", "团队长");
 
     public static Map<String, ESysRole> getMap() {
         Map<String, ESysRole> map = new HashMap<String, ESysRole>();
