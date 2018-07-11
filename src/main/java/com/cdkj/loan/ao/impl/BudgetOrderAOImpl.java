@@ -1736,20 +1736,49 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             start, limit, condition);
         List<BudgetOrder> list = page.getList();
         for (BudgetOrder budgetOrder : list) {
-            initReport(budgetOrder);
+            initTeamReport(budgetOrder);
         }
         return page;
     }
 
-    private BudgetOrder initReport(BudgetOrder budgetOrder) {
+    private BudgetOrder initTeamReport(BudgetOrder budgetOrder) {
         CreditUser user = creditUserBO.getCreditUserByCreditCode(
             budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
-        budgetOrder.setContactNo(user.getMobile());
+        budgetOrder.setContactNo(user.getMobile());// 联系电话
+        SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
+        budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
         SYSBizLog bizLog = sysBizLogBO
             .getLatestOperateRecordByBizCode(budgetOrder.getCode());
         if (null != bizLog) {
-            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤使用这个业务单在日志表的最新操作人
+            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
         }
+        return budgetOrder;
+    }
+
+    @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPageForBizReport(int start,
+            int limit, BudgetOrder condition) {
+        Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginable(start,
+            limit, condition);
+        List<BudgetOrder> list = paginable.getList();
+        for (BudgetOrder budgetOrder : list) {
+            initBizReport(budgetOrder);
+        }
+        return paginable;
+    }
+
+    private BudgetOrder initBizReport(BudgetOrder budgetOrder) {
+        SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
+        budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
+        SYSBizLog bizLog = sysBizLogBO
+            .getLatestOperateRecordByBizCode(budgetOrder.getCode());
+        if (null != bizLog) {
+            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
+        }
+        CreditUser user = creditUserBO.getCreditUserByCreditCode(
+            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        budgetOrder.setContactNo(user.getMobile());// 联系电话
+
         return budgetOrder;
     }
 
