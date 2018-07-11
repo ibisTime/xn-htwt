@@ -51,6 +51,7 @@ import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
+import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -1729,7 +1730,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             int limit, BudgetOrder condition) {
         Paginable<BudgetOrder> page = budgetOrderBO.getPaginableByTeamCode(
             start, limit, condition);
+        List<BudgetOrder> list = page.getList();
+        for (BudgetOrder budgetOrder : list) {
+            initReport(budgetOrder);
+        }
         return page;
+    }
+
+    private BudgetOrder initReport(BudgetOrder budgetOrder) {
+        CreditUser user = creditUserBO.getCreditUserByCreditCode(
+            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        budgetOrder.setContactNo(user.getMobile());
+        SYSBizLog bizLog = sysBizLogBO
+            .getLatestOperateRecordByBizCode(budgetOrder.getCode());
+        if (null != bizLog) {
+            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤使用这个业务单在日志表的最新操作人
+        }
+        return budgetOrder;
     }
 
 }

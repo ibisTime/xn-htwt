@@ -2194,7 +2194,7 @@
 	<select id="select_budgetOrder_byTeamCode" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
-		,t.sale_user_id
+		,t.credit_code
 		,t.original_price
 		,t.sale_user_id
 		,t.apply_user_name
@@ -2204,7 +2204,7 @@
 		,t.loan_amount
 		,t.repay_first_month_amount
 		,t.repay_month_amount
-		,t.credit_card_no
+		,t.repay_bankcard_number
 		,t.repay_bank_date
 		,t.biz_type
 		FROM

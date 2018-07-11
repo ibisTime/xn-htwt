@@ -872,6 +872,28 @@ public class BudgetOrder extends ABaseDO {
     // 业务编号模糊差查
     private String repayBizCodeForQuery;
 
+    // 联系电话
+    private String contactNo;
+
+    // 内勤
+    private String insideJob;
+
+    public String getInsideJob() {
+        return insideJob;
+    }
+
+    public void setInsideJob(String insideJob) {
+        this.insideJob = insideJob;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
     public String getKeyword() {
         return keyword;
     }
