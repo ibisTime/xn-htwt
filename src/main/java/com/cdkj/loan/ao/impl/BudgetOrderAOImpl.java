@@ -1778,8 +1778,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         CreditUser user = creditUserBO.getCreditUserByCreditCode(
             budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
         budgetOrder.setContactNo(user.getMobile());// 联系电话
-        Long cardTotalFee = budgetOrder.getBankFee() + budgetOrder.getTeamFee()
-                + budgetOrder.getCompanyFee();// 刷卡总手续费=团队服务费+银行服务费+公司服务费
+        long cardTotalFee = 0;
+        long bankFee = 0;
+        long teamFee = 0;
+        long companyFee = 0;
+        if (null != budgetOrder.getBankFee()) {
+            bankFee = budgetOrder.getBankFee();
+        }
+        if (null != budgetOrder.getTeamFee()) {
+            teamFee = budgetOrder.getTeamFee();
+        }
+        if (null != budgetOrder.getCompanyFee()) {
+            companyFee = budgetOrder.getCompanyFee();
+        }
+        cardTotalFee = bankFee + teamFee + companyFee;// 刷卡总手续费=团队服务费+银行服务费+公司服务费
         budgetOrder.setCardTotalFee(String.valueOf(cardTotalFee));
         // 刷卡总金额 = 贷款金额+刷卡总手续费
         Long cardTotalAmount = budgetOrder.getLoanAmount() + cardTotalFee;
