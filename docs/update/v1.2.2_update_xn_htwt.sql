@@ -142,8 +142,8 @@ CHANGE COLUMN `create_datetme` `create_datetime` DATETIME NULL DEFAULT NULL COMM
 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `policy_datetime` datetime DEFAULT NULL COMMENT '保单日期' AFTER `car_syx`,
-ADD COLUMN `policy_due_date` datetime DEFAULT NULL COMMENT '保单到期日' AFTER `policy_datetime`;
-CHANGE COLUMN `drive_license` `drive_license_front` TINYTEXT NULL DEFAULT NULL COMMENT '行驶证正面' ;
+ADD COLUMN `policy_due_date` datetime DEFAULT NULL COMMENT '保单到期日' AFTER `policy_datetime`,
+CHANGE COLUMN `drive_license` `drive_license_front` TINYTEXT NULL DEFAULT NULL COMMENT '行驶证正面' ,
 ADD COLUMN `drive_license_reverse` TINYTEXT DEFAULT NULL COMMENT '行驶证反面' AFTER `drive_license_front`;
 
 update tdq_budget_order tbo,tdq_credit tc

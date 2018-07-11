@@ -372,7 +372,7 @@
 			</if>
 			<if test="curNodeCodeList != null and curNodeCodeList != '' ">
 				AND t.cur_node_code in 
-				<foreach collection="curNodeCodeList" index="curNodeCode" item="item" open="(" separator="," close=")">
+				<foreach collection="curNodeCodeList" index="index" item="item" open="(" separator="," close=")">
 		            #{item}
 		        </foreach>
 			</if>
