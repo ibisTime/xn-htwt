@@ -28,6 +28,12 @@ public class XN632128Req {
     // 商业险
     private String carSyx;
 
+    // 保单日期
+    private String policyDatetime;
+
+    // 保单到期日
+    private String policyDueDate;
+
     // 其他资料
     private String carSettleOtherPdf;
 
@@ -37,6 +43,22 @@ public class XN632128Req {
 
     public void setCarSettleOtherPdf(String carSettleOtherPdf) {
         this.carSettleOtherPdf = carSettleOtherPdf;
+    }
+
+    public String getPolicyDatetime() {
+        return policyDatetime;
+    }
+
+    public void setPolicyDatetime(String policyDatetime) {
+        this.policyDatetime = policyDatetime;
+    }
+
+    public String getPolicyDueDate() {
+        return policyDueDate;
+    }
+
+    public void setPolicyDueDate(String policyDueDate) {
+        this.policyDueDate = policyDueDate;
     }
 
     public String getCode() {

@@ -681,6 +681,12 @@ public class BudgetOrder extends ABaseDO {
     // 商业险
     private String carSyx;
 
+    // 保单日期
+    private Date policyDatetime;
+
+    // 保单到期日
+    private Date policyDueDate;
+
     // 车辆落户其他资料
     private String carSettleOtherPdf;
 
@@ -1566,6 +1572,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGuaIdNo(String guaIdNo) {
         this.guaIdNo = guaIdNo;
+    }
+
+    public Date getPolicyDatetime() {
+        return policyDatetime;
+    }
+
+    public void setPolicyDatetime(Date policyDatetime) {
+        this.policyDatetime = policyDatetime;
+    }
+
+    public Date getPolicyDueDate() {
+        return policyDueDate;
+    }
+
+    public void setPolicyDueDate(Date policyDueDate) {
+        this.policyDueDate = policyDueDate;
     }
 
     public String getGuaPhone() {
