@@ -1810,13 +1810,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         BudgetOrder condition = new BudgetOrder();
         condition.setApplyUserNameForQuery(req.getUserName());
-        if (req.getEnterStatus().equals(EBoolean.YES.getCode())) {
-            // 已入档
-            condition.setCurNodeCode(EBudgetOrderNode.ARCHIVE_END.getCode());
-        } else {
-            // 未入档
-            condition.setCurNodeCodeNoEnter(EBudgetOrderNode.ARCHIVE_END
-                .getCode());
+        if (StringUtils.isNotBlank(req.getEnterStatus())) {
+            if (req.getEnterStatus().equals(EBoolean.YES.getCode())) {
+                // 已入档
+                condition
+                    .setCurNodeCode(EBudgetOrderNode.ARCHIVE_END.getCode());
+            } else {
+                // 未入档
+                condition.setCurNodeCodeNoEnter(EBudgetOrderNode.ARCHIVE_END
+                    .getCode());
+            }
         }
         SYSUser user = sysUserBO.getUser(req.getUserId());
         if (user.getRoleCode().equals(ESysRole.SALE.getCode())) {
