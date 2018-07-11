@@ -184,9 +184,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
             logistics.setUserName(sysUser.getRealName());
         }
         if (StringUtils.isNotBlank(logistics.getBizCode())) {
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(logistics.getBizCode());
-            logistics.setCustomerName(budgetOrder.getApplyUserName());
+            if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
+                BudgetOrder budgetOrder = budgetOrderBO
+                    .getBudgetOrder(logistics.getBizCode());
+                logistics.setCustomerName(budgetOrder.getApplyUserName());
+            }
         }
     }
 
