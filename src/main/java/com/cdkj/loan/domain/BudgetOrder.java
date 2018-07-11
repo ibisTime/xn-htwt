@@ -884,6 +884,28 @@ public class BudgetOrder extends ABaseDO {
     // 内勤
     private String insideJob;
 
+    // 刷卡总手续费=团队服务费+银行服务费+公司服务费
+    private String cardTotalFee;
+
+    // 刷卡总金额 = 贷款金额+刷卡总手续费
+    private String cardTotalAmount;
+
+    public String getCardTotalAmount() {
+        return cardTotalAmount;
+    }
+
+    public void setCardTotalAmount(String cardTotalAmount) {
+        this.cardTotalAmount = cardTotalAmount;
+    }
+
+    public String getCardTotalFee() {
+        return cardTotalFee;
+    }
+
+    public void setCardTotalFee(String cardTotalFee) {
+        this.cardTotalFee = cardTotalFee;
+    }
+
     public String getInsideJob() {
         return insideJob;
     }
