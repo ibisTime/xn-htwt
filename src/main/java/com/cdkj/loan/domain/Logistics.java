@@ -76,6 +76,9 @@ public class Logistics extends ABaseDO {
     // 用户姓名
     private String userName;
 
+    // 客户姓名
+    private String customerName;
+
     // 状态List
     private List<String> statusList;
 
@@ -85,6 +88,14 @@ public class Logistics extends ABaseDO {
 
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getTeamCode() {
