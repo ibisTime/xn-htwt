@@ -74,12 +74,10 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         String curNodeCode = data.getCurNodeCode();
 
         data.setGuaMode(req.getGuaMode());
-        data.setCustomerInformation(req.getCustomerInformation());
         data.setPriceApprovalPdf(req.getPriceApprovalPdf());
         data.setCar168Price(StringValidater.toLong(req.getCar168Price()));
         data.setApplyWorkAndJour(req.getApplyWorkAndJour());
         data.setHomeVisit(req.getHomeVisit());
-        data.setBasicsInformation(req.getBasicsInformation());
         data.setXszPdf(req.getXszPdf());
         data.setXszCarPdf(req.getXszCarPdf());
         data.setFrameNo(req.getFrameNo());
