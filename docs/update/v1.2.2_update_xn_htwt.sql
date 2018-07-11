@@ -129,12 +129,16 @@ WHERE
   tr.budget_order_code = tbo.code;
   
 update tdq_investigate_report set cur_node_code='010_01';
+update tdq_investigate_report set updater='USYS201800000000001';
+update tdq_investigate_report set update_datetime=now();
 
 update tdq_budget_order tbo,tdq_credit tc,tdq_credit_user tcu,tdq_investigate_report td
 set td.bank_credit_result_remark=tcu.bank_credit_result_remark 
 where tbo.credit_code=tc.code and tc.code = tcu.credit_code and tcu.loan_role='1';
 
 
+ALTER TABLE `tsys_user` 
+CHANGE COLUMN `create_datetme` `create_datetime` DATETIME NULL DEFAULT NULL COMMENT '注册时间' ;
 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `policy_datetime` datetime DEFAULT NULL COMMENT '保单日期' AFTER `car_syx`,
