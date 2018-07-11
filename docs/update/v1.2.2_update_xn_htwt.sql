@@ -158,6 +158,10 @@ ALTER TABLE `tdq_credit`
 DROP COLUMN `xsz_reverse`,
 DROP COLUMN `xsz_front`;
 
+ALTER TABLE `tdq_investigate_report` 
+CHANGE COLUMN `bank_credit_result_remark` `bank_credit_result_remark` TEXT NULL DEFAULT NULL COMMENT '申请人征信情况' ;
+
+
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171747477945012';
 DELETE FROM `tsys_menu` WHERE `code`='SM201805171749254406565';
 DELETE FROM `tsys_menu` WHERE `code`='SM201807102222115797443';

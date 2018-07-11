@@ -85,6 +85,7 @@ public class CreditAOImpl implements ICreditAO {
     private IBizTeamBO bizTeamBO;
 
     @Override
+    @Transactional
     public String addCredit(XN632110Req req) {
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
         if (StringUtils.isBlank(sysUser.getPostCode())) {
