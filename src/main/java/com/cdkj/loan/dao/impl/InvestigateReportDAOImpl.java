@@ -8,7 +8,6 @@ import com.cdkj.loan.dao.IInvestigateReportDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.InvestigateReport;
 
-//CHECK 。。。 
 @Repository("investigateReportDAOImpl")
 public class InvestigateReportDAOImpl extends AMybatisTemplate
         implements IInvestigateReportDAO {

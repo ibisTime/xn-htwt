@@ -8,9 +8,6 @@ public class XN632200Req {
     // 担保方式
     private String guaMode;
 
-    // 客户基本情况
-    private String customerInformation;
-
     // 申请人贷款车辆价格核准情况
     private String priceApprovalPdf;
 
@@ -22,9 +19,6 @@ public class XN632200Req {
 
     // 家访地址
     private String homeVisit;
-
-    // 车辆基础信息
-    private String basicsInformation;
 
     // 行驶证主副页
     private String xszPdf;
@@ -143,14 +137,6 @@ public class XN632200Req {
         this.guaMode = guaMode;
     }
 
-    public String getCustomerInformation() {
-        return customerInformation;
-    }
-
-    public void setCustomerInformation(String customerInformation) {
-        this.customerInformation = customerInformation;
-    }
-
     public String getPriceApprovalPdf() {
         return priceApprovalPdf;
     }
@@ -181,14 +167,6 @@ public class XN632200Req {
 
     public void setHomeVisit(String homeVisit) {
         this.homeVisit = homeVisit;
-    }
-
-    public String getBasicsInformation() {
-        return basicsInformation;
-    }
-
-    public void setBasicsInformation(String basicsInformation) {
-        this.basicsInformation = basicsInformation;
     }
 
     public String getXszPdf() {
