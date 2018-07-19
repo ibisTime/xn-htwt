@@ -344,10 +344,6 @@ public class OrderAOImpl implements IOrderAO {
     @Override
     public void userCancel(String code, String userId, String remark) {
         Order data = orderBO.getOrder(code);
-        if (!userId.equals(data.getApplyUser())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "订单申请人和取消操作用户不符");
-        }
         if (!EOrderStatus.TO_PAY.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "订单状态不是待支付状态，不能进行取消操作");
