@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IInvestigateReportBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
+import com.cdkj.loan.bo.IRoleNodeBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Page;
@@ -23,6 +24,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
+import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
@@ -63,6 +65,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private IRoleNodeBO roleNodeBO;
+
     @Override
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition) {
         return sysBizLogBO.querySYSBizLogList(condition);
@@ -95,35 +100,44 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         for (SYSBizLog sysBizLog : list) {
             SYSBizLog latestOperateRecordByBizCode = sysBizLogBO
                 .getLatestOperateRecordByBizCode(sysBizLog.getRefOrder());
-            if (ECreditNode.ACHIEVE.getCode().equals(
-                latestOperateRecordByBizCode.getDealNode())
-                    || EBudgetOrderNode.ARCHIVE_END.getCode().equals(
+            List<Node> nodeList = roleNodeBO.queryNodeListByRoleCode(condition
+                .getRoleCode());
+            for (Node node : nodeList) {
+                if (latestOperateRecordByBizCode.getDealNode().equals(node)) {
+                    if (ECreditNode.ACHIEVE.getCode().equals(
                         latestOperateRecordByBizCode.getDealNode())
-                    || ERepayBizNode.SETTLED.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || ERepayBizNode.BAD_DEBT.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || ERepayBizNode.TEAN_BUY_OUT.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || ERepayBizNode.TEAM_RENT.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || ERepayBizNode.RISK_MANAGER_CHECK_NO.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || ERepayBizNode.FINANCE_MANAGER_CHECK_NO.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || ERepayBizNode.REDEEM_SETTLED.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || EBudgetOrderNode.CANCEL_END.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || EBusinessTripApplyNode.AUDIT_PASS.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                    || EInvestigateReportNode.FINISH.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())) {
-                // 每种流程最后一个节点的 去除调
-                continue;
+                            || EBudgetOrderNode.ARCHIVE_END.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())
+                            || ERepayBizNode.SETTLED.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())
+                            || ERepayBizNode.BAD_DEBT.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())
+                            || ERepayBizNode.TEAN_BUY_OUT.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())
+                            || ERepayBizNode.TEAM_RENT.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())
+                            || ERepayBizNode.RISK_MANAGER_CHECK_NO.getCode()
+                                .equals(
+                                    latestOperateRecordByBizCode.getDealNode())
+                            || ERepayBizNode.FINANCE_MANAGER_CHECK_NO.getCode()
+                                .equals(
+                                    latestOperateRecordByBizCode.getDealNode())
+                            || ERepayBizNode.REDEEM_SETTLED.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())
+                            || EBudgetOrderNode.CANCEL_END.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())
+                            || EBusinessTripApplyNode.AUDIT_PASS.getCode()
+                                .equals(
+                                    latestOperateRecordByBizCode.getDealNode())
+                            || EInvestigateReportNode.FINISH.getCode().equals(
+                                latestOperateRecordByBizCode.getDealNode())) {
+                        // 每种流程最后一个节点的 去除调
+                        continue;
+                    }
+                    todoThing(latestOperateRecordByBizCode);// 赋值 转义
+                    resList.add(latestOperateRecordByBizCode);
+                }
             }
-            todoThing(latestOperateRecordByBizCode);// 赋值 转义
-            resList.add(latestOperateRecordByBizCode);
         }
         list.removeAll(list);
         for (SYSBizLog sysBizLog : resList) {
