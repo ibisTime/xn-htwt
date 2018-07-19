@@ -66,4 +66,7 @@ public interface IAccountBO extends IPaginableBO<Account> {
 
     // 获取账户列表
     public List<Account> queryAccountList(Account data);
+
+    // 通过币种和用户id查账户
+    public Account queryAccountListByCurrency(Account account);
 }

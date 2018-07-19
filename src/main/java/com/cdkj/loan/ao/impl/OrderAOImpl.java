@@ -8,6 +8,7 @@
  */
 package com.cdkj.loan.ao.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,7 @@ import com.cdkj.loan.common.ProvinceUtil;
 import com.cdkj.loan.core.CalculationUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.Product;
@@ -49,8 +51,11 @@ import com.cdkj.loan.dto.req.XN808054Req;
 import com.cdkj.loan.dto.req.XN808070CReq;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.dto.res.XN003020Res;
+import com.cdkj.loan.enums.EAccountStatus;
+import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizType;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EOrderStatus;
 import com.cdkj.loan.enums.EPayType;
@@ -120,6 +125,20 @@ public class OrderAOImpl implements IOrderAO {
         // if (productSpecs.getQuantity() - quantity < 0) {
         // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "库存不够，不能下单");
         // }
+
+        // 判断信用分是否足够
+        Account account = new Account();
+        account.setUserId(req.getApplyUser());
+        account.setType(EAccountType.Customer.getCode());
+        account.setStatus(EAccountStatus.NORMAL.getCode());
+        account.setCurrency(ECurrency.XYF.getCode());
+        Account domain = accountBO.queryAccountListByCurrency(account);
+        BigDecimal decimal = new BigDecimal(product.getCreditScore());
+        int compareTo = decimal.compareTo(domain.getAmount());
+        if (compareTo == 1) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "信用分低于该商品的最低信用分，不能下单！");
+        }
 
         // 生成订单基本信息
         Order order = new Order();

@@ -311,4 +311,9 @@ public class AccountBOImpl extends PaginableBOImpl<Account>
         this.changeAmount(toAccount, AmountUtil.mul(transAmount, rate),
             EChannelType.NBZ, null, null, refNo, toBizType, toBizNote);
     }
+
+    @Override
+    public Account queryAccountListByCurrency(Account account) {
+        return accountDAO.select(account);
+    }
 }
