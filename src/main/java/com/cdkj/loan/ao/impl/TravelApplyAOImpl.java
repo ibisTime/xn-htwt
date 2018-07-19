@@ -24,7 +24,7 @@ import com.cdkj.loan.dto.req.XN632620ReqChild;
 import com.cdkj.loan.exception.BizException;
 
 /**
- * 
+ * 出差/公出申请
  * @author: jiafr 
  * @since: 2018年6月6日 下午12:53:29 
  * @history:
@@ -89,8 +89,8 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
                 DateUtil.DATA_TIME_PATTERN_2);
             Date end = DateUtil.strToDate(child.getEndDatetime(),
                 DateUtil.DATA_TIME_PATTERN_2);
-            String time = String
-                .valueOf((end.getTime() - start.getTime()) / (1000 * 60 * 60));
+            String time = String.valueOf((end.getTime() - start.getTime())
+                    / (1000 * 60 * 60));
 
             detail.setTotalHour(time);
             detail.setRemark(child.getRemark());
@@ -141,8 +141,8 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
         travelApply.setApplyUserName(user.getRealName());
 
         // 部门.岗位初始化
-        Department department = departmentBO
-            .getDepartment(user.getDepartmentCode());
+        Department department = departmentBO.getDepartment(user
+            .getDepartmentCode());
         travelApply.setDepartmentName(department.getName());
         Department post = departmentBO.getDepartment(user.getPostCode());
         travelApply.setPostName(post.getName());
