@@ -34,7 +34,7 @@ public class XN808050Req {
     @NotBlank
     private String reAddress;
 
-    // 申请人（必填）]
+    // 申请人（必填）
     @NotBlank
     private String applyUser;
 
