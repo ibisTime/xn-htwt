@@ -26,8 +26,12 @@ import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBizOrderType;
+import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.EBusinessTripApplyNode;
+import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.EInvestigateReportNode;
+import com.cdkj.loan.enums.ERepayBizNode;
 
 @Service
 public class SYSBizLogAOImpl implements ISYSBizLogAO {
@@ -89,20 +93,36 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         List<SYSBizLog> list = paginable.getList();
         ArrayList<SYSBizLog> resList = new ArrayList<SYSBizLog>();
         for (SYSBizLog sysBizLog : list) {
-            // 如果是调查报告
-            if (EBizLogType.INVESTIGATEREPORT.getCode().equals(
-                sysBizLog.getRefType())) {
-                InvestigateReport report = investigateReportBO
-                    .getInvestigateReport(sysBizLog.getParentOrder());
-                Department department = departmentBO.getDepartment(report
-                    .getCompanyCode());
-                sysBizLog.setCompanyName(department.getName());
-                sysBizLog.setUserName(report.getApplyUserName());
-            }
-
             SYSBizLog latestOperateRecordByBizCode = sysBizLogBO
                 .getLatestOperateRecordByBizCode(sysBizLog.getRefOrder());
-            todoThing(latestOperateRecordByBizCode);
+            if (ECreditNode.ACHIEVE.getCode().equals(
+                latestOperateRecordByBizCode.getDealNode())
+                    || EBudgetOrderNode.ARCHIVE_END.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || ERepayBizNode.SETTLED.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || ERepayBizNode.BAD_DEBT.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || ERepayBizNode.TEAN_BUY_OUT.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || ERepayBizNode.TEAM_RENT.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || ERepayBizNode.RISK_MANAGER_CHECK_NO.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || ERepayBizNode.FINANCE_MANAGER_CHECK_NO.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || ERepayBizNode.REDEEM_SETTLED.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || EBudgetOrderNode.CANCEL_END.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || EBusinessTripApplyNode.AUDIT_PASS.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())
+                    || EInvestigateReportNode.FINISH.getCode().equals(
+                        latestOperateRecordByBizCode.getDealNode())) {
+                // 每种流程最后一个节点的 去除调
+                continue;
+            }
+            todoThing(latestOperateRecordByBizCode);// 赋值 转义
             resList.add(latestOperateRecordByBizCode);
         }
         list.removeAll(list);
@@ -146,7 +166,15 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             data.setLoanBank(budgetOrder.getLoanBank());
             data.setBizType(budgetOrder.getBizType());
         }
+        if ("IR".equals(refOrder)) {
+            InvestigateReport report = investigateReportBO
+                .getInvestigateReport(data.getRefOrder());
+            Department department = departmentBO.getDepartment(report
+                .getCompanyCode());
+            data.setCompanyName(department.getName());
+            data.setUserName(report.getApplyUserName());
 
+        }
         data.setUserName(userName);
         data.setCurNodeCode(data.getDealNode());
         data.setCompanyName(companyName);

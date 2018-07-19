@@ -65,8 +65,11 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
-			<if test="teamCode != null and teamCode != '' ">
+<!-- 			<if test="teamCode != null and teamCode != '' ">
 				AND EXISTS(SELECT 1 FROM tsys_user  WHERE role_code = trn.role_code AND team_code = #{teamCode})
+			</if> -->
+			<if test="teamCode != null and teamCode != '' ">
+				AND 1=1
 			</if>
 		</trim>
 	</sql>
