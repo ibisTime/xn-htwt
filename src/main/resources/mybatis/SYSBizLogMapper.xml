@@ -107,37 +107,26 @@
 	</select>
 	
 	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT
-		distinct
-		t.id
-		,t.parent_order
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		,t.deal_note
-		,t.status
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		FROM
-		tsys_biz_log t left join tsys_role_node trn on t.deal_node = trn.node_code
-		<include refid="where_condition" /> group by t.ref_order
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
+       select 
+       c.ref_order,c.deal_node,c.deal_note,c.start_datetime 
+       from 
+        (select a.ref_order ,a.deal_node ,a.deal_note ,a.start_datetime,a.end_datetime from tsys_biz_log a ,
+         (select ref_order, max(start_datetime) start_datetime from tsys_biz_log group by ref_order ) b
+         where a.ref_order = b.ref_order and a.start_datetime = b.start_datetime ) c
+         where c.deal_node in (select d.node_code node_code from tsys_role_node d 
+         where d.role_code = #{roleCode})
 	</select>
 	
 
 	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct t.id FROM tsys_biz_log t left join tsys_role_node trn on t.deal_node = trn.node_code
-		<include refid="where_condition" /> group by t.ref_order) tb
+		 select count(1) 
+		 from 
+        (select a.ref_order ,a.deal_node ,a.deal_note ,a.start_datetime,a.end_datetime from tsys_biz_log a ,
+         (select ref_order, max(start_datetime) start_datetime from tsys_biz_log group by ref_order ) b
+         where a.ref_order = b.ref_order and a.start_datetime = b.start_datetime ) c
+         where c.deal_node in (select d.node_code node_code from tsys_role_node d 
+         where d.role_code = #{roleCode})
 	</select>
 	
 	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
