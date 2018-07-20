@@ -31,7 +31,6 @@ public class XN632911 extends AProcessor {
         SYSBizLog condition = new SYSBizLog();
         condition.setRoleCode(req.getRoleCode());
         condition.setTeamCode(req.getTeamCode());
-        condition.setRefType(req.getFlowTypeCode());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ISYSBizLogAO.DEFAULT_ORDER_COLUMN;

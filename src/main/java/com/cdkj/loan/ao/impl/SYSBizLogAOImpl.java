@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,6 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
-import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
@@ -98,44 +98,37 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         List<SYSBizLog> list = paginable.getList();
         ArrayList<SYSBizLog> resList = new ArrayList<SYSBizLog>();
         for (SYSBizLog sysBizLog : list) {
-            SYSBizLog latestOperateRecordByBizCode = sysBizLogBO
-                .getLatestOperateRecordByBizCode(sysBizLog.getRefOrder());
-            List<Node> nodeList = roleNodeBO.queryNodeListByRoleCode(condition
-                .getRoleCode());
-            for (Node node : nodeList) {
-                if (latestOperateRecordByBizCode.getDealNode().equals(node)) {
-                    if (ECreditNode.ACHIEVE.getCode().equals(
-                        latestOperateRecordByBizCode.getDealNode())
-                            || EBudgetOrderNode.ARCHIVE_END.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())
-                            || ERepayBizNode.SETTLED.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())
-                            || ERepayBizNode.BAD_DEBT.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())
-                            || ERepayBizNode.TEAN_BUY_OUT.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())
-                            || ERepayBizNode.TEAM_RENT.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())
-                            || ERepayBizNode.RISK_MANAGER_CHECK_NO.getCode()
-                                .equals(
-                                    latestOperateRecordByBizCode.getDealNode())
-                            || ERepayBizNode.FINANCE_MANAGER_CHECK_NO.getCode()
-                                .equals(
-                                    latestOperateRecordByBizCode.getDealNode())
-                            || ERepayBizNode.REDEEM_SETTLED.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())
-                            || EBudgetOrderNode.CANCEL_END.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())
-                            || EBusinessTripApplyNode.AUDIT_PASS.getCode()
-                                .equals(
-                                    latestOperateRecordByBizCode.getDealNode())
-                            || EInvestigateReportNode.FINISH.getCode().equals(
-                                latestOperateRecordByBizCode.getDealNode())) {
-                        // 每种流程最后一个节点的 去除调
-                        continue;
+            if (!ECreditNode.ACHIEVE.getCode().equals(sysBizLog.getDealNode())
+                    && !EBudgetOrderNode.ARCHIVE_END.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !ERepayBizNode.SETTLED.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !ERepayBizNode.BAD_DEBT.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !ERepayBizNode.TEAN_BUY_OUT.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !ERepayBizNode.TEAM_RENT.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !ERepayBizNode.RISK_MANAGER_CHECK_NO.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !ERepayBizNode.FINANCE_MANAGER_CHECK_NO.getCode()
+                        .equals(sysBizLog.getDealNode())
+                    && !ERepayBizNode.REDEEM_SETTLED.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !EBudgetOrderNode.CANCEL_END.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !EBusinessTripApplyNode.AUDIT_PASS.getCode().equals(
+                        sysBizLog.getDealNode())
+                    && !EInvestigateReportNode.FINISH.getCode().equals(
+                        sysBizLog.getDealNode())) {
+                todoThing(sysBizLog);// 赋值 转义
+                if (StringUtils.isNotBlank(condition.getTeamCode())
+                        && StringUtils.isNotBlank(sysBizLog.getTeamCode())) {
+                    if (sysBizLog.getTeamCode().equals(condition.getTeamCode())) {
+                        resList.add(sysBizLog);
                     }
-                    todoThing(latestOperateRecordByBizCode);// 赋值 转义
-                    resList.add(latestOperateRecordByBizCode);
+                } else {
+                    resList.add(sysBizLog);
                 }
             }
         }
@@ -159,6 +152,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             Department department = departmentBO.getDepartment(credit
                 .getCompanyCode());
             companyName = department.getName();
+            data.setTeamCode(credit.getTeamCode());
         }
         if ("R".equals(refOrder)) {
             RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getRefOrder());
@@ -169,6 +163,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             Department department = departmentBO.getDepartment(budgetOrder
                 .getCompanyCode());
             companyName = department.getName();
+            data.setTeamCode(repayBiz.getTeamCode());
         }
         if ("B".equals(refOrder)) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
@@ -179,6 +174,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             companyName = department.getName();
             data.setLoanBank(budgetOrder.getLoanBank());
             data.setBizType(budgetOrder.getBizType());
+            data.setTeamCode(budgetOrder.getTeamCode());
         }
         if ("IR".equals(refOrder)) {
             InvestigateReport report = investigateReportBO
@@ -187,7 +183,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
             data.setCompanyName(department.getName());
             data.setUserName(report.getApplyUserName());
-
+            data.setTeamCode(report.getTeamCode());
         }
         data.setUserName(userName);
         data.setCurNodeCode(data.getDealNode());
@@ -195,7 +191,6 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         data.setFlowTypeCode(data.getRefType());
         data.setUpdateDatetime(DateUtil.dateToStr(data.getEndDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-
         return data;
     }
 

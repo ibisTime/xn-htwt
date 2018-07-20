@@ -20,16 +20,6 @@ public class XN632911Req extends APageReq {
 
     private String teamCode;
 
-    private String flowTypeCode;
-
-    public String getFlowTypeCode() {
-        return flowTypeCode;
-    }
-
-    public void setFlowTypeCode(String flowTypeCode) {
-        this.flowTypeCode = flowTypeCode;
-    }
-
     public String getRoleCode() {
         return roleCode;
     }
