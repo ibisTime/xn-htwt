@@ -147,7 +147,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
         // 日志记录
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUSINESS_TRIP_APPLY, code,
-            node.getCode(), req.getApplyNote(), req.getUpdater());
+            node.getCode(), req.getApplyNote());
 
         return code;
     }

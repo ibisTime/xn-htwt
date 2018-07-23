@@ -163,7 +163,7 @@ public class CreditAOImpl implements ICreditAO {
 
         // 日志记录
         sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue());
 
         return creditCode;
     }
@@ -339,12 +339,11 @@ public class CreditAOImpl implements ICreditAO {
             // 准入单开始的日志记录
             sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
                 budgetCode, EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode(),
-                EBudgetOrderNode.WRITE_BUDGET_ORDER.getValue(),
-                req.getOperator());
+                EBudgetOrderNode.WRITE_BUDGET_ORDER.getValue());
 
             // 征信结束的日志记录
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.CREDIT.getCode(),
-                credit.getCode(), preCurrentNode);
+                credit.getCode(), preCurrentNode, req.getOperator());
 
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(

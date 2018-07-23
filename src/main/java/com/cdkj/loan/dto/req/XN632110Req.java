@@ -16,6 +16,7 @@ public class XN632110Req {
 
     private String loanAmount;
 
+    // 业务种类（0新车1二手车）
     private String bizType;
 
     private String secondCarReport;
@@ -23,6 +24,7 @@ public class XN632110Req {
     @NotBlank
     private String operator;
 
+    // 0保存 1发送
     @NotBlank
     private String buttonCode;
 

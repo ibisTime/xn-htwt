@@ -24,4 +24,6 @@ public interface ISYSBizLogDAO extends IBaseDAO<SYSBizLog> {
 
     public List<SYSBizLog> selectListByBizOrderType(SYSBizLog condition,
             int start, int pageSize);
+
+    public void updateSysBizLog(SYSBizLog data);
 }

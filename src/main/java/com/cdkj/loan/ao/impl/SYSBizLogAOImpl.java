@@ -3,7 +3,6 @@ package com.cdkj.loan.ao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +28,6 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizOrderType;
-import com.cdkj.loan.enums.EBudgetOrderNode;
-import com.cdkj.loan.enums.EBusinessTripApplyNode;
-import com.cdkj.loan.enums.ECreditNode;
-import com.cdkj.loan.enums.EInvestigateReportNode;
-import com.cdkj.loan.enums.ERepayBizNode;
 
 @Service
 public class SYSBizLogAOImpl implements ISYSBizLogAO {
@@ -96,45 +90,8 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         Paginable<SYSBizLog> paginable = sysBizLogBO.getPaginableByRoleCode(
             start, limit, condition);
         List<SYSBizLog> list = paginable.getList();
-        ArrayList<SYSBizLog> resList = new ArrayList<SYSBizLog>();
         for (SYSBizLog sysBizLog : list) {
-            if (!ECreditNode.ACHIEVE.getCode().equals(sysBizLog.getDealNode())
-                    && !EBudgetOrderNode.ARCHIVE_END.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !ERepayBizNode.SETTLED.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !ERepayBizNode.BAD_DEBT.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !ERepayBizNode.TEAN_BUY_OUT.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !ERepayBizNode.TEAM_RENT.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !ERepayBizNode.RISK_MANAGER_CHECK_NO.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !ERepayBizNode.FINANCE_MANAGER_CHECK_NO.getCode()
-                        .equals(sysBizLog.getDealNode())
-                    && !ERepayBizNode.REDEEM_SETTLED.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !EBudgetOrderNode.CANCEL_END.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !EBusinessTripApplyNode.AUDIT_PASS.getCode().equals(
-                        sysBizLog.getDealNode())
-                    && !EInvestigateReportNode.FINISH.getCode().equals(
-                        sysBizLog.getDealNode())) {
-                todoThing(sysBizLog);// 赋值 转义
-                if (StringUtils.isNotBlank(condition.getTeamCode())
-                        && StringUtils.isNotBlank(sysBizLog.getTeamCode())) {
-                    if (sysBizLog.getTeamCode().equals(condition.getTeamCode())) {
-                        resList.add(sysBizLog);
-                    }
-                } else {
-                    resList.add(sysBizLog);
-                }
-            }
-        }
-        list.removeAll(list);
-        for (SYSBizLog sysBizLog : resList) {
-            list.add(sysBizLog);
+            todoThing(sysBizLog);// 赋值 转义
         }
         return paginable;
     }
