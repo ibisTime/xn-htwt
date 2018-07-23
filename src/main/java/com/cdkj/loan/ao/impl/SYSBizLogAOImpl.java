@@ -147,7 +147,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         data.setCompanyName(companyName);
         data.setFlowTypeCode(data.getRefType());
         data.setUpdateDatetime(DateUtil.dateToStr(data.getEndDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+            DateUtil.DATA_TIME_PATTERN_1));
         return data;
     }
 

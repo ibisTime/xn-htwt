@@ -467,9 +467,10 @@ public class CreditAOImpl implements ICreditAO {
                 .getLatestOperateRecordByBizCode(credit.getCode());
             if (null != sysBizLog) {
                 credit.setUpdaterName(sysBizLog.getOperatorName());
-                credit.setUpdateDatetime(DateUtil.dateToStr(
-                    sysBizLog.getStartDatetime(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
+                credit
+                    .setUpdateDatetime(DateUtil.dateToStr(
+                        sysBizLog.getStartDatetime(),
+                        DateUtil.DATA_TIME_PATTERN_1));
             }
         }
         // 获取银行信息
