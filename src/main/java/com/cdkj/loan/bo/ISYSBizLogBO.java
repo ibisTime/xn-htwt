@@ -18,6 +18,10 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
             EBizLogType refType, String refOrder, String preDealNode,
             String nowDealNode, String nowDealNote, String operator);
 
+    // 流程最后一步，执行当前方法
+    public void refreshPreSYSBizLog(String refType, String refOrder,
+            String dealNode);
+
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition);
 
     public SYSBizLog getSYSBizLog(int id);
@@ -30,7 +34,4 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
     public Paginable<SYSBizLog> getPaginableByBizOrderType(int start,
             int limit, SYSBizLog condition);
-
-    public void refreshPreSYSBizLog(String refType, String refOrder,
-            String dealNode);
 }
