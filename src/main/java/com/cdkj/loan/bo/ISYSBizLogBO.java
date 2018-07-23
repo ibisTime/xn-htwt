@@ -11,12 +11,13 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
     // 流程第一步，执行当前方法(产生下一个的空壳)
     public void saveSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote);
+            String refOrder, String dealNode, String dealNote, String teamCode);
 
     // 不是流程第一步，执行当前方法
     public void saveNewAndPreEndSYSBizLog(String parentOrder,
             EBizLogType refType, String refOrder, String preDealNode,
-            String nowDealNode, String nowDealNote, String operator);
+            String nowDealNode, String nowDealNote, String operator,
+            String teamCode);
 
     // 流程最后一步，执行当前方法
     public void refreshPreSYSBizLog(String refType, String refOrder,

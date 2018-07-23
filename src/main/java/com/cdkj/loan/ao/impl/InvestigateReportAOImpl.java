@@ -119,7 +119,7 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
             .get(data.getCurNodeCode());
         sysBizLogBO.saveSYSBizLog(data.getCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(),
-            currentNode.getCode(), currentNode.getValue());
+            currentNode.getCode(), currentNode.getValue(), data.getTeamCode());
     }
 
     @Override
@@ -151,7 +151,8 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
             .get(data.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            currentNode.getCode(), currentNode.getValue(), updater);
+            currentNode.getCode(), currentNode.getValue(), updater,
+            data.getTeamCode());
     }
 
     @Override
@@ -184,7 +185,8 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
             .get(data.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            currentNode.getCode(), currentNode.getValue(), updater);
+            currentNode.getCode(), currentNode.getValue(), updater,
+            data.getTeamCode());
     }
 
     @Override

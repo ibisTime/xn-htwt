@@ -498,7 +498,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
                 EBizLogType.BUDGET_ORDER, data.getCode(),
                 data.getCurNodeCode(), node.getCode(), node.getValue(),
-                req.getOperator());
+                req.getOperator(), data.getTeamCode());
             /*
              * // 日志记录 sysBizLogBO.saveSYSBizLog(data.getCode(),
              * EBizLogType.BUDGET_ORDER, data.getCode(), node.getCode(),
@@ -538,7 +538,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
 
     }
 
@@ -571,7 +572,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -768,7 +770,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 日志记录
                 sysBizLogBO.saveSYSBizLog(irCode,
                     EBizLogType.INVESTIGATEREPORT, irCode,
-                    investigateReport.getCurNodeCode(), approveNote);
+                    investigateReport.getCurNodeCode(), approveNote,
+                    investigateReport.getTeamCode());
             }
 
         } else {
@@ -783,7 +786,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -809,7 +813,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -850,7 +855,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -876,7 +882,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -902,7 +909,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -941,7 +949,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -985,7 +994,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
 
     }
 
@@ -1020,7 +1030,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1050,7 +1061,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
 
         // 银行已放款待财务退款 生成退客户垫资款数据
         if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
@@ -1065,7 +1077,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BACK_ADVANCE_FUND, budgetOrder.getCode(),
                 EBackAdvanceStatus.TODO_BACK.getCode(),
-                EBackAdvanceStatus.TODO_BACK.getValue());
+                EBackAdvanceStatus.TODO_BACK.getValue(),
+                budgetOrder.getTeamCode());
 
         }
         budgetOrderBO.saveBackAdvanceFund(budgetOrder);
@@ -1119,7 +1132,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1159,7 +1173,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1187,7 +1202,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), operator,
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1216,7 +1232,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1425,7 +1442,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBizLogType.BACK_ADVANCE_FUND, budgetOrder.getCode(),
             EBackAdvanceStatus.TODO_BACK.getCode(),
             EBackAdvanceStatus.HANDLED_BACK.getCode(),
-            EBackAdvanceStatus.HANDLED_BACK.getValue(), req.getOperator());
+            EBackAdvanceStatus.HANDLED_BACK.getValue(), req.getOperator(),
+            budgetOrder.getTeamCode());
 
     }
 
@@ -1453,7 +1471,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 写日志
         sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
-            currentNode.getCode(), currentNode.getValue());
+            currentNode.getCode(), currentNode.getValue(),
+            budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1496,7 +1515,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(), preCurrentNode,
             budgetOrder.getCurNodeCode(), req.getApproveNote(),
-            req.getOperator());
+            req.getOperator(), budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1527,7 +1546,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
                 preCurrentNode, budgetOrder.getCurNodeCode(),
-                req.getApproveNote(), req.getOperator());
+                req.getApproveNote(), req.getOperator(),
+                budgetOrder.getTeamCode());
         }
 
         budgetOrderBO.cancelFinanceAudit(budgetOrder);

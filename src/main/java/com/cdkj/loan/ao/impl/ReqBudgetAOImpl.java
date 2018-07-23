@@ -72,7 +72,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         // 日志记录
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.REQ_BUDGET, code,
-            currentNode.getCode(), currentNode.getValue());
+            currentNode.getCode(), currentNode.getValue(), null);
         return code;
     }
 
@@ -102,7 +102,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             reqBudget.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
             EBizLogType.REQ_BUDGET, reqBudget.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            null);
     }
 
     // 财务经理审核
@@ -131,7 +132,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             reqBudget.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
             EBizLogType.REQ_BUDGET, reqBudget.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            null);
     }
 
     // 确认放款
@@ -160,7 +162,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             reqBudget.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
             EBizLogType.REQ_BUDGET, reqBudget.getCode(), preNodeCode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            null);
     }
 
     @Override

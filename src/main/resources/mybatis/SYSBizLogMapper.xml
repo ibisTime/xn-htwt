@@ -17,6 +17,7 @@
 		<result column="start_datetime" property="startDatetime" />
 		<result column="end_datetime" property="endDatetime" />
 		<result column="speed_time" property="speedTime" />
+		<result column="team_code" property="teamCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -65,6 +66,9 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
+			<if test="teamCode != null and teamCode != '' ">
+				AND t.team_code = #{teamCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
@@ -83,6 +87,7 @@
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
+		,t.team_code
 		FROM
 		tsys_biz_log t
 		<include refid="where_condition" />
@@ -143,6 +148,7 @@
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
+		,t.team_code
 		FROM
 		tsys_biz_log t where t.id in (select max(id) FROM tsys_biz_log t
 		<include refid="where_condition" />)
@@ -165,6 +171,7 @@
 		,start_datetime
 		,end_datetime
 		,speed_time
+		,team_code
 		)
 		VALUES(
 		#{id}
@@ -181,6 +188,7 @@
 		,#{startDatetime}
 		,#{endDatetime}
 		,#{speedTime}
+		,#{teamCode}
 		)
 	</insert>
 
@@ -200,6 +208,7 @@
 		,start_datetime = #{startDatetime}
 		,end_datetime = #{endDatetime}
 		,speed_time = #{speedTime}
+		,team_code #{teamCode}
 		WHERE id = #{id}
 	</update>
 	
@@ -237,6 +246,7 @@
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
+		,t.team_code
 		FROM
 		tsys_biz_log t  
 		WHERE t.ref_order LIKE CONCAT(#{bizOrderType},'%') GROUP BY t.ref_order

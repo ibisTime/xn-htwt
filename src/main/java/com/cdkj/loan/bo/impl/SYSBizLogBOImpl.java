@@ -32,7 +32,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
 
     @Override
     public void saveSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote) {
+            String refOrder, String dealNode, String dealNote, String teamCode) {
         SYSBizLog data = new SYSBizLog();
         data.setParentOrder(parentOrder);
         data.setRefType(refType.getCode());
@@ -41,6 +41,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         data.setDealNote(dealNote);
         data.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         data.setStartDatetime(new Date());
+        data.setTeamCode(teamCode);
         sysBizLogDAO.insert(data);
     }
 
@@ -48,11 +49,13 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
     @Override
     public void saveNewAndPreEndSYSBizLog(String parentOrder,
             EBizLogType refType, String refOrder, String preDealNode,
-            String nowDealNode, String nowDealNote, String operator) {
+            String nowDealNode, String nowDealNote, String operator,
+            String teamCode) {
         // 处理之前节点
         refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode, operator);
         // 保存新节点
-        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode, nowDealNote);
+        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode, nowDealNote,
+            teamCode);
     }
 
     @Override

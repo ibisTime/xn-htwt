@@ -145,9 +145,9 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
         String code = businessTripApplyBO.saveBusinessTripApply(data);
 
-        // 日志记录
+        // 日志记录 TODO
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUSINESS_TRIP_APPLY, code,
-            node.getCode(), req.getApplyNote());
+            node.getCode(), req.getApplyNote(), null);
 
         return code;
     }
@@ -211,7 +211,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preNodeCode,
-            node.getCode(), approveNote, operator);
+            node.getCode(), approveNote, operator, null);
 
         businessTripApplyBO.departmentAudit(data);
 
@@ -241,7 +241,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preNodeCode,
-            node.getCode(), approveNote, operator);
+            node.getCode(), approveNote, operator, null);
 
         businessTripApplyBO.financeAudit(data);
 
@@ -271,7 +271,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preNodeCode,
-            node.getCode(), approveNote, operator);
+            node.getCode(), approveNote, operator, null);
 
         businessTripApplyBO.generalAudit(data);
 

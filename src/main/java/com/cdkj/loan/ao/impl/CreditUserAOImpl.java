@@ -88,7 +88,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
             credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            credit.getTeamCode());
 
     }
 }
