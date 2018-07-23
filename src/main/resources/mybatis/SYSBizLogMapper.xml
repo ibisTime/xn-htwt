@@ -208,7 +208,7 @@
 		,start_datetime = #{startDatetime}
 		,end_datetime = #{endDatetime}
 		,speed_time = #{speedTime}
-		,team_code #{teamCode}
+		,team_code = #{teamCode}
 		WHERE id = #{id}
 	</update>
 	
