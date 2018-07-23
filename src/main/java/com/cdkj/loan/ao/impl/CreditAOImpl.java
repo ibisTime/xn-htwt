@@ -162,10 +162,8 @@ public class CreditAOImpl implements ICreditAO {
         creditBO.setApplyUserInfo(credit);
 
         // 日志记录
-        sysBizLogBO
-            .saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,
-                currentNode.getCode(), currentNode.getValue(),
-                credit.getTeamCode());
+        sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,
+            currentNode.getCode(), null, credit.getTeamCode());
 
         return creditCode;
     }
@@ -434,8 +432,8 @@ public class CreditAOImpl implements ICreditAO {
         creditBO.cancelCredit(credit);
 
         sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.CREDIT, code,
-            preCurNodeCode, ECreditNode.CANCEL.getCode(),
-            ECreditNode.CANCEL.getValue(), operator, credit.getTeamCode());
+            preCurNodeCode, ECreditNode.CANCEL.getCode(), null, operator,
+            credit.getTeamCode());
 
     }
 
