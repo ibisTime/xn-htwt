@@ -25,6 +25,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="loanRole != null and loanRole != '' ">
+				AND t.loan_role = #{loanRole}
+			</if>
 			<if test="creditCode != null and creditCode != '' ">
 				AND t.credit_code = #{creditCode}
 			</if>
