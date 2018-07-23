@@ -9,6 +9,7 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.dto.req.XN632911Req;
+import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -31,6 +32,7 @@ public class XN632911 extends AProcessor {
         SYSBizLog condition = new SYSBizLog();
         condition.setRoleCode(req.getRoleCode());
         condition.setTeamCode(req.getTeamCode());
+        condition.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ISYSBizLogAO.DEFAULT_ORDER_COLUMN;

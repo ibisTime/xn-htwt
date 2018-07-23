@@ -163,7 +163,7 @@ public class CreditAOImpl implements ICreditAO {
 
         // 日志记录
         sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), null, credit.getTeamCode());
 
         return creditCode;
     }
@@ -244,7 +244,8 @@ public class CreditAOImpl implements ICreditAO {
             credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), precurNodeCode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            credit.getTeamCode());
     }
 
     @Override
@@ -340,11 +341,11 @@ public class CreditAOImpl implements ICreditAO {
             sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
                 budgetCode, EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode(),
                 EBudgetOrderNode.WRITE_BUDGET_ORDER.getValue(),
-                req.getOperator());
+                credit.getTeamCode());
 
             // 征信结束的日志记录
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.CREDIT.getCode(),
-                credit.getCode(), preCurrentNode);
+                credit.getCode(), preCurrentNode, req.getOperator());
 
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
@@ -354,7 +355,7 @@ public class CreditAOImpl implements ICreditAO {
             sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
                 EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
                 credit.getCurNodeCode(), req.getApproveNote(),
-                req.getOperator());
+                req.getOperator(), credit.getTeamCode());
         }
 
         creditBO.refreshCreditNode(credit);
@@ -409,7 +410,8 @@ public class CreditAOImpl implements ICreditAO {
             credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
+            credit.getTeamCode());
         creditBO.refreshInputBankCreditResult(credit);
 
     }
@@ -430,8 +432,8 @@ public class CreditAOImpl implements ICreditAO {
         creditBO.cancelCredit(credit);
 
         sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.CREDIT, code,
-            preCurNodeCode, ECreditNode.CANCEL.getCode(),
-            ECreditNode.CANCEL.getValue(), operator);
+            preCurNodeCode, ECreditNode.CANCEL.getCode(), null, operator,
+            credit.getTeamCode());
 
     }
 
@@ -465,9 +467,10 @@ public class CreditAOImpl implements ICreditAO {
                 .getLatestOperateRecordByBizCode(credit.getCode());
             if (null != sysBizLog) {
                 credit.setUpdaterName(sysBizLog.getOperatorName());
-                credit.setUpdateDatetime(DateUtil.dateToStr(
-                    sysBizLog.getStartDatetime(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
+                credit
+                    .setUpdateDatetime(DateUtil.dateToStr(
+                        sysBizLog.getStartDatetime(),
+                        DateUtil.DATA_TIME_PATTERN_1));
             }
         }
         // 获取银行信息

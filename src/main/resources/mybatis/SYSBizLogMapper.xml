@@ -17,6 +17,7 @@
 		<result column="start_datetime" property="startDatetime" />
 		<result column="end_datetime" property="endDatetime" />
 		<result column="speed_time" property="speedTime" />
+		<result column="team_code" property="teamCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -65,11 +66,8 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
-<!-- 			<if test="teamCode != null and teamCode != '' ">
-				AND EXISTS(SELECT 1 FROM tsys_user  WHERE role_code = trn.role_code AND team_code = #{teamCode})
-			</if> -->
 			<if test="teamCode != null and teamCode != '' ">
-				AND 1=1
+				AND t.team_code = #{teamCode}
 			</if>
 		</trim>
 	</sql>
@@ -89,6 +87,7 @@
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
+		,t.team_code
 		FROM
 		tsys_biz_log t
 		<include refid="where_condition" />
@@ -107,26 +106,30 @@
 	</select>
 	
 	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-       select 
+<!--        select 
        c.ref_order,c.deal_node,c.deal_note,c.start_datetime 
        from 
         (select a.ref_order ,a.deal_node ,a.deal_note ,a.start_datetime,a.end_datetime from tsys_biz_log a ,
          (select ref_order, max(start_datetime) start_datetime from tsys_biz_log group by ref_order ) b
          where a.ref_order = b.ref_order and a.start_datetime = b.start_datetime ) c
          where c.deal_node in (select d.node_code node_code from tsys_role_node d 
-         where d.role_code = #{roleCode})
+         where d.role_code = #{roleCode}) -->
+		SELECT * FROM tsys_biz_log t INNER JOIN tsys_role_node trn  ON t.deal_node=trn.node_code 
+		<include refid="where_condition" />
 	</select>
 	
 
 	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
 		resultType="java.lang.Long">
-		 select count(1) 
+<!-- 		 select count(1) 
 		 from 
         (select a.ref_order ,a.deal_node ,a.deal_note ,a.start_datetime,a.end_datetime from tsys_biz_log a ,
          (select ref_order, max(start_datetime) start_datetime from tsys_biz_log group by ref_order ) b
          where a.ref_order = b.ref_order and a.start_datetime = b.start_datetime ) c
          where c.deal_node in (select d.node_code node_code from tsys_role_node d 
-         where d.role_code = #{roleCode})
+         where d.role_code = #{roleCode}) -->
+         select count(1) from tsys_biz_log t inner join tsys_role_node trn on t.deal_node=trn.node_code 
+		 <include refid="where_condition" />
 	</select>
 	
 	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
@@ -145,6 +148,7 @@
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
+		,t.team_code
 		FROM
 		tsys_biz_log t where t.id in (select max(id) FROM tsys_biz_log t
 		<include refid="where_condition" />)
@@ -167,6 +171,7 @@
 		,start_datetime
 		,end_datetime
 		,speed_time
+		,team_code
 		)
 		VALUES(
 		#{id}
@@ -183,6 +188,7 @@
 		,#{startDatetime}
 		,#{endDatetime}
 		,#{speedTime}
+		,#{teamCode}
 		)
 	</insert>
 
@@ -202,6 +208,7 @@
 		,start_datetime = #{startDatetime}
 		,end_datetime = #{endDatetime}
 		,speed_time = #{speedTime}
+		,team_code = #{teamCode}
 		WHERE id = #{id}
 	</update>
 	
@@ -239,6 +246,7 @@
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
+		,t.team_code
 		FROM
 		tsys_biz_log t  
 		WHERE t.ref_order LIKE CONCAT(#{bizOrderType},'%') GROUP BY t.ref_order

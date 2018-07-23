@@ -92,4 +92,9 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
             pageSize, condition, SYSBizLog.class);
     }
 
+    @Override
+    public void updateSysBizLog(SYSBizLog data) {
+        super.update(NAMESPACE.concat("update_sysBizLog"), data);
+    }
+
 }

@@ -39,6 +39,8 @@ public class SYSBizLog extends ABaseDO {
 
     private String speedTime;// 花费时间
 
+    private String teamCode;// 团队编号
+
     /*-------------辅助字段---------------*/
 
     private Date startDatetimeStart;
@@ -50,8 +52,6 @@ public class SYSBizLog extends ABaseDO {
     private String operatorMobileForQuery;// 操作人手机号模糊查
 
     private String roleCode;
-
-    private String teamCode;
 
     private String userName;
 
