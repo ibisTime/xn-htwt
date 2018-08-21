@@ -117,9 +117,9 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         // 日志记录
         EInvestigateReportNode currentNode = EInvestigateReportNode.getMap()
             .get(data.getCurNodeCode());
-        sysBizLogBO.saveSYSBizLog(data.getCode(),
-            EBizLogType.INVESTIGATEREPORT, data.getCode(),
-            currentNode.getCode(), null, data.getTeamCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
+            currentNode.getCode(), null, req.getUpdater(), data.getTeamCode());
     }
 
     @Override
