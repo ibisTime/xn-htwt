@@ -857,7 +857,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setAdvanceFundAmountPdf(req.getAdvanceFundAmountPdf());
         budgetOrder.setOtherVideo(req.getOtherVideo());
         budgetOrder.setInterviewOtherPdf(req.getInterviewOtherPdf());
-        EBudgetOrderNode node = EBudgetOrderNode.BIZ_CHARGE_APPROVE;
+        EBudgetOrderNode node = EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE;
         budgetOrder.setCurNodeCode(node.getCode());
         budgetOrderBO.interview(budgetOrder);
 
