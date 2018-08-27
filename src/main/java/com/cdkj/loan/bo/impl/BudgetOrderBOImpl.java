@@ -360,9 +360,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
     @Override
     public void confirmBackAdvanceFund(BudgetOrder budgetOrder) {
-
         budgetOrderDAO.confirmBackAdvanceFund(budgetOrder);
-
     }
 
     @Override
@@ -375,12 +373,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Override
     public void cancelBizAudit(BudgetOrder budgetOrder) {
         budgetOrderDAO.cancelBizAudit(budgetOrder);
-
     }
 
     @Override
     public void cancelFinanceAudit(BudgetOrder budgetOrder) {
-
         budgetOrderDAO.cancelFinanceAudit(budgetOrder);
     }
 

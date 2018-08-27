@@ -2084,6 +2084,7 @@
 		,back_advance_open_bank	 = #{backAdvanceOpenBank}
 		,back_advance_subbranch = #{backAdvanceSubbranch}
 		,back_advance_water_bill = #{backAdvanceWaterBill}
+		,back_advance_status = #{backAdvanceStatus}
 		WHERE code = #{code}
 	</update>
 	
@@ -2102,6 +2103,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,frozen_status = #{frozenStatus}
+		,cancel_node_code = #{cancelNodeCode}
 		WHERE code = #{code}
 	</update>
 	<update id="update_cancel_finance_audit" parameterType="budgetOrder">
@@ -2109,6 +2111,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,frozen_status = #{frozenStatus}
+		,cancel_node_code = #{cancelNodeCode}
 		WHERE code = #{code}
 	</update>
 	

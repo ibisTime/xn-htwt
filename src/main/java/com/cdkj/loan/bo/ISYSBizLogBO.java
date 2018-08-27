@@ -9,9 +9,14 @@ import com.cdkj.loan.enums.EBizLogType;
 
 public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
-    // 流程第一步，执行当前方法(产生下一个的空壳)
+    // 记录本次操作的日志
+    public void recordCurOperate(String parentOrder, EBizLogType refType,
+            String refOrder, String dealNode, String dealNote, String operator,
+            String teamCode);
+
+    // 产生下一步操作的待补全的日志
     public void saveSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote, String teamCode);
+            String refOrder, String dealNode, String teamCode);
 
     // 不是流程第一步，执行当前方法
     public void saveNewAndPreEndSYSBizLog(String parentOrder,
@@ -21,7 +26,7 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
     // 流程最后一步，执行当前方法
     public void refreshPreSYSBizLog(String refType, String refOrder,
-            String dealNode, String operator);
+            String dealNode, String dealNote, String operator);
 
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition);
 

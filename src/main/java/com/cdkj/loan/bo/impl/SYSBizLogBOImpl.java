@@ -32,8 +32,8 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
     private ISYSUserBO sysUserBO;
 
     @Override
-    public void saveSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote,
+    public void recordCurOperate(String parentOrder, EBizLogType refType,
+            String refOrder, String dealNode, String dealNote, String operator,
             String teamCode) {
         SYSBizLog data = new SYSBizLog();
         data.setParentOrder(parentOrder);
@@ -41,6 +41,27 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         data.setRefOrder(refOrder);
         data.setDealNode(dealNode);
         data.setDealNote(dealNote);
+        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+        SYSUser sysUser = sysUserBO.getUser(operator);
+        data.setOperateRole(sysUser.getRoleCode());
+        data.setOperator(sysUser.getUserId());
+        data.setOperatorName(sysUser.getLoginName());
+        data.setOperatorMobile(sysUser.getMobile());
+        data.setStartDatetime(new Date());
+        data.setEndDatetime(new Date());
+        data.setSpeedTime("0");
+        data.setTeamCode(teamCode);
+        sysBizLogDAO.insert(data);
+    }
+
+    @Override
+    public void saveSYSBizLog(String parentOrder, EBizLogType refType,
+            String refOrder, String dealNode, String teamCode) {
+        SYSBizLog data = new SYSBizLog();
+        data.setParentOrder(parentOrder);
+        data.setRefType(refType.getCode());
+        data.setRefOrder(refOrder);
+        data.setDealNode(dealNode);
         data.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         data.setStartDatetime(new Date());
         data.setTeamCode(teamCode);
@@ -51,18 +72,18 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
     @Override
     public void saveNewAndPreEndSYSBizLog(String parentOrder,
             EBizLogType refType, String refOrder, String preDealNode,
-            String nowDealNode, String nowDealNote, String operator,
+            String nowDealNode, String preDealNote, String operator,
             String teamCode) {
         // 处理之前节点
-        refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode, operator);
+        refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode,
+            preDealNote, operator);
         // 保存新节点
-        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode, nowDealNote,
-            teamCode);
+        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode, teamCode);
     }
 
     @Override
     public void refreshPreSYSBizLog(String refType, String refOrder,
-            String dealNode, String operator) {
+            String dealNode, String dealNote, String operator) {
         SYSBizLog data = getSYSBizLoglatest(refType, refOrder, dealNode);
         SYSUser sysUser = sysUserBO.getUser(operator);
         data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
@@ -70,6 +91,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         data.setOperator(sysUser.getUserId());
         data.setOperatorName(sysUser.getLoginName());
         data.setOperatorMobile(sysUser.getMobile());
+        data.setDealNote(dealNote);
 
         if (data != null) {
             data.setEndDatetime(new Date());

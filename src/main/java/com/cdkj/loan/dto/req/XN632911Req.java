@@ -10,15 +10,12 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632911Req extends APageReq {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7948180551552144337L;
 
     @NotBlank
-    private String roleCode;
+    private String roleCode;// 角色编号
 
-    private String teamCode;
+    private String teamCode;// 团队编号
 
     public String getRoleCode() {
         return roleCode;
