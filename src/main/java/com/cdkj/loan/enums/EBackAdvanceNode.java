@@ -1,17 +1,15 @@
 package com.cdkj.loan.enums;
 
 /**
- * 退客户垫资款状态
+ * 退客户垫资款
  * @author: jiafr 
- * @since: 2018年6月9日 下午9:34:51 
+ * @since: 2018年8月27日 下午9:38:33 
  * @history:
  */
-public enum EBackAdvanceStatus {
+public enum EBackAdvanceNode {
+    FINANCE_REFUND("008_01", "财务退款");
 
-    NONEED_BACK("0", "无需退款"), TODO_BACK("1", "银行已放款待财务退款"), HANDLED_BACK("2",
-            "财务已退垫资款");
-
-    EBackAdvanceStatus(String code, String value) {
+    EBackAdvanceNode(String code, String value) {
         this.code = code;
         this.value = value;
     }
@@ -27,5 +25,4 @@ public enum EBackAdvanceStatus {
     public String getValue() {
         return value;
     }
-
 }

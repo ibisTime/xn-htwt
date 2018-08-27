@@ -6,9 +6,6 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class SYSBizLog extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
     private static final long serialVersionUID = 2099380862896285572L;
 
     private int id;// 序号

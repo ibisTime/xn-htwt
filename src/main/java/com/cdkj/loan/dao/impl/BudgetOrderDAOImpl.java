@@ -160,7 +160,6 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     @Override
     public void confirmBackAdvanceFund(BudgetOrder data) {
-
         super.update(NAMESPACE.concat("confirm_back_advance_fund"), data);
     }
 
@@ -173,7 +172,6 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     @Override
     public void cancelBizAudit(BudgetOrder data) {
-
         super.update(NAMESPACE.concat("update_cancel_biz_audit"), data);
 
     }
