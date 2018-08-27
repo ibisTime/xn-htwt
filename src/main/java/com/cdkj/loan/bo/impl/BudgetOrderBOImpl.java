@@ -117,6 +117,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             // 准入单插入团队编号 来自业务员的所属团队
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             data.setTeamCode(user.getTeamCode());
+            data.setPledgeStatus(EBoolean.NO.getCode());
 
             budgetOrderDAO.insert(data);
         }

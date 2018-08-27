@@ -292,6 +292,7 @@
 		<result column="green_big_smj" property="greenBigSmj" />
 		<result column="pledge_bank_commit_datetime" property="pledgeBankCommitDatetime" />
 		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
+		<result column="pledge_status" property="pledgeStatus" />
 		<result column="enter_location" property="enterLocation" />
 		<result column="sale_user_id" property="saleUserId" />
 		
@@ -351,6 +352,9 @@
 			</if>
 			<if test="loanBank != null and loanBank != '' ">
 				AND t.loan_bank = #{loanBank}
+			</if>
+			<if test="pledgeStatus != null and pledgeStatus != '' ">
+				AND t.pledge_status = #{pledgeStatus}
 			</if>
 			<if test="loanAmount != null and loanAmount != '' ">
 				AND t.loan_amount = #{loanAmount}
@@ -1399,6 +1403,7 @@
 		,cur_node_code
 		,cancel_node_code
 		,frozen_status
+		,pledge_status
 		,remark
 		)
 		VALUES(
@@ -1638,6 +1643,7 @@
 		,#{curNodeCode}
 		,#{cancelNodeCode}
 		,#{frozenStatus}
+		,#{pledgeStatus}
 		,#{remark}
 		)
 	</insert>
@@ -2047,6 +2053,7 @@
 		,car_pd = #{carPd}
 		,car_key = #{carKey}
 		,car_big_smj = #{carBigSmj}
+		,pledge_status = #{pledgeStatus}
 		WHERE code = #{code}
 	</update>
 	

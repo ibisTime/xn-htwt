@@ -777,6 +777,9 @@ public class BudgetOrder extends ABaseDO {
     // 抵押提交说明
     private String pledgeBankCommitNote;
 
+    // 抵押情况（1是，0否）pledge_status
+    private String pledgeStatus;
+
     // 入档位置
     private String enterLocation;
 
@@ -901,9 +904,6 @@ public class BudgetOrder extends ABaseDO {
 
     // 未入档节点
     private String curNodeCodeNoEnter;
-
-    // 抵押情况
-    private String pledgeStatus;
 
     // 未作废节点
     private String curNodeCodeNoCancel;

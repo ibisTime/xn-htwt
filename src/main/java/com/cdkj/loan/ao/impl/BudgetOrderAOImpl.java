@@ -1326,6 +1326,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarPd(req.getCarPd());
         budgetOrder.setCarKey(req.getCarKey());
         budgetOrder.setCarBigSmj(req.getCarBigSmj());
+        budgetOrder.setPledgeStatus(EBoolean.YES.getCode());
         budgetOrderBO.refreshMortgageFinish(budgetOrder);
 
         // 日志记录
@@ -2052,11 +2053,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         condition.setApplyUserNameForQuery(req.getUserName());
         condition.setRegion(req.getRegion());
         condition.setLoanBank(req.getLoanBank());
-        if (StringUtils.isNotBlank(req.getPledgeStatus())) {
-            if (EBoolean.YES.getCode().equals(req.getPledgeStatus())) {
-                // 抵押未完成 TODO
-            }
-        }
+        condition.setPledgeStatus(req.getPledgeStatus());
         condition.setCurNodeCode(req.getCurNodeCode());
         if (StringUtils.isNotBlank(req.getIsCancel())) {
             if (EBoolean.YES.getCode().equals(req.getIsCancel())) {
