@@ -919,6 +919,17 @@ public class BudgetOrder extends ABaseDO {
 
     private int advanceDays;// 垫资天数
 
+    // 资料快递单号及时间
+    private String logisticsDate;
+
+    public String getLogisticsDate() {
+        return logisticsDate;
+    }
+
+    public void setLogisticsDate(String logisticsDate) {
+        this.logisticsDate = logisticsDate;
+    }
+
     public int getAdvanceDays() {
         return advanceDays;
     }

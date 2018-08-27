@@ -33,4 +33,8 @@ public interface ISYSDictBO extends IPaginableBO<SYSDict> {
 
     public SYSDict getSYSDict(Long id);
 
+    // 通过父key和key获取value
+    public SYSDict getSYSDictByParentKeyAndDkey(String string,
+            String logisticsCompany);
+
 }

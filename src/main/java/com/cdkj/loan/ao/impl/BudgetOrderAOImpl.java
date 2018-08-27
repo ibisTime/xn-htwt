@@ -31,6 +31,7 @@ import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -54,6 +55,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSBizLog;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -87,6 +89,7 @@ import com.cdkj.loan.enums.EInvestigateReportNode;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanProductStatus;
 import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.enums.ESysRole;
@@ -161,6 +164,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IInvestigateReportBO investigateReportBO;
+
+    @Autowired
+    private ISYSDictBO dictBO;
 
     @Override
     @Transactional
@@ -2085,6 +2091,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 }
             }
             initBudgetOrder(budgetOrder);
+            // 通过类型，预算单号，收件节点，物流状态查找物流单
+            Logistics logistics = new Logistics();
+            logistics.setType(ELogisticsType.BUDGET.getCode());
+            logistics.setBizCode(budgetOrder.getCode());
+            logistics.setToNodeCode(EBudgetOrderNode.DHAPPROVEDATA.getCode());
+            logistics.setStatus(ELogisticsStatus.RECEIVED.getCode());
+            List<Logistics> logisticsList = logisticsBO
+                .queryLogisticsList(logistics);
+            if (CollectionUtils.isNotEmpty(logisticsList)) {
+                Logistics data = logisticsList.get(0);
+                Date receiptDatetime = data.getReceiptDatetime();// 收件时间
+                String logisticsCode = data.getLogisticsCode();// 单号
+                String logisticsCompany = data.getLogisticsCompany();// 快递公司
+                SYSDict dict = dictBO.getSYSDictByParentKeyAndDkey("kd_company",
+                    logisticsCompany);
+                String dvalue = dict.getDvalue();// 快递公司名称
+                budgetOrder.setLogisticsDate("单号:" + logisticsCode + ",收件时间:"
+                        + receiptDatetime + ",快递公司:" + dvalue);
+            }
         }
         return page;
     }
