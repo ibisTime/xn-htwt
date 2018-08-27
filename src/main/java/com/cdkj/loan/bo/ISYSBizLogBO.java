@@ -33,6 +33,9 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
     // 获取操作日志中最新操作记录
     public SYSBizLog getLatestOperateRecordByBizCode(String bizCode);
 
-    public Paginable<SYSBizLog> getPaginableByBizOrderType(int start,
-            int limit, SYSBizLog condition);
+    public Paginable<SYSBizLog> getPaginableByBizOrderType(int start, int limit,
+            SYSBizLog condition);
+
+    // 通过预算单申请操作人获取内勤
+    public SYSBizLog getApplyBudgetOrderOperator(String code, String code2);
 }

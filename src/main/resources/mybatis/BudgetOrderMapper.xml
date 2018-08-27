@@ -699,6 +699,7 @@
 		,t.green_big_smj
 		,t.pledge_bank_commit_datetime
 		,t.pledge_bank_commit_note
+		,t.pledge_status
 		
 		,t.enter_location
 		,t.sale_user_id
@@ -1105,6 +1106,7 @@
 		,t.green_big_smj
 		,t.pledge_bank_commit_datetime
 		,t.pledge_bank_commit_note
+		,t.pledge_status
 		
 		,t.enter_location
 		,t.sale_user_id

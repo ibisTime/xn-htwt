@@ -13,13 +13,13 @@ public class XN632915Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
-    private String userName;
+    private String userName;// 客户姓名
 
-    private String bizType;
+    private String bizType;// 业务种类
 
-    private String loanPeriod;
+    private String loanPeriod;// 贷款期限
 
-    private String curNodeCode;
+    private String curNodeCode;// 贷款进度
 
     public String getCurNodeCode() {
         return curNodeCode;

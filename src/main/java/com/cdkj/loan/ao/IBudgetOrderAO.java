@@ -138,6 +138,7 @@ public interface IBudgetOrderAO {
     public Object queryBudgetOrderPageForProgress(XN632913Req req);
 
     // 贷后统计
-    public Object queryBudgetOrderPageForLoanLater(XN632914Req req);
+    public Paginable<BudgetOrder> queryBudgetOrderPageForLoanLater(
+            XN632914Req req);
 
 }

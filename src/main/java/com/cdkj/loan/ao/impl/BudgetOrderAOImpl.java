@@ -55,7 +55,6 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSBizLog;
-import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -166,7 +165,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     private IInvestigateReportBO investigateReportBO;
 
     @Autowired
-    private ISYSDictBO dictBO;
+    private ISYSDictBO sysDictBO;
 
     @Override
     @Transactional
@@ -1459,11 +1458,21 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setTeamName(bizTeam.getName());
         }
 
-        // 资料快递
+        // 内勤
+        SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+            budgetOrder.getCode(),
+            EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+        if (null != bizLog) {
+            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
+        }
+
+        // 资料快递 通过类型，预算单号，收件节点，物流状态查找物流单
         Logistics logistics = new Logistics();
+        logistics.setType(ELogisticsType.BUDGET.getCode());
         logistics.setBizCode(budgetOrder.getCode());
         logistics.setFromNodeCode(EBudgetOrderNode.CARSETTLE.getCode());
         logistics.setToNodeCode(EBudgetOrderNode.DHAPPROVEDATA.getCode());
+        logistics.setStatus(ELogisticsStatus.RECEIVED.getCode());
         List<Logistics> logisticsList = logisticsBO
             .queryLogisticsList(logistics);
         if (CollectionUtils.isNotEmpty(logisticsList)) {
@@ -1946,8 +1955,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setContactNo(user.getMobile());// 联系电话
         SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
         budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
-        SYSBizLog bizLog = sysBizLogBO
-            .getLatestOperateRecordByBizCode(budgetOrder.getCode());
+        SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+            budgetOrder.getCode(),
+            EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
         if (null != bizLog) {
             budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
         }
@@ -1969,8 +1979,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     private BudgetOrder initBizReport(BudgetOrder budgetOrder) {
         SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
         budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
-        SYSBizLog bizLog = sysBizLogBO
-            .getLatestOperateRecordByBizCode(budgetOrder.getCode());
+        SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+            budgetOrder.getCode(),
+            EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
         if (null != bizLog) {
             budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
         }
@@ -2040,12 +2051,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             condition);
         if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
             for (BudgetOrder budgetOrder : page.getList()) {
-                if (StringUtils.isNotBlank(req.getEnterStatus())) {
-                    if (req.getEnterStatus().equals(EBoolean.YES.getCode())) {
-                        budgetOrder.setEnterStatus(EBoolean.YES.getCode());// 已入档
-                    } else {
-                        budgetOrder.setEnterStatus(EBoolean.NO.getCode());// 未入档
-                    }
+                if (EBudgetOrderNode.ARCHIVE_END.getCode()
+                    .equals(budgetOrder.getCurNodeCode())) {
+                    budgetOrder.setEnterStatus(EBoolean.YES.getCode());
+                } else {
+                    budgetOrder.setEnterStatus(EBoolean.NO.getCode());
                 }
                 initBudgetOrder(budgetOrder);
             }
@@ -2054,7 +2064,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Object queryBudgetOrderPageForLoanLater(XN632914Req req) {
+    public Paginable<BudgetOrder> queryBudgetOrderPageForLoanLater(
+            XN632914Req req) {
         BudgetOrder condition = new BudgetOrder();
         condition.setApplyUserNameForQuery(req.getUserName());
         condition.setRegion(req.getRegion());
@@ -2083,33 +2094,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             condition);
         List<BudgetOrder> list = page.getList();
         for (BudgetOrder budgetOrder : list) {
-            if (StringUtils.isNotBlank(req.getIsCancel())) {// 是否作废
-                if (req.getIsCancel().equals(EBoolean.YES.getCode())) {
-                    budgetOrder.setIsCancel(EBoolean.YES.getCode());// 是
-                } else {
-                    budgetOrder.setIsCancel(EBoolean.NO.getCode());// 否
-                }
+            if (EBudgetOrderNode.CANCEL_END.getCode()
+                .equals(budgetOrder.getCurNodeCode())) {
+                budgetOrder.setIsCancel(EBoolean.YES.getCode());// 是
+            } else {
+                budgetOrder.setIsCancel(EBoolean.NO.getCode());// 否
+            }
+            if (EBudgetOrderNode.ARCHIVE_END.getCode()
+                .equals(budgetOrder.getCurNodeCode())) {
+                budgetOrder.setEnterStatus(EBoolean.YES.getCode());
+            } else {
+                budgetOrder.setEnterStatus(EBoolean.NO.getCode());
             }
             initBudgetOrder(budgetOrder);
-            // 通过类型，预算单号，收件节点，物流状态查找物流单
-            Logistics logistics = new Logistics();
-            logistics.setType(ELogisticsType.BUDGET.getCode());
-            logistics.setBizCode(budgetOrder.getCode());
-            logistics.setToNodeCode(EBudgetOrderNode.DHAPPROVEDATA.getCode());
-            logistics.setStatus(ELogisticsStatus.RECEIVED.getCode());
-            List<Logistics> logisticsList = logisticsBO
-                .queryLogisticsList(logistics);
-            if (CollectionUtils.isNotEmpty(logisticsList)) {
-                Logistics data = logisticsList.get(0);
-                Date receiptDatetime = data.getReceiptDatetime();// 收件时间
-                String logisticsCode = data.getLogisticsCode();// 单号
-                String logisticsCompany = data.getLogisticsCompany();// 快递公司
-                SYSDict dict = dictBO.getSYSDictByParentKeyAndDkey("kd_company",
-                    logisticsCompany);
-                String dvalue = dict.getDvalue();// 快递公司名称
-                budgetOrder.setLogisticsDate("单号:" + logisticsCode + ",收件时间:"
-                        + receiptDatetime + ",快递公司:" + dvalue);
-            }
         }
         return page;
     }
