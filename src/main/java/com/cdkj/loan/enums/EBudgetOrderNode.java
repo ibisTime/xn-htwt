@@ -13,7 +13,7 @@ public enum EBudgetOrderNode {
     WRITE_BUDGET_ORDER("002_01", "填写准入申请单"), AREA_APPROVE("002_24", "区域经理审核"), INTERNAL_APPROVE(
             "002_25", "内勤主管审核"), RISK_APPROVE("002_02", "风控专员审核"), RISK_CHARGE_APPROVE(
             "002_03", "风控主管审核"), AGAIN_WRITE("002_04", "重新填写准入申请单"), INTERVIEW(
-            "002_05", "面签"), INTERVIEW_INTERNAL_APPROVE("002_26", "内勤主管审核"),  BIZ_CHARGE_APPROVE(
+            "002_05", "面签"), INTERVIEW_INTERNAL_APPROVE("002_26", "内勤主管审核(面签)"),  BIZ_CHARGE_APPROVE(
             "002_06", "业务总监审核"), ADVANCEFUND("002_07", "财务垫资"), AGAIN_INTERVIEW("002_08", "重新面签"),
 
     GPSAZ("002_09", "业务团队安装GPS"), GPSMANAGERAPPROVE("002_10", "GPS管理员审核"), AGAINGPSAZ(
