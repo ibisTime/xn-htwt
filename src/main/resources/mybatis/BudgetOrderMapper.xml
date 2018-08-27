@@ -316,6 +316,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="codeQuery != null and codeQuery != '' ">
+				AND t.code like "%"#{codeQuery}"%"
+			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
 			</if>
@@ -1130,6 +1133,28 @@
 		resultType="java.lang.Long">
 		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />) tb
+	</select>
+	
+	
+	<select id="select_budgetOrder_dz" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		distinct
+		t.code
+		,t.apply_user_name
+		,t.loan_bank
+		,t.loan_amount
+		,t.company_code
+		,t.sale_user_id
+		,t.advance_fund_datetime
+		,t.cur_node_code
+		FROM
+		tdq_budget_order t where t.cur_node_code between '002_09'  and  '002_14'
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
 	</select>
 
 	<insert id="insert_budgetOrder" parameterType="budgetOrder">

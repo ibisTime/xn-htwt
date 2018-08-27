@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -1653,9 +1654,39 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
             BudgetOrder condition) {
-        return budgetOrderBO.getPaginable(start, limit, condition);
+        Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginableByDz(start,
+            limit, condition);
+        ArrayList<BudgetOrder> list = new ArrayList<BudgetOrder>();
+        for (BudgetOrder budgetOrder : paginable.getList()) {
+            // 贷款银行
+            if (StringUtils.isNotBlank(budgetOrder.getLoanBank())) {
+                Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
+                budgetOrder.setLoanBankName(loanBank.getBankName());
+            }
+
+            // 业务公司名称
+            if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
+                Department company = departmentBO
+                    .getDepartment(budgetOrder.getCompanyCode());
+                budgetOrder.setCompanyName(company.getName());
+            }
+
+            // 垫资天数
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(budgetOrder.getAdvanceFundDatetime());
+            long time1 = cal.getTimeInMillis();
+            cal.setTime(new Date());
+            long time2 = cal.getTimeInMillis();
+            long between_days = (time2 - time1) / (1000 * 3600 * 24);
+            int days = Integer.parseInt(String.valueOf(between_days));
+            budgetOrder.setAdvanceDays(days);
+            if (days > 1) {
+                list.add(budgetOrder);
+            }
+        }
+        return list;
     }
 
     @Override

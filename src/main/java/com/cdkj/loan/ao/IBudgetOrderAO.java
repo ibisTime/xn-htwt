@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -117,7 +118,7 @@ public interface IBudgetOrderAO {
     public void cancelFinanceAudit(XN632192Req req);
 
     // 垫资超过1天未放款客户
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
             BudgetOrder condition);
 
     public void doSmsInterviewInform(String budgetOrderCode);

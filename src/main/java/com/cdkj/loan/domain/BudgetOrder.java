@@ -914,6 +914,27 @@ public class BudgetOrder extends ABaseDO {
     // 收件日期
     private Date receiptDatetime;
 
+    // 编号模糊查
+    private String codeQuery;
+
+    private int advanceDays;// 垫资天数
+
+    public int getAdvanceDays() {
+        return advanceDays;
+    }
+
+    public void setAdvanceDays(int advanceDays) {
+        this.advanceDays = advanceDays;
+    }
+
+    public String getCodeQuery() {
+        return codeQuery;
+    }
+
+    public void setCodeQuery(String codeQuery) {
+        this.codeQuery = codeQuery;
+    }
+
     public Date getReceiptDatetime() {
         return receiptDatetime;
     }

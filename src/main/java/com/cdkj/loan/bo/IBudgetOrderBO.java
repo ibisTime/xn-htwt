@@ -88,4 +88,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public Paginable<BudgetOrder> getPaginableByTeamCode(int start, int limit,
             BudgetOrder condition);
 
+    public Paginable<BudgetOrder> getPaginableByDz(int start, int limit,
+            BudgetOrder condition);
+
 }

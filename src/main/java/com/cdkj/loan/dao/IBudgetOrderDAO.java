@@ -70,4 +70,9 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     List<BudgetOrder> selectBudgetOrderListByTeamCode(BudgetOrder condition,
             int start, int pageSize);
 
+    long selectTotalCountByDz(BudgetOrder condition);
+
+    List<BudgetOrder> selectBudgetOrderByDzList(BudgetOrder condition,
+            int start, int pageSize);
+
 }
