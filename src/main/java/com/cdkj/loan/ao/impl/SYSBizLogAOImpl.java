@@ -19,7 +19,6 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
@@ -97,57 +96,61 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     }
 
     private SYSBizLog todoThing(SYSBizLog data) {
-
         String refOrder = data.getRefOrder().substring(0, 1);
-
-        data.setCode(data.getRefOrder());
         String userName = "";
-        String companyName = "";
+        String loanBank = "";
+        String bizType = "";
+        String departmentName = "";
+        String bizOrderType = "";
         if ("C".equals(refOrder)) {
             Credit credit = creditBO.getCredit(data.getRefOrder());
             userName = credit.getUserName();
+            loanBank = credit.getLoanBankCode();
+            bizType = credit.getBizType();
             Department department = departmentBO.getDepartment(credit
                 .getCompanyCode());
-            companyName = department.getName();
-            data.setTeamCode(credit.getTeamCode());
-        }
-        if ("R".equals(refOrder)) {
-            RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getRefOrder());
-            userName = repayBiz.getRealName();
-            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(repayBiz
-                .getBudgetOrderCode());
-            userName = budgetOrder.getApplyUserName();
-            Department department = departmentBO.getDepartment(budgetOrder
-                .getCompanyCode());
-            companyName = department.getName();
-            data.setTeamCode(repayBiz.getTeamCode());
+            departmentName = department.getName();
+            bizOrderType = "征信单";
         }
         if ("B".equals(refOrder)) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getRefOrder());
             userName = budgetOrder.getApplyUserName();
+            loanBank = budgetOrder.getLoanBank();
+            bizType = budgetOrder.getBizType();
             Department department = departmentBO.getDepartment(budgetOrder
                 .getCompanyCode());
-            companyName = department.getName();
-            data.setLoanBank(budgetOrder.getLoanBank());
-            data.setBizType(budgetOrder.getBizType());
-            data.setTeamCode(budgetOrder.getTeamCode());
+            departmentName = department.getName();
+            bizOrderType = "准入单";
         }
-        if ("IR".equals(refOrder)) {
+        if ("I".equals(refOrder)) {
             InvestigateReport report = investigateReportBO
                 .getInvestigateReport(data.getRefOrder());
+            userName = report.getApplyUserName();
+            loanBank = report.getLoanBank();
+            bizType = report.getBizType();
             Department department = departmentBO.getDepartment(report
                 .getCompanyCode());
-            data.setCompanyName(department.getName());
-            data.setUserName(report.getApplyUserName());
-            data.setTeamCode(report.getTeamCode());
+            departmentName = department.getName();
+            bizOrderType = "调查报告";
+        }
+        if ("R".equals(refOrder)) {
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getRefOrder());
+            userName = repayBiz.getRealName();
+            loanBank = repayBiz.getLoanBank();
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(repayBiz
+                .getRefCode());
+            bizType = budgetOrder.getBizType();
+            Department department = departmentBO.getDepartment(budgetOrder
+                .getCompanyCode());
+            departmentName = department.getName();
+            bizOrderType = "还款业务";
         }
         data.setUserName(userName);
-        data.setCurNodeCode(data.getDealNode());
-        data.setCompanyName(companyName);
-        data.setFlowTypeCode(data.getRefType());
-        data.setUpdateDatetime(DateUtil.dateToStr(data.getEndDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
+        data.setLoanBank(loanBank);
+        data.setBizType(bizType);
+        data.setDepartmentName(departmentName);
+        data.setBizOrderType(bizOrderType);
         return data;
     }
 

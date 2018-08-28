@@ -20,6 +20,7 @@ import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -36,6 +37,7 @@ import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.dto.req.XN630535Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealResult;
@@ -83,6 +85,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     IBankcardBO bankcardBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     @Override
     public Paginable<RepayPlan> queryRepayPlanPage(int start, int limit,
@@ -223,15 +228,18 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
         } else if (EDealResult.RED.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
+            // 更新还款业务未申请拖车节点
+            repayBizBO.overdueRedMenuHandle(repayBiz,
+                ERepayBizNode.QKCSB_APPLY_TC.getCode());
+            // 日志
+            sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(),
+                EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+                repayBiz.getCurNodeCode(), repayBiz.getTeamCode());
         } else if (EDealResult.YELLOW.getCode().equals(req.getDealResult())) {
             repayPlan
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
         }
         repayPlanBO.refreshRepayPlanOverdueHandle(repayPlan);
-
-        // 更新还款业务未申请拖车节点
-        repayBizBO.overdueRedMenuHandle(repayBiz,
-            ERepayBizNode.QKCSB_APPLY_TC.getCode());
     }
 
     @Override

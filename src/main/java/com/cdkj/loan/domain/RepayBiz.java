@@ -36,7 +36,7 @@ public class RepayBiz extends ABaseDO {
     // 关联类型
     private String refType;
 
-    // 关联编号
+    // 关联编号(准入单编号)
     private String refCode;
 
     // 业务总价

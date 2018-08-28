@@ -72,7 +72,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         // 日志记录
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.REQ_BUDGET, code,
-            currentNode.getCode(), null, null);
+            currentNode.getCode(), null);
         return code;
     }
 

@@ -13,3 +13,10 @@ SET SQL_SAFE_UPDATES = 1;
 
 INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('car_periods', '36', '12.5', 'admin', '2018-08-15 17:33:30', '车贷期数管理的期数和利率', 'CD-CWZCD000020', 'CD-CWZCD000020');
 DELETE FROM `tsys_menu` WHERE `code`='SM201805151423216129694';
+UPDATE `tsys_node_flow` SET `back_node`= null WHERE `id`='27';
+
+UPDATE `tsys_node_flow` SET `back_node`='003_17' WHERE `id`='37';
+UPDATE `tsys_node_flow` SET `back_node`='003_18' WHERE `id`='38';
+UPDATE `tsys_node_flow` SET `next_node`=null WHERE `id`='38';
+
+

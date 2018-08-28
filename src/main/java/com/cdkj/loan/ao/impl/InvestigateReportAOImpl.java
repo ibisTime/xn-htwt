@@ -115,11 +115,9 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         investigateReportBO.refreshInvestigateReport(data);
 
         // 日志记录
-        EInvestigateReportNode currentNode = EInvestigateReportNode.getMap()
-            .get(data.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetOrderCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            currentNode.getCode(), null, req.getUpdater(), data.getTeamCode());
+            data.getCurNodeCode(), null, req.getUpdater(), data.getTeamCode());
     }
 
     @Override
@@ -147,12 +145,9 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         investigateReportBO.riskApprove(data);
 
         // 日志记录
-        EInvestigateReportNode currentNode = EInvestigateReportNode.getMap()
-            .get(data.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetOrderCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            currentNode.getCode(), currentNode.getValue(), updater,
-            data.getTeamCode());
+            data.getCurNodeCode(), approveNote, updater, data.getTeamCode());
     }
 
     @Override
@@ -171,21 +166,24 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             data.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+            // 日志记录
+            sysBizLogBO.refreshPreSYSBizLog(
+                EBizLogType.INVESTIGATEREPORT.getCode(), data.getCode(),
+                curNodeCode, approveNote, updater);
         } else {
             data.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(curNodeCode).getBackNode());
+            sysBizLogBO
+                .saveNewAndPreEndSYSBizLog(data.getBudgetOrderCode(),
+                    EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
+                    data.getCurNodeCode(), approveNote, updater,
+                    data.getTeamCode());
         }
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
         data.setRemark(approveNote);
         investigateReportBO.riskApprove(data);
 
-        // 日志记录
-        EInvestigateReportNode currentNode = EInvestigateReportNode.getMap()
-            .get(data.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            currentNode.getCode(), approveNote, updater, data.getTeamCode());
     }
 
     @Override
