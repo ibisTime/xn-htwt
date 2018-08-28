@@ -56,7 +56,7 @@ public class SYSBizLog extends ABaseDO {
 
     private String departmentName;// 部门名称
 
-    private String bizOrderType;// 业务单类型（ 征信 准入 还款）
+    private String bizOrderType;// 业务单类型（ 征信单 准入单 还款业务 出差申请）
 
     public String getBizOrderType() {
         return bizOrderType;

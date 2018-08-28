@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.ao.ISYSBizLogAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IBusinessTripApplyBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IInvestigateReportBO;
@@ -20,6 +21,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.BusinessTripApply;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
@@ -61,6 +63,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     @Autowired
     private IRoleNodeBO roleNodeBO;
 
+    @Autowired
+    private IBusinessTripApplyBO businessTripApplyBO;
+
     @Override
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition) {
         return sysBizLogBO.querySYSBizLogList(condition);
@@ -96,13 +101,12 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     }
 
     private SYSBizLog todoThing(SYSBizLog data) {
-        String refOrder = data.getRefOrder().substring(0, 1);
         String userName = "";
         String loanBank = "";
         String bizType = "";
         String departmentName = "";
         String bizOrderType = "";
-        if ("C".equals(refOrder)) {
+        if ("C".equals(data.getRefOrder().substring(0, 1))) {
             Credit credit = creditBO.getCredit(data.getRefOrder());
             userName = credit.getUserName();
             loanBank = credit.getLoanBankCode();
@@ -112,7 +116,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             departmentName = department.getName();
             bizOrderType = "征信单";
         }
-        if ("B".equals(refOrder)) {
+        if ("BO".equals(data.getRefOrder().substring(0, 2))) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getRefOrder());
             userName = budgetOrder.getApplyUserName();
@@ -123,18 +127,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             departmentName = department.getName();
             bizOrderType = "准入单";
         }
-        if ("I".equals(refOrder)) {
-            InvestigateReport report = investigateReportBO
-                .getInvestigateReport(data.getRefOrder());
-            userName = report.getApplyUserName();
-            loanBank = report.getLoanBank();
-            bizType = report.getBizType();
-            Department department = departmentBO.getDepartment(report
-                .getCompanyCode());
-            departmentName = department.getName();
-            bizOrderType = "调查报告";
-        }
-        if ("R".equals(refOrder)) {
+        if ("RB".equals(data.getRefOrder().substring(0, 2))) {
             RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getRefOrder());
             userName = repayBiz.getRealName();
             loanBank = repayBiz.getLoanBank();
@@ -145,6 +138,28 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
             departmentName = department.getName();
             bizOrderType = "还款业务";
+        }
+        if ("BTA".equals(data.getRefOrder().substring(0, 3))) {
+            BusinessTripApply businessTripApply = businessTripApplyBO
+                .getBusinessTripApply(data.getRefOrder());
+            SYSUser user = sysUserBO.getUser(businessTripApply
+                .getApplyUserCode());
+            userName = user.getRealName();
+            Department department = departmentBO
+                .getDepartment(businessTripApply.getDepartmentCode());
+            departmentName = department.getName();
+            bizOrderType = "出差申请";
+        }
+        if ("IR".equals(data.getRefOrder().substring(0, 2))) {
+            InvestigateReport report = investigateReportBO
+                .getInvestigateReport(data.getRefOrder());
+            userName = report.getApplyUserName();
+            loanBank = report.getLoanBank();
+            bizType = report.getBizType();
+            Department department = departmentBO.getDepartment(report
+                .getCompanyCode());
+            departmentName = department.getName();
+            bizOrderType = "调查报告";
         }
         data.setUserName(userName);
         data.setLoanBank(loanBank);
@@ -158,7 +173,6 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     public Object querySYSBizLogPageByBizOrderType(int start, int limit,
             SYSBizLog condition) {
         List<Object> resList = new ArrayList<Object>();
-
         Paginable<SYSBizLog> paginable = sysBizLogBO
             .getPaginableByBizOrderType(start, limit, condition);
         List<SYSBizLog> list = paginable.getList();

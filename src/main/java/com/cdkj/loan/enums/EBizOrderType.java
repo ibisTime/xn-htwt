@@ -7,7 +7,7 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EBizOrderType {
-    C("C", "征信单"), BO("BO", "准入单"), RB("RB", "还款业务单");
+    C("C", "征信单"), BO("BO", "准入单"), RB("RB", "还款业务单"), IR("IR", "调查报告");
 
     EBizOrderType(String code, String value) {
         this.code = code;

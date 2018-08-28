@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 出差申请部门主管审核
+ * 出差申请财务主管审核
  * @author: jiafr 
  * @since: 2018年6月23日 下午4:29:19 
  * @history:

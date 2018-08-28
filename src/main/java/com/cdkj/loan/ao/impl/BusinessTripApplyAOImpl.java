@@ -21,9 +21,11 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.BusinessTripApply;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632690Req;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBusinessTripApplyNode;
 import com.cdkj.loan.exception.BizException;
@@ -57,7 +59,6 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
 
     @Override
     public String addBusinessTripApply(XN632690Req req) {
-
         BusinessTripApply data = new BusinessTripApply();
         data.setApplyUserCode(req.getApplyUserCode());
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUserCode());
@@ -134,20 +135,103 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setApplyNote(req.getApplyNote());
-
-        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
-            EBusinessTripApplyNode.APPLY.getCode()).getNextNode();
-
-        EBusinessTripApplyNode node = EBusinessTripApplyNode.getMap().get(
-            nextNode);
-
-        data.setCurNodeCode(node.getCode());
+        data.setCurNodeCode(EBusinessTripApplyNode.DEPARTMENT_AUDIT.getCode());
 
         String code = businessTripApplyBO.saveBusinessTripApply(data);
 
-        // 日志记录 TODO
+        // 日志记录
+        sysBizLogBO.recordCurOperate(code, EBizLogType.BUSINESS_TRIP_APPLY,
+            code, EBusinessTripApplyNode.APPLY.getCode(), req.getApplyNote(),
+            req.getUpdater(), null);
+        sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUSINESS_TRIP_APPLY, code,
+            EBusinessTripApplyNode.DEPARTMENT_AUDIT.getCode(), null);
 
         return code;
+    }
+
+    @Override
+    public void departmentAudit(String code, String operator,
+            String approveResult, String approveNote) {
+        BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
+        String preCurNodeCode = data.getCurNodeCode();// 当前节点
+        if (!EBusinessTripApplyNode.DEPARTMENT_AUDIT.getCode().equals(
+            preCurNodeCode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是部门主管审核节点，不能操作");
+        }
+        data.setDepartmentManagerCode(operator);
+        data.setUpdateDatetime(new Date());
+        data.setRemark(approveNote);
+        NodeFlow currentNode = nodeFlowBO
+            .getNodeFlowByCurrentNode(preCurNodeCode);
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(currentNode.getNextNode());
+        }
+        if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(currentNode.getBackNode());
+        }
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preCurNodeCode,
+            data.getCurNodeCode(), approveNote, operator, null);
+        businessTripApplyBO.departmentAudit(data);
+    }
+
+    @Override
+    public void financeAudit(String code, String operator,
+            String approveResult, String approveNote) {
+        BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
+        String preCurNodeCode = data.getCurNodeCode();// 当前节点
+        if (!EBusinessTripApplyNode.FINANCE_AUDIT.getCode().equals(
+            preCurNodeCode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是财务主管审核节点，不能操作");
+        }
+        data.setFinanceManagerCode(operator);
+        data.setUpdateDatetime(new Date());
+        data.setRemark(approveNote);
+        NodeFlow currentNode = nodeFlowBO
+            .getNodeFlowByCurrentNode(preCurNodeCode);
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(currentNode.getNextNode());
+        }
+        if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(currentNode.getBackNode());
+        }
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preCurNodeCode,
+            data.getCurNodeCode(), approveNote, operator, null);
+        businessTripApplyBO.financeAudit(data);
+    }
+
+    @Override
+    public void generalAudit(String code, String operator,
+            String approveResult, String approveNote) {
+        BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
+        String preCurNodeCode = data.getCurNodeCode();// 当前节点
+        if (!EBusinessTripApplyNode.GENERAL_AUDIT.getCode().equals(
+            preCurNodeCode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是总经理审核节点，不能操作");
+        }
+        data.setGeneralManagerCode(operator);
+        data.setUpdateDatetime(new Date());
+        data.setRemark(approveNote);
+        NodeFlow currentNode = nodeFlowBO
+            .getNodeFlowByCurrentNode(preCurNodeCode);
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(currentNode.getNextNode());
+            sysBizLogBO.refreshPreSYSBizLog(
+                EBizLogType.BUSINESS_TRIP_APPLY.getCode(), data.getCode(),
+                preCurNodeCode, approveNote, operator);
+        }
+        if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
+            data.setCurNodeCode(currentNode.getBackNode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+                EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(),
+                preCurNodeCode, data.getCurNodeCode(), approveNote, operator,
+                null);
+        }
+        businessTripApplyBO.generalAudit(data);
     }
 
     @Override
@@ -183,96 +267,6 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
         init(data);
         return data;
-    }
-
-    @Override
-    public void departmentAudit(String code, String operator,
-            String approveResult, String approveNote) {
-
-        BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
-        data.setDepartmentManagerCode(operator);
-        data.setUpdateDatetime(new Date());
-        data.setRemark(approveNote);
-
-        String preNodeCode = data.getCurNodeCode();
-
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preNodeCode).getNextNode());
-        }
-        if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preNodeCode).getBackNode());
-        }
-        EBusinessTripApplyNode node = EBusinessTripApplyNode.getMap().get(
-            data.getCurNodeCode());
-
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preNodeCode,
-            node.getCode(), approveNote, operator, null);
-
-        businessTripApplyBO.departmentAudit(data);
-
-    }
-
-    @Override
-    public void financeAudit(String code, String operator,
-            String approveResult, String approveNote) {
-
-        BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
-        data.setFinanceManagerCode(operator);
-        data.setUpdateDatetime(new Date());
-        data.setRemark(approveNote);
-
-        String preNodeCode = data.getCurNodeCode();
-
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preNodeCode).getNextNode());
-        }
-        if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preNodeCode).getBackNode());
-        }
-        EBusinessTripApplyNode node = EBusinessTripApplyNode.getMap().get(
-            data.getCurNodeCode());
-
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preNodeCode,
-            node.getCode(), approveNote, operator, null);
-
-        businessTripApplyBO.financeAudit(data);
-
-    }
-
-    @Override
-    public void generalAudit(String code, String operator,
-            String approveResult, String approveNote) {
-
-        BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
-        data.setGeneralManagerCode(operator);
-        data.setUpdateDatetime(new Date());
-        data.setRemark(approveNote);
-
-        String preNodeCode = data.getCurNodeCode();
-
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preNodeCode).getNextNode());
-        }
-        if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preNodeCode).getBackNode());
-        }
-        EBusinessTripApplyNode node = EBusinessTripApplyNode.getMap().get(
-            data.getCurNodeCode());
-
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preNodeCode,
-            node.getCode(), approveNote, operator, null);
-
-        businessTripApplyBO.generalAudit(data);
-
     }
 
     @Override
