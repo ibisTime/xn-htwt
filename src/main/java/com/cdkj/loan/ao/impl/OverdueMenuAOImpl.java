@@ -15,6 +15,7 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IOverdueMenuBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -51,6 +52,9 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
     @Autowired
     private IRepayPlanBO repayPlanBO;
 
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
     @Override
     @Transactional
     public void importOverdueMenu(String loanBankCode,
@@ -75,7 +79,6 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             List<RepayBiz> repayBizList = repayBizBO
                 .queryRepayBizList(condition);
             OverdueMenu overdueMenu = new OverdueMenu();
-            overdueMenu.setStatus(EOverdueMenuStatus.DCL.getCode());
             overdueMenu.setOverdueAmount(StringValidater.toLong(overdue
                 .getOverdueAmount()));
 
@@ -103,6 +106,9 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
                     overdueMenu.setOverdueDatetime(overDueRepayPlan
                         .getRepayDatetime());
                 }
+            } else {
+                overdueMenu.setStatus(EOverdueMenuStatus.DCL.getCode());
+                overdueMenu.setImportNote("信息不匹配");
             }
 
             // 最后逾期数据填充入库

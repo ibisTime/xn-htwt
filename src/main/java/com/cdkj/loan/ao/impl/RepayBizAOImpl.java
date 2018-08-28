@@ -17,6 +17,7 @@ import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -41,6 +42,7 @@ import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EJudicialLitigationEntryWay;
 import com.cdkj.loan.enums.ERepayBizNode;
@@ -85,6 +87,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private IBizTeamBO bizTeamBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     // 变更银行卡
     @Override
@@ -246,12 +251,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         return successAmount;
     }
 
-    // private BooleanRes daiKou(RepayBiz repayBiz) {
-    // long dkAmount = repayBiz.getFirstRepayAmount()
-    // * repayBiz.getRestPeriods();
-    // return new BooleanRes(true);
-    // }
-
     @Override
     public void enterBlackListProduct(String code, String blackHandleNote,
             String updater, String remark) {
@@ -297,80 +296,100 @@ public class RepayBizAOImpl implements IRepayBizAO {
     public void approveByQkcsDepartment(String code, Long cutLyDeposit,
             String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.QKCS_DEPART_CHECK.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();// 当前节点
+        if (!ERepayBizNode.QKCS_DEPART_CHECK.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不处于清欠催收部审核中");
         }
 
-        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+        String nextNodeCode = getNextNodeCode(preCurNodeCode,
             EBoolean.YES.getCode());
 
         repayBizBO.approveByQkcsDepartment(repayBiz, nextNodeCode,
             cutLyDeposit, updater, remark);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            nextNodeCode, remark, updater, repayBiz.getTeamCode());
+
     }
 
     @Override
     public void approveByBankCheck(XN630551Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.BANK_CHECK.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.BANK_CHECK.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不处于驻行人员审核中");
         }
 
-        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+        String nextNodeCode = getNextNodeCode(preCurNodeCode,
             req.getApproveResult());
 
         repayBizBO.approveByBankCheck(req.getCode(), nextNodeCode, DateUtil
             .strToDate(req.getSettleDatetime(), DateUtil.DATA_TIME_PATTERN_1),
             req.getSettlePdf(), req.getOperator(), req.getRemark());
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            nextNodeCode, req.getRemark(), req.getOperator(),
+            repayBiz.getTeamCode());
     }
 
     @Override
     public void approveByManager(String code, String approveResult,
             String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.MANAGER_CHECK.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.MANAGER_CHECK.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不处于总经理审核中");
         }
 
-        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-            approveResult);
+        String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
         repayBizBO.approveByManager(code, nextNodeCode, updater, remark);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            nextNodeCode, remark, updater, repayBiz.getTeamCode());
     }
 
     @Override
     public void approveByFinance(String code, String approveResult,
             String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.FINANCE_CHECK.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.FINANCE_CHECK.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不处于财务审核中");
         }
 
-        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-            approveResult);
+        String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
         repayBizBO.approveByFinance(code, nextNodeCode, updater, remark);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            nextNodeCode, remark, updater, repayBiz.getTeamCode());
     }
 
     @Override
     public void releaseMortgage(String code, Date releaseDatetime,
             String updater) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.RELEASE_MORTGAGE.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.RELEASE_MORTGAGE.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不处于解除抵押中");
         }
 
-        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+        String nextNodeCode = getNextNodeCode(preCurNodeCode,
             EBoolean.YES.getCode());
         repayBizBO
             .releaseMortgage(code, nextNodeCode, releaseDatetime, updater);
+        // 日志
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ.getCode(),
+            repayBiz.getCode(), preCurNodeCode, null, updater);
+
     }
 
     @Override
@@ -414,6 +433,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Transactional
     public void applyTrailer(XN630555Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        String preCurNodeCode = repayBiz.getCurNodeCode();// 划款业务当前节点
 
         RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
             req.getCode(), ERepayPlanNode.HANDLER_TO_RED);
@@ -435,14 +455,19 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.applyTrailer(repayBiz);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            repayBiz.getCurNodeCode(), req.getTcApplyNote(), req.getOperator(),
+            repayBiz.getTeamCode());
     }
 
     @Override
     public void financialMoney(String code, String operator,
             String remitAmount, String remitPdf) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.FINANCE_REMIT.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.FINANCE_REMIT.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是财务打款节点，不能操作！");
         }
@@ -456,13 +481,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(operator);
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.financialMoney(repayBiz);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            repayBiz.getCurNodeCode(), null, operator, repayBiz.getTeamCode());
     }
 
     @Override
     public void trailerEntry(XN630557Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.QKCSB_TOTC.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.QKCSB_TOTC.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是清欠催收部拖车结果待录入节点，不能操作！");
         }
@@ -480,13 +509,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.trailerEntry(repayBiz);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            repayBiz.getCurNodeCode(), req.getTakeNote(), req.getOperator(),
+            repayBiz.getTeamCode());
     }
 
     @Override
     public void trailerManage(String code, String appoveResult, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.QKCSB_TC_INPUT.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.QKCSB_TC_INPUT.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是清欠催收部拖车结果已录入节点，不能操作！");
         }
@@ -498,14 +532,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(operator);
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.trailerManage(repayBiz);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            repayBiz.getCurNodeCode(), null, operator, repayBiz.getTeamCode());
     }
 
     @Override
     public void judicialLitigationEntry(String code, String buyOutAmount,
             String way, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.JUDICIAL_LAWSUIT.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.JUDICIAL_LAWSUIT.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是司法诉讼节点，不能操作！");
         }
@@ -528,13 +566,16 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(operator);
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.judicialLitigationEntry(repayBiz);
+        // 日志
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ.getCode(),
+            repayBiz.getCode(), preCurNodeCode, null, operator);
     }
 
     @Override
     public void qkcsbRedeemApply(XN630561Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.QKCSB_REDEEM_APPLY.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.QKCSB_REDEEM_APPLY.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是清欠催收部申请赎回节点，不能操作！");
         }
@@ -553,13 +594,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.qkcsbRedeemApply(repayBiz);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            repayBiz.getCurNodeCode(), req.getGuaNote(), req.getOperator(),
+            repayBiz.getTeamCode());
     }
 
     @Override
     public void riskManagerCheck(XN630563Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.RISK_MANAGER_CHECK.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.RISK_MANAGER_CHECK.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是风控主管审核节点，不能操作！");
         }
@@ -578,14 +624,20 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.riskManagerCheck(repayBiz);
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+            repayBiz.getCurNodeCode(), req.getSuggestNote(), req.getOperator(),
+            repayBiz.getTeamCode());
     }
 
     @Override
     @Transactional
     public void financeApprove(XN630562Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        String preCurNodeCode = repayBiz.getCurNodeCode();
         if (!ERepayBizNode.FINANCE_MANAGER_CHECK.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+            preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是财务经理审核节点，不能操作！");
         }
@@ -593,6 +645,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
         RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
             req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            // 日志记录本次操作
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ.getCode(),
+                repayBiz.getCode(), preCurNodeCode, null, req.getOperator());
             if (ERepayPlanSuggest.SIX_SAFEGUARDS.getCode().equals(
                 repayPlan.getSuggest())) {
                 // 还款计划处理
@@ -606,6 +661,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {
                     repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK
                         .getCode());
+                    // 日志
+                    sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(),
+                        EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+                        repayBiz.getCurNodeCode(), repayBiz.getTeamCode());
                 } else {
                     repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
                 }
@@ -644,12 +703,21 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 repayBiz.setUpdater(req.getOperator());
                 repayBiz.setUpdateDatetime(new Date());
                 repayBizBO.financeApprove(repayBiz);
+                // 日志
+                sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(),
+                    EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+                    repayBiz.getCurNodeCode(), repayBiz.getTeamCode());
             }
         } else {
             repayBiz.setCurNodeCode(ERepayBizNode.RISK_MANAGER_CHECK.getCode());
             repayBiz.setUpdater(req.getOperator());
             repayBiz.setUpdateDatetime(new Date());
             repayBizBO.financeApprove(repayBiz);
+            // 日志
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+                EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
+                repayBiz.getCurNodeCode(), null, req.getOperator(),
+                repayBiz.getTeamCode());
         }
 
     }

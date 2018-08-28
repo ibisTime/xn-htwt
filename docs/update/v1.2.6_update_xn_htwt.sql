@@ -10,3 +10,11 @@ SET SQL_SAFE_UPDATES = 0;
 UPDATE tdq_budget_order  SET pledge_status = '0';
 UPDATE tdq_budget_order  SET pledge_status = '1'  WHERE car_number != '';
 SET SQL_SAFE_UPDATES = 1;
+
+UPDATE `tsys_node_flow` SET `back_node`= null WHERE `id`='27';
+
+UPDATE `tsys_node_flow` SET `back_node`='003_17' WHERE `id`='37';
+UPDATE `tsys_node_flow` SET `back_node`='003_18' WHERE `id`='38';
+UPDATE `tsys_node_flow` SET `next_node`=null WHERE `id`='38';
+
+

@@ -106,14 +106,14 @@
 	</select>
 	
 	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT * FROM tsys_biz_log t INNER JOIN tsys_role_node trn  ON t.deal_node=trn.node_code 
+		SELECT * FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
 		<include refid="where_condition" />
 	</select>
 	
 
 	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
 		resultType="java.lang.Long">
-         select count(1) from tsys_biz_log t inner join tsys_role_node trn on t.deal_node=trn.node_code 
+         SELECT count(1) FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
 		 <include refid="where_condition" />
 	</select>
 	

@@ -38,35 +38,25 @@ public class SYSBizLog extends ABaseDO {
 
     private String teamCode;// 团队编号
 
+    /***********************db properties**********************/
+
     /*-------------辅助字段---------------*/
-
-    private Date startDatetimeStart;
-
-    private Date endDatetimeEnd;
 
     private String operatorNameForQuery;// 操作人姓名模糊查
 
     private String operatorMobileForQuery;// 操作人手机号模糊查
 
-    private String roleCode;
+    private String roleCode;// 角色编号
 
-    private String userName;
+    private String userName;// 客户姓名
 
-    private String curNodeCode;
+    private String loanBank;// 贷款银行编号
 
-    private String companyName;
+    private String bizType;// 业务种类(新车，二手车)
 
-    private String flowTypeCode;
+    private String departmentName;// 部门名称
 
-    private String updateDatetime;
-
-    private String code;// bizCode
-
-    private String loanBank;
-
-    private String bizType;// 新车二手车
-
-    private String bizOrderType;// 征信 准入 还款
+    private String bizOrderType;// 业务单类型（ 征信 准入 还款）
 
     public String getBizOrderType() {
         return bizOrderType;
@@ -90,46 +80,6 @@ public class SYSBizLog extends ABaseDO {
 
     public void setBizType(String bizType) {
         this.bizType = bizType;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
-    }
-
-    public String getFlowTypeCode() {
-        return flowTypeCode;
-    }
-
-    public void setFlowTypeCode(String flowTypeCode) {
-        this.flowTypeCode = flowTypeCode;
-    }
-
-    public String getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public String getUserName() {
@@ -284,20 +234,12 @@ public class SYSBizLog extends ABaseDO {
         this.operatorMobileForQuery = operatorMobileForQuery;
     }
 
-    public Date getStartDatetimeStart() {
-        return startDatetimeStart;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setStartDatetimeStart(Date startDatetimeStart) {
-        this.startDatetimeStart = startDatetimeStart;
-    }
-
-    public Date getEndDatetimeEnd() {
-        return endDatetimeEnd;
-    }
-
-    public void setEndDatetimeEnd(Date endDatetimeEnd) {
-        this.endDatetimeEnd = endDatetimeEnd;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
 }
