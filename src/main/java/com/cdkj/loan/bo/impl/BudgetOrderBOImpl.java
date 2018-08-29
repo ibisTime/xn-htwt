@@ -298,13 +298,15 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         String result = EBoolean.NO.getCode();
 
         BudgetOrder budgetOrder = getBudgetOrder(code);
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
+        String preCurNodeCode = budgetOrder.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
+            null, nodeFlow.getNextNode(), operator, budgetOrder.getTeamCode());
         if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
             nodeFlow.getCurrentNode())) {
-
             if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
                 String logisticsCode = logisticsBO.saveLogistics(
                     ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
@@ -322,12 +324,6 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.updaterLogicNode(budgetOrder);
 
         return result;
-        // 日志记录
-        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-        // budgetOrder.getCurNodeCode());
-        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-        // currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
