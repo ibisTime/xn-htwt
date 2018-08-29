@@ -13,7 +13,7 @@ public class XN630170Req extends APageReq {
     private static final long serialVersionUID = 5780013307270124748L;
 
     @NotBlank
-    private String type;// 流程类型
+    private String type;// 流程类型 RB C...
 
     public String getType() {
         return type;

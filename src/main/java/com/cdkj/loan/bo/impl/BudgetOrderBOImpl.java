@@ -304,7 +304,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         // 日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
-            null, nodeFlow.getNextNode(), operator, budgetOrder.getTeamCode());
+            budgetOrder.getCurNodeCode(), null, operator,
+            budgetOrder.getTeamCode());
         if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
             nodeFlow.getCurrentNode())) {
             if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
