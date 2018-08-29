@@ -11,6 +11,7 @@
 		
 		<result column="content" property="content" />
 		<result column="publish_datetime" property="publishDatetime" />
+		<result column="enclosure" property="enclosure" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		
@@ -55,6 +56,7 @@
 		
 		,t.content
 		,t.publish_datetime
+		,t.enclosure
 		,t.status
 		,t.updater
 		
@@ -87,6 +89,7 @@
 		
 		,content
 		,publish_datetime
+		,enclosure
 		,status
 		,updater
 		
@@ -102,6 +105,7 @@
 		
 		,#{content}
 		,#{publishDatetime}
+		,#{enclosure}
 		,#{status}
 		,#{updater}
 		
@@ -120,6 +124,7 @@
 		,content = #{content}
 		
 		,publish_datetime = #{publishDatetime}
+		,enclosure = #{enclosure}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

@@ -52,6 +52,7 @@ public class NoticeAOImpl implements INoticeAO {
         data.setType(req.getType());
         data.setUrgentStatus(req.getUrgentStatus());
         data.setPublishDepartmentCode(req.getPublishDepartmentCode());
+        data.setEnclosure(req.getEnclosure());
         data.setStatus(ENoticeStatus.TO_PUBLISH.getCode());
 
         data.setContent(req.getContent());
@@ -122,7 +123,7 @@ public class NoticeAOImpl implements INoticeAO {
         data.setType(req.getType());
         data.setUrgentStatus(req.getUrgentStatus());
         data.setPublishDepartmentCode(req.getPublishDepartmentCode());
-
+        data.setEnclosure(req.getEnclosure());
         data.setStatus(ENoticeStatus.TO_PUBLISH.getCode());
         data.setContent(req.getContent());
         data.setRemark(req.getRemark());

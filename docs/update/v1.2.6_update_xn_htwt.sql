@@ -38,3 +38,15 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201808281928381327127','U201806141609052491026','2018-08-28 21:18:14',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201808281919304534607','U201806141609052491026','2018-08-28 21:18:14',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201808281931416733029','U201806141609052491026','2018-08-28 21:18:14',NULL);
+
+
+
+ALTER TABLE `tp_comp_regime` 
+CHANGE COLUMN `content` `content` TEXT NULL DEFAULT NULL COMMENT '内容' ;
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '008', '退客户垫资款', 'admin', '2018-06-25 08:25:28', 'CD-HTWT000020', 'CD-HTWT000020');
+
+ALTER TABLE `tp_comp_regime` 
+ADD COLUMN `enclosure` TINYTEXT NULL COMMENT '附件' AFTER `content`;
+
+ALTER TABLE `tp_notice` 
+ADD COLUMN `enclosure` TINYTEXT NULL COMMENT '附件' AFTER `publish_datetime`;

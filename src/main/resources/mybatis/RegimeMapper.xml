@@ -9,6 +9,7 @@
 		<result column="name" property="name" />
 
 		<result column="content" property="content" />
+		<result column="enclosure" property="enclosure" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -48,6 +49,7 @@
 		,t.name
 
 		,t.content
+		,t.enclosure
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -77,6 +79,7 @@
 		,name
 
 		,content
+		,enclosure
 		,status
 		,updater
 		,update_datetime
@@ -89,6 +92,7 @@
 		,#{name}
 
 		,#{content}
+		,#{enclosure}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -104,6 +108,7 @@
 		,name = #{name}
 		,content = #{content}
 
+		,enclosure = #{enclosure}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

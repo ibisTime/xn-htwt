@@ -53,6 +53,7 @@ public class RegimeAOImpl implements IRegimeAO {
         data.setRegimeCode(req.getRegimeCode());
         data.setType(req.getType());
         data.setContent(req.getContent());
+        data.setEnclosure(req.getEnclosure());
         data.setStatus(ERegimeStatus.TO_PUBLISH.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -113,7 +114,7 @@ public class RegimeAOImpl implements IRegimeAO {
         data.setRegimeCode(req.getRegimeCode());
         data.setType(req.getType());
         data.setContent(req.getContent());
-
+        data.setEnclosure(req.getEnclosure());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());

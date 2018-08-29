@@ -36,6 +36,9 @@ public class Notice extends ABaseDO {
     // 发布时间
     private Date publishDatetime;
 
+    // 附件
+    private String enclosure;
+
     // 状态
     private String status;
 
@@ -65,6 +68,14 @@ public class Notice extends ABaseDO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getEnclosure() {
+        return enclosure;
+    }
+
+    public void setEnclosure(String enclosure) {
+        this.enclosure = enclosure;
     }
 
     public void setCode(String code) {
