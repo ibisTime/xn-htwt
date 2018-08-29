@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.dto.req.XN632030Req;
 import com.cdkj.loan.dto.req.XN632032Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
@@ -39,8 +41,12 @@ public class BankAOImpl implements IBankAO {
     @Override
     @Transactional
     public String addBank(XN632030Req req) {
-        if (null != bankBO.getBank(req.getBankCode())) {
-            throw new BizException("xn0000", "银行信息已存在，请勿重复添加。");
+        Bank bank = new Bank();
+        bank.setBankCode(req.getBankCode());
+        List<Bank> bankList = bankBO.queryBankList(bank);
+        if (CollectionUtils.isNotEmpty(bankList)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "银行信息已存在，请勿重复添加!");
         }
         Bank data = new Bank();
         data.setBankCode(req.getBankCode());
@@ -87,8 +93,7 @@ public class BankAOImpl implements IBankAO {
         // bankRateBO.dropBankRate(rateCondition);
 
         // 编辑银行信息
-        Bank data = new Bank();
-        data.setCode(req.getCode());
+        Bank data = bankBO.getBank(req.getCode());
         data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());

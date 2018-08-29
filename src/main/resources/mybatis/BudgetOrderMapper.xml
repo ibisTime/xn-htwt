@@ -1141,6 +1141,11 @@
 		<include refid="where_condition" />) tb
 	</select>
 	
+	<select id="select_budgetOrder_count_byDz" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_budget_order t
+		<include refid="where_condition" />
+	</select>
 	
 	<select id="select_budgetOrder_dz" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT

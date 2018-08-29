@@ -14,7 +14,6 @@ public class XN632732Req {
     private String code;
 
     // 备注
-    @NotBlank
     private String remark;
 
     // 更新人
