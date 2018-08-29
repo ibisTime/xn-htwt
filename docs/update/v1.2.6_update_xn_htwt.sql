@@ -58,3 +58,5 @@ DROP COLUMN `ref_file_list`;
 UPDATE `tsys_node` SET `name`='入档完成' WHERE `code`='002_23';
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805081719260431762';
+
+DELETE FROM `tsys_menu` WHERE `code`='SM201805311013495606615';

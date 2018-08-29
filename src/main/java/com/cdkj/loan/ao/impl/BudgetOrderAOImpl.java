@@ -2027,9 +2027,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 }
                 arrayList.add(EBudgetOrderNode.ARCHIVE_END.getCode());
                 condition.setCurNodeCodeList(arrayList);
+            } else {
+                condition.setCurNodeCodeNoEnter(
+                    EBudgetOrderNode.ARCHIVE_END.getCode());
             }
-            condition
-                .setCurNodeCodeNoEnter(EBudgetOrderNode.ARCHIVE_END.getCode());
         }
 
         String orderColumn = req.getOrderColumn();
