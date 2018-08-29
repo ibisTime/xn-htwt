@@ -28,6 +28,7 @@ public class XN632116 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Credit condition = new Credit();
+        condition.setCode(req.getCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setTeamCode(req.getTeamCode());
         condition.setUserNameQuery(req.getUserName());
@@ -37,8 +38,8 @@ public class XN632116 extends AProcessor {
         condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
             req.getApplyDatetimeEnd(), true));
         condition.setIsCancel(req.getIsCancel());
-
         condition.setCurNodeCode(req.getCurNodeCode());
+
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ICreditAO.DEFAULT_ORDER_COLUMN;

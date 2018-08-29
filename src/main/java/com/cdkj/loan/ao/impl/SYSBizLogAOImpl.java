@@ -1,6 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.IRoleNodeBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
-import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BusinessTripApply;
@@ -32,7 +30,6 @@ import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.res.XN632912Res;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBizOrderType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 
@@ -228,49 +225,6 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         data.setDepartmentName(departmentName);
         data.setBizOrderType(bizOrderType);
         return data;
-    }
-
-    @Override
-    public Object querySYSBizLogPageByBizOrderType(int start, int limit,
-            SYSBizLog condition) {
-        List<Object> resList = new ArrayList<Object>();
-        Paginable<SYSBizLog> paginable = sysBizLogBO
-            .getPaginableByBizOrderType(start, limit, condition);
-        List<SYSBizLog> list = paginable.getList();
-        if (condition.getBizOrderType().equals(EBizOrderType.C.getCode())) {
-            for (SYSBizLog sysBizLog : list) {
-                Credit credit = creditBO.getCredit(sysBizLog.getRefOrder());
-                creditAO.initCredit(credit);
-                resList.add(credit);
-            }
-        }
-        if (condition.getBizOrderType().equals(EBizOrderType.BO.getCode())) {
-            for (SYSBizLog sysBizLog : list) {// TODO init
-                BudgetOrder budgetOrder = budgetOrderBO
-                    .getBudgetOrder(sysBizLog.getRefOrder());
-                resList.add(budgetOrder);
-            }
-        }
-        if (condition.getBizOrderType().equals(EBizOrderType.RB.getCode())) {
-            for (SYSBizLog sysBizLog : list) {// TODO init
-                RepayBiz repayBiz = repayBizBO.getRepayBiz(sysBizLog
-                    .getRefOrder());
-                resList.add(repayBiz);
-            }
-        }
-        Paginable<Object> page = new Page<Object>(start, limit,
-            paginable.getTotalCount());
-        page.setList(resList);
-        return page;
-    }
-
-    @Override
-    public Object querySYSRoleListByRefOrder(SYSBizLog condition) {
-        List<SYSBizLog> list = sysBizLogBO.querySYSBizLogList(condition);
-        for (SYSBizLog sysBizLog : list) {
-            init(sysBizLog);
-        }
-        return list;
     }
 
     private SYSBizLog init(SYSBizLog sysBizLog) {

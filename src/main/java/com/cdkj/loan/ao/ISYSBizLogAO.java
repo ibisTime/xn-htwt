@@ -11,21 +11,19 @@ import com.cdkj.loan.domain.SYSBizLog;
 public interface ISYSBizLogAO {
     static final String DEFAULT_ORDER_COLUMN = "id";
 
+    // 分页
     public Paginable<SYSBizLog> querySYSBizLogPage(int start, int limit,
             SYSBizLog condition);
 
+    // 列表
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition);
 
+    // 详情
     public SYSBizLog getSYSBizLog(int id);
 
     public Paginable<SYSBizLog> todoListOSS(int start, int limit,
             SYSBizLog condition);
 
     public Object todoListAPP(SYSBizLog condition);
-
-    public Object querySYSBizLogPageByBizOrderType(int start, int limit,
-            SYSBizLog condition);
-
-    public Object querySYSRoleListByRefOrder(SYSBizLog condition);
 
 }

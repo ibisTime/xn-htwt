@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.ISYSBizLogAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.SYSBizLog;
@@ -34,11 +33,6 @@ public class XN630176 extends AProcessor {
         condition.setOperator(req.getOperator());
         condition.setOperatorName(req.getOperatorName());
         condition.setOperatorMobile(req.getOperatorMobile());
-        condition.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setStartDatetime(DateUtil.strToDate(req.getEndDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-
         return sysBizLogAO.querySYSBizLogList(condition);
     }
 

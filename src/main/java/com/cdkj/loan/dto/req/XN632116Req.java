@@ -22,6 +22,9 @@ public class XN632116Req extends APageReq {
     // 团队编号
     private String teamCode;
 
+    // 征信单编号
+    private String code;
+
     // 预算单编号
     private String budgetOrderCode;
 
@@ -99,6 +102,14 @@ public class XN632116Req extends APageReq {
 
     public void setCurNodeCode(String curNodeCode) {
         this.curNodeCode = curNodeCode;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
 }

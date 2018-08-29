@@ -4,13 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.ISYSBizLogAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.dto.req.XN630175Req;
-import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -38,11 +36,6 @@ public class XN630175 extends AProcessor {
         condition.setOperator(req.getOperator());
         condition.setOperatorName(req.getOperatorName());
         condition.setOperatorMobile(req.getOperatorMobile());
-        condition.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setStartDatetime(DateUtil.strToDate(req.getEndDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
