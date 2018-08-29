@@ -1,12 +1,9 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632910Req;
 import com.cdkj.loan.exception.BizException;
@@ -28,21 +25,11 @@ public class XN632910 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
-        // condition.setCurNodeCodeDz(EBudgetOrderNode.GPSAZ.getCode());
-        // condition.setCurNodeCodeFk(EBudgetOrderNode.ENTRYMORTGAGE.getCode());
-        // condition.setAdvanceFlag(EBoolean.YES.getCode());
         condition.setCodeQuery(req.getBudgetCode());
         condition.setApplyUserName(req.getApplyUserName());
         condition.setLoanBank(req.getLoanBank());
 
-        String orderColumn = req.getOrderColumn();
-        if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;
-        }
-        condition.setOrder(orderColumn, req.getOrderDir());
-        int start = StringValidater.toInteger(req.getStart());
-        int limit = StringValidater.toInteger(req.getLimit());
-        return budgetOrderAO.queryBudgetOrderPageByDz(start, limit, condition);
+        return budgetOrderAO.queryBudgetOrderPageByDz(condition);
     }
 
     @Override

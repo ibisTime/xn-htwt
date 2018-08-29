@@ -13,7 +13,7 @@ public class XN632914Req extends APageReq {
     private static final long serialVersionUID = 5780013307270124748L;
 
     // 客户姓名
-    private String userName;
+    private String applyUserName;
 
     // 地区
     private String region;
@@ -30,12 +30,12 @@ public class XN632914Req extends APageReq {
     // 是否作废
     private String isCancel;
 
-    public String getUserName() {
-        return userName;
+    public String getApplyUserName() {
+        return applyUserName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
     }
 
     public String getRegion() {

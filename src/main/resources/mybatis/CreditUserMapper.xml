@@ -51,6 +51,7 @@
 		,t.auth_pdf
 		
 		,t.interview_pic
+		,t.credit_card_occupation
 		,t.bank_credit_result_pdf
 		,t.bank_credit_result_remark
 		from tdq_credit_user t
