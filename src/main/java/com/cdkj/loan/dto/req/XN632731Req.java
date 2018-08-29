@@ -29,6 +29,9 @@ public class XN632731Req {
     // 内容
     private String content;
 
+    // 附件
+    private String enclosure;
+
     // 更新人
     @NotBlank
     private String updater;
@@ -39,6 +42,14 @@ public class XN632731Req {
     // 范围
     @NotEmpty
     private List<XN632720ReqScope> scopePeopleList;
+
+    public String getEnclosure() {
+        return enclosure;
+    }
+
+    public void setEnclosure(String enclosure) {
+        this.enclosure = enclosure;
+    }
 
     public String getRegimeCode() {
         return regimeCode;

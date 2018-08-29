@@ -39,8 +39,10 @@ public class XN632722Req {
     @NotBlank
     private String content;
 
+    // 附件
+    private String enclosure;
+
     // 备注
-    @NotBlank
     private String remark;
 
     // 更新人
@@ -57,6 +59,14 @@ public class XN632722Req {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getEnclosure() {
+        return enclosure;
+    }
+
+    public void setEnclosure(String enclosure) {
+        this.enclosure = enclosure;
     }
 
     public String getType() {

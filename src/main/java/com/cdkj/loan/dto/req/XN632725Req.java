@@ -21,6 +21,9 @@ public class XN632725Req extends APageReq {
     // 发布部门
     private String publishDepartmentCode;
 
+    // 紧急程度
+    private String urgentStatus;
+
     // 状态
     private String status;
 
@@ -33,6 +36,14 @@ public class XN632725Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUrgentStatus() {
+        return urgentStatus;
+    }
+
+    public void setUrgentStatus(String urgentStatus) {
+        this.urgentStatus = urgentStatus;
     }
 
     public String getStatus() {

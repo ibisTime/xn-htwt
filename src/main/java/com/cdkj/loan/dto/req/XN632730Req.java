@@ -25,6 +25,9 @@ public class XN632730Req {
     // 内容
     private String content;
 
+    // 附件
+    private String enclosure;
+
     // 更新人
     private String updater;
 
@@ -41,6 +44,14 @@ public class XN632730Req {
 
     public String getRemark() {
         return remark;
+    }
+
+    public String getEnclosure() {
+        return enclosure;
+    }
+
+    public void setEnclosure(String enclosure) {
+        this.enclosure = enclosure;
     }
 
     public void setRemark(String remark) {
