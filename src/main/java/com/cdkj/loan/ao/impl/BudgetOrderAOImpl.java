@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +56,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSBizLog;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -1387,8 +1389,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
             budgetOrder.getCode(),
             EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-        if (null != bizLog) {
-            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
+        if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
+            SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+            budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
         }
 
         // 资料快递 通过类型，预算单号，收件节点，物流状态查找物流单
@@ -1402,9 +1405,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryLogisticsList(logistics);
         if (CollectionUtils.isNotEmpty(logisticsList)) {
             Logistics domain = logisticsList.get(0);
+            SYSDict dict = sysDictBO.getSYSDictByParentKeyAndDkey("kd_company",
+                domain.getLogisticsCompany());// 根据父key和Dkey查数据字典的Dvalue
+            String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(domain.getReceiptDatetime());// 转换收件时间的格式
             String informationExpress = "单号：" + domain.getLogisticsCode()
-                    + "  时间：" + domain.getReceiptDatetime() + "   快递公司："
-                    + domain.getLogisticsCompany();
+                    + "  时间：" + date + "   快递公司：" + dict.getDvalue();
             budgetOrder.setInformationExpress(informationExpress);
         }
         // 收件时间
@@ -1578,12 +1584,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(
             BudgetOrder condition) {
-        Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginableByDz(start,
-            limit, condition);
+        List<BudgetOrder> budgetOrderList = budgetOrderBO
+            .queryBudgetOrderList(condition);
         ArrayList<BudgetOrder> list = new ArrayList<BudgetOrder>();
-        for (BudgetOrder budgetOrder : paginable.getList()) {
+        for (BudgetOrder budgetOrder : budgetOrderList) {
             // 贷款银行
             if (StringUtils.isNotBlank(budgetOrder.getLoanBank())) {
                 Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
@@ -1865,8 +1871,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
             budgetOrder.getCode(),
             EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-        if (null != bizLog) {
-            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
+        if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
+            SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+            budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
         }
         return budgetOrder;
     }
@@ -1889,8 +1896,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
             budgetOrder.getCode(),
             EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-        if (null != bizLog) {
-            budgetOrder.setInsideJob(bizLog.getOperatorName());// 内勤（使用这个业务单在日志表的最新操作人）
+        if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
+            SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+            budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
         }
         CreditUser user = creditUserBO.getCreditUserByCreditCode(
             budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
@@ -1923,7 +1931,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     public Object queryBudgetOrderPageForProgress(XN632913Req req) {
         BudgetOrder condition = new BudgetOrder();
-        condition.setApplyUserNameForQuery(req.getUserName());
+        condition.setApplyUserNameForQuery(req.getApplyUserName());
         if (StringUtils.isNotBlank(req.getEnterStatus())) {
             if (req.getEnterStatus().equals(EBoolean.YES.getCode())) {
                 // 已入档
@@ -1973,7 +1981,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public Paginable<BudgetOrder> queryBudgetOrderPageForLoanLater(
             XN632914Req req) {
         BudgetOrder condition = new BudgetOrder();
-        condition.setApplyUserNameForQuery(req.getUserName());
+        condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setRegion(req.getRegion());
         condition.setLoanBank(req.getLoanBank());
         condition.setPledgeStatus(req.getPledgeStatus());

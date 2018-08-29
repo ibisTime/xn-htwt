@@ -1,8 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632910Req extends APageReq {
-
-    private static final long serialVersionUID = 1209667947927798356L;
+public class XN632910Req {
 
     // 业务编号
     private String budgetCode;

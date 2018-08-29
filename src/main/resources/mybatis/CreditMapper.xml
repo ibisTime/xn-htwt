@@ -159,7 +159,77 @@
 		From tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition" />) tb
 	</select>
-
+	
+	<select id="select_credit_count_byIsCancel" parameterType="credit" resultType="java.lang.Long">
+		select count(1) from tdq_credit t
+		<include refid="where_condition"/>
+	</select>
+	
+	<select id="select_credit_byIsCancel" parameterType="credit" resultMap="credit_DB_Result">
+		SELECT 
+		t.code
+		,t.loan_bank_code
+		,t.loan_amount
+		,t.biz_type
+		,t.second_car_report
+		,t.budget_code
+		,t.company_code
+		,t.sale_user_id
+		,t.user_name
+		,t.mobile
+		,t.id_no
+		,t.team_code
+		,t.apply_datetime
+		,t.cur_node_code
+		,t.note
+		,t.operator 
+		FROM 
+		tdq_credit t,tdq_budget_order b 
+		where
+		t.code = b.credit_code and b.cur_node_code = "007_04";
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_credit_count_byNotCancel" parameterType="credit" resultType="java.lang.Long">
+		select count(1) from tdq_credit t
+		<include refid="where_condition"/>
+	</select>
+	
+	<select id="select_credit_byNotCancel" parameterType="credit" resultMap="credit_DB_Result">
+		SELECT 
+		t.code
+		,t.loan_bank_code
+		,t.loan_amount
+		,t.biz_type
+		,t.second_car_report
+		,t.budget_code
+		,t.company_code
+		,t.sale_user_id
+		,t.user_name
+		,t.mobile
+		,t.id_no
+		,t.team_code
+		,t.apply_datetime
+		,t.cur_node_code
+		,t.note
+		,t.operator 
+		FROM 
+		tdq_credit t,tdq_budget_order b 
+		where
+		t.code = b.credit_code and b.cur_node_code != "007_04";
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
 	<insert id="insert_credit" parameterType="credit">
 		INSERT INTO tdq_credit(
 		code

@@ -94,6 +94,38 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     }
 
     @Override
+    public Paginable<Credit> getPaginableByIsCancel(int start, int limit,
+            Credit condition) {
+        prepare(condition);
+
+        long totalCount = creditDAO.selectTotalCountByIsCancel(condition);
+
+        Paginable<Credit> page = new Page<Credit>(start, limit, totalCount);
+
+        List<Credit> dataList = creditDAO.selectReqBudgetByIsCancel(condition,
+            page.getStart(), page.getPageSize());
+
+        page.setList(dataList);
+        return page;
+    }
+
+    @Override
+    public Paginable<Credit> getPaginableByNotCancel(int start, int limit,
+            Credit condition) {
+        prepare(condition);
+
+        long totalCount = creditDAO.selectTotalCountByNotCancel(condition);
+
+        Paginable<Credit> page = new Page<Credit>(start, limit, totalCount);
+
+        List<Credit> dataList = creditDAO.selectReqBudgetByNotCancel(condition,
+            page.getStart(), page.getPageSize());
+
+        page.setList(dataList);
+        return page;
+    }
+
+    @Override
     public void refreshCreditNode(Credit credit) {
         if (StringUtils.isNotBlank(credit.getCurNodeCode())) {
             creditDAO.updateNode(credit);

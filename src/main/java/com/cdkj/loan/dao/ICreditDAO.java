@@ -28,6 +28,18 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
     public List<Credit> selectReqBudgetByRoleCodeList(Credit condition,
             int start, int pageSize);
 
+    // 按是作废查询
+    public long selectTotalCountByIsCancel(Credit condition);
+
+    public List<Credit> selectReqBudgetByIsCancel(Credit condition, int start,
+            int pageSize);
+
+    // 按否作废查询
+    public long selectTotalCountByNotCancel(Credit condition);
+
+    public List<Credit> selectReqBudgetByNotCancel(Credit condition, int start,
+            int pageSize);
+
     // 征信撤回
     public int cancelCredit(Credit data);
 

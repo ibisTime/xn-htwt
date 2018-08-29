@@ -13,10 +13,6 @@ public class XN632150Req {
     @NotBlank
     private String code;
 
-    // 寄送材料清单(逗号隔开)
-    @NotBlank
-    private String sendFileList;
-
     // 寄送方式(1 线下 2 快递)
     @NotBlank
     private String sendType;
@@ -44,14 +40,6 @@ public class XN632150Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getSendFileList() {
-        return sendFileList;
-    }
-
-    public void setSendFileList(String sendFileList) {
-        this.sendFileList = sendFileList;
     }
 
     public String getSendType() {

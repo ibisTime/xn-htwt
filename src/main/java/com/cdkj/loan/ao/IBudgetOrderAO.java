@@ -118,7 +118,7 @@ public interface IBudgetOrderAO {
     public void cancelFinanceAudit(XN632192Req req);
 
     // 垫资超过1天未放款客户
-    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(
             BudgetOrder condition);
 
     public void doSmsInterviewInform(String budgetOrderCode);

@@ -47,8 +47,8 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
     @Override
     public List<Credit> selectList(Credit condition, int start, int count) {
 
-        return super.selectList(NAMESPACE.concat("select_credit"), start,
-            count, condition, Credit.class);
+        return super.selectList(NAMESPACE.concat("select_credit"), start, count,
+            condition, Credit.class);
     }
 
     @Override
@@ -78,6 +78,32 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
     }
 
     @Override
+    public long selectTotalCountByIsCancel(Credit condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_credit_count_byIsCancel"), condition);
+    }
+
+    @Override
+    public List<Credit> selectReqBudgetByIsCancel(Credit condition, int start,
+            int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_credit_byIsCancel"),
+            start, pageSize, condition, Credit.class);
+    }
+
+    @Override
+    public long selectTotalCountByNotCancel(Credit condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_credit_count_byNotCancel"), condition);
+    }
+
+    @Override
+    public List<Credit> selectReqBudgetByNotCancel(Credit condition, int start,
+            int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_credit_byNotCancel"),
+            start, pageSize, condition, Credit.class);
+    }
+
+    @Override
     public int cancelCredit(Credit data) {
         return super.update(NAMESPACE.concat("update_cancel_credit"), data);
     }
@@ -91,8 +117,8 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
 
     @Override
     public int refreshInputBankCreditResult(Credit data) {
-        return super.update(
-            NAMESPACE.concat("update_input_bank_credit_result"), data);
+        return super.update(NAMESPACE.concat("update_input_bank_credit_result"),
+            data);
 
     }
 
