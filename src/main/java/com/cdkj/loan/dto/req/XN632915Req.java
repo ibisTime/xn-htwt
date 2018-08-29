@@ -13,7 +13,7 @@ public class XN632915Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
-    private String userName;// 客户姓名
+    private String applyUserName;// 客户姓名
 
     private String bizType;// 业务种类
 
@@ -29,12 +29,12 @@ public class XN632915Req extends APageReq {
         this.curNodeCode = curNodeCode;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getApplyUserName() {
+        return applyUserName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
     }
 
     public String getBizType() {
