@@ -15,7 +15,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 待办事项
+ * 待办事项(OSS)
  * @author: jiafr 
  * @since: 2018年7月6日 下午2:19:30 
  * @history:
@@ -42,8 +42,7 @@ public class XN632911 extends AProcessor {
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
 
-        return sysBizLogAO
-            .querySYSBizLogPageByRoleCode(start, limit, condition);
+        return sysBizLogAO.todoListOSS(start, limit, condition);
     }
 
     @Override

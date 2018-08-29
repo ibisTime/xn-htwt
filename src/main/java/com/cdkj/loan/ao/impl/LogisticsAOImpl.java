@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -24,6 +25,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -61,6 +63,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
     @Override
     @Transactional
     public void sendLogistics(XN632150Req req) {
@@ -89,7 +94,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logistics.setSendNote(req.getSendNote());
         logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
         logisticsBO.sendLogistics(logistics);
-
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getBizCode(),
+            EBizLogType.LOGISTICS, logistics.getCode(),
+            ELogisticsStatus.SEND.getCode(),
+            ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
+            req.getOperator(), logistics.getTeamCode());
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             gpsApplyBO.sendGps(logistics.getBizCode(),
                 logistics.getSendDatetime());
@@ -120,6 +130,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
         String result = EBoolean.NO.getCode();
         logisticsBO.receiveLogistics(code, remark);
+        // 日志
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.LOGISTICS.getCode(),
+            data.getCode(), ELogisticsStatus.RECEIVE.getCode(), remark,
+            operator);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
@@ -144,6 +158,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "发件人团队人员不能收件！");
         }
+        // 日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBizCode(),
+            EBizLogType.LOGISTICS, data.getCode(),
+            ELogisticsStatus.RECEIVE.getCode(),
+            ELogisticsStatus.SEND_AGAIN.getCode(), remark, operator,
+            data.getTeamCode());
 
         logisticsBO.sendAgainLogistics(code, remark);
     }

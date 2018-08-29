@@ -26,4 +26,6 @@ public interface ISYSBizLogDAO extends IBaseDAO<SYSBizLog> {
             int start, int pageSize);
 
     public void updateSysBizLog(SYSBizLog data);
+
+    public List<SYSBizLog> selectListByRoleCode(SYSBizLog condition);
 }
