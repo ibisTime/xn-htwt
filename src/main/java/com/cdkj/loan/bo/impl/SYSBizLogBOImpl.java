@@ -158,6 +158,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         if (StringUtils.isNotBlank(bizCode)) {
             SYSBizLog condition = new SYSBizLog();
             condition.setRefOrder(bizCode);
+            condition.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
             sysBizLog = sysBizLogDAO.getLatestOperateRecordByBizCode(condition);
         }
         return sysBizLog;

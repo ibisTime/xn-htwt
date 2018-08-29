@@ -212,7 +212,7 @@
 		WHERE 
 		ref_order=#{refOrder}) b 
 		WHERE  
-		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime
+		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime and a.status = '1'
 	</select>
 	
 	<select id="select_sysBizLog_byBizOrderType" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">

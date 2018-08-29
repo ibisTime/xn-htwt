@@ -34,7 +34,7 @@ public class XN632116Req extends APageReq {
     // 节点编号
     private String curNodeCode;
 
-    // 节点编号
+    // 是否作废
     private String isCancel;
 
     public String getIsCancel() {
