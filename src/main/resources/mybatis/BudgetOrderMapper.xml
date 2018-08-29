@@ -344,6 +344,9 @@
 			<if test="applyUserId != null and applyUserId != '' ">
 				AND t.apply_user_id = #{applyUserId}
 			</if>
+			<if test="applyUserName != null and applyUserName != '' ">
+				AND t.apply_user_name = #{applyUserName}
+			</if>
 			<if test="applyUserNameForQuery != null and applyUserNameForQuery != '' ">
 				AND t.apply_user_name like "%"#{applyUserNameForQuery}"%"
 			</if>
@@ -1165,7 +1168,7 @@
 		,t.advance_fund_datetime
 		,t.cur_node_code
 		FROM
-		tdq_budget_order t where t.cur_node_code between '002_09'  and  '002_14'
+		tdq_budget_order t 
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
