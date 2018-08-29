@@ -108,6 +108,9 @@ public class SYSDictBOImpl extends PaginableBOImpl<SYSDict>
     public SYSDict getSYSDictByParentKeyAndDkey(String parentKey, String dKey) {
         SYSDict condition = new SYSDict();
         condition.setParentKey(parentKey);
+        if (dKey == null) {
+            return null;
+        }
         condition.setDkey(dKey);
         return sysDictDAO.select(condition);
     }

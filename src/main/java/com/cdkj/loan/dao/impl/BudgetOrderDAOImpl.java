@@ -134,10 +134,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public List<BudgetOrder> selectBudgetOrderByDzList(BudgetOrder condition,
-            int start, int pageSize) {
+    public List<BudgetOrder> selectBudgetOrderByDzList(BudgetOrder condition) {
         return super.selectList(NAMESPACE.concat("select_budgetOrder_dz"),
-            start, pageSize, condition, BudgetOrder.class);
+            condition, BudgetOrder.class);
     }
 
     @Override

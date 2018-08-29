@@ -50,3 +50,7 @@ ADD COLUMN `enclosure` TINYTEXT NULL COMMENT '附件' AFTER `content`;
 
 ALTER TABLE `tp_notice` 
 ADD COLUMN `enclosure` TINYTEXT NULL COMMENT '附件' AFTER `publish_datetime`;
+
+ALTER TABLE `tdq_logistics` 
+DROP COLUMN `send_file_list`,
+DROP COLUMN `ref_file_list`;

@@ -1405,12 +1405,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryLogisticsList(logistics);
         if (CollectionUtils.isNotEmpty(logisticsList)) {
             Logistics domain = logisticsList.get(0);
+            String companyName = null;
             SYSDict dict = sysDictBO.getSYSDictByParentKeyAndDkey("kd_company",
                 domain.getLogisticsCompany());// 根据父key和Dkey查数据字典的Dvalue
+            if (dict != null) {
+                companyName = dict.getDkey();
+            }
             String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(domain.getReceiptDatetime());// 转换收件时间的格式
             String informationExpress = "单号：" + domain.getLogisticsCode()
-                    + "  时间：" + date + "   快递公司：" + dict.getDvalue();
+                    + "  时间：" + date + "   快递公司：" + companyName;
             budgetOrder.setInformationExpress(informationExpress);
         }
         // 收件时间
@@ -1587,15 +1591,30 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(
             BudgetOrder condition) {
         List<BudgetOrder> budgetOrderList = budgetOrderBO
-            .queryBudgetOrderList(condition);
+            .getPaginableByDz(condition);
         ArrayList<BudgetOrder> list = new ArrayList<BudgetOrder>();
         for (BudgetOrder budgetOrder : budgetOrderList) {
+
+            // 业务员姓名
+            if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
+                SYSUser sysUser = sysUserBO
+                    .getUser(budgetOrder.getSaleUserId());
+                budgetOrder.setSaleUserName(sysUser.getRealName());
+            }
             // 贷款银行
             if (StringUtils.isNotBlank(budgetOrder.getLoanBank())) {
                 Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
                 budgetOrder.setLoanBankName(loanBank.getBankName());
             }
-
+            // 内勤
+            SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+                budgetOrder.getCode(),
+                EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+            if (null != bizLog
+                    && StringUtils.isNotBlank(bizLog.getOperator())) {
+                SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+                budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
+            }
             // 业务公司名称
             if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
                 Department company = departmentBO
@@ -1605,6 +1624,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             // 垫资天数
             Calendar cal = Calendar.getInstance();
+            if (budgetOrder.getAdvanceFundDatetime() == null) {
+                continue;
+            }
             cal.setTime(budgetOrder.getAdvanceFundDatetime());
             long time1 = cal.getTimeInMillis();
             cal.setTime(new Date());
