@@ -229,7 +229,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
 
     private SYSBizLog init(SYSBizLog sysBizLog) {
         SYSUser user = sysUserBO.getUser(sysBizLog.getOperator());
-        sysBizLog.setOperatorName(user.getRealName());
+        if (null != user) {
+            sysBizLog.setOperatorName(user.getRealName());
+        }
         return sysBizLog;
     }
 

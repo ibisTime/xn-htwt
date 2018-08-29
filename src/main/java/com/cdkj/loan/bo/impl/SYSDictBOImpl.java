@@ -27,8 +27,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class SYSDictBOImpl extends PaginableBOImpl<SYSDict>
-        implements ISYSDictBO {
+public class SYSDictBOImpl extends PaginableBOImpl<SYSDict> implements
+        ISYSDictBO {
     @Autowired
     private ISYSDictDAO sysDictDAO;
 
@@ -108,9 +108,6 @@ public class SYSDictBOImpl extends PaginableBOImpl<SYSDict>
     public SYSDict getSYSDictByParentKeyAndDkey(String parentKey, String dKey) {
         SYSDict condition = new SYSDict();
         condition.setParentKey(parentKey);
-        if (dKey == null) {
-            return null;
-        }
         condition.setDkey(dKey);
         return sysDictDAO.select(condition);
     }
