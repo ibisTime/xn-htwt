@@ -27,8 +27,8 @@ import com.cdkj.loan.enums.ELogisticsStatus;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
-        ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
+        implements ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
@@ -41,8 +41,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode, String refFileList) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -54,7 +54,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
 
         data.setFromNodeCode(fromNodeCode);
         data.setToNodeCode(toNodeCode);
-        data.setRefFileList(refFileList);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
         data.setReceiver(EBoolean.NO.getCode());
         logisticsDAO.insert(data);
@@ -64,8 +63,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     @Override
     public String saveLogisticsGps(String type, String bizCode, String userId,
             String refFileList, String receiver) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -75,7 +74,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         // 找到团队
         SYSUser sysUser = sysUserBO.getUser(userId);
         data.setTeamCode(sysUser.getTeamCode());
-        data.setRefFileList(refFileList);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
         data.setReceiver(receiver);
 

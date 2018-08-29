@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +56,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSBizLog;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -1403,9 +1405,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryLogisticsList(logistics);
         if (CollectionUtils.isNotEmpty(logisticsList)) {
             Logistics domain = logisticsList.get(0);
+            SYSDict dict = sysDictBO.getSYSDictByParentKeyAndDkey("kd_company",
+                domain.getLogisticsCompany());// 根据父key和Dkey查数据字典的Dvalue
+            String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(domain.getReceiptDatetime());// 转换收件时间的格式
             String informationExpress = "单号：" + domain.getLogisticsCode()
-                    + "  时间：" + domain.getReceiptDatetime() + "   快递公司："
-                    + domain.getLogisticsCompany();
+                    + "  时间：" + date + "   快递公司：" + dict.getDvalue();
             budgetOrder.setInformationExpress(informationExpress);
         }
         // 收件时间

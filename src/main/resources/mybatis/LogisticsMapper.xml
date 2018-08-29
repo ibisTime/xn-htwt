@@ -11,8 +11,6 @@
 		
 		<result column="from_node_code" property="fromNodeCode" />
 		<result column="to_node_code" property="toNodeCode" />
-		<result column="ref_file_list" property="refFileList" />
-		<result column="send_file_list" property="sendFileList" />
 		<result column="send_type" property="sendType" />
 		
 		<result column="logistics_company" property="logisticsCompany" />
@@ -75,8 +73,6 @@
 		,t.from_node_code
 		
 		,t.to_node_code
-		,t.ref_file_list
-		,t.send_file_list
 		,t.send_type
 		,t.logistics_company
 		
@@ -112,7 +108,6 @@
 		,from_node_code
 		
 		,to_node_code
-		,ref_file_list
 		,receiver
 		,status
 		)
@@ -125,7 +120,6 @@
 		,#{fromNodeCode}
 		
 		,#{toNodeCode}
-		,#{refFileList}
 		,#{receiver}
 		,#{status}
 		)
@@ -134,8 +128,7 @@
 	<update id="update_logistics_send" parameterType="logistics">
 		UPDATE tdq_logistics t
 		SET
-		t.send_file_list = #{sendFileList}
-		,t.send_type = #{sendType}
+		t.send_type = #{sendType}
 		,t.logistics_company = #{logisticsCompany}
 		,t.logistics_code = #{logisticsCode}
 		,t.send_datetime = #{sendDatetime}

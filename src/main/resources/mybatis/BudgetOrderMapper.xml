@@ -353,6 +353,12 @@
 			<if test="loanBank != null and loanBank != '' ">
 				AND t.loan_bank = #{loanBank}
 			</if>
+			<if test="region != null and region != '' ">
+				AND t.region = #{region}
+			</if>
+			<if test="bizType != null and bizType != '' ">
+				AND t.biz_type = #{bizType}
+			</if>
 			<if test="pledgeStatus != null and pledgeStatus != '' ">
 				AND t.pledge_status = #{pledgeStatus}
 			</if>
@@ -399,7 +405,7 @@
 				AND t.frozen_status = #{frozenStatus}
 			</if>
 			<if test="keyword != null and keyword != '' ">
-				AND (t.region LIKE "%"#{keyword}"%" OR t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.car_brand LIKE "%"#{keyword}"%")
+				AND (t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.car_brand LIKE "%"#{keyword}"%")
 			</if>
 			<if test="curNodeCode != null and curNodeCode != ''">
 				AND t.cur_node_code = #{curNodeCode}
