@@ -30,6 +30,7 @@ public class XN632910 extends AProcessor {
         condition.setCodeQuery(req.getCode());
         condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setLoanBank(req.getLoanBank());
+        condition.setRegion(req.getRegion());
         ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add("002_09");
         arrayList.add("002_10");

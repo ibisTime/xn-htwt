@@ -30,6 +30,17 @@ public class XN632914Req extends APageReq {
     // 是否作废
     private String isCancel;
 
+    // 是否归档
+    private String enterStatus;
+
+    public String getEnterStatus() {
+        return enterStatus;
+    }
+
+    public void setEnterStatus(String enterStatus) {
+        this.enterStatus = enterStatus;
+    }
+
     public String getApplyUserName() {
         return applyUserName;
     }

@@ -1405,11 +1405,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryLogisticsList(logistics);
         if (CollectionUtils.isNotEmpty(logisticsList)) {
             Logistics domain = logisticsList.get(0);
-            String companyName = null;
-            SYSDict dict = sysDictBO.getSYSDictByParentKeyAndDkey("kd_company",
-                domain.getLogisticsCompany());// 根据父key和Dkey查数据字典的Dvalue
-            if (dict != null) {
-                companyName = dict.getDkey();
+            String companyName = "";
+            if (StringUtils.isNotBlank(domain.getLogisticsCompany())) {
+                SYSDict dict = sysDictBO.getSYSDictByParentKeyAndDkey(
+                    "kd_company", domain.getLogisticsCompany());// 根据父key和Dkey查数据字典的Dvalue
+                companyName = dict.getDvalue();
+
             }
             String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(domain.getReceiptDatetime());// 转换收件时间的格式
@@ -2016,6 +2017,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 condition.setCurNodeCodeNoCancel(
                     EBudgetOrderNode.CANCEL_END.getCode());
             }
+        }
+        if (StringUtils.isNotBlank(req.getEnterStatus())) {
+            // 归档
+            if (EBoolean.YES.getCode().equals(req.getEnterStatus())) {
+                ArrayList<String> arrayList = new ArrayList<String>();
+                if (StringUtils.isNotBlank(condition.getCurNodeCode())) {
+                    arrayList.add(condition.getCurNodeCode());
+                }
+                arrayList.add(EBudgetOrderNode.ARCHIVE_END.getCode());
+                condition.setCurNodeCodeList(arrayList);
+            }
+            condition
+                .setCurNodeCodeNoEnter(EBudgetOrderNode.ARCHIVE_END.getCode());
         }
 
         String orderColumn = req.getOrderColumn();

@@ -8,6 +8,9 @@ public class XN632910Req {
     // 客户姓名
     private String applyUserName;
 
+    // 所属区域
+    private String region;
+
     // 贷款银行编号（支行编号）
     private String loanBank;
 
@@ -17,6 +20,14 @@ public class XN632910Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public String getApplyUserName() {
