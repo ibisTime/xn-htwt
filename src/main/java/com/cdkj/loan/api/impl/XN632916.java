@@ -29,7 +29,7 @@ public class XN632916 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
-        condition.setApplyUserNameForQuery(req.getUserName());
+        condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setBizType(req.getBizType());
         condition.setLoanPeriod(req.getLoanPeriod());
         condition.setTeamCode(req.getTeamCode());

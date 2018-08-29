@@ -25,8 +25,8 @@ public class XN632910 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
-        condition.setCodeQuery(req.getBudgetCode());
-        condition.setApplyUserName(req.getApplyUserName());
+        condition.setCodeQuery(req.getCode());
+        condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setLoanBank(req.getLoanBank());
 
         return budgetOrderAO.queryBudgetOrderPageByDz(condition);

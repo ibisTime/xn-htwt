@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 public class XN632910Req {
 
     // 业务编号
-    private String budgetCode;
+    private String code;
 
     // 客户姓名
     private String applyUserName;
@@ -11,12 +11,12 @@ public class XN632910Req {
     // 贷款银行编号（支行编号）
     private String loanBank;
 
-    public String getBudgetCode() {
-        return budgetCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setBudgetCode(String budgetCode) {
-        this.budgetCode = budgetCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getApplyUserName() {
