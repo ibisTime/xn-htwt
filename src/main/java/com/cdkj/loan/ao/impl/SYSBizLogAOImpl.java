@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.IBusinessTripApplyBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IInvestigateReportBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.IRoleNodeBO;
@@ -25,10 +26,15 @@ import com.cdkj.loan.domain.BusinessTripApply;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
+import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.res.XN632912Res;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBizOrderType;
+import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ELogisticsStatus;
 
 @Service
 public class SYSBizLogAOImpl implements ISYSBizLogAO {
@@ -66,6 +72,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     @Autowired
     private IBusinessTripApplyBO businessTripApplyBO;
 
+    @Autowired
+    private ILogisticsBO logisticsBO;
+
     @Override
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition) {
         return sysBizLogBO.querySYSBizLogList(condition);
@@ -89,13 +98,57 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     }
 
     @Override
-    public Paginable<SYSBizLog> querySYSBizLogPageByRoleCode(int start,
-            int limit, SYSBizLog condition) {
+    public Object todoListAPP(SYSBizLog condition) {
+        List<SYSBizLog> list = sysBizLogBO
+            .querySYSBizLogListByRoleCode(condition);
+        XN632912Res data = new XN632912Res(0, 0, 0, 0, 0, 0);
+        for (SYSBizLog sysBizLog : list) {
+            if (EBizLogType.CREDIT.getCode().equals(sysBizLog.getRefType())) {
+                data.setCreditTodo(data.getCreditTodo() + 1);
+            }
+            if (EBudgetOrderNode.INTERVIEW.getCode().equals(
+                sysBizLog.getDealNode())
+                    || EBudgetOrderNode.AGAIN_INTERVIEW.getCode().equals(
+                        sysBizLog.getDealNode())) {
+                data.setInterviewTodo(data.getInterviewTodo() + 1);
+            }
+            if (EBudgetOrderNode.GPSAZ.getCode()
+                .equals(sysBizLog.getDealNode())
+                    || EBudgetOrderNode.AGAINGPSAZ.getCode().equals(
+                        sysBizLog.getDealNode())) {
+                data.setGpsInstallTodo(data.getGpsInstallTodo() + 1);
+            }
+            if (EBudgetOrderNode.CARSETTLE.getCode().equals(
+                sysBizLog.getDealNode())) {
+                data.setCarSettleTodo(data.getCarSettleTodo() + 1);
+            }
+            if (EBudgetOrderNode.ENTRYMORTGAGE.getCode().equals(
+                sysBizLog.getDealNode())
+                    || EBudgetOrderNode.ENTRYCOMMITBANK.getCode().equals(
+                        sysBizLog.getDealNode())
+                    || EBudgetOrderNode.MORTGAGEFINISH.getCode().equals(
+                        sysBizLog.getDealNode())) {
+                data.setEntryMortgageTodo(data.getEntryMortgageTodo() + 1);
+            }
+            if (ELogisticsStatus.SEND.getCode().equals(sysBizLog.getDealNode())
+                    || ELogisticsStatus.RECEIVE.getCode().equals(
+                        sysBizLog.getDealNode())
+                    || ELogisticsStatus.SEND_AGAIN.getCode().equals(
+                        sysBizLog.getDealNode())) {
+                data.setLogisticsTodo(data.getLogisticsTodo() + 1);
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public Paginable<SYSBizLog> todoListOSS(int start, int limit,
+            SYSBizLog condition) {
         Paginable<SYSBizLog> paginable = sysBizLogBO.getPaginableByRoleCode(
             start, limit, condition);
         List<SYSBizLog> list = paginable.getList();
         for (SYSBizLog sysBizLog : list) {
-            todoThing(sysBizLog);// 赋值 转义
+            todoThing(sysBizLog);
         }
         return paginable;
     }
@@ -160,6 +213,14 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
             departmentName = department.getName();
             bizOrderType = "调查报告";
+        }
+        if ("L".equals(data.getRefOrder().substring(0, 1))) {
+            Logistics logistics = logisticsBO.getLogistics(data.getRefOrder());
+            SYSUser user = sysUserBO.getUser(logistics.getUserId());
+            if (null != user) {
+                userName = user.getRealName();
+            }
+            bizOrderType = "资料传递";
         }
         data.setUserName(userName);
         data.setLoanBank(loanBank);

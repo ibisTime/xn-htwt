@@ -3,14 +3,12 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 代办事项OSS
+ * 代办事项APP
  * @author: jiafr 
  * @since: 2018年7月6日 下午2:05:21 
  * @history:
  */
-public class XN632911Req extends APageReq {
-
-    private static final long serialVersionUID = 7948180551552144337L;
+public class XN632912Req {
 
     @NotBlank
     private String roleCode;// 角色编号

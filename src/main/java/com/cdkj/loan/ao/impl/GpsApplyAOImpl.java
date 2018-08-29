@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
@@ -24,8 +25,10 @@ import com.cdkj.loan.dto.req.XN632710Req;
 import com.cdkj.loan.dto.req.XN632711Req;
 import com.cdkj.loan.dto.req.XN632711ReqChild;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
+import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
@@ -51,6 +54,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
 
     @Autowired
     private ILogisticsBO logisticsBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     @Override
     public String addGpsApply(XN632710Req req) {
@@ -95,9 +101,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gpsBO.applyGps(gps);
         }
         // 产生物流单
-        logisticsBO
-            .saveLogisticsGps(ELogisticsType.GPS.getCode(), data.getCode(),
-                data.getApplyUser(), "GPS物流传递", data.getApplyUser());
+        String logisticsCode = logisticsBO.saveLogisticsGps(
+            ELogisticsType.GPS.getCode(), data.getCode(), data.getApplyUser(),
+            "GPS物流传递", data.getApplyUser());
+        // 日志
+        sysBizLogBO.saveSYSBizLog(data.getCode(), EBizLogType.LOGISTICS,
+            logisticsCode, ELogisticsStatus.SEND.getCode(), null);
     }
 
     @Override
