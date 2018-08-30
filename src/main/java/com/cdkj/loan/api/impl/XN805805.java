@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.cdkj.loan.ao.ICNavigateAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CNavigate;
 import com.cdkj.loan.dto.req.XN805805Req;
@@ -49,10 +50,10 @@ public class XN805805 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805805Req.class);
         StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater
-            .validateBlank(req.getCompanyCode(), req.getSystemCode());
+        ObjValidater.validateReq(req);
     }
 }

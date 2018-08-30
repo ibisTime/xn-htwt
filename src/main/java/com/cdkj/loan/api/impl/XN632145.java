@@ -35,12 +35,13 @@ public class XN632145 extends AProcessor {
         condition.setCompanyCode(req.getCompanyCode());
         condition.setTeamCode(req.getTeamCode());
         condition.setApplyUserNameForQuery(req.getApplyUserName());
-        condition.setApplyDatetimeStart(DateUtil.getFrontDate(
-            req.getApplyDatetimeStart(), false));
-        condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
-            req.getApplyDatetimeEnd(), true));
+        condition.setApplyDatetimeStart(
+            DateUtil.getFrontDate(req.getApplyDatetimeStart(), false));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getApplyDatetimeEnd(), true));
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
+        condition.setKeyword(req.getKeyword());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
