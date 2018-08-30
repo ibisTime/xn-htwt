@@ -1,6 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-
 public class XN632145Req extends APageReq {
 
     /** 
@@ -28,6 +27,16 @@ public class XN632145Req extends APageReq {
     private String curNodeCode;// 当前节点编号
 
     private String isAdvanceFund;// 是否垫资
+
+    private String keyword; // 关键字
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public String getCompanyCode() {
         return companyCode;

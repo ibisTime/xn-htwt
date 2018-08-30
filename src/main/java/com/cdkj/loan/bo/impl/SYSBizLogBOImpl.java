@@ -22,8 +22,8 @@ import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
-        ISYSBizLogBO {
+public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
+        implements ISYSBizLogBO {
 
     @Autowired
     private ISYSBizLogDAO sysBizLogDAO;
@@ -102,7 +102,8 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             Long day = diff / (24 * 60 * 60 * 1000);
             Long hour = (diff / (60 * 60 * 1000) - day * 24);
             Long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
-            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60
+                    - min * 60);
             data.setSpeedTime(day + "天" + hour + "时" + min + "分" + sec + "秒");
             // sysBizLogDAO.updateSpeedtime(data);
             sysBizLogDAO.updateSysBizLog(data);
@@ -164,8 +165,20 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
     }
 
     @Override
-    public Paginable<SYSBizLog> getPaginableByBizOrderType(int start,
-            int limit, SYSBizLog condition) {
+    public SYSBizLog getLatestOperateCreditByBizCode(String bizCode) {
+        SYSBizLog sysBizLog = null;
+        if (StringUtils.isNotBlank(bizCode)) {
+            SYSBizLog condition = new SYSBizLog();
+            condition.setRefOrder(bizCode);
+            condition.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+            sysBizLog = sysBizLogDAO.getLatestOperateCreditByBizCode(condition);
+        }
+        return sysBizLog;
+    }
+
+    @Override
+    public Paginable<SYSBizLog> getPaginableByBizOrderType(int start, int limit,
+            SYSBizLog condition) {
         prepare(condition);
         long totalCount = sysBizLogDAO
             .selectTotalCountByBizOrderType(condition);
@@ -194,4 +207,5 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         List<SYSBizLog> dataList = sysBizLogDAO.selectListByRoleCode(condition);
         return dataList;
     }
+
 }

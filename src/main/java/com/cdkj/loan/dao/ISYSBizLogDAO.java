@@ -28,4 +28,6 @@ public interface ISYSBizLogDAO extends IBaseDAO<SYSBizLog> {
     public void updateSysBizLog(SYSBizLog data);
 
     public List<SYSBizLog> selectListByRoleCode(SYSBizLog condition);
+
+    public SYSBizLog getLatestOperateCreditByBizCode(SYSBizLog condition);
 }
