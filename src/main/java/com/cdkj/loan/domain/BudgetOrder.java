@@ -881,8 +881,11 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> curNodeCodeList;
 
-    // 业务编号模糊差查
+    // 还款业务编号模糊差查
     private String repayBizCodeForQuery;
+
+    // 查询还款业务不为null的业务单（进行到贷后的业务）
+    private String repayBizCodeNotNull;
 
     // 联系电话
     private String contactNo;
@@ -3344,6 +3347,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCurNodeCodeList(List<String> curNodeCodeList) {
         this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public String getRepayBizCodeNotNull() {
+        return repayBizCodeNotNull;
+    }
+
+    public void setRepayBizCodeNotNull(String repayBizCodeNotNull) {
+        this.repayBizCodeNotNull = repayBizCodeNotNull;
     }
 
 }

@@ -27,8 +27,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class SYSDictBOImpl extends PaginableBOImpl<SYSDict>
-        implements ISYSDictBO {
+public class SYSDictBOImpl extends PaginableBOImpl<SYSDict> implements
+        ISYSDictBO {
     @Autowired
     private ISYSDictDAO sysDictDAO;
 

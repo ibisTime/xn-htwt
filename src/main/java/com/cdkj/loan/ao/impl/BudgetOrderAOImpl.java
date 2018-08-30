@@ -1409,8 +1409,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             if (StringUtils.isNotBlank(domain.getLogisticsCompany())) {
                 SYSDict dict = sysDictBO.getSYSDictByParentKeyAndDkey(
                     "kd_company", domain.getLogisticsCompany());// 根据父key和Dkey查数据字典的Dvalue
-                companyName = dict.getDvalue();
-
+                if (dict != null) {
+                    companyName = dict.getDvalue();
+                }
+            } else {
+                companyName = "无";
             }
             String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(domain.getReceiptDatetime());// 转换收件时间的格式
@@ -2016,6 +2019,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         condition.setLoanBank(req.getLoanBank());
         condition.setPledgeStatus(req.getPledgeStatus());
         condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setRepayBizCodeNotNull("贷后业务单");
         if (StringUtils.isNotBlank(req.getIsCancel())) {
             if (EBoolean.YES.getCode().equals(req.getIsCancel())) {
                 // 作废

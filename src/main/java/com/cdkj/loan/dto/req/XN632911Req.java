@@ -17,6 +17,10 @@ public class XN632911Req extends APageReq {
 
     private String teamCode;// 团队编号
 
+    private String refOrder;// 业务编号
+
+    private String refType;// 流程类型
+
     public String getRoleCode() {
         return roleCode;
     }
@@ -31,6 +35,22 @@ public class XN632911Req extends APageReq {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public String getRefOrder() {
+        return refOrder;
+    }
+
+    public void setRefOrder(String refOrder) {
+        this.refOrder = refOrder;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
     }
 
 }
