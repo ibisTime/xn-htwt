@@ -61,6 +61,12 @@ DELETE FROM `tsys_menu` WHERE `code`='SM201805081719260431762';
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805311013495606615';
 
+UPDATE `tsys_menu` SET `name`='垫资超1天未放款', `url`='/statistic/one-report.htm' WHERE `code`='SM201808281931416733029';
+
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201808291134334396154','详情','2','/detail','1','U201806141609052491026','2018-08-29 11:34:33','','SM201808281931416733029');
+
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201808291134334396154','U201806141609052491026','2018-08-29 16:22:36',NULL);
+
 SET SQL_SAFE_UPDATES = 0;
 UPDATE tdh_repay_biz  SET is_advance_settled = '0'  WHERE is_advance_settled is null;
 SET SQL_SAFE_UPDATES = 1;
