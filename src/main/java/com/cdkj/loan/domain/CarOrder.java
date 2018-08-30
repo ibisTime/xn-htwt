@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -51,6 +52,16 @@ public class CarOrder extends ABaseDO {
 
     // 用户
     private User user;
+
+    private List<String> statusList; // 状态List
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public User getUser() {
         return user;

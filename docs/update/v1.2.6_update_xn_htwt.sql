@@ -60,3 +60,7 @@ UPDATE `tsys_node` SET `name`='入档完成' WHERE `code`='002_23';
 DELETE FROM `tsys_menu` WHERE `code`='SM201805081719260431762';
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805311013495606615';
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tdh_repay_biz  SET is_advance_settled = '0'  WHERE is_advance_settled is null;
+SET SQL_SAFE_UPDATES = 1;

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN630435Req extends APageReq {
 
     /** 
@@ -31,7 +33,17 @@ public class XN630435Req extends APageReq {
 
     private String status; // 状态
 
+    private List<String> statusList; // 状态List
+
     private String handler; // 处理人
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public String getUserId() {
         return userId;

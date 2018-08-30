@@ -43,6 +43,7 @@ public class XN630435 extends AProcessor {
         condition.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         condition.setPeriods(StringValidater.toInteger(req.getPeriods()));
         condition.setStatus(req.getStatus());
+        condition.setStatusList(req.getStatusList());
         condition.setHandler(req.getHandler());
 
         String orderColumn = req.getOrderColumn();
