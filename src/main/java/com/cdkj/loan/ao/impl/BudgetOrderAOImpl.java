@@ -1875,7 +1875,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public Paginable<BudgetOrder> queryBudgetOrderPageByTeamCode(int start,
-            int limit, BudgetOrder condition) {
+            int limit, BudgetOrder condition, String roleCode) {
+        if (!"RO201800000000000001".equals(roleCode)
+                && condition.getTeamCode() == null) {
+            return null;
+        }
+        if ("RO201800000000000001".equals(roleCode)) {
+            condition.setTeamName(null);
+        }
         Paginable<BudgetOrder> page = budgetOrderBO
             .getPaginableByTeamCode(start, limit, condition);
         List<BudgetOrder> list = page.getList();

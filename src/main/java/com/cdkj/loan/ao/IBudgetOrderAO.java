@@ -128,7 +128,7 @@ public interface IBudgetOrderAO {
 
     // 团队报表
     public Paginable<BudgetOrder> queryBudgetOrderPageByTeamCode(int start,
-            int limit, BudgetOrder condition);
+            int limit, BudgetOrder condition, String roleCode);
 
     // 业务报表
     public Object queryBudgetOrderPageForBizReport(int start, int limit,
