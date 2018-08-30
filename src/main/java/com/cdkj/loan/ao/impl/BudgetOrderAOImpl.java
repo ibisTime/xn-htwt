@@ -1988,6 +1988,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         condition.setLoanBank(req.getLoanBank());
         condition.setPledgeStatus(req.getPledgeStatus());
         condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setRepayBizCodeNotNull("贷后业务单");
         if (StringUtils.isNotBlank(req.getIsCancel())) {
             if (EBoolean.YES.getCode().equals(req.getIsCancel())) {
                 // 作废
