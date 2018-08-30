@@ -37,17 +37,6 @@ public class XN632116Req extends APageReq {
     // 节点编号
     private String curNodeCode;
 
-    // 是否作废
-    private String isCancel;
-
-    public String getIsCancel() {
-        return isCancel;
-    }
-
-    public void setIsCancel(String isCancel) {
-        this.isCancel = isCancel;
-    }
-
     public String getTeamCode() {
         return teamCode;
     }

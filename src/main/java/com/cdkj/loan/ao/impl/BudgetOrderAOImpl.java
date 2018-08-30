@@ -1997,6 +1997,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .getCode());
             }
         }
+        if (StringUtils.isNotBlank(req.getEnterStatus())) {
+            // 归档
+            if (EBoolean.YES.getCode().equals(req.getEnterStatus())) {
+                ArrayList<String> arrayList = new ArrayList<String>();
+                if (StringUtils.isNotBlank(condition.getCurNodeCode())) {
+                    arrayList.add(condition.getCurNodeCode());
+                }
+                arrayList.add(EBudgetOrderNode.ARCHIVE_END.getCode());
+                condition.setCurNodeCodeList(arrayList);
+            } else {
+                condition.setCurNodeCodeNoEnter(EBudgetOrderNode.ARCHIVE_END
+                    .getCode());
+            }
+        }
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

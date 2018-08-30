@@ -290,13 +290,6 @@ public class CreditAOImpl implements ICreditAO {
             Credit condition) {
         Paginable<Credit> paginable = creditBO.getPaginable(start, limit,
             condition);
-        if (EBoolean.YES.getCode().equals(condition.getIsCancel())) {
-            paginable = creditBO.getPaginableByIsCancel(start, limit,
-                condition);
-        } else if (EBoolean.NO.getCode().equals(condition.getIsCancel())) {
-            paginable = creditBO.getPaginableByNotCancel(start, limit,
-                condition);
-        }
         List<Credit> list = paginable.getList();
         for (Credit credit : list) {
             initCredit(credit);

@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import java.util.ArrayList;
+
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -28,7 +30,15 @@ public class XN632910 extends AProcessor {
         condition.setCodeQuery(req.getCode());
         condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setLoanBank(req.getLoanBank());
-
+        condition.setRegion(req.getRegion());
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("002_09");
+        arrayList.add("002_10");
+        arrayList.add("002_11");
+        arrayList.add("002_12");
+        arrayList.add("002_13");
+        arrayList.add("002_14");
+        condition.setCurNodeCodeList(arrayList);
         return budgetOrderAO.queryBudgetOrderPageByDz(condition);
     }
 
