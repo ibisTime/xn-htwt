@@ -294,6 +294,7 @@
 		,total_overdue_count
 		,cur_overdue_count
 		,black_handle_note
+		,is_advance_settled
 		
 		,updater
 		,update_datetime
@@ -344,6 +345,7 @@
 		,#{curOverdueCount}
 		,#{blackHandleNote}
 		
+		,#{isAdvanceSettled}
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}

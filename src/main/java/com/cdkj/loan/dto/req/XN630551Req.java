@@ -28,7 +28,7 @@ public class XN630551Req {
     private String settleDatetime;
 
     // 结清证明
-    private String settlePdf;
+    private String settleAttach;
 
     public String getApproveResult() {
         return approveResult;
@@ -70,12 +70,12 @@ public class XN630551Req {
         this.settleDatetime = settleDatetime;
     }
 
-    public String getSettlePdf() {
-        return settlePdf;
+    public String getSettleAttach() {
+        return settleAttach;
     }
 
-    public void setSettlePdf(String settlePdf) {
-        this.settlePdf = settlePdf;
+    public void setSettleAttach(String settleAttach) {
+        this.settleAttach = settleAttach;
     }
 
 }

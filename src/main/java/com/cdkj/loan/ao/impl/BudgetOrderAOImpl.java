@@ -1884,7 +1884,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             return null;
         }
         if ("RO201800000000000001".equals(roleCode)) {
-            condition.setTeamName(null);
+            condition.setTeamCode(null);
         }
         Paginable<BudgetOrder> page = budgetOrderBO
             .getPaginableByTeamCode(start, limit, condition);

@@ -131,6 +131,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
 
         repayBiz.setCurOverdueCount(0);
         repayBiz.setBlackHandleNote("暂无");
+        repayBiz.setIsAdvanceSettled(EBoolean.NO.getCode());
         repayBiz.setUpdater(operator);
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(budgetOrder.getRemark());
