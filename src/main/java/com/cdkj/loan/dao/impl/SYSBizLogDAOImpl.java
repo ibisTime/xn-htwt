@@ -9,7 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.SYSBizLog;
 
 @Repository("sysBizLogDAOImpl")
-public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO {
+public class SYSBizLogDAOImpl extends AMybatisTemplate
+        implements ISYSBizLogDAO {
 
     @Override
     public int insert(SYSBizLog data) {
@@ -41,12 +42,13 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
 
     @Override
     public List<SYSBizLog> selectList(SYSBizLog condition) {
-        return super.selectList(NAMESPACE.concat("select_sysBizLog"),
-            condition, SYSBizLog.class);
+        return super.selectList(NAMESPACE.concat("select_sysBizLog"), condition,
+            SYSBizLog.class);
     }
 
     @Override
-    public List<SYSBizLog> selectList(SYSBizLog condition, int start, int count) {
+    public List<SYSBizLog> selectList(SYSBizLog condition, int start,
+            int count) {
         return super.selectList(NAMESPACE.concat("select_sysBizLog"), start,
             count, condition, SYSBizLog.class);
     }
@@ -65,16 +67,14 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
     @Override
     public List<SYSBizLog> selectListByRoleCode(SYSBizLog condition, int start,
             int pageSize) {
-        return super.selectList(
-            NAMESPACE.concat("select_sysBizLog_byRoleCode"), start, pageSize,
-            condition, SYSBizLog.class);
+        return super.selectList(NAMESPACE.concat("select_sysBizLog_byRoleCode"),
+            start, pageSize, condition, SYSBizLog.class);
     }
 
     @Override
     public List<SYSBizLog> selectListByRoleCode(SYSBizLog condition) {
-        return super.selectList(
-            NAMESPACE.concat("select_sysBizLog_byRoleCode"), condition,
-            SYSBizLog.class);
+        return super.selectList(NAMESPACE.concat("select_sysBizLog_byRoleCode"),
+            condition, SYSBizLog.class);
     }
 
     @Override
@@ -102,6 +102,13 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
     @Override
     public void updateSysBizLog(SYSBizLog data) {
         super.update(NAMESPACE.concat("update_sysBizLog"), data);
+    }
+
+    @Override
+    public SYSBizLog getLatestOperateCreditByBizCode(SYSBizLog condition) {
+        return super.select(
+            NAMESPACE.concat("select_latest_operate_credit_by_bizCode"),
+            condition, SYSBizLog.class);
     }
 
 }

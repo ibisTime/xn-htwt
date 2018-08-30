@@ -490,8 +490,9 @@ public class CreditAOImpl implements ICreditAO {
             }
             credit.setIsCancel(EBoolean.NO.getCode());
         }
+        // 征信的内勤取录入征信结果的操作人
         SYSBizLog bizLog = sysBizLogBO
-            .getLatestOperateRecordByBizCode(credit.getCode());
+            .getLatestOperateCreditByBizCode(credit.getCode());
         if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
             SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
             credit.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）

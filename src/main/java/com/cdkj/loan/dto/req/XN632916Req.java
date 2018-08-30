@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * 团队报表
  * @author: jiafr 
@@ -21,7 +19,6 @@ public class XN632916Req extends APageReq {
 
     private String loanPeriod;// 贷款期限
 
-    @NotBlank
     private String teamCode;// 团队编号
 
     public String getTeamCode() {

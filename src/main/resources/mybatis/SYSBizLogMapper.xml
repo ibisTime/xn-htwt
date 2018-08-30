@@ -209,6 +209,16 @@
 		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime and a.status = '1'
 	</select>
 	
+	<select id="select_latest_operate_credit_by_bizCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+		SELECT a.* FROM 
+		tsys_biz_log a,
+		(SELECT ref_order,max(start_datetime) as start_datetime FROM tsys_biz_log  
+		WHERE 
+		ref_order=#{refOrder}) b 
+		WHERE  
+		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime and a.status = '1' and a.deal_node = '001_02'
+	</select>
+	
 	<select id="select_sysBizLog_byBizOrderType" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		SELECT
 		t.id
