@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 public class Node extends ABaseDO {
@@ -20,6 +22,8 @@ public class Node extends ABaseDO {
     private String roleCode;// 角色编号
 
     private String isChoice; // 当前角色是否拥有
+
+    private List<String> typeList;// 类型list
 
     public String getRoleCode() {
         return roleCode;
@@ -75,6 +79,14 @@ public class Node extends ABaseDO {
 
     public void setNameQuery(String nameQuery) {
         this.nameQuery = nameQuery;
+    }
+
+    public List<String> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<String> typeList) {
+        this.typeList = typeList;
     }
 
 }

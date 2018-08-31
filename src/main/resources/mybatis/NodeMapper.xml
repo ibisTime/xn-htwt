@@ -23,6 +23,12 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			<if test="typeList != null and typeList != '' ">
+				AND t.type in 
+				<foreach collection="typeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_node" parameterType="node" resultMap="node_DB_Result">
