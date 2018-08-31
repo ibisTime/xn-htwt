@@ -36,12 +36,12 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
     private ISYSConfigDAO sysConfigDAO;
 
     @Override
-    public int refreshSYSConfig(Long id, String cvalue, String updater,
+    public int refreshSYSConfig(String ckey, String cvalue, String updater,
             String remark) {
-        SYSConfig data = new SYSConfig();
-        data.setId(id);
+        SYSConfig condition = new SYSConfig();
+        condition.setCkey(ckey);
+        SYSConfig data = sysConfigDAO.select(condition);
         data.setCvalue(cvalue);
-
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
         data.setRemark(remark);

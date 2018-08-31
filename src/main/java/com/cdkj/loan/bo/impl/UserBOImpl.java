@@ -72,8 +72,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     public int refreshLoginPwd(String userId, String loginPwd) {
         int count = 0;
         if (StringUtils.isNotBlank(userId)) {
-            User data = new User();
-            data.setUserId(userId);
+            User data = getUser(userId);
             data.setLoginPwd(MD5Util.md5(loginPwd));
             data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
             count = userDAO.updateLoginPwd(data);

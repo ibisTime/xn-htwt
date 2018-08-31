@@ -15,7 +15,6 @@ import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -63,11 +62,10 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
-    public void refreshUseGps(String code, String budgetOrder) {
+    public void refreshUseGps(String code, String budgetOrder, EBoolean e) {
         if (StringUtils.isNotBlank(code)) {
-            Gps data = new Gps();
-            data.setCode(code);
-            data.setUseStatus(EGpsUseStatus.USED.getCode());
+            Gps data = getGps(code);
+            data.setUseStatus(e.getCode());
             data.setUseDatetime(new Date());
             data.setBizCode(budgetOrder);
             gpsDAO.updateUseStatus(data);

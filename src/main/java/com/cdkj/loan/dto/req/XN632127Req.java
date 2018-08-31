@@ -1,6 +1,10 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.cdkj.loan.domain.BudgetOrderGps;
 
 /**
  * 预算单-GPS管理员审核
@@ -20,6 +24,16 @@ public class XN632127Req {
 
     @NotBlank
     private String operator;// 操作人
+
+    private List<BudgetOrderGps> budgetOrderGpsList;
+
+    public List<BudgetOrderGps> getBudgetOrderGpsList() {
+        return budgetOrderGpsList;
+    }
+
+    public void setBudgetOrderGpsList(List<BudgetOrderGps> budgetOrderGpsList) {
+        this.budgetOrderGpsList = budgetOrderGpsList;
+    }
 
     public String getCode() {
         return code;

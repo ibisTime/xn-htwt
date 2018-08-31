@@ -15,7 +15,7 @@ public interface ISYSConfigAO {
 
     String DEFAULT_ORDER_COLUMN = "id";
 
-    public void editSYSConfig(Long id, String cvalue, String updater,
+    public void editSYSConfig(String ckey, String cvalue, String updater,
             String remark);
 
     public Paginable<SYSConfig> querySYSConfigPage(int start, int limit,

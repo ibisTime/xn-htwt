@@ -26,6 +26,12 @@ public class XN632155Req extends APageReq {
     // 收件人
     private String receiver;
 
+    // 类型
+    private String type;
+
+    // 类型List
+    private List<String> typeList;
+
     // 状态List
     private List<String> statusList;
 
@@ -35,6 +41,22 @@ public class XN632155Req extends APageReq {
 
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<String> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<String> typeList) {
+        this.typeList = typeList;
     }
 
     public String getReceiver() {

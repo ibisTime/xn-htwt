@@ -20,6 +20,16 @@ public class XN630520Req extends APageReq {
 
     private String realName;// 姓名
 
+    private String teamCode;// 团队编号
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
+
     public String getRealName() {
         return realName;
     }

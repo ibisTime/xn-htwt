@@ -48,7 +48,6 @@ import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
-import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.Logistics;
@@ -813,7 +812,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         // 当前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
-        if (!EBudgetOrderNode.INTERVIEW.getCode().equals(preCurrentNode)) {
+        if (!EBudgetOrderNode.INTERVIEW.getCode().equals(preCurrentNode)
+                && !EBudgetOrderNode.AGAIN_INTERVIEW.getCode().equals(
+                    budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是面签节点，不能操作");
         }
@@ -957,7 +958,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void gpsManagerApprove(String code, String operator,
-            String approveResult, String approveNote) {
+            String approveResult, String approveNote, List<BudgetOrderGps> list) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
@@ -970,16 +971,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preCurrentNode).getNextNode());
 
-            // 更新gps使用状态
-            List<BudgetOrderGps> gpslist = budgetOrderGpsBO
-                .queryBudgetOrderGpsList(budgetOrder.getCode());
-            for (BudgetOrderGps budgetOrderGps : gpslist) {
-                Gps gps = gpsBO.getGps(budgetOrderGps.getCode());
-                gpsBO.refreshUseGps(gps.getCode(), budgetOrder.getCode());
-            }
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preCurrentNode).getBackNode());
+            // gps使用状态改为未使用
+            for (BudgetOrderGps budgetOrderGps : list) {
+                gpsBO
+                    .refreshUseGps(budgetOrderGps.getCode(), null, EBoolean.NO);
+            }
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshGpsManagerApprove(budgetOrder);
@@ -1600,7 +1599,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             long between_days = (time2 - time1) / (1000 * 3600 * 24);
             int days = Integer.parseInt(String.valueOf(between_days));
             budgetOrder.setAdvanceDays(days);
-            if (days > 1) {
+            if (days >= 1) {
                 list.add(budgetOrder);
             }
         }

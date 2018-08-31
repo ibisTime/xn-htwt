@@ -4,7 +4,6 @@ import com.cdkj.loan.ao.ISYSConfigAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN630042Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -25,8 +24,8 @@ public class XN630042 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        sysConfigAO.editSYSConfig(StringValidater.toLong(req.getId()),
-            req.getCvalue(), req.getUpdater(), req.getRemark());
+        sysConfigAO.editSYSConfig(req.getKey(), req.getCvalue(),
+            req.getUpdater(), req.getRemark());
         return new BooleanRes(true);
     }
 

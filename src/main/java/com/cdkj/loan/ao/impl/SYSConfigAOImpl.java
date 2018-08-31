@@ -21,9 +21,9 @@ public class SYSConfigAOImpl implements ISYSConfigAO {
     ISYSConfigBO sysConfigBO;
 
     @Override
-    public void editSYSConfig(Long id, String cvalue, String updater,
+    public void editSYSConfig(String ckey, String cvalue, String updater,
             String remark) {
-        sysConfigBO.refreshSYSConfig(id, cvalue, updater, remark);
+        sysConfigBO.refreshSYSConfig(ckey, cvalue, updater, "提前还款服务费");
     }
 
     @Override
