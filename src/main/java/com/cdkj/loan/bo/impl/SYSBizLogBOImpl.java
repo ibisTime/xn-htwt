@@ -85,15 +85,14 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
     public void refreshPreSYSBizLog(String refType, String refOrder,
             String dealNode, String dealNote, String operator) {
         SYSBizLog data = getSYSBizLoglatest(refType, refOrder, dealNode);
-        SYSUser sysUser = sysUserBO.getUser(operator);
-        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
-        data.setOperateRole(sysUser.getRoleCode());
-        data.setOperator(sysUser.getUserId());
-        data.setOperatorName(sysUser.getLoginName());
-        data.setOperatorMobile(sysUser.getMobile());
-        data.setDealNote(dealNote);
-
-        if (data != null) {
+        if (null != data) {
+            SYSUser sysUser = sysUserBO.getUser(operator);
+            data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+            data.setOperateRole(sysUser.getRoleCode());
+            data.setOperator(sysUser.getUserId());
+            data.setOperatorName(sysUser.getLoginName());
+            data.setOperatorMobile(sysUser.getMobile());
+            data.setDealNote(dealNote);
             data.setEndDatetime(new Date());
             // 计算花费时间
             Long start = data.getStartDatetime().getTime();
