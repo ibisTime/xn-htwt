@@ -82,6 +82,15 @@ UPDATE `tsys_node_flow` SET `next_node`='002_24' WHERE `id`='8';
 
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('SR201800000000000000YWY', '002_11');
 
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201808311514347975033','GPS发件','1','/transmit/transmitGps.htm','3','U201806141609052491026','2018-08-31 15:16:35','','SM201805291121432585610');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201808311516565463134','发件','2','/send','1','U201806141609052491026','2018-08-31 15:16:56','','SM201808311514347975033');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201808311517146078898','详情','2','/detail','2','U201806141609052491026','2018-08-31 15:17:14','','SM201808311514347975033');
+UPDATE `tsys_menu` SET `order_no`='4' WHERE `code`='SM201806242217285108940';
+
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201808311514347975033','U201806141609052491026','2018-08-31 15:18:00',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201808311516565463134','U201806141609052491026','2018-08-31 15:18:00',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201808311517146078898','U201806141609052491026','2018-08-31 15:18:00',NULL);
+
 
 gps mei bu 011
 INSERT INTO `dev_xn_htwt`.`tsys_node` (`code`, `name`, `type`) VALUES ('012_01', '业务贷后资料发件', '012');
