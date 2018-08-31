@@ -15,6 +15,7 @@ import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -42,6 +43,10 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
             for (XN632126ReqGps reqGps : gpsAzList) {
                 BudgetOrderGps data = new BudgetOrderGps();
                 Gps gps = gpsBO.getGps(reqGps.getCode());
+                if (EGpsUseStatus.USED.getCode().equals(gps.getUseStatus())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "该gps已安装，请重新选择！");
+                }
                 data.setCode(reqGps.getCode());
                 data.setGpsDevNo(gps.getGpsDevNo());
                 data.setGpsType(gps.getGpsType());

@@ -72,3 +72,6 @@ UPDATE tdh_repay_biz  SET is_advance_settled = '0'  WHERE is_advance_settled is 
 SET SQL_SAFE_UPDATES = 1;
 
 UPDATE `tsys_node_flow` SET `next_node`='002_26' WHERE `id`='12';
+UPDATE `tsys_node_flow` SET `next_node`='002_24' WHERE `id`='8';
+
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('SR201800000000000000YWY', '002_11');
