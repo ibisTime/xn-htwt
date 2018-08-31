@@ -956,7 +956,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             List<XN632126ReqGps> gpsAzList) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         String preCurrentNode = budgetOrder.getCurNodeCode();// 之前节点
-        if (!EBudgetOrderNode.GPSAZ.getCode().equals(preCurrentNode)) {
+        if (!EBudgetOrderNode.GPSAZ.getCode().equals(preCurrentNode)
+                && !EBudgetOrderNode.AGAINGPSAZ.getCode()
+                    .equals(preCurrentNode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是业务团队安装GPS节点，不能操作");
         }
