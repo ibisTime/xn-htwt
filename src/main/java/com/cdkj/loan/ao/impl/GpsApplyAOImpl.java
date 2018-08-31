@@ -25,10 +25,8 @@ import com.cdkj.loan.dto.req.XN632710Req;
 import com.cdkj.loan.dto.req.XN632711Req;
 import com.cdkj.loan.dto.req.XN632711ReqChild;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
-import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
@@ -101,12 +99,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gpsBO.applyGps(gps);
         }
         // 产生物流单
-        String logisticsCode = logisticsBO.saveLogisticsGps(
-            ELogisticsType.GPS.getCode(), data.getCode(), data.getApplyUser(),
-            "GPS物流传递", data.getApplyUser());
-        // 日志
-        sysBizLogBO.saveSYSBizLog(data.getCode(), EBizLogType.LOGISTICS,
-            logisticsCode, ELogisticsStatus.SEND.getCode(), null);
+        logisticsBO
+            .saveLogisticsGps(ELogisticsType.GPS.getCode(), data.getCode(),
+                data.getApplyUser(), "GPS物流传递", data.getApplyUser());
     }
 
     @Override

@@ -71,8 +71,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void sendLogistics(XN632150Req req) {
         Logistics logistics = logisticsBO.getLogistics(req.getCode());
         if (!ELogisticsStatus.TO_SEND.getCode().equals(logistics.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
-                    .equals(logistics.getStatus())) {
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
+                    logistics.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待发货状态!");
         }
@@ -93,14 +93,26 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logistics.setSendNote(req.getSendNote());
         logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
         logisticsBO.sendLogistics(logistics);
-        // 日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getBizCode(),
-            EBizLogType.LOGISTICS, logistics.getCode(),
-            ELogisticsStatus.SEND.getCode(), ELogisticsStatus.RECEIVE.getCode(),
-            req.getSendNote(), req.getOperator(), logistics.getTeamCode());
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             gpsApplyBO.sendGps(logistics.getBizCode(),
                 logistics.getSendDatetime());
+            // 日志
+            if (ELogisticsStatus.TO_SEND.getCode()
+                .equals(logistics.getStatus())) {
+                sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getCode(),
+                    EBizLogType.GPS_LOGISTICS, logistics.getCode(),
+                    ELogisticsStatus.SEND.getCode(),
+                    ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
+                    req.getOperator(), null);
+            }
+            if (ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
+                logistics.getStatus())) {
+                sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getCode(),
+                    EBizLogType.GPS_LOGISTICS, logistics.getCode(),
+                    ELogisticsStatus.SEND_AGAIN.getCode(),
+                    ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
+                    req.getOperator(), null);
+            }
         }
     }
 
@@ -128,21 +140,20 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
         String result = EBoolean.NO.getCode();
         logisticsBO.receiveLogistics(code, remark);
-        // 日志
-        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.LOGISTICS.getCode(),
-            data.getCode(), ELogisticsStatus.RECEIVE.getCode(), remark,
-            operator);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.receiveGps(data.getBizCode());
+            // 日志
+            sysBizLogBO.refreshPreSYSBizLog(
+                EBizLogType.GPS_LOGISTICS.getCode(), data.getCode(),
+                ELogisticsStatus.RECEIVE.getCode(), remark, operator);
         }
         return new BooleanRes(true, result);
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator,
-            String remark) {
+    public void sendAgainLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
@@ -157,14 +168,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "发件人团队人员不能收件！");
         }
-        // 日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBizCode(),
-            EBizLogType.LOGISTICS, data.getCode(),
-            ELogisticsStatus.RECEIVE.getCode(),
-            ELogisticsStatus.SEND_AGAIN.getCode(), remark, operator,
-            data.getTeamCode());
-
         logisticsBO.sendAgainLogistics(code, remark);
+        if (data.getType().equals(ELogisticsType.GPS.getCode())) {
+            // 日志
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+                EBizLogType.GPS_LOGISTICS, data.getCode(),
+                ELogisticsStatus.RECEIVE.getCode(),
+                ELogisticsStatus.SEND_AGAIN.getCode(), remark, operator, null);
+        }
     }
 
     @Override

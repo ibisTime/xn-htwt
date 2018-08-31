@@ -31,13 +31,12 @@ import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
-import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -64,16 +63,18 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         CreditUser ghrCreditUser = null;
         CreditUser guaCreditUser = null;
         for (CreditUser creditUser : creditUserList) {
-            if (applyCreditUser == null && ELoanRole.APPLY_USER.getCode()
-                .equals(creditUser.getLoanRole())) {
+            if (applyCreditUser == null
+                    && ELoanRole.APPLY_USER.getCode().equals(
+                        creditUser.getLoanRole())) {
                 applyCreditUser = creditUser;
             }
-            if (ghrCreditUser == null && ELoanRole.GHR.getCode()
-                .equals(creditUser.getLoanRole())) {
+            if (ghrCreditUser == null
+                    && ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
                 ghrCreditUser = creditUser;
             }
-            if (guaCreditUser == null && ELoanRole.GUARANTOR.getCode()
-                .equals(creditUser.getLoanRole())) {
+            if (guaCreditUser == null
+                    && ELoanRole.GUARANTOR.getCode().equals(
+                        creditUser.getLoanRole())) {
                 guaCreditUser = creditUser;
             }
         }
@@ -81,8 +82,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         String code = null;
         if (credit != null) {
             BudgetOrder data = new BudgetOrder();
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.BUDGETORDER.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGETORDER
+                .getCode());
             data.setCode(code);
             data.setCreditCode(credit.getCode());
             data.setBizType(credit.getBizType());
@@ -304,18 +305,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getCurNodeCode(), null, operator,
             budgetOrder.getTeamCode());
-        if (EBudgetOrderNode.DHAPPROVEDATA.getCode()
-            .equals(nodeFlow.getCurrentNode())) {
+        if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
+            nodeFlow.getCurrentNode())) {
             if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
-                String logisticsCode = logisticsBO.saveLogistics(
-                    ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
-                    operator, nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
-                    nodeFlow.getFileList());
+                logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                    budgetOrder.getCode(), operator, nodeFlow.getCurrentNode(),
+                    nodeFlow.getNextNode(), nodeFlow.getFileList());
                 result = EBoolean.YES.getCode();
-                // 日志
-                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-                    EBizLogType.LOGISTICS, logisticsCode,
-                    ELogisticsStatus.SEND.getCode(), budgetOrder.getTeamCode());
             } else {
                 throw new BizException("xn0000", "当前节点材料清单不存在");
             }

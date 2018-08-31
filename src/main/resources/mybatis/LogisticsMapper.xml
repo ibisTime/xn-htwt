@@ -50,7 +50,6 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
 			</if>

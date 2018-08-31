@@ -71,7 +71,14 @@ SET SQL_SAFE_UPDATES = 0;
 UPDATE tdh_repay_biz  SET is_advance_settled = '0'  WHERE is_advance_settled is null;
 SET SQL_SAFE_UPDATES = 1;
 
+
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('011_01', 'GPS发件', '011');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('011_02', 'GPS收件', '011');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('011_03', 'GPS补件', '011');
+
 UPDATE `tsys_node_flow` SET `next_node`='002_26' WHERE `id`='12';
 UPDATE `tsys_node_flow` SET `next_node`='002_24' WHERE `id`='8';
 
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('SR201800000000000000YWY', '002_11');
+

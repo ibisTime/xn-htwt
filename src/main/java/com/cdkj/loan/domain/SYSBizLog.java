@@ -58,6 +58,8 @@ public class SYSBizLog extends ABaseDO {
 
     private String bizOrderType;// 业务单类型（ 征信单 准入单 还款业务 出差申请）
 
+    private String logisticsStatus;// 物流单状态
+
     public String getBizOrderType() {
         return bizOrderType;
     }
@@ -240,6 +242,14 @@ public class SYSBizLog extends ABaseDO {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public String getLogisticsStatus() {
+        return logisticsStatus;
+    }
+
+    public void setLogisticsStatus(String logisticsStatus) {
+        this.logisticsStatus = logisticsStatus;
     }
 
 }
