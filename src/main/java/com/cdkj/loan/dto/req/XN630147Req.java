@@ -10,6 +10,8 @@ public class XN630147Req {
 
     private List<String> typeList;
 
+    private List<String> codeList;
+
     public String getName() {
         return name;
     }
@@ -32,6 +34,14 @@ public class XN630147Req {
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public List<String> getCodeList() {
+        return codeList;
+    }
+
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
     }
 
 }

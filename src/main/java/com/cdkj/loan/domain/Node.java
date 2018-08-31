@@ -25,6 +25,8 @@ public class Node extends ABaseDO {
 
     private List<String> typeList;// 类型list
 
+    private List<String> codeList;// 编号list
+
     public String getRoleCode() {
         return roleCode;
     }
@@ -87,6 +89,14 @@ public class Node extends ABaseDO {
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public List<String> getCodeList() {
+        return codeList;
+    }
+
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
     }
 
 }

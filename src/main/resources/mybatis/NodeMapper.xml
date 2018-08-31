@@ -29,6 +29,12 @@
 		            #{item}
 		        </foreach>
 			</if>
+			<if test="codeList != null and codeList != '' ">
+				AND t.code in 
+				<foreach collection="codeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_node" parameterType="node" resultMap="node_DB_Result">

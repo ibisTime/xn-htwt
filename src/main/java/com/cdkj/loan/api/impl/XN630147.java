@@ -38,6 +38,7 @@ public class XN630147 extends AProcessor {
         condition.setNameQuery(req.getName());
         condition.setType(req.getType());
         condition.setTypeList(req.getTypeList());
+        condition.setCodeList(req.getCodeList());
 
         return nodeAO.queryNodeList(condition);
     }
