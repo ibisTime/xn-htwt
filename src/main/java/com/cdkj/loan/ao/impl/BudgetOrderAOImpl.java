@@ -1018,21 +1018,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 车辆信息落户
         budgetOrderBO.carSettle(budgetOrder);
-        // 获取参考材料
-        String fileList = nodeFlow.getFileList();
-        if (StringUtils.isNotBlank(fileList)) {
-            String logisticsCode = logisticsBO.saveLogistics(
-                ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
-                budgetOrder.getSaleUserId(),
-                EBudgetOrderNode.CARSETTLE.getCode(), nodeFlow.getNextNode(),
-                fileList);
-            sysBizLogBO
-                .saveSYSBizLog(budgetOrder.getCode(), EBizLogType.LOGISTICS,
-                    logisticsCode, ELogisticsStatus.YWDH_SEND.getCode(),
-                    budgetOrder.getTeamCode());
-        } else {
-            throw new BizException("xn0000", "当前节点材料清单不存在");
-        }
+        String logisticsCode = logisticsBO.saveLogistics(
+            ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
+            budgetOrder.getSaleUserId(), EBudgetOrderNode.CARSETTLE.getCode(),
+            nodeFlow.getNextNode(), null);
+        /*
+         * sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+         * EBizLogType.YWDH_LOGISTICS, logisticsCode,
+         * ELogisticsStatus.YWDH_SEND.getCode(), budgetOrder.getTeamCode());
+         */
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -1182,19 +1176,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 获取参考材料
         budgetOrder.setCurNodeCode(currentNodeFlow.getNextNode());
-        String fileList = currentNodeFlow.getFileList();
-        if (StringUtils.isNotBlank(fileList)) {
-            String logisticsCode = logisticsBO.saveLogistics(
-                ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
-                req.getOperator(), preCurrentNode,
-                currentNodeFlow.getNextNode(), fileList);
-            sysBizLogBO
-                .saveSYSBizLog(budgetOrder.getCode(), EBizLogType.LOGISTICS,
-                    logisticsCode, ELogisticsStatus.ZHDY_SEND.getCode(),
-                    budgetOrder.getTeamCode());
-        } else {
-            throw new BizException("xn0000", "当前节点材料清单不存在");
-        }
+        String logisticsCode = logisticsBO.saveLogistics(
+            ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
+            req.getOperator(), preCurrentNode, currentNodeFlow.getNextNode(),
+            null);
+        /*
+         * sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+         * EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+         * ELogisticsStatus.ZHDY_SEND.getCode(), budgetOrder.getTeamCode());
+         */
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),

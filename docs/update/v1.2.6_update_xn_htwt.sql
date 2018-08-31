@@ -106,3 +106,7 @@ UPDATE `dev_xn_htwt`.`tsys_node` SET `type`='014' WHERE `code`='014_02';
 INSERT INTO `tsys_biz_log` (`parent_order`, `ref_type`, `ref_order`, `deal_node`, `deal_note`, `status`, `operate_role`, `operator`, `operator_name`, `operator_mobile`, `start_datetime`, `team_code`) VALUES ('BO201807161505084842416', '002', 'BO201807161505084842416', '002_14', '驻行人员审核放款材料', '0', '', '', '', '', '2018-07-17 15:01:37', 'BT201807161416460323894');
 UPDATE `tsys_biz_log` SET `end_datetime`='2018-07-17 15:01:37', `speed_time`='0天0时3分50秒' WHERE `id`='1243';
 
+
+INSERT INTO `dev_xn_htwt`.`tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`) VALUES ('1', 'node_type', '012', '业务贷后资料传递', 'admin', '2018-06-25 08:25:28');
+INSERT INTO `dev_xn_htwt`.`tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`) VALUES ('1', 'node_type', '013', '驻行放款资料传递', 'admin', '2018-06-25 08:25:28');
+INSERT INTO `dev_xn_htwt`.`tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`) VALUES ('1', 'node_type', '014', '驻行抵押资料传递', 'admin', '2018-06-25 08:25:28');

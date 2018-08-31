@@ -1,6 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ import com.cdkj.loan.domain.BusinessTripApply;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
-import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
@@ -155,15 +153,15 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         String bizType = "";
         String departmentName = "";
         String bizOrderType = "";
-        if ("L".equals(data.getRefOrder().substring(0, 1))) {
-            Logistics logistics = logisticsBO.getLogistics(data.getRefOrder());
-            data.setLogisticsStatus(logistics.getStatus());
-            SYSUser user = sysUserBO.getUser(logistics.getUserId());
-            if (null != user) {
-                userName = user.getRealName();
-            }
-            bizOrderType = "GPS";
-        }
+        /*
+         * if ("L".equals(data.getRefOrder().substring(0, 1))) { Logistics
+         * logistics = logisticsBO.getLogistics(data.getRefOrder());
+         * data.setLogisticsStatus(logistics.getStatus()); BudgetOrder
+         * budgetOrder = budgetOrderBO.getBudgetOrder(logistics .getBizCode());
+         * Department department = departmentBO.getDepartment(budgetOrder
+         * .getCompanyCode()); departmentName = department.getName(); userName =
+         * budgetOrder.getApplyUserName(); bizOrderType = "资料传递"; }
+         */
         if ("C".equals(data.getRefOrder().substring(0, 1))) {
             Credit credit = creditBO.getCredit(data.getRefOrder());
             userName = credit.getUserName();
@@ -173,32 +171,29 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
             departmentName = department.getName();
             bizOrderType = "征信单";
-        }
-        if ("BO".equals(data.getRefOrder().substring(0, 2))) {
+        } else if ("BO".equals(data.getRefOrder().substring(0, 2))) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getRefOrder());
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.DHAPPROVEDATA.getCode())
-                    || budgetOrder.getCurNodeCode().equals(
-                        EBudgetOrderNode.COMMITBANK3.getCode())
-                    || budgetOrder.getCurNodeCode().equals(
-                        EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
-                Logistics condition = new Logistics();
-                ArrayList<String> statusList = new ArrayList<String>();
-                statusList.add(ELogisticsStatus.TO_SEND.getCode());
-                statusList.add(ELogisticsStatus.TO_RECEIVE.getCode());
-                statusList.add(ELogisticsStatus.TO_SEND_AGAIN.getCode());
-                condition.setStatusList(statusList);
-                condition.setBizCode(budgetOrder.getCode());
-                condition.setToNodeCode(budgetOrder.getCurNodeCode());
-                List<Logistics> list = logisticsBO
-                    .queryLogisticsList(condition);
-                if (list != null) {
-                    Logistics logistics = list.get(0);
-                    data.setRefOrder(logistics.getCode());
-                    data.setLogisticsStatus(logistics.getStatus());
-                }
-            }
+            /*
+             * if (budgetOrder.getCurNodeCode().equals(
+             * EBudgetOrderNode.DHAPPROVEDATA.getCode()) ||
+             * budgetOrder.getCurNodeCode().equals(
+             * EBudgetOrderNode.COMMITBANK3.getCode()) ||
+             * budgetOrder.getCurNodeCode().equals(
+             * EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) { Logistics
+             * condition = new Logistics(); ArrayList<String> statusList = new
+             * ArrayList<String>();
+             * statusList.add(ELogisticsStatus.TO_SEND.getCode());
+             * statusList.add(ELogisticsStatus.TO_RECEIVE.getCode());
+             * statusList.add(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+             * condition.setStatusList(statusList);
+             * condition.setBizCode(budgetOrder.getCode());
+             * condition.setToNodeCode(budgetOrder.getCurNodeCode());
+             * List<Logistics> list = logisticsBO
+             * .queryLogisticsList(condition); if (list != null) { Logistics
+             * logistics = list.get(0); data.setRefOrder(logistics.getCode());
+             * data.setLogisticsStatus(logistics.getStatus()); } }
+             */
             userName = budgetOrder.getApplyUserName();
             loanBank = budgetOrder.getLoanBank();
             bizType = budgetOrder.getBizType();
@@ -206,8 +201,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
             departmentName = department.getName();
             bizOrderType = "准入单";
-        }
-        if ("RB".equals(data.getRefOrder().substring(0, 2))) {
+        } else if ("RB".equals(data.getRefOrder().substring(0, 2))) {
             RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getRefOrder());
             userName = repayBiz.getRealName();
             loanBank = repayBiz.getLoanBank();
@@ -218,8 +212,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
             departmentName = department.getName();
             bizOrderType = "还款业务";
-        }
-        if ("BTA".equals(data.getRefOrder().substring(0, 3))) {
+        } else if ("BTA".equals(data.getRefOrder().substring(0, 3))) {
             BusinessTripApply businessTripApply = businessTripApplyBO
                 .getBusinessTripApply(data.getRefOrder());
             SYSUser user = sysUserBO.getUser(businessTripApply
@@ -229,8 +222,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getDepartment(businessTripApply.getDepartmentCode());
             departmentName = department.getName();
             bizOrderType = "出差申请";
-        }
-        if ("IR".equals(data.getRefOrder().substring(0, 2))) {
+        } else if ("IR".equals(data.getRefOrder().substring(0, 2))) {
             InvestigateReport report = investigateReportBO
                 .getInvestigateReport(data.getRefOrder());
             userName = report.getApplyUserName();

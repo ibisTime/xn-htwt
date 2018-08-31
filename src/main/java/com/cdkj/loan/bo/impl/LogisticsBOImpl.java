@@ -16,7 +16,6 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -83,11 +82,11 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         data.setReceiver(receiver);
 
         logisticsDAO.insert(data);
-        // 日志
-        sysBizLogBO
-            .saveSYSBizLog(data.getCode(), EBizLogType.GPS_LOGISTICS,
-                data.getCode(), ELogisticsStatus.SEND.getCode(),
-                data.getTeamCode());
+        /*
+         * // 日志 sysBizLogBO .saveSYSBizLog(data.getCode(),
+         * EBizLogType.GPS_LOGISTICS, data.getCode(),
+         * ELogisticsStatus.SEND.getCode(), data.getTeamCode());
+         */
         return code;
     }
 
