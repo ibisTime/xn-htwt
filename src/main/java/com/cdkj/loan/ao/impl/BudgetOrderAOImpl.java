@@ -835,7 +835,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         // 当前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
-        if (!EBudgetOrderNode.INTERVIEW.getCode().equals(preCurrentNode)) {
+        if (!EBudgetOrderNode.INTERVIEW.getCode().equals(preCurrentNode)
+                && !EBudgetOrderNode.AGAIN_INTERVIEW.getCode()
+                    .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是面签节点，不能操作");
         }
@@ -1638,7 +1640,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             long between_days = (time2 - time1) / (1000 * 3600 * 24);
             int days = Integer.parseInt(String.valueOf(between_days));
             budgetOrder.setAdvanceDays(days);
-            if (days > 1) {
+            if (days >= 1) {
                 list.add(budgetOrder);
             }
         }

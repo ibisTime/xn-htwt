@@ -32,6 +32,12 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			<if test="typeList != null and typeList.size() != 0 ">
+				AND t.type in 
+				<foreach collection="typeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>

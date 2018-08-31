@@ -70,3 +70,5 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 SET SQL_SAFE_UPDATES = 0;
 UPDATE tdh_repay_biz  SET is_advance_settled = '0'  WHERE is_advance_settled is null;
 SET SQL_SAFE_UPDATES = 1;
+
+UPDATE `tsys_node_flow` SET `next_node`='002_26' WHERE `id`='12';
