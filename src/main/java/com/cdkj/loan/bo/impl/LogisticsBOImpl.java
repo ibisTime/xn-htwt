@@ -84,8 +84,10 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
 
         logisticsDAO.insert(data);
         // 日志
-        sysBizLogBO.saveSYSBizLog(data.getCode(), EBizLogType.GPS_LOGISTICS,
-            data.getCode(), ELogisticsStatus.SEND.getCode(), null);
+        sysBizLogBO
+            .saveSYSBizLog(data.getCode(), EBizLogType.GPS_LOGISTICS,
+                data.getCode(), ELogisticsStatus.SEND.getCode(),
+                data.getTeamCode());
         return code;
     }
 

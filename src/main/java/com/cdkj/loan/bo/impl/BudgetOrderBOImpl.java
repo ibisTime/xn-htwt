@@ -31,6 +31,7 @@ import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
@@ -308,10 +309,15 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
             nodeFlow.getCurrentNode())) {
             if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
-                logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                    budgetOrder.getCode(), operator, nodeFlow.getCurrentNode(),
+                String newLogisticsCode = logisticsBO.saveLogistics(
+                    ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
+                    operator, nodeFlow.getCurrentNode(),
                     nodeFlow.getNextNode(), nodeFlow.getFileList());
                 result = EBoolean.YES.getCode();
+                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                    EBizLogType.LOGISTICS, newLogisticsCode,
+                    ELogisticsStatus.ZHFK_SEND.getCode(),
+                    budgetOrder.getTeamCode());
             } else {
                 throw new BizException("xn0000", "当前节点材料清单不存在");
             }

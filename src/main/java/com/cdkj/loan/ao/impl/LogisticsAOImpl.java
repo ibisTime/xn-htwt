@@ -27,6 +27,7 @@ import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -105,14 +106,30 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
                     req.getOperator(), null);
             }
-            if (ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
-                logistics.getStatus())) {
-                sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getCode(),
-                    EBizLogType.GPS_LOGISTICS, logistics.getCode(),
-                    ELogisticsStatus.SEND_AGAIN.getCode(),
-                    ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
-                    req.getOperator(), null);
+        } else {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(logistics
+                .getBizCode());
+            ELogisticsStatus pre = null;
+            ELogisticsStatus now = null;
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+                pre = ELogisticsStatus.YWDH_SEND;
+                now = ELogisticsStatus.YWDH_RECEIVE;
             }
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.COMMITBANK3.getCode())) {
+                pre = ELogisticsStatus.ZHFK_SEND;
+                now = ELogisticsStatus.ZHFK_RECEIVE;
+            }
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+                pre = ELogisticsStatus.ZHDY_SEND;
+                now = ELogisticsStatus.ZHDY_RECEIVE;
+            }
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getBizCode(),
+                EBizLogType.LOGISTICS, logistics.getCode(), pre.getCode(),
+                now.getCode(), req.getSendNote(), req.getOperator(),
+                budgetOrder.getTeamCode());
         }
     }
 
@@ -142,6 +159,24 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logisticsBO.receiveLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+                .getBizCode());
+            ELogisticsStatus pre = null;
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+                pre = ELogisticsStatus.YWDH_SEND;
+            }
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.COMMITBANK3.getCode())) {
+                pre = ELogisticsStatus.ZHFK_SEND;
+            }
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+                pre = ELogisticsStatus.ZHDY_SEND;
+            }
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.LOGISTICS.getCode(),
+                data.getCode(), pre.getCode(), remark, operator);
+
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.receiveGps(data.getBizCode());
             // 日志
@@ -174,7 +209,30 @@ public class LogisticsAOImpl implements ILogisticsAO {
             sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
                 EBizLogType.GPS_LOGISTICS, data.getCode(),
                 ELogisticsStatus.RECEIVE.getCode(),
-                ELogisticsStatus.SEND_AGAIN.getCode(), remark, operator, null);
+                ELogisticsStatus.SEND.getCode(), remark, operator, null);
+        } else {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+                .getBizCode());
+            ELogisticsStatus pre = null;
+            ELogisticsStatus now = null;
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+                pre = ELogisticsStatus.YWDH_SEND;
+                now = ELogisticsStatus.YWDH_RECEIVE;
+            }
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.COMMITBANK3.getCode())) {
+                pre = ELogisticsStatus.ZHFK_SEND;
+                now = ELogisticsStatus.ZHFK_RECEIVE;
+            }
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+                pre = ELogisticsStatus.ZHDY_SEND;
+                now = ELogisticsStatus.ZHDY_RECEIVE;
+            }
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBizCode(),
+                EBizLogType.LOGISTICS, data.getCode(), pre.getCode(),
+                now.getCode(), remark, operator, budgetOrder.getTeamCode());
         }
     }
 

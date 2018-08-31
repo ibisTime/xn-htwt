@@ -82,3 +82,22 @@ UPDATE `tsys_node_flow` SET `next_node`='002_24' WHERE `id`='8';
 
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('SR201800000000000000YWY', '002_11');
 
+gps mei bu 011
+INSERT INTO `dev_xn_htwt`.`tsys_node` (`code`, `name`, `type`) VALUES ('012_01', '业务贷后资料发件', '012');
+INSERT INTO `dev_xn_htwt`.`tsys_node` (`code`, `name`, `type`) VALUES ('012_02', '业务贷后资料收件', '012');
+INSERT INTO `dev_xn_htwt`.`tsys_node` (`code`, `name`, `type`) VALUES ('012_03', '驻行放款材料发件', '012');
+INSERT INTO `dev_xn_htwt`.`tsys_node` (`code`, `name`, `type`) VALUES ('012_04', '驻行放款材料收件', '012');
+INSERT INTO `dev_xn_htwt`.`tsys_node` (`code`, `name`, `type`) VALUES ('012_05', '驻行抵押材料发件', '012');
+INSERT INTO `dev_xn_htwt`.`tsys_node` (`code`, `name`, `type`) VALUES ('012_06', '驻行抵押材料收件', '012');
+
+UPDATE `dev_xn_htwt`.`tsys_node` SET `code`='013_01' WHERE `code`='012_03';
+UPDATE `dev_xn_htwt`.`tsys_node` SET `code`='013_02' WHERE `code`='012_04';
+UPDATE `dev_xn_htwt`.`tsys_node` SET `code`='014_01' WHERE `code`='012_05';
+UPDATE `dev_xn_htwt`.`tsys_node` SET `code`='014_02' WHERE `code`='012_06';
+
+UPDATE `dev_xn_htwt`.`tsys_node` SET `type`='013' WHERE `code`='013_01';
+UPDATE `dev_xn_htwt`.`tsys_node` SET `type`='013' WHERE `code`='013_02';
+UPDATE `dev_xn_htwt`.`tsys_node` SET `type`='014' WHERE `code`='014_01';
+UPDATE `dev_xn_htwt`.`tsys_node` SET `type`='014' WHERE `code`='014_02';
+
+

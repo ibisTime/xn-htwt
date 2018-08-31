@@ -130,8 +130,6 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             }
             if (ELogisticsStatus.SEND.getCode().equals(sysBizLog.getDealNode())
                     || ELogisticsStatus.RECEIVE.getCode().equals(
-                        sysBizLog.getDealNode())
-                    || ELogisticsStatus.SEND_AGAIN.getCode().equals(
                         sysBizLog.getDealNode())) {
                 data.setLogisticsTodo(data.getLogisticsTodo() + 1);
             }
@@ -157,6 +155,15 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         String bizType = "";
         String departmentName = "";
         String bizOrderType = "";
+        if ("L".equals(data.getRefOrder().substring(0, 1))) {
+            Logistics logistics = logisticsBO.getLogistics(data.getRefOrder());
+            data.setLogisticsStatus(logistics.getStatus());
+            SYSUser user = sysUserBO.getUser(logistics.getUserId());
+            if (null != user) {
+                userName = user.getRealName();
+            }
+            bizOrderType = "GPS";
+        }
         if ("C".equals(data.getRefOrder().substring(0, 1))) {
             Credit credit = creditBO.getCredit(data.getRefOrder());
             userName = credit.getUserName();
@@ -233,15 +240,6 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getCompanyCode());
             departmentName = department.getName();
             bizOrderType = "调查报告";
-        }
-        if ("L".equals(data.getRefOrder().substring(0, 1))) {
-            Logistics logistics = logisticsBO.getLogistics(data.getRefOrder());
-            data.setLogisticsStatus(logistics.getStatus());
-            SYSUser user = sysUserBO.getUser(logistics.getUserId());
-            if (null != user) {
-                userName = user.getRealName();
-            }
-            bizOrderType = "GPS";
         }
         data.setUserName(userName);
         data.setLoanBank(loanBank);
