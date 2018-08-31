@@ -389,7 +389,7 @@
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>
-			<if test="curNodeCodeList != null and curNodeCodeList != '' ">
+			<if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
 				AND t.cur_node_code in 
 				<foreach collection="curNodeCodeList" index="index" item="item" open="(" separator="," close=")">
 		            #{item}

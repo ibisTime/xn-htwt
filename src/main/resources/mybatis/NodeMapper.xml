@@ -24,13 +24,13 @@
 				AND t.type = #{type}
 			</if>
 			<if test="typeList != null and typeList != '' ">
-				AND t.type in 
+				AND t.type IN 
 				<foreach collection="typeList" index="index" item="item" open="(" separator="," close=")">
 		            #{item}
 		        </foreach>
 			</if>
-			<if test="codeList != null and codeList != '' ">
-				AND t.code in 
+			<if test="codeList != null and codeList.size() > 0 ">
+				AND t.code IN 
 				<foreach collection="codeList" index="index" item="item" open="(" separator="," close=")">
 		            #{item}
 		        </foreach>
