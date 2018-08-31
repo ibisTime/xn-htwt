@@ -29,7 +29,7 @@ public class XN630520 extends AProcessor {
         condition.setRealNameQuery(req.getRealName());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setCurNodeCode(req.getCurNodeCode());
-
+        condition.setTeamCode(req.getTeamCode());
         condition.setKeyword(req.getKeyword());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

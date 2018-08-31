@@ -25,7 +25,8 @@ public class XN632127 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         budgetOrderAO.gpsManagerApprove(req.getCode(), req.getOperator(),
-            req.getApproveResult(), req.getApproveNote());
+            req.getApproveResult(), req.getApproveNote(),
+            req.getBudgetOrderGpsList());
         return new BooleanRes(true);
     }
 
