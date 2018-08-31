@@ -15,7 +15,9 @@ import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.ITencentBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
@@ -53,6 +55,12 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Autowired
     private IArchiveBO archiveBO;
+
+    @Autowired
+    private ISmsOutBO smsOutBO;
+
+    @Autowired
+    private IUserBO userBO;
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
@@ -161,7 +169,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         sysUserBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
         // SYSUser user = sysUserBO.getUser(userId);
-        // if (!EUserKind.Plat.getCode().equals(user.getKind())) {
+        // if (!EUserKind.Plat.getCode().equals(user.getType())) {
         // smsOutBO.sendSmsOut(user.getMobile(),
         // "尊敬的" + PhoneUtil.hideMobile(user.getMobile())
         // + "用户，您的登录密码修改成功。请妥善保管您的账户相关信息。",
@@ -270,7 +278,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Transactional
     public void doResetLoginPwd(String mobile, String smsCaptcha,
             String newLoginPwd) {
-        SYSUser user = sysUserBO.getUser(mobile);
+        SYSUser user = sysUserBO.getUserByMobile(mobile);
         if (StringUtils.isBlank(user.getUserId())) {
             throw new BizException("li01004", "用户不存在,请先注册");
         }
@@ -283,8 +291,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
                         + "，请联系工作人员");
         }
         // 短信验证码是否正确
-        // smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063");
-        // userBO.refreshLoginPwd(user, newLoginPwd);
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063");
+        sysUserBO.refreshLoginPwd(user, newLoginPwd, user.getUserId(), "修改密码");
         // // 发送短信
         // smsOutBO.sendSmsOut(mobile,
         // "尊敬的" + PhoneUtil.hideMobile(mobile)
