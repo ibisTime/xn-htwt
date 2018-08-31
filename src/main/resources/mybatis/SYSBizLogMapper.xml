@@ -54,6 +54,9 @@
 			<if test="operatorMobile != null and operatorMobile != '' ">
 				AND t.operator_mobile = #{operatorMobile}
 			</if>
+			<if test="refOrderForQuery != null and refOrderForQuery != '' ">
+				AND t.ref_order like "%"#{refOrderForQuery}"%"
+			</if>
 			<if test="operatorMobileForQuery != null and operatorMobileForQuery != '' ">
 				AND t.operator_mobile like "%"#{operatorMobileForQuery}"%"
 			</if>

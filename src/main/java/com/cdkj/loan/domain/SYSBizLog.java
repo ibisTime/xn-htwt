@@ -46,6 +46,8 @@ public class SYSBizLog extends ABaseDO {
 
     private String operatorMobileForQuery;// 操作人手机号模糊查
 
+    private String refOrderForQuery;// 关联订单编号模糊查询
+
     private String roleCode;// 角色编号
 
     private String userName;// 客户姓名
@@ -250,6 +252,14 @@ public class SYSBizLog extends ABaseDO {
 
     public void setLogisticsStatus(String logisticsStatus) {
         this.logisticsStatus = logisticsStatus;
+    }
+
+    public String getRefOrderForQuery() {
+        return refOrderForQuery;
+    }
+
+    public void setRefOrderForQuery(String refOrderForQuery) {
+        this.refOrderForQuery = refOrderForQuery;
     }
 
 }
