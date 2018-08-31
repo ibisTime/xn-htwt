@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +170,28 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         if ("BO".equals(data.getRefOrder().substring(0, 2))) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getRefOrder());
+            if (budgetOrder.getCurNodeCode().equals(
+                EBudgetOrderNode.DHAPPROVEDATA.getCode())
+                    || budgetOrder.getCurNodeCode().equals(
+                        EBudgetOrderNode.COMMITBANK3.getCode())
+                    || budgetOrder.getCurNodeCode().equals(
+                        EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+                Logistics condition = new Logistics();
+                ArrayList<String> statusList = new ArrayList<String>();
+                statusList.add(ELogisticsStatus.TO_SEND.getCode());
+                statusList.add(ELogisticsStatus.TO_RECEIVE.getCode());
+                statusList.add(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+                condition.setStatusList(statusList);
+                condition.setBizCode(budgetOrder.getCode());
+                condition.setToNodeCode(budgetOrder.getCurNodeCode());
+                List<Logistics> list = logisticsBO
+                    .queryLogisticsList(condition);
+                if (list != null) {
+                    Logistics logistics = list.get(0);
+                    data.setRefOrder(logistics.getCode());
+                    data.setLogisticsStatus(logistics.getStatus());
+                }
+            }
             userName = budgetOrder.getApplyUserName();
             loanBank = budgetOrder.getLoanBank();
             bizType = budgetOrder.getBizType();
@@ -213,11 +236,12 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         }
         if ("L".equals(data.getRefOrder().substring(0, 1))) {
             Logistics logistics = logisticsBO.getLogistics(data.getRefOrder());
+            data.setLogisticsStatus(logistics.getStatus());
             SYSUser user = sysUserBO.getUser(logistics.getUserId());
             if (null != user) {
                 userName = user.getRealName();
             }
-            bizOrderType = "资料传递";
+            bizOrderType = "GPS";
         }
         data.setUserName(userName);
         data.setLoanBank(loanBank);

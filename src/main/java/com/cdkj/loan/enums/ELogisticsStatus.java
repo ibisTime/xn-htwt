@@ -9,8 +9,9 @@ package com.cdkj.loan.enums;
 public enum ELogisticsStatus {
     TO_SEND("0", "待发件"), TO_RECEIVE("1", "已发件待收件"), RECEIVED("2", "已收件审核"), TO_SEND_AGAIN(
             "3", "已收件待补件"),
-    // 节点
-    SEND("011_01", "发件"), RECEIVE("011_02", "收件"), SEND_AGAIN("011_03", "补件");
+    // GPS节点
+    SEND("011_01", "GPS发件"), RECEIVE("011_02", "GPS收件"), SEND_AGAIN("011_03",
+            "GPS补件");
 
     ELogisticsStatus(String code, String value) {
         this.code = code;

@@ -9,12 +9,14 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -27,8 +29,8 @@ import com.cdkj.loan.enums.ELogisticsStatus;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
-        implements ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
+        ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
@@ -38,11 +40,14 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode, String refFileList) {
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOGISTICS.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -63,8 +68,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     @Override
     public String saveLogisticsGps(String type, String bizCode, String userId,
             String refFileList, String receiver) {
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOGISTICS.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -78,6 +83,9 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         data.setReceiver(receiver);
 
         logisticsDAO.insert(data);
+        // 日志
+        sysBizLogBO.saveSYSBizLog(data.getCode(), EBizLogType.GPS_LOGISTICS,
+            data.getCode(), ELogisticsStatus.SEND.getCode(), null);
         return code;
     }
 
