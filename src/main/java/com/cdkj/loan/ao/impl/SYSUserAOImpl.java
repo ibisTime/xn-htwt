@@ -72,6 +72,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setUserId(userId);
         data.setType(ESysUserType.Plat.getCode());
         data.setLoginName(loginName);
+        // 判断手机号是否存在
+        doCheckMobile(mobile);
         data.setMobile(mobile);
         data.setRealName(realName);
         data.setLoginPwd(MD5Util.md5(loginPwd));
