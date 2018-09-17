@@ -12,10 +12,10 @@ import java.util.TimerTask;
 
 import org.apache.http.message.BasicNameValuePair;
 
-import com.cdkj.loan.creditcommon.HttpClient;
-import com.cdkj.loan.creditcommon.JsonUtils;
-import com.cdkj.loan.creditcommon.MDUtil;
-import com.cdkj.loan.creditcommon.StringUtils;
+import com.cdkj.loan.creditCommon.HttpClient;
+import com.cdkj.loan.creditCommon.JsonUtils;
+import com.cdkj.loan.creditCommon.MDUtil;
+import com.cdkj.loan.creditCommon.StringUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

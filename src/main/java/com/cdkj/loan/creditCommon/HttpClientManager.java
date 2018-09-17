@@ -1,4 +1,4 @@
-package com.cdkj.loan.creditcommon;
+package com.cdkj.loan.creditCommon;
 
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;

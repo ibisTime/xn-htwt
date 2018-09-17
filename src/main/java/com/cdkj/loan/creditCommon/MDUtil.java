@@ -3,7 +3,7 @@
  * @Company: 
  * @Create Time: 2016�?8�?13�? 下午3:13:19
  */
-package com.cdkj.loan.creditcommon;
+package com.cdkj.loan.creditCommon;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

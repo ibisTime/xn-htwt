@@ -1,4 +1,4 @@
-package com.cdkj.loan.creditcommon;
+package com.cdkj.loan.creditCommon;
 
 /**
  * Created by lewis on 2016/7/2.

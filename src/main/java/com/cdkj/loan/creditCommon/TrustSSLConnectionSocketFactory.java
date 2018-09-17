@@ -1,4 +1,4 @@
-package com.cdkj.loan.creditcommon;
+package com.cdkj.loan.creditCommon;
 
 import java.security.cert.CertificateException;
 

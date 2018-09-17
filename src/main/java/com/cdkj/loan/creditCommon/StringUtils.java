@@ -7,7 +7,7 @@
  * Confidential Information and shall use it only in accordance with the terms
  * of the license agreement you entered into with IPS.
  */
-package com.cdkj.loan.creditcommon;
+package com.cdkj.loan.creditCommon;
 
 
 import sun.misc.BASE64Decoder;

@@ -1,4 +1,4 @@
-package com.cdkj.loan.creditcommon;
+package com.cdkj.loan.creditCommon;
 
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;

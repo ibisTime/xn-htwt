@@ -1,4 +1,4 @@
-package com.cdkj.loan.creditcommon;
+package com.cdkj.loan.creditCommon;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
