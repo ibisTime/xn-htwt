@@ -30,16 +30,16 @@ public class AbstractCredit {
     public static HttpClient httpClient = new HttpClient();
 
     // 配置您申请的appkey和apiSecret
-    public static final String apiUrl = "https://api.limuzhengxin.com";// 测试地址：https://t.limuzhengxin.cn
-                                                                       // 生产地址：https://api.limuzhengxin.com
+    public static final String apiUrl = "https://t.limuzhengxin.cn";// 测试地址：https://t.limuzhengxin.cn
+                                                                    // 生产地址：https://api.limuzhengxin.com
 
-    public static final String apiKey = "4268765441801243";// !!!需自行设定!!!
+    public static final String apiKey = "9665866375902170";// !!!需自行设定!!!
 
     public static final String method = "api.identity.idcheck";
 
     public static final String version = "1.2.0";
 
-    public static final String apiSecret = "oWzX8DM3PnlezJ1AVclYaVgjJxKASwBb";// !!!需自行设定!!!
+    public static final String apiSecret = "uMryJfeyNPHFtuB52h2BK1muD9JouBha";// !!!需自行设定!!!
 
     public static final String apiUrlTask = apiUrl + "/mobile_report/v1/task";// 运营商报告采集任务提交地址
 
