@@ -10,7 +10,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 银行卡三要素核验
+ * 涉案详情
  * @author: CYL 
  * @since: 2018年9月17日 上午10:58:27 
  * @history:
@@ -23,7 +23,7 @@ public class XN632922 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return mobileReportDemoAO.bankCardNo3Authentication(req);
+        return mobileReportDemoAO.involvedDetails(req);
     }
 
     @Override

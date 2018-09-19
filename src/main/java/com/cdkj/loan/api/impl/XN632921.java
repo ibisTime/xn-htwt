@@ -10,7 +10,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 手机号实名核验
+ * 涉案列表(记录)
  * @author: CYL 
  * @since: 2018年9月17日 上午10:58:27 
  * @history:
@@ -23,7 +23,7 @@ public class XN632921 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return mobileReportDemoAO.mobileAuthentication(req);
+        return mobileReportDemoAO.involvedList(req);
     }
 
     @Override

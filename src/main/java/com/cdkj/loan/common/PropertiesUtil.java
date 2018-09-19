@@ -30,5 +30,7 @@ public class PropertiesUtil {
 
         public static String SMS_URL = props.getProperty("SMS_URL");
 
+        public static String LMZX_URL = props.getProperty("LMZX_URL");
+
     }
 }

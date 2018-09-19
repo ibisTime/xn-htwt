@@ -12,9 +12,9 @@ public class XN632922Req {
     @NotBlank
     private String name;
 
-    // 银行卡号
+    // 详情 ID
     @NotBlank
-    private String bankCardNo;
+    private String recordId;
 
     public String getIdentityNo() {
         return identityNo;
@@ -32,12 +32,12 @@ public class XN632922Req {
         this.name = name;
     }
 
-    public String getBankCardNo() {
-        return bankCardNo;
+    public String getRecordId() {
+        return recordId;
     }
 
-    public void setBankCardNo(String bankCardNo) {
-        this.bankCardNo = bankCardNo;
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
     }
 
 }

@@ -12,10 +12,6 @@ public class XN632921Req {
     @NotBlank
     private String name;
 
-    // 手机号
-    @NotBlank
-    private String mobileNo;
-
     public String getIdentityNo() {
         return identityNo;
     }
@@ -31,13 +27,4 @@ public class XN632921Req {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getMobileNo() {
-        return mobileNo;
-    }
-
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
-    }
-
 }
