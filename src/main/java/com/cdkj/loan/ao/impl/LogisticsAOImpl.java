@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,8 +73,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void sendLogistics(XN632150Req req) {
         Logistics logistics = logisticsBO.getLogistics(req.getCode());
         if (!ELogisticsStatus.TO_SEND.getCode().equals(logistics.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
-                    logistics.getStatus())) {
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
+                    .equals(logistics.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待发货状态!");
         }
@@ -84,6 +85,20 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     "gps申领人不能发件！");
             }
         }
+        if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())
+                && CollectionUtils.isEmpty(req.getFilelist())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "材料清单不能为空！");
+        }
+        String fileList = "";
+        for (String file : req.getFilelist()) {
+            fileList += file + ",";
+        }
+        if (StringUtils.isNotBlank(fileList)) {
+            fileList = fileList.substring(0, fileList.length() - 1);
+        }
+        logistics.setFilelist(fileList);
+
         // 发件
         logistics.setSendType(req.getSendType());
         logistics.setLogisticsCompany(req.getLogisticsCompany());
@@ -107,25 +122,25 @@ public class LogisticsAOImpl implements ILogisticsAO {
              * req.getOperator(), null); }
              */
         } else {
-            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(logistics
-                .getBizCode());
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(logistics.getBizCode());
             ELogisticsStatus pre = null;
             ELogisticsStatus now = null;
             EBizLogType bizLogType = null;
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
                 pre = ELogisticsStatus.YWDH_SEND;
                 now = ELogisticsStatus.YWDH_RECEIVE;
                 bizLogType = EBizLogType.YWDH_LOGISTICS;
             }
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.COMMITBANK3.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
                 pre = ELogisticsStatus.ZHFK_SEND;
                 now = ELogisticsStatus.ZHFK_RECEIVE;
                 bizLogType = EBizLogType.ZHFK_LOGISTICS;
             }
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
                 pre = ELogisticsStatus.ZHDY_SEND;
                 now = ELogisticsStatus.ZHDY_RECEIVE;
                 bizLogType = EBizLogType.ZHDY_LOGISTICS;
@@ -164,22 +179,22 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logisticsBO.receiveLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
-            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
-                .getBizCode());
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(data.getBizCode());
             ELogisticsStatus pre = null;
             EBizLogType bizLogType = null;
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
                 pre = ELogisticsStatus.YWDH_SEND;
                 bizLogType = EBizLogType.YWDH_LOGISTICS;
             }
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.COMMITBANK3.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
                 pre = ELogisticsStatus.ZHFK_SEND;
                 bizLogType = EBizLogType.ZHFK_LOGISTICS;
             }
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
                 pre = ELogisticsStatus.ZHDY_SEND;
                 bizLogType = EBizLogType.ZHDY_LOGISTICS;
             }
@@ -200,7 +215,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator, String remark) {
+    public void sendAgainLogistics(String code, String operator,
+            String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
@@ -224,25 +240,25 @@ public class LogisticsAOImpl implements ILogisticsAO {
              * ELogisticsStatus.SEND.getCode(), remark, operator, null);
              */
         } else {
-            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
-                .getBizCode());
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(data.getBizCode());
             ELogisticsStatus pre = null;
             ELogisticsStatus now = null;
             EBizLogType bizLogType = null;
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
                 pre = ELogisticsStatus.YWDH_SEND;
                 now = ELogisticsStatus.YWDH_RECEIVE;
                 bizLogType = EBizLogType.YWDH_LOGISTICS;
             }
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.COMMITBANK3.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
                 pre = ELogisticsStatus.ZHFK_SEND;
                 now = ELogisticsStatus.ZHFK_RECEIVE;
                 bizLogType = EBizLogType.ZHFK_LOGISTICS;
             }
-            if (budgetOrder.getCurNodeCode().equals(
-                EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+            if (budgetOrder.getCurNodeCode()
+                .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
                 pre = ELogisticsStatus.ZHDY_SEND;
                 now = ELogisticsStatus.ZHDY_RECEIVE;
                 bizLogType = EBizLogType.ZHDY_LOGISTICS;

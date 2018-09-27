@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -30,6 +32,9 @@ public class XN632150Req {
     // 发货说明
     private String sendNote;
 
+    // 材料清单
+    private List<String> filelist;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -40,6 +45,14 @@ public class XN632150Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public List<String> getFilelist() {
+        return filelist;
+    }
+
+    public void setFilelist(List<String> filelist) {
+        this.filelist = filelist;
     }
 
     public String getSendType() {

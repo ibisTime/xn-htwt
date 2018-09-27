@@ -59,6 +59,9 @@ public class Logistics extends ABaseDO {
     // 收件人(gps 落地具体某个人/ 非gps默认0)
     private String receiver;
 
+    // 材料清单
+    private String filelist;
+
     // 状态(0 待发件 1已发件待收件 2已收件审核 3已收件待补件)
     private String status;
 
@@ -85,6 +88,14 @@ public class Logistics extends ABaseDO {
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public String getFilelist() {
+        return filelist;
+    }
+
+    public void setFilelist(String filelist) {
+        this.filelist = filelist;
     }
 
     public List<String> getStatusList() {
