@@ -20,3 +20,6 @@ SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `tb_gps_apply` 
 ADD COLUMN `apply_wired_count` int(11) NULL COMMENT '申请有线个数' AFTER `apply_count`,
 ADD COLUMN `apply_wireless_count` int(11) NULL COMMENT '申请无线个数' AFTER `apply_wired_count`;
+
+ALTER TABLE `tdq_logistics` 
+ADD COLUMN `filelist` VARCHAR(255) NULL COMMENT '材料清单' AFTER `receiver`;

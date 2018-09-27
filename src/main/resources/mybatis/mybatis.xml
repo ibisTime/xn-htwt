@@ -155,6 +155,7 @@
 
 		<typeAlias alias="bus" type="com.cdkj.loan.domain.Bus" />
 		<typeAlias alias="busBorrow" type="com.cdkj.loan.domain.BusBorrow" />
+		<typeAlias alias="fileList" type="com.cdkj.loan.domain.FileList" />
 
 	</typeAliases>
 </configuration>

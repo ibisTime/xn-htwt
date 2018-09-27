@@ -43,7 +43,7 @@ public class NodeFlowAOImpl implements INodeFlowAO {
     @Override
     public NodeFlow getNodeFlow(String id) {
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlow(id);
-        initFile(nodeFlow);
+        // initFile(nodeFlow);
         return nodeFlow;
     }
 
@@ -55,7 +55,7 @@ public class NodeFlowAOImpl implements INodeFlowAO {
             if (fileArr != null) {
                 for (int i = 0; i < fileArr.length; i++) {
                     FileList file = new FileList();
-                    file.setContent(fileArr[i]);
+                    // file.setContent(fileArr[i]);
                     fileStrs.add(file);
                 }
             }
@@ -68,7 +68,7 @@ public class NodeFlowAOImpl implements INodeFlowAO {
         String fileList = "";
         if (CollectionUtils.isNotEmpty(filelist)) {
             for (FileList file : filelist) {
-                fileList += file.getContent() + ",";
+                // fileList += file.getContent() + ",";
             }
             if (StringUtils.isNotBlank(fileList)) {
                 fileList = fileList.substring(0, fileList.length() - 1);
