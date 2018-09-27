@@ -22,13 +22,13 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
-import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630060Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EDepartmentType;
+import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
@@ -86,18 +86,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setCompanyCode(
             departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
 
-        data.setStatus(EUserStatus.NORMAL.getCode());
-        // 验证档案是否被其他人使用
-        if (StringUtils.isNotBlank(archiveCode)) {
-            Archive archive = archiveBO.getArchive(archiveCode);
-            if (StringUtils.isNotBlank(archive.getUserId())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "档案已被其他人使用");
-            }
-            archive.setUserId(userId);
-            data.setArchiveCode(archiveCode);
-            archiveBO.refreshBelongUser(archive);
-        }
+        data.setStatus(ESYSUserStatus.BLOCK.getCode());
         sysUserBO.saveUser(data);
 
         // 注册腾讯云用户
@@ -124,7 +113,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "登录密码错误");
         }
         SYSUser user = userList2.get(0);
-        if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
+        if (!ESYSUserStatus.NORMAL.getCode().equals(user.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "该用户操作存在异常");
         }
@@ -203,14 +192,14 @@ public class SYSUserAOImpl implements ISYSUserAO {
             throw new BizException("li01004", "管理员无法注销");
         }
         String mobile = user.getMobile();
-        String smsContent = "";
-        EUserStatus userStatus = null;
-        if (EUserStatus.NORMAL.getCode().equalsIgnoreCase(user.getStatus())) {
-            smsContent = "您的账号已被管理员封禁";
-            userStatus = EUserStatus.Ren_Locked;
+        // String smsContent = "";
+        ESYSUserStatus userStatus = null;
+        if (ESYSUserStatus.NORMAL.getCode().equalsIgnoreCase(user.getStatus())) {
+            // smsContent = "您的账号已被管理员封禁";
+            userStatus = ESYSUserStatus.BLOCK;
         } else {
-            smsContent = "您的账号已被管理员解封,请遵守平台相关规则";
-            userStatus = EUserStatus.NORMAL;
+            // smsContent = "您的账号已被管理员解封,请遵守平台相关规则";
+            userStatus = ESYSUserStatus.NORMAL;
         }
         sysUserBO.refreshStatus(userId, userStatus, updater, remark);
         // if (!EUserKind.Plat.getCode().equals(user.getType())

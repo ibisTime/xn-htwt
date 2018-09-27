@@ -34,6 +34,9 @@ public interface IArchiveAO {
     // 新增离职档案
     public void editLeaveArchive(Archive data);
 
+    // 删除离职档案
+    public void removeLeaveArchive(String code);
+
     // 按年龄统计分析
     public void statisticsAge(Archive condition);
 

@@ -398,19 +398,16 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_belongUser">
+	<update id="update_belongUser" parameterType="archive">
 		UPDATE tp_archive
 		SET
 		user_id = #{userId}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="delete_archive">
-		UPDATE tp_archive
-		SET
-		status = '0' 
+	<delete id="delete_archive" parameterType="archive">
+		DELETE FROM tp_archive
 		WHERE code = #{code}
-	</update>
-
+	</delete>
 
 </mapper>

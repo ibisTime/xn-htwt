@@ -19,7 +19,7 @@ public interface IArchiveBO extends IPaginableBO<Archive> {
 
     public void checkArchiveByIdNo(String idNo, String code);
 
-    public String saveArchive(Archive data);
+    public void saveArchive(Archive data);
 
     public void removeArchive(String code);
 

@@ -21,7 +21,6 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ESYSUserStatus;
-import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -98,8 +97,8 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
     }
 
     @Override
-    public void refreshStatus(String userId, EUserStatus status, String updater,
-            String remark) {
+    public void refreshStatus(String userId, ESYSUserStatus status,
+            String updater, String remark) {
         if (StringUtils.isNotBlank(userId)) {
             SYSUser data = new SYSUser();
             data.setUserId(userId);

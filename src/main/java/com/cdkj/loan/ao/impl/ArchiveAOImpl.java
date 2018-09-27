@@ -12,12 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cdkj.loan.ao.IArchiveAO;
+import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.SysConstants;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.SYSUser;
@@ -28,6 +31,9 @@ import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
 import com.cdkj.loan.dto.res.XN632803Res;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.EWorkStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -50,15 +56,22 @@ public class ArchiveAOImpl implements IArchiveAO {
     private ISYSUserBO sysUserBO;
 
     @Autowired
+    private ISYSUserAO sysUserAO;
+
+    @Autowired
     private IDepartmentBO departmentBO;
 
     @Override
+    @Transactional
     public String addArchive(XN632800Req req) {
         // 判断身份证和手机号是否存在，已存在就报错
         archiveBO.checkArchiveByMobile(req.getMobile(), null);
         archiveBO.checkArchiveByIdNo(req.getIdNo(), null);
 
         Archive data = new Archive();
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
+        data.setCode(code);
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
         data.setMobile(req.getMobile());
@@ -85,9 +98,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -114,6 +127,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setMobileAward(StringValidater.toLong(req.getMobileAward()));
         data.setTaxiWard(StringValidater.toLong(req.getTaxiWard()));
         data.setMealAward(StringValidater.toLong(req.getMealAward()));
+        data.setStatus(EBoolean.YES.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
@@ -125,23 +139,25 @@ public class ArchiveAOImpl implements IArchiveAO {
             data.setWorkingYears(workingYears);
         }
 
-        // SYSUser sysUserLoginName = sysUserBO
-        // .getUserByLoginName(req.getMobile());
-        // SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
-        // String userId = null;
-        // if (sysUserLoginName == null && sysUserMobile == null) {
-        // userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
-        // req.getMobile(), "888888", req.getMobile(), req.getRealName(),
-        // SysConstants.COMMON_ROLE, req.getPostCode());
-        // } else {
-        // if (sysUserLoginName != null) {
-        // userId = sysUserLoginName.getUserId();
-        // } else if (sysUserMobile != null) {
-        // userId = sysUserMobile.getUserId();
-        // }
-        // }
-        // data.setUserId(userId);
-        String archiveCode = archiveBO.saveArchive(data);
+        SYSUser sysUserLoginName = sysUserBO
+            .getUserByLoginName(req.getRealName());
+        if (sysUserLoginName != null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该姓名已存在，请重新填写！");
+        }
+        SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
+        if (sysUserMobile != null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该手机号已存在，请重新填写！");
+        }
+        String userId = null;
+        // 默认生成账号为真实姓名，默认密码为手机号码
+        userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+            req.getRealName(), req.getMobile(), req.getMobile(),
+            req.getRealName(), SysConstants.COMMON_ROLE, req.getPostCode(),
+            code);
+        data.setUserId(userId);
+        archiveBO.saveArchive(data);
 
         List<XN632800ReqChild> socialRelationList = req.getSocialRelationList();
         if (CollectionUtils.isEmpty(socialRelationList)) {
@@ -149,7 +165,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         }
         for (XN632800ReqChild xn632800ReqChild : socialRelationList) {
             SocialRelation data1 = new SocialRelation();
-            data1.setArchiveCode(archiveCode);
+            data1.setArchiveCode(code);
             data1.setRealName(xn632800ReqChild.getRealName());
             data1.setRelation(xn632800ReqChild.getRelation());
             data1.setCompanyName(xn632800ReqChild.getCompanyName());
@@ -158,7 +174,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             socialRelationBO.saveSocialRelation(data1);
         }
 
-        return archiveCode;
+        return code;
     }
 
     @Override
@@ -194,9 +210,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -251,8 +267,8 @@ public class ArchiveAOImpl implements IArchiveAO {
             sysUser.setRealName(data.getRealName());
             sysUser.setPostCode(data.getPostCode());
             sysUser.setDepartmentCode(data.getDepartmentCode());
-            sysUser.setCompanyCode(departmentBO.getCompanyByDepartment(data
-                .getDepartmentCode()));
+            sysUser.setCompanyCode(
+                departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
             sysUserBO.refreshMobileDepartment(sysUser);
         }
     }
@@ -304,6 +320,11 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (null != sysUser) {
             sysUserBO.refreshUserLock(sysUser.getUserId());
         }
+    }
+
+    @Override
+    public void removeLeaveArchive(String code) {
+        archiveBO.removeArchive(code);
     }
 
     @Override
@@ -373,4 +394,5 @@ public class ArchiveAOImpl implements IArchiveAO {
         list.add(res5);
         return list;
     }
+
 }

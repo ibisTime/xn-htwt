@@ -10,12 +10,10 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IArchiveDAO;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -25,8 +23,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
-        IArchiveBO {
+public class ArchiveBOImpl extends PaginableBOImpl<Archive>
+        implements IArchiveBO {
 
     @Autowired
     private IArchiveDAO archiveDAO;
@@ -84,27 +82,14 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
     }
 
     @Override
-    public String saveArchive(Archive data) {
-        String code = null;
-        if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.RECRUITAPPLY
-                .getCode());
-            data.setCode(code);
-            data.setStatus("1");
-            archiveDAO.insert(data);
-        }
-        return code;
+    public void saveArchive(Archive data) {
+        archiveDAO.insert(data);
     }
 
     @Override
     public void removeArchive(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            Archive data = new Archive();
-            data.setCode(code);
-            data.setStatus("0");
-            count = archiveDAO.delete(data);
-        }
+        Archive data = getArchive(code);
+        archiveDAO.delete(data);
     }
 
     @Override
@@ -119,10 +104,10 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
     public List<Archive> queryArchiveList(Archive condition) {
         List<Archive> archiveList = archiveDAO.selectList(condition);
         for (Archive archive : archiveList) {
-            archive.setDepartmentName(departmentBO.getDepartment(
-                archive.getDepartmentCode()).getName());
-            archive.setPostName(departmentBO.getDepartment(
-                archive.getPostCode()).getName());
+            archive.setDepartmentName(departmentBO
+                .getDepartment(archive.getDepartmentCode()).getName());
+            archive.setPostName(
+                departmentBO.getDepartment(archive.getPostCode()).getName());
         }
         return archiveList;
     }
