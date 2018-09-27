@@ -213,4 +213,12 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
             condition, BudgetOrder.class);
     }
 
+    @Override
+    public List<BudgetOrder> queryBudgetOrderByApplyUserName(
+            BudgetOrder condition) {
+        return super.selectList(
+            NAMESPACE.concat("select_budgetOrder_byApplyUserName"), condition,
+            BudgetOrder.class);
+    }
+
 }

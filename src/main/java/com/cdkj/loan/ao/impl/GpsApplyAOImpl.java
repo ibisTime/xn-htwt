@@ -69,7 +69,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
         data.setApplyReason(req.getApplyReason());
-        data.setApplyCount(StringValidater.toInteger(req.getApplyCount()));
+        data.setApplyWiredCount(
+            StringValidater.toInteger(req.getApplyWiredCount()));
+        data.setApplyWirelessCount(
+            StringValidater.toInteger(req.getApplyWirelessCount()));
+        data.setApplyCount(
+            data.getApplyWiredCount() + data.getApplyWirelessCount());
         data.setApplyDatetime(new Date());
         data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
         return gpsApplyBO.saveGpsApply(data);
@@ -99,9 +104,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gpsBO.applyGps(gps);
         }
         // 产生物流单
-        logisticsBO
-            .saveLogisticsGps(ELogisticsType.GPS.getCode(), data.getCode(),
-                data.getApplyUser(), "GPS物流传递", data.getApplyUser());
+        logisticsBO.saveLogisticsGps(ELogisticsType.GPS.getCode(),
+            data.getCode(), data.getApplyUser(), "GPS物流传递",
+            data.getApplyUser());
     }
 
     @Override
@@ -128,8 +133,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     private void initGpsApply(GpsApply gpsApply) {
         SYSUser sysUser = sysUserBO.getUser(gpsApply.getApplyUser());
         gpsApply.setApplyUserName(sysUser.getRealName());
-        Department department = departmentBO.getDepartment(gpsApply
-            .getCompanyCode());
+        Department department = departmentBO
+            .getDepartment(gpsApply.getCompanyCode());
         if (department != null) {
             gpsApply.setCompanyName(department.getName());
         }

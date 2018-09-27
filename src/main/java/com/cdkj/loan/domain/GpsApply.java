@@ -17,7 +17,7 @@ public class GpsApply extends ABaseDO {
     // 编号
     private String code;
 
-    // 类型(1 公司 2 个人)
+    // 类型(1 有线 2 无线)
     private String type;
 
     // 公司编号
@@ -32,8 +32,14 @@ public class GpsApply extends ABaseDO {
     // 申请原因
     private String applyReason;
 
-    // 申请个数
+    // 申请总个数
     private Integer applyCount;
+
+    // 申请有线个数
+    private Integer applyWiredCount;
+
+    // 申请无线个数
+    private Integer applyWirelessCount;
 
     // 发货日期
     private Date sendDatetime;
@@ -108,6 +114,22 @@ public class GpsApply extends ABaseDO {
 
     public Date getSendDatetime() {
         return sendDatetime;
+    }
+
+    public Integer getApplyWiredCount() {
+        return applyWiredCount;
+    }
+
+    public void setApplyWiredCount(Integer applyWiredCount) {
+        this.applyWiredCount = applyWiredCount;
+    }
+
+    public Integer getApplyWirelessCount() {
+        return applyWirelessCount;
+    }
+
+    public void setApplyWirelessCount(Integer applyWirelessCount) {
+        this.applyWirelessCount = applyWirelessCount;
     }
 
     public void setReceiveDatetime(Date receiveDatetime) {

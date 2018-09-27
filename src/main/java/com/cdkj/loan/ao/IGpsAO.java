@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.dto.req.XN632701Res;
 
 @Component
 public interface IGpsAO {
@@ -18,5 +19,7 @@ public interface IGpsAO {
     public List<Gps> queryGpsList(Gps condition);
 
     public Gps getGps(String code);
+
+    public void addGpsList(List<XN632701Res> gpsList);
 
 }

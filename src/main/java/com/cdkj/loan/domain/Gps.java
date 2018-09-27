@@ -54,6 +54,17 @@ public class Gps extends ABaseDO {
     // 申请人姓名
     private String applyUserName;
 
+    // 预算单
+    private BudgetOrder budgetOrder;
+
+    public BudgetOrder getBudgetOrder() {
+        return budgetOrder;
+    }
+
+    public void setBudgetOrder(BudgetOrder budgetOrder) {
+        this.budgetOrder = budgetOrder;
+    }
+
     public String getGpsType() {
         return gpsType;
     }

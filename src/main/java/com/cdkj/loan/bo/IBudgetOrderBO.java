@@ -90,4 +90,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public List<BudgetOrder> getPaginableByDz(BudgetOrder condition);
 
+    // 根据客户姓名查询预算单
+    public List<BudgetOrder> queryBudgetOrderByApplyUserName(
+            BudgetOrder condition);
+
 }

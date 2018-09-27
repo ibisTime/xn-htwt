@@ -2071,4 +2071,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         return page;
     }
 
+    @Override
+    public List<BudgetOrder> queryBudgetOrderByApplyUserName(
+            BudgetOrder condition) {
+        return budgetOrderBO.queryBudgetOrderByApplyUserName(condition);
+    }
+
 }

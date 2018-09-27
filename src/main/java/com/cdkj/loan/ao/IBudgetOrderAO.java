@@ -143,4 +143,8 @@ public interface IBudgetOrderAO {
     public Paginable<BudgetOrder> queryBudgetOrderPageForLoanLater(
             XN632914Req req);
 
+    // 根据客户姓名查询预算单
+    public List<BudgetOrder> queryBudgetOrderByApplyUserName(
+            BudgetOrder condition);
+
 }

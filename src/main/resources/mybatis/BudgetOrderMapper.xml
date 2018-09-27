@@ -823,6 +823,22 @@
 			</if>
 		</trim>
 	</select>
+	
+	<select id="select_budgetOrder_byApplyUserName" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		t.code
+		,t.apply_user_name
+		,t.mobile
+		,t.car_frame_no
+		FROM
+		tdq_budget_order t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
 
 	<select id="select_budgetOrder_count" parameterType="budgetOrder"
 		resultType="java.lang.Long">

@@ -783,7 +783,7 @@ public class BudgetOrder extends ABaseDO {
     // 入档位置
     private String enterLocation;
 
-    // 业务员
+    // 业务员（信贷专员）
     private String saleUserId;
 
     // 团队编号

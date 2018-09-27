@@ -9,17 +9,20 @@ import org.hibernate.validator.constraints.NotBlank;
  * @history:
  */
 public class XN632710Req {
-    // 类型(1 公司 2 个人)
-    @NotBlank
+    // 类型(1 有线 2 无线)
     private String type;
 
     // 申请人
     @NotBlank
     private String applyUser;
 
-    // 申请数量
+    // 申请有线个数
     @NotBlank
-    private String applyCount;
+    private String applyWiredCount;
+
+    // 申请无线个数
+    @NotBlank
+    private String applyWirelessCount;
 
     // 申请原因
     private String applyReason;
@@ -40,12 +43,20 @@ public class XN632710Req {
         this.applyUser = applyUser;
     }
 
-    public String getApplyCount() {
-        return applyCount;
+    public String getApplyWiredCount() {
+        return applyWiredCount;
     }
 
-    public void setApplyCount(String applyCount) {
-        this.applyCount = applyCount;
+    public void setApplyWiredCount(String applyWiredCount) {
+        this.applyWiredCount = applyWiredCount;
+    }
+
+    public String getApplyWirelessCount() {
+        return applyWirelessCount;
+    }
+
+    public void setApplyWirelessCount(String applyWirelessCount) {
+        this.applyWirelessCount = applyWirelessCount;
     }
 
     public String getApplyReason() {

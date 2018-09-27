@@ -11,6 +11,8 @@
 		
 		<result column="apply_reason" property="applyReason" />
 		<result column="apply_count" property="applyCount" />
+		<result column="apply_wired_count" property="applyWiredCount" />
+		<result column="apply_wireless_count" property="applyWirelessCount" />
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="receive_datetime" property="receiveDatetime" />
 		<result column="status" property="status" />
@@ -47,6 +49,8 @@
 		
 		,t.apply_reason
 		,t.apply_count
+		,t.apply_wired_count
+		,t.apply_wireless_count
 		,t.send_datetime
 		,t.receive_datetime
 		,t.status
@@ -78,6 +82,8 @@
 		
 		,apply_reason
 		,apply_count
+		,apply_wired_count
+		,apply_wireless_count
 		,status
 		,remark
 		)
@@ -90,6 +96,8 @@
 		
 		,#{applyReason}
 		,#{applyCount}
+		,#{applyWiredCount}
+		,#{applyWirelessCount}
 		,#{status}
 		,#{remark}
 		)

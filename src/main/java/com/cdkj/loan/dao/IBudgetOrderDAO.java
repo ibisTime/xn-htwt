@@ -74,4 +74,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     List<BudgetOrder> selectBudgetOrderByDzList(BudgetOrder condition);
 
+    // 根据客户姓名查询预算单
+    List<BudgetOrder> queryBudgetOrderByApplyUserName(BudgetOrder condition);
+
 }
