@@ -36,6 +36,9 @@
 			<if test="applyUser != null and applyUser != '' ">
 				AND t.apply_user = #{applyUser}
 			</if>
+			<if test="applyUserName != null and applyUserName != '' ">
+				AND tb.apply_user_name = #{applyUserName}
+			</if>
 			<if test="applyStatus != null and applyStatus != '' ">
 				AND t.apply_status = #{applyStatus}
 			</if>
@@ -60,7 +63,7 @@
 		,t.use_datetime
 		,t.biz_code
 		FROM
-		tb_gps t
+		tb_gps t left join tdq_budget_order tb on t.biz_code = tb.code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">

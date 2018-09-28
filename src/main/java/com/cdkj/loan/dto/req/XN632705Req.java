@@ -25,6 +25,17 @@ public class XN632705Req extends APageReq {
     // 业务编号
     private String bizCode;
 
+    // 申请人姓名(预算单)
+    private String applyUserName;
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
+
     public String getGpsDevNo() {
         return gpsDevNo;
     }
