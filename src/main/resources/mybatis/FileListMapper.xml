@@ -4,8 +4,9 @@
 <mapper namespace="com.cdkj.loan.dao.IFileListDAO">
 	<resultMap id="fileList_DB_Result" type="fileList">
 		<result column="id" property="id" />
-		<result column="number" property="number" />
+		<result column="no" property="no" />
 		<result column="name" property="name" />
+		<result column="number" property="number" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
@@ -14,8 +15,8 @@
 			<if test="id != null and id != '' ">
 				AND t.id = #{id}
 			</if>
-			<if test="number != null and number != '' ">
-				AND t.number = #{number}
+			<if test="no != null and no != '' ">
+				AND t.no = #{no}
 			</if>
 			<if test="name != null and name != '' ">
 				AND t.name = #{name}
@@ -28,8 +29,9 @@
 	<select id="select_fileList" parameterType="fileList" resultMap="fileList_DB_Result">
 		SELECT
 		t.id
-		,t.number
+		,t.no
 		,t.name
+		,t.number
 		,t.updater
 		,t.update_datetime
 		FROM
@@ -52,15 +54,17 @@
 		INSERT INTO
 		tdq_file_list(
 		id
-		,number
+		,no
 		,name
+		,number
 		,updater
 		,update_datetime
 		)
 		VALUES(
 		#{id}
-		,#{number}
+		,#{no}
 		,#{name}
+		,#{number}
 		,#{updater}
 		,#{updateDatetime}
 		)
@@ -69,8 +73,9 @@
 	<update id="update_fileList" parameterType="fileList">
 		UPDATE tdq_file_list
 		SET
-		number = #{number}
+		no = #{no}
 		,name = #{name}
+		,number = #{number}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE id = #{id}

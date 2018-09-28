@@ -6,8 +6,9 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 DROP TABLE IF EXISTS `tdq_file_list`;
 CREATE TABLE `tdq_file_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `number` varchar(255) DEFAULT NULL COMMENT '序号',
+  `no` varchar(255) DEFAULT NULL COMMENT '序号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `number` int(11) DEFAULT NULL COMMENT '份数',
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
