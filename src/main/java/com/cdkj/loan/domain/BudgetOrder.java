@@ -816,6 +816,9 @@ public class BudgetOrder extends ABaseDO {
     // 业务员（信贷专员）
     private String saleUserId;
 
+    // 内勤
+    private String insideJob;
+
     // 团队编号
     private String teamCode;
 
@@ -920,9 +923,6 @@ public class BudgetOrder extends ABaseDO {
     // 联系电话
     private String contactNo;
 
-    // 内勤
-    private String insideJob;
-
     // 刷卡总手续费=团队服务费+银行服务费+公司服务费
     private String cardTotalFee;
 
@@ -954,6 +954,17 @@ public class BudgetOrder extends ABaseDO {
 
     // 资料快递单号及时间
     private String logisticsDate;
+
+    // 内勤名称
+    private String insideJobName;
+
+    public String getInsideJobName() {
+        return insideJobName;
+    }
+
+    public void setInsideJobName(String insideJobName) {
+        this.insideJobName = insideJobName;
+    }
 
     public String getLogisticsDate() {
         return logisticsDate;

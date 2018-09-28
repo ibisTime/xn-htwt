@@ -54,7 +54,6 @@ import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
-import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
@@ -519,6 +518,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setPledgeUser(req.getPledgeUser());
         data.setPledgeUserIdCardCopy(req.getPledgeUserIdCardCopy());
         data.setPledgeAddress(req.getPledgeAddress());
+        data.setInsideJob(req.getOperator());
 
         String preNodeCode = data.getCurNodeCode(); // 当前节点
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
@@ -534,6 +534,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void areaApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -562,6 +563,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void internalApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -957,6 +959,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void interviewInternalApprove(String code, String operator,
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -1439,13 +1442,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         // 内勤
-        SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
-            budgetOrder.getCode(),
-            EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-        if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
-            SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
-            budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
+        if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
+            SYSUser InsideJob = sysUserBO.getUser(budgetOrder.getInsideJob());
+            budgetOrder.setInsideJobName(InsideJob.getRealName());
         }
+        // SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+        // budgetOrder.getCode(),
+        // EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+        // if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
+        // SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+        // budgetOrder.setInsideJob(operator.getRealName());//
+        // 内勤（使用这个业务单在日志表的最新操作人）
+        // }
 
         // 资料快递 通过类型，预算单号，收件节点，物流状态查找物流单
         Logistics logistics = new Logistics();
@@ -1502,13 +1510,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
-            int limit, BudgetOrder condition) {
+            int limit, BudgetOrder condition, String operator) {
         if (ESysRole.getMap().get(condition.getRoleCode()) == null) {
             condition.setTeamCode(null);
         }
-        // if (ESysRole.SALE.getCode().equals(condition.getRoleCode())) {
-        // condition.setSaleUserId(saleUserId);
-        // }
+
+        if (ESysRole.SALE.getCode().equals(condition.getRoleCode())) {
+            condition.setSaleUserId(operator);
+            condition.setTeamCode(null);
+        }
+
+        if (ESysRole.YWNQ.getCode().equals(condition.getRoleCode())) {
+            condition.setInsideJob(operator);
+            condition.setTeamCode(null);
+        }
 
         Paginable<BudgetOrder> page = budgetOrderBO
             .getPaginableByRoleCode(start, limit, condition);
@@ -1543,6 +1558,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void confirmBackAdvanceFund(XN632180Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBackAdvanceStatus.TODO_BACK.getCode()
@@ -1565,6 +1581,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void applyCancel(XN632190Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (EBudgetOrderNode.COMMITBANK.getCode()
@@ -1588,6 +1605,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void cancelBizAudit(XN632191Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         String preCurrentNode = budgetOrder.getCurNodeCode();
@@ -1629,6 +1647,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void cancelFinanceAudit(XN632192Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         String preCurrentNode = budgetOrder.getCurNodeCode();
@@ -1673,14 +1692,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 budgetOrder.setLoanBankName(loanBank.getBankName());
             }
             // 内勤
-            SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
-                budgetOrder.getCode(),
-                EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-            if (null != bizLog
-                    && StringUtils.isNotBlank(bizLog.getOperator())) {
-                SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
-                budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在预算单申请时日志表的最新操作人）
+            if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
+                SYSUser user = sysUserBO.getUser(budgetOrder.getInsideJob());
+                budgetOrder.setInsideJobName(user.getRealName());
             }
+            // SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+            // budgetOrder.getCode(),
+            // EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+            // if (null != bizLog
+            // && StringUtils.isNotBlank(bizLog.getOperator())) {
+            // SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+            // budgetOrder.setInsideJob(operator.getRealName());//
+            // 内勤（使用这个业务单在预算单申请时日志表的最新操作人）
+            // }
+
             // 业务公司名称
             if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
                 Department company = departmentBO
@@ -1724,6 +1749,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void dataSupplement(XN632141Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.COMMITBANK.getCode()
@@ -1972,13 +1998,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setContactNo(user.getMobile());// 联系电话
         SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
         budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
-        SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
-            budgetOrder.getCode(),
-            EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-        if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
-            SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
-            budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
+        if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
+            SYSUser InsideJob = sysUserBO.getUser(budgetOrder.getInsideJob());
+            budgetOrder.setInsideJobName(InsideJob.getRealName());
         }
+        // SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+        // budgetOrder.getCode(),
+        // EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+        // if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
+        // SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+        // budgetOrder.setInsideJob(operator.getRealName());//
+        // 内勤（使用这个业务单在日志表的最新操作人）
+        // }
         return budgetOrder;
     }
 
@@ -1997,13 +2028,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     private BudgetOrder initBizReport(BudgetOrder budgetOrder) {
         SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
         budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
-        SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
-            budgetOrder.getCode(),
-            EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-        if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
-            SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
-            budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
+        if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
+            SYSUser InsideJob = sysUserBO.getUser(budgetOrder.getInsideJob());
+            budgetOrder.setInsideJobName(InsideJob.getRealName());
         }
+        // SYSBizLog bizLog = sysBizLogBO.getApplyBudgetOrderOperator(
+        // budgetOrder.getCode(),
+        // EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+        // if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
+        // SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+        // budgetOrder.setInsideJob(operator.getRealName());//
+        // 内勤（使用这个业务单在日志表的最新操作人）
+        // }
         CreditUser user = creditUserBO.getCreditUserByCreditCode(
             budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
         budgetOrder.setContactNo(user.getMobile());// 联系电话

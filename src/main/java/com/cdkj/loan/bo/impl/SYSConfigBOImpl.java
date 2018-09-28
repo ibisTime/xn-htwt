@@ -167,4 +167,9 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
 
     }
 
+    @Override
+    public void saveSYSConfig(SYSConfig sysConfig) {
+        sysConfigDAO.insert(sysConfig);
+    }
+
 }

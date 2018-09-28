@@ -111,7 +111,7 @@ public interface IBudgetOrderAO {
     public void mortgageFinish(XN632133Req req);
 
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
-            int limit, BudgetOrder condition);
+            int limit, BudgetOrder condition, String operator);
 
     public BudgetOrder getMoreBudget(String code);
 

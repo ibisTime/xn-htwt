@@ -53,7 +53,7 @@ public class XN632148 extends AProcessor {
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return budgetOrderAO.queryBudgetOrderPageByRoleCode(start, limit,
-            condition);
+            condition, req.getOperator());
     }
 
     @Override

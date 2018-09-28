@@ -26,4 +26,8 @@ public interface ISYSConfigAO {
     public Map<String, String> getSYSConfigMap(String type);
 
     public SYSConfig getSYSConfig(String key);
+
+    // 新增车贷期数管理
+    public void addSYSConfig(String key, String cvalue, String updater,
+            String remark);
 }

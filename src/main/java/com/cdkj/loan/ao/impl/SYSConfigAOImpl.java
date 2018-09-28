@@ -1,9 +1,11 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ISYSConfigAO;
 import com.cdkj.loan.bo.ISYSConfigBO;
@@ -45,5 +47,19 @@ public class SYSConfigAOImpl implements ISYSConfigAO {
     @Override
     public Map<String, String> getSYSConfigMap(String type) {
         return sysConfigBO.getConfigsMap(type);
+    }
+
+    @Override
+    @Transactional
+    public void addSYSConfig(String key, String cvalue, String updater,
+            String remark) {
+        SYSConfig sysConfig = new SYSConfig();
+        sysConfig.setType("car_periods");
+        sysConfig.setCkey(key);
+        sysConfig.setCvalue(cvalue);
+        sysConfig.setUpdater(updater);
+        sysConfig.setUpdateDatetime(new Date());
+        sysConfig.setRemark(remark);
+        sysConfigBO.saveSYSConfig(sysConfig);
     }
 }

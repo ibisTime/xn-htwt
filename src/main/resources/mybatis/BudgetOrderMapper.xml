@@ -305,6 +305,7 @@
 		<result column="pledge_status" property="pledgeStatus" />
 		<result column="enter_location" property="enterLocation" />
 		<result column="sale_user_id" property="saleUserId" />
+		<result column="inside_job" property="insideJob" />
 		
 		<result column="team_code" property="teamCode" />
 		<result column="company_code" property="companyCode" />
@@ -347,6 +348,9 @@
 			</if>
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
+			</if>
+			<if test="insideJob != null and insideJob != '' ">
+				AND t.inside_job = #{insideJob}
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
@@ -735,6 +739,7 @@
 		
 		,t.enter_location
 		,t.sale_user_id
+		,t.inside_job
 		,t.team_code
 		,t.company_code
 		,t.apply_datetime
@@ -826,6 +831,7 @@
 		,t.bank_fk_datetime
 		,t.is_advance_fund
 		,t.sale_user_id
+		,t.inside_job
 		,t.company_code
 		,t.apply_datetime
 		
@@ -1168,6 +1174,7 @@
 		
 		,t.enter_location
 		,t.sale_user_id
+		,t.inside_job
 		,t.team_code
 		,t.company_code
 		,t.apply_datetime
@@ -1214,6 +1221,7 @@
 		,t.loan_amount
 		,t.company_code
 		,t.sale_user_id
+		,t.inside_job
 		,t.advance_fund_datetime
 		,t.cur_node_code
 		FROM
@@ -1966,6 +1974,7 @@
 		,marry_pdf = #{marryPdf}
 		,other_pdf = #{otherPdf}
 		,is_advance_fund = #{isAdvanceFund}
+		,inside_job = #{insideJob}
 		,pledge_user = #{pledgeUser}
 		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
 		,pledge_address = #{pledgeAddress}

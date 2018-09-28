@@ -41,4 +41,7 @@ public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
 
     public BigDecimal getBigDecimalValue(String key);
 
+    // 新增车贷期数管理
+    public void saveSYSConfig(SYSConfig sysConfig);
+
 }

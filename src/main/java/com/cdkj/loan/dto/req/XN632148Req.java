@@ -37,6 +37,16 @@ public class XN632148Req extends APageReq {
 
     private String keyword; // 关键字
 
+    private String operator; // 操作人
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     public String getKeyword() {
         return keyword;
     }
