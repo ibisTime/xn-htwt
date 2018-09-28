@@ -19,6 +19,7 @@
 		<result column="send_note" property="sendNote" />
 		<result column="receipt_datetime" property="receiptDatetime" />
 		
+		<result column="sender" property="sender" />
 		<result column="receiver" property="receiver" />
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
@@ -85,6 +86,7 @@
 		,t.send_datetime
 		,t.send_note
 		,t.receipt_datetime
+		,t.sender
 		,t.receiver
 		,t.status
 		,t.remark
@@ -137,6 +139,7 @@
 		,t.logistics_company = #{logisticsCompany}
 		,t.logistics_code = #{logisticsCode}
 		,t.send_datetime = #{sendDatetime}
+		,t.sender = #{sender}
 		
 		,t.send_note = #{sendNote}
 		,t.status = #{status}
@@ -148,6 +151,7 @@
 		SET
 		t.receipt_datetime = #{receiptDatetime}
 		,t.status = #{status}
+		,t.receiver = #{receiver}
 		,t.remark = #{remark}
 		WHERE code = #{code}
 	</update>

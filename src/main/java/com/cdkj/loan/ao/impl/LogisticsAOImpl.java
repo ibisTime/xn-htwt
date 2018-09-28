@@ -108,6 +108,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             DateUtil.DATA_TIME_PATTERN_1));
         logistics.setSendNote(req.getSendNote());
         logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
+        logistics.setSender(req.getOperator());
         logisticsBO.sendLogistics(logistics);
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             gpsApplyBO.sendGps(logistics.getBizCode(),
@@ -159,7 +160,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
             String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
-            throw new BizException("xn0000", "资料不是待收件状态!");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待收件状态!");
         }
 
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
@@ -176,7 +178,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
 
         String result = EBoolean.NO.getCode();
-        logisticsBO.receiveLogistics(code, remark);
+        logisticsBO.receiveLogistics(code, operator, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
             BudgetOrder budgetOrder = budgetOrderBO
@@ -302,6 +304,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     .getBudgetOrder(logistics.getBizCode());
                 logistics.setCustomerName(budgetOrder.getApplyUserName());
             }
+        }
+        if (StringUtils.isNotBlank(logistics.getSender())) {
+            SYSUser user = sysUserBO.getUser(logistics.getSender());
+            logistics.setSenderName(user.getRealName());
+        }
+        if (StringUtils.isNotBlank(logistics.getReceiver())) {
+            SYSUser user = sysUserBO.getUser(logistics.getReceiver());
+            logistics.setReceiverName(user.getRealName());
         }
     }
 

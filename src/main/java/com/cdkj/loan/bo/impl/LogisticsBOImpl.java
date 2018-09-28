@@ -16,7 +16,6 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
 
@@ -28,8 +27,8 @@ import com.cdkj.loan.enums.ELogisticsStatus;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
-        ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
+        implements ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
@@ -45,8 +44,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode, String refFileList) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -59,7 +58,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         data.setFromNodeCode(fromNodeCode);
         data.setToNodeCode(toNodeCode);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
-        data.setReceiver(EBoolean.NO.getCode());
         logisticsDAO.insert(data);
         return code;
     }
@@ -67,8 +65,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     @Override
     public String saveLogisticsGps(String type, String bizCode, String userId,
             String refFileList, String receiver) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -96,12 +94,13 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     }
 
     @Override
-    public void receiveLogistics(String code, String remark) {
+    public void receiveLogistics(String code, String operator, String remark) {
         if (StringUtils.isNotBlank(code)) {
             Logistics condition = new Logistics();
             condition.setCode(code);
             condition.setRemark(remark);
             condition.setReceiptDatetime(new Date());
+            condition.setReceiver(operator);
             condition.setStatus(ELogisticsStatus.RECEIVED.getCode());
             logisticsDAO.updateLogisticsReceive(condition);
         }

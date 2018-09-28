@@ -21,9 +21,6 @@ ALTER TABLE `tb_gps_apply`
 ADD COLUMN `apply_wired_count` int(11) NULL COMMENT '申请有线个数' AFTER `apply_count`,
 ADD COLUMN `apply_wireless_count` int(11) NULL COMMENT '申请无线个数' AFTER `apply_wired_count`;
 
-ALTER TABLE `tdq_logistics` 
-ADD COLUMN `filelist` VARCHAR(255) NULL COMMENT '材料清单' AFTER `receiver`;
-
 UPDATE `tsys_node` SET `name`='风控一审' WHERE `code`='002_02';
 UPDATE `tsys_node` SET `name`='风控终审' WHERE `code`='002_03';
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_27', '风控二审', '002');
@@ -33,3 +30,11 @@ UPDATE `tsys_node_flow` SET `next_node`='002_27' WHERE `id`='6';
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('002', '002_27', '002_03', '002_04');
 UPDATE `tsys_node_flow` SET `next_node`='002_28' WHERE `id`='7';
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('002', '002_28', '002_05', '002_04');
+
+ALTER TABLE `tdq_logistics` 
+ADD COLUMN `filelist` VARCHAR(255) NULL COMMENT '材料清单' AFTER `receiver`,
+ADD COLUMN `sender` VARCHAR(32) NULL COMMENT '发件人' AFTER `receipt_datetime`;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tdq_logistics t SET t.receiver = null WHERE t.receiver = '0';
+SET SQL_SAFE_UPDATES = 1;

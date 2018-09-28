@@ -56,7 +56,10 @@ public class Logistics extends ABaseDO {
     // 收件时间
     private Date receiptDatetime;
 
-    // 收件人(gps 落地具体某个人/ 非gps默认0)
+    // 发件人
+    private String sender;
+
+    // 收件人
     private String receiver;
 
     // 材料清单
@@ -82,12 +85,42 @@ public class Logistics extends ABaseDO {
     // 类型List
     private List<String> typeList;
 
+    // 发件人
+    private String senderName;
+
+    // 收件人
+    private String receiverName;
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
     public List<String> getTypeList() {
         return typeList;
     }
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public String getFilelist() {
