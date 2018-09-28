@@ -40,13 +40,21 @@ public interface IBudgetOrderAO {
     public void internalApprove(String code, String approveResult,
             String approveNote, String operator);
 
-    // 风控专员审核
-    public void riskApprove(String code, String approveResult,
+    // 风控一审
+    public void riskOneApprove(String code, String approveResult,
+            String approveNote, String operator);
+
+    // 风控二审
+    public void riskTwoApprove(String code, String approveResult,
             String approveNote, String operator);
 
     // 风控主管审核
     public void riskChargeApprove(String code, String operator,
             String approveResult, String approveNote);
+
+    // 业务总监审核
+    void yBizChargeApprove(String code, String operator, String approveResult,
+            String approveNote);
 
     // 面签
     public void interview(XN632123Req req);

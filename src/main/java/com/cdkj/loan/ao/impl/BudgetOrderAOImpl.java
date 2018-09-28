@@ -580,32 +580,55 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void riskApprove(String code, String approveResult,
+    public void riskOneApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.RISK_APPROVE.getCode()
+        if (!EBudgetOrderNode.RISK_ONE_APPROVE.getCode()
             .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是风控专员审核节点，不能操作");
+                "当前节点不是风控一审节点，不能操作");
         }
 
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder
-                .setCurNodeCode(
-                    nodeFlowBO
-                        .getNodeFlowByCurrentNode(
-                            EBudgetOrderNode.RISK_APPROVE.getCode())
-                        .getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
         } else {
-            budgetOrder
-                .setCurNodeCode(
-                    nodeFlowBO
-                        .getNodeFlowByCurrentNode(
-                            EBudgetOrderNode.RISK_APPROVE.getCode())
-                        .getBackNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
+        }
+        budgetOrder.setRemark(approveNote);
+        budgetOrderBO.refreshriskApprove(budgetOrder);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            budgetOrder.getCurNodeCode(), approveNote, operator,
+            budgetOrder.getTeamCode());
+    }
+
+    @Override
+    @Transactional
+    public void riskTwoApprove(String code, String approveResult,
+            String approveNote, String operator) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        if (!EBudgetOrderNode.RISK_TWO_APPROVE.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是风控二审节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshriskApprove(budgetOrder);
@@ -626,9 +649,38 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (!EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()
             .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是风控主管审核节点，不能操作");
+                "当前节点不是风控终审节点，不能操作");
         }
 
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
+        }
+        budgetOrder.setRemark(approveNote);
+        budgetOrderBO.refreshriskChargeApprove(budgetOrder);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            budgetOrder.getCurNodeCode(), approveNote, operator,
+            budgetOrder.getTeamCode());
+    }
+
+    @Override
+    @Transactional
+    public void yBizChargeApprove(String code, String operator,
+            String approveResult, String approveNote) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        if (!EBudgetOrderNode.YBIZ_CHARGE_APPROVE.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是业务总监审核节点，不能操作");
+        }
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
@@ -814,12 +866,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode())
-                .getBackNode());
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
         }
+
         budgetOrder.setRemark(approveNote);
-        budgetOrderBO.refreshriskChargeApprove(budgetOrder);
+        budgetOrderBO.refreshbizChargeApprove(budgetOrder);
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -1445,6 +1496,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (ESysRole.getMap().get(condition.getRoleCode()) == null) {
             condition.setTeamCode(null);
         }
+        // if (ESysRole.SALE.getCode().equals(condition.getRoleCode())) {
+        // condition.setSaleUserId(saleUserId);
+        // }
 
         Paginable<BudgetOrder> page = budgetOrderBO
             .getPaginableByRoleCode(start, limit, condition);
@@ -1615,7 +1669,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             if (null != bizLog
                     && StringUtils.isNotBlank(bizLog.getOperator())) {
                 SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
-                budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
+                budgetOrder.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在预算单申请时日志表的最新操作人）
             }
             // 业务公司名称
             if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {

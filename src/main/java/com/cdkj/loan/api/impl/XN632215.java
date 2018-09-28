@@ -6,7 +6,6 @@ import com.cdkj.loan.ao.IFileListAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.FileList;
 import com.cdkj.loan.dto.req.XN632215Req;
 import com.cdkj.loan.exception.BizException;
@@ -28,7 +27,6 @@ public class XN632215 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         FileList condition = new FileList();
-        condition.setId(StringValidater.toInteger(req.getId()));
         condition.setNumber(req.getNumber());
         condition.setName(req.getName());
         condition.setUpdater(req.getUpdater());

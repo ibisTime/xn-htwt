@@ -11,8 +11,9 @@ import java.util.Map;
  */
 public enum EBudgetOrderNode {
     WRITE_BUDGET_ORDER("002_01", "填写准入申请单"), AREA_APPROVE("002_24", "区域经理审核"), INTERNAL_APPROVE(
-            "002_25", "内勤主管审核"), RISK_APPROVE("002_02", "风控专员审核"), RISK_CHARGE_APPROVE(
-            "002_03", "风控主管审核"), AGAIN_WRITE("002_04", "重新填写准入申请单"), INTERVIEW(
+            "002_25", "内勤主管审核"), RISK_ONE_APPROVE("002_02", "风控一审"),RISK_TWO_APPROVE(
+            "002_27", "风控二审"), RISK_CHARGE_APPROVE("002_03", "风控终审"),YBIZ_CHARGE_APPROVE(
+            "002_28", "业务总监审核"), AGAIN_WRITE("002_04", "重新填写准入申请单"), INTERVIEW(
             "002_05", "面签"), INTERVIEW_INTERNAL_APPROVE("002_26", "内勤主管审核(面签)"), BIZ_CHARGE_APPROVE(
             "002_06", "业务总监审核"), ADVANCEFUND("002_07", "财务垫资"), AGAIN_INTERVIEW(
             "002_08", "重新面签"),

@@ -1,37 +1,20 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 public class XN632215Req extends APageReq {
 
     private static final long serialVersionUID = 1436082124795324054L;
 
-    // 编号
-    @NotBlank
-    private String id;
-
     // 序号
-    @NotBlank
     private String number;
 
     // 名称
-    @NotBlank
     private String name;
 
     // 更新人
-    @NotBlank
     private String updater;
 
     public String getNumber() {
         return number;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setNumber(String number) {

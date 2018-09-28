@@ -23,3 +23,13 @@ ADD COLUMN `apply_wireless_count` int(11) NULL COMMENT '申请无线个数' AFTE
 
 ALTER TABLE `tdq_logistics` 
 ADD COLUMN `filelist` VARCHAR(255) NULL COMMENT '材料清单' AFTER `receiver`;
+
+UPDATE `tsys_node` SET `name`='风控一审' WHERE `code`='002_02';
+UPDATE `tsys_node` SET `name`='风控终审' WHERE `code`='002_03';
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_27', '风控二审', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_28', '业务总监审核', '002');
+
+UPDATE `tsys_node_flow` SET `next_node`='002_27' WHERE `id`='6';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('002', '002_27', '002_03', '002_04');
+UPDATE `tsys_node_flow` SET `next_node`='002_28' WHERE `id`='7';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('002', '002_28', '002_05', '002_04');

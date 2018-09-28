@@ -29,6 +29,19 @@ public class FileList extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
+    /*-----------辅助字段--------------*/
+
+    // 更新人名称
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public int getId() {
         return id;
     }
