@@ -296,7 +296,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMateZfbJourDatetimeEnd(
             DateUtil.strToDate(req.getMateZfbJourDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setMateZfbJourInterest(req.getMateZfbJourInterest());
+        data.setMateZfbJourInterest1(req.getMateZfbJourInterest1());
+        data.setMateZfbJourInterest2(req.getMateZfbJourInterest2());
         data.setMateZfbInterest1(
             StringValidater.toLong(req.getMateZfbInterest1()));
         data.setMateZfbInterest2(
@@ -321,7 +322,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setMateWxJourDatetimeEnd(DateUtil.strToDate(
             req.getMateWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setMateWxJourInterest(req.getMateWxJourInterest());
+        data.setMateWxJourInterest1(req.getMateWxJourInterest1());
+        data.setMateWxJourInterest2(req.getMateWxJourInterest2());
         data.setMateWxInterest1(
             StringValidater.toLong(req.getMateWxInterest1()));
         data.setMateWxInterest2(
@@ -344,7 +346,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getMateJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setMateJourDatetimeEnd(DateUtil.strToDate(
             req.getMateJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setMateJourInterest(req.getMateJourInterest());
+        data.setMateJourInterest1(req.getMateJourInterest1());
+        data.setMateJourInterest2(req.getMateJourInterest2());
         data.setMateInterest1(StringValidater.toLong(req.getMateInterest1()));
         data.setMateInterest2(StringValidater.toLong(req.getMateInterest2()));
 
@@ -375,7 +378,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGuaZfbJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setGuaZfbJourInterest(req.getGuaZfbJourInterest());
+        data.setGuaZfbJourInterest1(req.getGuaZfbJourInterest1());
+        data.setGuaZfbJourInterest2(req.getGuaZfbJourInterest2());
         data.setGuaZfbInterest1(
             StringValidater.toLong(req.getGuaZfbInterest1()));
         data.setGuaZfbInterest2(
@@ -400,7 +404,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGuaWxJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setGuaWxJourInterest(req.getGuaWxJourInterest());
+        data.setGuaWxJourInterest1(req.getGuaWxJourInterest1());
+        data.setGuaWxJourInterest2(req.getGuaWxJourInterest2());
         data.setGuaWxInterest1(StringValidater.toLong(req.getGuaWxInterest1()));
         data.setGuaWxInterest2(StringValidater.toLong(req.getGuaWxInterest2()));
 
@@ -422,7 +427,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getGuaJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGuaJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setGuaJourInterest(req.getGuaJourInterest());
+        data.setGuaJourInterest1(req.getGuaJourInterest1());
+        data.setGuaJourInterest2(req.getGuaJourInterest2());
         data.setGuaInterest1(StringValidater.toLong(req.getGuaInterest1()));
         data.setGuaInterest2(StringValidater.toLong(req.getGuaInterest2()));
 
@@ -449,7 +455,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getZfbJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setZfbJourDatetimeEnd(DateUtil.strToDate(
             req.getZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setZfbJourInterest(req.getZfbJourInterest());
+        data.setZfbJourInterest1(req.getZfbJourInterest1());
+        data.setZfbJourInterest2(req.getZfbJourInterest2());
         data.setZfbInterest1(StringValidater.toLong(req.getZfbInterest1()));
         data.setZfbInterest2(StringValidater.toLong(req.getZfbInterest2()));
 
@@ -467,7 +474,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getWxJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setWxJourDatetimeEnd(DateUtil.strToDate(req.getWxJourDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setWxJourInterest(req.getWxJourInterest());
+        data.setWxJourInterest1(req.getWxJourInterest1());
+        data.setWxJourInterest2(req.getWxJourInterest2());
         data.setWxInterest1(StringValidater.toLong(req.getWxInterest1()));
         data.setWxInterest2(StringValidater.toLong(req.getWxInterest2()));
 
@@ -485,7 +493,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setJourDatetimeEnd(DateUtil.strToDate(req.getJourDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setJourInterest(req.getJourInterest());
+        data.setJourInterest1(req.getJourInterest1());
+        data.setJourInterest2(req.getJourInterest2());
         data.setInterest1(StringValidater.toLong(req.getInterest1()));
         data.setInterest2(StringValidater.toLong(req.getInterest2()));
 
@@ -507,6 +516,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMarryPdf(req.getMarryPdf());
         data.setOtherPdf(req.getOtherPdf());
         data.setIsAdvanceFund(req.getIsAdvanceFund());
+        data.setPledgeUser(req.getPledgeUser());
+        data.setPledgeUserIdCardCopy(req.getPledgeUserIdCardCopy());
+        data.setPledgeAddress(req.getPledgeAddress());
 
         String preNodeCode = data.getCurNodeCode(); // 当前节点
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
@@ -1243,8 +1255,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         NodeFlow currentNodeFlow = nodeFlowBO
             .getNodeFlowByCurrentNode(preCurrentNode);
         budgetOrder.setCurNodeCode(currentNodeFlow.getNextNode());
-        budgetOrder.setPledgeUser(req.getPledgeUser());
-        budgetOrder.setPledgeAddress(req.getPledgeAddress());
         budgetOrder.setPledgeDatetime(DateUtil.strToDate(
             req.getPledgeDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGreenBigSmj(req.getGreenBigSmj());
@@ -1740,7 +1750,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setMateZfbJourDatetimeEnd(
             DateUtil.strToDate(req.getMateZfbJourDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setMateZfbJourInterest(req.getMateZfbJourInterest());
+        budgetOrder.setMateZfbJourInterest1(req.getMateZfbJourInterest1());
+        budgetOrder.setMateZfbJourInterest2(req.getMateZfbJourInterest2());
 
         budgetOrder.setMateZfbInterest1(
             StringValidater.toLong(req.getMateZfbInterest1()));
@@ -1765,7 +1776,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         budgetOrder.setMateWxJourDatetimeEnd(DateUtil.strToDate(
             req.getMateWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setMateWxJourInterest(req.getMateWxJourInterest());
+        budgetOrder.setMateWxJourInterest1(req.getMateWxJourInterest1());
+        budgetOrder.setMateWxJourInterest2(req.getMateWxJourInterest2());
         budgetOrder.setMateWxInterest1(
             StringValidater.toLong(req.getMateWxInterest1()));
         budgetOrder.setMateWxInterest2(
@@ -1788,7 +1800,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getMateJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setMateJourDatetimeEnd(DateUtil.strToDate(
             req.getMateJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setMateJourInterest(req.getMateJourInterest());
+        budgetOrder.setMateJourInterest1(req.getMateJourInterest1());
+        budgetOrder.setMateJourInterest2(req.getMateJourInterest2());
         budgetOrder
             .setMateInterest1(StringValidater.toLong(req.getMateInterest1()));
 
@@ -1822,7 +1835,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGuaZfbJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setGuaZfbJourInterest(req.getGuaZfbJourInterest());
+        budgetOrder.setGuaZfbJourInterest1(req.getGuaZfbJourInterest1());
+        budgetOrder.setGuaZfbJourInterest2(req.getGuaZfbJourInterest2());
         budgetOrder.setGuaZfbInterest1(
             StringValidater.toLong(req.getGuaZfbInterest1()));
 
@@ -1847,7 +1861,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuaWxJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        budgetOrder.setGuaWxJourInterest(req.getGuaWxJourInterest());
+        budgetOrder.setGuaWxJourInterest1(req.getGuaWxJourInterest1());
+        budgetOrder.setGuaWxJourInterest2(req.getGuaWxJourInterest2());
         budgetOrder
             .setGuaWxInterest1(StringValidater.toLong(req.getGuaWxInterest1()));
         budgetOrder
@@ -1870,7 +1885,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getGuaJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGuaJourDatetimeEnd(DateUtil.strToDate(
             req.getGuaJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setGuaJourInterest(req.getGuaJourInterest());
+        budgetOrder.setGuaJourInterest1(req.getGuaJourInterest1());
+        budgetOrder.setGuaJourInterest2(req.getGuaJourInterest2());
         budgetOrder
             .setGuaInterest1(StringValidater.toLong(req.getGuaInterest1()));
         budgetOrder
@@ -1895,7 +1911,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setZfbJourDatetimeEnd(DateUtil.strToDate(
             req.getZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        budgetOrder.setZfbJourInterest(req.getZfbJourInterest());
+        budgetOrder.setZfbJourInterest1(req.getZfbJourInterest1());
+        budgetOrder.setZfbJourInterest2(req.getZfbJourInterest2());
         budgetOrder
             .setZfbInterest1(StringValidater.toLong(req.getZfbInterest1()));
         budgetOrder
@@ -1907,7 +1924,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getWxJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setWxJourDatetimeEnd(DateUtil.strToDate(
             req.getWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setWxJourInterest(req.getWxJourInterest());
+        budgetOrder.setWxJourInterest1(req.getWxJourInterest1());
+        budgetOrder.setWxJourInterest2(req.getWxJourInterest2());
         budgetOrder
             .setWxInterest1(StringValidater.toLong(req.getWxInterest1()));
         budgetOrder
@@ -1919,7 +1937,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setJourDatetimeEnd(DateUtil.strToDate(
             req.getJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setJourInterest(req.getJourInterest());
+        budgetOrder.setJourInterest1(req.getJourInterest1());
+        budgetOrder.setJourInterest2(req.getJourInterest2());
 
         budgetOrder.setInterest1(StringValidater.toLong(req.getInterest1()));
         budgetOrder.setInterest2(StringValidater.toLong(req.getInterest2()));

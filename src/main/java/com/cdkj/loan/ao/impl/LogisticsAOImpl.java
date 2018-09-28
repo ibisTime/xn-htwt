@@ -2,7 +2,6 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,18 +85,18 @@ public class LogisticsAOImpl implements ILogisticsAO {
             }
         }
         if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())
-                && CollectionUtils.isEmpty(req.getFilelist())) {
+                && StringUtils.isBlank(req.getFilelist())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "材料清单不能为空！");
         }
-        String fileList = "";
-        for (String file : req.getFilelist()) {
-            fileList += file + ",";
-        }
-        if (StringUtils.isNotBlank(fileList)) {
-            fileList = fileList.substring(0, fileList.length() - 1);
-        }
-        logistics.setFilelist(fileList);
+        // String fileList = "";
+        // for (String file : req.getFilelist()) {
+        // fileList += file + ",";
+        // }
+        // if (StringUtils.isNotBlank(fileList)) {
+        // fileList = fileList.substring(0, fileList.length() - 1);
+        // }
+        logistics.setFilelist(req.getFilelist());
 
         // 发件
         logistics.setSendType(req.getSendType());

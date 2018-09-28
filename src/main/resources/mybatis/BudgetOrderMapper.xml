@@ -93,7 +93,8 @@
 		
 		<result column="mate_zfb_jour_datetime_start" property="mateZfbJourDatetimeStart" />
 		<result column="mate_zfb_jour_datetime_end" property="mateZfbJourDatetimeEnd" />
-		<result column="mate_zfb_jour_interest" property="mateZfbJourInterest" />
+		<result column="mate_zfb_jour_interest1" property="mateZfbJourInterest1" />
+		<result column="mate_zfb_jour_interest2" property="mateZfbJourInterest2" />
 		<result column="mate_zfb_interest1" property="mateZfbInterest1" />
 		<result column="mate_zfb_interest2" property="mateZfbInterest2" />
 		<result column="mate_zfb_jour_income" property="mateZfbJourIncome" />
@@ -106,7 +107,8 @@
 		<result column="mate_zfb_jour_remark" property="mateZfbJourRemark" />
 		<result column="mate_wx_jour_datetime_start" property="mateWxJourDatetimeStart" />
 		<result column="mate_wx_jour_datetime_end" property="mateWxJourDatetimeEnd" />
-		<result column="mate_wx_jour_interest" property="mateWxJourInterest" />
+		<result column="mate_wx_jour_interest1" property="mateWxJourInterest1" />
+		<result column="mate_wx_jour_interest2" property="mateWxJourInterest2" />
 		<result column="mate_wx_interest1" property="mateWxInterest1" />
 		<result column="mate_wx_interest2" property="mateWxInterest2" />
 		<result column="mate_wx_jour_income" property="mateWxJourIncome" />
@@ -119,7 +121,8 @@
 		<result column="mate_wx_jour_remark" property="mateWxJourRemark" />
 		<result column="mate_jour_datetime_start" property="mateJourDatetimeStart" />
 		<result column="mate_jour_datetime_end" property="mateJourDatetimeEnd" />
-		<result column="mate_jour_interest" property="mateJourInterest" />
+		<result column="mate_jour_interest1" property="mateJourInterest1" />
+		<result column="mate_jour_interest2" property="mateJourInterest2" />
 		<result column="mate_interest1" property="mateInterest1" />
 		<result column="mate_interest2" property="mateInterest2" />
 		<result column="mate_jour_income" property="mateJourIncome" />
@@ -143,7 +146,8 @@
 		
 		<result column="gua_zfb_jour_datetime_start" property="guaZfbJourDatetimeStart" />
 		<result column="gua_zfb_jour_datetime_end" property="guaZfbJourDatetimeEnd" />
-		<result column="gua_zfb_jour_interest" property="guaZfbJourInterest" />
+		<result column="gua_zfb_jour_interest1" property="guaZfbJourInterest1" />
+		<result column="gua_zfb_jour_interest2" property="guaZfbJourInterest2" />
 		<result column="gua_zfb_interest1" property="guaZfbInterest1" />
 		<result column="gua_zfb_interest2" property="guaZfbInterest2" />
 		<result column="gua_zfb_jour_income" property="guaZfbJourIncome" />
@@ -156,7 +160,8 @@
 		<result column="gua_zfb_jour_remark" property="guaZfbJourRemark" />
 		<result column="gua_wx_jour_datetime_start" property="guaWxJourDatetimeStart" />
 		<result column="gua_wx_jour_datetime_end" property="guaWxJourDatetimeEnd" />
-		<result column="gua_wx_jour_interest" property="guaWxJourInterest" />
+		<result column="gua_wx_jour_interest1" property="guaWxJourInterest1" />
+		<result column="gua_wx_jour_interest2" property="guaWxJourInterest2" />
 		<result column="gua_wx_interest1" property="guaWxInterest1" />
 		<result column="gua_wx_interest2" property="guaWxInterest2" />
 		<result column="gua_wx_jour_income" property="guaWxJourIncome" />
@@ -169,7 +174,8 @@
 		<result column="gua_wx_jour_remark" property="guaWxJourRemark" />
 		<result column="gua_jour_datetime_start" property="guaJourDatetimeStart" />
 		<result column="gua_jour_datetime_end" property="guaJourDatetimeEnd" />
-		<result column="gua_jour_interest" property="guaJourInterest" />
+		<result column="gua_jour_interest1" property="guaJourInterest1" />
+		<result column="gua_jour_interest2" property="guaJourInterest2" />
 		<result column="gua_interest1" property="guaInterest1" />
 		<result column="gua_interest2" property="guaInterest2" />
 		<result column="gua_jour_income" property="guaJourIncome" />
@@ -191,7 +197,8 @@
 		<result column="emergency_mobile2" property="emergencyMobile2" />
 		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
 		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
-		<result column="zfb_jour_interest" property="zfbJourInterest" />
+		<result column="zfb_jour_interest1" property="zfbJourInterest1" />
+		<result column="zfb_jour_interest2" property="zfbJourInterest2" />
 		<result column="zfb_interest1" property="zfbInterest1" />
 		<result column="zfb_interest2" property="zfbInterest2" />
 		<result column="zfb_jour_income" property="zfbJourIncome" />
@@ -204,7 +211,8 @@
 		<result column="zfb_jour_remark" property="zfbJourRemark" />
 		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
 		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
-		<result column="wx_jour_interest" property="wxJourInterest" />
+		<result column="wx_jour_interest1" property="wxJourInterest1" />
+		<result column="wx_jour_interest2" property="wxJourInterest2" />
 		<result column="wx_interest1" property="wxInterest1" />
 		<result column="wx_interest2" property="wxInterest2" />
 		<result column="wx_jour_income" property="wxJourIncome" />
@@ -217,7 +225,8 @@
 		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="jour_datetime_start" property="jourDatetimeStart" />
 		<result column="jour_datetime_end" property="jourDatetimeEnd" />
-		<result column="jour_interest" property="jourInterest" />
+		<result column="jour_interest1" property="jourInterest1" />
+		<result column="jour_interest2" property="jourInterest2" />
 		<result column="interest1" property="interest1" />
 		<result column="interest2" property="interest2" />
 		<result column="jour_income" property="jourIncome" />
@@ -286,6 +295,7 @@
 		<result column="receipt_pdf" property="receiptPdf" />
 		<result column="receipt_remark" property="receiptRemark" />
 		<result column="pledge_user" property="pledgeUser" />
+		<result column="pledge_user_id_card_copy" property="pledgeUserIdCardCopy" />
 		<result column="pledge_address" property="pledgeAddress" />
 		<result column="pledge_datetime" property="pledgeDatetime" />
 		
@@ -507,7 +517,8 @@
 		
 		,t.mate_zfb_jour_datetime_start
 		,t.mate_zfb_jour_datetime_end
-		,t.mate_zfb_jour_interest
+		,t.mate_zfb_jour_interest1
+		,t.mate_zfb_jour_interest2
 		,t.mate_zfb_interest1
 		,t.mate_zfb_interest2
 		,t.mate_zfb_jour_income
@@ -521,7 +532,8 @@
 		
 		,t.mate_wx_jour_datetime_start
 		,t.mate_wx_jour_datetime_end
-		,t.mate_wx_jour_interest
+		,t.mate_wx_jour_interest1
+		,t.mate_wx_jour_interest2
 		,t.mate_wx_interest1
 		,t.mate_wx_interest2
 		,t.mate_wx_jour_income
@@ -534,7 +546,8 @@
 		
 		,t.mate_jour_datetime_start
 		,t.mate_jour_datetime_end
-		,t.mate_jour_interest
+		,t.mate_jour_interest1
+		,t.mate_jour_interest2
 		,t.mate_interest1
 		,t.mate_interest2
 		,t.mate_jour_income
@@ -565,7 +578,8 @@
 		
 		,t.gua_zfb_jour_datetime_start
 		,t.gua_zfb_jour_datetime_end
-		,t.gua_zfb_jour_interest
+		,t.gua_zfb_jour_interest1
+		,t.gua_zfb_jour_interest2
 		,t.gua_zfb_interest1
 		,t.gua_zfb_interest2
 		,t.gua_zfb_jour_income
@@ -578,7 +592,8 @@
 		
 		,t.gua_wx_jour_datetime_start
 		,t.gua_wx_jour_datetime_end
-		,t.gua_wx_jour_interest
+		,t.gua_wx_jour_interest1
+		,t.gua_wx_jour_interest2
 		,t.gua_wx_interest1
 		,t.gua_wx_interest2
 		,t.gua_wx_jour_income
@@ -591,7 +606,8 @@
 		
 		,t.gua_jour_datetime_start
 		,t.gua_jour_datetime_end
-		,t.gua_jour_interest
+		,t.gua_jour_interest1
+		,t.gua_jour_interest2
 		,t.gua_interest1
 		,t.gua_interest2
 		,t.gua_jour_income
@@ -613,7 +629,8 @@
 		
 		,t.zfb_jour_datetime_start
 		,t.zfb_jour_datetime_end
-		,t.zfb_jour_interest
+		,t.zfb_jour_interest1
+		,t.zfb_jour_interest2
 		,t.zfb_interest1
 		,t.zfb_interest2
 		,t.zfb_jour_income
@@ -626,7 +643,8 @@
 		
 		,t.wx_jour_datetime_start
 		,t.wx_jour_datetime_end
-		,t.wx_jour_interest
+		,t.wx_jour_interest1
+		,t.wx_jour_interest2
 		,t.wx_interest1
 		,t.wx_interest2
 		,t.wx_jour_income
@@ -639,7 +657,8 @@
 		
 		,t.jour_datetime_start
 		,t.jour_datetime_end
-		,t.jour_interest
+		,t.jour_interest1
+		,t.jour_interest2
 		,t.interest1
 		,t.interest2
 		,t.jour_income
@@ -706,6 +725,7 @@
 		
 		,t.receipt_remark
 		,t.pledge_user
+		,t.pledge_user_id_card_copy
 		,t.pledge_address
 		,t.pledge_datetime
 		,t.green_big_smj
@@ -930,7 +950,8 @@
 		
 		,t.mate_zfb_jour_datetime_start
 		,t.mate_zfb_jour_datetime_end
-		,t.mate_zfb_jour_interest
+		,t.mate_zfb_jour_interest1
+		,t.mate_zfb_jour_interest2
 		,t.mate_zfb_interest1
 		,t.mate_zfb_interest2
 		,t.mate_zfb_jour_income
@@ -944,7 +965,8 @@
 		
 		,t.mate_wx_jour_datetime_start
 		,t.mate_wx_jour_datetime_end
-		,t.mate_wx_jour_interest
+		,t.mate_wx_jour_interest1
+		,t.mate_wx_jour_interest2
 		,t.mate_wx_interest1
 		,t.mate_wx_interest2
 		,t.mate_wx_jour_income
@@ -957,7 +979,8 @@
 		
 		,t.mate_jour_datetime_start
 		,t.mate_jour_datetime_end
-		,t.mate_jour_interest
+		,t.mate_jour_interest1
+		,t.mate_jour_interest2
 		,t.mate_interest1
 		,t.mate_interest2
 		,t.mate_jour_income
@@ -988,7 +1011,8 @@
 		
 		,t.gua_zfb_jour_datetime_start
 		,t.gua_zfb_jour_datetime_end
-		,t.gua_zfb_jour_interest
+		,t.gua_zfb_jour_interest1
+		,t.gua_zfb_jour_interest2
 		,t.gua_zfb_interest1
 		,t.gua_zfb_interest2
 		,t.gua_zfb_jour_income
@@ -1001,7 +1025,8 @@
 		
 		,t.gua_wx_jour_datetime_start
 		,t.gua_wx_jour_datetime_end
-		,t.gua_wx_jour_interest
+		,t.gua_wx_jour_interest1
+		,t.gua_wx_jour_interest2
 		,t.gua_wx_interest1
 		,t.gua_wx_interest2
 		,t.gua_wx_jour_income
@@ -1014,7 +1039,8 @@
 		
 		,t.gua_jour_datetime_start
 		,t.gua_jour_datetime_end
-		,t.gua_jour_interest
+		,t.gua_jour_interest1
+		,t.gua_jour_interest2
 		,t.gua_interest1
 		,t.gua_interest2
 		,t.gua_jour_income
@@ -1036,7 +1062,8 @@
 		
 		,t.zfb_jour_datetime_start
 		,t.zfb_jour_datetime_end
-		,t.zfb_jour_interest
+		,t.zfb_jour_interest1
+		,t.zfb_jour_interest2
 		,t.zfb_interest1
 		,t.zfb_interest2
 		,t.zfb_jour_income
@@ -1049,7 +1076,8 @@
 		
 		,t.wx_jour_datetime_start
 		,t.wx_jour_datetime_end
-		,t.wx_jour_interest
+		,t.wx_jour_interest1
+		,t.wx_jour_interest2
 		,t.wx_interest1
 		,t.wx_interest2
 		,t.wx_jour_income
@@ -1062,7 +1090,8 @@
 		
 		,t.jour_datetime_start
 		,t.jour_datetime_end
-		,t.jour_interest
+		,t.jour_interest1
+		,t.jour_interest2
 		,t.interest1
 		,t.interest2
 		,t.jour_income
@@ -1129,6 +1158,7 @@
 		
 		,t.receipt_remark
 		,t.pledge_user
+		,t.pledge_user_id_card_copy
 		,t.pledge_address
 		,t.pledge_datetime
 		,t.green_big_smj
@@ -1268,7 +1298,8 @@
 		,month_income
 		,mate_zfb_jour_datetime_start
 		,mate_zfb_jour_datetime_end
-		,mate_zfb_jour_interest
+		,mate_zfb_jour_interest1
+		,mate_zfb_jour_interest2
 		,mate_zfb_interest1
 		,mate_zfb_interest2
 		,mate_zfb_jour_income
@@ -1281,7 +1312,8 @@
 		
 		,mate_wx_jour_datetime_start
 		,mate_wx_jour_datetime_end
-		,mate_wx_jour_interest
+		,mate_wx_jour_interest1
+		,mate_wx_jour_interest2
 		,mate_wx_interest1
 		,mate_wx_interest2
 		,mate_wx_jour_income
@@ -1294,7 +1326,8 @@
 		
 		,mate_jour_datetime_start
 		,mate_jour_datetime_end
-		,mate_jour_interest
+		,mate_jour_interest1
+		,mate_jour_interest2
 		,mate_interest1
 		,mate_interest2
 		,mate_jour_income
@@ -1325,7 +1358,8 @@
 		
 		,gua_zfb_jour_datetime_start
 		,gua_zfb_jour_datetime_end
-		,gua_zfb_jour_interest
+		,gua_zfb_jour_interest1
+		,gua_zfb_jour_interest2
 		,gua_zfb_interest1
 		,gua_zfb_interest2
 		,gua_zfb_jour_income
@@ -1338,7 +1372,8 @@
 		
 		,gua_wx_jour_datetime_start
 		,gua_wx_jour_datetime_end
-		,gua_wx_jour_interest
+		,gua_wx_jour_interest1
+		,gua_wx_jour_interest2
 		,gua_wx_interest1
 		,gua_wx_interest2
 		,gua_wx_jour_income
@@ -1351,7 +1386,8 @@
 		
 		,gua_jour_datetime_start
 		,gua_jour_datetime_end
-		,gua_jour_interest
+		,gua_jour_interest1
+		,gua_jour_interest2
 		,gua_interest1
 		,gua_interest2
 		,gua_jour_income
@@ -1373,7 +1409,8 @@
 		
 		,zfb_jour_datetime_start
 		,zfb_jour_datetime_end
-		,zfb_jour_interest
+		,zfb_jour_interest1
+		,zfb_jour_interest2
 		,zfb_interest1
 		,zfb_interest2
 		,zfb_jour_income
@@ -1386,7 +1423,8 @@
 		
 		,wx_jour_datetime_start
 		,wx_jour_datetime_end
-		,wx_jour_interest
+		,wx_jour_interest1
+		,wx_jour_interest2
 		,wx_interest1
 		,wx_interest2
 		,wx_jour_income
@@ -1399,7 +1437,8 @@
 		
 		,jour_datetime_start
 		,jour_datetime_end
-		,jour_interest
+		,jour_interest1
+		,jour_interest2
 		,interest1
 		,interest2
 		,jour_income
@@ -1770,7 +1809,8 @@
 		,mate_zfb_jour_datetime_start = #{mateZfbJourDatetimeStart}
 		
 		,mate_zfb_jour_datetime_end = #{mateZfbJourDatetimeEnd}
-		,mate_zfb_jour_interest = #{mateZfbJourInterest}
+		,mate_zfb_jour_interest1 = #{mateZfbJourInterest1}
+		,mate_zfb_jour_interest2 = #{mateZfbJourInterest2}
 		,mate_zfb_interest1 = #{mateZfbInterest1}
 		,mate_zfb_interest2 = #{mateZfbInterest2}
 		,mate_zfb_jour_income = #{mateZfbJourIncome}
@@ -1783,7 +1823,8 @@
 		,mate_zfb_jour_remark = #{mateZfbJourRemark}
 		,mate_wx_jour_datetime_start = #{mateWxJourDatetimeStart}
 		,mate_wx_jour_datetime_end = #{mateWxJourDatetimeEnd}
-		,mate_wx_jour_interest = #{mateWxJourInterest}
+		,mate_wx_jour_interest1 = #{mateWxJourInterest1}
+		,mate_wx_jour_interest2 = #{mateWxJourInterest2}
 		,mate_wx_interest1 = #{mateWxInterest1}
 		,mate_wx_interest2 = #{mateWxInterest2}
 		
@@ -1797,7 +1838,8 @@
 		,mate_wx_jour_remark = #{mateWxJourRemark}
 		,mate_jour_datetime_start = #{mateJourDatetimeStart}
 		,mate_jour_datetime_end = #{mateJourDatetimeEnd}
-		,mate_jour_interest = #{mateJourInterest}
+		,mate_jour_interest1 = #{mateJourInterest1}
+		,mate_jour_interest2 = #{mateJourInterest2}
 		,mate_interest1 = #{mateInterest1}
 		,mate_interest2 = #{mateInterest2}
 		,mate_jour_income = #{mateJourIncome}
@@ -1821,7 +1863,8 @@
 		,gua_zfb_jour_datetime_start = #{guaZfbJourDatetimeStart}
 		
 		,gua_zfb_jour_datetime_end = #{guaZfbJourDatetimeEnd}
-		,gua_zfb_jour_interest = #{guaZfbJourInterest}
+		,gua_zfb_jour_interest1 = #{guaZfbJourInterest1}
+		,gua_zfb_jour_interest2 = #{guaZfbJourInterest2}
 		,gua_zfb_interest1 = #{guaZfbInterest1}
 		,gua_zfb_interest2 = #{guaZfbInterest2}
 		,gua_zfb_jour_income = #{guaZfbJourIncome}
@@ -1834,7 +1877,8 @@
 		,gua_zfb_jour_remark = #{guaZfbJourRemark}
 		,gua_wx_jour_datetime_start = #{guaWxJourDatetimeStart}
 		,gua_wx_jour_datetime_end = #{guaWxJourDatetimeEnd}
-		,gua_wx_jour_interest = #{guaWxJourInterest}
+		,gua_wx_jour_interest1 = #{guaWxJourInterest1}
+		,gua_wx_jour_interest2 = #{guaWxJourInterest2}
 		,gua_wx_interest1 = #{guaWxInterest1}
 		,gua_wx_interest2 = #{guaWxInterest2}
 		,gua_wx_jour_income = #{guaWxJourIncome}
@@ -1848,7 +1892,8 @@
 		,gua_wx_jour_remark = #{guaWxJourRemark}
 		,gua_jour_datetime_start = #{guaJourDatetimeStart}
 		,gua_jour_datetime_end = #{guaJourDatetimeEnd}
-		,gua_jour_interest = #{guaJourInterest}
+		,gua_jour_interest1 = #{guaJourInterest1}
+		,gua_jour_interest2 = #{guaJourInterest2}
 		,gua_interest1 = #{guaInterest1}
 		,gua_interest2 = #{guaInterest2}
 		,gua_jour_income = #{guaJourIncome}
@@ -1870,7 +1915,8 @@
 		,emergency_mobile2 = #{emergencyMobile2}
 		,zfb_jour_datetime_start = #{zfbJourDatetimeStart}
 		,zfb_jour_datetime_end = #{zfbJourDatetimeEnd}
-		,zfb_jour_interest = #{zfbJourInterest}
+		,zfb_jour_interest1 = #{zfbJourInterest1}
+		,zfb_jour_interest2 = #{zfbJourInterest2}
 		,zfb_interest1 = #{zfbInterest1}
 		,zfb_interest2 = #{zfbInterest2}
 		,zfb_jour_income = #{zfbJourIncome}
@@ -1884,7 +1930,8 @@
 		
 		,wx_jour_datetime_start = #{wxJourDatetimeStart}
 		,wx_jour_datetime_end = #{wxJourDatetimeEnd}
-		,wx_jour_interest = #{wxJourInterest}
+		,wx_jour_interest1 = #{wxJourInterest1}
+		,wx_jour_interest2 = #{wxJourInterest2}
 		,wx_interest1 = #{wxInterest1}
 		,wx_interest2 = #{wxInterest2}
 		,wx_jour_income = #{wxJourIncome}
@@ -1898,7 +1945,8 @@
 		,jour_datetime_start = #{jourDatetimeStart}
 		
 		,jour_datetime_end = #{jourDatetimeEnd}
-		,jour_interest = #{jourInterest}
+		,jour_interest1 = #{jourInterest1}
+		,jour_interest2 = #{jourInterest2}
 		,interest1 = #{interest1}
 		,interest2 = #{interest2}
 		,jour_income = #{jourIncome}
@@ -1918,6 +1966,9 @@
 		,marry_pdf = #{marryPdf}
 		,other_pdf = #{otherPdf}
 		,is_advance_fund = #{isAdvanceFund}
+		,pledge_user = #{pledgeUser}
+		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
+		,pledge_address = #{pledgeAddress}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -2062,9 +2113,7 @@
 	<update id="update_entry_mortgage" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		pledge_user = #{pledgeUser}
-		,pledge_address = #{pledgeAddress}
-		,pledge_datetime = #{pledgeDatetime}
+		pledge_datetime = #{pledgeDatetime}
 		,green_big_smj = #{greenBigSmj}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
@@ -2161,7 +2210,8 @@
 		,mate_company_contact_no = #{mateCompanyContactNo}
 		,mate_zfb_jour_datetime_start = #{mateZfbJourDatetimeStart}
 		,mate_zfb_jour_datetime_end = #{mateZfbJourDatetimeEnd}
-		,mate_zfb_jour_interest = #{mateZfbJourInterest}
+		,mate_zfb_jour_interest1 = #{mateZfbJourInterest1}
+		,mate_zfb_jour_interest2 = #{mateZfbJourInterest2}
 		
 		,mate_zfb_interest1 = #{mateZfbInterest1}
 		,mate_zfb_interest2 = #{mateZfbInterest2}
@@ -2176,7 +2226,8 @@
 		,mate_wx_jour_datetime_start = #{mateWxJourDatetimeStart}
 		
 		,mate_wx_jour_datetime_end = #{mateWxJourDatetimeEnd}
-		,mate_wx_jour_interest = #{mateWxJourInterest}
+		,mate_wx_jour_interest1 = #{mateWxJourInterest1}
+		,mate_wx_jour_interest2 = #{mateWxJourInterest2}
 		,mate_wx_interest1 = #{mateWxInterest1}
 		,mate_wx_interest2 = #{mateWxInterest2}
 		,mate_wx_jour_income = #{mateWxJourIncome}
@@ -2190,7 +2241,8 @@
 		,mate_wx_jour_remark = #{mateWxJourRemark}
 		,mate_jour_datetime_start = #{mateJourDatetimeStart}
 		,mate_jour_datetime_end = #{mateJourDatetimeEnd}
-		,mate_jour_interest = #{mateJourInterest}
+		,mate_jour_interest1 = #{mateJourInterest1}
+		,mate_jour_interest2 = #{mateJourInterest2}
 		,mate_interest1 = #{mateInterest1}
 		
 		,mate_interest2 = #{mateInterest2}
@@ -2214,7 +2266,8 @@
 		,gua_house_asset_address = #{guaHouseAssetAddress}
 		,gua_zfb_jour_datetime_start = #{guaZfbJourDatetimeStart}
 		,gua_zfb_jour_datetime_end = #{guaZfbJourDatetimeEnd}
-		,gua_zfb_jour_interest = #{guaZfbJourInterest}
+		,gua_zfb_jour_interest1 = #{guaZfbJourInterest1}
+		,gua_zfb_jour_interest2 = #{guaZfbJourInterest2}
 		,gua_zfb_interest1 = #{guaZfbInterest1}
 		
 		,gua_zfb_interest2 = #{guaZfbInterest2}
@@ -2229,7 +2282,8 @@
 		,gua_wx_jour_datetime_start = #{guaWxJourDatetimeStart}
 		,gua_wx_jour_datetime_end = #{guaWxJourDatetimeEnd}
 		
-		,gua_wx_jour_interest = #{guaWxJourInterest}
+		,gua_wx_jour_interest1 = #{guaWxJourInterest1}
+		,gua_wx_jour_interest2 = #{guaWxJourInterest2}
 		,gua_wx_interest1 = #{guaWxInterest1}
 		,gua_wx_interest2 = #{guaWxInterest2}
 		,gua_wx_jour_income = #{guaWxJourIncome}
@@ -2243,7 +2297,8 @@
 		
 		,gua_jour_datetime_start = #{guaJourDatetimeStart}
 		,gua_jour_datetime_end = #{guaJourDatetimeEnd}
-		,gua_jour_interest = #{guaJourInterest}
+		,gua_jour_interest1 = #{guaJourInterest1}
+		,gua_jour_interest2 = #{guaJourInterest2}
 		,gua_interest1 = #{guaInterest1}
 		,gua_interest2 = #{guaInterest2}
 		
@@ -2259,7 +2314,8 @@
 		,zfb_jour_datetime_start = #{zfbJourDatetimeStart}
 		,zfb_jour_datetime_end = #{zfbJourDatetimeEnd}
 		
-		,zfb_jour_interest = #{zfbJourInterest}
+		,zfb_jour_interest1 = #{zfbJourInterest1}
+		,zfb_jour_interest2 = #{zfbJourInterest2}
 		,zfb_interest1 = #{zfbInterest1}
 		,zfb_interest2 = #{zfbInterest2}
 		,zfb_jour_pic = #{zfbJourPic}
@@ -2267,7 +2323,8 @@
 		
 		,wx_jour_datetime_start = #{wxJourDatetimeStart}
 		,wx_jour_datetime_end = #{wxJourDatetimeEnd}
-		,wx_jour_interest = #{wxJourInterest}
+		,wx_jour_interest1 = #{wxJourInterest1}
+		,wx_jour_interest2 = #{wxJourInterest2}
 		,wx_interest1 = #{wxInterest1}
 		,wx_interest2 = #{wxInterest2}
 		
@@ -2275,7 +2332,8 @@
 		,wx_jour_remark = #{wxJourRemark}
 		,jour_datetime_start = #{jourDatetimeStart}
 		,jour_datetime_end = #{jourDatetimeEnd}
-		,jour_interest = #{jourInterest}
+		,jour_interest1 = #{jourInterest1}
+		,jour_interest2 = #{jourInterest2}
 		
 		,interest1 = #{interest1}
 		,interest2 = #{interest2}
