@@ -54,8 +54,19 @@ public class Gps extends ABaseDO {
     // 申请人姓名
     private String applyUserName;
 
+    // 申请人角色
+    private String applyUserRole;
+
     // 预算单
     private BudgetOrder budgetOrder;
+
+    public String getApplyUserRole() {
+        return applyUserRole;
+    }
+
+    public void setApplyUserRole(String applyUserRole) {
+        this.applyUserRole = applyUserRole;
+    }
 
     public BudgetOrder getBudgetOrder() {
         return budgetOrder;

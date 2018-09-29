@@ -14,6 +14,8 @@ public interface IGpsAO {
 
     public String addGps(String gpsNo, String gpsType);
 
+    public void editGps(String code, String gpsDevNo, String gpsType);
+
     public Paginable<Gps> queryGpsPage(int start, int limit, Gps condition);
 
     public List<Gps> queryGpsList(Gps condition);

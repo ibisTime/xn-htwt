@@ -41,6 +41,11 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
+    public void editGps(Gps gps) {
+        gpsDAO.editGps(gps);
+    }
+
+    @Override
     public void applyGps(Gps data) {
         if (data != null) {
             gpsDAO.updateApply(data);
@@ -108,4 +113,5 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
         }
         return data;
     }
+
 }

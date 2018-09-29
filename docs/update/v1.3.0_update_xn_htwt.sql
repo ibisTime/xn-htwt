@@ -26,6 +26,7 @@ UPDATE `tsys_node` SET `name`='风控一审' WHERE `code`='002_02';
 UPDATE `tsys_node` SET `name`='风控终审' WHERE `code`='002_03';
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_27', '风控二审', '002');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_28', '业务总监审核', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('001_08', '派单', '001');
 
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('001', '001_08', '001_02');
 UPDATE `tsys_node_flow` SET `next_node`='001_08' WHERE `id`='1';
@@ -46,6 +47,11 @@ ALTER TABLE `tdq_budget_order`
 ADD COLUMN `pledge_user_id_card_copy` text NULL COMMENT '代理人身份证复印件' AFTER `pledge_user`,
 ADD COLUMN `inside_job` varchar(32) NULL COMMENT '内勤' AFTER `sale_user_id`,
 ADD COLUMN `is_gps_az` VARCHAR(4) NULL COMMENT '是否安装了GPS' AFTER `frozen_status`,
+ADD COLUMN `enter_datetime` datetime NULL COMMENT '入档日期' AFTER `enter_location`,
+ADD COLUMN `vehicle_company_name` varchar(255) NULL COMMENT '机动车销售公司' AFTER `loan_period`,
+ADD COLUMN `other_fee` bigint(20) NULL COMMENT '其他费用' AFTER `auth_fee`,
+ADD COLUMN `is_financing` VARCHAR(4) NULL COMMENT '是否融资' AFTER `is_advance_fund`,
+ADD COLUMN `car_model_name` varchar(255) NULL COMMENT '车型名称' AFTER `car_model`,
 CHANGE COLUMN `mate_zfb_jour_interest` `mate_zfb_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶支付宝流水结息1' ,
 ADD COLUMN `mate_zfb_jour_interest2` MEDIUMTEXT NULL COMMENT '配偶支付宝流水结息2' AFTER `mate_zfb_jour_interest1`,
 CHANGE COLUMN `mate_wx_jour_interest` `mate_wx_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶微信流水结息1' ,
@@ -76,7 +82,6 @@ SET SQL_SAFE_UPDATES = 1;
 
 ALTER TABLE `tdq_credit` 
 ADD COLUMN `inside_job` varchar(32) NULL COMMENT '内勤' AFTER `note`;
-
 
 
 

@@ -106,6 +106,14 @@
 		,apply_datetime = #{applyDatetime}
 		WHERE code = #{code}
 	</update>
+
+	<update id="update_gps" parameterType="gps">
+		UPDATE tb_gps
+		SET
+		gps_dev_no = #{gpsDevNo}
+		,gps_type = #{gpsType}
+		WHERE code = #{code}
+	</update>
 	
 	<update id="update_gps_applyStatus" parameterType="gps">
 		UPDATE tb_gps

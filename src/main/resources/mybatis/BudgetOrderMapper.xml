@@ -12,6 +12,7 @@
 		
 		<result column="gps_fee" property="gpsFee" />
 		<result column="auth_fee" property="authFee" />
+		<result column="other_fee" property="otherFee" />
 		<result column="bank_fee" property="bankFee" />
 		<result column="company_fee" property="companyFee" />
 		<result column="team_fee" property="teamFee" />
@@ -19,10 +20,12 @@
 		
 		<result column="biz_type" property="bizType" />
 		<result column="loan_period" property="loanPeriod" />
+		<result column="vehicle_company_name" property="vehicleCompanyName" />
 		<result column="invoice_company" property="invoiceCompany" />
 		<result column="car_brand" property="carBrand" />
 		<result column="car_series" property="carSeries" />
 		<result column="car_model" property="carModel" />
+		<result column="car_model_name" property="carModelName" />
 		<result column="car_type" property="carType" />
 		
 		<result column="car_pic" property="carPic" />
@@ -246,6 +249,7 @@
 		<result column="marry_pdf" property="marryPdf" />
 		<result column="other_pdf" property="otherPdf" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
+		<result column="is_financing" property="isFinancing" />
 		<result column="bank_video" property="bankVideo" />
 		<result column="bank_photo" property="bankPhoto" />
 		<result column="company_video" property="companyVideo" />
@@ -304,6 +308,7 @@
 		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
 		<result column="pledge_status" property="pledgeStatus" />
 		<result column="enter_location" property="enterLocation" />
+		<result column="enter_datetime" property="enterDatetime" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="inside_job" property="insideJob" />
 		
@@ -440,6 +445,9 @@
 			<if test="curNodeCodeNoCancel != null and curNodeCodeNoCancel != ''">
 				AND t.cur_node_code != #{curNodeCodeNoCancel}
 			</if>
+			<if test="enterLocation != null and enterLocation != ''">
+				AND t.enter_location != #{enterLocation}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
@@ -453,6 +461,7 @@
 		
 		,t.gps_fee
 		,t.auth_fee
+		,t.other_fee
 		,t.bank_fee
 		,t.company_fee
 		,t.team_fee
@@ -460,10 +469,12 @@
 		
 		,t.biz_type
 		,t.loan_period
+		,t.vehicle_company_name
 		,t.invoice_company
 		,t.car_brand
 		,t.car_series
 		,t.car_model
+		,t.car_model_name
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
@@ -685,6 +696,7 @@
 		,t.marry_pdf
 		,t.other_pdf
 		,t.is_advance_fund
+		,t.is_financing
 		,t.bank_video
 		,t.bank_photo
 		,t.company_video
@@ -742,6 +754,7 @@
 		,t.pledge_status
 		
 		,t.enter_location
+		,t.enter_datetime
 		,t.sale_user_id
 		,t.inside_job
 		,t.team_code
@@ -781,6 +794,7 @@
 		
 		,t.gps_fee
 		,t.auth_fee
+		,t.other_fee
 		,t.bank_fee
 		,t.company_fee
 		,t.team_fee
@@ -788,10 +802,12 @@
 		
 		,t.biz_type
 		,t.loan_period
+		,t.vehicle_company_name
 		,t.invoice_company
 		,t.car_brand
 		,t.car_series
 		,t.car_model
+		,t.car_model_name
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
@@ -835,6 +851,7 @@
 		
 		,t.bank_fk_datetime
 		,t.is_advance_fund
+		,t.is_financing
 		,t.sale_user_id
 		,t.inside_job
 		,t.company_code
@@ -890,6 +907,7 @@
 		
 		,t.gps_fee
 		,t.auth_fee
+		,t.other_fee
 		,t.bank_fee
 		,t.company_fee
 		,t.team_fee
@@ -897,10 +915,12 @@
 		
 		,t.biz_type
 		,t.loan_period
+		,t.vehicle_company_name
 		,t.invoice_company
 		,t.car_brand
 		,t.car_series
 		,t.car_model
+		,t.car_model_name
 		,t.car_type
 		,t.car_pic
 		,t.car_hgz_pic
@@ -1122,6 +1142,7 @@
 		,t.marry_pdf
 		,t.other_pdf
 		,t.is_advance_fund
+		,t.is_financing
 		,t.bank_video
 		,t.bank_photo
 		,t.company_video
@@ -1179,6 +1200,7 @@
 		,t.pledge_status
 		
 		,t.enter_location
+		,t.enter_datetime
 		,t.sale_user_id
 		,t.inside_job
 		,t.team_code
@@ -1750,6 +1772,7 @@
 		,loan_bank = #{loanBank}
 		,gps_fee = #{gpsFee}
 		,auth_fee = #{authFee}
+		,other_fee = #{otherFee}
 		
 		,bank_fee = #{bankFee}
 		,company_fee = #{companyFee}
@@ -1758,10 +1781,12 @@
 		,biz_type = #{bizType}
 		,loan_period = #{loanPeriod}
 		
+		,vehicle_company_name = #{vehicleCompanyName}
 		,invoice_company = #{invoiceCompany}
 		,car_brand = #{carBrand}
 		,car_series = #{carSeries}
 		,car_model = #{carModel}
+		,car_model_name = #{carModelName}
 		,car_type = #{carType}
 		,car_pic = #{carPic}
 		,car_hgz_pic = #{carHgzPic}
@@ -1985,6 +2010,7 @@
 		,marry_pdf = #{marryPdf}
 		,other_pdf = #{otherPdf}
 		,is_advance_fund = #{isAdvanceFund}
+		,is_financing = #{isFinancing}
 		,pledge_user = #{pledgeUser}
 		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
 		,pledge_address = #{pledgeAddress}
@@ -2165,6 +2191,7 @@
 		UPDATE tdq_budget_order
 		SET
 		enter_location = #{enterLocation}
+		,enter_datetime = #{enterDatetime}
 		,cur_node_code = #{curNodeCode}
 		,repay_biz_code = #{repayBizCode}
 		,apply_user_id = #{applyUserId}

@@ -219,6 +219,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setBizType(req.getBizType());
         data.setLoanPeriod(req.getLoanPeriod());
+        data.setVehicleCompanyName(req.getVehicleCompanyName());
         data.setInvoiceCompany(req.getInvoiceCompany());
         data.setCarBrand(req.getCarBrand());
         data.setCarSeries(req.getCarSeries());
@@ -1381,6 +1382,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 归档完成，更新预算单信息
         String repayBizCode = repayBiz.getCode();
         budgetOrder.setCurNodeCode(EBudgetOrderNode.ARCHIVE_END.getCode());
+        budgetOrder.setEnterLocation(enterLocation);
+        budgetOrder.setEnterDatetime(new Date());
         budgetOrderBO.archiveSuccess(budgetOrder, repayBizCode, userId);
 
         // 日志记录

@@ -30,6 +30,7 @@ public class FileListAOImpl implements IFileListAO {
     @Override
     public void addFileList(XN632210Req req) {
         FileList data = new FileList();
+        data.setNo(req.getNo());
         data.setNumber(req.getNumber());
         data.setName(req.getName());
         data.setUpdater(req.getUpdater());
@@ -40,6 +41,7 @@ public class FileListAOImpl implements IFileListAO {
     @Override
     public void editFileList(XN632212Req req) {
         FileList data = getFileList(StringValidater.toInteger(req.getId()));
+        data.setNo(req.getNo());
         data.setNumber(req.getNumber());
         data.setName(req.getName());
         data.setUpdater(req.getUpdater());

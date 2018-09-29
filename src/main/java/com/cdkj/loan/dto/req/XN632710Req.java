@@ -17,12 +17,19 @@ public class XN632710Req {
     private String applyUser;
 
     // 申请有线个数
-    @NotBlank
     private String applyWiredCount;
 
     // 申请无线个数
-    @NotBlank
     private String applyWirelessCount;
+
+    // 客户姓名
+    private String customerName;
+
+    // 手机号
+    private String mobile;
+
+    // 车架号
+    private String carFrameNo;
 
     // 申请原因
     private String applyReason;
@@ -33,6 +40,30 @@ public class XN632710Req {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getCarFrameNo() {
+        return carFrameNo;
+    }
+
+    public void setCarFrameNo(String carFrameNo) {
+        this.carFrameNo = carFrameNo;
     }
 
     public String getApplyUser() {

@@ -12,12 +12,14 @@ import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IGpsAO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
+import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632701Res;
 import com.cdkj.loan.enums.EBoolean;
@@ -39,6 +41,9 @@ public class GpsAOImpl implements IGpsAO {
     @Autowired
     private IBudgetOrderAO budgetOrderAO;
 
+    @Autowired
+    private ISYSRoleBO sysRoleBO;
+
     @Override
     @Transactional
     public String addGps(String gpsDevNo, String gpsType) {
@@ -54,6 +59,15 @@ public class GpsAOImpl implements IGpsAO {
         data.setUseStatus(EGpsUseStatus.UN_USE.getCode());
         gpsBO.saveGps(data);
         return code;
+    }
+
+    @Override
+    @Transactional
+    public void editGps(String code, String gpsDevNo, String gpsType) {
+        Gps gps = gpsBO.getGps(code);
+        gps.setGpsDevNo(gpsDevNo);
+        gps.setGpsType(gpsType);
+        gpsBO.editGps(gps);
     }
 
     @Override
@@ -120,6 +134,8 @@ public class GpsAOImpl implements IGpsAO {
         if (StringUtils.isNotBlank(gps.getApplyUser())) {
             SYSUser sysUser = sysUserBO.getUser(gps.getApplyUser());
             gps.setApplyUserName(sysUser.getRealName());
+            SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
+            gps.setApplyUserRole(sysRole.getName());
         }
 
         // 预算单（要展示客户姓名专员等一系列字段）

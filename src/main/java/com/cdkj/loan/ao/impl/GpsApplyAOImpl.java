@@ -75,6 +75,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             StringValidater.toInteger(req.getApplyWirelessCount()));
         data.setApplyCount(
             data.getApplyWiredCount() + data.getApplyWirelessCount());
+        data.setCustomerName(req.getCustomerName());
+        data.setMobile(req.getMobile());
+        data.setCarFrameNo(req.getCarFrameNo());
         data.setApplyDatetime(new Date());
         data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
         return gpsApplyBO.saveGpsApply(data);

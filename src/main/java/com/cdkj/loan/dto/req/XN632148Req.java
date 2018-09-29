@@ -32,6 +32,17 @@ public class XN632148Req extends APageReq {
 
     private String isAdvanceFund;// 是否垫资
 
+    // 入档位置
+    private String enterLocation;
+
+    public String getEnterLocation() {
+        return enterLocation;
+    }
+
+    public void setEnterLocation(String enterLocation) {
+        this.enterLocation = enterLocation;
+    }
+
     // 是否安装了GPS(1是，0否)
     private String isGpsAz;
 

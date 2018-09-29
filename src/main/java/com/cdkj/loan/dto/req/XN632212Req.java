@@ -10,6 +10,10 @@ public class XN632212Req {
 
     // 序号
     @NotBlank
+    private String no;
+
+    // 份数
+    @NotBlank
     private String number;
 
     // 名称
@@ -22,6 +26,14 @@ public class XN632212Req {
 
     public String getNumber() {
         return number;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 
     public String getId() {

@@ -41,6 +41,15 @@ public class GpsApply extends ABaseDO {
     // 申请无线个数
     private Integer applyWirelessCount;
 
+    // 客户姓名
+    private String customerName;
+
+    // 手机号
+    private String mobile;
+
+    // 车架号
+    private String carFrameNo;
+
     // 发货日期
     private Date sendDatetime;
 
@@ -59,6 +68,30 @@ public class GpsApply extends ABaseDO {
 
     // 公司名称
     private String companyName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getCarFrameNo() {
+        return carFrameNo;
+    }
+
+    public void setCarFrameNo(String carFrameNo) {
+        this.carFrameNo = carFrameNo;
+    }
 
     public void setCode(String code) {
         this.code = code;

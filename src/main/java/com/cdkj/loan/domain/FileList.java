@@ -18,10 +18,13 @@ public class FileList extends ABaseDO {
     private int id;
 
     // 序号
-    private String number;
+    private String no;
 
     // 名称
     private String name;
+
+    // 份数
+    private String number;
 
     // 更新人
     private String updater;
@@ -40,6 +43,14 @@ public class FileList extends ABaseDO {
 
     public void setUpdaterName(String updaterName) {
         this.updaterName = updaterName;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 
     public int getId() {

@@ -30,6 +30,17 @@ public class XN632145Req extends APageReq {
 
     private String keyword; // 关键字
 
+    // 入档位置
+    private String enterLocation;
+
+    public String getEnterLocation() {
+        return enterLocation;
+    }
+
+    public void setEnterLocation(String enterLocation) {
+        this.enterLocation = enterLocation;
+    }
+
     public String getKeyword() {
         return keyword;
     }

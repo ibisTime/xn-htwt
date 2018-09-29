@@ -91,6 +91,38 @@ public class Logistics extends ABaseDO {
     // 收件人
     private String receiverName;
 
+    private GpsApply gpsApply;
+
+    // 业务团队
+    private String teamName;
+
+    // 角色
+    private String userRole;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
+    public GpsApply getGpsApply() {
+        return gpsApply;
+    }
+
+    public void setGpsApply(GpsApply gpsApply) {
+        this.gpsApply = gpsApply;
+    }
+
     public String getSenderName() {
         return senderName;
     }

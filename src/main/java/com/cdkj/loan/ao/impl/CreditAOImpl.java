@@ -177,7 +177,7 @@ public class CreditAOImpl implements ICreditAO {
     @Transactional
     public void distributeLeaflets(XN632119Req req) {
         Credit credit = creditBO.getCredit(req.getCreditCode());
-        if (ECreditNode.DISTRIBUTE_LEAFLETS.getCode()
+        if (!ECreditNode.DISTRIBUTE_LEAFLETS.getCode()
             .equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前征信不是派单节点，不能操作！");

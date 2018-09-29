@@ -40,6 +40,9 @@ public class XN632120Req {
     // 贷款期限
     private String loanPeriod;
 
+    // 机动车销售公司
+    private String vehicleCompanyName;
+
     // 开票单位
     private String invoiceCompany;
 
@@ -1940,6 +1943,14 @@ public class XN632120Req {
 
     public void setGuaJourMonthExpend(String guaJourMonthExpend) {
         this.guaJourMonthExpend = guaJourMonthExpend;
+    }
+
+    public String getVehicleCompanyName() {
+        return vehicleCompanyName;
+    }
+
+    public void setVehicleCompanyName(String vehicleCompanyName) {
+        this.vehicleCompanyName = vehicleCompanyName;
     }
 
     public String getGuaJourPic() {

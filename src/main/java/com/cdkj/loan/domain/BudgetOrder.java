@@ -39,6 +39,9 @@ public class BudgetOrder extends ABaseDO {
     // 公证费
     private Long authFee;
 
+    // 其他费用
+    private Long otherFee;
+
     // 银行服务费
     private Long bankFee;
 
@@ -57,6 +60,9 @@ public class BudgetOrder extends ABaseDO {
     // 贷款期数
     private String loanPeriod;
 
+    // 机动车销售公司
+    private String vehicleCompanyName;
+
     // 开票单位
     private String invoiceCompany;
 
@@ -66,8 +72,11 @@ public class BudgetOrder extends ABaseDO {
     // 车系
     private String carSeries;
 
-    // 车型
+    // 车辆型号
     private String carModel;
+
+    // 车型名称
+    private String carModelName;
 
     // 车辆类型
     private String carType;
@@ -663,6 +672,9 @@ public class BudgetOrder extends ABaseDO {
     // 是否垫资
     private String isAdvanceFund;
 
+    // 是否融资
+    private String isFinancing;
+
     // 银行视频
     private String bankVideo;
 
@@ -812,6 +824,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 入档位置
     private String enterLocation;
+
+    // 入档时间
+    private Date enterDatetime;
 
     // 业务员（信贷专员）
     private String saleUserId;
@@ -1521,6 +1536,14 @@ public class BudgetOrder extends ABaseDO {
         this.nowAddress = nowAddress;
     }
 
+    public Long getOtherFee() {
+        return otherFee;
+    }
+
+    public void setOtherFee(Long otherFee) {
+        this.otherFee = otherFee;
+    }
+
     public String getIsCardMailAddress() {
         return isCardMailAddress;
     }
@@ -1909,6 +1932,14 @@ public class BudgetOrder extends ABaseDO {
         this.marryPdf = marryPdf;
     }
 
+    public Date getEnterDatetime() {
+        return enterDatetime;
+    }
+
+    public void setEnterDatetime(Date enterDatetime) {
+        this.enterDatetime = enterDatetime;
+    }
+
     public String getOtherPdf() {
         return otherPdf;
     }
@@ -1959,6 +1990,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setMateWxInterest2(Long mateWxInterest2) {
         this.mateWxInterest2 = mateWxInterest2;
+    }
+
+    public String getCarModelName() {
+        return carModelName;
+    }
+
+    public void setCarModelName(String carModelName) {
+        this.carModelName = carModelName;
     }
 
     public Long getGuaZfbInterest1() {
@@ -2297,6 +2336,14 @@ public class BudgetOrder extends ABaseDO {
         this.carKey = carKey;
     }
 
+    public String getVehicleCompanyName() {
+        return vehicleCompanyName;
+    }
+
+    public void setVehicleCompanyName(String vehicleCompanyName) {
+        this.vehicleCompanyName = vehicleCompanyName;
+    }
+
     public String getWorkIsCardMailAddress() {
         return workIsCardMailAddress;
     }
@@ -2503,6 +2550,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setMateJourInterest2(String mateJourInterest2) {
         this.mateJourInterest2 = mateJourInterest2;
+    }
+
+    public String getIsFinancing() {
+        return isFinancing;
+    }
+
+    public void setIsFinancing(String isFinancing) {
+        this.isFinancing = isFinancing;
     }
 
     public String getGuaZfbJourInterest1() {

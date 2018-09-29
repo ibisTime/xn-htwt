@@ -13,6 +13,9 @@
 		<result column="apply_count" property="applyCount" />
 		<result column="apply_wired_count" property="applyWiredCount" />
 		<result column="apply_wireless_count" property="applyWirelessCount" />
+		<result column="customer_name" property="customerName" />
+		<result column="mobile" property="mobile" />
+		<result column="car_frame_no" property="carFrameNo" />
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="receive_datetime" property="receiveDatetime" />
 		<result column="status" property="status" />
@@ -51,6 +54,9 @@
 		,t.apply_count
 		,t.apply_wired_count
 		,t.apply_wireless_count
+		,t.customer_name
+		,t.mobile
+		,t.car_frame_no
 		,t.send_datetime
 		,t.receive_datetime
 		,t.status
@@ -84,6 +90,9 @@
 		,apply_count
 		,apply_wired_count
 		,apply_wireless_count
+		,customer_name
+		,mobile
+		,car_frame_no
 		,status
 		,remark
 		)
@@ -98,6 +107,9 @@
 		,#{applyCount}
 		,#{applyWiredCount}
 		,#{applyWirelessCount}
+		,#{customerName}
+		,#{mobile}
+		,#{carFrameNo}
 		,#{status}
 		,#{remark}
 		)

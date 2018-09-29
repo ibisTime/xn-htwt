@@ -3,9 +3,13 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632210Req {
-    // 序号
+    // 份数
     @NotBlank
     private String number;
+
+    // 序号
+    @NotBlank
+    private String no;
 
     // 名称
     @NotBlank
@@ -21,6 +25,14 @@ public class XN632210Req {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 
     public String getName() {

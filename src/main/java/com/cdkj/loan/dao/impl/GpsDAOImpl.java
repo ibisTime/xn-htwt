@@ -33,7 +33,7 @@ public class GpsDAOImpl extends AMybatisTemplate implements IGpsDAO {
 
     @Override
     public int updateUseStatus(Gps data) {
-        return super.insert(NAMESPACE.concat("update_gps_useStatus"), data);
+        return super.update(NAMESPACE.concat("update_gps_useStatus"), data);
     }
 
     @Override
@@ -58,5 +58,10 @@ public class GpsDAOImpl extends AMybatisTemplate implements IGpsDAO {
     public List<Gps> selectList(Gps condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_gps"), start, count,
             condition, Gps.class);
+    }
+
+    @Override
+    public void editGps(Gps data) {
+        super.update(NAMESPACE.concat("update_gps"), data);
     }
 }

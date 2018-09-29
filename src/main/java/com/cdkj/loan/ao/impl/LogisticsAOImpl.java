@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ILogisticsAO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
@@ -15,12 +16,16 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.GpsApply;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.dto.res.BooleanRes;
@@ -66,6 +71,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private ISYSRoleBO sysRoleBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
 
     @Override
     @Transactional
@@ -296,6 +307,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (StringUtils.isNotBlank(logistics.getUserId())) {
             SYSUser sysUser = sysUserBO.getUser(logistics.getUserId());
             logistics.setUserName(sysUser.getRealName());
+            SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
+            logistics.setUserRole(sysRole.getName());
+        }
+        if (StringUtils.isNotBlank(logistics.getTeamCode())) {
+            BizTeam bizTeam = bizTeamBO.getBizTeam(logistics.getTeamCode());
+            logistics.setTeamName(bizTeam.getName());
         }
         if (StringUtils.isNotBlank(logistics.getBizCode())) {
             if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
@@ -311,6 +328,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (StringUtils.isNotBlank(logistics.getReceiver())) {
             SYSUser user = sysUserBO.getUser(logistics.getReceiver());
             logistics.setReceiverName(user.getRealName());
+        }
+        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
+            GpsApply gpsApply = gpsApplyBO.getGpsApply(logistics.getBizCode());
+            logistics.setGpsApply(gpsApply);
         }
     }
 

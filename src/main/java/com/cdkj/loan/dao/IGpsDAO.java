@@ -11,4 +11,6 @@ public interface IGpsDAO extends IBaseDAO<Gps> {
     int updateApplyStatus(Gps data);
 
     int updateUseStatus(Gps data);
+
+    void editGps(Gps gps);
 }
