@@ -21,6 +21,17 @@ public class XN630066Req extends APageReq {
     // 真实姓名
     private String realName;
 
+    // 角色编号
+    private String roleCode;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public String getRealName() {
         return realName;
     }
