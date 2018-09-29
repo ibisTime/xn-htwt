@@ -60,6 +60,9 @@ public class Credit extends ABaseDO {
     // 征信说明
     private String note;
 
+    // 内勤
+    private String insideJob;
+
     // 录入征信结果的驻行人员
     private String operator;
 
@@ -117,9 +120,6 @@ public class Credit extends ABaseDO {
 
     // 是否作废
     private String isCancel;
-
-    // 内勤
-    private String insideJob;
 
     public String getInsideJob() {
         return insideJob;

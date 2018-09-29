@@ -37,6 +37,7 @@ import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
+import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -170,6 +171,29 @@ public class CreditAOImpl implements ICreditAO {
             currentNode.getCode(), credit.getTeamCode());
 
         return creditCode;
+    }
+
+    @Override
+    @Transactional
+    public void distributeLeaflets(XN632119Req req) {
+        Credit credit = creditBO.getCredit(req.getCreditCode());
+        if (ECreditNode.DISTRIBUTE_LEAFLETS.getCode()
+            .equals(credit.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前征信不是派单节点，不能操作！");
+        }
+        String curNodeCode = credit.getCurNodeCode();
+        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode)
+            .getNextNode();
+        credit.setInsideJob(req.getInsideJob());
+        credit.setCurNodeCode(nextNode);
+        creditBO.distributeLeaflets(credit);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
+            EBizLogType.CREDIT, credit.getCode(), curNodeCode,
+            credit.getCurNodeCode(), null, req.getOperator(),
+            credit.getTeamCode());
     }
 
     @Override
@@ -490,12 +514,13 @@ public class CreditAOImpl implements ICreditAO {
             }
             credit.setIsCancel(EBoolean.NO.getCode());
         }
-        // 征信的内勤取录入征信结果的操作人
-        SYSBizLog bizLog = sysBizLogBO
-            .getLatestOperateCreditByBizCode(credit.getCode());
-        if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
-            SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
-            credit.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
-        }
+        // // 征信的内勤取录入征信结果的操作人
+        // SYSBizLog bizLog = sysBizLogBO
+        // .getLatestOperateCreditByBizCode(credit.getCode());
+        // if (null != bizLog && StringUtils.isNotBlank(bizLog.getOperator())) {
+        // SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
+        // credit.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
+        // }
     }
+
 }

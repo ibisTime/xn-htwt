@@ -47,4 +47,7 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
 
     public int refreshInputBankCreditResult(Credit data);
 
+    // 派单
+    public void distributeLeaflets(Credit credit);
+
 }

@@ -32,6 +32,9 @@ public class XN632148Req extends APageReq {
 
     private String isAdvanceFund;// 是否垫资
 
+    // 是否安装了GPS(1是，0否)
+    private String isGpsAz;
+
     @NotBlank
     private String roleCode;// 角色编号
 
@@ -45,6 +48,14 @@ public class XN632148Req extends APageReq {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getIsGpsAz() {
+        return isGpsAz;
+    }
+
+    public void setIsGpsAz(String isGpsAz) {
+        this.isGpsAz = isGpsAz;
     }
 
     public String getKeyword() {

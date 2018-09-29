@@ -518,7 +518,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setPledgeUser(req.getPledgeUser());
         data.setPledgeUserIdCardCopy(req.getPledgeUserIdCardCopy());
         data.setPledgeAddress(req.getPledgeAddress());
-        data.setInsideJob(req.getOperator());
 
         String preNodeCode = data.getCurNodeCode(); // 当前节点
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
@@ -1036,6 +1035,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 下个节点设置
         budgetOrder.setCurNodeCode(
             nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        budgetOrder.setIsGpsAz(EBoolean.YES.getCode());
         budgetOrderBO.installGps(budgetOrder);
 
         // 日志记录

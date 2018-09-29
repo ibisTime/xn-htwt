@@ -78,6 +78,11 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     }
 
     @Override
+    public void distributeLeaflets(Credit credit) {
+        creditDAO.distributeLeaflets(credit);
+    }
+
+    @Override
     public Paginable<Credit> getPaginableByRoleCode(int start, int limit,
             Credit condition) {
         prepare(condition);

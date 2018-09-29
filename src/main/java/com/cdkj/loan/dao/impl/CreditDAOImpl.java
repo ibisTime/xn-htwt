@@ -122,4 +122,9 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
 
     }
 
+    @Override
+    public void distributeLeaflets(Credit data) {
+        super.update(NAMESPACE.concat("update_distributeLeaflets"), data);
+    }
+
 }

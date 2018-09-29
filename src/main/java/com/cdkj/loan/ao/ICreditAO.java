@@ -6,6 +6,7 @@ import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
+import com.cdkj.loan.dto.req.XN632119Req;
 
 /**
  * 征信
@@ -47,5 +48,8 @@ public interface ICreditAO {
     public void cancelCredit(String code, String operator);
 
     public void initCredit(Credit credit);
+
+    // 派单
+    public void distributeLeaflets(XN632119Req req);
 
 }

@@ -27,6 +27,8 @@ UPDATE `tsys_node` SET `name`='风控终审' WHERE `code`='002_03';
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_27', '风控二审', '002');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_28', '业务总监审核', '002');
 
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('001', '001_08', '001_02');
+UPDATE `tsys_node_flow` SET `next_node`='001_08' WHERE `id`='1';
 UPDATE `tsys_node_flow` SET `next_node`='002_27' WHERE `id`='6';
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('002', '002_27', '002_03', '002_04');
 UPDATE `tsys_node_flow` SET `next_node`='002_28' WHERE `id`='7';
@@ -66,8 +68,13 @@ SET SQL_SAFE_UPDATES = 0;
 update tdq_budget_order b,tsys_biz_log z set b.inside_job = z.operator where b.code = z.ref_order and z.deal_node = '002_01';
 SET SQL_SAFE_UPDATES = 1;
 
+ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `is_gps_az` VARCHAR(4) NULL COMMENT '是否安装了GPS' AFTER `frozen_status`;
 
-
+SET SQL_SAFE_UPDATES = 0;
+update tdq_budget_order set is_gps_az = '0';
+update tdq_budget_order b,tdq_budget_order_gps g set b.is_gps_az = '1' where b.code = g.budget_order;
+SET SQL_SAFE_UPDATES = 1;
 
 
 

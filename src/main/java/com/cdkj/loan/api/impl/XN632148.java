@@ -45,6 +45,7 @@ public class XN632148 extends AProcessor {
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setRoleCode(req.getRoleCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
+        condition.setIsGpsAz(req.getIsGpsAz());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;

@@ -46,4 +46,7 @@ public interface ICreditBO extends IPaginableBO<Credit> {
 
     public void refreshInputBankCreditResult(Credit credit);
 
+    // 派单
+    public void distributeLeaflets(Credit credit);
+
 }

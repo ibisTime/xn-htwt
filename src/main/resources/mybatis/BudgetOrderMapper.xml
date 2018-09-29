@@ -321,6 +321,7 @@
 		
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="frozen_status" property="frozenStatus" />
+		<result column="is_gps_az" property="isGpsAz" />
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
@@ -423,6 +424,9 @@
 			</if>
 			<if test="frozenStatus != null and frozenStatus != ''">
 				AND t.frozen_status = #{frozenStatus}
+			</if>
+			<if test="isGpsAz != null and isGpsAz != ''">
+				AND t.is_gps_az = #{isGpsAz}
 			</if>
 			<if test="keyword != null and keyword != '' ">
 				AND (t.apply_user_name LIKE "%"#{keyword}"%" OR t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%")
@@ -754,6 +758,7 @@
 		,t.cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
+		,t.is_gps_az
 		,t.remark
 		FROM
 		tdq_budget_order t
@@ -840,6 +845,7 @@
 		,t.team_code
 		,t.back_advance_status
 		,t.frozen_status
+		,t.is_gps_az
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -1189,6 +1195,7 @@
 		,t.cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
+		,t.is_gps_az
 		,t.remark
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
@@ -1467,6 +1474,7 @@
 		,is_advance_fund
 		
 		,sale_user_id
+		,inside_job
 		,team_code
 		,company_code
 		,repay_bank_code
@@ -1486,6 +1494,7 @@
 		,cancel_node_code
 		,frozen_status
 		,pledge_status
+		,is_gps_az
 		,remark
 		)
 		VALUES(
@@ -1709,6 +1718,7 @@
 		,#{isAdvanceFund}
 		
 		,#{saleUserId}
+		,#{insideJob}
 		,#{teamCode}
 		,#{companyCode}
 		,#{repayBankCode}
@@ -1726,6 +1736,7 @@
 		,#{cancelNodeCode}
 		,#{frozenStatus}
 		,#{pledgeStatus}
+		,#{isGpsAz}
 		,#{remark}
 		)
 	</insert>
@@ -1974,7 +1985,6 @@
 		,marry_pdf = #{marryPdf}
 		,other_pdf = #{otherPdf}
 		,is_advance_fund = #{isAdvanceFund}
-		,inside_job = #{insideJob}
 		,pledge_user = #{pledgeUser}
 		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
 		,pledge_address = #{pledgeAddress}
@@ -2042,6 +2052,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,is_gps_az = #{isGpsAz}
 		WHERE code = #{code}
 	</update>
 	

@@ -855,6 +855,9 @@ public class BudgetOrder extends ABaseDO {
     // 冻结状态
     private String frozenStatus;
 
+    // 是否安装了GPS(1是，0否)
+    private String isGpsAz;
+
     // 最新备注
     private String remark;
 
@@ -964,6 +967,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setInsideJobName(String insideJobName) {
         this.insideJobName = insideJobName;
+    }
+
+    public String getIsGpsAz() {
+        return isGpsAz;
+    }
+
+    public void setIsGpsAz(String isGpsAz) {
+        this.isGpsAz = isGpsAz;
     }
 
     public String getLogisticsDate() {

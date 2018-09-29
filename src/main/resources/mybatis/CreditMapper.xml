@@ -20,6 +20,7 @@
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="note" property="note" />
+		<result column="inside_job" property="insideJob" />
 		<result column="operator" property="operator" />
 	</resultMap>
 	
@@ -108,6 +109,7 @@
 		,t.cur_node_code		
 		,t.apply_datetime
 		,t.note
+		,t.inside_job
 		,t.operator
 		from tdq_credit t
 		<include refid="where_condition"/>
@@ -143,6 +145,7 @@
 		,t.cur_node_code		
 		,t.apply_datetime
 		,t.note
+		,t.inside_job
 		,t.operator
 		from tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition"/>
@@ -182,6 +185,7 @@
 		,t.apply_datetime
 		,t.cur_node_code
 		,t.note
+		,t.inside_job
 		,t.operator 
 		FROM 
 		tdq_credit t,tdq_budget_order b 
@@ -217,6 +221,7 @@
 		,t.apply_datetime
 		,t.cur_node_code
 		,t.note
+		,t.inside_job
 		,t.operator 
 		FROM 
 		tdq_credit t,tdq_budget_order b 
@@ -304,6 +309,14 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,operator = #{operator}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_distributeLeaflets" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		cur_node_code = #{curNodeCode}
+		,inside_job = #{insideJob}
 		WHERE code = #{code}
 	</update>
 	
