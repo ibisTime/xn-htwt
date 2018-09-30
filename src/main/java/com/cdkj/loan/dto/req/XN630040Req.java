@@ -6,7 +6,7 @@ public class XN630040Req {
 
     // 键（必填）
     @NotBlank(message = "键不能为空")
-    private String key;
+    private String ckey;
 
     // 值（必填）
     @NotBlank(message = "值不能为空")
@@ -19,12 +19,12 @@ public class XN630040Req {
     // 备注（选填）
     private String remark;
 
-    public String getKey() {
-        return key;
+    public String getCkey() {
+        return ckey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setCkey(String ckey) {
+        this.ckey = ckey;
     }
 
     public String getCvalue() {

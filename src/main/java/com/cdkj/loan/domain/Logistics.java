@@ -99,6 +99,28 @@ public class Logistics extends ABaseDO {
     // 角色
     private String userRole;
 
+    // 内勤名称
+    private String insideJobName;
+
+    // 信贷专员姓名
+    private String saleUserName;
+
+    public String getInsideJobName() {
+        return insideJobName;
+    }
+
+    public void setInsideJobName(String insideJobName) {
+        this.insideJobName = insideJobName;
+    }
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
+    }
+
     public String getTeamName() {
         return teamName;
     }

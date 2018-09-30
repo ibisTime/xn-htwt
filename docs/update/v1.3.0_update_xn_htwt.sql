@@ -83,6 +83,11 @@ SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `tdq_credit` 
 ADD COLUMN `inside_job` varchar(32) NULL COMMENT '内勤' AFTER `note`;
 
+ALTER TABLE `tb_gps_apply` 
+ADD COLUMN `customer_name` varchar(255) NULL COMMENT '客户姓名' AFTER `apply_wireless_count`,
+ADD COLUMN `mobile` varchar(32) NULL COMMENT '手机号' AFTER `customer_name`,
+ADD COLUMN `car_frame_no` varchar(255) NULL COMMENT '车架号' AFTER `mobile`;
+
 
 
 

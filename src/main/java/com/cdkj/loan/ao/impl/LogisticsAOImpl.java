@@ -333,6 +333,20 @@ public class LogisticsAOImpl implements ILogisticsAO {
             GpsApply gpsApply = gpsApplyBO.getGpsApply(logistics.getBizCode());
             logistics.setGpsApply(gpsApply);
         }
+        if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(logistics.getBizCode());
+            if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
+                SYSUser saleuser = sysUserBO
+                    .getUser(budgetOrder.getSaleUserId());
+                logistics.setSaleUserName(saleuser.getRealName());
+            }
+            if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
+                SYSUser jobuser = sysUserBO.getUser(budgetOrder.getInsideJob());
+                logistics.setInsideJobName(jobuser.getRealName());
+            }
+        }
+
     }
 
     @Override

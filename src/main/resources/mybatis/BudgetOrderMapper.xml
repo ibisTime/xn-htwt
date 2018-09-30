@@ -1589,7 +1589,8 @@
 		,#{monthIncome}
 		,#{mateZfbJourDatetimeStart}
 		,#{mateZfbJourDatetimeEnd}
-		,#{mateZfbJourInterest}
+		,#{mateZfbJourInterest1}
+		,#{mateZfbJourInterest2}
 		,#{mateZfbInterest1}
 		,#{mateZfbInterest2}
 		,#{mateZfbJourIncome}
@@ -1602,7 +1603,8 @@
 		 
 		,#{mateWxJourDatetimeStart}
 		,#{mateWxJourDatetimeEnd}
-		,#{mateWxJourInterest}
+		,#{mateWxJourInterest1}
+		,#{mateWxJourInterest2}
 		,#{mateWxInterest1}
 		,#{mateWxInterest2}
 		,#{mateWxJourIncome}
@@ -1615,7 +1617,8 @@
 		
 		,#{mateJourDatetimeStart}
 		,#{mateJourDatetimeEnd}
-		,#{mateJourInterest}
+		,#{mateJourInterest1}
+		,#{mateJourInterest2}
 		,#{mateInterest1}
 		,#{mateInterest2}
 		,#{mateJourIncome}
@@ -1646,7 +1649,8 @@
 		
 		,#{guaZfbJourDatetimeStart}
 		,#{guaZfbJourDatetimeEnd}
-		,#{guaZfbJourInterest}
+		,#{guaZfbJourInterest1}
+		,#{guaZfbJourInterest2}
 		,#{guaZfbInterest1}
 		,#{guaZfbInterest2}
 		,#{guaZfbJourIncome}
@@ -1659,7 +1663,8 @@
 		
 		,#{guaWxJourDatetimeStart}
 		,#{guaWxJourDatetimeEnd}
-		,#{guaWxJourInterest}
+		,#{guaWxJourInterest1}
+		,#{guaWxJourInterest2}
 		,#{guaWxInterest1}
 		,#{guaWxInterest2}
 		,#{guaWxJourIncome}
@@ -1672,7 +1677,8 @@
 		
 		,#{guaJourDatetimeStart}
 		,#{guaJourDatetimeEnd}
-		,#{guaJourInterest}
+		,#{guaJourInterest1}
+		,#{guaJourInterest2}
 		,#{guaInterest1}
 		,#{guaInterest2}
 		,#{guaJourIncome}
@@ -1694,7 +1700,8 @@
 		
 		,#{zfbJourDatetimeStart}
 		,#{zfbJourDatetimeEnd}
-		,#{zfbJourInterest}
+		,#{zfbJourInterest1}
+		,#{zfbJourInterest2}
 		,#{zfbInterest1}
 		,#{zfbInterest2}
 		,#{zfbJourIncome}
@@ -1707,7 +1714,8 @@
 		
 		,#{wxJourDatetimeStart}
 		,#{wxJourDatetimeEnd}
-		,#{wxJourInterest}
+		,#{wxJourInterest1}
+		,#{wxJourInterest2}
 		,#{wxInterest1}
 		,#{wxInterest2}
 		,#{wxJourIncome}
@@ -1720,7 +1728,8 @@
 		 
 		,#{jourDatetimeStart}
 		,#{jourDatetimeEnd}
-		,#{jourInterest}
+		,#{jourInterest1}
+		,#{jourInterest2}
 		,#{interest1}
 		,#{interest2}
 		,#{jourIncome}

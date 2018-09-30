@@ -51,11 +51,11 @@ public class SYSConfigAOImpl implements ISYSConfigAO {
 
     @Override
     @Transactional
-    public void addSYSConfig(String key, String cvalue, String updater,
+    public void addSYSConfig(String ckey, String cvalue, String updater,
             String remark) {
         SYSConfig sysConfig = new SYSConfig();
         sysConfig.setType("car_periods");
-        sysConfig.setCkey(key);
+        sysConfig.setCkey(ckey);
         sysConfig.setCvalue(cvalue);
         sysConfig.setUpdater(updater);
         sysConfig.setUpdateDatetime(new Date());

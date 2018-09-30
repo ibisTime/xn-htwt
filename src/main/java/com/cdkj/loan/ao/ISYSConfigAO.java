@@ -28,6 +28,6 @@ public interface ISYSConfigAO {
     public SYSConfig getSYSConfig(String key);
 
     // 新增车贷期数管理
-    public void addSYSConfig(String key, String cvalue, String updater,
+    public void addSYSConfig(String ckey, String cvalue, String updater,
             String remark);
 }
