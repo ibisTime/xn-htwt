@@ -93,7 +93,9 @@ DELETE FROM `tsys_node` WHERE `code`='002_06';
 UPDATE `tsys_node_flow` SET `next_node`='002_07' WHERE `id`='60';
 DELETE FROM `tsys_node_flow` WHERE `id`='10';
 
-
+ALTER TABLE `tdq_budget_order_gps` 
+ADD COLUMN `dev_photos` tinytext NULL COMMENT '设备图片' AFTER `az_user`,
+ADD COLUMN `az_photos` tinytext NULL COMMENT '安装图片' AFTER `dev_photos`;
 
 
 

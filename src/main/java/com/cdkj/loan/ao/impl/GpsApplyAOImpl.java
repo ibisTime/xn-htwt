@@ -9,17 +9,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IGpsApplyAO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.GpsApply;
+import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632710Req;
 import com.cdkj.loan.dto.req.XN632711Req;
@@ -55,6 +58,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
+
+    @Autowired
+    private ISYSRoleBO sysRoleBO;
 
     @Override
     public String addGpsApply(XN632710Req req) {
@@ -140,6 +149,14 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             .getDepartment(gpsApply.getCompanyCode());
         if (department != null) {
             gpsApply.setCompanyName(department.getName());
+        }
+        if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
+            sysUser.setTeamName(
+                bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
+        }
+        if (StringUtils.isNotBlank(sysUser.getRoleCode())) {
+            SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
+            sysUser.setRoleName(sysRole.getName());
         }
     }
 

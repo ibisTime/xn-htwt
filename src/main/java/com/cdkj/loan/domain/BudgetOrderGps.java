@@ -30,6 +30,12 @@ public class BudgetOrderGps extends ABaseDO {
     // 安装人员
     private String azUser;
 
+    // 设备图片
+    private String devPhotos;
+
+    // 安装图片
+    private String azPhotos;
+
     // 备注
     private String remark;
 
@@ -42,6 +48,22 @@ public class BudgetOrderGps extends ABaseDO {
 
     public String getCode() {
         return code;
+    }
+
+    public String getDevPhotos() {
+        return devPhotos;
+    }
+
+    public void setDevPhotos(String devPhotos) {
+        this.devPhotos = devPhotos;
+    }
+
+    public String getAzPhotos() {
+        return azPhotos;
+    }
+
+    public void setAzPhotos(String azPhotos) {
+        this.azPhotos = azPhotos;
     }
 
     public void setGpsDevNo(String gpsDevNo) {

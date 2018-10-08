@@ -913,8 +913,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setAdvanceFundAmountPdf(req.getAdvanceFundAmountPdf());
         budgetOrder.setOtherVideo(req.getOtherVideo());
         budgetOrder.setInterviewOtherPdf(req.getInterviewOtherPdf());
-        budgetOrder.setCurNodeCode(
-            nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        if (EBoolean.YES.getCode().equals(req.getIsSend())) {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(preCurrentNode);
+        }
         budgetOrderBO.interview(budgetOrder);
 
         // 日志记录

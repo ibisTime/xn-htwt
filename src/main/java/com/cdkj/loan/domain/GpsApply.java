@@ -69,6 +69,28 @@ public class GpsApply extends ABaseDO {
     // 公司名称
     private String companyName;
 
+    // 团队名称
+    private String teamName;
+
+    // 角色名称
+    private String roleName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
     public String getCustomerName() {
         return customerName;
     }

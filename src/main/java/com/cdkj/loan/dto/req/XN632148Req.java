@@ -35,14 +35,6 @@ public class XN632148Req extends APageReq {
     // 入档位置
     private String enterLocation;
 
-    public String getEnterLocation() {
-        return enterLocation;
-    }
-
-    public void setEnterLocation(String enterLocation) {
-        this.enterLocation = enterLocation;
-    }
-
     // 是否安装了GPS(1是，0否)
     private String isGpsAz;
 
@@ -59,6 +51,14 @@ public class XN632148Req extends APageReq {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getEnterLocation() {
+        return enterLocation;
+    }
+
+    public void setEnterLocation(String enterLocation) {
+        this.enterLocation = enterLocation;
     }
 
     public String getIsGpsAz() {

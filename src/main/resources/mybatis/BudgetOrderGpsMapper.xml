@@ -9,6 +9,8 @@
 		<result column="az_location" property="azLocation" />
 		<result column="az_datetime" property="azDatetime" />
 		<result column="az_user" property="azUser" />
+		<result column="dev_photos" property="devPhotos" />
+		<result column="az_photos" property="azPhotos" />
 		<result column="remark" property="remark" />
 		<result column="budget_order" property="budgetOrder" />
 	</resultMap>
@@ -27,6 +29,8 @@
 		,t.az_location
 		,t.az_datetime
 		,t.az_user
+		,t.dev_photos
+		,t.az_photos
 		,t.remark
 		,t.budget_order
 		FROM
@@ -54,6 +58,8 @@
 		,az_location
 		,az_datetime
 		,az_user
+		,dev_photos
+		,az_photos
 		,remark
 		,budget_order
 		)
@@ -64,6 +70,8 @@
 		,#{azLocation}
 		,#{azDatetime}
 		,#{azUser}
+		,#{devPhotos}
+		,#{azPhotos}
 		,#{remark}
 		,#{budgetOrder}
 		)

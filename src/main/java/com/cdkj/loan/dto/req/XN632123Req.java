@@ -14,14 +14,12 @@ public class XN632123Req {
     private String code;// 预算单编号
 
     // 银行视频
-    @NotBlank
     private String bankVideo;
 
     // 银行面签照片
     private String bankPhoto;
 
     // 公司视频
-    @NotBlank
     private String companyVideo;
 
     // 公司合同
@@ -39,6 +37,10 @@ public class XN632123Req {
     // 面签其他资料
     private String interviewOtherPdf;
 
+    // 是否发送(1是,0否)
+    @NotBlank
+    private String isSend;
+
     @NotBlank
     private String operator;// 操作人
 
@@ -48,6 +50,14 @@ public class XN632123Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getIsSend() {
+        return isSend;
+    }
+
+    public void setIsSend(String isSend) {
+        this.isSend = isSend;
     }
 
     public String getOtherVideo() {

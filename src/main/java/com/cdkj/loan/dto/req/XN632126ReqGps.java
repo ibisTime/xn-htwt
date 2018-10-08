@@ -20,6 +20,12 @@ public class XN632126ReqGps {
     // gps 安装用户
     private String azUser;
 
+    // 设备图片
+    private String devPhotos;
+
+    // 安装图片
+    private String azPhotos;
+
     // 备注
     private String remark;
 
@@ -29,6 +35,22 @@ public class XN632126ReqGps {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getDevPhotos() {
+        return devPhotos;
+    }
+
+    public void setDevPhotos(String devPhotos) {
+        this.devPhotos = devPhotos;
+    }
+
+    public String getAzPhotos() {
+        return azPhotos;
+    }
+
+    public void setAzPhotos(String azPhotos) {
+        this.azPhotos = azPhotos;
     }
 
     public String getAzLocation() {
