@@ -60,8 +60,8 @@ public interface IBudgetOrderAO {
     public void interview(XN632123Req req);
 
     // 业务总监审核
-    public void bizChargeApprove(String code, String operator,
-            String approveResult, String approveNote);
+    // public void bizChargeApprove(String code, String operator,
+    // String approveResult, String approveNote);
 
     // 面签内勤主管审核
     public void interviewInternalApprove(String code, String operator,

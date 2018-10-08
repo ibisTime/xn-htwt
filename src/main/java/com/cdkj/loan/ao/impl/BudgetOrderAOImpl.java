@@ -924,39 +924,40 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getTeamCode());
     }
 
-    @Override
-    @Transactional
-    public void bizChargeApprove(String code, String operator,
-            String approveResult, String approveNote) {
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        if (!EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是业务总监审核节点，不能操作");
-        }
-        // 之前节点
-        String preCurrentNode = budgetOrder.getCurNodeCode();
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            if (EBoolean.NO.getCode().equals(budgetOrder.getIsAdvanceFund())) {// 不垫资，直接跳到gps
-                budgetOrder.setCurNodeCode(EBudgetOrderNode.GPSAZ.getCode());
-            } else {
-                budgetOrder.setCurNodeCode(nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
-            }
-        } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
-        }
-
-        budgetOrder.setRemark(approveNote);
-        budgetOrderBO.refreshbizChargeApprove(budgetOrder);
-
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getCurNodeCode(), approveNote, operator,
-            budgetOrder.getTeamCode());
-    }
+    // @Override
+    // @Transactional
+    // public void bizChargeApprove(String code, String operator,
+    // String approveResult, String approveNote) {
+    // BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+    // if (!EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode()
+    // .equals(budgetOrder.getCurNodeCode())) {
+    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+    // "当前节点不是业务总监审核节点，不能操作");
+    // }
+    // // 之前节点
+    // String preCurrentNode = budgetOrder.getCurNodeCode();
+    // if (EApproveResult.PASS.getCode().equals(approveResult)) {
+    // if (EBoolean.NO.getCode().equals(budgetOrder.getIsAdvanceFund())) {//
+    // 不垫资，直接跳到gps
+    // budgetOrder.setCurNodeCode(EBudgetOrderNode.GPSAZ.getCode());
+    // } else {
+    // budgetOrder.setCurNodeCode(nodeFlowBO
+    // .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+    // }
+    // } else {
+    // budgetOrder.setCurNodeCode(nodeFlowBO
+    // .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
+    // }
+    //
+    // budgetOrder.setRemark(approveNote);
+    // budgetOrderBO.refreshbizChargeApprove(budgetOrder);
+    //
+    // // 日志记录
+    // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+    // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+    // budgetOrder.getCurNodeCode(), approveNote, operator,
+    // budgetOrder.getTeamCode());
+    // }
 
     @Override
     @Transactional
@@ -1003,6 +1004,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setAdvanceFundAmount(
             StringValidater.toLong(req.getAdvanceFundAmount()));
         budgetOrder.setBillPdf(req.getBillPdf());
+        budgetOrder.setAdvanceNote(req.getAdvanceNote());
 
         // 下个节点设置
         budgetOrder.setCurNodeCode(

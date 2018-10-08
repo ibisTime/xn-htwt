@@ -262,6 +262,7 @@
 		
 		<result column="advance_fund_amount" property="advanceFundAmount" />
 		<result column="bill_pdf" property="billPdf" />
+		<result column="advance_note" property="advanceNote" />
 		<result column="advance_fund_amount_pdf" property="advanceFundAmountPdf" />
 		<result column="car_settle_datetime" property="carSettleDatetime" />
 		<result column="car_number" property="carNumber" />
@@ -708,6 +709,7 @@
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
 		,t.bill_pdf
+		,t.advance_note
 		,t.advance_fund_amount_pdf
 		,t.car_settle_datetime
 		
@@ -1154,6 +1156,7 @@
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
 		,t.bill_pdf
+		,t.advance_note
 		,t.advance_fund_amount_pdf
 		,t.car_settle_datetime
 		
@@ -2097,6 +2100,7 @@
 		advance_fund_datetime = #{advanceFundDatetime}
 		,advance_fund_amount = #{advanceFundAmount}
 		,bill_pdf = #{billPdf}
+		,advance_note = #{advanceNote}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}

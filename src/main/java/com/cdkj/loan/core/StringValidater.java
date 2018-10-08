@@ -62,7 +62,8 @@ public class StringValidater {
         return !((codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA)
                 || (codePoint == 0xD)
                 || ((codePoint >= 0x20) && (codePoint <= 0xD7FF))
-                || ((codePoint >= 0xE000) && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF)));
+                || ((codePoint >= 0xE000) && (codePoint <= 0xFFFD))
+                || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF)));
     }
 
     /** 
@@ -108,7 +109,7 @@ public class StringValidater {
     public static Long toLong(String string) {
         Long amount = null;
         try {
-            if (StringUtils.isNotBlank(string)) {
+            if (StringUtils.isNotBlank(string) && !"NaN".equals(string)) {
                 amount = Long.valueOf(string);
             }
         } catch (Exception e) {

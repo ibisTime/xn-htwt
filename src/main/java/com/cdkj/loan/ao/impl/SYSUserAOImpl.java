@@ -194,7 +194,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         String mobile = user.getMobile();
         // String smsContent = "";
         ESYSUserStatus userStatus = null;
-        if (ESYSUserStatus.NORMAL.getCode().equalsIgnoreCase(user.getStatus())) {
+        if (ESYSUserStatus.NORMAL.getCode()
+            .equalsIgnoreCase(user.getStatus())) {
             // smsContent = "您的账号已被管理员封禁";
             userStatus = ESYSUserStatus.BLOCK;
         } else {
@@ -324,6 +325,10 @@ public class SYSUserAOImpl implements ISYSUserAO {
             if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
                 sysUser.setTeamName(
                     bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
+            }
+            if (StringUtils.isNotBlank(sysUser.getRoleCode())) {
+                SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
+                sysUser.setRoleName(sysRole.getName());
             }
         }
         return page;

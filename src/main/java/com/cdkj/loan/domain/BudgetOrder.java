@@ -705,6 +705,9 @@ public class BudgetOrder extends ABaseDO {
     // 水单
     private String billPdf;
 
+    // 垫资说明
+    private String advanceNote;
+
     // 资金划转授权书
     private String advanceFundAmountPdf;
 
@@ -2270,6 +2273,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBillPdf(String billPdf) {
         this.billPdf = billPdf;
+    }
+
+    public String getAdvanceNote() {
+        return advanceNote;
+    }
+
+    public void setAdvanceNote(String advanceNote) {
+        this.advanceNote = advanceNote;
     }
 
     public Date getCarSettleDatetime() {

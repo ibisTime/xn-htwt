@@ -28,6 +28,17 @@ public class XN632125Req {
     @NotBlank
     private String billPdf;
 
+    // 垫资说明
+    private String advanceNote;
+
+    public String getAdvanceNote() {
+        return advanceNote;
+    }
+
+    public void setAdvanceNote(String advanceNote) {
+        this.advanceNote = advanceNote;
+    }
+
     public String getCode() {
         return code;
     }

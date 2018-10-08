@@ -52,6 +52,7 @@ ADD COLUMN `vehicle_company_name` varchar(255) NULL COMMENT '机动车销售公�
 ADD COLUMN `other_fee` bigint(20) NULL COMMENT '其他费用' AFTER `auth_fee`,
 ADD COLUMN `is_financing` VARCHAR(4) NULL COMMENT '是否融资' AFTER `is_advance_fund`,
 ADD COLUMN `car_model_name` varchar(255) NULL COMMENT '车型名称' AFTER `car_model`,
+ADD COLUMN `advance_note` varchar(255) NULL COMMENT '垫资说明' AFTER `bill_pdf`,
 CHANGE COLUMN `mate_zfb_jour_interest` `mate_zfb_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶支付宝流水结息1' ,
 ADD COLUMN `mate_zfb_jour_interest2` MEDIUMTEXT NULL COMMENT '配偶支付宝流水结息2' AFTER `mate_zfb_jour_interest1`,
 CHANGE COLUMN `mate_wx_jour_interest` `mate_wx_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶微信流水结息1' ,
@@ -87,6 +88,10 @@ ALTER TABLE `tb_gps_apply`
 ADD COLUMN `customer_name` varchar(255) NULL COMMENT '客户姓名' AFTER `apply_wireless_count`,
 ADD COLUMN `mobile` varchar(32) NULL COMMENT '手机号' AFTER `customer_name`,
 ADD COLUMN `car_frame_no` varchar(255) NULL COMMENT '车架号' AFTER `mobile`;
+
+DELETE FROM `tsys_node` WHERE `code`='002_06';
+UPDATE `tsys_node_flow` SET `next_node`='002_07' WHERE `id`='60';
+DELETE FROM `tsys_node_flow` WHERE `id`='10';
 
 
 

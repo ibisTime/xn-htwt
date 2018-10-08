@@ -86,11 +86,22 @@ public class SYSUser extends ABaseDO {
 
     private String teamName;
 
+    // 角色名称
+    private String roleName;
+
     // 真实姓名模糊查
     private String realNameQuery;
 
     // 登录名模糊查
     private String loginNameQuery;
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public String getLoginNameQuery() {
         return loginNameQuery;
