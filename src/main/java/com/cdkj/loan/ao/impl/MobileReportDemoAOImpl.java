@@ -36,8 +36,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class MobileReportDemoAOImpl extends AbstractCredit
-        implements IMobileReportDemoAO {
+public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
@@ -201,13 +200,13 @@ public class MobileReportDemoAOImpl extends AbstractCredit
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
-        // reqParam.add(new BasicNameValuePair("password", "CiEyMzR3dWxx"));
-        try {
-            reqParam.add(new BasicNameValuePair("password", new String(
-                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-        }
+        reqParam.add(new BasicNameValuePair("password", "ITIzNHd1bHE="));
+        // try {
+        // reqParam.add(new BasicNameValuePair("password", new String(
+        // Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
+        // } catch (UnsupportedEncodingException e1) {
+        // e1.printStackTrace();
+        // }
         reqParam.add(new BasicNameValuePair("area", req.getArea()));
         if (StringUtils.isNotBlank(req.getRealName())) {
             reqParam.add(new BasicNameValuePair("realName", req.getRealName()));
@@ -221,8 +220,8 @@ public class MobileReportDemoAOImpl extends AbstractCredit
         // req.getIdentityCardNo()));
         // reqParam.add(new BasicNameValuePair("identityName",
         // req.getIdentityName()));
-        reqParam.add(new BasicNameValuePair("callBackUrl",
-            configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
+        // reqParam.add(new BasicNameValuePair("callBackUrl",
+        // configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
         // reqParam.add(new BasicNameValuePair("accessType", ""));// 接入方式
         // 不填写默认api
         // reqParam.add(new BasicNameValuePair("ts", ""));// 时间戳
@@ -426,10 +425,11 @@ public class MobileReportDemoAOImpl extends AbstractCredit
             reqParam.add(new BasicNameValuePair("username", req.getUsername()));// 账号
             reqParam.add(new BasicNameValuePair("password", new String(
                 Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));// 密码
-            reqParam.add(new BasicNameValuePair("sign", getSign(reqParam)));// 请求参数签名
+            // reqParam.add(new BasicNameValuePair("sign",
+            // getSign(reqParam)));// 请求参数签名
 
             // 提交受理请求
-            doProcess(reqParam);
+            // doProcess(reqParam);
 
         } catch (Exception ex) {
             System.out.println("开始获取京东信息异常：" + ex);
