@@ -79,7 +79,7 @@ public class AbstractCredit {
             JsonNode rootNode = objectMapper.readValue(json, JsonNode.class);
             String code = rootNode.get("code").textValue();
 
-            if ("0000".equals(code)) {// 受理成功
+            if ("0010".equals(code)) {// 受理成功
                 System.out.println("成功 ");
                 token = rootNode.get("token").textValue();
             }

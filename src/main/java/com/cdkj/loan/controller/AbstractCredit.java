@@ -19,6 +19,7 @@ import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @Description:立木征信主流程
@@ -75,14 +76,17 @@ public class AbstractCredit {
         if (StringUtils.isBlank(json)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
         } else {
-            // ObjectMapper objectMapper = new ObjectMapper();
-            // JsonNode rootNode = objectMapper.readValue(json, JsonNode.class);
-            // String code = rootNode.get("code").textValue();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readValue(json, JsonNode.class);
+            String code = rootNode.get("code").textValue();
 
-            // if ("0000".equals(code)) {// 受理成功
-            // System.out.println("成功 ");
-            // token = rootNode.get("token").textValue();
-            // }
+            if ("0010".equals(code)) {// 受理成功
+
+                token = rootNode.get("token").textValue();
+                timer();// 每5秒查询一次数据请求
+            } else {
+                System.out.println("查询失败");
+            }
         }
         return json;
 

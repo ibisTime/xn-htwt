@@ -11,6 +11,7 @@ import com.cdkj.loan.dto.req.XN632927Req;
 import com.cdkj.loan.dto.req.XN632928Req;
 import com.cdkj.loan.dto.req.XN632929Req;
 import com.cdkj.loan.dto.req.XN632930Req;
+import com.cdkj.loan.dto.req.XN632931Req;
 
 public interface IMobileReportDemoAO {
 
@@ -46,5 +47,8 @@ public interface IMobileReportDemoAO {
 
     // 公积金查询
     Object housefund(XN632930Req req);
+
+    // 京东查询
+    void jdFund(XN632931Req req);
 
 }
