@@ -13,6 +13,7 @@
 		<result column="apply_count" property="applyCount" />
 		<result column="apply_wired_count" property="applyWiredCount" />
 		<result column="apply_wireless_count" property="applyWirelessCount" />
+		<result column="budget_order_code" property="budgetOrderCode" />
 		<result column="customer_name" property="customerName" />
 		<result column="mobile" property="mobile" />
 		<result column="car_frame_no" property="carFrameNo" />
@@ -54,6 +55,7 @@
 		,t.apply_count
 		,t.apply_wired_count
 		,t.apply_wireless_count
+		,t.budget_order_code
 		,t.customer_name
 		,t.mobile
 		,t.car_frame_no
@@ -90,6 +92,7 @@
 		,apply_count
 		,apply_wired_count
 		,apply_wireless_count
+		,budget_order_code
 		,customer_name
 		,mobile
 		,car_frame_no
@@ -107,6 +110,7 @@
 		,#{applyCount}
 		,#{applyWiredCount}
 		,#{applyWirelessCount}
+		,#{budgetOrderCode}
 		,#{customerName}
 		,#{mobile}
 		,#{carFrameNo}

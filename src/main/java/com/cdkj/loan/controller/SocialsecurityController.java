@@ -41,7 +41,7 @@ public class SocialsecurityController {
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
-    @RequestMapping(value = "/socialsecurity", method = RequestMethod.POST)
+    @RequestMapping(value = "/socialsecurity", method = RequestMethod.GET)
     public void doClockIn(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         System.out.println("lalalla");

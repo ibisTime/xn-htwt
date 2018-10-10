@@ -41,6 +41,9 @@ public class GpsApply extends ABaseDO {
     // 申请无线个数
     private Integer applyWirelessCount;
 
+    // 预算单编号
+    private String budgetOrderCode;
+
     // 客户姓名
     private String customerName;
 
@@ -81,6 +84,14 @@ public class GpsApply extends ABaseDO {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
     }
 
     public String getRoleName() {

@@ -346,6 +346,23 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 logistics.setInsideJobName(jobuser.getRealName());
             }
         }
+        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
+            GpsApply gpsApply = gpsApplyBO.getGpsApply(logistics.getBizCode());
+            if (StringUtils.isNotBlank(gpsApply.getBudgetOrderCode())) {
+                BudgetOrder budgetOrder = budgetOrderBO
+                    .getBudgetOrder(gpsApply.getBudgetOrderCode());
+                if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
+                    SYSUser saleuser = sysUserBO
+                        .getUser(budgetOrder.getSaleUserId());
+                    logistics.setSaleUserName(saleuser.getRealName());
+                }
+                if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
+                    SYSUser jobuser = sysUserBO
+                        .getUser(budgetOrder.getInsideJob());
+                    logistics.setInsideJobName(jobuser.getRealName());
+                }
+            }
+        }
 
     }
 

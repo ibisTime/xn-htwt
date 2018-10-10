@@ -22,6 +22,9 @@ public class XN632710Req {
     // 申请无线个数
     private String applyWirelessCount;
 
+    // 预算单编号
+    private String budgetOrderCode;
+
     // 客户姓名
     private String customerName;
 
@@ -40,6 +43,14 @@ public class XN632710Req {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
     }
 
     public String getCustomerName() {

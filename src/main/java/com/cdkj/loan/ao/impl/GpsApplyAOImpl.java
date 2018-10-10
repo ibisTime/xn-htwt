@@ -84,6 +84,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             StringValidater.toInteger(req.getApplyWirelessCount()));
         data.setApplyCount(
             data.getApplyWiredCount() + data.getApplyWirelessCount());
+        data.setBudgetOrderCode(req.getBudgetOrderCode());
         data.setCustomerName(req.getCustomerName());
         data.setMobile(req.getMobile());
         data.setCarFrameNo(req.getCarFrameNo());
@@ -151,12 +152,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gpsApply.setCompanyName(department.getName());
         }
         if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
-            sysUser.setTeamName(
+            gpsApply.setTeamName(
                 bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
         }
         if (StringUtils.isNotBlank(sysUser.getRoleCode())) {
             SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
-            sysUser.setRoleName(sysRole.getName());
+            gpsApply.setRoleName(sysRole.getName());
         }
     }
 
