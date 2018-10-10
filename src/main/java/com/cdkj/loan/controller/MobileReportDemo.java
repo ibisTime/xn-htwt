@@ -46,7 +46,8 @@ public class MobileReportDemo {
         reqParam.add(new BasicNameValuePair("identityNo", identityNo));
         String name = object.getString("name");
         reqParam.add(new BasicNameValuePair("name", name));
-        reqParam.add(new BasicNameValuePair("sign", credit.getSign(reqParam)));// 请求参数签名
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
         PrintWriter writer;
         try {

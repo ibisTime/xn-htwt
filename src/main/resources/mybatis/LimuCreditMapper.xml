@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ILimuCreditDAO">
+	<resultMap id="limuCredit_DB_Result" type="limuCredit">
+		<result column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
+		<result column="biz_type" property="bizType" />
+		<result column="token" property="token" />
+		<result column="found_datetime" property="foundDatetime" />
+		<result column="status" property="status" />
+		<result column="result" property="result" />
+		<result column="callback_datetime" property="callbackDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="token != null and token != '' ">
+				AND t.token = #{token}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_limuCredit" parameterType="limuCredit" resultMap="limuCredit_DB_Result">
+		SELECT
+		t.id
+		,t.user_id
+		,t.user_name
+		,t.biz_type
+		,t.token
+		,t.found_datetime
+		,t.status
+		,t.result
+		,t.callback_datetime
+		FROM
+		tdq_limu_credit t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_limuCredit_count" parameterType="limuCredit"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_limu_credit t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_limuCredit" parameterType="limuCredit">
+		INSERT INTO
+		tdq_limu_credit(
+		id
+		,user_id
+		,user_name
+		,biz_type
+		,token
+		,found_datetime
+		,status
+		,result
+		,callback_datetime
+		)
+		VALUES(
+		#{id}
+		,#{userId}
+		,#{userName}
+		,#{bizType}
+		,#{token}
+		,#{foundDatetime}
+		,#{status}
+		,#{result}
+		,#{callbackDatetime}
+		)
+	</insert>
+
+	<update id="update_limuCredit" parameterType="limuCredit">
+		UPDATE tdq_limu_credit
+		SET
+		user_id = #{userId}
+		,user_name = #{userName}
+		,biz_type = #{bizType}
+		,token = #{token}
+		,found_datetime = #{foundDatetime}
+		,status = #{status}
+		,result = #{result}
+		,callback_datetime = #{callbackDatetime}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

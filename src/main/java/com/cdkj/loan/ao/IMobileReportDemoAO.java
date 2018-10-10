@@ -51,4 +51,5 @@ public interface IMobileReportDemoAO {
     // 京东查询
     void jdFund(XN632931Req req);
 
+    Object callBackUrl();
 }

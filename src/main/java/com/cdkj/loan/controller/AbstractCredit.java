@@ -132,7 +132,7 @@ public class AbstractCredit {
     public boolean roundRobin() throws Exception {
 
         // 状态查询
-        String json = httpClient.doPost(apiUrlStatus, getReqParam());
+        String json = httpClient.doPost(apiUrlStatus, getReqParam(apiSecret));
         JsonNode rootNode = JsonUtils.toJsonNode(json);
         String token = JsonUtils.getJsonValue(rootNode, "token");
         String code = JsonUtils.getJsonValue(rootNode, "code");
@@ -195,7 +195,7 @@ public class AbstractCredit {
                 }
                 if (bInput) {
                     // 等待输入信息
-                    code = sendInput();
+                    code = sendInput(apiSecret);
                     System.out.println("发送输入信息后查询状态：" + code);
                     if ("0009".equals(code)) {// 结果 >>>>> 成功或失败
                         // 继续轮训
@@ -210,11 +210,11 @@ public class AbstractCredit {
                 }
             } else if ("0000".startsWith(code)) {// 成功
                 System.out.println("运营商报告结果查询开始 >>>>>");
-                getReport();
+                getReport(apiSecret);
                 System.out.println("运营商报告结果查询结束 >>>>>");
 
                 System.out.println("运营商报告原始数据结果查询开始 >>>>>");
-                getData();
+                getData(apiSecret);
                 System.out.println("运营商报告原始数据结果查询结束 >>>>>");
 
                 return true;
@@ -233,9 +233,10 @@ public class AbstractCredit {
      * 签名转化
      *
      * @param reqParam
+     * @param apiSecret 
      * @return
      */
-    public String getSign(List<BasicNameValuePair> reqParam) {
+    public String getSign(List<BasicNameValuePair> reqParam, String apiSecret) {
 
         StringBuffer sbb = new StringBuffer();
         int index = 1;
@@ -298,11 +299,12 @@ public class AbstractCredit {
      *
      * @return
      */
-    public List<BasicNameValuePair> getReqParam() {
+    public List<BasicNameValuePair> getReqParam(String apiSecret) {
         List<BasicNameValuePair> reqParam = new ArrayList<>();
         reqParam.add(new BasicNameValuePair("apiKey", apiKey));// API授权
         reqParam.add(new BasicNameValuePair("token", token));
-        reqParam.add(new BasicNameValuePair("sign", getSign(reqParam)));// 请求参数签名
+        reqParam
+            .add(new BasicNameValuePair("sign", getSign(reqParam, apiSecret)));// 请求参数签名
         return reqParam;
     }
 
@@ -312,7 +314,7 @@ public class AbstractCredit {
      * @throws
      * @Description:信息输入
      */
-    public String sendInput() throws Exception {
+    public String sendInput(String apiSecret) throws Exception {
         Scanner s = new Scanner(System.in);
         System.out.println("请输入上述提示信息（输入完按回车）：");
         List<BasicNameValuePair> reqParam = new ArrayList<>();
@@ -320,7 +322,8 @@ public class AbstractCredit {
         reqParam.add(new BasicNameValuePair("token", token));// 请求标识
         reqParam.add(new BasicNameValuePair("input", s.nextLine()));// 短信验证码/图片验证码/独立密码
 
-        reqParam.add(new BasicNameValuePair("sign", getSign(reqParam)));// 请求参数签名
+        reqParam
+            .add(new BasicNameValuePair("sign", getSign(reqParam, apiSecret)));// 请求参数签名
         String json = httpClient.doPost(apiUrlInput, reqParam);
         return JsonUtils.getJsonValue(json, "code");
     }
@@ -330,13 +333,14 @@ public class AbstractCredit {
      * @throws
      * @Description:运营商报告原始数据结果集
      */
-    public void getData() {
+    public void getData(String apiSecret) {
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
 
         reqParam.add(new BasicNameValuePair("apiKey", apiKey));// API授权
         reqParam.add(new BasicNameValuePair("token", token));// 请求标识
 
-        reqParam.add(new BasicNameValuePair("sign", getSign(reqParam)));// 请求参数签名
+        reqParam
+            .add(new BasicNameValuePair("sign", getSign(reqParam, apiSecret)));// 请求参数签名
         String json = httpClient.doPost(apiUrlData, reqParam);
         System.out.println("运营商报告原始数据结果集:" + json);
     }
@@ -346,13 +350,14 @@ public class AbstractCredit {
      * @throws
      * @Description:运营商报告结果查询
      */
-    public void getReport() {
+    public void getReport(String apiSecret) {
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
 
         reqParam.add(new BasicNameValuePair("apiKey", apiKey));// API授权
         reqParam.add(new BasicNameValuePair("token", token));// 请求标识
 
-        reqParam.add(new BasicNameValuePair("sign", getSign(reqParam)));// 请求参数签名
+        reqParam
+            .add(new BasicNameValuePair("sign", getSign(reqParam, apiSecret)));// 请求参数签名
         String json = httpClient.doPost(apiUrlReport, reqParam);
         System.out.println("运营商报告结果集:" + json);
     }

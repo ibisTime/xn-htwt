@@ -9,21 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "fileList";
+    private static String key = "limuCredit";
 
     // 实体名称
-    private static String keyName = "材料清单";
+    private static String keyName = "立木征信";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_file_list";
+    private static String dbname = "tdq_limu_credit";
 
-    private static String[] DBwords = { "id", "number", "name", "updater",
-            "update_datetime" };
+    private static String[] DBwords = { "id", "user_id", "user_name",
+            "biz_type", "token", "found_datetime", "status", "result",
+            "callback_datetime" };
 
-    private static String[] DBwordsName = { "编号", "序号", "名称", "更新人", "更新时间" };
+    private static String[] DBwordsName = { "编号", "用户编号", "用户账号", "业务类型", "标记",
+            "查询时间", "状态", "查询结果", "回调时间" };
 
     private static String[] DOwords = getDOwords();
 

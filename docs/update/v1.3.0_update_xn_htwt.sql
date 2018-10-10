@@ -98,5 +98,17 @@ ADD COLUMN `dev_photos` tinytext NULL COMMENT '设备图片' AFTER `az_user`,
 ADD COLUMN `az_photos` tinytext NULL COMMENT '安装图片' AFTER `dev_photos`;
 
 
-
+DROP TABLE IF EXISTS `tdq_limu_credit`;
+CREATE TABLE `tdq_limu_credit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `user_name` varchar(255) DEFAULT NULL COMMENT '用户账号',
+  `biz_type` varchar(4) DEFAULT NULL COMMENT '业务类型',
+  `token` varchar(255) DEFAULT NULL COMMENT '标记',
+  `found_datetime` datetime DEFAULT NULL COMMENT '查询时间',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `result` varchar(255) DEFAULT NULL COMMENT '查询结果',
+  `callback_datetime` datetime DEFAULT NULL COMMENT '回调时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
