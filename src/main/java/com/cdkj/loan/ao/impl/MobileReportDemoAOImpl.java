@@ -213,17 +213,11 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             .add(new BasicNameValuePair("method", "api.socialsecurity.get"));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
         try {
-            reqParam.add(new BasicNameValuePair("password",
-                new String(Base64.encodeBase64("!234wulq".getBytes("UTF-8")))));
+            reqParam.add(new BasicNameValuePair("password", new String(
+                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
         } catch (UnsupportedEncodingException e1) {
             e1.printStackTrace();
         }
-        // try {
-        // reqParam.add(new BasicNameValuePair("password", new String(
-        // Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
-        // } catch (UnsupportedEncodingException e1) {
-        // e1.printStackTrace();
-        // }
         reqParam.add(new BasicNameValuePair("area", req.getArea()));
         if (StringUtils.isNotBlank(req.getRealName())) {
             reqParam.add(new BasicNameValuePair("realName", req.getRealName()));
@@ -232,20 +226,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             reqParam
                 .add(new BasicNameValuePair("otherInfo", req.getOtherInfo()));
         }
-        // reqParam.add(new BasicNameValuePair("uid", req.getUid()));
-        // reqParam.add(new BasicNameValuePair("identityCardNo",
-        // req.getIdentityCardNo()));
-        // reqParam.add(new BasicNameValuePair("identityName",
-        // req.getIdentityName()));
         reqParam.add(new BasicNameValuePair("callBackUrl",
             configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
-        // reqParam.add(new BasicNameValuePair("accessType", ""));// 接入方式
-        // 不填写默认api
-        // reqParam.add(new BasicNameValuePair("ts", ""));// 时间戳
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String post = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+
         String token = null;
         if (StringUtils.isBlank(post)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
@@ -261,7 +248,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "查询失败");
                 }
-                // socialsecurity = socialsecurity(token, "socialsecurity");
+
                 LimuCredit limuCredit = new LimuCredit();
                 limuCredit.setBizType("socialsecurity");
                 limuCredit.setUserName(req.getUsername());
@@ -356,15 +343,14 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             reqParam
                 .add(new BasicNameValuePair("otherInfo", req.getOtherInfo()));
         }
-        // reqParam.add(new BasicNameValuePair("callBackUrl",
-        // configsMap.get("apiUrl") + ""));// 回调url
+        reqParam.add(new BasicNameValuePair("callBackUrl",
+            configsMap.get("apiUrl") + "/socialsecurity"));// 回调url
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
         String post = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         String token = null;
-        String socialsecurity = null;
         if (StringUtils.isBlank(post)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
         } else {
@@ -379,12 +365,19 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "查询失败");
                 }
-                socialsecurity = socialsecurity(token, "housefund");
+                LimuCredit limuCredit = new LimuCredit();
+                limuCredit.setBizType("socialsecurity");
+                limuCredit.setUserName(req.getUsername());
+                limuCredit.setToken(token);
+                limuCredit
+                    .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                limuCredit.setFoundDatetime(new Date());
+                limuCreditBO.saveLimuCredit(limuCredit);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return socialsecurity;
+        return post;
     }
 
     @Override

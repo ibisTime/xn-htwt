@@ -2,7 +2,6 @@ package com.cdkj.loan.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.bo.ILimuCreditBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.creditCommon.HttpClient;
@@ -41,25 +39,36 @@ public class SocialsecurityController {
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
-    @RequestMapping(value = "/socialsecurity", method = RequestMethod.GET)
+    @RequestMapping(value = "/socialsecurity", method = RequestMethod.POST)
     public void doClockIn(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        System.out.println("lalalla");
-        String json = request.getParameter("json").toString();
-        String str = URLDecoder.decode(json, "UTF-8");
-        JSONObject object = JSONObject.parseObject(str);
-        String token = object.getString("token");
-        LimuCredit limuCredit = limuCreditBO.getLimuCreditByToken(token);
-        String domain = creditFound(token, "socialsecurity");
+
+        Map<Object, Object> map = request.getParameterMap();
+
+        String[] token = (String[]) map.get("token");
+        String[] bizType = (String[]) map.get("bizType");
+        String[] uid = (String[]) map.get("uid");
+
+        System.out.println("token:" + token[0]);
+
+        // System.out.println(
+        // "token:" + token[0] + ",bizType:" + bizType[0] + ",uid:" + uid[0]);
+
+        LimuCredit limuCredit = limuCreditBO.getLimuCreditByToken(token[0]);
+        if (limuCredit == null) {
+            System.out.println("查询结果为空！");
+        }
+        System.out.println("limuCredit:" + limuCredit);
+        String domain = creditFound(token[0], bizType[0]);
+        System.out.println("domain:" + domain);
         if (domain == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "回调结果为空！");
         }
         limuCredit.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
         limuCredit.setResult(domain);
         limuCredit.setCallbackDatetime(new Date());
-        limuCredit.setUserId(object.getString("userId"));
+        limuCredit.setUserId(uid[0]);
         limuCreditBO.refreshLimuCredit(limuCredit);
-
         PrintWriter writer = null;
         try {
             writer = response.getWriter();
@@ -70,7 +79,7 @@ public class SocialsecurityController {
         }
     }
 
-    private String creditFound(String token, String bizType) {
+    public String creditFound(String token, String bizType) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         Map<String, String> configsMap = sysConfigBO
@@ -85,7 +94,10 @@ public class SocialsecurityController {
         reqParam.add(new BasicNameValuePair("bizType", bizType));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        System.out.println("doPost:" + doPost);
+        return doPost;
     }
+
 }

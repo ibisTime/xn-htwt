@@ -105,4 +105,21 @@ public class LimuCredit extends ABaseDO {
         return result;
     }
 
+    public Date getFoundDatetime() {
+        return foundDatetime;
+    }
+
+    public Date getCallbackDatetime() {
+        return callbackDatetime;
+    }
+
+    @Override
+    public String toString() {
+        return "LimuCredit [id=" + id + ", userId=" + userId + ", userName="
+                + userName + ", bizType=" + bizType + ", token=" + token
+                + ", foundDatetime=" + foundDatetime + ", status=" + status
+                + ", result=" + result + ", callbackDatetime="
+                + callbackDatetime + "]";
+    }
+
 }
