@@ -54,23 +54,20 @@ public class SocialsecurityController {
         System.out.println("bizType:" + bizType[0]);
         System.out.println("uid:" + uid[0]);
 
-        // System.out.println(
-        // "token:" + token[0] + ",bizType:" + bizType[0] + ",uid:" + uid[0]);
-
         LimuCredit limuCredit = limuCreditBO.getLimuCreditByUid(uid[0]);
-        if (limuCredit != null) {
-            // 通过新加入的这条数据查询是否征信过；如果有，删掉这条，并更新原来的数据
-            LimuCredit condition = new LimuCredit();
-            condition.setUserName(limuCredit.getUserName());
-            condition.setBizType(bizType[0]);
-            List<LimuCredit> limuCreditList = limuCreditBO
-                .queryLimuCreditList(condition);
-            if (limuCreditList.size() > 1) {
-                limuCreditBO.dropLimuCredit(limuCredit.getId());
-                limuCredit = limuCreditList.get(0);
-            }
-            System.out.println("limuCredit:" + limuCredit);
-        }
+        // if (limuCredit != null) {
+        // // 通过新加入的这条数据查询是否征信过；如果有，删掉这条，并更新原来的数据
+        // LimuCredit condition = new LimuCredit();
+        // condition.setUserName(limuCredit.getUserName());
+        // condition.setBizType(bizType[0]);
+        // List<LimuCredit> limuCreditList = limuCreditBO
+        // .queryLimuCreditList(condition);
+        // if (limuCreditList.size() > 1) {
+        // limuCreditBO.dropLimuCredit(limuCredit.getId());
+        // limuCredit = limuCreditList.get(0);
+        // }
+        // }
+        System.out.println("limuCredit:" + limuCredit);
         if (limuCredit == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询结果为空！");
         }
