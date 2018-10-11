@@ -49,7 +49,7 @@ public interface IMobileReportDemoAO {
     Object housefund(XN632930Req req);
 
     // 京东查询
-    void jdFund(XN632931Req req);
+    String jdFund(XN632931Req req);
 
     Object callBackUrl();
 }

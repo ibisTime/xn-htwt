@@ -94,10 +94,8 @@ public class SocialsecurityController {
         reqParam.add(new BasicNameValuePair("bizType", bizType));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
-        String doPost = httpClient
-            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        System.out.println("doPost:" + doPost);
-        return doPost;
+        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
+            reqParam);
     }
 
 }

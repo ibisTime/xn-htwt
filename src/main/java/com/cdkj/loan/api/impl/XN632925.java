@@ -23,8 +23,8 @@ public class XN632925 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        // return mobileReportDemoAO.socialsecurityArea(req);
-        return mobileReportDemoAO.callBackUrl();
+        return mobileReportDemoAO.socialsecurityArea(req);
+        // return mobileReportDemoAO.callBackUrl();
     }
 
     @Override

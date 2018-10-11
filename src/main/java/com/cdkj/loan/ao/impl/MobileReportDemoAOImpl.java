@@ -381,6 +381,91 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     }
 
     @Override
+    public String jdFund(XN632931Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
+        reqParam
+            .add(new BasicNameValuePair("version", configsMap.get("version")));
+        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        try {
+            reqParam.add(new BasicNameValuePair("password", new String(
+                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        reqParam.add(new BasicNameValuePair("callBackUrl",
+            configsMap.get("apiUrl") + "/socialsecurity"));// 回调url
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+
+        String post = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        String token = null;
+        if (StringUtils.isBlank(post)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
+        } else {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode;
+            try {
+                rootNode = objectMapper.readValue(post, JsonNode.class);
+                String code = rootNode.get("code").textValue();
+                if ("0010".equals(code)) {// 受理成功
+                    token = rootNode.get("token").textValue();
+                } else {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "查询失败");
+                }
+                LimuCredit limuCredit = new LimuCredit();
+                limuCredit.setBizType("jd");
+                limuCredit.setUserName(req.getUsername());
+                limuCredit.setToken(token);
+                limuCredit
+                    .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                limuCredit.setFoundDatetime(new Date());
+                limuCreditBO.saveLimuCredit(limuCredit);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return post;
+
+        // System.out.println("开始获取京东信息");
+        //
+        // try {
+        //
+        // // 提交受理请求对象
+        // Map<String, String> configsMap = sysConfigBO
+        // .getConfigsMap("id_no_authentication");
+        // List<BasicNameValuePair> reqParam = new
+        // ArrayList<BasicNameValuePair>();
+        // reqParam.add(
+        // new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        // reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
+        // reqParam.add(
+        // new BasicNameValuePair("version", configsMap.get("version")));
+        //
+        // reqParam.add(new BasicNameValuePair("username",
+        // req.getUsername()));// 账号
+        // reqParam.add(new BasicNameValuePair("password", new String(
+        // Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));// 密码
+        // // reqParam.add(new BasicNameValuePair("sign",
+        // // getSign(reqParam)));// 请求参数签名
+        //
+        // // 提交受理请求
+        // // doProcess(reqParam);
+        //
+        // } catch (Exception ex) {
+        // System.out.println("开始获取京东信息异常：" + ex);
+        // }
+    }
+
+    @Override
     public Object callBackUrl() {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
@@ -399,81 +484,4 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             reqParam);
         return post;
     }
-
-    @Override
-    public void jdFund(XN632931Req req) {
-        // HttpClient httpClient = new HttpClient();
-        // AbstractCredit credit = new AbstractCredit();
-        // Map<String, String> configsMap = sysConfigBO
-        // .getConfigsMap("id_no_authentication");
-        // List<BasicNameValuePair> reqParam = new
-        // ArrayList<BasicNameValuePair>();
-        // reqParam
-        // .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-        // reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
-        // reqParam
-        // .add(new BasicNameValuePair("version", configsMap.get("version")));
-        // reqParam.add(new BasicNameValuePair("username", req.getUsername()));
-        // try {
-        // reqParam.add(new BasicNameValuePair("password", new String(
-        // Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
-        // } catch (UnsupportedEncodingException e) {
-        // e.printStackTrace();
-        // }
-        // reqParam.add(new BasicNameValuePair("sign",
-        // credit.getSign(reqParam)));// 请求参数签名
-        //
-        // String post = httpClient
-        // .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        // String token = null;
-        // String socialsecurity = null;
-        // if (StringUtils.isBlank(post)) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
-        // } else {
-        // ObjectMapper objectMapper = new ObjectMapper();
-        // JsonNode rootNode;
-        // try {
-        // rootNode = objectMapper.readValue(post, JsonNode.class);
-        // String code = rootNode.get("code").textValue();
-        // if ("0010".equals(code)) {// 受理成功
-        // token = rootNode.get("token").textValue();
-        // } else {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "查询失败");
-        // }
-        // socialsecurity = socialsecurity(token, "jd");
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
-        // }
-        // return socialsecurity;
-
-        System.out.println("开始获取京东信息");
-
-        try {
-
-            // 提交受理请求对象
-            Map<String, String> configsMap = sysConfigBO
-                .getConfigsMap("id_no_authentication");
-            List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
-            reqParam.add(
-                new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-            reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
-            reqParam.add(
-                new BasicNameValuePair("version", configsMap.get("version")));
-
-            reqParam.add(new BasicNameValuePair("username", req.getUsername()));// 账号
-            reqParam.add(new BasicNameValuePair("password", new String(
-                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));// 密码
-            // reqParam.add(new BasicNameValuePair("sign",
-            // getSign(reqParam)));// 请求参数签名
-
-            // 提交受理请求
-            // doProcess(reqParam);
-
-        } catch (Exception ex) {
-            System.out.println("开始获取京东信息异常：" + ex);
-        }
-    }
-
 }
