@@ -42,6 +42,7 @@ public class SocialsecurityController {
     @RequestMapping(value = "/socialsecurity", method = RequestMethod.POST)
     public void doClockIn(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        System.out.println("===========回调方法开始执行============");
 
         Map<Object, Object> map = request.getParameterMap();
 
@@ -50,15 +51,18 @@ public class SocialsecurityController {
         String[] uid = (String[]) map.get("uid");
 
         System.out.println("token:" + token[0]);
+        System.out.println("bizType:" + bizType[0]);
+        System.out.println("uid:" + uid[0]);
 
         // System.out.println(
         // "token:" + token[0] + ",bizType:" + bizType[0] + ",uid:" + uid[0]);
 
-        LimuCredit limuCredit = limuCreditBO.getLimuCreditByToken(token[0]);
-        if (limuCredit == null) {
-            System.out.println("查询结果为空！");
-        }
+        LimuCredit limuCredit = limuCreditBO.getLimuCreditByToken(uid[0]);
         System.out.println("limuCredit:" + limuCredit);
+        if (limuCredit == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询结果为空！");
+        }
+
         String domain = creditFound(token[0], bizType[0]);
         System.out.println("domain:" + domain);
         if (domain == null) {
@@ -68,15 +72,19 @@ public class SocialsecurityController {
         limuCredit.setResult(domain);
         limuCredit.setCallbackDatetime(new Date());
         limuCredit.setUserId(uid[0]);
-        limuCreditBO.refreshLimuCredit(limuCredit);
-        PrintWriter writer = null;
-        try {
-            writer = response.getWriter();
-            writer.append("success");
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        int i = limuCreditBO.refreshLimuCredit(limuCredit);
+        System.out.println("i:" + i);
+        if (i > 0) {
+            PrintWriter writer = null;
+            try {
+                writer = response.getWriter();
+                writer.append("success");
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        System.out.println("===========回调方法结束============");
     }
 
     public String creditFound(String token, String bizType) {

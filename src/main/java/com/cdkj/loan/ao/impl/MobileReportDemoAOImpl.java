@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.ILimuCreditBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.common.PropertiesUtil;
 import com.cdkj.loan.controller.AbstractCredit;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.creditCommon.HttpClient;
 import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.LimuCredit;
@@ -66,9 +67,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("name", req.getName()));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
-
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        LimuCredit limuCredit = new LimuCredit();
+        limuCredit.setUserName(req.getIdentityNo());
+        limuCredit.setResult(doPost);
+        limuCredit.setFoundDatetime(new Date());
+        limuCredit.setBizType("identity");
+        limuCreditBO.saveLimuCredit(limuCredit);
+        return doPost;
     }
 
     @Override
@@ -89,9 +96,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("name", req.getName()));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
-
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        LimuCredit limuCredit = new LimuCredit();
+        limuCredit.setUserName(req.getIdentityNo());
+        limuCredit.setResult(doPost);
+        limuCredit.setFoundDatetime(new Date());
+        limuCredit.setBizType("involvedlistcheck");
+        limuCreditBO.saveLimuCredit(limuCredit);
+        return doPost;
     }
 
     @Override
@@ -114,8 +127,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        LimuCredit limuCredit = new LimuCredit();
+        limuCredit.setUserName(req.getIdentityNo());
+        limuCredit.setResult(doPost);
+        limuCredit.setFoundDatetime(new Date());
+        limuCredit.setBizType("involveddetailscheck");
+        limuCreditBO.saveLimuCredit(limuCredit);
+        return doPost;
     }
 
     @Override
@@ -139,8 +159,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        LimuCredit limuCredit = new LimuCredit();
+        limuCredit.setUserName(req.getBankCardNo());
+        limuCredit.setResult(doPost);
+        limuCredit.setFoundDatetime(new Date());
+        limuCredit.setBizType("bankcard4check");
+        limuCreditBO.saveLimuCredit(limuCredit);
+        return doPost;
     }
 
     @Override
@@ -161,8 +188,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        LimuCredit limuCredit = new LimuCredit();
+        limuCredit.setUserName(req.getIdentityNo());
+        limuCredit.setResult(doPost);
+        limuCredit.setFoundDatetime(new Date());
+        limuCredit.setBizType("shixincheck");
+        limuCreditBO.saveLimuCredit(limuCredit);
+        return doPost;
     }
 
     @Override
@@ -202,6 +236,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     public Object socialSecurity(XN632927Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
+        String userId = OrderNoGenerater.generate("U");
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -212,6 +247,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("method", "api.socialsecurity.get"));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        reqParam.add(new BasicNameValuePair("uid", userId));
         try {
             reqParam.add(new BasicNameValuePair("password", new String(
                 Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
@@ -230,6 +266,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+
         String post = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
 
@@ -252,6 +289,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 LimuCredit limuCredit = new LimuCredit();
                 limuCredit.setBizType("socialsecurity");
                 limuCredit.setUserName(req.getUsername());
+                limuCredit.setUserId(userId);
                 limuCredit.setToken(token);
                 limuCredit
                     .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -344,7 +382,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 .add(new BasicNameValuePair("otherInfo", req.getOtherInfo()));
         }
         reqParam.add(new BasicNameValuePair("callBackUrl",
-            configsMap.get("apiUrl") + "/socialsecurity"));// 回调url
+            configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
@@ -384,12 +422,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     public String jdFund(XN632931Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
+
+        String userId = OrderNoGenerater.generate("U");
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
+        reqParam.add(new BasicNameValuePair("uid", userId));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
@@ -400,7 +441,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             e.printStackTrace();
         }
         reqParam.add(new BasicNameValuePair("callBackUrl",
-            configsMap.get("apiUrl") + "/socialsecurity"));// 回调url
+            configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
@@ -423,6 +464,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 }
                 LimuCredit limuCredit = new LimuCredit();
                 limuCredit.setBizType("jd");
+                limuCredit.setUserId(userId);
                 limuCredit.setUserName(req.getUsername());
                 limuCredit.setToken(token);
                 limuCredit
@@ -483,5 +525,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String post = httpClient.doPost("https://t.limuzhengxin.cn/callBackUrl",
             reqParam);
         return post;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(OrderNoGenerater.generate("U"));
     }
 }

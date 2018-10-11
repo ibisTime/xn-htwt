@@ -23,8 +23,7 @@ public class XN632931 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        mobileReportDemoAO.jdFund(req);
-        return null;
+        return mobileReportDemoAO.jdFund(req);
     }
 
     @Override

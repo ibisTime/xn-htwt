@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -50,8 +51,13 @@ public class LimuCreditBOImpl extends PaginableBOImpl<LimuCredit>
 
     @Override
     public LimuCredit getLimuCreditByToken(String token) {
-        LimuCredit condition = new LimuCredit();
-        condition.setToken(token);
-        return limuCreditDAO.select(condition);
+        LimuCredit data = null;
+        if (StringUtils.isBlank(token)) {
+            LimuCredit condition = new LimuCredit();
+            // condition.setToken(token);
+            condition.setUserId(token);
+            limuCreditDAO.select(condition);
+        }
+        return data;
     }
 }
