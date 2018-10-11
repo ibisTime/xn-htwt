@@ -34,6 +34,7 @@ import com.cdkj.loan.dto.req.XN632928Req;
 import com.cdkj.loan.dto.req.XN632929Req;
 import com.cdkj.loan.dto.req.XN632930Req;
 import com.cdkj.loan.dto.req.XN632931Req;
+import com.cdkj.loan.dto.req.XN632932Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELimuCreditStatus;
 import com.cdkj.loan.exception.BizException;
@@ -476,35 +477,66 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             }
         }
         return post;
+    }
 
-        // System.out.println("开始获取京东信息");
-        //
-        // try {
-        //
-        // // 提交受理请求对象
-        // Map<String, String> configsMap = sysConfigBO
-        // .getConfigsMap("id_no_authentication");
-        // List<BasicNameValuePair> reqParam = new
-        // ArrayList<BasicNameValuePair>();
-        // reqParam.add(
-        // new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-        // reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
-        // reqParam.add(
-        // new BasicNameValuePair("version", configsMap.get("version")));
-        //
-        // reqParam.add(new BasicNameValuePair("username",
-        // req.getUsername()));// 账号
-        // reqParam.add(new BasicNameValuePair("password", new String(
-        // Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));// 密码
-        // // reqParam.add(new BasicNameValuePair("sign",
-        // // getSign(reqParam)));// 请求参数签名
-        //
-        // // 提交受理请求
-        // // doProcess(reqParam);
-        //
-        // } catch (Exception ex) {
-        // System.out.println("开始获取京东信息异常：" + ex);
-        // }
+    @Override
+    public Object taobaoFund(XN632932Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+
+        String userId = OrderNoGenerater.generate("U");
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("method", "api.taobao.get"));
+        reqParam.add(new BasicNameValuePair("uid", userId));
+        reqParam
+            .add(new BasicNameValuePair("version", configsMap.get("version")));
+        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        try {
+            reqParam.add(new BasicNameValuePair("password", new String(
+                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        reqParam.add(new BasicNameValuePair("callBackUrl",
+            configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+
+        String post = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        String token = null;
+        if (StringUtils.isBlank(post)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
+        } else {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode;
+            try {
+                rootNode = objectMapper.readValue(post, JsonNode.class);
+                String code = rootNode.get("code").textValue();
+                if ("0010".equals(code)) {// 受理成功
+                    token = rootNode.get("token").textValue();
+                } else {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "查询失败");
+                }
+                LimuCredit limuCredit = new LimuCredit();
+                limuCredit.setBizType("taobao");
+                limuCredit.setUserId(userId);
+                limuCredit.setUserName(req.getUsername());
+                limuCredit.setToken(token);
+                limuCredit
+                    .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                limuCredit.setFoundDatetime(new Date());
+                limuCreditBO.saveLimuCredit(limuCredit);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return post;
     }
 
     @Override
@@ -530,4 +562,5 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     public static void main(String[] args) {
         System.out.println(OrderNoGenerater.generate("U"));
     }
+
 }

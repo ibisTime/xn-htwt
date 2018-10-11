@@ -12,6 +12,7 @@ import com.cdkj.loan.dto.req.XN632928Req;
 import com.cdkj.loan.dto.req.XN632929Req;
 import com.cdkj.loan.dto.req.XN632930Req;
 import com.cdkj.loan.dto.req.XN632931Req;
+import com.cdkj.loan.dto.req.XN632932Req;
 
 public interface IMobileReportDemoAO {
 
@@ -50,6 +51,9 @@ public interface IMobileReportDemoAO {
 
     // 京东查询
     String jdFund(XN632931Req req);
+
+    // 淘宝查询
+    Object taobaoFund(XN632932Req req);
 
     Object callBackUrl();
 }
