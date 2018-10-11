@@ -25,6 +25,16 @@ public class LimuCreditBOImpl extends PaginableBOImpl<LimuCredit>
     }
 
     @Override
+    public void dropLimuCredit(int id) {
+        LimuCredit limuCredit = getLimuCredit(id);
+        if (limuCredit == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "立木征信编号不存在！");
+        }
+        limuCreditDAO.delete(limuCredit);
+    }
+
+    @Override
     public int refreshLimuCredit(LimuCredit data) {
         return limuCreditDAO.update(data);
     }
@@ -50,14 +60,28 @@ public class LimuCreditBOImpl extends PaginableBOImpl<LimuCredit>
     }
 
     @Override
-    public LimuCredit getLimuCreditByToken(String token) {
+    public LimuCredit getLimuCreditByUid(String uid) {
         LimuCredit data = null;
-        if (StringUtils.isBlank(token)) {
+        if (StringUtils.isBlank(uid)) {
             LimuCredit condition = new LimuCredit();
             // condition.setToken(token);
-            condition.setUserId(token);
-            limuCreditDAO.select(condition);
+            condition.setUserId(uid);
+            data = limuCreditDAO.select(condition);
         }
         return data;
     }
+
+    @Override
+    public LimuCredit getLimuCreditByUserName(String userName, String bizType) {
+        LimuCredit data = null;
+        if (StringUtils.isBlank(userName)) {
+            LimuCredit condition = new LimuCredit();
+            // condition.setToken(token);
+            condition.setUserName(userName);
+            condition.setBizType(bizType);
+            data = limuCreditDAO.select(condition);
+        }
+        return data;
+    }
+
 }

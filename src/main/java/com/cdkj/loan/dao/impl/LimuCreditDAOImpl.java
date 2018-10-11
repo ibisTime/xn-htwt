@@ -19,7 +19,7 @@ public class LimuCreditDAOImpl extends AMybatisTemplate
 
     @Override
     public int delete(LimuCredit data) {
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_limuCredit"), data);
     }
 
     @Override

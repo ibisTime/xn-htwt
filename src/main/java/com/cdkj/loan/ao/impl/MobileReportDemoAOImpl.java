@@ -70,12 +70,20 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        LimuCredit limuCredit = new LimuCredit();
-        limuCredit.setUserName(req.getIdentityNo());
-        limuCredit.setResult(doPost);
-        limuCredit.setFoundDatetime(new Date());
-        limuCredit.setBizType("identity");
-        limuCreditBO.saveLimuCredit(limuCredit);
+        LimuCredit data = limuCreditBO
+            .getLimuCreditByUserName(req.getIdentityNo(), "identity");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getIdentityNo());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("identity");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
         return doPost;
     }
 
@@ -99,12 +107,20 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        LimuCredit limuCredit = new LimuCredit();
-        limuCredit.setUserName(req.getIdentityNo());
-        limuCredit.setResult(doPost);
-        limuCredit.setFoundDatetime(new Date());
-        limuCredit.setBizType("involvedlistcheck");
-        limuCreditBO.saveLimuCredit(limuCredit);
+        LimuCredit data = limuCreditBO
+            .getLimuCreditByUserName(req.getIdentityNo(), "involvedlistcheck");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getIdentityNo());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("involvedlistcheck");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
         return doPost;
     }
 
@@ -130,12 +146,20 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        LimuCredit limuCredit = new LimuCredit();
-        limuCredit.setUserName(req.getIdentityNo());
-        limuCredit.setResult(doPost);
-        limuCredit.setFoundDatetime(new Date());
-        limuCredit.setBizType("involveddetailscheck");
-        limuCreditBO.saveLimuCredit(limuCredit);
+        LimuCredit data = limuCreditBO.getLimuCreditByUserName(
+            req.getIdentityNo(), "involveddetailscheck");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getIdentityNo());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("involveddetailscheck");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
         return doPost;
     }
 
@@ -162,12 +186,20 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        LimuCredit limuCredit = new LimuCredit();
-        limuCredit.setUserName(req.getBankCardNo());
-        limuCredit.setResult(doPost);
-        limuCredit.setFoundDatetime(new Date());
-        limuCredit.setBizType("bankcard4check");
-        limuCreditBO.saveLimuCredit(limuCredit);
+        LimuCredit data = limuCreditBO
+            .getLimuCreditByUserName(req.getIdentityNo(), "bankcard4check");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getBankCardNo());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("bankcard4check");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
         return doPost;
     }
 
@@ -191,12 +223,20 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        LimuCredit limuCredit = new LimuCredit();
-        limuCredit.setUserName(req.getIdentityNo());
-        limuCredit.setResult(doPost);
-        limuCredit.setFoundDatetime(new Date());
-        limuCredit.setBizType("shixincheck");
-        limuCreditBO.saveLimuCredit(limuCredit);
+        LimuCredit data = limuCreditBO
+            .getLimuCreditByUserName(req.getIdentityNo(), "shixincheck");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getIdentityNo());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("shixincheck");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
         return doPost;
     }
 

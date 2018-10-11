@@ -24,6 +24,12 @@
 			<if test="token != null and token != '' ">
 				AND t.token = #{token}
 			</if>
+			<if test="userName != null and userName != '' ">
+				AND t.user_name = #{userName}
+			</if>
+			<if test="bizType != null and bizType != '' ">
+				AND t.biz_type = #{bizType}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_limuCredit" parameterType="limuCredit" resultMap="limuCredit_DB_Result">
@@ -92,6 +98,11 @@
 		,callback_datetime = #{callbackDatetime}
 		WHERE id = #{id}
 	</update>
+
+	<delete id="delete_limuCredit" parameterType="limuCredit">
+		DELETE tdq_limu_credit
+		WHERE id = #{id}
+	</delete>
 
 
 </mapper>
