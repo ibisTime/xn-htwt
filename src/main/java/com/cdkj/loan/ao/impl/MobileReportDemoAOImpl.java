@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.IMobileReportDemoAO;
 import com.cdkj.loan.bo.ILimuCreditBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
@@ -35,6 +37,8 @@ import com.cdkj.loan.dto.req.XN632929Req;
 import com.cdkj.loan.dto.req.XN632930Req;
 import com.cdkj.loan.dto.req.XN632931Req;
 import com.cdkj.loan.dto.req.XN632932Req;
+import com.cdkj.loan.dto.req.XN632933Req;
+import com.cdkj.loan.dto.req.XN632934Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELimuCreditStatus;
 import com.cdkj.loan.exception.BizException;
@@ -237,7 +241,10 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setBizType("shixincheck");
             limuCreditBO.saveLimuCredit(limuCredit);
         }
-        return doPost;
+        // 截取data
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("data");
+        return jsonObject;
     }
 
     @Override
@@ -252,8 +259,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             new BasicNameValuePair("method", "api.socialsecurity.getareas"));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取data
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONArray jsonArray = parseObject.getJSONArray("data");
+        return jsonArray;
     }
 
     @Override
@@ -445,7 +456,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                         "查询失败");
                 }
                 LimuCredit limuCredit = new LimuCredit();
-                limuCredit.setBizType("socialsecurity");
+                limuCredit.setBizType("housefund");
                 limuCredit.setUserName(req.getUsername());
                 limuCredit.setToken(token);
                 limuCredit
@@ -599,8 +610,106 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         return post;
     }
 
-    public static void main(String[] args) {
-        System.out.println(OrderNoGenerater.generate("U"));
+    @Override
+    public Object mobileLocation(XN632933Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        // reqParam.add(new BasicNameValuePair("method",
+        // configsMap.get("apiUrl") + "/mobile/v1_2/location"));
+        reqParam.add(new BasicNameValuePair("mobileNo", req.getMobileNo()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/mobile/v1_2/location", reqParam);
+        LimuCredit data = limuCreditBO
+            .getLimuCreditByUserName(req.getMobileNo(), "mobileLocation");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getMobileNo());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("mobileLocation");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object mobileReportTask(XN632934Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(
+            new BasicNameValuePair("identityCardNo", req.getIdentityCardNo()));
+        reqParam
+            .add(new BasicNameValuePair("identityName", req.getIdentityName()));
+        reqParam.add(new BasicNameValuePair("bankcard", req.getBankcard()));
+        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        reqParam.add(new BasicNameValuePair("password", req.getPassword()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/mobile_report/v1_2/task", reqParam);
+        LimuCredit data = limuCreditBO
+            .getLimuCreditByUserName(req.getUsername(), "mobileReportTask");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getUsername());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("mobileReportTask");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object mobileReportTaskStatus(String token) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", token));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/mobile_report/v1_2/task/status",
+            reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByUserName(token,
+            "mobileReportTask");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setToken(token);
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("mobileReportTask");
+            limuCreditBO.saveLimuCredit(limuCredit);
+        }
+        return doPost;
     }
 
 }

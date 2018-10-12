@@ -13,6 +13,8 @@ import com.cdkj.loan.dto.req.XN632929Req;
 import com.cdkj.loan.dto.req.XN632930Req;
 import com.cdkj.loan.dto.req.XN632931Req;
 import com.cdkj.loan.dto.req.XN632932Req;
+import com.cdkj.loan.dto.req.XN632933Req;
+import com.cdkj.loan.dto.req.XN632934Req;
 
 public interface IMobileReportDemoAO {
 
@@ -56,4 +58,13 @@ public interface IMobileReportDemoAO {
     Object taobaoFund(XN632932Req req);
 
     Object callBackUrl();
+
+    // 运营商归属地查询
+    Object mobileLocation(XN632933Req req);
+
+    // 运营商报告采集任务提交
+    Object mobileReportTask(XN632934Req req);
+
+    // 运营商报告采集状态查询
+    Object mobileReportTaskStatus(String token);
 }

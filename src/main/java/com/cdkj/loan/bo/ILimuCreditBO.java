@@ -19,6 +19,8 @@ public interface ILimuCreditBO extends IPaginableBO<LimuCredit> {
 
     public LimuCredit getLimuCreditByUid(String uid);
 
+    public LimuCredit getLimuCreditByToken(String token);
+
     public LimuCredit getLimuCreditByUserName(String userName, String bizType);
 
 }

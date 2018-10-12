@@ -69,7 +69,9 @@ public class SocialsecurityController {
         // }
         System.out.println("limuCredit:" + limuCredit);
         if (limuCredit == null) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询结果为空！");
+            System.out.println("查询结果为空！");
+            // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+            // "查询结果为空！");
         }
 
         String domain = creditFound(token[0], bizType[0]);

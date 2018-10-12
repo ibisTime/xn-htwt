@@ -62,7 +62,7 @@ public class LimuCreditBOImpl extends PaginableBOImpl<LimuCredit>
     @Override
     public LimuCredit getLimuCreditByUid(String uid) {
         LimuCredit data = null;
-        if (StringUtils.isBlank(uid)) {
+        if (StringUtils.isNotBlank(uid)) {
             LimuCredit condition = new LimuCredit();
             // condition.setToken(token);
             condition.setUserId(uid);
@@ -74,11 +74,23 @@ public class LimuCreditBOImpl extends PaginableBOImpl<LimuCredit>
     @Override
     public LimuCredit getLimuCreditByUserName(String userName, String bizType) {
         LimuCredit data = null;
-        if (StringUtils.isBlank(userName)) {
+        if (StringUtils.isNotBlank(userName)) {
             LimuCredit condition = new LimuCredit();
             // condition.setToken(token);
             condition.setUserName(userName);
             condition.setBizType(bizType);
+            data = limuCreditDAO.select(condition);
+        }
+        return data;
+    }
+
+    @Override
+    public LimuCredit getLimuCreditByToken(String token) {
+        LimuCredit data = null;
+        if (StringUtils.isNotBlank(token)) {
+            LimuCredit condition = new LimuCredit();
+            // condition.setToken(token);
+            condition.setToken(token);
             data = limuCreditDAO.select(condition);
         }
         return data;

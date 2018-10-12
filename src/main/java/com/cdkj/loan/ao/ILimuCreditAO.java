@@ -9,7 +9,7 @@ import com.cdkj.loan.domain.LimuCredit;
 
 @Component
 public interface ILimuCreditAO {
-    static final String DEFAULT_ORDER_COLUMN = "code";
+    static final String DEFAULT_ORDER_COLUMN = "id";
 
     public void addLimuCredit(LimuCredit data);
 
