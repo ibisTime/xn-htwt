@@ -15,6 +15,13 @@ import com.cdkj.loan.dto.req.XN632931Req;
 import com.cdkj.loan.dto.req.XN632932Req;
 import com.cdkj.loan.dto.req.XN632933Req;
 import com.cdkj.loan.dto.req.XN632934Req;
+import com.cdkj.loan.dto.req.XN632936Req;
+import com.cdkj.loan.dto.req.XN632937Req;
+import com.cdkj.loan.dto.req.XN632938Req;
+import com.cdkj.loan.dto.req.XN632939Req;
+import com.cdkj.loan.dto.req.XN632941Req;
+import com.cdkj.loan.dto.req.XN632942Req;
+import com.cdkj.loan.dto.req.XN632943Req;
 
 public interface IMobileReportDemoAO {
 
@@ -67,4 +74,28 @@ public interface IMobileReportDemoAO {
 
     // 运营商报告采集状态查询
     Object mobileReportTaskStatus(String token);
+
+    // 运营商报告验证码输入
+    Object mobileReportTaskInput(XN632936Req req);
+
+    // 运营商报告结果获取
+    Object mobileReportTaskReport(XN632937Req req);
+
+    // 运营商报告原始数据获取
+    Object mobileReportTaskData(XN632938Req req);
+
+    // 电商报告采集任务提交
+    Object taobaoReportTask(XN632939Req req);
+
+    // 电商报告采集状态查询
+    Object taobaoReportTaskStatus(String token);
+
+    // 电商报告验证码输入
+    Object taobaoReportTaskInput(XN632941Req req);
+
+    // 电商报告结果获取
+    Object taobaoReportTaskReport(XN632942Req req);
+
+    // 电商报告原始数据获取
+    Object taobaoReportTaskData(XN632943Req req);
 }

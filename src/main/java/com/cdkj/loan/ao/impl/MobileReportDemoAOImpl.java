@@ -39,6 +39,13 @@ import com.cdkj.loan.dto.req.XN632931Req;
 import com.cdkj.loan.dto.req.XN632932Req;
 import com.cdkj.loan.dto.req.XN632933Req;
 import com.cdkj.loan.dto.req.XN632934Req;
+import com.cdkj.loan.dto.req.XN632936Req;
+import com.cdkj.loan.dto.req.XN632937Req;
+import com.cdkj.loan.dto.req.XN632938Req;
+import com.cdkj.loan.dto.req.XN632939Req;
+import com.cdkj.loan.dto.req.XN632941Req;
+import com.cdkj.loan.dto.req.XN632942Req;
+import com.cdkj.loan.dto.req.XN632943Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELimuCreditStatus;
 import com.cdkj.loan.exception.BizException;
@@ -619,13 +626,16 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-        // reqParam.add(new BasicNameValuePair("method",
-        // configsMap.get("apiUrl") + "/mobile/v1_2/location"));
+        reqParam
+            .add(new BasicNameValuePair("version", configsMap.get("version")));
+        reqParam.add(new BasicNameValuePair("method", "api.mobile.area"));
         reqParam.add(new BasicNameValuePair("mobileNo", req.getMobileNo()));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
-        String doPost = httpClient.doPost(
-            configsMap.get("apiUrl") + "/mobile/v1_2/location", reqParam);
+        // String doPost = httpClient.doPost(
+        // configsMap.get("apiUrl") + "/mobile/v1/location", reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getMobileNo(), "mobileLocation");
         if (data != null) {
@@ -658,23 +668,39 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             .add(new BasicNameValuePair("identityName", req.getIdentityName()));
         reqParam.add(new BasicNameValuePair("bankcard", req.getBankcard()));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
-        reqParam.add(new BasicNameValuePair("password", req.getPassword()));
+        try {
+            reqParam.add(new BasicNameValuePair("password", new String(
+                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
-            configsMap.get("apiUrl") + "/mobile_report/v1_2/task", reqParam);
+            configsMap.get("apiUrl") + "/mobile_report/v1/task", reqParam);
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getUsername(), "mobileReportTask");
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        String token = rootNode.get("token").textValue();
         if (data != null) {
-            data.setResult(doPost);
+            data.setToken(token);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
         } else {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserName(req.getUsername());
-            limuCredit.setResult(doPost);
+            limuCredit.setToken(token);
             limuCredit.setFoundDatetime(new Date());
             limuCredit.setBizType("mobileReportTask");
+            limuCreditBO.saveLimuCredit(limuCredit);
+            limuCredit.setBizType("mobileReportTaskData");
             limuCreditBO.saveLimuCredit(limuCredit);
         }
         return doPost;
@@ -693,23 +719,265 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
-            configsMap.get("apiUrl") + "/mobile_report/v1_2/task/status",
+            configsMap.get("apiUrl") + "/mobile_report/v1/task/status",
             reqParam);
-        LimuCredit data = limuCreditBO.getLimuCreditByUserName(token,
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(token,
             "mobileReportTask");
         if (data != null) {
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
         } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据token查询的运营商数据不存在！");
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object mobileReportTaskInput(XN632936Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("input", req.getInput()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/mobile_report/v1/task/input",
+            reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+            "mobileReportTask");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "token不存在！");
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object mobileReportTaskReport(XN632937Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/mobile_report/v1/task/report",
+            reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+            "mobileReportTask");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "token不存在！");
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object mobileReportTaskData(XN632938Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/mobile_report/v1/task/data", reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+            "mobileReportTaskData");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据token查询的运营商数据不存在！");
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object taobaoReportTask(XN632939Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(
+            new BasicNameValuePair("identityCardNo", req.getIdentityCardNo()));
+        reqParam
+            .add(new BasicNameValuePair("identityName", req.getIdentityName()));
+        reqParam.add(new BasicNameValuePair("loginType", req.getLoginType()));
+        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        try {
+            reqParam.add(new BasicNameValuePair("password", new String(
+                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/taobao_report/v1/task", reqParam);
+        LimuCredit data = limuCreditBO
+            .getLimuCreditByUserName(req.getUsername(), "taobaoReportTask");
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String token = rootNode.get("token").textValue();
+        if (data != null) {
+            data.setToken(token);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
             LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserName(req.getUsername());
             limuCredit.setToken(token);
-            limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
-            limuCredit.setBizType("mobileReportTask");
+            limuCredit.setBizType("taobaoReportTask");
+            limuCreditBO.saveLimuCredit(limuCredit);
+            limuCredit.setBizType("taobaoReportTaskData");
             limuCreditBO.saveLimuCredit(limuCredit);
         }
         return doPost;
     }
 
+    @Override
+    public Object taobaoReportTaskStatus(String token) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", token));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/taobao_report/v1/task/status",
+            reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(token,
+            "taobaoReportTask");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据token查询的运营商数据不存在！");
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object taobaoReportTaskInput(XN632941Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("input", req.getInput()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/taobao_report/v1/task/input",
+            reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+            "taobaoReportTask");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "token不存在！");
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object taobaoReportTaskReport(XN632942Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/taobao_report/v1/task/data", reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+            "taobaoReportTaskData");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据token查询的运营商数据不存在！");
+        }
+        return doPost;
+    }
+
+    @Override
+    public Object taobaoReportTaskData(XN632943Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient.doPost(
+            configsMap.get("apiUrl") + "/taobao_report/v1/task/data", reqParam);
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+            "taobaoReportTaskData");
+        if (data != null) {
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据token查询的运营商数据不存在！");
+        }
+        return doPost;
+    }
 }

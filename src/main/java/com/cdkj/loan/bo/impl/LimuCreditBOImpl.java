@@ -85,11 +85,11 @@ public class LimuCreditBOImpl extends PaginableBOImpl<LimuCredit>
     }
 
     @Override
-    public LimuCredit getLimuCreditByToken(String token) {
+    public LimuCredit getLimuCreditByToken(String token, String bizType) {
         LimuCredit data = null;
         if (StringUtils.isNotBlank(token)) {
             LimuCredit condition = new LimuCredit();
-            // condition.setToken(token);
+            condition.setBizType(bizType);
             condition.setToken(token);
             data = limuCreditDAO.select(condition);
         }
