@@ -81,6 +81,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0000".equals(jsonObject)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getIdentityNo(), "identity");
         if (data != null) {
@@ -118,6 +124,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0000".equals(jsonObject)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getIdentityNo(), "involvedlistcheck");
         if (data != null) {
@@ -157,6 +169,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0000".equals(jsonObject)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO.getLimuCreditByUserName(
             req.getIdentityNo(), "involveddetailscheck");
         if (data != null) {
@@ -197,6 +215,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0000".equals(jsonObject)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getIdentityNo(), "bankcard4check");
         if (data != null) {
@@ -234,6 +258,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0000".equals(jsonObject)) {
+            return parseObject.getJSONObject("data");
+        }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getIdentityNo(), "shixincheck");
         if (data != null) {
@@ -249,9 +279,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
         }
         // 截取data
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("data");
-        return jsonObject;
+        JSONObject joData = parseObject.getJSONObject("data");
+        return joData;
     }
 
     @Override
@@ -328,7 +357,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
         String post = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-
+        // 截取code,如果不成功，不用保存
+        // JSONObject parseObject = JSONObject.parseObject(post);
+        // JSONObject jsonObject = parseObject.getJSONObject("code");
+        // if (!"0000".equals(jsonObject)) {
+        // return post;
+        // }
         String token = null;
         if (StringUtils.isBlank(post)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
@@ -344,16 +378,26 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "查询失败");
                 }
-
-                LimuCredit limuCredit = new LimuCredit();
-                limuCredit.setBizType("socialsecurity");
-                limuCredit.setUserName(req.getUsername());
-                limuCredit.setUserId(userId);
-                limuCredit.setToken(token);
-                limuCredit
-                    .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
-                limuCredit.setFoundDatetime(new Date());
-                limuCreditBO.saveLimuCredit(limuCredit);
+                LimuCredit limuCredit = limuCreditBO.getLimuCreditByUserName(
+                    req.getUsername(), "socialsecurity");
+                if (limuCredit == null) {
+                    LimuCredit data = new LimuCredit();
+                    data.setBizType("socialsecurity");
+                    data.setUserName(req.getUsername());
+                    data.setUserId(userId);
+                    data.setToken(token);
+                    data.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    data.setFoundDatetime(new Date());
+                    limuCreditBO.saveLimuCredit(data);
+                } else {
+                    limuCredit.setUserId(userId);
+                    limuCredit.setToken(token);
+                    limuCredit.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    limuCredit.setFoundDatetime(new Date());
+                    limuCreditBO.refreshLimuCredit(limuCredit);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -417,6 +461,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     public Object housefund(XN632930Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
+        String userId = OrderNoGenerater.generate("U");
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -462,14 +507,26 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "查询失败");
                 }
-                LimuCredit limuCredit = new LimuCredit();
-                limuCredit.setBizType("housefund");
-                limuCredit.setUserName(req.getUsername());
-                limuCredit.setToken(token);
-                limuCredit
-                    .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
-                limuCredit.setFoundDatetime(new Date());
-                limuCreditBO.saveLimuCredit(limuCredit);
+                LimuCredit limuCredit = limuCreditBO
+                    .getLimuCreditByUserName(req.getUsername(), "housefund");
+                if (limuCredit == null) {
+                    LimuCredit data = new LimuCredit();
+                    data.setBizType("housefund");
+                    data.setUserName(req.getUsername());
+                    data.setUserId(userId);
+                    data.setToken(token);
+                    data.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    data.setFoundDatetime(new Date());
+                    limuCreditBO.saveLimuCredit(data);
+                } else {
+                    limuCredit.setUserId(userId);
+                    limuCredit.setToken(token);
+                    limuCredit.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    limuCredit.setFoundDatetime(new Date());
+                    limuCreditBO.refreshLimuCredit(limuCredit);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -521,15 +578,27 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "查询失败");
                 }
-                LimuCredit limuCredit = new LimuCredit();
-                limuCredit.setBizType("jd");
-                limuCredit.setUserId(userId);
-                limuCredit.setUserName(req.getUsername());
-                limuCredit.setToken(token);
-                limuCredit
-                    .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
-                limuCredit.setFoundDatetime(new Date());
-                limuCreditBO.saveLimuCredit(limuCredit);
+
+                LimuCredit limuCredit = limuCreditBO
+                    .getLimuCreditByUserName(req.getUsername(), "jd");
+                if (limuCredit == null) {
+                    LimuCredit data = new LimuCredit();
+                    data.setBizType("jd");
+                    data.setUserName(req.getUsername());
+                    data.setUserId(userId);
+                    data.setToken(token);
+                    data.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    data.setFoundDatetime(new Date());
+                    limuCreditBO.saveLimuCredit(data);
+                } else {
+                    limuCredit.setUserId(userId);
+                    limuCredit.setToken(token);
+                    limuCredit.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    limuCredit.setFoundDatetime(new Date());
+                    limuCreditBO.refreshLimuCredit(limuCredit);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -581,15 +650,26 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "查询失败");
                 }
-                LimuCredit limuCredit = new LimuCredit();
-                limuCredit.setBizType("taobao");
-                limuCredit.setUserId(userId);
-                limuCredit.setUserName(req.getUsername());
-                limuCredit.setToken(token);
-                limuCredit
-                    .setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
-                limuCredit.setFoundDatetime(new Date());
-                limuCreditBO.saveLimuCredit(limuCredit);
+                LimuCredit limuCredit = limuCreditBO
+                    .getLimuCreditByUserName(req.getUsername(), "taobao");
+                if (limuCredit == null) {
+                    LimuCredit data = new LimuCredit();
+                    data.setBizType("taobao");
+                    data.setUserName(req.getUsername());
+                    data.setUserId(userId);
+                    data.setToken(token);
+                    data.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    data.setFoundDatetime(new Date());
+                    limuCreditBO.saveLimuCredit(data);
+                } else {
+                    limuCredit.setUserId(userId);
+                    limuCredit.setToken(token);
+                    limuCredit.setStatus(
+                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    limuCredit.setFoundDatetime(new Date());
+                    limuCreditBO.refreshLimuCredit(limuCredit);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -636,20 +716,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         // configsMap.get("apiUrl") + "/mobile/v1/location", reqParam);
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
-        LimuCredit data = limuCreditBO
-            .getLimuCreditByUserName(req.getMobileNo(), "mobileLocation");
-        if (data != null) {
-            data.setResult(doPost);
-            data.setFoundDatetime(new Date());
-            limuCreditBO.refreshLimuCredit(data);
-        } else {
-            LimuCredit limuCredit = new LimuCredit();
-            limuCredit.setUserName(req.getMobileNo());
-            limuCredit.setResult(doPost);
-            limuCredit.setFoundDatetime(new Date());
-            limuCredit.setBizType("mobileLocation");
-            limuCreditBO.saveLimuCredit(limuCredit);
-        }
         return doPost;
     }
 
@@ -678,6 +744,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0010".equals(jsonObject)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getUsername(), "mobileReportTask");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -685,7 +757,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         try {
             rootNode = objectMapper.readValue(doPost, JsonNode.class);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         String token = rootNode.get("token").textValue();
@@ -723,11 +794,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(token,
             "mobileReportTask");
-        if (data != null) {
-            data.setResult(doPost);
-            data.setFoundDatetime(new Date());
-            limuCreditBO.refreshLimuCredit(data);
-        } else {
+        if (data == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "根据token查询的运营商数据不存在！");
         }
@@ -750,10 +817,25 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task/input",
             reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0000".equals(jsonObject)) {
+            return doPost;
+        }
+        String post = httpClient.doPost(
+            configsMap.get("apiUrl") + "/mobile_report/v1/task/report",
+            reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject jsPost = JSONObject.parseObject(post);
+        JSONObject jsCode = jsPost.getJSONObject("code");
+        if (!"0000".equals(jsCode)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
             "mobileReportTask");
         if (data != null) {
-            data.setResult(doPost);
+            data.setResult(post);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
         } else {
@@ -805,6 +887,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task/data", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0000".equals(jsonObject)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
             "mobileReportTaskData");
         if (data != null) {
@@ -843,6 +931,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/taobao_report/v1/task", reqParam);
+        // 截取code,如果不成功，不用保存
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONObject jsonObject = parseObject.getJSONObject("code");
+        if (!"0010".equals(jsonObject)) {
+            return doPost;
+        }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getUsername(), "taobaoReportTask");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -914,10 +1008,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/taobao_report/v1/task/input",
             reqParam);
+        String post = httpClient.doPost(
+            configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
+            reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
             "taobaoReportTask");
         if (data != null) {
-            data.setResult(doPost);
+            data.setResult(post);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
         } else {
@@ -940,7 +1037,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
-            configsMap.get("apiUrl") + "/taobao_report/v1/task/data", reqParam);
+            configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
+            reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
             "taobaoReportTaskData");
         if (data != null) {
