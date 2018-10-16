@@ -11,14 +11,14 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632940Req {
 
     @NotBlank
-    private String token;
+    private String tokendb;
 
-    public String getToken() {
-        return token;
+    public String getTokendb() {
+        return tokendb;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setTokendb(String tokendb) {
+        this.tokendb = tokendb;
     }
 
 }

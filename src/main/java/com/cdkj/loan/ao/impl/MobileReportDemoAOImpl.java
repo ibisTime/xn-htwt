@@ -82,9 +82,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0000".equals(jsonObject)) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0000".equals(code)) {
             return doPost;
         }
         LimuCredit data = limuCreditBO
@@ -125,9 +131,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0000".equals(jsonObject)) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0000".equals(code)) {
             return doPost;
         }
         LimuCredit data = limuCreditBO
@@ -170,9 +182,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0000".equals(jsonObject)) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0000".equals(code)) {
             return doPost;
         }
         LimuCredit data = limuCreditBO.getLimuCreditByUserName(
@@ -216,9 +234,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0000".equals(jsonObject)) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0000".equals(code)) {
             return doPost;
         }
         LimuCredit data = limuCreditBO
@@ -259,10 +283,16 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0000".equals(jsonObject)) {
-            return parseObject.getJSONObject("data");
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0000".equals(code)) {
+            return rootNode.get("data").textValue();
         }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getIdentityNo(), "shixincheck");
@@ -279,7 +309,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
         }
         // 截取data
-        JSONObject joData = parseObject.getJSONObject("data");
+        String joData = rootNode.get("data").textValue();
         return joData;
     }
 
@@ -375,8 +405,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 if ("0010".equals(code)) {// 受理成功
                     token = rootNode.get("token").textValue();
                 } else {
-                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "查询失败");
+                    return post;
                 }
                 LimuCredit limuCredit = limuCreditBO.getLimuCreditByUserName(
                     req.getUsername(), "socialsecurity");
@@ -744,12 +773,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task", reqParam);
-        // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0010".equals(jsonObject)) {
-            return doPost;
-        }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getUsername(), "mobileReportTask");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -758,6 +781,10 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             rootNode = objectMapper.readValue(doPost, JsonNode.class);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0010".equals(code)) {
+            return doPost;
         }
         String token = rootNode.get("token").textValue();
         if (data != null) {
@@ -810,7 +837,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("token", req.getTokendb()));
         reqParam.add(new BasicNameValuePair("input", req.getInput()));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
@@ -818,21 +845,31 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("apiUrl") + "/mobile_report/v1/task/input",
             reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0000".equals(jsonObject)) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0000".equals(code)) {
             return doPost;
         }
         String post = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task/report",
             reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject jsPost = JSONObject.parseObject(post);
-        JSONObject jsCode = jsPost.getJSONObject("code");
+        try {
+            rootNode = objectMapper.readValue(post, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String jsCode = rootNode.get("code").textValue();
         if (!"0000".equals(jsCode)) {
             return doPost;
         }
-        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
             "mobileReportTask");
         if (data != null) {
             data.setResult(post);
@@ -888,9 +925,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task/data", reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0000".equals(jsonObject)) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0000".equals(code)) {
             return doPost;
         }
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
@@ -932,11 +975,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/taobao_report/v1/task", reqParam);
         // 截取code,如果不成功，不用保存
-        JSONObject parseObject = JSONObject.parseObject(doPost);
-        JSONObject jsonObject = parseObject.getJSONObject("code");
-        if (!"0010".equals(jsonObject)) {
-            return doPost;
-        }
+        // JSONObject parseObject = JSONObject.parseObject(doPost);
+        // JSONObject jsonObject = parseObject.getJSONObject("code");
+
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getUsername(), "taobaoReportTask");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -945,6 +986,10 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             rootNode = objectMapper.readValue(doPost, JsonNode.class);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0010".equals(code)) {
+            return doPost;
         }
         String token = rootNode.get("token").textValue();
         if (data != null) {
@@ -1001,7 +1046,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("token", req.getTokendb()));
         reqParam.add(new BasicNameValuePair("input", req.getInput()));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
@@ -1011,7 +1056,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String post = httpClient.doPost(
             configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
             reqParam);
-        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
             "taobaoReportTask");
         if (data != null) {
             data.setResult(post);

@@ -23,7 +23,7 @@ public class XN632940 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return mobileReportDemoAO.taobaoReportTaskStatus(req.getToken());
+        return mobileReportDemoAO.taobaoReportTaskStatus(req.getTokendb());
     }
 
     @Override
