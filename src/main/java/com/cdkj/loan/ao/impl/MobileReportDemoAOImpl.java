@@ -309,8 +309,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
         }
         // 截取data
-        String joData = rootNode.get("data").textValue();
-        return joData;
+        // String joData = rootNode.get("data").textValue();
+        return doPost;
     }
 
     @Override
@@ -465,8 +465,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             .add(new BasicNameValuePair("method", "api.housefund.getareas"));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
-        return httpClient.doPost(configsMap.get("apiUrl") + "/api/gateway",
-            reqParam);
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取data
+        JSONObject parseObject = JSONObject.parseObject(doPost);
+        JSONArray jsonArray = parseObject.getJSONArray("data");
+        return jsonArray;
     }
 
     @Override
@@ -666,7 +670,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         String token = null;
         if (StringUtils.isBlank(post)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "查询失败");
+            return "查询结果为空！";
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode;
@@ -677,7 +681,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     token = rootNode.get("token").textValue();
                 } else {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "查询失败");
+                        rootNode.get("msg").textValue());
                 }
                 LimuCredit limuCredit = limuCreditBO
                     .getLimuCreditByUserName(req.getUsername(), "taobao");
