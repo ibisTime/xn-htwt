@@ -51,6 +51,7 @@ ADD COLUMN `enter_datetime` datetime NULL COMMENT '入档日期' AFTER `enter_lo
 ADD COLUMN `vehicle_company_name` varchar(255) NULL COMMENT '机动车销售公司' AFTER `loan_period`,
 ADD COLUMN `other_fee` bigint(20) NULL COMMENT '其他费用' AFTER `auth_fee`,
 ADD COLUMN `is_financing` VARCHAR(4) NULL COMMENT '是否融资' AFTER `is_advance_fund`,
+ADD COLUMN `is_logistics` VARCHAR(4) NULL COMMENT '是否是资料传递中' AFTER `is_gps_az`,
 ADD COLUMN `car_model_name` varchar(255) NULL COMMENT '车型名称' AFTER `car_model`,
 ADD COLUMN `advance_note` varchar(255) NULL COMMENT '垫资说明' AFTER `bill_pdf`,
 CHANGE COLUMN `mate_zfb_jour_interest` `mate_zfb_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶支付宝流水结息1' ,
@@ -74,11 +75,12 @@ ADD COLUMN `jour_interest2` MEDIUMTEXT NULL COMMENT '流水结息2' AFTER `jour_
 
 SET SQL_SAFE_UPDATES = 0;
 update tdq_budget_order b,tsys_biz_log z set b.inside_job = z.operator where b.code = z.ref_order and z.deal_node = '002_01';
-SET SQL_SAFE_UPDATES = 1;
 
-SET SQL_SAFE_UPDATES = 0;
 update tdq_budget_order set is_gps_az = '0';
 update tdq_budget_order b,tdq_budget_order_gps g set b.is_gps_az = '1' where b.code = g.budget_order;
+
+update tdq_budget_order SET is_logistics = '0';
+update tdq_budget_order b,tdq_logistics l set b.is_logistics = '1' where b.code = l.biz_code and l.status = '1';
 SET SQL_SAFE_UPDATES = 1;
 
 ALTER TABLE `tdq_credit` 
@@ -96,6 +98,9 @@ DELETE FROM `tsys_node_flow` WHERE `id`='10';
 ALTER TABLE `tdq_budget_order_gps` 
 ADD COLUMN `dev_photos` tinytext NULL COMMENT '设备图片' AFTER `az_user`,
 ADD COLUMN `az_photos` tinytext NULL COMMENT '安装图片' AFTER `dev_photos`;
+
+--ALTER TABLE `tsys_biz_log` 
+--ADD COLUMN `logistics_status` varchar(255) NULL COMMENT '物流状态' AFTER `status`;
 
 
 DROP TABLE IF EXISTS `tdq_limu_credit`;

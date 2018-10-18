@@ -94,4 +94,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public List<BudgetOrder> queryBudgetOrderByApplyUserName(
             BudgetOrder condition);
 
+    // 物流传递中
+    public void updateIsLogistics(BudgetOrder budgetOrder);
+
 }

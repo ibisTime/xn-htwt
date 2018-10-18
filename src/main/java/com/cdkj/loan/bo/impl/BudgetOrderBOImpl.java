@@ -296,6 +296,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         String preCurNodeCode = budgetOrder.getCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+        // 状态为不在物流传递中
+        budgetOrder.setIsLogistics(EBoolean.NO.getCode());
         // 日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
@@ -307,12 +309,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
                 operator, nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
                 null);
+            // 产生物流单后改变状态为物流传递中
+            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+
+            // 资料传递日志
+            sysBizLogBO.saveSYSBizLog(newLogisticsCode, EBizLogType.LOGISTICS,
+                newLogisticsCode, budgetOrder.getCurNodeCode(),
+                budgetOrder.getTeamCode());
             result = EBoolean.YES.getCode();
-            /*
-             * sysBizLogBO .saveSYSBizLog(budgetOrder.getCode(),
-             * EBizLogType.ZHFK_LOGISTICS, newLogisticsCode,
-             * ELogisticsStatus.ZHFK_SEND.getCode(), budgetOrder.getTeamCode());
-             */
 
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
@@ -371,6 +375,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Override
     public void dataSupplement(BudgetOrder budgetOrder) {
         budgetOrderDAO.dataSupplement(budgetOrder);
+    }
+
+    @Override
+    public void updateIsLogistics(BudgetOrder budgetOrder) {
+        budgetOrderDAO.updateIsLogistics(budgetOrder);
     }
 
     @Override

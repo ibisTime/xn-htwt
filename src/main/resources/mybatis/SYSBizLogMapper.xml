@@ -66,6 +66,9 @@
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
 			</if>
+			<if test="isLogistics != null and isLogistics != ''">
+				AND b.is_logistics = #{isLogistics}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
@@ -103,14 +106,14 @@
 	</select>
 	
 	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT * FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
+		SELECT * FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order
 		<include refid="where_condition" />
 	</select>
 	
 
 	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
 		resultType="java.lang.Long">
-         SELECT count(1) FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
+         SELECT count(1) FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order
 		 <include refid="where_condition" />
 	</select>
 	

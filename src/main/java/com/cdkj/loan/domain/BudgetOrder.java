@@ -876,6 +876,9 @@ public class BudgetOrder extends ABaseDO {
     // 是否安装了GPS(1是，0否)
     private String isGpsAz;
 
+    // 是否是资料传递中（1是，0否）
+    private String isLogistics;
+
     // 最新备注
     private String remark;
 
@@ -1241,6 +1244,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setSaleUserName(String saleUserName) {
         this.saleUserName = saleUserName;
+    }
+
+    public String getIsLogistics() {
+        return isLogistics;
+    }
+
+    public void setIsLogistics(String isLogistics) {
+        this.isLogistics = isLogistics;
     }
 
     public String getCompanyName() {

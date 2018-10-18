@@ -123,15 +123,17 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             gpsApplyBO.sendGps(logistics.getBizCode(),
                 logistics.getSendDatetime());
-            /*
-             * // 日志 if (ELogisticsStatus.TO_SEND.getCode()
-             * .equals(logistics.getStatus())) {
-             * sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getCode(),
-             * EBizLogType.GPS_LOGISTICS, logistics.getCode(),
-             * ELogisticsStatus.SEND.getCode(),
-             * ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
-             * req.getOperator(), null); }
-             */
+
+            // 日志
+            if (ELogisticsStatus.TO_SEND.getCode()
+                .equals(logistics.getStatus())) {
+                sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getCode(),
+                    EBizLogType.GPS_LOGISTICS, logistics.getCode(),
+                    ELogisticsStatus.SEND.getCode(),
+                    ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
+                    req.getOperator(), null);
+            }
+
         } else {
             BudgetOrder budgetOrder = budgetOrderBO
                 .getBudgetOrder(logistics.getBizCode());
@@ -191,25 +193,25 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logisticsBO.receiveLogistics(code, operator, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(data.getBizCode());
-            ELogisticsStatus pre = null;
-            EBizLogType bizLogType = null;
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
-                pre = ELogisticsStatus.YWDH_SEND;
-                bizLogType = EBizLogType.YWDH_LOGISTICS;
-            }
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
-                pre = ELogisticsStatus.ZHFK_SEND;
-                bizLogType = EBizLogType.ZHFK_LOGISTICS;
-            }
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
-                pre = ELogisticsStatus.ZHDY_SEND;
-                bizLogType = EBizLogType.ZHDY_LOGISTICS;
-            }
+            // BudgetOrder budgetOrder = budgetOrderBO
+            // .getBudgetOrder(data.getBizCode());
+            // ELogisticsStatus pre = null;
+            // EBizLogType bizLogType = null;
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+            // pre = ELogisticsStatus.YWDH_SEND;
+            // bizLogType = EBizLogType.YWDH_LOGISTICS;
+            // }
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
+            // pre = ELogisticsStatus.ZHFK_SEND;
+            // bizLogType = EBizLogType.ZHFK_LOGISTICS;
+            // }
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+            // pre = ELogisticsStatus.ZHDY_SEND;
+            // bizLogType = EBizLogType.ZHDY_LOGISTICS;
+            // }
             /*
              * sysBizLogBO.refreshPreSYSBizLog(bizLogType.getCode(),
              * data.getCode(), pre.getCode(), remark, operator);

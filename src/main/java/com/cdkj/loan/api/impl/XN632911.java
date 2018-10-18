@@ -9,6 +9,7 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.dto.req.XN632911Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -35,6 +36,7 @@ public class XN632911 extends AProcessor {
         condition.setRefType(req.getRefType());
         condition.setRefOrderForQuery(req.getRefOrder());
         condition.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
+        condition.setIsLogistics(EBoolean.NO.getCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

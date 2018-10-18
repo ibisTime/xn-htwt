@@ -328,6 +328,7 @@
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="frozen_status" property="frozenStatus" />
 		<result column="is_gps_az" property="isGpsAz" />
+		<result column="is_logistics" property="isLogistics" />
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
@@ -433,6 +434,9 @@
 			</if>
 			<if test="isGpsAz != null and isGpsAz != ''">
 				AND t.is_gps_az = #{isGpsAz}
+			</if>
+			<if test="isLogistics != null and isLogistics != ''">
+				AND t.is_logistics = #{isLogistics}
 			</if>
 			<if test="keyword != null and keyword != '' ">
 				AND (t.apply_user_name LIKE "%"#{keyword}"%" OR t.id_no LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%")
@@ -774,6 +778,7 @@
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
+		,t.is_logistics
 		,t.remark
 		FROM
 		tdq_budget_order t
@@ -865,6 +870,7 @@
 		,t.back_advance_status
 		,t.frozen_status
 		,t.is_gps_az
+		,t.is_logistics
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -1221,6 +1227,7 @@
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
+		,t.is_logistics
 		,t.remark
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
@@ -2165,6 +2172,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,is_logistics = #{isLogistics}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2435,5 +2443,11 @@
 		<include refid="where_condition" />
 	</select>
 	
+	<update id="update_isLogistics" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		is_logistics = #{isLogistics}
+		WHERE code = #{code}
+	</update>
 
 </mapper>

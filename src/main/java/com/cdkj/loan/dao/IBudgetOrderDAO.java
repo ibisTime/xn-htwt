@@ -77,4 +77,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 根据客户姓名查询预算单
     List<BudgetOrder> queryBudgetOrderByApplyUserName(BudgetOrder condition);
 
+    // 物流传递中
+    void updateIsLogistics(BudgetOrder budgetOrder);
+
 }

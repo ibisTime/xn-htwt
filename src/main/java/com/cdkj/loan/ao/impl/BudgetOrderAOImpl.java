@@ -1114,15 +1114,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 车辆信息落户
         budgetOrderBO.carSettle(budgetOrder);
+        // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
             ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
             budgetOrder.getSaleUserId(), EBudgetOrderNode.CARSETTLE.getCode(),
             nodeFlow.getNextNode(), null);
-        /*
-         * sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-         * EBizLogType.YWDH_LOGISTICS, logisticsCode,
-         * ELogisticsStatus.YWDH_SEND.getCode(), budgetOrder.getTeamCode());
-         */
+        // 产生物流单后改变状态为物流传递中
+        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+        budgetOrderBO.updateIsLogistics(budgetOrder);
+
+        // 资料传递日志
+        sysBizLogBO.saveSYSBizLog(logisticsCode, EBizLogType.LOGISTICS,
+            logisticsCode, budgetOrder.getCurNodeCode(),
+            budgetOrder.getTeamCode());
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -1276,12 +1280,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
             req.getOperator(), preCurrentNode, currentNodeFlow.getNextNode(),
             null);
-        /*
-         * sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-         * EBizLogType.ZHDY_LOGISTICS, logisticsCode,
-         * ELogisticsStatus.ZHDY_SEND.getCode(), budgetOrder.getTeamCode());
-         */
+        // 产生物流单后改变状态为物流传递中
+        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+        budgetOrderBO.updateIsLogistics(budgetOrder);
 
+        // 资料传递日志
+        sysBizLogBO.saveSYSBizLog(logisticsCode, EBizLogType.LOGISTICS,
+            logisticsCode, budgetOrder.getCurNodeCode(),
+            budgetOrder.getTeamCode());
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,

@@ -24,6 +24,7 @@ import com.cdkj.loan.domain.BusinessTripApply;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InvestigateReport;
+import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
@@ -248,6 +249,11 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         SYSUser user = sysUserBO.getUser(sysBizLog.getOperator());
         if (null != user) {
             sysBizLog.setOperatorName(user.getRealName());
+        }
+        if (EBizLogType.LOGISTICS.getCode().equals(sysBizLog.getRefType())) {
+            Logistics logistics = logisticsBO
+                .getLogistics(sysBizLog.getRefOrder());
+            sysBizLog.setLogisticsStatus(logistics.getStatus());
         }
         return sysBizLog;
     }

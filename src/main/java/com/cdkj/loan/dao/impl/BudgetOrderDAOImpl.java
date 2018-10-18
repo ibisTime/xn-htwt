@@ -103,6 +103,11 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void updateIsLogistics(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_isLogistics"), data);
+    }
+
+    @Override
     public BudgetOrder select(BudgetOrder condition) {
         return super.select(NAMESPACE.concat("select_budgetOrder"), condition,
             BudgetOrder.class);

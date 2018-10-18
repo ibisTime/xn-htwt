@@ -48,6 +48,8 @@ public class SYSBizLog extends ABaseDO {
 
     private String refOrderForQuery;// 关联订单编号模糊查询
 
+    private String isLogistics;// 是否在物流传递中
+
     private String roleCode;// 角色编号
 
     private String userName;// 客户姓名
@@ -68,6 +70,14 @@ public class SYSBizLog extends ABaseDO {
 
     public void setBizOrderType(String bizOrderType) {
         this.bizOrderType = bizOrderType;
+    }
+
+    public String getIsLogistics() {
+        return isLogistics;
+    }
+
+    public void setIsLogistics(String isLogistics) {
+        this.isLogistics = isLogistics;
     }
 
     public String getLoanBank() {

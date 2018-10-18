@@ -14,8 +14,11 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
 
@@ -96,13 +99,22 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     @Override
     public void receiveLogistics(String code, String operator, String remark) {
         if (StringUtils.isNotBlank(code)) {
-            Logistics condition = new Logistics();
-            condition.setCode(code);
+            Logistics condition = getLogistics(code);
             condition.setRemark(remark);
             condition.setReceiptDatetime(new Date());
             condition.setReceiver(operator);
             condition.setStatus(ELogisticsStatus.RECEIVED.getCode());
             logisticsDAO.updateLogisticsReceive(condition);
+
+            // 补全日志
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.LOGISTICS.getCode(),
+                code, condition.getFromNodeCode(), null, operator);
+
+            // 状态为不在物流传递中
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(condition.getBizCode());
+            budgetOrder.setIsLogistics(EBoolean.NO.getCode());
+            budgetOrderBO.updateIsLogistics(budgetOrder);
         }
     }
 
