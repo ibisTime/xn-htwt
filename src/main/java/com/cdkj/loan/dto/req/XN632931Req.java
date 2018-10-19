@@ -14,6 +14,18 @@ public class XN632931Req {
     // 登陆类型
     private String loginType;
 
+    // 用户编号
+    @NotBlank
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUsername() {
         return username;
     }

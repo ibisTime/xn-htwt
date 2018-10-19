@@ -54,7 +54,8 @@ public class SocialsecurityController {
         System.out.println("bizType:" + bizType[0]);
         System.out.println("uid:" + uid[0]);
 
-        LimuCredit limuCredit = limuCreditBO.getLimuCreditByUid(uid[0]);
+        LimuCredit limuCredit = limuCreditBO.getLimuCreditByUid(uid[0],
+            bizType[0]);
         // if (limuCredit != null) {
         // // 通过新加入的这条数据查询是否征信过；如果有，删掉这条，并更新原来的数据
         // LimuCredit condition = new LimuCredit();
@@ -82,7 +83,6 @@ public class SocialsecurityController {
         limuCredit.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
         limuCredit.setResult(domain);
         limuCredit.setCallbackDatetime(new Date());
-        limuCredit.setUserId(uid[0]);
         int i = limuCreditBO.refreshLimuCredit(limuCredit);
         System.out.println("i:" + i);
         if (i > 0) {

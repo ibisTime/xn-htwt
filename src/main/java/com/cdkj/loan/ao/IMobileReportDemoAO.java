@@ -22,6 +22,7 @@ import com.cdkj.loan.dto.req.XN632939Req;
 import com.cdkj.loan.dto.req.XN632941Req;
 import com.cdkj.loan.dto.req.XN632942Req;
 import com.cdkj.loan.dto.req.XN632943Req;
+import com.cdkj.loan.dto.req.XN632944Req;
 
 public interface IMobileReportDemoAO {
 
@@ -63,6 +64,9 @@ public interface IMobileReportDemoAO {
 
     // 淘宝查询
     Object taobaoFund(XN632932Req req);
+
+    // 状态查询
+    Object taobaoFundStatus(XN632944Req req);
 
     Object callBackUrl();
 

@@ -3,32 +3,14 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632932Req {
-    // 账号
-    @NotBlank
-    private String username;
 
-    // 密码
+    // 用户编号
     @NotBlank
-    private String password;
+    private String userId;
 
     // 登陆类型
+    @NotBlank
     private String loginType;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getLoginType() {
         return loginType;
@@ -36,6 +18,14 @@ public class XN632932Req {
 
     public void setLoginType(String loginType) {
         this.loginType = loginType;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

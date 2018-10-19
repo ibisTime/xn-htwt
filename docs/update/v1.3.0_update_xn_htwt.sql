@@ -136,3 +136,9 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'lmzx_biz_type', 'mobileReportTask', '运营商报告原始数据获取', 'admin', '2018-06-25 08:24:17', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'lmzx_biz_type', 'taobaoReportTask', '电商报告结果获取', 'admin', '2018-06-25 08:24:17', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'lmzx_biz_type', 'taobaoReportTaskData', '电商报告原始数据', 'admin', '2018-06-25 08:24:17', 'CD-HTWT000020', 'CD-HTWT000020');
+
+
+UPDATE `tsys_config` SET `cvalue`='-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgMEcLIbyOAGxfK+P1\nZi/47tlslJBHujLudBWAr4KhSHWhRANCAASiSJTODFYvLhQ9PxKKr9wsbaNkqw89\nRpefKvJS9iVJ9473r8byj7WmWUHDyEClz3yyb/FOBl6fognJ102zcePG\n-----END PRIVATE KEY-----\n' WHERE `id`='36';
+UPDATE `tsys_config` SET `cvalue`='-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEokiUzgxWLy4UPT8Siq/cLG2jZKsP\nPUaXnyryUvYlSfeO96/G8o+1pllBw8hApc98sm/xTgZen6IJyddNs3Hjxg==\n-----END PUBLIC KEY-----\n' WHERE `id`='35';
+UPDATE `tsys_config` SET `cvalue`='36862' WHERE `id`='37';
+UPDATE `tsys_config` SET `cvalue`='1400144984' WHERE `id`='33';

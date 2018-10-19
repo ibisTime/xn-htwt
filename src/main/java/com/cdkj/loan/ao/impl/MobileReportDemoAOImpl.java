@@ -20,7 +20,6 @@ import com.cdkj.loan.bo.ILimuCreditBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.common.PropertiesUtil;
 import com.cdkj.loan.controller.AbstractCredit;
-import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.creditCommon.HttpClient;
 import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.LimuCredit;
@@ -46,6 +45,7 @@ import com.cdkj.loan.dto.req.XN632939Req;
 import com.cdkj.loan.dto.req.XN632941Req;
 import com.cdkj.loan.dto.req.XN632942Req;
 import com.cdkj.loan.dto.req.XN632943Req;
+import com.cdkj.loan.dto.req.XN632944Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELimuCreditStatus;
 import com.cdkj.loan.exception.BizException;
@@ -354,7 +354,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     public Object socialSecurity(XN632927Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
-        String userId = OrderNoGenerater.generate("U");
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -365,7 +364,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("method", "api.socialsecurity.get"));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
-        reqParam.add(new BasicNameValuePair("uid", userId));
+        reqParam.add(new BasicNameValuePair("uid", req.getUserId()));
         try {
             reqParam.add(new BasicNameValuePair("password", new String(
                 Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
@@ -407,20 +406,20 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 } else {
                     return post;
                 }
-                LimuCredit limuCredit = limuCreditBO.getLimuCreditByUserName(
-                    req.getUsername(), "socialsecurity");
+                LimuCredit limuCredit = limuCreditBO
+                    .getLimuCreditByUid(req.getUserId(), "socialsecurity");
                 if (limuCredit == null) {
                     LimuCredit data = new LimuCredit();
                     data.setBizType("socialsecurity");
                     data.setUserName(req.getUsername());
-                    data.setUserId(userId);
+                    data.setUserId(req.getUserId());
                     data.setToken(token);
                     data.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserId(userId);
+                    limuCredit.setUserId(req.getUserId());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -494,7 +493,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     public Object housefund(XN632930Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
-        String userId = OrderNoGenerater.generate("U");
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -541,19 +539,19 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                         "查询失败");
                 }
                 LimuCredit limuCredit = limuCreditBO
-                    .getLimuCreditByUserName(req.getUsername(), "housefund");
+                    .getLimuCreditByUid(req.getUserId(), "housefund");
                 if (limuCredit == null) {
                     LimuCredit data = new LimuCredit();
                     data.setBizType("housefund");
                     data.setUserName(req.getUsername());
-                    data.setUserId(userId);
+                    data.setUserId(req.getUserId());
                     data.setToken(token);
                     data.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserId(userId);
+                    limuCredit.setUserId(req.getUserId());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -572,14 +570,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
 
-        String userId = OrderNoGenerater.generate("U");
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
-        reqParam.add(new BasicNameValuePair("uid", userId));
+        reqParam.add(new BasicNameValuePair("uid", req.getUserId()));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
@@ -613,19 +610,19 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 }
 
                 LimuCredit limuCredit = limuCreditBO
-                    .getLimuCreditByUserName(req.getUsername(), "jd");
+                    .getLimuCreditByUid(req.getUserId(), "jd");
                 if (limuCredit == null) {
                     LimuCredit data = new LimuCredit();
                     data.setBizType("jd");
                     data.setUserName(req.getUsername());
-                    data.setUserId(userId);
+                    data.setUserId(req.getUserId());
                     data.setToken(token);
                     data.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserId(userId);
+                    limuCredit.setUserId(req.getUserId());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -644,23 +641,23 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
 
-        String userId = OrderNoGenerater.generate("U");
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.taobao.get"));
-        reqParam.add(new BasicNameValuePair("uid", userId));
+        reqParam.add(new BasicNameValuePair("uid", req.getUserId()));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
-        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
-        try {
-            reqParam.add(new BasicNameValuePair("password", new String(
-                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        // reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        // try {
+        // reqParam.add(new BasicNameValuePair("password", new String(
+        // Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
+        // } catch (UnsupportedEncodingException e) {
+        // e.printStackTrace();
+        // }
+        reqParam.add(new BasicNameValuePair("loginType", req.getLoginType()));
         reqParam.add(new BasicNameValuePair("callBackUrl",
             configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
         reqParam.add(new BasicNameValuePair("sign",
@@ -679,33 +676,56 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 String code = rootNode.get("code").textValue();
                 if ("0010".equals(code)) {// 受理成功
                     token = rootNode.get("token").textValue();
-                } else {
-                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        rootNode.get("msg").textValue());
-                }
-                LimuCredit limuCredit = limuCreditBO
-                    .getLimuCreditByUserName(req.getUsername(), "taobao");
-                if (limuCredit == null) {
-                    LimuCredit data = new LimuCredit();
-                    data.setBizType("taobao");
-                    data.setUserName(req.getUsername());
-                    data.setUserId(userId);
-                    data.setToken(token);
-                    data.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
-                    data.setFoundDatetime(new Date());
-                    limuCreditBO.saveLimuCredit(data);
-                } else {
-                    limuCredit.setUserId(userId);
-                    limuCredit.setToken(token);
-                    limuCredit.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
-                    limuCredit.setFoundDatetime(new Date());
-                    limuCreditBO.refreshLimuCredit(limuCredit);
+                    LimuCredit limuCredit = limuCreditBO
+                        .getLimuCreditByUid(req.getUserId(), "taobao");
+                    if (limuCredit == null) {
+                        LimuCredit data = new LimuCredit();
+                        data.setBizType("taobao");
+                        data.setUserId(req.getUserId());
+                        data.setToken(token);
+                        data.setStatus(
+                            ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                        data.setFoundDatetime(new Date());
+                        limuCreditBO.saveLimuCredit(data);
+                    } else {
+                        limuCredit.setToken(token);
+                        limuCredit.setStatus(
+                            ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                        limuCredit.setFoundDatetime(new Date());
+                        limuCreditBO.refreshLimuCredit(limuCredit);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        return post;
+    }
+
+    @Override
+    public Object taobaoFundStatus(XN632944Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("method", "api.common.getStatus"));
+        reqParam
+            .add(new BasicNameValuePair("version", configsMap.get("version")));
+        reqParam.add(new BasicNameValuePair("callBackUrl",
+            configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("bizType", "taobao"));
+
+        String post = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        if (StringUtils.isBlank(post)) {
+            return "查询结果为空！";
         }
         return post;
     }

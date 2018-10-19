@@ -3,6 +3,11 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632930Req {
+
+    // 用户编号
+    @NotBlank
+    private String userId;
+
     // 账号
     @NotBlank
     private String username;
@@ -36,6 +41,14 @@ public class XN632930Req {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getIdentityCardNo() {
