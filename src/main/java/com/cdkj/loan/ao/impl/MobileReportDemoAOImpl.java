@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.IMobileReportDemoAO;
 import com.cdkj.loan.bo.ILimuCreditBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.common.PropertiesUtil;
 import com.cdkj.loan.controller.AbstractCredit;
 import com.cdkj.loan.creditCommon.HttpClient;
@@ -59,6 +60,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
     @Autowired
     private ILimuCreditBO limuCreditBO;
+
+    @Autowired
+    private IUserBO userBO;
 
     public static final String LMZX_URL = PropertiesUtil.Config.LMZX_URL;
 
@@ -106,6 +110,10 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setFoundDatetime(new Date());
             limuCredit.setBizType("identity");
             limuCreditBO.saveLimuCredit(limuCredit);
+        }
+        // 更新app端用户身份证
+        if (StringUtils.isNotBlank(req.getUserId())) {
+            userBO.refreshIdNo(req.getUserId(), req.getIdentityNo());
         }
         return doPost;
     }
@@ -364,7 +372,11 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("method", "api.socialsecurity.get"));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
-        reqParam.add(new BasicNameValuePair("uid", req.getUserId()));
+        if (StringUtils.isBlank(req.getIdNo())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "请先进行身份证实名认证！");
+        }
+        reqParam.add(new BasicNameValuePair("uid", req.getIdNo()));
         try {
             reqParam.add(new BasicNameValuePair("password", new String(
                 Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
@@ -407,19 +419,19 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     return post;
                 }
                 LimuCredit limuCredit = limuCreditBO
-                    .getLimuCreditByUid(req.getUserId(), "socialsecurity");
+                    .getLimuCreditByUid(req.getIdNo(), "socialsecurity");
                 if (limuCredit == null) {
                     LimuCredit data = new LimuCredit();
                     data.setBizType("socialsecurity");
                     data.setUserName(req.getUsername());
-                    data.setUserId(req.getUserId());
+                    data.setUserId(req.getIdNo());
                     data.setToken(token);
                     data.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserId(req.getUserId());
+                    limuCredit.setUserId(req.getIdNo());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -501,6 +513,11 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("method", "api.housefund.get"));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
+        if (StringUtils.isBlank(req.getIdNo())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "请先进行身份证实名认证！");
+        }
+        reqParam.add(new BasicNameValuePair("uid", req.getIdNo()));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
         try {
             reqParam.add(new BasicNameValuePair("password", new String(
@@ -539,19 +556,19 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                         "查询失败");
                 }
                 LimuCredit limuCredit = limuCreditBO
-                    .getLimuCreditByUid(req.getUserId(), "housefund");
+                    .getLimuCreditByUid(req.getIdNo(), "housefund");
                 if (limuCredit == null) {
                     LimuCredit data = new LimuCredit();
                     data.setBizType("housefund");
                     data.setUserName(req.getUsername());
-                    data.setUserId(req.getUserId());
+                    data.setUserId(req.getIdNo());
                     data.setToken(token);
                     data.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserId(req.getUserId());
+                    limuCredit.setUserId(req.getIdNo());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -576,7 +593,11 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.jd.get"));
-        reqParam.add(new BasicNameValuePair("uid", req.getUserId()));
+        if (StringUtils.isBlank(req.getIdNo())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "请先进行身份证实名认证！");
+        }
+        reqParam.add(new BasicNameValuePair("uid", req.getIdNo()));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
@@ -610,19 +631,19 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 }
 
                 LimuCredit limuCredit = limuCreditBO
-                    .getLimuCreditByUid(req.getUserId(), "jd");
+                    .getLimuCreditByUid(req.getIdNo(), "jd");
                 if (limuCredit == null) {
                     LimuCredit data = new LimuCredit();
                     data.setBizType("jd");
                     data.setUserName(req.getUsername());
-                    data.setUserId(req.getUserId());
+                    data.setUserId(req.getIdNo());
                     data.setToken(token);
                     data.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserId(req.getUserId());
+                    limuCredit.setUserId(req.getIdNo());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -647,7 +668,11 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.taobao.get"));
-        reqParam.add(new BasicNameValuePair("uid", req.getUserId()));
+        if (StringUtils.isBlank(req.getIdNo())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "请先进行身份证实名认证！");
+        }
+        reqParam.add(new BasicNameValuePair("uid", req.getIdNo()));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
         // reqParam.add(new BasicNameValuePair("username", req.getUsername()));
@@ -677,11 +702,11 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 if ("0010".equals(code)) {// 受理成功
                     token = rootNode.get("token").textValue();
                     LimuCredit limuCredit = limuCreditBO
-                        .getLimuCreditByUid(req.getUserId(), "taobao");
+                        .getLimuCreditByUid(req.getIdNo(), "taobao");
                     if (limuCredit == null) {
                         LimuCredit data = new LimuCredit();
                         data.setBizType("taobao");
-                        data.setUserId(req.getUserId());
+                        data.setUserId(req.getIdNo());
                         data.setToken(token);
                         data.setStatus(
                             ELimuCreditStatus.PENDING_CALLBACK.getCode());

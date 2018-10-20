@@ -4,9 +4,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632927Req {
 
-    // 用户编号
-    @NotBlank
-    private String userId;
+    // 用户身份证号
+    private String idNo;
 
     // 账号
     @NotBlank
@@ -51,12 +50,12 @@ public class XN632927Req {
         this.identityCardNo = identityCardNo;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getIdentityName() {

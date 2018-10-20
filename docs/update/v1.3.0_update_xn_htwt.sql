@@ -142,3 +142,9 @@ UPDATE `tsys_config` SET `cvalue`='-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqG
 UPDATE `tsys_config` SET `cvalue`='-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEokiUzgxWLy4UPT8Siq/cLG2jZKsP\nPUaXnyryUvYlSfeO96/G8o+1pllBw8hApc98sm/xTgZen6IJyddNs3Hjxg==\n-----END PUBLIC KEY-----\n' WHERE `id`='35';
 UPDATE `tsys_config` SET `cvalue`='36862' WHERE `id`='37';
 UPDATE `tsys_config` SET `cvalue`='1400144984' WHERE `id`='33';
+
+---------------------------------------------------------------------------------------------------------
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '011', 'gps资料传递', 'admin', '2018-06-25 08:25:28', 'CD-HTWT000020', 'CD-HTWT000020');
+UPDATE `tsys_dict` SET `dvalue`='资料传递' WHERE `id`='918';
+DELETE FROM `tsys_dict` WHERE `id`='919';
+DELETE FROM `tsys_dict` WHERE `id`='920';

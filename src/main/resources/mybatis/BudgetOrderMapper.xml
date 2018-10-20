@@ -1527,6 +1527,7 @@
 		,frozen_status
 		,pledge_status
 		,is_gps_az
+		,is_logistics
 		,remark
 		)
 		VALUES(
@@ -1778,6 +1779,7 @@
 		,#{frozenStatus}
 		,#{pledgeStatus}
 		,#{isGpsAz}
+		,#{isLogistics}
 		,#{remark}
 		)
 	</insert>

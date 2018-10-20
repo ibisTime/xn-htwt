@@ -121,6 +121,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setTeamCode(user.getTeamCode());
             data.setPledgeStatus(EBoolean.NO.getCode());
             data.setIsGpsAz(EBoolean.NO.getCode());
+            data.setIsLogistics(EBoolean.NO.getCode());
             budgetOrderDAO.insert(data);
         }
         return code;

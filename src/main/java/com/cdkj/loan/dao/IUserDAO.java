@@ -25,4 +25,7 @@ public interface IUserDAO extends IBaseDAO<User> {
     // 更新状态
     public int updateStatus(User data);
 
+    // 修改用户身份证号
+    public void updateIdNo(User user);
+
 }

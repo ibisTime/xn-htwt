@@ -12,6 +12,17 @@ public class XN632920Req {
     @NotBlank
     private String name;
 
+    // 用户id（App端填写）
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getIdentityNo() {
         return identityNo;
     }

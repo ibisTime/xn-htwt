@@ -213,6 +213,13 @@
 		WHERE user_id = #{userId}
 	</update>
 	
+	<update id="update_idNo" parameterType="user">
+		UPDATE tstd_user
+		SET
+		id_no = #{idNo}
+		WHERE user_id = #{userId}
+	</update>
+	
 	<update id="update_status" parameterType="user">
 		UPDATE tstd_user
 		SET

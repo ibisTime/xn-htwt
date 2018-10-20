@@ -14,16 +14,15 @@ public class XN632931Req {
     // 登陆类型
     private String loginType;
 
-    // 用户编号
-    @NotBlank
-    private String userId;
+    // 用户身份证号
+    private String idNo;
 
-    public String getUserId() {
-        return userId;
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getUsername() {
