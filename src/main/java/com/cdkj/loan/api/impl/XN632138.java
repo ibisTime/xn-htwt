@@ -24,7 +24,8 @@ public class XN632138 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.riskTwoApprove(req.getCode(), req.getApproveResult(),
+        budgetOrderAO.riskTwoApprove(req.getCode(),
+            req.getCarPriceCheckReport(), req.getApproveResult(),
             req.getApproveNote(), req.getOperator());
         return new BooleanRes(true);
     }

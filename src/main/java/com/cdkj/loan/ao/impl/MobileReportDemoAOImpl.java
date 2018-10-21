@@ -744,7 +744,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
-        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("token", req.getTokendb()));
         reqParam.add(new BasicNameValuePair("bizType", "taobao"));
 
         String post = httpClient
@@ -1013,12 +1013,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             .add(new BasicNameValuePair("identityName", req.getIdentityName()));
         reqParam.add(new BasicNameValuePair("loginType", req.getLoginType()));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
-        try {
-            reqParam.add(new BasicNameValuePair("password", new String(
-                Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        reqParam.add(new BasicNameValuePair("uid", req.getIdentityCardNo()));
+        reqParam.add(new BasicNameValuePair("callBackUrl",
+            configsMap.get("localhostUrl") + "/socialsecurity"));// 回调url
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
@@ -1028,7 +1025,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         // JSONObject jsonObject = parseObject.getJSONObject("code");
 
         LimuCredit data = limuCreditBO
-            .getLimuCreditByUserName(req.getUsername(), "taobaoReportTask");
+            .getLimuCreditByUserName(req.getUsername(), "taobao_report");
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = null;
         try {
@@ -1049,8 +1046,10 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserName(req.getUsername());
             limuCredit.setToken(token);
+            String uid = req.getIdentityCardNo();
+            limuCredit.setUserId(uid);
             limuCredit.setFoundDatetime(new Date());
-            limuCredit.setBizType("taobaoReportTask");
+            limuCredit.setBizType("taobao_report");
             limuCreditBO.saveLimuCredit(limuCredit);
             limuCredit.setBizType("taobaoReportTaskData");
             limuCreditBO.saveLimuCredit(limuCredit);
@@ -1074,7 +1073,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("apiUrl") + "/taobao_report/v1/task/status",
             reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(token,
-            "taobaoReportTask");
+            "taobao_report");
         if (data != null) {
             data.setResult(doPost);
             data.setFoundDatetime(new Date());

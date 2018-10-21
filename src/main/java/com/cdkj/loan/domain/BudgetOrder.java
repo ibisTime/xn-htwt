@@ -813,6 +813,9 @@ public class BudgetOrder extends ABaseDO {
     // 抵押日期
     private Date pledgeDatetime;
 
+    // 车辆价格核实报告
+    private String carPriceCheckReport;
+
     // 绿大本扫描件
     private String greenBigSmj;
 
@@ -1620,6 +1623,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankVideo(String bankVideo) {
         this.bankVideo = bankVideo;
+    }
+
+    public String getCarPriceCheckReport() {
+        return carPriceCheckReport;
+    }
+
+    public void setCarPriceCheckReport(String carPriceCheckReport) {
+        this.carPriceCheckReport = carPriceCheckReport;
     }
 
     public String getCompanyVideo() {

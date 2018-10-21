@@ -625,8 +625,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void riskTwoApprove(String code, String approveResult,
-            String approveNote, String operator) {
+    public void riskTwoApprove(String code, String carPriceCheckReport,
+            String approveResult, String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.RISK_TWO_APPROVE.getCode()
@@ -644,6 +644,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
         }
+        budgetOrder.setCarPriceCheckReport(carPriceCheckReport);
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshriskApprove(budgetOrder);
 

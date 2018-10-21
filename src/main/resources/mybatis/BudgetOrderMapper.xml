@@ -303,6 +303,7 @@
 		<result column="pledge_user_id_card_copy" property="pledgeUserIdCardCopy" />
 		<result column="pledge_address" property="pledgeAddress" />
 		<result column="pledge_datetime" property="pledgeDatetime" />
+		<result column="car_price_check_report" property="carPriceCheckReport" />
 		
 		<result column="green_big_smj" property="greenBigSmj" />
 		<result column="pledge_bank_commit_datetime" property="pledgeBankCommitDatetime" />
@@ -2052,6 +2053,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,car_price_check_report = #{carPriceCheckReport}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>

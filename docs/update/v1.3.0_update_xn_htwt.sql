@@ -53,7 +53,8 @@ ADD COLUMN `other_fee` bigint(20) NULL COMMENT '其他费用' AFTER `auth_fee`,
 ADD COLUMN `is_financing` VARCHAR(4) NULL COMMENT '是否融资' AFTER `is_advance_fund`,
 ADD COLUMN `is_logistics` VARCHAR(4) NULL COMMENT '是否是资料传递中' AFTER `is_gps_az`,
 ADD COLUMN `car_model_name` varchar(255) NULL COMMENT '车型名称' AFTER `car_model`,
-ADD COLUMN `advance_note` varchar(255) NULL COMMENT '垫资说明' AFTER `bill_pdf`,
+ADD COLUMN `advance_note` MEDIUMTEXT NULL COMMENT '垫资说明' AFTER `bill_pdf`,
+ADD COLUMN `car_price_check_report` varchar(255) NULL COMMENT '车辆价格核实报告' AFTER `pledge_datetime`,
 CHANGE COLUMN `mate_zfb_jour_interest` `mate_zfb_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶支付宝流水结息1' ,
 ADD COLUMN `mate_zfb_jour_interest2` MEDIUMTEXT NULL COMMENT '配偶支付宝流水结息2' AFTER `mate_zfb_jour_interest1`,
 CHANGE COLUMN `mate_wx_jour_interest` `mate_wx_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶微信流水结息1' ,
@@ -106,7 +107,7 @@ ADD COLUMN `az_photos` tinytext NULL COMMENT '安装图片' AFTER `dev_photos`;
 DROP TABLE IF EXISTS `tdq_limu_credit`;
 CREATE TABLE `tdq_limu_credit` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `user_id` varchar(255) DEFAULT NULL COMMENT '用户编号',
   `user_name` varchar(255) DEFAULT NULL COMMENT '用户账号',
   `biz_type` varchar(4) DEFAULT NULL COMMENT '业务类型',
   `token` varchar(255) DEFAULT NULL COMMENT '标记',

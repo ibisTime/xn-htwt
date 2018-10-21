@@ -16,12 +16,7 @@ public class XN632939Req {
     private String loginType;
 
     // 账号
-    @NotBlank
     private String username;
-
-    // 密码
-    @NotBlank
-    private String password;
 
     public String getIdentityCardNo() {
         return identityCardNo;
@@ -53,14 +48,6 @@ public class XN632939Req {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 }

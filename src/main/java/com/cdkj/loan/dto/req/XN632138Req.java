@@ -13,6 +13,10 @@ public class XN632138Req {
     @NotBlank
     private String code;// 预算单编号
 
+    // 车辆价格核实报告
+    @NotBlank
+    private String carPriceCheckReport;
+
     @NotBlank
     private String approveResult;// 审核结果
 
@@ -27,6 +31,14 @@ public class XN632138Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCarPriceCheckReport() {
+        return carPriceCheckReport;
+    }
+
+    public void setCarPriceCheckReport(String carPriceCheckReport) {
+        this.carPriceCheckReport = carPriceCheckReport;
     }
 
     public String getApproveResult() {
