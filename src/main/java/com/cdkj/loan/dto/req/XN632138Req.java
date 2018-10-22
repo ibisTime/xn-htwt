@@ -14,7 +14,6 @@ public class XN632138Req {
     private String code;// 预算单编号
 
     // 车辆价格核实报告
-    @NotBlank
     private String carPriceCheckReport;
 
     @NotBlank

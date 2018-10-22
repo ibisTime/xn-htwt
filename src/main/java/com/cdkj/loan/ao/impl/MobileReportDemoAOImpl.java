@@ -68,7 +68,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
 
     @Override
     @Transactional
-    public String authentication(XN632920Req req) {
+    public Object authentication(XN632920Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         Map<String, String> configsMap = sysConfigBO

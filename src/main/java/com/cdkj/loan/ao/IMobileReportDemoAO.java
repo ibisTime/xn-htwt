@@ -27,7 +27,7 @@ import com.cdkj.loan.dto.req.XN632944Req;
 public interface IMobileReportDemoAO {
 
     // 身份证实名认证
-    String authentication(XN632920Req req);
+    Object authentication(XN632920Req req);
 
     // 涉案列表(记录)
     Object involvedList(XN632921Req req);

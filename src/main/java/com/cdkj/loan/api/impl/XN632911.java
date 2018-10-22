@@ -1,7 +1,5 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.ISYSBizLogAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -38,11 +36,7 @@ public class XN632911 extends AProcessor {
         condition.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         condition.setIsLogistics(EBoolean.NO.getCode());
 
-        String orderColumn = req.getOrderColumn();
-        if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = ISYSBizLogAO.DEFAULT_ORDER_COLUMN;
-        }
-        condition.setOrder(orderColumn, req.getOrderDir());
+        condition.setOrder("start_datetime", false);// 按开始时间倒序
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
 

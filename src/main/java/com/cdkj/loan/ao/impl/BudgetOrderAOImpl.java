@@ -188,13 +188,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data.setLoanProductName(loanProduct.getName());
             data.setRegion(req.getRegion());
             data.setLoanBank(loanProduct.getLoanBank());
+            data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
+            data.setAuthFee(StringValidater.toLong(req.getAuthFee()));
+            data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
             if (EDealType.SEND.getCode().equals(req.getDealType())) {
-
-                data.setGpsFee(loanProduct.getGpsFee());
-                // 公证费=贷款额*公证费比例
-
-                data.setAuthFee(
-                    AmountUtil.mul(loanAmount, loanProduct.getAuthRate()));
                 // 银行服务费=前置*贷款额/（1+前置）
                 Long amount = AmountUtil.mul(loanAmount,
                     loanProduct.getPreRate());
@@ -225,6 +222,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setCarSeries(req.getCarSeries());
 
         data.setCarModel(req.getCarModel());
+        data.setCarModelName(req.getCarModelName());
         data.setCarType(req.getCarType());
         data.setCarPic(req.getCarPic());
         data.setCarHgzPic(req.getCarHgzPic());
@@ -519,7 +517,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setPledgeUser(req.getPledgeUser());
         data.setPledgeUserIdCardCopy(req.getPledgeUserIdCardCopy());
         data.setPledgeAddress(req.getPledgeAddress());
-
+        data.setIsFinancing(req.getIsFinancing());
         String preNodeCode = data.getCurNodeCode(); // 当前节点
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
             // 下一个节点

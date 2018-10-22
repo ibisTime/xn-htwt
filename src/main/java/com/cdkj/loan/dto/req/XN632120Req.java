@@ -22,6 +22,15 @@ public class XN632120Req {
     // 所属区域
     private String region;
 
+    // GPS费用
+    private String gpsFee;
+
+    // 公证费
+    private String authFee;
+
+    // 其他费用
+    private String otherFee;
+
     // 公司手续费
     private String companyFee;
 
@@ -54,6 +63,9 @@ public class XN632120Req {
 
     // 车型
     private String carModel;
+
+    // 车型名称
+    private String carModelName;
 
     // 车辆类型
     private String carType;
@@ -648,6 +660,17 @@ public class XN632120Req {
 
     // 其他资料
     private String otherPdf;
+
+    // 是否融资
+    private String isFinancing;
+
+    public String getIsFinancing() {
+        return isFinancing;
+    }
+
+    public void setIsFinancing(String isFinancing) {
+        this.isFinancing = isFinancing;
+    }
 
     public String getHkBookPdf() {
         return hkBookPdf;
@@ -1449,6 +1472,30 @@ public class XN632120Req {
         this.mateWxJourMonthExpend = mateWxJourMonthExpend;
     }
 
+    public String getGpsFee() {
+        return gpsFee;
+    }
+
+    public void setGpsFee(String gpsFee) {
+        this.gpsFee = gpsFee;
+    }
+
+    public String getAuthFee() {
+        return authFee;
+    }
+
+    public void setAuthFee(String authFee) {
+        this.authFee = authFee;
+    }
+
+    public String getOtherFee() {
+        return otherFee;
+    }
+
+    public void setOtherFee(String otherFee) {
+        this.otherFee = otherFee;
+    }
+
     public String getCarType() {
         return carType;
     }
@@ -1579,6 +1626,14 @@ public class XN632120Req {
 
     public void setWxInterest1(String wxInterest1) {
         this.wxInterest1 = wxInterest1;
+    }
+
+    public String getCarModelName() {
+        return carModelName;
+    }
+
+    public void setCarModelName(String carModelName) {
+        this.carModelName = carModelName;
     }
 
     public String getWxInterest2() {
