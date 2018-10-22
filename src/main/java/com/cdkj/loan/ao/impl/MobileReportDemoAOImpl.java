@@ -643,7 +643,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserId(req.getIdNo());
+                    limuCredit.setUserName(req.getUsername());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -745,7 +745,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         reqParam.add(new BasicNameValuePair("token", req.getTokendb()));
-        reqParam.add(new BasicNameValuePair("bizType", "taobao"));
+        // reqParam.add(new BasicNameValuePair("bizType", "taobao"));
+        reqParam.add(new BasicNameValuePair("bizType", "jd"));
 
         String post = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
@@ -1025,7 +1026,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         // JSONObject jsonObject = parseObject.getJSONObject("code");
 
         LimuCredit data = limuCreditBO
-            .getLimuCreditByUserName(req.getUsername(), "taobao_report");
+            .getLimuCreditByUid(req.getIdentityCardNo(), "taobao_report");
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = null;
         try {

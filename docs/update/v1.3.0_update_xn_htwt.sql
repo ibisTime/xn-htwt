@@ -100,9 +100,6 @@ ALTER TABLE `tdq_budget_order_gps`
 ADD COLUMN `dev_photos` tinytext NULL COMMENT '设备图片' AFTER `az_user`,
 ADD COLUMN `az_photos` tinytext NULL COMMENT '安装图片' AFTER `dev_photos`;
 
---ALTER TABLE `tsys_biz_log` 
---ADD COLUMN `logistics_status` varchar(255) NULL COMMENT '物流状态' AFTER `status`;
-
 
 DROP TABLE IF EXISTS `tdq_limu_credit`;
 CREATE TABLE `tdq_limu_credit` (
