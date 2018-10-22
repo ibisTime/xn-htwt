@@ -16,6 +16,9 @@ public class XN632138Req {
     // 车辆价格核实报告
     private String carPriceCheckReport;
 
+    // 房屋照片
+    private String housePicture;
+
     @NotBlank
     private String approveResult;// 审核结果
 
@@ -30,6 +33,14 @@ public class XN632138Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getHousePicture() {
+        return housePicture;
+    }
+
+    public void setHousePicture(String housePicture) {
+        this.housePicture = housePicture;
     }
 
     public String getCarPriceCheckReport() {

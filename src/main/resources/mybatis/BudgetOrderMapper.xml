@@ -755,6 +755,7 @@
 		,t.pledge_user_id_card_copy
 		,t.pledge_address
 		,t.pledge_datetime
+		,t.car_price_check_report
 		,t.green_big_smj
 		,t.pledge_bank_commit_datetime
 		,t.pledge_bank_commit_note
@@ -1204,6 +1205,7 @@
 		,t.pledge_user_id_card_copy
 		,t.pledge_address
 		,t.pledge_datetime
+		,t.car_price_check_report
 		,t.green_big_smj
 		,t.pledge_bank_commit_datetime
 		,t.pledge_bank_commit_note
@@ -2054,6 +2056,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,car_price_check_report = #{carPriceCheckReport}
+		,house_picture = #{housePicture}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>

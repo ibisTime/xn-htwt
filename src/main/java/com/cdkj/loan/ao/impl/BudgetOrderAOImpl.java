@@ -54,6 +54,7 @@ import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
+import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
@@ -624,7 +625,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void riskTwoApprove(String code, String carPriceCheckReport,
-            String approveResult, String approveNote, String operator) {
+            String housePicture, String approveResult, String approveNote,
+            String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.RISK_TWO_APPROVE.getCode()
@@ -642,6 +644,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
         }
+        budgetOrder.setHousePicture(housePicture);
         budgetOrder.setCarPriceCheckReport(carPriceCheckReport);
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshriskApprove(budgetOrder);
@@ -1568,6 +1571,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         SYSUser user = sysUserBO.getUser(budgetOrder.getSaleUserId());
         budgetOrder.setRoleCode(user.getRoleCode());
         budgetOrder.setCredit(credit);
+
+        // 区域经理名称
+        SYSBizLog sysBizLog = new SYSBizLog();
+        sysBizLog.setParentOrder(code);
+        sysBizLog.setDealNode(EBudgetOrderNode.AREA_APPROVE.getCode());
+        List<SYSBizLog> bizLogList = sysBizLogBO.querySYSBizLogList(sysBizLog);
+        if (CollectionUtils.isNotEmpty(bizLogList)) {
+            SYSBizLog bizLog = bizLogList.get(bizLogList.size() - 1);
+            budgetOrder.setAreaName(bizLog.getOperatorName());
+        }
         return budgetOrder;
     }
 

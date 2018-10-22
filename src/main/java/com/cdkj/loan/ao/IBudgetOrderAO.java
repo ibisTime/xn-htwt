@@ -46,7 +46,8 @@ public interface IBudgetOrderAO {
 
     // 风控二审
     public void riskTwoApprove(String code, String carPriceCheckReport,
-            String approveResult, String approveNote, String operator);
+            String housePicture, String approveResult, String approveNote,
+            String operator);
 
     // 风控主管审核
     public void riskChargeApprove(String code, String operator,

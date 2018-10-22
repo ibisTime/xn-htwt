@@ -12,8 +12,11 @@ import com.cdkj.loan.ao.IBankAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankRateBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632030Req;
 import com.cdkj.loan.dto.req.XN632032Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -37,6 +40,9 @@ public class BankAOImpl implements IBankAO {
 
     @Autowired
     private IBankSubbranchBO bankSubbranchBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     @Transactional
@@ -136,6 +142,12 @@ public class BankAOImpl implements IBankAO {
         // bankRateList = bankRateBO.queryBankRateList(rateCondition);
         // data.setBankRateList(bankRateList);
         // }
+        for (Bank bank : page.getList()) {
+            if (StringUtils.isNotBlank(bank.getUpdater())) {
+                SYSUser user = sysUserBO.getUser(bank.getUpdater());
+                bank.setUpdaterName(user.getRealName());
+            }
+        }
         return page;
     }
 

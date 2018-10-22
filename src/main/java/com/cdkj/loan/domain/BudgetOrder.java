@@ -904,6 +904,9 @@ public class BudgetOrder extends ABaseDO {
     // 公司名称
     private String companyName;
 
+    // 区域经理名称
+    private String areaName;
+
     // 业务员姓名
     private String saleUserName;
 
@@ -991,6 +994,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setInsideJobName(String insideJobName) {
         this.insideJobName = insideJobName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public String getIsGpsAz() {
