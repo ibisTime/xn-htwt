@@ -183,7 +183,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     "必须由GPS申领人收件！");
             }
         } else {
-            if (data.getUserId().equals(operator)) {
+            if (data.getSender().equals(operator)) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "收件人不能和发件人同一人！");
             }

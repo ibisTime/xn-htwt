@@ -21,6 +21,7 @@
 		
 		<result column="sender" property="sender" />
 		<result column="receiver" property="receiver" />
+		<result column="filelist" property="filelist" />
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
 	</resultMap>
@@ -88,6 +89,7 @@
 		,t.receipt_datetime
 		,t.sender
 		,t.receiver
+		,t.filelist
 		,t.status
 		,t.remark
 		FROM
@@ -142,6 +144,7 @@
 		,t.sender = #{sender}
 		
 		,t.send_note = #{sendNote}
+		,t.filelist = #{filelist}
 		,t.status = #{status}
 		WHERE code = #{code}
 	</update>

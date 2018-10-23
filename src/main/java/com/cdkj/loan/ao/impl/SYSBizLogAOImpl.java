@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.ao.ILogisticsAO;
 import com.cdkj.loan.ao.ISYSBizLogAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBusinessTripApplyBO;
@@ -46,6 +48,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     private IDepartmentBO departmentBO;
 
     @Autowired
+    private IBudgetOrderAO budgetOrderAO;
+
+    @Autowired
     private IBudgetOrderBO budgetOrderBO;
 
     @Autowired
@@ -71,6 +76,9 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
 
     @Autowired
     private ILogisticsBO logisticsBO;
+
+    @Autowired
+    private ILogisticsAO logisticsAO;
 
     @Override
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition) {
@@ -236,6 +244,14 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
                 .getDepartment(report.getCompanyCode());
             departmentName = department.getName();
             bizOrderType = "调查报告";
+        } else if ("L".equals(data.getRefOrder().substring(0, 1))) {
+            Logistics logistics = logisticsAO.getLogistics(data.getRefOrder());
+            BudgetOrder budgetOrder = budgetOrderAO
+                .getBudgetOrder(data.getParentOrder());
+            userName = logistics.getUserName();
+            loanBank = budgetOrder.getLoanBankName();
+            departmentName = budgetOrder.getCompanyName();
+            bizOrderType = "资料传递";
         }
         data.setUserName(userName);
         data.setLoanBank(loanBank);
