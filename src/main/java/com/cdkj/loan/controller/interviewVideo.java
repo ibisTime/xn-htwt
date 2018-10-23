@@ -26,7 +26,7 @@ public class interviewVideo {
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
-    @RequestMapping(value = "/authentication", method = RequestMethod.POST)
+    @RequestMapping(value = "/interviewVideo", method = RequestMethod.POST)
     public void doClockIn(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AbstractCredit credit = new AbstractCredit();

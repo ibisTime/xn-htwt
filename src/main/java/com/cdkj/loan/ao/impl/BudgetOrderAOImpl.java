@@ -1126,7 +1126,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.updateIsLogistics(budgetOrder);
 
         // 资料传递日志
-        sysBizLogBO.saveSYSBizLog(logisticsCode, EBizLogType.LOGISTICS,
+        sysBizLogBO.saveSYSBizLog(req.getCode(), EBizLogType.LOGISTICS,
             logisticsCode, budgetOrder.getCurNodeCode(),
             budgetOrder.getTeamCode());
 
@@ -1287,7 +1287,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.updateIsLogistics(budgetOrder);
 
         // 资料传递日志
-        sysBizLogBO.saveSYSBizLog(logisticsCode, EBizLogType.LOGISTICS,
+        sysBizLogBO.saveSYSBizLog(req.getCode(), EBizLogType.LOGISTICS,
             logisticsCode, budgetOrder.getCurNodeCode(),
             budgetOrder.getTeamCode());
         // 日志记录

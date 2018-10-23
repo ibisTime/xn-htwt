@@ -105,6 +105,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.refreshLimuCredit(data);
         } else {
             LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getIdentityNo());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
@@ -158,6 +159,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.refreshLimuCredit(data);
         } else {
             LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getIdentityNo());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
@@ -209,6 +211,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.refreshLimuCredit(data);
         } else {
             LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getIdentityNo());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
@@ -261,6 +264,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.refreshLimuCredit(data);
         } else {
             LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getBankCardNo());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
@@ -310,6 +314,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.refreshLimuCredit(data);
         } else {
             LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getIdentityNo());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());

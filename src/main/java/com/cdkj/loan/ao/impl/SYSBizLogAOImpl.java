@@ -252,6 +252,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             loanBank = budgetOrder.getLoanBankName();
             departmentName = budgetOrder.getCompanyName();
             bizOrderType = "资料传递";
+            data.setLogisticsStatus(logistics.getStatus());
         }
         data.setUserName(userName);
         data.setLoanBank(loanBank);

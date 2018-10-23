@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.LimuCredit;
+import com.cdkj.loan.dto.req.XN632949Req;
 
 @Component
 public interface ILimuCreditAO {
@@ -21,5 +22,7 @@ public interface ILimuCreditAO {
     public List<LimuCredit> queryLimuCreditList(LimuCredit condition);
 
     public LimuCredit getLimuCredit(int id);
+
+    public Object getLimuCreditByType(XN632949Req req);
 
 }

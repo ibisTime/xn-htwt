@@ -106,7 +106,23 @@
 	</select>
 	
 	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT * FROM tsys_biz_log t where (t.id in (SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} and t.status = #{status}) or t.id = (SELECT t.id FROM tsys_biz_log t where t.ref_type = '012' and t.status = #{status})) 
+		(SELECT
+		t.id
+		,t.parent_order
+		,t.ref_type
+		,t.ref_order
+		,t.deal_node
+		,t.deal_note
+		,t.status
+		,t.operate_role
+		,t.operator
+		,t.operator_name
+		,t.operator_mobile
+		,t.start_datetime
+		,t.end_datetime
+		,t.speed_time
+		,t.team_code
+		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} and t.status = #{status}
 		<if test="refType != null and refType != '' ">
     		AND t.ref_type = #{refType}
   		</if>
@@ -114,9 +130,37 @@
 			AND t.ref_order = #{refOrder}
 		</if>
 		<if test="teamCode != null and teamCode != '' ">
-				AND t.team_code = #{teamCode}
+			AND t.team_code = #{teamCode}
 		</if>
-		order by t.start_datetime desc
+		order by t.start_datetime desc)
+		union
+		(SELECT
+		t.id
+		,t.parent_order
+		,t.ref_type
+		,t.ref_order
+		,t.deal_node
+		,t.deal_note
+		,t.status
+		,t.operate_role
+		,t.operator
+		,t.operator_name
+		,t.operator_mobile
+		,t.start_datetime
+		,t.end_datetime
+		,t.speed_time
+		,t.team_code
+		FROM tsys_biz_log t where t.ref_type = '012' and t.status = #{status}
+		<if test="refType != null and refType != '' ">
+    		AND t.ref_type = #{refType}
+  		</if>
+		<if test="refOrder != null and refOrder != '' ">
+			AND t.ref_order = #{refOrder}
+		</if>
+		<if test="teamCode != null and teamCode != '' ">
+			AND t.team_code = #{teamCode}
+		</if>
+		order by t.start_datetime desc)
 	</select>
 	
 

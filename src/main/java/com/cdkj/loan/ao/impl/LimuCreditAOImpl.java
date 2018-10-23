@@ -9,8 +9,8 @@ import com.cdkj.loan.ao.ILimuCreditAO;
 import com.cdkj.loan.bo.ILimuCreditBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.LimuCredit;
+import com.cdkj.loan.dto.req.XN632949Req;
 
-//CHECK ��鲢��ע�� 
 @Service
 public class LimuCreditAOImpl implements ILimuCreditAO {
 
@@ -41,5 +41,13 @@ public class LimuCreditAOImpl implements ILimuCreditAO {
     @Override
     public LimuCredit getLimuCredit(int id) {
         return limuCreditBO.getLimuCredit(id);
+    }
+
+    @Override
+    public Object getLimuCreditByType(XN632949Req req) {
+        LimuCredit condition = new LimuCredit();
+        condition.setUserId(req.getUserId());
+        condition.setBizType(req.getBizType());
+        return limuCreditBO.getLimuCreditByType(condition);
     }
 }

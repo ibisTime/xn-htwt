@@ -314,7 +314,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             budgetOrder.setIsLogistics(EBoolean.YES.getCode());
 
             // 资料传递日志
-            sysBizLogBO.saveSYSBizLog(newLogisticsCode, EBizLogType.LOGISTICS,
+            sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
                 newLogisticsCode, budgetOrder.getCurNodeCode(),
                 budgetOrder.getTeamCode());
             result = EBoolean.YES.getCode();

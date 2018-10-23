@@ -1,5 +1,8 @@
 package com.cdkj.loan.ao;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public interface IInterviewVideoAO {
 
     // 录制视频

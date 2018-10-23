@@ -16,17 +16,8 @@ public class XN632949Req extends APageReq {
     // 用户编号
     private String userId;
 
-    // 用户账号
-    private String userName;
-
     // 业务类型
     private String bizType;
-
-    // 标记
-    private String token;
-
-    // 状态
-    private String status;
 
     public String getUserId() {
         return userId;
@@ -36,36 +27,12 @@ public class XN632949Req extends APageReq {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getBizType() {
         return bizType;
     }
 
     public void setBizType(String bizType) {
         this.bizType = bizType;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
 }

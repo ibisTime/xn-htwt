@@ -96,4 +96,9 @@ public class LimuCreditBOImpl extends PaginableBOImpl<LimuCredit>
         return data;
     }
 
+    @Override
+    public Object getLimuCreditByType(LimuCredit condition) {
+        return limuCreditDAO.select(condition);
+    }
+
 }
