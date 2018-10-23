@@ -106,8 +106,17 @@
 	</select>
 	
 	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT * FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order
-		<include refid="where_condition" />
+		SELECT * FROM tsys_biz_log t where (t.id in (SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} and t.status = #{status}) or t.id = (SELECT t.id FROM tsys_biz_log t where t.ref_type = '012' and t.status = #{status})) 
+		<if test="refType != null and refType != '' ">
+    		AND t.ref_type = #{refType}
+  		</if>
+		<if test="refOrder != null and refOrder != '' ">
+			AND t.ref_order = #{refOrder}
+		</if>
+		<if test="teamCode != null and teamCode != '' ">
+				AND t.team_code = #{teamCode}
+		</if>
+		order by t.start_datetime desc
 	</select>
 	
 
