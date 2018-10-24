@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IInterviewVideoDAO">
+	<resultMap id="interviewVideo_DB_Result" type="interviewVideo">
+		<result column="id" property="id" />
+		<result column="room_code" property="roomCode" />
+		<result column="file_id" property="fileId" />
+		<result column="video_url" property="videoUrl" />
+		<result column="file_size" property="fileSize" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="file_format" property="fileFormat" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_interviewVideo" parameterType="interviewVideo" resultMap="interviewVideo_DB_Result">
+		SELECT
+		t.id
+		,t.room_code
+		,t.file_id
+		,t.video_url
+		,t.file_size
+		,t.start_time
+		,t.end_time
+		,t.file_format
+		FROM
+		tdq_interview_video t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_interviewVideo_count" parameterType="interviewVideo"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_interview_video t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_interviewVideo" parameterType="interviewVideo">
+		INSERT INTO
+		tdq_interview_video(
+		id
+		,room_code
+		,file_id
+		,video_url
+		,file_size
+		,start_time
+		,end_time
+		,file_format
+		)
+		VALUES(
+		#{id}
+		,#{roomCode}
+		,#{fileId}
+		,#{videoUrl}
+		,#{fileSize}
+		,#{startTime}
+		,#{endTime}
+		,#{fileFormat}
+		)
+	</insert>
+
+	<update id="update_interviewVideo" parameterType="interviewVideo">
+		UPDATE tdq_interview_video
+		SET
+		room_code = #{roomCode}
+		,file_id = #{fileId}
+		,video_url = #{videoUrl}
+		,file_size = #{fileSize}
+		,start_time = #{startTime}
+		,end_time = #{endTime}
+		,file_format = #{fileFormat}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

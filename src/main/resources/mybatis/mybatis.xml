@@ -157,6 +157,8 @@
 		<typeAlias alias="busBorrow" type="com.cdkj.loan.domain.BusBorrow" />
 		<typeAlias alias="fileList" type="com.cdkj.loan.domain.FileList" />
 		<typeAlias alias="limuCredit" type="com.cdkj.loan.domain.LimuCredit" />
+		<typeAlias alias="interviewVideoRoom" type="com.cdkj.loan.domain.InterviewVideoRoom" />
+		<typeAlias alias="interviewVideo" type="com.cdkj.loan.domain.InterviewVideo" />
 
 	</typeAliases>
 </configuration>

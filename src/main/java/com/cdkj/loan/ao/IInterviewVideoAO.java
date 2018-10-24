@@ -1,16 +1,26 @@
 package com.cdkj.loan.ao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+
+import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.InterviewVideo;
 
 @Component
 public interface IInterviewVideoAO {
+    static final String DEFAULT_ORDER_COLUMN = "id";
 
-    // 录制视频
-    Object recordVideo(String roomId, String realTimeRecord);
+    public void addInterviewVideo(InterviewVideo data);
 
-    // 录制视频
-    Object endRecordVideo(String roomId, String taskId);
+    public int dropInterviewVideo(int id);
 
-    // 混流
-    Object mixedFlow(String outputId, String inputId, String imageLayer);
+    public Paginable<InterviewVideo> queryInterviewVideoPage(int start,
+            int limit, InterviewVideo condition);
+
+    public List<InterviewVideo> queryInterviewVideoList(
+            InterviewVideo condition);
+
+    public InterviewVideo getInterviewVideo(int id);
+
 }

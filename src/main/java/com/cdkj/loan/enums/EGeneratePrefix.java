@@ -26,7 +26,7 @@ public enum EGeneratePrefix {
     DEPARTMENT("DP", "部门"), REQBUDGET("RB", "请款预算单表"), CREDIT("C", "征信单"), CREDITUSER(
             "CU", "征信列表"), INSURANCECOMPANY("IC", "保险公司信息"), COLLECTBANKCARD(
             "CB", "收款账号"), CARDEALER("CD", "经销商信息表"), CARDEALERPROTOCOL("CDT",
-            "经销商协议表"),
+            "经销商协议表"),INTERVIEWVIDEOROOM("IVR","面签视频房间"),
 
     BUDGET("BG", "预订单"),INVESTIGATEREPORT("IR","调查报告"), GPS("G", "GPS"), BANK("BA", "银行"), LOGISTICS("L",
 

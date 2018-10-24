@@ -9,23 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "limuCredit";
+    private static String key = "interviewVideo";
 
     // 实体名称
-    private static String keyName = "立木征信";
+    private static String keyName = "面签视频";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_limu_credit";
+    private static String dbname = "tdq_interview_video";
 
-    private static String[] DBwords = { "id", "user_id", "user_name",
-            "biz_type", "token", "found_datetime", "status", "result",
-            "callback_datetime" };
+    private static String[] DBwords = { "id", "room_code", "file_id",
+            "video_url", "file_size", "start_time", "end_time", "file_format" };
 
-    private static String[] DBwordsName = { "编号", "用户编号", "用户账号", "业务类型", "标记",
-            "查询时间", "状态", "查询结果", "回调时间" };
+    private static String[] DBwordsName = { "序号", "房间编号", "视频编号", "点播视频的下载地址",
+            "文件大小", "开始时间", "结束时间", "文件格式" };
 
     private static String[] DOwords = getDOwords();
 

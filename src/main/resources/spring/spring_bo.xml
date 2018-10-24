@@ -396,4 +396,12 @@
 		<property name="paginableDAO" ref="limuCreditDAOImpl"/>
 	</bean>
 	
+	<bean id="interviewVideoRoomBO" class="com.cdkj.loan.bo.impl.InterviewVideoRoomBOImpl">
+		<property name="paginableDAO" ref="interviewVideoRoomDAOImpl"/>
+	</bean>
+	
+	<bean id="interviewVideoBO" class="com.cdkj.loan.bo.impl.InterviewVideoBOImpl">
+		<property name="paginableDAO" ref="interviewVideoDAOImpl"/>
+	</bean>
+	
 </beans>

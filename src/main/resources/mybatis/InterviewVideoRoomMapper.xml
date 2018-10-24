@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IInterviewVideoRoomDAO">
+	<resultMap id="interviewVideoRoom_DB_Result" type="interviewVideoRoom">
+		<result column="code" property="code" />
+		<result column="hl_url" property="hlUrl" />
+		<result column="create_datetime" property="createDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_interviewVideoRoom" parameterType="interviewVideoRoom" resultMap="interviewVideoRoom_DB_Result">
+		SELECT
+		t.code
+		,t.hl_url
+		,t.create_datetime
+		FROM
+		tdq_interview_video_room t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_interviewVideoRoom_count" parameterType="interviewVideoRoom"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_interview_video_room t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_interviewVideoRoom" parameterType="interviewVideoRoom">
+		INSERT INTO
+		tdq_interview_video_room(
+		code
+		,hl_url
+		,create_datetime
+		)
+		VALUES(
+		#{code}
+		,#{hlUrl}
+		,#{createDatetime}
+		)
+	</insert>
+
+	<update id="update_interviewVideoRoom" parameterType="interviewVideoRoom">
+		UPDATE tdq_interview_video_room
+		SET
+		hl_url = #{hlUrl}
+		,create_datetime = #{createDatetime}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

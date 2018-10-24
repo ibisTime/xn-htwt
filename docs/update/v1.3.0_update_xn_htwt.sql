@@ -155,3 +155,24 @@ DELETE FROM `tsys_dict` WHERE `id`='920';
 ---------------------------------------------------------------------------------------------------------
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'car_frame_price_count', '车架价格核算', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'car_frame_price_count', '1', 'www.chehang168.com', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
+
+DROP TABLE IF EXISTS `tdq_interview_video_room`;
+CREATE TABLE `tdq_interview_video_room` (
+  `code` varchar(32) NOT NULL COMMENT '房间编号',
+  `hl_url` varchar(255) DEFAULT NULL COMMENT '混流视频下载地址',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tdq_interview_video`;
+CREATE TABLE `tdq_interview_video` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `room_code` varchar(255) DEFAULT NULL COMMENT '房间编号',
+  `file_id` varchar(255) DEFAULT NULL COMMENT '视频编号',
+  `video_url` varchar(255) DEFAULT NULL COMMENT '点播视频的下载地址',
+  `file_size` varchar(255) DEFAULT NULL COMMENT '文件大小',
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `file_format` varchar(32) DEFAULT NULL COMMENT '文件格式',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
