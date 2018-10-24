@@ -30,14 +30,13 @@ public class XN632195 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
-        condition.setCode(req.getBizCode());
+        condition.setCode(req.getCode());
         condition.setApplyUserName(req.getApplyUserName());
-        condition.setAdvanceFundDatetimeStart(DateUtil.strToDate(
-            req.getAdvanceFundDatetimeStart(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition
-            .setAdvanceFundDatetimeEnd(DateUtil.strToDate(
-                req.getAdvanceFundDatetimeEnd(),
+        condition.setAdvanceFundDatetimeStart(
+            DateUtil.strToDate(req.getAdvanceFundDatetimeStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setAdvanceFundDatetimeEnd(
+            DateUtil.strToDate(req.getAdvanceFundDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
 

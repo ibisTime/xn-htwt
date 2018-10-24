@@ -12,7 +12,7 @@ public class XN632195Req extends APageReq {
 
     private String applyUserName;
 
-    private String bizCode;
+    private String code;
 
     private String advanceFundDatetimeStart;
 
@@ -26,12 +26,12 @@ public class XN632195Req extends APageReq {
         this.applyUserName = applyUserName;
     }
 
-    public String getBizCode() {
-        return bizCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getAdvanceFundDatetimeStart() {

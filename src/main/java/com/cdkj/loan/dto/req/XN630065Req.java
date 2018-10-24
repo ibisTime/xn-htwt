@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 /**
  * @author: xieyj 
  * @since: 2016年9月17日 下午3:58:52 
@@ -23,6 +25,17 @@ public class XN630065Req extends APageReq {
 
     // 角色编号
     private String roleCode;
+
+    // 角色编号
+    private List<String> roleCodeList;
+
+    public List<String> getRoleCodeList() {
+        return roleCodeList;
+    }
+
+    public void setRoleCodeList(List<String> roleCodeList) {
+        this.roleCodeList = roleCodeList;
+    }
 
     public String getRoleCode() {
         return roleCode;

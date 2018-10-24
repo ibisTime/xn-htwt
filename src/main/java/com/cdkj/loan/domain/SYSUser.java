@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -94,6 +95,17 @@ public class SYSUser extends ABaseDO {
 
     // 登录名模糊查
     private String loginNameQuery;
+
+    // 角色编号
+    private List<String> roleCodeList;
+
+    public List<String> getRoleCodeList() {
+        return roleCodeList;
+    }
+
+    public void setRoleCodeList(List<String> roleCodeList) {
+        this.roleCodeList = roleCodeList;
+    }
 
     public String getRoleName() {
         return roleName;

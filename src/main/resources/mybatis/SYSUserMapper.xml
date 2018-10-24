@@ -62,7 +62,12 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND t.role_code = #{roleCode}
 			</if>
-			
+			<if test="roleCodeList != null and roleCodeList.size() > 0 ">
+				AND t.role_code in 
+				<foreach collection="roleCodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 			<if test="keyword != null and keyword != '' ">
 				AND (t.login_name like "%"#{keyword}"%" OR  t.mobile like "%"#{keyword}"%")
 			</if>

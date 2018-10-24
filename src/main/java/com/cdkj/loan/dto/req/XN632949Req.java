@@ -6,12 +6,7 @@ package com.cdkj.loan.dto.req;
  * @since: 2018年10月12日 下午4:44:21 
  * @history:
  */
-public class XN632949Req extends APageReq {
-
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 1L;
+public class XN632949Req {
 
     // 用户编号
     private String userId;

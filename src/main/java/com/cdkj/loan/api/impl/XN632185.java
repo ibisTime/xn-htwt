@@ -30,7 +30,7 @@ public class XN632185 extends AProcessor {
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
         condition.setApplyUserName(req.getApplyUserName());
-        condition.setCode(req.getBizCode());
+        condition.setCode(req.getCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getStartDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
