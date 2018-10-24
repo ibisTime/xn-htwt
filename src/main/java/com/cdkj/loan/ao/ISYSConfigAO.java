@@ -15,8 +15,8 @@ public interface ISYSConfigAO {
 
     String DEFAULT_ORDER_COLUMN = "id";
 
-    public void editSYSConfig(String ckey, String cvalue, String updater,
-            String remark);
+    public void editSYSConfig(String id, String ckey, String cvalue,
+            String updater, String remark);
 
     public Paginable<SYSConfig> querySYSConfigPage(int start, int limit,
             SYSConfig condition);
@@ -30,4 +30,7 @@ public interface ISYSConfigAO {
     // 新增车贷期数管理
     public void addSYSConfig(String ckey, String cvalue, String updater,
             String remark);
+
+    // 删除车贷期数管理
+    public void dropSYSConfig(Long id);
 }

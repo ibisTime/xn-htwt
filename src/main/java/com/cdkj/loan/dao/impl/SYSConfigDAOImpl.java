@@ -22,7 +22,8 @@ import com.cdkj.loan.domain.SYSConfig;
  * @history:
  */
 @Repository("sysConfigDAOImpl")
-public class SYSConfigDAOImpl extends AMybatisTemplate implements ISYSConfigDAO {
+public class SYSConfigDAOImpl extends AMybatisTemplate
+        implements ISYSConfigDAO {
 
     /** 
      * @see com.cdkj.loan.dao.base.IBaseDAO#insert(java.lang.Object)
@@ -37,8 +38,7 @@ public class SYSConfigDAOImpl extends AMybatisTemplate implements ISYSConfigDAO 
      */
     @Override
     public int delete(SYSConfig data) {
-        // TODO Auto-generated method stub
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_sysConfig"), data);
     }
 
     /** 
@@ -64,15 +64,16 @@ public class SYSConfigDAOImpl extends AMybatisTemplate implements ISYSConfigDAO 
      */
     @Override
     public List<SYSConfig> selectList(SYSConfig condition) {
-        return super.selectList(NAMESPACE.concat("select_sysConfig"),
-            condition, SYSConfig.class);
+        return super.selectList(NAMESPACE.concat("select_sysConfig"), condition,
+            SYSConfig.class);
     }
 
     /** 
      * @see com.cdkj.loan.dao.base.IBaseDAO#selectList(java.lang.Object, int, int)
      */
     @Override
-    public List<SYSConfig> selectList(SYSConfig condition, int start, int count) {
+    public List<SYSConfig> selectList(SYSConfig condition, int start,
+            int count) {
         return super.selectList(NAMESPACE.concat("select_sysConfig"), start,
             count, condition, SYSConfig.class);
     }

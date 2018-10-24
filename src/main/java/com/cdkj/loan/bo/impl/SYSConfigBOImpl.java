@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ISYSConfigDAO;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -36,11 +37,10 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
     private ISYSConfigDAO sysConfigDAO;
 
     @Override
-    public int refreshSYSConfig(String ckey, String cvalue, String updater,
-            String remark) {
-        SYSConfig condition = new SYSConfig();
-        condition.setCkey(ckey);
-        SYSConfig data = sysConfigDAO.select(condition);
+    public int refreshSYSConfig(String id, String ckey, String cvalue,
+            String updater, String remark) {
+        SYSConfig data = getSYSConfig(StringValidater.toLong(id));
+        data.setCkey(ckey);
         data.setCvalue(cvalue);
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
@@ -170,6 +170,19 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
     @Override
     public void saveSYSConfig(SYSConfig sysConfig) {
         sysConfigDAO.insert(sysConfig);
+    }
+
+    @Override
+    public void dropSYSConfig(Long id) {
+        int i = 0;
+        if (id > 0) {
+            SYSConfig condition = new SYSConfig();
+            condition.setId(id);
+            i = sysConfigDAO.delete(condition);
+        }
+        if (i == 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "id记录不存在");
+        }
     }
 
 }

@@ -20,8 +20,8 @@ import com.cdkj.loan.domain.SYSConfig;
  * @history:
  */
 public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
-    public int refreshSYSConfig(String ckey, String cvalue, String updater,
-            String remark);
+    public int refreshSYSConfig(String id, String ckey, String cvalue,
+            String updater, String remark);
 
     public SYSConfig getSYSConfig(Long id);
 
@@ -43,5 +43,7 @@ public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
 
     // 新增车贷期数管理
     public void saveSYSConfig(SYSConfig sysConfig);
+
+    public void dropSYSConfig(Long id);
 
 }

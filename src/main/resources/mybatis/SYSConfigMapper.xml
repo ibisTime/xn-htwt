@@ -80,9 +80,15 @@
 	<update id="update_value" parameterType="sysConfig">
 		UPDATE tsys_config SET
 		cvalue = #{cvalue}
+		,ckey=#{ckey}
 		,updater=#{updater}
 		,update_datetime=#{updateDatetime}
 		,remark=#{remark}
 		WHERE id = #{id}
 	</update>
+	
+	<delete id="delete_sysConfig" parameterType="sysConfig">
+		DELETE FROM tsys_config
+		WHERE id = #{id}
+	</delete>
 </mapper>

@@ -4,9 +4,13 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630042Req {
 
+    // id
+    @NotBlank
+    private String id;
+
     // 键（必填）
     @NotBlank(message = "键不能为空")
-    private String key;
+    private String ckey;
 
     // 值（必填）
     @NotBlank(message = "值不能为空")
@@ -19,12 +23,20 @@ public class XN630042Req {
     // 备注（选填）
     private String remark;
 
-    public String getKey() {
-        return key;
+    public String getId() {
+        return id;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCkey() {
+        return ckey;
+    }
+
+    public void setCkey(String ckey) {
+        this.ckey = ckey;
     }
 
     public String getCvalue() {
