@@ -115,6 +115,10 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
         String string = OkHttpUtils.doAccessHTTPPostJson(
             "http://fcgi.video.qcloud.com/common_access", jo.toString());
+        InterviewVideoRoom videoRoom = interviewVideoRoomBO
+            .getInterviewVideoRoom(req.getRoomId());
+        videoRoom.setHlUrl(string);
+        interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
         return string;
     }
 

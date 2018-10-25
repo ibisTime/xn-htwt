@@ -829,7 +829,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task", reqParam);
         LimuCredit data = limuCreditBO
-            .getLimuCreditByUserName(req.getUsername(), "mobileReportTask");
+            .getLimuCreditByUid(req.getIdentityCardNo(), "mobileReportTask");
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = null;
         try {
@@ -848,6 +848,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.refreshLimuCredit(data);
         } else {
             LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserId(req.getIdentityCardNo());
             limuCredit.setUserName(req.getUsername());
             limuCredit.setToken(token);
             limuCredit.setFoundDatetime(new Date());
@@ -946,13 +947,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("token", req.getTokendb()));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/mobile_report/v1/task/report",
             reqParam);
-        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
             "mobileReportTask");
         if (data != null) {
             data.setResult(doPost);
