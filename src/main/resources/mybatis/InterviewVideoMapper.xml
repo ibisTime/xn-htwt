@@ -14,8 +14,14 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
+			</if>
+			<if test="roomCode != null and roomCode != '' ">
+				AND t.room_code = #{roomCode}
+			</if>
+			<if test="fileId != null and fileId != '' ">
+				AND t.file_id = #{fileId}
 			</if>
 		</trim>
 	</sql>
@@ -79,7 +85,7 @@
 		,start_time = #{startTime}
 		,end_time = #{endTime}
 		,file_format = #{fileFormat}
-		WHERE code = #{code}
+		WHERE id = #{id}
 	</update>
 
 

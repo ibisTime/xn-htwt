@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.InterviewVideoRoom;
 import com.cdkj.loan.dto.req.XN632950Req;
+import com.cdkj.loan.dto.req.XN632951Req;
 
 @Component
 public interface IInterviewVideoRoomAO {
@@ -25,5 +26,8 @@ public interface IInterviewVideoRoomAO {
             InterviewVideoRoom condition);
 
     public InterviewVideoRoom getInterviewVideoRoom(String code);
+
+    // 混流
+    public Object hlInterviewVideo(XN632951Req req);
 
 }

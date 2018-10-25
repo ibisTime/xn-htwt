@@ -18,4 +18,6 @@ public interface IInterviewVideoBO extends IPaginableBO<InterviewVideo> {
 
     public InterviewVideo getInterviewVideoByRoomCode(String roomCode);
 
+    public InterviewVideo getInterviewVideoByFileId(String fileId);
+
 }

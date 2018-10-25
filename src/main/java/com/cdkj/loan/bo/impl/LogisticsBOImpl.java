@@ -124,8 +124,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     @Override
     public void sendAgainLogistics(String code, String remark) {
         if (StringUtils.isNotBlank(code)) {
-            Logistics data = new Logistics();
-            data.setCode(code);
+            Logistics data = getLogistics(code);
             data.setRemark(remark);
             data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
             logisticsDAO.updateLogisticsReceive(data);

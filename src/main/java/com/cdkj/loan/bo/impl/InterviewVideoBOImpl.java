@@ -59,4 +59,11 @@ public class InterviewVideoBOImpl extends PaginableBOImpl<InterviewVideo>
         condition.setRoomCode(roomCode);
         return interviewVideoDAO.select(condition);
     }
+
+    @Override
+    public InterviewVideo getInterviewVideoByFileId(String fileId) {
+        InterviewVideo condition = new InterviewVideo();
+        condition.setFileId(fileId);
+        return interviewVideoDAO.select(condition);
+    }
 }

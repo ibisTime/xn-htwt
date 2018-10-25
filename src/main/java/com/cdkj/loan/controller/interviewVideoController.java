@@ -1,5 +1,7 @@
 package com.cdkj.loan.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,22 +45,32 @@ public class interviewVideoController {
         String[] fileFormat = (String[]) map.get("file_format");
 
         System.out.println("token:" + token[0]);
-        // System.out.println("bizType:" + bizType[0]);
-        // System.out.println("uid:" + uid[0]);
 
         if ("100".equals(eventType[0])) {
-            InterviewVideo interviewVideo = new InterviewVideo();
-            interviewVideo.setRoomCode(streamId[0]);
-            interviewVideo.setVideoUrl(videoUrl[0]);
-            interviewVideo.setFileSize(fileSize[0]);
-            interviewVideo.setStartTime(
-                DateUtil.strToDate(startTime[0], DateUtil.DATA_TIME_PATTERN_1));
-            interviewVideo.setEndTime(
-                DateUtil.strToDate(endTime[0], DateUtil.DATA_TIME_PATTERN_1));
-            interviewVideo.setFileId(fileId[0]);
-            interviewVideo.setFileFormat(fileFormat[0]);
-            interviewVideoBO.saveInterviewVideo(interviewVideo);
+            InterviewVideo video = interviewVideoBO
+                .getInterviewVideoByFileId(fileId[0]);
+            if (video == null) {
+                InterviewVideo interviewVideo = new InterviewVideo();
+                interviewVideo.setRoomCode(streamId[0]);
+                interviewVideo.setVideoUrl(videoUrl[0]);
+                interviewVideo.setFileSize(fileSize[0]);
+                interviewVideo.setStartTime(DateUtil.strToDate(startTime[0],
+                    DateUtil.DATA_TIME_PATTERN_1));
+                interviewVideo.setEndTime(DateUtil.strToDate(endTime[0],
+                    DateUtil.DATA_TIME_PATTERN_1));
+                interviewVideo.setFileId(fileId[0]);
+                interviewVideo.setFileFormat(fileFormat[0]);
+                interviewVideoBO.saveInterviewVideo(interviewVideo);
+            }
             System.out.println("videoUrl:" + videoUrl[0]);
+            PrintWriter writer = null;
+            try {
+                writer = response.getWriter();
+                writer.append("0");
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println("===========回调方法结束============");
     }
