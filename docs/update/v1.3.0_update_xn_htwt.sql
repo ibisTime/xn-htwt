@@ -110,7 +110,7 @@ CREATE TABLE `tdq_limu_credit` (
   `token` varchar(255) DEFAULT NULL COMMENT '标记',
   `found_datetime` datetime DEFAULT NULL COMMENT '查询时间',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `result` varchar(255) DEFAULT NULL COMMENT '查询结果',
+  `result` LONGTEXT DEFAULT NULL COMMENT '查询结果',
   `callback_datetime` datetime DEFAULT NULL COMMENT '回调时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -152,9 +152,9 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 UPDATE `tsys_dict` SET `dvalue`='资料传递' WHERE `id`='918';
 DELETE FROM `tsys_dict` WHERE `id`='919';
 DELETE FROM `tsys_dict` WHERE `id`='920';
----------------------------------------------------------------------------------------------------------
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'car_frame_price_count', '车架价格核算', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'car_frame_price_count', '1', 'www.chehang168.com', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
+---------------------------------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS `tdq_interview_video_room`;
 CREATE TABLE `tdq_interview_video_room` (
