@@ -114,6 +114,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gps.setApplyUser(data.getApplyUser());
             gps.setApplyStatus(EBoolean.NO.getCode());
             gps.setApplyDatetime(data.getApplyDatetime());
+            if (StringUtils.isNotBlank(data.getCustomerName())) {
+                gps.setCustomerName(data.getCustomerName());
+            }
             gpsBO.applyGps(gps);
         }
         // 产生物流单

@@ -11,7 +11,6 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IInterviewVideoRoomDAO;
 import com.cdkj.loan.domain.InterviewVideoRoom;
-import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -24,8 +23,7 @@ public class InterviewVideoRoomBOImpl extends
     public String saveInterviewVideoRoom(InterviewVideoRoom data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.INTERVIEWVIDEOROOM.getCode());
+            code = OrderNoGenerater.random7();
             data.setCode(code);
             interviewVideoRoomDAO.insert(data);
         }

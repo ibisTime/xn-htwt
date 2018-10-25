@@ -47,6 +47,9 @@ public class Gps extends ABaseDO {
     // 业务编号
     private String bizCode;
 
+    // 客户姓名
+    private String customerName;
+
     /*****************/
     // 公司编号
     private String companyName;
@@ -66,6 +69,14 @@ public class Gps extends ABaseDO {
 
     public void setApplyUserRole(String applyUserRole) {
         this.applyUserRole = applyUserRole;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public BudgetOrder getBudgetOrder() {

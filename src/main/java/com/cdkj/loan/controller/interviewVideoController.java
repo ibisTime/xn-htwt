@@ -30,7 +30,7 @@ public class interviewVideoController {
     @RequestMapping(value = "/interviewVideo", method = RequestMethod.POST)
     public void doClockIn(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        System.out.println("===========回调方法开始执行============");
+        System.out.println("===========回调面签视频方法开始执行============");
 
         Map<Object, Object> map = request.getParameterMap();
 
@@ -43,12 +43,21 @@ public class interviewVideoController {
         String[] endTime = (String[]) map.get("end_time");
         String[] fileId = (String[]) map.get("file_id");
         String[] fileFormat = (String[]) map.get("file_format");
+        System.out.println("event_type:" + eventType[0]);
+        System.out.println("stream_id:" + streamId[0]);
+        System.out.println("video_url:" + videoUrl[0]);
+        System.out.println("file_size:" + fileSize[0]);
+        System.out.println("start_time:" + startTime[0]);
+        System.out.println("end_time:" + endTime[0]);
+        System.out.println("file_id:" + fileId[0]);
+        System.out.println("file_format:" + fileFormat[0]);
 
         System.out.println("token:" + token[0]);
 
         if ("100".equals(eventType[0])) {
             InterviewVideo video = interviewVideoBO
                 .getInterviewVideoByFileId(fileId[0]);
+            System.out.println("video:" + video);
             if (video == null) {
                 InterviewVideo interviewVideo = new InterviewVideo();
                 interviewVideo.setRoomCode(streamId[0]);
@@ -61,6 +70,7 @@ public class interviewVideoController {
                 interviewVideo.setFileId(fileId[0]);
                 interviewVideo.setFileFormat(fileFormat[0]);
                 interviewVideoBO.saveInterviewVideo(interviewVideo);
+                System.out.println("执行了保存方法！");
             }
             System.out.println("videoUrl:" + videoUrl[0]);
             PrintWriter writer = null;
@@ -72,6 +82,6 @@ public class interviewVideoController {
                 e.printStackTrace();
             }
         }
-        System.out.println("===========回调方法结束============");
+        System.out.println("===========回调面签视频方法结束============");
     }
 }

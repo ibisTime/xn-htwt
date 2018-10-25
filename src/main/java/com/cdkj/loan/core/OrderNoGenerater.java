@@ -22,4 +22,20 @@ public class OrderNoGenerater {
         return prefix + today + String.valueOf(random);
     }
 
+    /**
+     * 随机生成一个7位数，且第一位不为0
+     * @return 
+     * @create: 2018年10月25日 下午10:20:31 CYL
+     * @history:
+     */
+    public static String random7() {
+        Double random = Math.random();
+        String str = random.toString().substring(2, 9);
+        String sub2 = random.toString().substring(2, 3);
+        if (sub2.equals("0")) {
+            str = "1" + random.toString().substring(3, 9);
+        }
+        return str;
+    }
+
 }

@@ -26,14 +26,14 @@ public class XN632705Req extends APageReq {
     private String bizCode;
 
     // 申请人姓名(预算单)
-    private String applyUserName;
+    private String customerName;
 
-    public String getApplyUserName() {
-        return applyUserName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setApplyUserName(String applyUserName) {
-        this.applyUserName = applyUserName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getGpsDevNo() {

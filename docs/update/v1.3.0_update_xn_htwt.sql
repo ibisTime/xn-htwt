@@ -158,7 +158,6 @@ DELETE FROM `tsys_dict` WHERE `id`='919';
 DELETE FROM `tsys_dict` WHERE `id`='920';
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'car_frame_price_count', '车架价格核算', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'car_frame_price_count', '1', 'www.chehang168.com', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
----------------------------------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS `tdq_interview_video_room`;
 CREATE TABLE `tdq_interview_video_room` (
@@ -180,3 +179,8 @@ CREATE TABLE `tdq_interview_video` (
   `file_format` varchar(32) DEFAULT NULL COMMENT '文件格式',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+---------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tb_gps` 
+ADD COLUMN `customer_name` VARCHAR(255) NULL COMMENT '客户姓名' AFTER `biz_code`;
