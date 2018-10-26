@@ -7,7 +7,7 @@ import com.cdkj.loan.domain.InterviewVideo;
 
 public interface IInterviewVideoBO extends IPaginableBO<InterviewVideo> {
 
-    public void saveInterviewVideo(InterviewVideo data);
+    public int saveInterviewVideo(InterviewVideo data);
 
     public int removeInterviewVideo(int id);
 

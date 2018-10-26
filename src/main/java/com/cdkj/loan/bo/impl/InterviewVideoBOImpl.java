@@ -18,8 +18,9 @@ public class InterviewVideoBOImpl extends PaginableBOImpl<InterviewVideo>
     @Autowired
     private IInterviewVideoDAO interviewVideoDAO;
 
-    public void saveInterviewVideo(InterviewVideo data) {
-        interviewVideoDAO.insert(data);
+    public int saveInterviewVideo(InterviewVideo data) {
+        int id = interviewVideoDAO.insert(data);
+        return id;
     }
 
     @Override

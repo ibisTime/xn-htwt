@@ -605,6 +605,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("uid", req.getIdNo()));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
+        reqParam.add(new BasicNameValuePair("loginType", req.getLoginType()));
         reqParam.add(new BasicNameValuePair("username", req.getUsername()));
         try {
             reqParam.add(new BasicNameValuePair("password", new String(
@@ -631,8 +632,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 if ("0010".equals(code)) {// 受理成功
                     token = rootNode.get("token").textValue();
                 } else {
-                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "查询失败");
+                    return post;
                 }
 
                 LimuCredit limuCredit = limuCreditBO
@@ -640,7 +640,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 if (limuCredit == null) {
                     LimuCredit data = new LimuCredit();
                     data.setBizType("jd");
-                    data.setUserName(req.getUsername());
                     data.setUserId(req.getIdNo());
                     data.setToken(token);
                     data.setStatus(
@@ -648,7 +647,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
-                    limuCredit.setUserName(req.getUsername());
                     limuCredit.setToken(token);
                     limuCredit.setStatus(
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
@@ -751,7 +749,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         reqParam.add(new BasicNameValuePair("token", req.getTokendb()));
         // reqParam.add(new BasicNameValuePair("bizType", "taobao"));
-        reqParam.add(new BasicNameValuePair("bizType", "jd"));
+        reqParam.add(new BasicNameValuePair("bizType", req.getBizType()));
 
         String post = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);

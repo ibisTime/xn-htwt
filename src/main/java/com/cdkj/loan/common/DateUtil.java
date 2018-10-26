@@ -352,4 +352,20 @@ public class DateUtil {
         return calendar.getTime();
     }
 
+    /**
+     * UNIX 时间戳   转  时间
+     * @param year
+     * @param month
+     * @return 
+     * @create: 2018年10月26日 下午5:07:09 CYL
+     * @history:
+     */
+    public static Date unixToTime(String unix) {
+        Long timestamp = Long.parseLong(unix) * 1000;
+        String dateString = new java.text.SimpleDateFormat(
+            "yyyy-MM-dd HH:mm:ss").format(new java.util.Date(timestamp));
+        Date date = strToDate(dateString, DateUtil.DATA_TIME_PATTERN_1);
+        return date;
+    }
+
 }

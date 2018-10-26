@@ -4,14 +4,13 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632931Req {
     // 账号
-    @NotBlank
     private String username;
 
     // 密码
-    @NotBlank
     private String password;
 
     // 登陆类型
+    @NotBlank
     private String loginType;
 
     // 用户身份证号

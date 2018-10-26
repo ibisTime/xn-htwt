@@ -5,6 +5,7 @@
 	<resultMap id="interviewVideo_DB_Result" type="interviewVideo">
 		<result column="id" property="id" />
 		<result column="room_code" property="roomCode" />
+		<result column="stream_id" property="streamId" />
 		<result column="file_id" property="fileId" />
 		<result column="video_url" property="videoUrl" />
 		<result column="file_size" property="fileSize" />
@@ -29,6 +30,7 @@
 		SELECT
 		t.id
 		,t.room_code
+		,t.stream_id
 		,t.file_id
 		,t.video_url
 		,t.file_size
@@ -56,6 +58,7 @@
 		tdq_interview_video(
 		id
 		,room_code
+		,stream_id
 		,file_id
 		,video_url
 		,file_size
@@ -66,6 +69,7 @@
 		VALUES(
 		#{id}
 		,#{roomCode}
+		,#{streamId}
 		,#{fileId}
 		,#{videoUrl}
 		,#{fileSize}
@@ -79,6 +83,7 @@
 		UPDATE tdq_interview_video
 		SET
 		room_code = #{roomCode}
+		,stream_id = #{streamId}
 		,file_id = #{fileId}
 		,video_url = #{videoUrl}
 		,file_size = #{fileSize}

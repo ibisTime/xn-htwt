@@ -167,10 +167,12 @@ CREATE TABLE `tdq_interview_video_room` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+---------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `tdq_interview_video`;
 CREATE TABLE `tdq_interview_video` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `room_code` varchar(255) DEFAULT NULL COMMENT '房间编号',
+  `stream_id` varchar(255) DEFAULT NULL COMMENT '直播码',
   `file_id` varchar(255) DEFAULT NULL COMMENT '视频编号',
   `video_url` varchar(255) DEFAULT NULL COMMENT '点播视频的下载地址',
   `file_size` varchar(255) DEFAULT NULL COMMENT '文件大小',
@@ -180,7 +182,6 @@ CREATE TABLE `tdq_interview_video` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
----------------------------------------------------------------------------------------------------------
 
 ALTER TABLE `tb_gps` 
 ADD COLUMN `customer_name` VARCHAR(255) NULL COMMENT '客户姓名' AFTER `biz_code`;

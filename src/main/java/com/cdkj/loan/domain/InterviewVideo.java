@@ -20,6 +20,9 @@ public class InterviewVideo extends ABaseDO {
     // 房间编号
     private String roomCode;
 
+    // 直播码
+    private String streamId;
+
     // 视频编号
     private String fileId;
 
@@ -52,6 +55,14 @@ public class InterviewVideo extends ABaseDO {
 
     public String getRoomCode() {
         return roomCode;
+    }
+
+    public String getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(String streamId) {
+        this.streamId = streamId;
     }
 
     public void setFileId(String fileId) {

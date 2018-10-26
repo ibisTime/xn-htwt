@@ -13,6 +13,7 @@ import com.cdkj.loan.ao.IInterviewVideoRoomAO;
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.bo.IInterviewVideoRoomBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.core.OkHttpUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.InterviewVideo;
@@ -76,14 +77,14 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         JSONObject jobl = new JSONObject();
         jobl.put("image_layer", "1");
         JSONObject job = new JSONObject();
-        job.put("input_stream_id", videoList.get(0).getFileId());
+        job.put("input_stream_id", videoList.get(0).getStreamId());
         job.put("layout_params", jobl);
         inputList.add(job);
         int i = 1;
         for (int j = 1; j < videoList.size(); j++) {
             // 小画面
             JSONObject jox = new JSONObject();
-            jox.put("input_stream_id", videoList.get(j).getFileId());
+            jox.put("input_stream_id", videoList.get(j).getStreamId());
             JSONObject joxl = new JSONObject();
             joxl.put("image_layer", i + 1);
             joxl.put("image_width", "160");
@@ -96,9 +97,11 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
         JSONObject para = new JSONObject();
         para.put("app_id", "1257046543");
-        para.put("interface", "start_mix_stream_advanced");
+        para.put("interface", "mix_streamv2.start_mix_stream_advanced");
         para.put("mix_stream_session_id", req.getRoomId());
-        para.put("output_stream_id", videoList.get(0).getFileId());
+        para.put("output_stream_id",
+            "32810_MIX_" + videoList.get(0).getStreamId() + "_2_"
+                    + (Long.toString(new Date().getTime() / 1000)));
         para.put("output_stream_type", "0");
         para.put("output_stream_bitrate", "1500");
         para.put("input_stream_list", inputList);
@@ -107,14 +110,18 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         interFace.put("para", para);
 
         JSONObject jo = new JSONObject();
-        String time = Long.toString(new Date().getTime() / 1000);
+        String time = Long
+            .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 60 * 1000);
         jo.put("timestamp", time);
         String HL = OrderNoGenerater.generate("HL");
         jo.put("eventId", HL);
         jo.put("interface", interFace);
 
+        String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
         String string = OkHttpUtils.doAccessHTTPPostJson(
-            "http://fcgi.video.qcloud.com/common_access", jo.toString());
+            "http://fcgi.video.qcloud.com/common_access?appid=1257046543&interface=Mix_StreamV2&t="
+                    + time + "&sign=" + sign,
+            jo.toString());
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
             .getInterviewVideoRoom(req.getRoomId());
         videoRoom.setHlUrl(string);
