@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 立木征信分页查
  * @author: CYL 
@@ -8,10 +10,12 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632949Req {
 
-    // 用户编号
+    // 身份证号
+    @NotBlank
     private String userId;
 
     // 业务类型
+    @NotBlank
     private String bizType;
 
     public String getUserId() {

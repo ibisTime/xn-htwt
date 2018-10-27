@@ -34,6 +34,9 @@
 			<if test="relation != null and relation != '' ">
 				AND t.relation = #{relation}
 			</if>
+			<if test="idNo != null and idNo != '' ">
+				AND t.id_no = #{idNo}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">

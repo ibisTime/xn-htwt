@@ -6,6 +6,7 @@
 		<result column="id" property="id" />
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
+		<result column="customer_name" property="customerName" />
 		<result column="biz_type" property="bizType" />
 		<result column="token" property="token" />
 		<result column="found_datetime" property="foundDatetime" />
@@ -24,11 +25,17 @@
 			<if test="token != null and token != '' ">
 				AND t.token = #{token}
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 			<if test="userName != null and userName != '' ">
 				AND t.user_name = #{userName}
 			</if>
 			<if test="bizType != null and bizType != '' ">
 				AND t.biz_type = #{bizType}
+			</if>
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name = #{customerName}
 			</if>
 		</trim>
 	</sql>
@@ -37,6 +44,7 @@
 		t.id
 		,t.user_id
 		,t.user_name
+		,t.customer_name
 		,t.biz_type
 		,t.token
 		,t.found_datetime
@@ -44,13 +52,9 @@
 		,t.result
 		,t.callback_datetime
 		FROM
-		tdq_limu_credit t
+		tdq_limu_credit t 
 		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
+		order by t.found_datetime desc
 	</select>
 
 	<select id="select_limuCredit_count" parameterType="limuCredit"
@@ -65,6 +69,7 @@
 		id
 		,user_id
 		,user_name
+		,customer_name
 		,biz_type
 		,token
 		,found_datetime
@@ -76,6 +81,7 @@
 		#{id}
 		,#{userId}
 		,#{userName}
+		,#{customerName}
 		,#{bizType}
 		,#{token}
 		,#{foundDatetime}
@@ -90,6 +96,7 @@
 		SET
 		user_id = #{userId}
 		,user_name = #{userName}
+		,customer_name = #{customerName}
 		,biz_type = #{bizType}
 		,token = #{token}
 		,found_datetime = #{foundDatetime}

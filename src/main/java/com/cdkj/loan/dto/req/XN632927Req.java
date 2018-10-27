@@ -7,6 +7,9 @@ public class XN632927Req {
     // 用户身份证号
     private String idNo;
 
+    // 客户姓名
+    private String customerName;
+
     // 账号
     @NotBlank
     private String username;
@@ -40,6 +43,14 @@ public class XN632927Req {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getIdentityCardNo() {

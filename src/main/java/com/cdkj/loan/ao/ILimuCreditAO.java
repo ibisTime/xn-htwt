@@ -25,4 +25,7 @@ public interface ILimuCreditAO {
 
     public Object getLimuCreditByType(XN632949Req req);
 
+    // 查询状态
+    public Object queryLimuCreditMap(String userId);
+
 }

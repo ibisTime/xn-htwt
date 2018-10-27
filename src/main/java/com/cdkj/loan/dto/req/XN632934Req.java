@@ -11,10 +11,6 @@ public class XN632934Req {
     @NotBlank
     private String identityName;
 
-    // 银行卡号
-    @NotBlank
-    private String bankcard;
-
     // 账号
     @NotBlank
     private String username;
@@ -37,14 +33,6 @@ public class XN632934Req {
 
     public void setIdentityName(String identityName) {
         this.identityName = identityName;
-    }
-
-    public String getBankcard() {
-        return bankcard;
-    }
-
-    public void setBankcard(String bankcard) {
-        this.bankcard = bankcard;
     }
 
     public String getUsername() {

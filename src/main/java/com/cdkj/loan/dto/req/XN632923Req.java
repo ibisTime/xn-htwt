@@ -20,6 +20,17 @@ public class XN632923Req {
     @NotBlank
     private String bankCardNo;
 
+    // 客户姓名
+    private String customerName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public String getIdentityNo() {
         return identityNo;
     }

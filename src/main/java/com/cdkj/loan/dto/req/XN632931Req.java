@@ -16,6 +16,17 @@ public class XN632931Req {
     // 用户身份证号
     private String idNo;
 
+    // 客户姓名
+    private String customerName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public String getIdNo() {
         return idNo;
     }

@@ -22,6 +22,28 @@ public class XN632947Req extends APageReq {
     // 标记
     private String token;
 
+    // 状态
+    private String status;
+
+    // 客户姓名
+    private String customerName;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public String getUserId() {
         return userId;
     }

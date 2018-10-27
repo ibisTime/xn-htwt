@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,28 @@ public class LimuCreditAOImpl implements ILimuCreditAO {
         LimuCredit condition = new LimuCredit();
         condition.setUserId(req.getUserId());
         condition.setBizType(req.getBizType());
-        return limuCreditBO.getLimuCreditByType(condition);
+        LimuCredit limuCredit = limuCreditBO.getLimuCreditByType(condition);
+        if (limuCredit == null) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Object queryLimuCreditMap(String userId) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        LimuCredit condition = new LimuCredit();
+        condition.setUserId(userId);
+        List<LimuCredit> creditList = limuCreditBO
+            .queryLimuCreditList(condition);
+        for (LimuCredit limuCredit : creditList) {
+            // if (map.get(limuCredit.getBizType()) == null) {
+            // map.put(limuCredit.getBizType(),
+            // limuCredit.getId() + "," + limuCredit.getStatus());
+            // }
+            map.put(limuCredit.getBizType(),
+                limuCredit.getId() + "," + limuCredit.getStatus());
+        }
+        return map;
     }
 }

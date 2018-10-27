@@ -99,9 +99,10 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         para.put("app_id", "1257046543");
         para.put("interface", "mix_streamv2.start_mix_stream_advanced");
         para.put("mix_stream_session_id", req.getRoomId());
-        para.put("output_stream_id",
-            "32810_MIX_" + videoList.get(0).getStreamId() + "_2_"
-                    + (Long.toString(new Date().getTime() / 1000)));
+        // para.put("output_stream_id",
+        // "32810_MIX_" + videoList.get(0).getStreamId() + "_2_"
+        // + (Long.toString(new Date().getTime() / 1000)));
+        para.put("output_stream_id", videoList.get(0).getStreamId());
         para.put("output_stream_type", "0");
         para.put("output_stream_bitrate", "1500");
         para.put("input_stream_list", inputList);

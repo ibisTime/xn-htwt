@@ -60,7 +60,7 @@ public interface IMobileReportDemoAO {
     Object housefund(XN632930Req req);
 
     // 京东查询
-    String jdFund(XN632931Req req);
+    Object jdFund(XN632931Req req);
 
     // 淘宝查询
     Object taobaoFund(XN632932Req req);

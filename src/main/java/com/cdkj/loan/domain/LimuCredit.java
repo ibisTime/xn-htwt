@@ -23,6 +23,9 @@ public class LimuCredit extends ABaseDO {
     // 用户账号
     private String userName;
 
+    // 客户姓名
+    private String customerName;
+
     // 业务类型
     private String bizType;
 
@@ -47,6 +50,14 @@ public class LimuCredit extends ABaseDO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public void setFoundDatetime(Date foundDatetime) {
