@@ -16,6 +16,7 @@ CREATE TABLE `tdq_file_list` (
 
 SET SQL_SAFE_UPDATES = 0;
 UPDATE `tsys_user` SET `status`='1' WHERE status = 0;
+UPDATE `tsys_role` SET `updater`='USYS201800000000001';
 SET SQL_SAFE_UPDATES = 1;
 
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'sys_user_status', '用户状态', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
@@ -145,17 +146,13 @@ UPDATE `tsys_config` SET `cvalue`='1400144984' WHERE `id`='33';
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiUrl','https://t.limuzhengxin.cn','admin','2018-08-15 17:33:30','立木征信apiUrl','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiKey','9665866375902170','admin','2018-08-15 17:33:30','立木征信apiKey','CD-CWZCD000020','CD-CWZCD000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','method','api.identity.idcheck','admin','2018-08-15 17:33:30','立木征信method','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','version','1.2.0','admin','2018-08-15 17:33:30','立木征信version','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiSecret','uMryJfeyNPHFtuB52h2BK1muD9JouBha','admin','2018-08-15 17:33:30','立木征信apiSecret','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','localhostUrl','http://120.26.6.213:2402/xn-htwt','admin','2018-08-15 17:33:30','立木征信localhostUrl',NULL,NULL);
 
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '011', 'gps资料传递', 'admin', '2018-06-25 08:25:28', 'CD-HTWT000020', 'CD-HTWT000020');
-UPDATE `tsys_dict` SET `dvalue`='资料传递' WHERE `id`='918';
-DELETE FROM `tsys_dict` WHERE `id`='919';
-DELETE FROM `tsys_dict` WHERE `id`='920';
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'car_frame_price_count', '车架价格核算', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'car_frame_price_count', '1', 'www.chehang168.com', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'car_frame_price_count', '1', 'http://www.chehang168.com', 'admin', '2018-06-25 08:23:27', 'CD-HTWT000020', 'CD-HTWT000020');
 
 DROP TABLE IF EXISTS `tdq_interview_video_room`;
 CREATE TABLE `tdq_interview_video_room` (
@@ -165,7 +162,6 @@ CREATE TABLE `tdq_interview_video_room` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
----------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `tdq_interview_video`;
 CREATE TABLE `tdq_interview_video` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
@@ -234,3 +230,74 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810262334243005783','USYS201800000000001','2018-10-26 23:39:17',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810262338163812758','USYS201800000000001','2018-10-26 23:39:17',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810262338332128523','USYS201800000000001','2018-10-26 23:39:17',NULL);
+
+
+ALTER TABLE `tp_archive_location` 
+ADD COLUMN `location` VARCHAR(255) NULL COMMENT '位置编号' AFTER `code`;
+
+ALTER TABLE `tdq_budget_order_fee` 
+ADD COLUMN `customer_name` varchar(255) NULL COMMENT '客户姓名' AFTER `user_id`;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tdq_budget_order_fee f,tdq_budget_order b set f.customer_name = b.apply_user_name where f.budget_order = b.code;
+SET SQL_SAFE_UPDATES = 1;
+
+
+
+
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809271914229793995','删除','2','/delete','5','USYS201800000000001','2018-09-27 19:14:22','备注','SM201806051430270749521');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809281129084333407','节点材料清单','1','/basedata/materiallist.htm','6','USYS201800000000001','2018-09-28 11:29:08','备注','SM201804301415107007680');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809281129592887604','新增','2','/add','1','USYS201800000000001','2018-09-28 11:29:59','备注','SM201809281129084333407');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809281130199719600','修改','2','/edit','2','USYS201800000000001','2018-09-28 11:30:19','备注','SM201809281129084333407');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809281130423897425','删除','2','/delete','3','USYS201800000000001','2018-09-28 11:30:42','备注','SM201809281129084333407');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809291056410917156','导入','2','/import','99','USYS201800000000001','2018-09-29 11:07:14','备注','SM201806082258364384563');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809291511053446479','风控二审','2','/checkCommissionerTwo','5','USYS201800000000001','2018-09-29 15:11:05','备注','SM201805291013406492370');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809291513092815686','业务总监审核','2','/businessCheck','8','USYS201800000000001','2018-10-10 15:32:48','备注','SM201805291013406492370');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809291635053891748','内勤主管派单','2','/dispatch','2','USYS201800000000001','2018-09-29 16:35:05','备注','SM201805291008583268448');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201809301004051973291','新增','2','/add','1','USYS201800000000001','2018-09-30 10:04:05','备注','SM201804301415439657360');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810081508522461968','银行类别管理','1','/basedata/bankType.htm','5','USYS201800000000001','2018-10-08 15:09:33','基础数据','SM201804301415107007680');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810081510143761682','新增','2','/add','1','USYS201800000000001','2018-10-08 15:10:14','银行类别管理','SM201810081508522461968');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810081510563154417','详情','2','/detail','2','USYS201800000000001','2018-10-08 15:10:56','银行类别管理','SM201810081508522461968');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810081759068475261','修改','2','/edit','2','USYS201800000000001','2018-10-08 17:59:06','','SM201806082258364384563');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810101415345789815','财务垫资','1','/loan/advMoney.htm','2','USYS201800000000001','2018-10-10 14:15:34','车贷财务','SM201806120306549653438');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810111140276954558','大数据','2','/bigData','5','USYS201800000000001','2018-10-11 11:40:27','备注','SM201805291008583268448');
+DELETE FROM `tsys_menu` WHERE `code`='SM201805301404545315674';
+UPDATE `tsys_menu` SET `order_no`='3' WHERE `code`='SM201806082300058567560';
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810282145146014367','财务确认垫资','2','/edit','1','U201806141609052491026','2018-10-28 21:45:14','','SM201810101415345789815');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201810282145339691164','详情','2','/detail','2','U201806141609052491026','2018-10-28 21:45:33','','SM201810101415345789815');
+
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809271914229793995','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809281129084333407','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809281129592887604','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809281130199719600','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809281130423897425','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809291056410917156','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809291511053446479','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809291513092815686','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809291635053891748','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201809301004051973291','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810081508522461968','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810081510143761682','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810081510563154417','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810081759068475261','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810101415345789815','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810111140276954558','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810282145146014367','USYS201800000000001','2018-10-28 13:44:41',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201810282145339691164','USYS201800000000001','2018-10-28 13:44:41',NULL);
+	
+UPDATE `tsys_menu` SET `name`='风控终审' WHERE `code`='SM201805301403549725902';
+UPDATE `tsys_menu` SET `name`='风控一审' WHERE `code`='SM201805301402526871471';
+UPDATE `tsys_menu` SET `order_no`='3' WHERE `code`='SM201805301353172967295';
+UPDATE `tsys_menu` SET `order_no`='4' WHERE `code`='SM201805301354371318364';
+UPDATE `tsys_menu` SET `order_no`='9' WHERE `code`='SM201805301354548731957';
+UPDATE `tsys_menu` SET `order_no`='7' WHERE `code`='SM201805301403549725902';
+UPDATE `tsys_menu` SET `order_no`='9' WHERE `code`='SM201805301404079981243';
+UPDATE `tb_bank` SET `updater`='USYS201800000000001' WHERE `code`='BA201806011006085041799';
+UPDATE `tb_bank` SET `updater`='USYS201800000000001' WHERE `code`='BA201809101215201166542';
+UPDATE `tsys_menu` SET `order_no`='2' WHERE `code`='SM201804251904256377856';
+DELETE FROM `tsys_menu` WHERE `code`='SM201805171816173306551';
+DELETE FROM `tsys_menu` WHERE `code`='SM201805171817010037298';
+DELETE FROM `tsys_menu` WHERE `code`='SM201805081718535897157';
+
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','node_type','012','资料传递','USYS201800000000001','2018-10-28 14:14:21',NULL,NULL,NULL);

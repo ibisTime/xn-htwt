@@ -3,7 +3,6 @@ package com.cdkj.loan.api.impl;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IBudgetOrderFeeAO;
-import com.cdkj.loan.ao.ISYSRoleAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -31,17 +30,18 @@ public class XN632165 extends AProcessor {
     public Object doBusiness() throws BizException {
         BudgetOrderFee condition = new BudgetOrderFee();
         condition.setUserId(req.getUserId());
+        condition.setCustomerName(req.getCustomerName());
         condition.setIsSettled(req.getIsSettled());
         condition.setBudgetOrder(req.getBudgetOrder());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
-            column = ISYSRoleAO.DEFAULT_ORDER_COLUMN;
+            column = IBudgetOrderFeeAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return budgetOrderFeeAO
-            .queryBudgetOrderFeePage(start, limit, condition);
+        return budgetOrderFeeAO.queryBudgetOrderFeePage(start, limit,
+            condition);
     }
 
     @Override

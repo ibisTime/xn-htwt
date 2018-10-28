@@ -67,6 +67,6 @@ public interface IUserBO extends IPaginableBO<User> {
     public String saveUser(String mobile);
 
     // 修改用户身份证号
-    public void refreshIdNo(String userId, String identityNo);
+    public void refreshIdNo(String userId, String identityNo, String name);
 
 }

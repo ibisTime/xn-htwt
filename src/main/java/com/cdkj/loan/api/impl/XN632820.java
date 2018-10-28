@@ -28,6 +28,7 @@ public class XN632820 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         ArchiveLocation data = new ArchiveLocation();
+        data.setLocation(req.getLocation());
         data.setName(req.getName());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());

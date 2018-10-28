@@ -261,11 +261,11 @@
 	<select id="select_latest_operate_record_by_bizCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		SELECT a.* FROM 
 		tsys_biz_log a,
-		(SELECT ref_order,max(start_datetime) as start_datetime FROM tsys_biz_log  
+		(SELECT ref_order,max(end_datetime) as end_datetime FROM tsys_biz_log  
 		WHERE 
 		ref_order=#{refOrder}) b 
 		WHERE  
-		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime and a.status = '1'
+		a.ref_order=b.ref_order and a.end_datetime=b.end_datetime and a.status = '1'
 	</select>
 	
 	<select id="select_latest_operate_credit_by_bizCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">

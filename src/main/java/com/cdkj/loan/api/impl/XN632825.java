@@ -29,7 +29,8 @@ public class XN632825 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         ArchiveLocation condition = new ArchiveLocation();
-        condition.setName(req.getName());
+        condition.setLocationQuery(req.getLocation());
+        condition.setNameQuery(req.getName());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IArchiveLocationAO.DEFAULT_ORDER_COLUMN;

@@ -217,6 +217,7 @@
 		UPDATE tstd_user
 		SET
 		id_no = #{idNo}
+		,real_name = #{realName}
 		WHERE user_id = #{userId}
 	</update>
 	

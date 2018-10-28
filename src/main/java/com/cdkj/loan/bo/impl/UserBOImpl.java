@@ -323,9 +323,10 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public void refreshIdNo(String userId, String identityNo) {
+    public void refreshIdNo(String userId, String identityNo, String name) {
         User user = getUser(userId);
         user.setIdNo(identityNo);
+        user.setRealName(name);
         userDAO.updateIdNo(user);
     }
 

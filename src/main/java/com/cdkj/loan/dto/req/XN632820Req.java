@@ -10,6 +10,10 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632820Req {
 
+    // 位置编号
+    @NotBlank
+    private String location;
+
     // 位置名称
     @NotBlank
     private String name;
@@ -17,6 +21,14 @@ public class XN632820Req {
     // 更新人(选填)
     @NotBlank
     private String updater;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getName() {
         return name;

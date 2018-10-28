@@ -77,6 +77,7 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate
             condition, SYSBizLog.class);
     }
 
+    // C:把开始时间改为结束时间
     @Override
     public SYSBizLog getLatestOperateRecordByBizCode(SYSBizLog condition) {
         return super.select(

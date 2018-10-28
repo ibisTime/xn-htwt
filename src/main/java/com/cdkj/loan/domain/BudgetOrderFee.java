@@ -24,6 +24,9 @@ public class BudgetOrderFee extends ABaseDO {
     // 用户编号
     private String userId;
 
+    // 客户姓名
+    private String customerName;
+
     // 应收手续费总额
     private Long shouldAmount;
 
@@ -68,6 +71,14 @@ public class BudgetOrderFee extends ABaseDO {
 
     // 预算单
     private BudgetOrder budgetOrderObject;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public BudgetOrder getBudgetOrderObject() {
         return budgetOrderObject;

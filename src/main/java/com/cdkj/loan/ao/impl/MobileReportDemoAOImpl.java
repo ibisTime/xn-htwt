@@ -75,7 +75,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         HashMap<String, String> map = new HashMap<String, String>();
-        int id = 0;
+        String id = "-1";
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -100,7 +100,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         }
         String code = rootNode.get("code").textValue();
         if (!"0000".equals(code)) {
-            return doPost;
+            map.put("id", id);
+            map.put("result", doPost);
+            return map;
         }
         LimuCredit data = limuCreditBO.getLimuCreditByUid(req.getIdentityNo(),
             "identity");
@@ -110,7 +112,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
-            id = data.getId();
+            id = data.getId() + "";
         } else {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserId(req.getIdentityNo());
@@ -123,14 +125,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
             LimuCredit lmCredit = limuCreditBO
                 .getLimuCreditByUid(req.getIdentityNo(), "identity");
-            id = lmCredit.getId();
+            id = lmCredit.getId() + "";
         }
         // 更新app端用户身份证
         if (StringUtils.isNotBlank(req.getUserId())) {
-            userBO.refreshIdNo(req.getUserId(), req.getIdentityNo());
+            userBO.refreshIdNo(req.getUserId(), req.getIdentityNo(),
+                req.getName());
         }
         // map.put("\"id\":" + id, "\"result\":" + doPost);
-        map.put("id", id + "");
+        map.put("id", id);
         map.put("result", doPost);
         return map;
     }
@@ -140,7 +143,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         HashMap<String, String> map = new HashMap<String, String>();
-        int id = 0;
+        String id = "-1";
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -166,7 +169,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         }
         String code = rootNode.get("code").textValue();
         if (!"0000".equals(code)) {
-            return doPost;
+            map.put("id", id);
+            map.put("result", doPost);
+            return map;
         }
         LimuCredit data = limuCreditBO
             .getLimuCreditByUserName(req.getIdentityNo(), "involvedlistcheck");
@@ -175,7 +180,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
-            id = data.getId();
+            id = data.getId() + "";
         } else {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserId(req.getIdentityNo());
@@ -187,9 +192,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
             LimuCredit lmCredit = limuCreditBO
                 .getLimuCreditByUid(req.getIdentityNo(), "involvedlistcheck");
-            id = lmCredit.getId();
+            id = lmCredit.getId() + "";
         }
-        map.put("id", id + "");
+        map.put("id", id);
         map.put("result", doPost);
         return map;
     }
@@ -250,7 +255,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         HashMap<String, String> map = new HashMap<String, String>();
-        int id = 0;
+        String id = "-1";
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -279,17 +284,19 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         }
         String code = rootNode.get("code").textValue();
         if (!"0000".equals(code)) {
-            return doPost;
+            map.put("id", id);
+            map.put("result", doPost);
+            return map;
         }
-        LimuCredit data = limuCreditBO
-            .getLimuCreditByUserName(req.getIdentityNo(), "bankcard4check");
+        LimuCredit data = limuCreditBO.getLimuCreditByUid(req.getIdentityNo(),
+            "bankcard4check");
         if (data != null) {
             data.setCustomerName(req.getCustomerName());
             data.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
-            id = data.getId();
+            id = data.getId() + "";
         } else {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserId(req.getIdentityNo());
@@ -302,9 +309,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
             LimuCredit lmCredit = limuCreditBO
                 .getLimuCreditByUid(req.getIdentityNo(), "bankcard4check");
-            id = lmCredit.getId();
+            id = lmCredit.getId() + "";
         }
-        map.put("id", id + "");
+        map.put("id", id);
         map.put("result", doPost);
         return map;
     }
@@ -633,7 +640,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         HashMap<String, String> map = new HashMap<String, String>();
-        int id = 0;
+        String id = "-1";
 
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
@@ -675,7 +682,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 if ("0010".equals(code)) {// 受理成功
                     token = rootNode.get("token").textValue();
                 } else {
-                    return post;
+                    map.put("id", id);
+                    map.put("result", post);
+                    return map;
                 }
 
                 LimuCredit limuCredit = limuCreditBO
@@ -692,7 +701,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     limuCreditBO.saveLimuCredit(data);
                     LimuCredit lmCredit = limuCreditBO
                         .getLimuCreditByToken(token, "jd");
-                    id = lmCredit.getId();
+                    id = lmCredit.getId() + "";
                 } else {
                     limuCredit.setCustomerName(req.getCustomerName());
                     limuCredit.setToken(token);
@@ -700,13 +709,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                         ELimuCreditStatus.PENDING_CALLBACK.getCode());
                     limuCredit.setFoundDatetime(new Date());
                     limuCreditBO.refreshLimuCredit(limuCredit);
-                    id = limuCredit.getId();
+                    id = limuCredit.getId() + "";
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        map.put("id", id + "");
+        map.put("id", id);
         map.put("result", post);
         return map;
     }
@@ -868,7 +877,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         HashMap<String, String> map = new HashMap<String, String>();
-        int id = 0;
+        String id = "-1";
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -900,7 +909,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         }
         String code = rootNode.get("code").textValue();
         if (!"0010".equals(code)) {
-            return doPost;
+            map.put("id", id);
+            map.put("result", doPost);
+            return map;
         }
         String token = rootNode.get("token").textValue();
         if (data != null) {
@@ -909,7 +920,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             data.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
-            id = data.getId();
+            id = data.getId() + "";
         } else {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserId(req.getIdentityCardNo());
@@ -924,9 +935,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
             LimuCredit lmCredit = limuCreditBO.getLimuCreditByToken(token,
                 "mobileReportTask");
-            id = lmCredit.getId();
+            id = lmCredit.getId() + "";
         }
-        map.put("id", id + "");
+        map.put("id", id);
         map.put("result", doPost);
         return map;
     }
@@ -1082,7 +1093,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         HashMap<String, String> map = new HashMap<String, String>();
-        int id = 0;
+        String id = "-1";
         Map<String, String> configsMap = sysConfigBO
             .getConfigsMap("id_no_authentication");
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
@@ -1116,7 +1127,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         }
         String code = rootNode.get("code").textValue();
         if (!"0010".equals(code)) {
-            return doPost;
+            map.put("id", id);
+            map.put("result", doPost);
+            return map;
         }
         String token = rootNode.get("token").textValue();
         if (data != null) {
@@ -1125,7 +1138,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             data.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
-            id = data.getId();
+            id = data.getId() + "";
         } else {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserName(req.getUsername());
@@ -1141,9 +1154,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCreditBO.saveLimuCredit(limuCredit);
             LimuCredit lmCredit = limuCreditBO.getLimuCreditByToken(token,
                 "taobao_report");
-            id = lmCredit.getId();
+            id = lmCredit.getId() + "";
         }
-        map.put("id", id + "");
+        map.put("id", id);
         map.put("result", doPost);
         return map;
     }

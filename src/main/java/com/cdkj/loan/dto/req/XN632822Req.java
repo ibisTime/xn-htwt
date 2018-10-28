@@ -1,6 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-
 /**
  * 修改档案存放位置
  * @author: jiafr 
@@ -13,6 +12,9 @@ public class XN632822Req {
 
     private String name;
 
+    // 位置编号
+    private String location;
+
     private String updater;
 
     public String getCode() {
@@ -21,6 +23,14 @@ public class XN632822Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getName() {

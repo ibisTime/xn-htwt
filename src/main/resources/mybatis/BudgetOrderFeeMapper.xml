@@ -6,6 +6,7 @@
 		<result column="code" property="code" />
 		<result column="company_code" property="companyCode" />
 		<result column="user_id" property="userId" />
+		<result column="customer_name" property="customerName" />
 		<result column="should_amount" property="shouldAmount" />
 		<result column="real_amount" property="realAmount" />
 		
@@ -23,6 +24,9 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name = #{customerName}
+			</if>
 			<if test="isSettled != null and isSettled != '' ">
 				AND t.is_settled = #{isSettled}
 			</if>
@@ -36,6 +40,7 @@
 		t.code
 		,t.company_code
 		,t.user_id
+		,t.customer_name
 		,t.should_amount
 		,t.real_amount
 		
@@ -66,6 +71,7 @@
 		code
 		,company_code
 		,user_id
+		,customer_name
 		,should_amount
 		,real_amount
 		
@@ -79,6 +85,7 @@
 		#{code}
 		,#{companyCode}
 		,#{userId}
+		,#{customerName}
 		,#{shouldAmount}
 		,#{realAmount}
 		

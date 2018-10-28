@@ -17,6 +17,9 @@ public class ArchiveLocation extends ABaseDO {
     // 编号
     private String code;
 
+    // 位置编号
+    private String location;
+
     // 位置名称
     private String name;
 
@@ -33,12 +36,42 @@ public class ArchiveLocation extends ABaseDO {
 
     private String updaterName;
 
+    // 位置编号模糊
+    private String locationQuery;
+
+    // 位置名称模糊
+    private String nameQuery;
+
+    public String getLocationQuery() {
+        return locationQuery;
+    }
+
+    public void setLocationQuery(String locationQuery) {
+        this.locationQuery = locationQuery;
+    }
+
+    public String getNameQuery() {
+        return nameQuery;
+    }
+
+    public void setNameQuery(String nameQuery) {
+        this.nameQuery = nameQuery;
+    }
+
     public String getUpdaterName() {
         return updaterName;
     }
 
     public void setUpdaterName(String updaterName) {
         this.updaterName = updaterName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setCode(String code) {

@@ -16,6 +16,9 @@ public class XN632165Req extends APageReq {
     // 用户编号
     private String userId;
 
+    // 客户姓名
+    private String customerName;
+
     // 是否已结清(0 待结清 1 已结清)
     private String isSettled;
 
@@ -28,6 +31,14 @@ public class XN632165Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getIsSettled() {

@@ -706,6 +706,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             BudgetOrderFee data = new BudgetOrderFee();
             data.setCompanyCode(budgetOrder.getCompanyCode());
             data.setUserId(budgetOrder.getSaleUserId());
+            data.setCustomerName(budgetOrder.getApplyUserName());
             // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+服务费
             data.setShouldAmount(budgetOrder.getBankFee()
                     + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()

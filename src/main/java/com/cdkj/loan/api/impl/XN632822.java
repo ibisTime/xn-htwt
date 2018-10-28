@@ -30,6 +30,7 @@ public class XN632822 extends AProcessor {
         ArchiveLocation data = new ArchiveLocation();
         data.setCode(req.getCode());
         data.setName(req.getName());
+        data.setLocation(req.getLocation());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         archiveLocationAO.editArchiveLocation(data);

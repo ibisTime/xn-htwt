@@ -10,8 +10,19 @@ public class XN632825Req extends APageReq {
 
     private static final long serialVersionUID = 1L;
 
+    // 位置编号
+    private String location;
+
     // 位置名称
     private String name;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getName() {
         return name;
