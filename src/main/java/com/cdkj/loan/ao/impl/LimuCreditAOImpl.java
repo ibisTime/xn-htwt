@@ -68,8 +68,9 @@ public class LimuCreditAOImpl implements ILimuCreditAO {
             // map.put(limuCredit.getBizType(),
             // limuCredit.getId() + "," + limuCredit.getStatus());
             // }
-            map.put(limuCredit.getBizType(),
-                limuCredit.getId() + "," + limuCredit.getStatus());
+            map.put(limuCredit.getBizType(), "{\"id\":" + limuCredit.getId()
+                    + "," + "\"status\":" + limuCredit.getStatus() + "}");
+
         }
         return map;
     }

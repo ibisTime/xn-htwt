@@ -12,7 +12,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -72,7 +71,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     public static final String LMZX_URL = PropertiesUtil.Config.LMZX_URL;
 
     @Override
-    @Transactional
     public Object authentication(XN632920Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
@@ -107,7 +105,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         LimuCredit data = limuCreditBO.getLimuCreditByUid(req.getIdentityNo(),
             "identity");
         if (data != null) {
-            data.setCustomerName(req.getCustomerName());
+            data.setCustomerName(req.getName());
             data.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
@@ -117,7 +115,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             LimuCredit limuCredit = new LimuCredit();
             limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getIdentityNo());
-            limuCredit.setCustomerName(req.getCustomerName());
+            limuCredit.setCustomerName(req.getName());
             limuCredit.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
@@ -131,12 +129,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         if (StringUtils.isNotBlank(req.getUserId())) {
             userBO.refreshIdNo(req.getUserId(), req.getIdentityNo());
         }
-        map.put(id + "", doPost);
+        // map.put("\"id\":" + id, "\"result\":" + doPost);
+        map.put("id", id + "");
+        map.put("result", doPost);
         return map;
     }
 
     @Override
-    @Transactional
     public Object involvedList(XN632921Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
@@ -190,12 +189,12 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 .getLimuCreditByUid(req.getIdentityNo(), "involvedlistcheck");
             id = lmCredit.getId();
         }
-        map.put(id + "", doPost);
+        map.put("id", id + "");
+        map.put("result", doPost);
         return map;
     }
 
     @Override
-    @Transactional
     public Object involvedDetails(XN632922Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
@@ -247,7 +246,6 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
     }
 
     @Override
-    @Transactional
     public Object bankCardNo4Authentication(XN632923Req req) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
@@ -306,7 +304,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 .getLimuCreditByUid(req.getIdentityNo(), "bankcard4check");
             id = lmCredit.getId();
         }
-        map.put(id + "", doPost);
+        map.put("id", id + "");
+        map.put("result", doPost);
         return map;
     }
 
@@ -707,7 +706,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 e.printStackTrace();
             }
         }
-        map.put(id + "", post);
+        map.put("id", id + "");
+        map.put("result", post);
         return map;
     }
 
@@ -926,7 +926,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 "mobileReportTask");
             id = lmCredit.getId();
         }
-        map.put(id + "", doPost);
+        map.put("id", id + "");
+        map.put("result", doPost);
         return map;
     }
 
@@ -1142,7 +1143,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 "taobao_report");
             id = lmCredit.getId();
         }
-        map.put(id + "", doPost);
+        map.put("id", id + "");
+        map.put("result", doPost);
         return map;
     }
 

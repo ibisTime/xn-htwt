@@ -15,17 +15,6 @@ public class XN632920Req {
     // 用户id（App端填写）
     private String userId;
 
-    // 客户姓名
-    private String customerName;
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
     public String getUserId() {
         return userId;
     }
