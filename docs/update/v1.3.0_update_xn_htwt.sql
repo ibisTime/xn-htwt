@@ -1,3 +1,44 @@
+SET SQL_SAFE_UPDATES = 0;
+DROP TABLE IF EXISTS `tdq_linshi`;
+CREATE TABLE `tdq_linshi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(32) DEFAULT NULL COMMENT '编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tdq_linshi` (code) SELECT t.id FROM tsys_biz_log t left join tdq_budget_order b on t.parent_order = b.code where t.deal_node = '002_01' and b.cur_node_code = '002_01';
+DELETE FROM tsys_biz_log WHERE id in (SELECT code FROM tdq_linshi);
+TRUNCATE `tdq_linshi`;
+INSERT INTO `tdq_linshi` (code) SELECT t.code FROM tdq_credit t left join tdq_budget_order b on t.budget_code = b.code where b.cur_node_code = '002_01';
+UPDATE tdq_credit SET cur_node_code = '001_08' WHERE code in (SELECT code FROM tdq_linshi);
+UPDATE tdq_credit SET budget_code = null WHERE code in (SELECT code FROM tdq_linshi);
+TRUNCATE `tdq_linshi`;
+INSERT INTO `tdq_linshi` (code) select l.id from tsys_biz_log l left join tdq_credit c on l.parent_order = c.code where l.parent_order in (SELECT t.code FROM tdq_credit t left join tdq_budget_order b on t.budget_code = b.code where b.cur_node_code = '002_01') and l.deal_node > '001_01';
+DELETE FROM tsys_biz_log WHERE id in (SELECT code FROM tdq_linshi);
+DELETE FROM tdq_budget_order where cur_node_code = '002_01';
+
+TRUNCATE `tdq_linshi`;
+INSERT INTO `tdq_linshi` (code) select l.id from tsys_biz_log l left join tdq_credit c on l.parent_order = c.code where c.code = '001_02' and l.deal_node > '001_01';
+DELETE FROM tsys_biz_log WHERE id in (SELECT code FROM tdq_linshi);
+update tdq_credit set cur_node_code = '001_08' where cur_node_code = '001_02';
+TRUNCATE `tdq_linshi`;
+INSERT INTO `tdq_linshi` (code) select l.id from tsys_biz_log l left join tdq_credit c on l.parent_order = c.code where c.code = '001_03' and l.deal_node > '001_01';
+DELETE FROM tsys_biz_log WHERE id in (SELECT code FROM tdq_linshi);
+update tdq_credit set cur_node_code = '001_08' where cur_node_code = '001_03';
+TRUNCATE `tdq_linshi`;
+INSERT INTO `tdq_linshi` (code) select l.id from tsys_biz_log l left join tdq_credit c on l.parent_order = c.code where c.code = '001_05' and l.deal_node > '001_01';
+DELETE FROM tsys_biz_log WHERE id in (SELECT code FROM tdq_linshi);
+update tdq_credit set cur_node_code = '001_01' where cur_node_code = '001_05';
+TRUNCATE `tdq_linshi`;
+INSERT INTO `tdq_linshi` (code) select l.id from tsys_biz_log l left join tdq_credit c on l.parent_order = c.code where c.code = '001_06' and l.deal_node > '001_01';
+DELETE FROM tsys_biz_log WHERE id in (SELECT code FROM tdq_linshi);
+update tdq_credit set cur_node_code = '001_08' where cur_node_code = '001_06';
+
+DROP TABLE IF EXISTS `tdq_linshi`;
+SET SQL_SAFE_UPDATES = 1;
+
+
+
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'people_status', '角色状态', 'admin', '2018-06-25 08:24:17', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'people_status', '1', '正常', 'admin', '2018-06-25 08:24:17', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'people_status', '2', '注销', 'admin', '2018-06-25 08:24:17', 'CD-HTWT000020', 'CD-HTWT000020');
@@ -301,3 +342,10 @@ DELETE FROM `tsys_menu` WHERE `code`='SM201805081718535897157';
 
 
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','node_type','012','资料传递','USYS201800000000001','2018-10-28 14:14:21',NULL,NULL,NULL);
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '001_08');
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '002_27');
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '002_28');
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '008_01');
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_01');
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_02');
+INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_03');

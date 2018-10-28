@@ -7,6 +7,8 @@ public class XN632305Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    private String code;// 编号
+
     private String budgetOrderCode;// 准入单编号
 
     private String realName;// 客户姓名
@@ -16,6 +18,14 @@ public class XN632305Req extends APageReq {
     private String advanceFundDatetimeEnd;// 垫资日期止
 
     private String status;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getStatus() {
         return status;

@@ -29,14 +29,14 @@ public class XN632305 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         OverdueMenu condition = new OverdueMenu();
+        condition.setCode(req.getCode());
         condition.setBudgetOrderCode(req.getBudgetOrderCode());
         condition.setRealName(req.getRealName());
-        condition.setAdvanceFundDatetimeStart(DateUtil.strToDate(
-            req.getAdvanceFundDatetimeStart(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition
-            .setAdvanceFundDatetimeEnd(DateUtil.strToDate(
-                req.getAdvanceFundDatetimeEnd(),
+        condition.setAdvanceFundDatetimeStart(
+            DateUtil.strToDate(req.getAdvanceFundDatetimeStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setAdvanceFundDatetimeEnd(
+            DateUtil.strToDate(req.getAdvanceFundDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setStatus(req.getStatus());
 
