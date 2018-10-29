@@ -152,7 +152,7 @@ CREATE TABLE `tdq_limu_credit` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `user_id` varchar(255) DEFAULT NULL COMMENT '用户编号',
   `user_name` varchar(255) DEFAULT NULL COMMENT '用户账号',
-  `biz_type` varchar(4) DEFAULT NULL COMMENT '业务类型',
+  `biz_type` varchar(32) DEFAULT NULL COMMENT '业务类型',
   `token` varchar(255) DEFAULT NULL COMMENT '标记',
   `found_datetime` datetime DEFAULT NULL COMMENT '查询时间',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
@@ -349,3 +349,9 @@ INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO2018000000000
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_01');
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_02');
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_03');
+
+--------------------------------------------------------------------------------------------
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tdq_budget_order b SET b.enter_location='AL201810231847482876866' WHERE b.cur_node_code = '002_23';
+UPDATE tdq_budget_order b,tsys_biz_log l SET b.enter_datetime = l.end_datetime where l.parent_order = b.code and l.deal_node = '002_22' and l.status = '1';
+SET SQL_SAFE_UPDATES = 1;

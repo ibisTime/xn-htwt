@@ -59,6 +59,9 @@ public class LimuCreditAOImpl implements ILimuCreditAO {
     @Override
     public Object queryLimuCreditMap(String userId) {
         HashMap<String, String> map = new HashMap<String, String>();
+        if (userId.equals("") || userId.equals(null)) {
+            return map;
+        }
         LimuCredit condition = new LimuCredit();
         condition.setUserId(userId);
         List<LimuCredit> creditList = limuCreditBO
