@@ -132,7 +132,7 @@ public interface IBudgetOrderAO {
     public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(
             BudgetOrder condition);
 
-    public void doSmsInterviewInform(String budgetOrderCode);
+    public void doSmsInterviewInform(String budgetOrderCode, String roomId);
 
     // 资料补录
     public void dataSupplement(XN632141Req req);

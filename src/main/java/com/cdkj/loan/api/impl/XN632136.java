@@ -24,7 +24,7 @@ public class XN632136 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.doSmsInterviewInform(req.getCode());
+        budgetOrderAO.doSmsInterviewInform(req.getCode(), req.getRoomId());
         return new BooleanRes(true);
     }
 
