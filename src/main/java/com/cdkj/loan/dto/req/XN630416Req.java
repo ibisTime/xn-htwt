@@ -1,10 +1,12 @@
 package com.cdkj.loan.dto.req;
 
-public class XN630416Req extends APageReq {
+public class XN630416Req {
 
     private String name; // 名称（选填）
 
     private String brandCode; // 品牌编号（选填）
+
+    private String location;// UI位置
 
     private String status; // 状态（选填）
 
@@ -14,6 +16,14 @@ public class XN630416Req extends APageReq {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getBrandCode() {

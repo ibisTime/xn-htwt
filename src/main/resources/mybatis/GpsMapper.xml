@@ -52,6 +52,9 @@
 			<if test="customerName != null and customerName != '' ">
 				AND t.customer_name = #{customerName}
 			</if>
+			<if test="customerNameQuery != null and customerNameQuery != '' ">
+				AND t.customer_name like %#{customerNameQuery}%
+			</if>
 		</trim>
 	</sql>
 	<select id="select_gps" parameterType="gps" resultMap="gps_DB_Result">

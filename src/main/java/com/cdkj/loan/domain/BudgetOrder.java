@@ -834,6 +834,9 @@ public class BudgetOrder extends ABaseDO {
     // 入档时间
     private Date enterDatetime;
 
+    // 入档清单
+    private String enterFileList;
+
     // 业务员（信贷专员）
     private String saleUserId;
 
@@ -906,6 +909,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 区域经理名称
     private String areaName;
+
+    // 区域经理手机号
+    private String areaMobile;
 
     // 业务员姓名
     private String saleUserName;
@@ -1002,6 +1008,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setAreaName(String areaName) {
         this.areaName = areaName;
+    }
+
+    public String getAreaMobile() {
+        return areaMobile;
+    }
+
+    public void setAreaMobile(String areaMobile) {
+        this.areaMobile = areaMobile;
     }
 
     public String getIsGpsAz() {
@@ -1226,6 +1240,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setFrozenStatus(String frozenStatus) {
         this.frozenStatus = frozenStatus;
+    }
+
+    public String getEnterFileList() {
+        return enterFileList;
+    }
+
+    public void setEnterFileList(String enterFileList) {
+        this.enterFileList = enterFileList;
     }
 
     public String getBackAdvanceStatus() {

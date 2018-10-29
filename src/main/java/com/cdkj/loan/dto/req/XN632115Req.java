@@ -17,6 +17,9 @@ public class XN632115Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    // 用户id
+    private String userId;
+
     // 征信单编号
     private String code;
 
@@ -25,9 +28,6 @@ public class XN632115Req extends APageReq {
 
     // 业务员编号
     private String saleUserId;
-
-    // 团队编号
-    private String teamCode;
 
     // 预算单编号
     private String budgetOrderCode;
@@ -70,6 +70,14 @@ public class XN632115Req extends APageReq {
 
     public void setCurNodeCodeList(List<String> curNodeCodeList) {
         this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getCode() {
@@ -118,14 +126,6 @@ public class XN632115Req extends APageReq {
 
     public void setSaleUserId(String saleUserId) {
         this.saleUserId = saleUserId;
-    }
-
-    public String getTeamCode() {
-        return teamCode;
-    }
-
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
     }
 
     public String getBudgetOrderCode() {

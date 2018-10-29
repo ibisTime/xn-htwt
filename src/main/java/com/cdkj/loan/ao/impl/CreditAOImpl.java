@@ -323,10 +323,20 @@ public class CreditAOImpl implements ICreditAO {
 
     @Override
     public Paginable<Credit> queryCreditPageByRoleCode(int start, int limit,
-            Credit condition) {
-        if (ESysRole.getMap().get(condition.getRoleCode()) == null) {
-            condition.setTeamCode(null);
+            Credit condition, String userId) {
+        if (ESysRole.LEADER.getCode().equals(condition.getRoleCode())) {
+            SYSUser user = sysUserBO.getUser(userId);
+            if (user.getTeamCode() != null) {
+                condition.setTeamCode(user.getTeamCode());
+            }
         }
+        if (ESysRole.SALE.getCode().equals(condition.getRoleCode())) {
+            condition.setSaleUserId(userId);
+        }
+        if (ESysRole.YWNQ.getCode().equals(condition.getRoleCode())) {
+            condition.setInsideJob(userId);
+        }
+
         Paginable<Credit> result = creditBO.getPaginableByRoleCode(start, limit,
             condition);
         List<Credit> list = result.getList();

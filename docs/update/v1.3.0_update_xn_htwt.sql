@@ -100,6 +100,7 @@ ADD COLUMN `is_financing` VARCHAR(4) NULL COMMENT '是否融资' AFTER `is_advan
 ADD COLUMN `is_logistics` VARCHAR(4) NULL COMMENT '是否是资料传递中' AFTER `is_gps_az`,
 ADD COLUMN `car_model_name` varchar(255) NULL COMMENT '车型名称' AFTER `car_model`,
 ADD COLUMN `advance_note` MEDIUMTEXT NULL COMMENT '垫资说明' AFTER `bill_pdf`,
+ADD COLUMN `enter_fileList` MEDIUMTEXT NULL COMMENT '入档清单' AFTER `enter_datetime`,
 ADD COLUMN `car_price_check_report` varchar(255) NULL COMMENT '车辆价格核实报告' AFTER `pledge_datetime`,
 CHANGE COLUMN `mate_zfb_jour_interest` `mate_zfb_jour_interest1` MEDIUMTEXT NULL DEFAULT NULL COMMENT '配偶支付宝流水结息1' ,
 ADD COLUMN `mate_zfb_jour_interest2` MEDIUMTEXT NULL COMMENT '配偶支付宝流水结息2' AFTER `mate_zfb_jour_interest1`,
@@ -185,10 +186,10 @@ UPDATE `tsys_config` SET `cvalue`='-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CA
 UPDATE `tsys_config` SET `cvalue`='36862' WHERE `id`='37';
 UPDATE `tsys_config` SET `cvalue`='1400144984' WHERE `id`='33';
 
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiUrl','https://t.limuzhengxin.cn','admin','2018-08-15 17:33:30','立木征信apiUrl','CD-CWZCD000020','CD-CWZCD000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiKey','9665866375902170','admin','2018-08-15 17:33:30','立木征信apiKey','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiUrl','https://api.limuzhengxin.com','admin','2018-08-15 17:33:30','立木征信apiUrl','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiKey','4268765441801243','admin','2018-08-15 17:33:30','立木征信apiKey','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','version','1.2.0','admin','2018-08-15 17:33:30','立木征信version','CD-CWZCD000020','CD-CWZCD000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiSecret','uMryJfeyNPHFtuB52h2BK1muD9JouBha','admin','2018-08-15 17:33:30','立木征信apiSecret','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiSecret','oWzX8DM3PnlezJ1AVclYaVgjJxKASwBb','admin','2018-08-15 17:33:30','立木征信apiSecret','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','localhostUrl','http://120.26.6.213:2402/xn-htwt','admin','2018-08-15 17:33:30','立木征信localhostUrl',NULL,NULL);
 
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '011', 'gps资料传递', 'admin', '2018-06-25 08:25:28', 'CD-HTWT000020', 'CD-HTWT000020');
@@ -350,8 +351,14 @@ INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO2018000000000
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_02');
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '011_03');
 
---------------------------------------------------------------------------------------------
+
 SET SQL_SAFE_UPDATES = 0;
 UPDATE tdq_budget_order b SET b.enter_location='AL201810231847482876866' WHERE b.cur_node_code = '002_23';
-UPDATE tdq_budget_order b,tsys_biz_log l SET b.enter_datetime = l.end_datetime where l.parent_order = b.code and l.deal_node = '002_22' and l.status = '1';
+UPDATE tdq_budget_order b,tsys_biz_log l SET b.enter_datetime = l.end_datetime where l.parent_order = b.code and l.deal_node = '002_22' and l.status = '1' and b.cur_node_code = '002_23';
+UPDATE tb_gps g,tdq_budget_order b SET g.customer_name=b.apply_user_name WHERE g.biz_code=b.code;
+UPDATE tdq_budget_order SET cur_node_code='002_07' WHERE cur_node_code = '002_06';
+UPDATE tsys_biz_log SET deal_node='002_07' WHERE deal_node = '002_06';
+UPDATE tstd_cnavigate SET location='index_banner';
+UPDATE tsys_user SET role_code='SR201805301244280427951' WHERE user_id='U201806150132244051603';
+UPDATE tsys_user SET role_code='SR201805301244280427951' WHERE user_id='U201806191450138622121';
 SET SQL_SAFE_UPDATES = 1;

@@ -236,15 +236,15 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException("xn0000", "资料不是待收件状态!");
         }
 
-        // 操作人入参验证
-        SYSUser condition = new SYSUser();
-        condition.setUserId(operator);
-        condition.setTeamCode(data.getTeamCode());
-        long count = sysUserBO.getTotalCount(condition);
-        if (count <= 0) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "发件人团队人员不能收件！");
-        }
+        // 操作人入参验证 CX
+        // SYSUser condition = new SYSUser();
+        // condition.setUserId(operator);
+        // condition.setTeamCode(data.getTeamCode());
+        // long count = sysUserBO.getTotalCount(condition);
+        // if (count <= 0) {
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // "发件人团队人员不能收件！");
+        // }
         logisticsBO.sendAgainLogistics(code, remark);
         if (data.getType().equals(ELogisticsType.GPS.getCode())) {
             /*

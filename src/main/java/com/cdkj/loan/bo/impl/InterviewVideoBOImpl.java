@@ -67,4 +67,11 @@ public class InterviewVideoBOImpl extends PaginableBOImpl<InterviewVideo>
         condition.setFileId(fileId);
         return interviewVideoDAO.select(condition);
     }
+
+    @Override
+    public InterviewVideo getInterviewVideoByStreamId(String streamId) {
+        InterviewVideo condition = new InterviewVideo();
+        condition.setStreamId(streamId);
+        return interviewVideoDAO.select(condition);
+    }
 }

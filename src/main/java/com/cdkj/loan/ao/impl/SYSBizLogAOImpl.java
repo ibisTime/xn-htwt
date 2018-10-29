@@ -248,7 +248,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             Logistics logistics = logisticsAO.getLogistics(data.getRefOrder());
             BudgetOrder budgetOrder = budgetOrderAO
                 .getBudgetOrder(data.getParentOrder());
-            userName = logistics.getUserName();
+            userName = budgetOrder.getApplyUserName();
             loanBank = budgetOrder.getLoanBankName();
             departmentName = budgetOrder.getCompanyName();
             bizOrderType = "资料传递";

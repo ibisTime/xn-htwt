@@ -20,4 +20,6 @@ public interface IInterviewVideoBO extends IPaginableBO<InterviewVideo> {
 
     public InterviewVideo getInterviewVideoByFileId(String fileId);
 
+    public InterviewVideo getInterviewVideoByStreamId(String channelId);
+
 }

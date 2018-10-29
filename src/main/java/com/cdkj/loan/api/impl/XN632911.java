@@ -32,7 +32,7 @@ public class XN632911 extends AProcessor {
         condition.setRoleCode(req.getRoleCode());
         condition.setTeamCode(req.getTeamCode());
         condition.setRefType(req.getRefType());
-        condition.setRefOrderForQuery(req.getRefOrder());
+        condition.setRefOrder(req.getRefOrder());
         condition.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         condition.setIsLogistics(EBoolean.NO.getCode());
 

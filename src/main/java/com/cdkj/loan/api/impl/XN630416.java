@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.cdkj.loan.ao.ISeriesAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630416Req;
 import com.cdkj.loan.exception.BizException;
@@ -28,13 +29,10 @@ public class XN630416 extends AProcessor {
         Series condition = new Series();
         condition.setName(req.getName());
         condition.setBrandCode(req.getBrandCode());
-        condition.setStatus(req.getStatus());
-
-        String orderColumn = req.getOrderColumn();
-        if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = ISeriesAO.DEFAULT_ORDER_COLUMN;
+        if (StringUtils.isNotBlank(req.getLocation())) {
+            condition.setLocation(StringValidater.toInteger(req.getLocation()));
         }
-        condition.setOrder(orderColumn, req.getOrderDir());
+        condition.setStatus(req.getStatus());
         return seriesAO.querySeriesList(condition);
     }
 

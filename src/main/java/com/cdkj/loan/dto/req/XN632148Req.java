@@ -26,8 +26,6 @@ public class XN632148Req extends APageReq {
 
     private String companyCode;// 公司编号
 
-    private String teamCode;// 团队编号
-
     private List<String> curNodeCodeList;// 当前节点编号
 
     private String isAdvanceFund;// 是否垫资
@@ -43,14 +41,14 @@ public class XN632148Req extends APageReq {
 
     private String keyword; // 关键字
 
-    private String operator; // 操作人
+    private String userId; // 操作人
 
-    public String getOperator() {
-        return operator;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getEnterLocation() {
@@ -91,14 +89,6 @@ public class XN632148Req extends APageReq {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
-    }
-
-    public String getTeamCode() {
-        return teamCode;
-    }
-
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
     }
 
     public String getSaleUserId() {

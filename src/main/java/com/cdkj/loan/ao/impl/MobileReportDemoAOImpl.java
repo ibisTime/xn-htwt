@@ -894,6 +894,55 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
+        if (StringUtils.isNotBlank(req.getContactIdentityNo1st())) {
+            reqParam.add(new BasicNameValuePair("contactIdentityNo1st",
+                req.getContactIdentityNo1st()));
+        }
+        if (StringUtils.isNotBlank(req.getContactIdentityNo2nd())) {
+            reqParam.add(new BasicNameValuePair("contactIdentityNo2nd",
+                req.getContactIdentityNo2nd()));
+        }
+        if (StringUtils.isNotBlank(req.getContactIdentityNo3rd())) {
+            reqParam.add(new BasicNameValuePair("contactIdentityNo3rd",
+                req.getContactIdentityNo3rd()));
+        }
+        if (StringUtils.isNotBlank(req.getContactMobile1st())) {
+            reqParam.add(new BasicNameValuePair("contactMobile1st",
+                req.getContactMobile1st()));
+        }
+        if (StringUtils.isNotBlank(req.getContactMobile2nd())) {
+            reqParam.add(new BasicNameValuePair("contactMobile2nd",
+                req.getContactMobile2nd()));
+        }
+        if (StringUtils.isNotBlank(req.getContactMobile3rd())) {
+            reqParam.add(new BasicNameValuePair("contactMobile3rd",
+                req.getContactMobile3rd()));
+        }
+        if (StringUtils.isNotBlank(req.getContactName1st())) {
+            reqParam.add(new BasicNameValuePair("contactName1st",
+                req.getContactName1st()));
+        }
+        if (StringUtils.isNotBlank(req.getContactName2nd())) {
+            reqParam.add(new BasicNameValuePair("contactName2nd",
+                req.getContactName2nd()));
+        }
+        if (StringUtils.isNotBlank(req.getContactName3rd())) {
+            reqParam.add(new BasicNameValuePair("contactName3rd",
+                req.getContactName3rd()));
+        }
+        if (StringUtils.isNotBlank(req.getContactRelationship1st())) {
+            reqParam.add(new BasicNameValuePair("contactRelationship1st",
+                req.getContactRelationship1st()));
+        }
+        if (StringUtils.isNotBlank(req.getContactRelationship2nd())) {
+            reqParam.add(new BasicNameValuePair("contactRelationship2nd",
+                req.getContactRelationship2nd()));
+        }
+        if (StringUtils.isNotBlank(req.getContactRelationship3rd())) {
+            reqParam.add(new BasicNameValuePair("contactRelationship3rd",
+                req.getContactRelationship3rd()));
+        }
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
@@ -1230,13 +1279,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
-        reqParam.add(new BasicNameValuePair("token", req.getToken()));
+        reqParam.add(new BasicNameValuePair("token", req.getTokendb()));
         reqParam.add(new BasicNameValuePair("sign",
             credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
         String doPost = httpClient.doPost(
             configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
             reqParam);
-        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getToken(),
+        LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
             "taobaoReportTaskData");
         if (data != null) {
             data.setResult(doPost);

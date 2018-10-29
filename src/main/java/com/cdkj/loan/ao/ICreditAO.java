@@ -36,7 +36,7 @@ public interface ICreditAO {
 
     // 征信分页查询 按角色权限
     public Paginable<Credit> queryCreditPageByRoleCode(int start, int limit,
-            Credit condition);
+            Credit condition, String userId);
 
     // 征信初审
     public void audit(XN632113Req req);

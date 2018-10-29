@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -1343,6 +1345,31 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarKey(req.getCarKey());
         budgetOrder.setCarBigSmj(req.getCarBigSmj());
         budgetOrder.setPledgeStatus(EBoolean.YES.getCode());
+
+        // 获取所有物流单的材料清单，去重
+        Logistics logistics = new Logistics();
+        logistics.setBizCode(req.getCode());
+        List<Logistics> logisticsList = logisticsBO
+            .queryLogisticsList(logistics);
+        ArrayList<String> arrayList = new ArrayList<String>();
+        for (Logistics data : logisticsList) {
+            String filelist = data.getFilelist();
+            if (filelist != null) {
+                String[] split = filelist.split(",");
+                for (String string : split) {
+                    arrayList.add(string);
+                }
+            }
+        }
+        String res = "";
+        Set set = new HashSet();
+        for (String str : arrayList) {
+            if (set.add(str)) {
+                res += str + ",";
+            }
+        }
+        String substring = res.substring(0, res.length() - 1);
+        budgetOrder.setEnterFileList(substring);
         budgetOrderBO.refreshMortgageFinish(budgetOrder);
 
         // 日志记录
@@ -1350,6 +1377,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             budgetOrder.getCurNodeCode(), null, req.getOperator(),
             budgetOrder.getTeamCode());
+    }
+
+    public static void main(String[] args) {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        String filelist = "1,2,3";
+        String[] split = filelist.split(",");
+        for (String string : split) {
+            arrayList.add(string);
+        }
+        String res = "";
+        Set set = new HashSet();
+        for (String str : arrayList) {
+            if (set.add(str)) {
+                res += str + ",";
+                // list.add(str);
+            }
+        }
+        String substring = res.substring(0, res.length() - 1);
+        System.out.println(substring);
     }
 
     @Override
@@ -1528,19 +1574,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
-            int limit, BudgetOrder condition, String operator) {
-        if (ESysRole.getMap().get(condition.getRoleCode()) == null) {
-            condition.setTeamCode(null);
+            int limit, BudgetOrder condition, String userId) {
+        if (ESysRole.LEADER.getCode().equals(condition.getRoleCode())) {
+            SYSUser user = sysUserBO.getUser(userId);
+            if (user.getTeamCode() != null) {
+                condition.setTeamCode(user.getTeamCode());
+            }
         }
-
         if (ESysRole.SALE.getCode().equals(condition.getRoleCode())) {
-            condition.setSaleUserId(operator);
-            condition.setTeamCode(null);
+            condition.setSaleUserId(userId);
         }
-
         if (ESysRole.YWNQ.getCode().equals(condition.getRoleCode())) {
-            condition.setInsideJob(operator);
-            condition.setTeamCode(null);
+            condition.setInsideJob(userId);
         }
 
         Paginable<BudgetOrder> page = budgetOrderBO
@@ -1581,6 +1626,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (CollectionUtils.isNotEmpty(bizLogList)) {
             SYSBizLog bizLog = bizLogList.get(bizLogList.size() - 1);
             budgetOrder.setAreaName(bizLog.getOperatorName());
+            budgetOrder.setAreaMobile(bizLog.getOperatorMobile());
         }
         return budgetOrder;
     }
@@ -1762,7 +1808,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void doSmsInterviewInform(String budgetOrderCode) {
+    public void doSmsInterviewInform(String budgetOrderCode, String roomId) {
         BudgetOrder data = budgetOrderBO.getBudgetOrder(budgetOrderCode);
         if (!EBudgetOrderNode.INTERVIEW.getCode().equals(data.getCurNodeCode())
                 && !EBudgetOrderNode.AGAIN_INTERVIEW.getCode()
@@ -1770,9 +1816,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是面签节点");
         }
-        String roomCode = data.getCode().substring(data.getCode().length() - 7);
+        // String roomCode = data.getCode().substring(data.getCode().length() -
+        // 7);
         smsOutBO.sendSmsOut(data.getMobile(),
-            "您的车贷准入申请单正在面签，请您现在打开APP，点击\"我的\"->\"开始面签\"，输入房间号[" + roomCode
+            "您的车贷准入申请单正在面签，请您现在打开APP，点击\"我的\"->\"开始面签\"，输入房间号[" + roomId
                     + "]，进入房间并完成面签。");
     }
 

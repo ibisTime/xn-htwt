@@ -33,7 +33,6 @@ public class XN632148 extends AProcessor {
         condition.setRepayBizCodeForQuery(req.getRepayBizCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setCompanyCode(req.getCompanyCode());
-        condition.setTeamCode(req.getTeamCode());
         condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setEnterLocation(req.getEnterLocation());
         condition.setKeyword(req.getKeyword());
@@ -54,7 +53,7 @@ public class XN632148 extends AProcessor {
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return budgetOrderAO.queryBudgetOrderPageByRoleCode(start, limit,
-            condition, req.getOperator());
+            condition, req.getUserId());
     }
 
     @Override

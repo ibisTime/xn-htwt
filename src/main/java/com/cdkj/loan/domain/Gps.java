@@ -60,6 +60,9 @@ public class Gps extends ABaseDO {
     // 申请人角色
     private String applyUserRole;
 
+    // 客户姓名
+    private String customerNameQuery;
+
     // 预算单
     private BudgetOrder budgetOrder;
 
@@ -69,6 +72,14 @@ public class Gps extends ABaseDO {
 
     public void setApplyUserRole(String applyUserRole) {
         this.applyUserRole = applyUserRole;
+    }
+
+    public String getCustomerNameQuery() {
+        return customerNameQuery;
+    }
+
+    public void setCustomerNameQuery(String customerNameQuery) {
+        this.customerNameQuery = customerNameQuery;
     }
 
     public String getCustomerName() {

@@ -311,6 +311,7 @@
 		<result column="pledge_status" property="pledgeStatus" />
 		<result column="enter_location" property="enterLocation" />
 		<result column="enter_datetime" property="enterDatetime" />
+		<result column="enter_fileList" property="enterFileList" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="inside_job" property="insideJob" />
 		
@@ -763,6 +764,7 @@
 		
 		,t.enter_location
 		,t.enter_datetime
+		,t.enter_fileList
 		,t.sale_user_id
 		,t.inside_job
 		,t.team_code
@@ -1213,6 +1215,7 @@
 		
 		,t.enter_location
 		,t.enter_datetime
+		,t.enter_fileList
 		,t.sale_user_id
 		,t.inside_job
 		,t.team_code
@@ -2212,6 +2215,7 @@
 		,car_key = #{carKey}
 		,car_big_smj = #{carBigSmj}
 		,pledge_status = #{pledgeStatus}
+		,enter_fileList = #{enterFileList}
 		WHERE code = #{code}
 	</update>
 	

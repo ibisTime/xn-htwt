@@ -39,7 +39,6 @@ public class interviewVideoController {
 
         Integer eventType = json.getInteger("event_type");
 
-        String streamId = json.getString("stream_id");
         String videoUrl = json.getString("video_url");
         String fileSize = json.getString("file_size");
         String startTime = json.getString("start_time");
@@ -56,6 +55,8 @@ public class interviewVideoController {
         // System.out.println("file_id:" + fileId);
         // System.out.println("file_format:" + fileFormat);
 
+        String streamId = json.getString("stream_id");
+
         String string = json.getString("stream_param");
         String[] split = string.split("&");
         String groupid = split[6];
@@ -63,27 +64,43 @@ public class interviewVideoController {
         String roomcode = groupid.substring(8);
         System.out.println("roomcode--->" + roomcode);
 
-        if (eventType == 100) {
-            System.out.println("=====进入判断=====");
+        if (eventType == 1) {
             InterviewVideo video = interviewVideoBO
-                .getInterviewVideoByFileId(fileId);
+                .getInterviewVideoByStreamId(streamId);
             // System.out.println("video:" + video);
             if (video == null) {
                 InterviewVideo interviewVideo = new InterviewVideo();
                 interviewVideo.setRoomCode(roomcode);
                 interviewVideo.setStreamId(streamId);
-                interviewVideo.setVideoUrl(videoUrl);
-                interviewVideo.setFileSize(fileSize);
-                interviewVideo.setStartTime(DateUtil.unixToTime(startTime));
-                interviewVideo.setEndTime(DateUtil.unixToTime(endTime));
-                interviewVideo.setFileId(fileId);
-                interviewVideo.setFileFormat(fileFormat);
                 interviewVideoBO.saveInterviewVideo(interviewVideo);
             }
             PrintWriter writer = null;
             try {
                 writer = response.getWriter();
-                writer.append("0");
+                writer.append("{\"code\":0}");
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (eventType == 100) {
+            System.out.println("=====进入判断=====");
+            InterviewVideo data = interviewVideoBO
+                .getInterviewVideoByStreamId(streamId);
+            // System.out.println("video:" + video);
+            data.setRoomCode(roomcode);
+            data.setStreamId(streamId);
+            data.setVideoUrl(videoUrl);
+            data.setFileSize(fileSize);
+            data.setStartTime(DateUtil.unixToTime(startTime));
+            data.setEndTime(DateUtil.unixToTime(endTime));
+            data.setFileId(fileId);
+            data.setFileFormat(fileFormat);
+            // interviewVideoBO.re(data);
+            PrintWriter writer = null;
+            try {
+                writer = response.getWriter();
+                writer.append("{\"code\":0}");
                 writer.flush();
             } catch (IOException e) {
                 e.printStackTrace();

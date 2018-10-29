@@ -33,7 +33,6 @@ public class XN632115 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setUserNameQuery(req.getUserName());
-        condition.setTeamCode(req.getTeamCode());
         condition.setBudgetCodeQuery(req.getBudgetOrderCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
@@ -60,7 +59,8 @@ public class XN632115 extends AProcessor {
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
 
-        return creditAO.queryCreditPageByRoleCode(start, limit, condition);
+        return creditAO.queryCreditPageByRoleCode(start, limit, condition,
+            req.getUserId());
     }
 
     @Override
