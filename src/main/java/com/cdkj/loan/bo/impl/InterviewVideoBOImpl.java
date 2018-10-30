@@ -74,4 +74,9 @@ public class InterviewVideoBOImpl extends PaginableBOImpl<InterviewVideo>
         condition.setStreamId(streamId);
         return interviewVideoDAO.select(condition);
     }
+
+    @Override
+    public void refreshInterviewVideo(InterviewVideo data) {
+        interviewVideoDAO.update(data);
+    }
 }

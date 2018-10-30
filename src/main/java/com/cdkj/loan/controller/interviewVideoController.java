@@ -16,6 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.InterviewVideo;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.exception.BizException;
 
 @Controller
 public class interviewVideoController {
@@ -87,16 +89,18 @@ public class interviewVideoController {
             System.out.println("=====进入判断=====");
             InterviewVideo data = interviewVideoBO
                 .getInterviewVideoByStreamId(streamId);
-            // System.out.println("video:" + video);
-            data.setRoomCode(roomcode);
-            data.setStreamId(streamId);
+            // System.out.println("video:" + video);.
+            if (data == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "推流失败，未找到视频，请重试！");
+            }
             data.setVideoUrl(videoUrl);
             data.setFileSize(fileSize);
             data.setStartTime(DateUtil.unixToTime(startTime));
             data.setEndTime(DateUtil.unixToTime(endTime));
             data.setFileId(fileId);
             data.setFileFormat(fileFormat);
-            // interviewVideoBO.re(data);
+            interviewVideoBO.refreshInterviewVideo(data);
             PrintWriter writer = null;
             try {
                 writer = response.getWriter();

@@ -5,5 +5,7 @@ import com.cdkj.loan.domain.InterviewVideo;
 
 //dao层 
 public interface IInterviewVideoDAO extends IBaseDAO<InterviewVideo> {
-	String NAMESPACE = IInterviewVideoDAO.class.getName().concat(".");
+    String NAMESPACE = IInterviewVideoDAO.class.getName().concat(".");
+
+    void update(InterviewVideo data);
 }

@@ -11,6 +11,8 @@ public interface IInterviewVideoBO extends IPaginableBO<InterviewVideo> {
 
     public int removeInterviewVideo(int id);
 
+    public void refreshInterviewVideo(InterviewVideo data);
+
     public List<InterviewVideo> queryInterviewVideoList(
             InterviewVideo condition);
 
