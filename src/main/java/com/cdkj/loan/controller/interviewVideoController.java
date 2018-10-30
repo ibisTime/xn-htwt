@@ -58,7 +58,7 @@ public class interviewVideoController {
         // System.out.println("file_format:" + fileFormat);
 
         String streamId = json.getString("stream_id");
-
+        System.out.println("streamId:" + streamId);
         String string = json.getString("stream_param");
         String[] split = string.split("&");
         String groupid = split[6];
@@ -69,12 +69,14 @@ public class interviewVideoController {
         if (eventType == 1) {
             InterviewVideo video = interviewVideoBO
                 .getInterviewVideoByStreamId(streamId);
-            // System.out.println("video:" + video);
+            System.out.println("video:" + video);
             if (video == null) {
                 InterviewVideo interviewVideo = new InterviewVideo();
                 interviewVideo.setRoomCode(roomcode);
                 interviewVideo.setStreamId(streamId);
                 interviewVideoBO.saveInterviewVideo(interviewVideo);
+            } else {
+                System.out.println("videoId:" + video.getId());
             }
             PrintWriter writer = null;
             try {

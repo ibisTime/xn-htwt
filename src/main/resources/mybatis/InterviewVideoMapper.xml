@@ -24,6 +24,9 @@
 			<if test="fileId != null and fileId != '' ">
 				AND t.file_id = #{fileId}
 			</if>
+			<if test="streamId != null and streamId != '' ">
+				AND t.stream_id = #{streamId}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_interviewVideo" parameterType="interviewVideo" resultMap="interviewVideo_DB_Result">

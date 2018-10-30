@@ -23,6 +23,7 @@ import com.cdkj.loan.dto.req.XN632941Req;
 import com.cdkj.loan.dto.req.XN632942Req;
 import com.cdkj.loan.dto.req.XN632943Req;
 import com.cdkj.loan.dto.req.XN632944Req;
+import com.cdkj.loan.dto.req.XN632945Req;
 
 public interface IMobileReportDemoAO {
 
@@ -102,4 +103,7 @@ public interface IMobileReportDemoAO {
 
     // 电商报告原始数据获取
     Object taobaoReportTaskData(XN632943Req req);
+
+    // 车险查询
+    Object carInsurance(XN632945Req req);
 }

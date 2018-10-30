@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.InterviewVideoRoom;
 import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
+import com.cdkj.loan.dto.req.XN632952Req;
 
 @Component
 public interface IInterviewVideoRoomAO {
@@ -29,5 +30,8 @@ public interface IInterviewVideoRoomAO {
 
     // 混流
     public Object hlInterviewVideo(XN632951Req req);
+
+    // 查询录制文件
+    public Object foundHlVideo(XN632952Req req);
 
 }

@@ -48,6 +48,7 @@ import com.cdkj.loan.dto.req.XN632941Req;
 import com.cdkj.loan.dto.req.XN632942Req;
 import com.cdkj.loan.dto.req.XN632943Req;
 import com.cdkj.loan.dto.req.XN632944Req;
+import com.cdkj.loan.dto.req.XN632945Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELimuCreditStatus;
 import com.cdkj.loan.exception.BizException;
@@ -1323,5 +1324,80 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 "根据token查询的运营商数据不存在！");
         }
         return doPost;
+    }
+
+    @Override
+    public Object carInsurance(XN632945Req req) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        HashMap<String, String> map = new HashMap<String, String>();
+        String id = "-1";
+        Map<String, String> configsMap = sysConfigBO
+            .getConfigsMap("id_no_authentication");
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam.add(new BasicNameValuePair("method", "api.autoinsurance.get"));
+        reqParam
+            .add(new BasicNameValuePair("version", configsMap.get("version")));
+        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        if (StringUtils.isNotBlank(req.getPassword())) {
+            try {
+                reqParam.add(new BasicNameValuePair("password", new String(
+                    Base64.encodeBase64(req.getPassword().getBytes("UTF-8")))));
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            }
+        }
+        reqParam.add(new BasicNameValuePair("policyNo", req.getPolicyNo()));
+        reqParam.add(new BasicNameValuePair("identityNo", req.getIdentityNo()));
+        reqParam.add(new BasicNameValuePair("type", req.getType()));
+        reqParam.add(new BasicNameValuePair("insuranceCompany",
+            req.getInsuranceCompany()));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        // 截取code,如果不成功，不用保存
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (!"0010".equals(code)) {
+            map.put("id", id);
+            map.put("result", doPost);
+            return map;
+        }
+        LimuCredit data = limuCreditBO.getLimuCreditByUid(req.getIdentityNo(),
+            "autoinsurance");
+        if (data != null) {
+            data.setCustomerName(req.getCustomerName());
+            data.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            data.setResult(doPost);
+            data.setFoundDatetime(new Date());
+            limuCreditBO.refreshLimuCredit(data);
+            id = data.getId() + "";
+        } else {
+            LimuCredit limuCredit = new LimuCredit();
+            limuCredit.setUserId(req.getIdentityNo());
+            limuCredit.setUserName(req.getIdentityNo());
+            limuCredit.setCustomerName(req.getCustomerName());
+            limuCredit.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            limuCredit.setResult(doPost);
+            limuCredit.setFoundDatetime(new Date());
+            limuCredit.setBizType("autoinsurance");
+            limuCreditBO.saveLimuCredit(limuCredit);
+            LimuCredit lmCredit = limuCreditBO
+                .getLimuCreditByUid(req.getIdentityNo(), "autoinsurance");
+            id = lmCredit.getId() + "";
+        }
+        // map.put("\"id\":" + id, "\"result\":" + doPost);
+        map.put("id", id);
+        map.put("result", doPost);
+        return map;
     }
 }

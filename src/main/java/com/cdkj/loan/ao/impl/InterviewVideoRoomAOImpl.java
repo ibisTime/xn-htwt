@@ -20,6 +20,7 @@ import com.cdkj.loan.domain.InterviewVideo;
 import com.cdkj.loan.domain.InterviewVideoRoom;
 import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
+import com.cdkj.loan.dto.req.XN632952Req;
 
 @Service
 public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
@@ -89,8 +90,8 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             joxl.put("image_layer", i + 1);
             joxl.put("image_width", "160");
             joxl.put("image_height", "240");
-            joxl.put("location_x", "380");
-            joxl.put("location_y", "630");
+            joxl.put("location_x", "0");
+            joxl.put("location_y", "0");
             jox.put("layout_params", joxl);
             inputList.add(jox);
         }
@@ -112,10 +113,10 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
         JSONObject jo = new JSONObject();
         String time = Long
-            .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 60 * 1000);
+            .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
         jo.put("timestamp", time);
         String HL = OrderNoGenerater.generate("HL");
-        jo.put("eventId", HL);
+        jo.put("eventId", HL.substring(2, 6));
         jo.put("interface", interFace);
 
         String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
@@ -127,6 +128,19 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             .getInterviewVideoRoom(req.getRoomId());
         videoRoom.setHlUrl(string);
         interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
+        return string;
+    }
+
+    @Override
+    public Object foundHlVideo(XN632952Req req) {
+        String time = Long
+            .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
+        String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
+        String string = OkHttpUtils.doAccessHTTPGetJson(
+            "http://fcgi.video.qcloud.com/common_access?Param.s.channel_id="
+                    + req.getStreamId()
+                    + "&appid=1257046543&interface=Live_Tape_GetFilelist&sign="
+                    + sign + "&t=" + time);
         return string;
     }
 
