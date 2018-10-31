@@ -326,6 +326,7 @@
 		<result column="back_advance_subbranch" property="backAdvanceSubbranch" />
 		<result column="back_advance_water_bill" property="backAdvanceWaterBill" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="intev_cur_node_code" property="intevCurNodeCode" />
 		
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="frozen_status" property="frozenStatus" />
@@ -419,6 +420,12 @@
 		            #{item}
 		        </foreach>
 			</if>
+			<if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0 ">
+				AND t.intev_cur_node_code in 
+				<foreach collection="intevCurNodeCodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 			<if test="curNodeCodeDz != null and curNodeCodeDz != '' ">
 				<![CDATA[AND t.cur_node_code >= #{curNodeCodeDz}]]>
 			</if>
@@ -445,6 +452,9 @@
 			</if>
 			<if test="curNodeCode != null and curNodeCode != ''">
 				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="intevCurNodeCode != null and intevCurNodeCode != ''">
+				AND t.intev_cur_node_code = #{intevCurNodeCode}
 			</if>
 			<if test="curNodeCodeNoEnter != null and curNodeCodeNoEnter != ''">
 				AND t.cur_node_code != #{curNodeCodeNoEnter}
@@ -779,6 +789,7 @@
 		,t.back_advance_water_bill
 		
 		,t.cur_node_code
+		,t.intev_cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
@@ -869,6 +880,7 @@
 		,t.apply_datetime
 		
 		,t.cur_node_code
+		,t.intev_cur_node_code
 		,t.remark
 		,t.team_code
 		,t.back_advance_status
@@ -1230,13 +1242,15 @@
 		,t.back_advance_water_bill
 		
 		,t.cur_node_code
+		,t.intev_cur_node_code
+		,t.intev_cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
 		,t.is_logistics
 		,t.remark
 		FROM
-		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		tdq_budget_order t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code)
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -1247,7 +1261,7 @@
 
 	<select id="select_budgetOrder_count_byRoleCode" parameterType="budgetOrder"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code)
 		<include refid="where_condition" />) tb
 	</select>
 	
@@ -1269,6 +1283,7 @@
 		,t.inside_job
 		,t.advance_fund_datetime
 		,t.cur_node_code
+		,t.intev_cur_node_code
 		FROM
 		tdq_budget_order t 
 		<include refid="where_condition" />
@@ -1529,6 +1544,7 @@
 		,back_advance_water_bill
 		
 		,cur_node_code
+		,intev_cur_node_code
 		,cancel_node_code
 		,frozen_status
 		,pledge_status
@@ -1781,6 +1797,7 @@
 		,#{backAdvanceSubbranch}
 		,#{backAdvanceWaterBill}
 		,#{curNodeCode}
+		,#{intevCurNodeCode}
 		,#{cancelNodeCode}
 		,#{frozenStatus}
 		,#{pledgeStatus}

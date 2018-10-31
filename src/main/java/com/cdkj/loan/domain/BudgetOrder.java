@@ -873,6 +873,9 @@ public class BudgetOrder extends ABaseDO {
     // 当前节点编号
     private String curNodeCode;
 
+    // 面签节点编号
+    private String intevCurNodeCode;
+
     // 客户申请作废时的节点编号
     private String cancelNodeCode;
 
@@ -1232,6 +1235,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCancelNodeCode(String cancelNodeCode) {
         this.cancelNodeCode = cancelNodeCode;
+    }
+
+    public String getIntevCurNodeCode() {
+        return intevCurNodeCode;
+    }
+
+    public void setIntevCurNodeCode(String intevCurNodeCode) {
+        this.intevCurNodeCode = intevCurNodeCode;
     }
 
     public String getFrozenStatus() {

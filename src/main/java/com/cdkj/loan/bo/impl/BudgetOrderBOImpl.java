@@ -116,6 +116,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setSaleUserId(credit.getSaleUserId());
             data.setInsideJob(credit.getInsideJob());
             data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+            data.setIntevCurNodeCode(EBudgetOrderNode.INTERVIEW.getCode());
             // 准入单插入团队编号 来自业务员的所属团队
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             data.setTeamCode(user.getTeamCode());

@@ -702,8 +702,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+            budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCEFUND.getCode());
             /**************生成 手续费************/
             BudgetOrderFee data = new BudgetOrderFee();
             data.setCompanyCode(budgetOrder.getCompanyCode());
@@ -1006,7 +1005,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (!EBudgetOrderNode.ADVANCEFUND.getCode().equals(preCurrentNode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是财务垫资节点，不能操作");
+                "准入审查流程未走完，不能操作");
+        }
+        if (!EBudgetOrderNode.ADVANCEFUND.getCode()
+            .equals(budgetOrder.getIntevCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "面签流程未走完，不能操作");
         }
         budgetOrder.setAdvanceFundDatetime(DateUtil.strToDate(
             req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
