@@ -158,7 +158,13 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
             SYSBizLog condition = new SYSBizLog();
             condition.setRefOrder(bizCode);
             condition.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
-            sysBizLog = sysBizLogDAO.getLatestOperateRecordByBizCode(condition);
+            // sysBizLog =
+            // sysBizLogDAO.getLatestOperateRecordByBizCode(condition);
+            // 找最新一条，线上数据有时间重复的，会报错
+            List<SYSBizLog> selectList = sysBizLogDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(selectList)) {
+                sysBizLog = selectList.get(selectList.size() - 1);
+            }
         }
         return sysBizLog;
     }

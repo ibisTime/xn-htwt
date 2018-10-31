@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
     @Override
     public Object hlInterviewVideo(XN632951Req req) {
+        HashMap<String, String> map = new HashMap<String, String>();
         InterviewVideo condition = new InterviewVideo();
         condition.setRoomCode(req.getRoomId());
         List<InterviewVideo> videoList = interviewVideoBO
@@ -76,7 +78,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         JSONArray inputList = new JSONArray();
         // 背景画面
         JSONObject jobl = new JSONObject();
-        jobl.put("image_layer", "1");
+        jobl.put("image_layer", 1);
         JSONObject job = new JSONObject();
         job.put("input_stream_id", videoList.get(0).getStreamId());
         job.put("layout_params", jobl);
@@ -90,14 +92,18 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             joxl.put("image_layer", i + 1);
             joxl.put("image_width", "160");
             joxl.put("image_height", "240");
-            joxl.put("location_x", "0");
+            if (j == 1) {
+                joxl.put("location_x", "0");
+            } else {
+                joxl.put("location_x", "380");
+            }
             joxl.put("location_y", "0");
             jox.put("layout_params", joxl);
             inputList.add(jox);
         }
 
         JSONObject para = new JSONObject();
-        para.put("app_id", "1257046543");
+        para.put("app_id", 1257046543);
         para.put("interface", "mix_streamv2.start_mix_stream_advanced");
         para.put("mix_stream_session_id", req.getRoomId());
         // para.put("output_stream_id",
@@ -126,9 +132,11 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             jo.toString());
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
             .getInterviewVideoRoom(req.getRoomId());
-        videoRoom.setHlUrl(string);
+        videoRoom.setHlUrl(videoList.get(0).getStreamId());
         interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
-        return string;
+        map.put("streamId", videoList.get(0).getStreamId());
+        map.put("result", string);
+        return map;
     }
 
     @Override
