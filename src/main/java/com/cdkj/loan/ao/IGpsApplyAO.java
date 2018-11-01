@@ -20,7 +20,7 @@ public interface IGpsApplyAO {
 
     public void approveYesGpsApply(XN632711Req req);
 
-    public void approveNoGpsApply(String code, String remark);
+    public void approveNoGpsApply(String code, String operator, String remark);
 
     public Paginable<GpsApply> queryGpsApplyPage(int start, int limit,
             GpsApply condition);

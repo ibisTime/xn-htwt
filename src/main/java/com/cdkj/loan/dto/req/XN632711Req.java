@@ -18,7 +18,7 @@ public class XN632711Req {
 
     // 操作人
     @NotBlank
-    private String operater;
+    private String operator;
 
     // 备注
     private String remark;
@@ -27,12 +27,12 @@ public class XN632711Req {
     @NotEmpty
     private List<XN632711ReqChild> gpsList;
 
-    public String getOperater() {
-        return operater;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setOperater(String operater) {
-        this.operater = operater;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getCode() {
