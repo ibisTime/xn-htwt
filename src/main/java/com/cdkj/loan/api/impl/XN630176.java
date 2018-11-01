@@ -33,6 +33,7 @@ public class XN630176 extends AProcessor {
         condition.setOperator(req.getOperator());
         condition.setOperatorName(req.getOperatorName());
         condition.setOperatorMobile(req.getOperatorMobile());
+        condition.setOrder("start_datetime", false);
         return sysBizLogAO.querySYSBizLogList(condition);
     }
 

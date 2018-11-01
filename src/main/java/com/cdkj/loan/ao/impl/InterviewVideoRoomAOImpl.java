@@ -121,7 +121,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
         jo.put("timestamp", time);
         String HL = OrderNoGenerater.generate("HL");
-        jo.put("eventId", HL.substring(2, 6));
+        jo.put("eventId", HL.substring(2, 8));
         jo.put("interface", interFace);
 
         String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
@@ -129,11 +129,13 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             "http://fcgi.video.qcloud.com/common_access?appid=1257046543&interface=Mix_StreamV2&t="
                     + time + "&sign=" + sign,
             jo.toString());
+        InterviewVideo interviewVideo = interviewVideoBO
+            .getInterviewVideoByStreamId(videoList.get(0).getStreamId());
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
             .getInterviewVideoRoom(req.getRoomId());
-        videoRoom.setHlUrl(videoList.get(0).getStreamId());
+        videoRoom.setHlUrl(interviewVideo.getVideoUrl());
         interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
-        map.put("streamId", videoList.get(0).getStreamId());
+        map.put("videoUrl", interviewVideo.getVideoUrl());
         map.put("result", string);
         return map;
     }

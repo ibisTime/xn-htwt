@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.InterviewVideo;
+import com.cdkj.loan.dto.req.XN632953Req;
 
 @Component
 public interface IInterviewVideoAO {
@@ -22,5 +23,7 @@ public interface IInterviewVideoAO {
             InterviewVideo condition);
 
     public InterviewVideo getInterviewVideo(int id);
+
+    public Object foundRoomTotal(XN632953Req req);
 
 }

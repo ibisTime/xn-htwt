@@ -9,6 +9,7 @@ import com.cdkj.loan.ao.IInterviewVideoAO;
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.InterviewVideo;
+import com.cdkj.loan.dto.req.XN632953Req;
 
 @Service
 public class interviewVideoAOImpl implements IInterviewVideoAO {
@@ -41,5 +42,12 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
     @Override
     public InterviewVideo getInterviewVideo(int id) {
         return interviewVideoBO.getInterviewVideo(id);
+    }
+
+    @Override
+    public Object foundRoomTotal(XN632953Req req) {
+        InterviewVideo interviewVideo = new InterviewVideo();
+        interviewVideo.setRoomCode(req.getRoomId());
+        return interviewVideoBO.getTotalCount(interviewVideo);
     }
 }
