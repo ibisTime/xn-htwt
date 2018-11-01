@@ -19,6 +19,8 @@ import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.dao.IBudgetOrderDAO;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.GpsApply;
@@ -65,7 +67,11 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     @Autowired
     private ISYSRoleBO sysRoleBO;
 
+    @Autowired
+    private IBudgetOrderDAO budgetOrderDAO;
+
     @Override
+    @Transactional
     public String addGpsApply(XN632710Req req) {
         // undo 待验证库存数量和申请数量
         GpsApply data = new GpsApply();
@@ -84,7 +90,17 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             StringValidater.toInteger(req.getApplyWirelessCount()));
         data.setApplyCount(
             data.getApplyWiredCount() + data.getApplyWirelessCount());
-        data.setBudgetOrderCode(req.getBudgetOrderCode());
+        if (StringUtils.isNotBlank(req.getBudgetOrderCode())) {
+            // 验证预算单编号存不存在
+            BudgetOrder budgetOrder = new BudgetOrder();
+            budgetOrder.setCode(req.getBudgetOrderCode());
+            BudgetOrder domain = budgetOrderDAO.select(budgetOrder);
+            if (domain == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "请检查客户姓名是否从下拉框中选择!");
+            }
+            data.setBudgetOrderCode(req.getBudgetOrderCode());
+        }
         data.setCustomerName(req.getCustomerName());
         data.setMobile(req.getMobile());
         data.setCarFrameNo(req.getCarFrameNo());
