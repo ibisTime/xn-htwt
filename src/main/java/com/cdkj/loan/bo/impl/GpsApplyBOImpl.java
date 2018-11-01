@@ -27,8 +27,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
-        IGpsApplyBO {
+public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
+        implements IGpsApplyBO {
 
     @Autowired
     private IGpsApplyDAO gpsApplyDAO;
@@ -53,8 +53,8 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
     public String saveGpsApply(GpsApply data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.GPS_APPLY
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.GPS_APPLY.getCode());
             data.setCode(code);
             gpsApplyDAO.insert(data);
         }
@@ -63,11 +63,13 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
 
     @Override
     public void approveGpsApply(String code, EGpsApplyStatus eGpsApplyStatus,
-            String remark) {
+            String operator, String remark) {
         if (StringUtils.isNotBlank(code)) {
             GpsApply gpsApply = new GpsApply();
             gpsApply.setCode(code);
             gpsApply.setStatus(eGpsApplyStatus.getCode());
+            gpsApply.setOperator(operator);
+            gpsApply.setUpdateDatetime(new Date());
             gpsApply.setRemark(remark);
             gpsApplyDAO.updateGpsApplyApprove(gpsApply);
         }

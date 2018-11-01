@@ -20,7 +20,7 @@ public interface IGpsApplyBO extends IPaginableBO<GpsApply> {
     public String saveGpsApply(GpsApply data);
 
     public void approveGpsApply(String code, EGpsApplyStatus eGpsApplyStatus,
-            String remark);
+            String operator, String remark);
 
     public List<GpsApply> queryGpsApplyList(GpsApply condition);
 

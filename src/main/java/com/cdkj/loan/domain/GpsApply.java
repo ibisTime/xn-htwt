@@ -63,6 +63,12 @@ public class GpsApply extends ABaseDO {
     // 状态(0 待审核 1 审核通过,待发货 2 审核不通过 3 已发货,待收货 4 已收货)
     private String status;
 
+    // 操作人
+    private String operator;
+
+    // 操作时间
+    private Date updateDatetime;
+
     // 备注
     private String remark;
 
@@ -88,6 +94,22 @@ public class GpsApply extends ABaseDO {
 
     public void setGpsList(List<Gps> gpsList) {
         this.gpsList = gpsList;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public String getTeamName() {

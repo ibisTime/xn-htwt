@@ -116,7 +116,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
         gpsApplyBO.approveGpsApply(req.getCode(), EGpsApplyStatus.APPROVE_YES,
-            req.getRemark());
+            req.getOperater(), req.getRemark());
 
         for (XN632711ReqChild childReq : req.getGpsList()) {
             if (StringUtils.isBlank(childReq.getCode())) {
@@ -141,12 +141,13 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     }
 
     @Override
-    public void approveNoGpsApply(String code, String remark) {
+    public void approveNoGpsApply(String code, String operator, String remark) {
         GpsApply data = gpsApplyBO.getGpsApply(code);
         if (!EGpsApplyStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
-        gpsApplyBO.approveGpsApply(code, EGpsApplyStatus.APPROVE_NO, remark);
+        gpsApplyBO.approveGpsApply(code, EGpsApplyStatus.APPROVE_NO, operator,
+            remark);
     }
 
     @Override
