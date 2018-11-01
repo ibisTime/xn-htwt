@@ -178,6 +178,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
             gpsApply.setRoleName(sysRole.getName());
         }
+
+        // 审核时的gps列表
+        Gps gps = new Gps();
+        gps.setApplyCode(gpsApply.getCode());
+        List<Gps> queryGpsList = gpsBO.queryGpsList(gps);
+        gpsApply.setGpsList(queryGpsList);
     }
 
     @Override

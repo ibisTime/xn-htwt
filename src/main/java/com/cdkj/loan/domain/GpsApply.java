@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -77,6 +78,17 @@ public class GpsApply extends ABaseDO {
 
     // 角色名称
     private String roleName;
+
+    // 审核的gps列表
+    private List<Gps> gpsList;
+
+    public List<Gps> getGpsList() {
+        return gpsList;
+    }
+
+    public void setGpsList(List<Gps> gpsList) {
+        this.gpsList = gpsList;
+    }
 
     public String getTeamName() {
         return teamName;
