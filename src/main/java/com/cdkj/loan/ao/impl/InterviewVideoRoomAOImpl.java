@@ -83,21 +83,20 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         job.put("input_stream_id", videoList.get(0).getStreamId());
         job.put("layout_params", jobl);
         inputList.add(job);
-        int i = 1;
         for (int j = 1; j < videoList.size(); j++) {
             // 小画面
             JSONObject jox = new JSONObject();
             jox.put("input_stream_id", videoList.get(j).getStreamId());
             JSONObject joxl = new JSONObject();
-            joxl.put("image_layer", i + 1);
+            joxl.put("image_layer", j + 1);
             joxl.put("image_width", "160");
-            joxl.put("image_height", "240");
+            joxl.put("image_height", "160");
+            joxl.put("location_x", "0");
             if (j == 1) {
-                joxl.put("location_x", "0");
+                joxl.put("location_y", "0");
             } else {
-                joxl.put("location_x", "380");
+                joxl.put("location_y", "180");
             }
-            joxl.put("location_y", "0");
             jox.put("layout_params", joxl);
             inputList.add(jox);
         }
