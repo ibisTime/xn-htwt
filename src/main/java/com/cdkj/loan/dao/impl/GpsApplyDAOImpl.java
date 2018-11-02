@@ -35,8 +35,8 @@ public class GpsApplyDAOImpl extends AMybatisTemplate implements IGpsApplyDAO {
 
     @Override
     public long selectTotalCount(GpsApply condition) {
-        return super.selectTotalCount(
-            NAMESPACE.concat("select_gpsApply_count"), condition);
+        return super.selectTotalCount(NAMESPACE.concat("select_gpsApply_count"),
+            condition);
     }
 
     @Override
@@ -64,6 +64,11 @@ public class GpsApplyDAOImpl extends AMybatisTemplate implements IGpsApplyDAO {
     @Override
     public void updateGpsApplyReceive(GpsApply data) {
         super.update(NAMESPACE.concat("update_gpsApply_receive"), data);
+    }
+
+    @Override
+    public void updateGpsApply(GpsApply data) {
+        super.update(NAMESPACE.concat("update_gpsApply"), data);
     }
 
 }

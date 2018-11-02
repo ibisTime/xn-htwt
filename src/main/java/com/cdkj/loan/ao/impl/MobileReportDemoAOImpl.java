@@ -22,6 +22,7 @@ import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.common.PropertiesUtil;
 import com.cdkj.loan.controller.AbstractCredit;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.creditCommon.HttpClient;
 import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.LimuCredit;
@@ -497,7 +498,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         return post;
     }
 
-    private String socialsecurity(String token, String bizType) {
+    @Override
+    public Object socialsecurity(String token, String bizType) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         Map<String, String> configsMap = sysConfigBO
@@ -1340,7 +1342,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam.add(new BasicNameValuePair("method", "api.autoinsurance.get"));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
-        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        if (StringUtils.isNotBlank(req.getUsername())) {
+            reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        }
         if (StringUtils.isNotBlank(req.getPassword())) {
             try {
                 reqParam.add(new BasicNameValuePair("password", new String(
@@ -1349,8 +1353,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 e1.printStackTrace();
             }
         }
-        reqParam.add(new BasicNameValuePair("policyNo", req.getPolicyNo()));
-        reqParam.add(new BasicNameValuePair("identityNo", req.getIdentityNo()));
+        if (StringUtils.isNotBlank(req.getPolicyNo())) {
+            reqParam.add(new BasicNameValuePair("policyNo", req.getPolicyNo()));
+        }
+        if (StringUtils.isNotBlank(req.getIdentityNo())) {
+            reqParam
+                .add(new BasicNameValuePair("identityNo", req.getIdentityNo()));
+        }
         reqParam.add(new BasicNameValuePair("type", req.getType()));
         reqParam.add(new BasicNameValuePair("insuranceCompany",
             req.getInsuranceCompany()));
@@ -1367,6 +1376,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             e.printStackTrace();
         }
         String code = rootNode.get("code").textValue();
+        String token = rootNode.get("token").textValue();
         if (!"0010".equals(code)) {
             map.put("id", id);
             map.put("result", doPost);
@@ -1395,9 +1405,26 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 .getLimuCreditByUid(req.getIdentityNo(), "autoinsurance");
             id = lmCredit.getId() + "";
         }
+
+        // 查询结果
+        foundResult(reqParam, token, configsMap, id);
+
         // map.put("\"id\":" + id, "\"result\":" + doPost);
         map.put("id", id);
         map.put("result", doPost);
         return map;
+    }
+
+    private void foundResult(List<BasicNameValuePair> reqParam, String token,
+            Map<String, String> configsMap, String id) {
+        HttpClient httpClient = new HttpClient();
+        reqParam.add(new BasicNameValuePair("method", "api.common.getResult"));
+        reqParam.add(new BasicNameValuePair("type", token));
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        LimuCredit limuCredit = limuCreditBO
+            .getLimuCredit(StringValidater.toInteger(id));
+        limuCredit.setResult(doPost);
+        limuCreditBO.refreshLimuCredit(limuCredit);
     }
 }

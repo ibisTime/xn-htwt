@@ -29,6 +29,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632710Req;
 import com.cdkj.loan.dto.req.XN632711Req;
 import com.cdkj.loan.dto.req.XN632711ReqChild;
+import com.cdkj.loan.dto.req.XN632713Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
@@ -106,6 +107,45 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         data.setApplyDatetime(new Date());
         data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
         return gpsApplyBO.saveGpsApply(data);
+    }
+
+    @Override
+    @Transactional
+    public void againGpsApply(XN632713Req req) {
+        GpsApply data = gpsApplyBO.getGpsApply(req.getCode());
+        SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
+        if (StringUtils.isBlank(sysUser.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请人岗位为空，请先设置岗位");
+        }
+        data.setCompanyCode(sysUser.getCompanyCode());
+        data.setApplyUser(req.getApplyUser());
+        data.setApplyReason(req.getApplyReason());
+        data.setApplyWiredCount(
+            StringValidater.toInteger(req.getApplyWiredCount()));
+        data.setApplyWirelessCount(
+            StringValidater.toInteger(req.getApplyWirelessCount()));
+        data.setApplyCount(
+            data.getApplyWiredCount() + data.getApplyWirelessCount());
+        if (StringUtils.isNotBlank(req.getBudgetOrderCode())) {
+            // 验证预算单编号存不存在
+            BudgetOrder budgetOrder = new BudgetOrder();
+            budgetOrder.setCode(req.getBudgetOrderCode());
+            BudgetOrder domain = budgetOrderDAO.select(budgetOrder);
+            if (domain == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "请检查客户姓名是否从下拉框中选择!");
+            }
+            data.setBudgetOrderCode(req.getBudgetOrderCode());
+        }
+        data.setCustomerName(req.getCustomerName());
+        data.setMobile(req.getMobile());
+        data.setCarFrameNo(req.getCarFrameNo());
+        data.setApplyDatetime(new Date());
+        data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
+        data.setOperator(req.getApplyUser());
+        data.setUpdateDatetime(new Date());
+        gpsApplyBO.refreshGpsApply(data);
     }
 
     @Override

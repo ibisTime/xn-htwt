@@ -90,12 +90,12 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             JSONObject joxl = new JSONObject();
             joxl.put("image_layer", j + 1);
             joxl.put("image_width", "160");
-            joxl.put("image_height", "160");
+            joxl.put("image_height", "180");
             joxl.put("location_x", "0");
             if (j == 1) {
                 joxl.put("location_y", "0");
             } else {
-                joxl.put("location_y", "180");
+                joxl.put("location_y", "200");
             }
             jox.put("layout_params", joxl);
             inputList.add(jox);
@@ -129,6 +129,8 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             "http://fcgi.video.qcloud.com/common_access?appid=1257046543&interface=Mix_StreamV2&t="
                     + time + "&sign=" + sign,
             jo.toString());
+        // InterviewVideo interviewVideo = interviewVideoBO
+        // .getInterviewVideoByStreamId(videoList.get(0).getStreamId());
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
             .getInterviewVideoRoom(req.getRoomId());
         videoRoom.setHlUrl(videoList.get(0).getStreamId());

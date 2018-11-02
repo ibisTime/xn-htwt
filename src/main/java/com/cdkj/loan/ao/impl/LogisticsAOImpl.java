@@ -236,6 +236,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException("xn0000", "资料不是待收件状态!");
         }
 
+        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
+            // 收件人必须是申领人
+            if (!operator.equals(data.getReceiver())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "必须由GPS申领人收件！");
+            }
+        }
+
         // 操作人入参验证 CX
         // SYSUser condition = new SYSUser();
         // condition.setUserId(operator);

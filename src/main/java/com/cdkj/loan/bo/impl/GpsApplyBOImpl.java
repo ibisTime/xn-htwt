@@ -62,6 +62,11 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
     }
 
     @Override
+    public void refreshGpsApply(GpsApply data) {
+        gpsApplyDAO.updateGpsApply(data);
+    }
+
+    @Override
     public void approveGpsApply(String code, EGpsApplyStatus eGpsApplyStatus,
             String operator, String remark) {
         if (StringUtils.isNotBlank(code)) {
@@ -120,4 +125,5 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
         }
         return data;
     }
+
 }
