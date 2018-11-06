@@ -696,6 +696,9 @@ public class BudgetOrder extends ABaseDO {
     // 面签其他资料
     private String interviewOtherPdf;
 
+    // 是否面签完成
+    private String isInterview;
+
     // 垫资日期
     private Date advanceFundDatetime;
 
@@ -1621,6 +1624,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setIsCardMailAddress(String isCardMailAddress) {
         this.isCardMailAddress = isCardMailAddress;
+    }
+
+    public String getIsInterview() {
+        return isInterview;
+    }
+
+    public void setIsInterview(String isInterview) {
+        this.isInterview = isInterview;
     }
 
     public String getPostCode1() {

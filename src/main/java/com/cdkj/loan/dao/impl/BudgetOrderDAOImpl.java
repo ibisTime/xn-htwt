@@ -48,6 +48,11 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void updaterInterviewInternal(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_interviewInternal"), data);
+    }
+
+    @Override
     public void updaterBizChargeApprove(BudgetOrder data) {
         super.update(NAMESPACE.concat("update_biz_charge_approve"), data);
     }

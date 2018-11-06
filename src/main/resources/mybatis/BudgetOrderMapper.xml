@@ -258,6 +258,7 @@
 		<result column="interview_contract" property="interviewContract" />
 		<result column="other_video" property="otherVideo" />
 		<result column="interview_other_pdf" property="interviewOtherPdf" />
+		<result column="is_interview" property="isInterview" />
 		<result column="advance_fund_datetime" property="advanceFundDatetime" />
 		
 		<result column="advance_fund_amount" property="advanceFundAmount" />
@@ -721,6 +722,7 @@
 		,t.bank_contract
 		,t.other_video
 		,t.interview_other_pdf
+		,t.is_interview
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
@@ -1174,6 +1176,7 @@
 		,t.bank_contract
 		,t.other_video
 		,t.interview_other_pdf
+		,t.is_interview
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
@@ -1543,6 +1546,7 @@
 		,back_advance_subbranch
 		,back_advance_water_bill
 		
+		,is_interview
 		,cur_node_code
 		,intev_cur_node_code
 		,cancel_node_code
@@ -1796,6 +1800,7 @@
 		,#{backAdvanceOpenBank}
 		,#{backAdvanceSubbranch}
 		,#{backAdvanceWaterBill}
+		,#{isInterview}
 		,#{curNodeCode}
 		,#{intevCurNodeCode}
 		,#{cancelNodeCode}
@@ -2092,7 +2097,7 @@
 	<update id="update_interview" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		intev_cur_node_code = #{intevCurNodeCode}
 		,bank_video = #{bankVideo}
 		,bank_photo = #{bankPhoto}
 		,company_video = #{companyVideo}
@@ -2101,6 +2106,15 @@
 		,advance_fund_amount_pdf = #{advanceFundAmountPdf}
 		,other_video = #{otherVideo}
 		,interview_other_pdf = #{interviewOtherPdf}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_interviewInternal">
+		UPDATE tdq_budget_order
+		SET
+		intev_cur_node_code = #{IntevCurNodeCode}
+		,is_interview = #{isInterview}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -2199,6 +2213,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{IntevCurNodeCode}
 		,is_logistics = #{isLogistics}
 		,remark = #{remark}
 		WHERE code = #{code}

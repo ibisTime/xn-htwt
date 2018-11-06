@@ -20,6 +20,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void interview(BudgetOrder budgetOrder);
 
+    public void refreshInterviewInternal(BudgetOrder budgetOrder);
+
     public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition);
 
     public BudgetOrder getBudgetOrder(String code);

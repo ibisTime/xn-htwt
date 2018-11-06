@@ -115,6 +115,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
             data.setInsideJob(credit.getInsideJob());
+            data.setIsInterview(EBoolean.NO.getCode());
             data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
             data.setIntevCurNodeCode(EBudgetOrderNode.INTERVIEW.getCode());
             // 准入单插入团队编号 来自业务员的所属团队
@@ -161,6 +162,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         if (StringUtils.isNotBlank(data.getCode())) {
             budgetOrderDAO.updaterInterview(data);
         }
+    }
+
+    @Override
+    public void refreshInterviewInternal(BudgetOrder data) {
+        budgetOrderDAO.updaterInterviewInternal(data);
     }
 
     @Override
@@ -295,9 +301,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         String result = EBoolean.NO.getCode();
 
         BudgetOrder budgetOrder = getBudgetOrder(code);
-        String preCurNodeCode = budgetOrder.getCurNodeCode();
+        String preCurNodeCode = budgetOrder.getIntevCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
-        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+        budgetOrder.setIntevCurNodeCode(nodeFlow.getNextNode());
         // 状态为不在物流传递中
         budgetOrder.setIsLogistics(EBoolean.NO.getCode());
         // 日志
@@ -305,8 +311,12 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getCurNodeCode(), null, operator,
             budgetOrder.getTeamCode());
-        if (EBudgetOrderNode.DHAPPROVEDATA.getCode()
-            .equals(nodeFlow.getCurrentNode())) {
+        if (EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode()
+            .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.DHAPPROVEDATA.getCode()
+                    .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.RISK_CONTROLLER_APPROVE.getCode()
+                    .equals(nodeFlow.getCurrentNode())) {
             String newLogisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
                 operator, nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
@@ -316,7 +326,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
-                newLogisticsCode, budgetOrder.getCurNodeCode(),
+                newLogisticsCode, budgetOrder.getIntevCurNodeCode(),
                 budgetOrder.getTeamCode());
             result = EBoolean.YES.getCode();
 
