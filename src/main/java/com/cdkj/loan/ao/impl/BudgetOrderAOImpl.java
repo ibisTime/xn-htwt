@@ -70,6 +70,7 @@ import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.dto.req.XN632141Req;
+import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
@@ -998,6 +999,37 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    public void financeAudit(XN632143Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (!EBudgetOrderNode.FINANCEAUDIT.getCode().equals(preCurrentNode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "准入审查流程未走完，不能操作");
+        }
+        if (!EBudgetOrderNode.FINANCEAUDIT.getCode()
+            .equals(budgetOrder.getIntevCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "面签流程未走完，不能操作");
+        }
+
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(req.getCurNadeCode());
+        }
+        budgetOrder.setRemark(req.getApproveNote());
+        budgetOrderBO.refreshAreaApprove(budgetOrder);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            budgetOrder.getCurNodeCode(), req.getApproveNote(),
+            req.getOperator(), budgetOrder.getTeamCode());
+    }
+
+    @Override
     @Transactional
     public void advanceFund(XN632125Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
@@ -1005,13 +1037,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (!EBudgetOrderNode.ADVANCEFUND.getCode().equals(preCurrentNode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "准入审查流程未走完，不能操作");
+                "当前节点不是财务垫资，不能操作");
         }
-        if (!EBudgetOrderNode.ADVANCEFUND.getCode()
-            .equals(budgetOrder.getIntevCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "面签流程未走完，不能操作");
-        }
+
         budgetOrder.setAdvanceFundDatetime(DateUtil.strToDate(
             req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setAdvanceFundAmount(

@@ -16,6 +16,8 @@
 		<result column="use_datetime" property="useDatetime" />
 		<result column="biz_code" property="bizCode" />
 		<result column="customer_name" property="customerName" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -53,7 +55,7 @@
 				AND t.customer_name = #{customerName}
 			</if>
 			<if test="customerNameQuery != null and customerNameQuery != '' ">
-				AND t.customer_name like %#{customerNameQuery}%
+				AND t.customer_name like "%"#{customerNameQuery}"%"
 			</if>
 		</trim>
 	</sql>
@@ -70,6 +72,8 @@
 		,t.use_datetime
 		,t.biz_code
 		,t.customer_name
+		,t.updater
+		,t.update_datetime
 		FROM
 		tb_gps t left join tdq_budget_order tb on t.biz_code = tb.code
 		<include refid="where_condition" />
@@ -82,7 +86,7 @@
 
 	<select id="select_gps_count" parameterType="gps"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tb_gps t
+		SELECT count(1) FROM tb_gps t left join tdq_budget_order tb on t.biz_code = tb.code
 		<include refid="where_condition" />
 	</select>
 
@@ -94,6 +98,8 @@
 		,gps_type
 		,apply_status
 		,use_status
+		,updater
+		,update_datetime
 		)
 		VALUES(
 		#{code}
@@ -101,6 +107,8 @@
 		,#{gpsType}
 		,#{applyStatus}
 		,#{useStatus}
+		,#{updater}
+		,#{updateDatetime}
 		)
 	</insert>
 
@@ -121,6 +129,8 @@
 		SET
 		gps_dev_no = #{gpsDevNo}
 		,gps_type = #{gpsType}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 	

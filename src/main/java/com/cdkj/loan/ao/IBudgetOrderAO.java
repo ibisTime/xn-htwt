@@ -18,6 +18,7 @@ import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.dto.req.XN632141Req;
+import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
@@ -67,6 +68,9 @@ public interface IBudgetOrderAO {
     // 面签内勤主管审核
     public void interviewInternalApprove(String code, String operator,
             String approveResult, String approveNote);
+
+    // 财务审核
+    public void financeAudit(XN632143Req req);
 
     // 财务确认垫资
     public void advanceFund(XN632125Req req);

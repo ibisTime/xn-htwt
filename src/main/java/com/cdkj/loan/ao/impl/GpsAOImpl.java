@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -46,7 +47,7 @@ public class GpsAOImpl implements IGpsAO {
 
     @Override
     @Transactional
-    public String addGps(String gpsDevNo, String gpsType) {
+    public String addGps(String gpsDevNo, String gpsType, String updater) {
         // 验证gps设备号是否唯一
         gpsBO.checkGpsDevNo(gpsDevNo);
 
@@ -57,16 +58,21 @@ public class GpsAOImpl implements IGpsAO {
         data.setGpsType(gpsType);
         data.setApplyStatus(EBoolean.NO.getCode());
         data.setUseStatus(EGpsUseStatus.UN_USE.getCode());
+        data.setUpdater(updater);
+        data.setUpdatedatetime(new Date());
         gpsBO.saveGps(data);
         return code;
     }
 
     @Override
     @Transactional
-    public void editGps(String code, String gpsDevNo, String gpsType) {
+    public void editGps(String code, String gpsDevNo, String gpsType,
+            String updater) {
         Gps gps = gpsBO.getGps(code);
         gps.setGpsDevNo(gpsDevNo);
         gps.setGpsType(gpsType);
+        gps.setUpdater(updater);
+        gps.setUpdatedatetime(new Date());
         gpsBO.editGps(gps);
     }
 

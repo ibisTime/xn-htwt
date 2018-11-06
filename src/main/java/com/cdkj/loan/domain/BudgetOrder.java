@@ -953,6 +953,8 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> curNodeCodeList;
 
+    private List<String> intevCurNodeCodeList;
+
     // 还款业务编号模糊差查
     private String repayBizCodeForQuery;
 
@@ -1003,6 +1005,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setInsideJobName(String insideJobName) {
         this.insideJobName = insideJobName;
+    }
+
+    public List<String> getIntevCurNodeCodeList() {
+        return intevCurNodeCodeList;
+    }
+
+    public void setIntevCurNodeCodeList(List<String> intevCurNodeCodeList) {
+        this.intevCurNodeCodeList = intevCurNodeCodeList;
     }
 
     public String getAreaName() {
