@@ -20,7 +20,8 @@ public enum EBudgetOrderNode {
 
     GPSAZ("002_09", "业务团队安装GPS"), GPSMANAGERAPPROVE("002_10", "GPS管理员审核"), AGAINGPSAZ(
             "002_12", "业务团队重新安装GPS"), CARSETTLE("002_11", "业务团队车辆落户"), DHAPPROVEDATA(
-            "002_13", "业务贷后审核材料"), COMMITBANK3("002_14", "驻行人员审核放款材料"),
+            "002_13", "业务贷后审核材料"), COMMITBANK3("002_14", "驻行人员审核放款材料"),GPS_APPROVE_PASS(
+            "002_32","gps管理员审核通过"),
 
     COMMITBANK("002_15", "驻行人员回录提交放款材料"), ENTRYLOAN("002_16", "录入放款信息"), CONFIRMLOAN(
             "002_17", "财务确认银行放款"), ENTRYMORTGAGE("002_18", "业务团队车辆抵押录入"), MORTGAGECOMMITBANK(

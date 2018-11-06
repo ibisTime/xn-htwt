@@ -328,6 +328,7 @@
 		<result column="back_advance_water_bill" property="backAdvanceWaterBill" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="intev_cur_node_code" property="intevCurNodeCode" />
+		<result column="advanf_cur_node_code" property="advanfCurNodeCode" />
 		
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="frozen_status" property="frozenStatus" />
@@ -792,6 +793,7 @@
 		
 		,t.cur_node_code
 		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
@@ -883,6 +885,7 @@
 		
 		,t.cur_node_code
 		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		,t.remark
 		,t.team_code
 		,t.back_advance_status
@@ -1246,7 +1249,7 @@
 		
 		,t.cur_node_code
 		,t.intev_cur_node_code
-		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
@@ -1287,6 +1290,7 @@
 		,t.advance_fund_datetime
 		,t.cur_node_code
 		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		FROM
 		tdq_budget_order t 
 		<include refid="where_condition" />
@@ -2150,6 +2154,7 @@
 		,bill_pdf = #{billPdf}
 		,advance_note = #{advanceNote}
 		,cur_node_code = #{curNodeCode}
+		,advanf_cur_node_code = #{advanfCurNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>

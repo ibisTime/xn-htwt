@@ -879,6 +879,9 @@ public class BudgetOrder extends ABaseDO {
     // 面签节点编号
     private String intevCurNodeCode;
 
+    // 垫资节点编号
+    private String advanfCurNodeCode;
+
     // 客户申请作废时的节点编号
     private String cancelNodeCode;
 
@@ -1008,6 +1011,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setInsideJobName(String insideJobName) {
         this.insideJobName = insideJobName;
+    }
+
+    public String getAdvanfCurNodeCode() {
+        return advanfCurNodeCode;
+    }
+
+    public void setAdvanfCurNodeCode(String advanfCurNodeCode) {
+        this.advanfCurNodeCode = advanfCurNodeCode;
     }
 
     public List<String> getIntevCurNodeCodeList() {

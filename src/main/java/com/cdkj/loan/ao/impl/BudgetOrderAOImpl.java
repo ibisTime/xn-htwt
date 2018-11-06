@@ -1063,6 +1063,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 下个节点设置
         budgetOrder.setCurNodeCode(
             nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        budgetOrder
+            .setAdvanfCurNodeCode(EBudgetOrderNode.ENTRYMORTGAGE.getCode());
         budgetOrderBO.advancefund(budgetOrder);
 
         // 日志记录
