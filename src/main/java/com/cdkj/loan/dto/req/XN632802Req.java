@@ -25,6 +25,9 @@ public class XN632802Req {
     // 手机号码
     private String mobile;
 
+    // 头像
+    private String avatar;
+
     // 工号
     private String jobNo;
 
@@ -178,7 +181,8 @@ public class XN632802Req {
         return socialRelationList;
     }
 
-    public void setSocialRelationList(List<XN632802ReqChild> socialRelationList) {
+    public void setSocialRelationList(
+            List<XN632802ReqChild> socialRelationList) {
         this.socialRelationList = socialRelationList;
     }
 
@@ -364,6 +368,14 @@ public class XN632802Req {
 
     public void setFiveInsuranceInfo(String fiveInsuranceInfo) {
         this.fiveInsuranceInfo = fiveInsuranceInfo;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getResidenceAddress() {

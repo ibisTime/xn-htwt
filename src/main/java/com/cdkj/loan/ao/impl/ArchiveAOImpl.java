@@ -75,6 +75,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
         data.setMobile(req.getMobile());
+        data.setAvatar(req.getAvatar());
         data.setJobNo(req.getJobNo());
         data.setEntryDatetime(DateUtil.strToDate(req.getEntryDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
@@ -154,8 +155,8 @@ public class ArchiveAOImpl implements IArchiveAO {
         // 默认生成账号为真实姓名，默认密码为手机号码
         userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
             req.getRealName(), req.getMobile(), req.getMobile(),
-            req.getRealName(), SysConstants.COMMON_ROLE, req.getPostCode(),
-            code);
+            req.getAvatar(), req.getRealName(), SysConstants.COMMON_ROLE,
+            req.getPostCode(), code);
         data.setUserId(userId);
         archiveBO.saveArchive(data);
 
@@ -264,6 +265,7 @@ public class ArchiveAOImpl implements IArchiveAO {
 
             SYSUser sysUser = sysUserBO.getUser(data.getUserId());
             sysUser.setMobile(data.getMobile());
+            sysUser.setPhoto(req.getAvatar());
             sysUser.setRealName(data.getRealName());
             sysUser.setPostCode(data.getPostCode());
             sysUser.setDepartmentCode(data.getDepartmentCode());

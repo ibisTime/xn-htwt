@@ -7,6 +7,7 @@
 		<result column="real_name" property="realName" />
 		<result column="id_no" property="idNo" />
 		<result column="mobile" property="mobile" />
+		<result column="avatar" property="avatar" />
 		<result column="job_no" property="jobNo" />
 		<result column="entry_datetime" property="entryDatetime" />
 		<result column="department_code" property="departmentCode" />
@@ -128,6 +129,7 @@
 		,t.real_name
 		,t.id_no
 		,t.mobile
+		,t.avatar
 		,t.job_no
 		,t.entry_datetime
 		,t.department_code
@@ -205,6 +207,7 @@
 		,real_name
 		,id_no
 		,mobile
+		,avatar
 		,job_no
 		,entry_datetime
 		,department_code
@@ -265,6 +268,7 @@
 		,#{realName}
 		,#{idNo}
 		,#{mobile}
+		,#{avatar}
 		,#{jobNo}
 		,#{entryDatetime}
 		,#{departmentCode}

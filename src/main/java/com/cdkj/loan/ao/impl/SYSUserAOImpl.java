@@ -64,8 +64,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String realName, String roleCode, String postCode,
-            String archiveCode) {
+            String mobile, String avatar, String realName, String roleCode,
+            String postCode, String archiveCode) {
 
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
@@ -75,6 +75,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         // 判断手机号是否存在
         doCheckMobile(mobile);
         data.setMobile(mobile);
+        data.setPhoto(avatar);
         data.setRealName(realName);
         data.setLoginPwd(MD5Util.md5(loginPwd));
         data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));

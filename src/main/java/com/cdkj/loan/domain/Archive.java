@@ -27,6 +27,9 @@ public class Archive extends ABaseDO {
     // 手机号码
     private String mobile;
 
+    // 头像
+    private String avatar;
+
     // 工号
     private String jobNo;
 
@@ -428,6 +431,14 @@ public class Archive extends ABaseDO {
 
     public String getSalaryCard() {
         return salaryCard;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public void setBankName(String bankName) {
