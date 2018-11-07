@@ -714,6 +714,9 @@ public class BudgetOrder extends ABaseDO {
     // 资金划转授权书
     private String advanceFundAmountPdf;
 
+    // 驻行申请：补充说明
+    private String supplementNote;
+
     // 车辆落户日期
     private Date carSettleDatetime;
 
@@ -749,6 +752,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 大本扫描件
     private String carBigSmj;
+
+    // 车辆行驶证扫描件
+    private String carXszSmj;
+
+    // 完税证明扫描件
+    private String dutyPaidProveSmj;
 
     // 银行提交时间
     private Date bankCommitDatetime;
@@ -1877,6 +1886,14 @@ public class BudgetOrder extends ABaseDO {
         this.otherVideo = otherVideo;
     }
 
+    public String getSupplementNote() {
+        return supplementNote;
+    }
+
+    public void setSupplementNote(String supplementNote) {
+        this.supplementNote = supplementNote;
+    }
+
     public String getMateCompanyContactNo() {
         return mateCompanyContactNo;
     }
@@ -2467,6 +2484,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarBigSmj(String carBigSmj) {
         this.carBigSmj = carBigSmj;
+    }
+
+    public String getCarXszSmj() {
+        return carXszSmj;
+    }
+
+    public void setCarXszSmj(String carXszSmj) {
+        this.carXszSmj = carXszSmj;
+    }
+
+    public String getDutyPaidProveSmj() {
+        return dutyPaidProveSmj;
+    }
+
+    public void setDutyPaidProveSmj(String dutyPaidProveSmj) {
+        this.dutyPaidProveSmj = dutyPaidProveSmj;
     }
 
     public Date getBankCommitDatetime() {

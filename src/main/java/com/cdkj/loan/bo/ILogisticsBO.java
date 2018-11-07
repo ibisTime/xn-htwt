@@ -13,8 +13,9 @@ import com.cdkj.loan.domain.Logistics;
  */
 public interface ILogisticsBO extends IPaginableBO<Logistics> {
     // 添加资料传递记录
-    public String saveLogistics(String type, String bizCode, String userId,
-            String fromNodeCode, String toNodeCode, String refFileList);
+    public String saveLogistics(String type, String curNodeType, String bizCode,
+            String userId, String fromNodeCode, String toNodeCode,
+            String refFileList);
 
     public String saveLogisticsGps(String type, String bizCode, String userId,
             String refFileList, String receiver);

@@ -160,6 +160,16 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void residentMortgageApply(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_residentMortgageApply"), data);
+    }
+
+    @Override
+    public void insidejobConfirm(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_insidejobConfirm"), data);
+    }
+
+    @Override
     public List<BudgetOrder> selectBudgetOrderByRoleCodeList(
             BudgetOrder condition, int start, int count) {
         return super.selectList(

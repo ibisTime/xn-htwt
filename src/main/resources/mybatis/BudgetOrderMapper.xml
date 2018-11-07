@@ -265,6 +265,7 @@
 		<result column="bill_pdf" property="billPdf" />
 		<result column="advance_note" property="advanceNote" />
 		<result column="advance_fund_amount_pdf" property="advanceFundAmountPdf" />
+		<result column="supplement_note" property="supplementNote" />
 		<result column="car_settle_datetime" property="carSettleDatetime" />
 		<result column="car_number" property="carNumber" />
 		<result column="car_invoice" property="carInvoice" />
@@ -279,6 +280,8 @@
 		
 		<result column="car_key" property="carKey" />
 		<result column="car_big_smj" property="carBigSmj" />
+		<result column="car_xsz_smj" property="carXszSmj" />
+		<result column="duty_paid_prove_smj" property="dutyPaidProveSmj" />
 		<result column="bank_commit_datetime" property="bankCommitDatetime" />
 		<result column="bank_commit_note" property="bankCommitNote" />
 		<result column="repay_bank_code" property="repayBankCode" />
@@ -730,6 +733,7 @@
 		,t.bill_pdf
 		,t.advance_note
 		,t.advance_fund_amount_pdf
+		,t.supplement_note
 		,t.car_settle_datetime
 		
 		,t.car_number
@@ -743,6 +747,8 @@
 		,t.car_pd
 		,t.car_key
 		,t.car_big_smj
+		,t.car_xsz_smj
+		,t.duty_paid_prove_smj
 		,t.bank_commit_datetime
 		,t.bank_commit_note
 		
@@ -1186,6 +1192,7 @@
 		,t.bill_pdf
 		,t.advance_note
 		,t.advance_fund_amount_pdf
+		,t.supplement_note
 		,t.car_settle_datetime
 		
 		,t.car_number
@@ -1199,6 +1206,8 @@
 		,t.car_pd
 		,t.car_key
 		,t.car_big_smj
+		,t.car_xsz_smj
+		,t.duty_paid_prove_smj
 		,t.bank_commit_datetime
 		,t.bank_commit_note
 		
@@ -2251,6 +2260,8 @@
 		,car_pd = #{carPd}
 		,car_key = #{carKey}
 		,car_big_smj = #{carBigSmj}
+		,car_xsz_smj = #{carXszSmj}
+		,duty_paid_prove_smj = #{dutyPaidProveSmj}
 		,pledge_status = #{pledgeStatus}
 		,enter_fileList = #{enterFileList}
 		WHERE code = #{code}
@@ -2304,6 +2315,24 @@
 		,cancel_node_code = #{cancelNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_residentMortgageApply" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,supplement_note = #{supplementNote}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_insidejobConfirm" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,pledge_user = #{pledgeUser}
+		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_cancel_finance_audit" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET

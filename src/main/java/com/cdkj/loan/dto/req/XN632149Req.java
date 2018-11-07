@@ -3,23 +3,20 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 业务总监审核
- * @author: xieyj 
- * @since: 2018年5月29日 下午10:29:59 
+ * 驻行人员审核抵押材料
+ * @author: CYL 
+ * @since: 2018年8月21日 上午10:25:12 
  * @history:
  */
-public class XN632124Req {
+public class XN632149Req {
 
     @NotBlank
     private String code;// 预算单编号
 
+    @NotBlank
+    private String approveResult;// 审核结果
+
     private String approveNote;// 审核说明
-
-    // 代理人
-    private String pledgeUser;
-
-    // 代理人身份证复印件
-    private String pledgeUserIdCardCopy;
 
     @NotBlank
     private String operator;// 操作人
@@ -32,20 +29,12 @@ public class XN632124Req {
         this.code = code;
     }
 
-    public String getPledgeUser() {
-        return pledgeUser;
+    public String getApproveResult() {
+        return approveResult;
     }
 
-    public void setPledgeUser(String pledgeUser) {
-        this.pledgeUser = pledgeUser;
-    }
-
-    public String getPledgeUserIdCardCopy() {
-        return pledgeUserIdCardCopy;
-    }
-
-    public void setPledgeUserIdCardCopy(String pledgeUserIdCardCopy) {
-        this.pledgeUserIdCardCopy = pledgeUserIdCardCopy;
+    public void setApproveResult(String approveResult) {
+        this.approveResult = approveResult;
     }
 
     public String getOperator() {

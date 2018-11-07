@@ -46,13 +46,15 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     private ISYSBizLogBO sysBizLogBO;
 
     @Override
-    public String saveLogistics(String type, String bizCode, String userId,
-            String fromNodeCode, String toNodeCode, String refFileList) {
+    public String saveLogistics(String type, String curNodeType, String bizCode,
+            String userId, String fromNodeCode, String toNodeCode,
+            String refFileList) {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
+        data.setCurNodeType(curNodeType);
         data.setBizCode(bizCode);
         data.setUserId(userId);
         // 找到团队

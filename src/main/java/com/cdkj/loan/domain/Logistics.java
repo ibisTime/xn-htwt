@@ -23,6 +23,9 @@ public class Logistics extends ABaseDO {
     // 类型(1 预算单 2 gps)
     private String type;
 
+    // 节点类型(1车辆抵押，2银行放款)
+    private String curNodeType;
+
     // 业务编号
     private String bizCode;
 
@@ -159,6 +162,14 @@ public class Logistics extends ABaseDO {
 
     public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
+    }
+
+    public String getCurNodeType() {
+        return curNodeType;
+    }
+
+    public void setCurNodeType(String curNodeType) {
+        this.curNodeType = curNodeType;
     }
 
     public List<String> getTypeList() {

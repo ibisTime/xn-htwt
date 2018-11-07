@@ -4,35 +4,37 @@ import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632124Req;
+import com.cdkj.loan.dto.req.XN632149Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 业务总监审核
+ * 驻行人员审核抵押材料
  * @author: CYL 
- * @since: 2018年5月30日 下午2:00:57 
+ * @since: 2018年11月7日 上午11:52:23 
  * @history:
  */
-public class XN632124 extends AProcessor {
+public class XN632149 extends AProcessor {
+
     private IBudgetOrderAO budgetOrderAO = SpringContextHolder
         .getBean(IBudgetOrderAO.class);
 
-    private XN632124Req req = null;
+    private XN632149Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.insidejobConfirm(req);
+        budgetOrderAO.mortgageCommitbank(req);
         return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632124Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632149Req.class);
         ObjValidater.validateReq(req);
+
     }
 
 }

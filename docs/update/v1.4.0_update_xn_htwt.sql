@@ -25,10 +25,16 @@ INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO2018000000000
 ALTER TABLE `tp_archive` 
 ADD COLUMN `avatar` varchar(255) NULL COMMENT '头像' AFTER `mobile`;
 
+ALTER TABLE `tdq_logistics` 
+ADD COLUMN `cur_node_type` varchar(4) NULL COMMENT '节点类型' AFTER `type`;
+
 ALTER TABLE `tb_gps` 
 ADD COLUMN `updater` varchar(255) NULL COMMENT '更新人' AFTER `customer_name`,
 ADD COLUMN `update_datetime` datetime NULL COMMENT '更新时间' AFTER `updater`;
 
 ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `car_xsz_smj` tinytext NULL COMMENT '车辆行驶证扫描件' AFTER `car_big_smj`,
+ADD COLUMN `duty_paid_prove_smj` tinytext NULL COMMENT '完税证明扫描件' AFTER `car_xsz_smj`,
+ADD COLUMN `supplement_note` tinytext NULL COMMENT '补充说明' AFTER `advance_fund_amount_pdf`,
 ADD COLUMN `is_interview` varchar(4) NULL COMMENT '是否面签完成' AFTER `interview_other_pdf`,
 ADD COLUMN `advanf_cur_node_code` varchar(32) NULL COMMENT '垫资节点编号' AFTER `intev_cur_node_code`;

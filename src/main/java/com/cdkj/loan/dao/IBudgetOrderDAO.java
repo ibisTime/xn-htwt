@@ -82,4 +82,10 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 物流传递中
     void updateIsLogistics(BudgetOrder budgetOrder);
 
+    // 驻行抵押申请
+    void residentMortgageApply(BudgetOrder budgetOrder);
+
+    // 内勤确认
+    void insidejobConfirm(BudgetOrder budgetOrder);
+
 }

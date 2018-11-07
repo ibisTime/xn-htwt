@@ -34,6 +34,12 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void advancefund(BudgetOrder budgetOrder);
 
+    // 驻行抵押申请
+    public void residentMortgageApply(BudgetOrder budgetOrder);
+
+    // 内勤确认
+    public void insidejobConfirm(BudgetOrder budgetOrder);
+
     public void refreshGpsManagerApprove(BudgetOrder budgetOrder);
 
     public void installGps(BudgetOrder budgetOrder);
@@ -63,7 +69,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
             String userId);
 
     // 物流流转
-    public String logicOrder(String code, String operator);
+    public String logicOrderLoan(String code, String operator);
+
+    // 物流流转
+    public String logicOrderMortgage(String code, String operator);
 
     public Paginable<BudgetOrder> getPaginableByRoleCode(int start,
             int pageSize, BudgetOrder condition);

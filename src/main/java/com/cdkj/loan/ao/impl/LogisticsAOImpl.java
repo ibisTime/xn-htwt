@@ -32,7 +32,7 @@ import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -135,29 +135,29 @@ public class LogisticsAOImpl implements ILogisticsAO {
             }
 
         } else {
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(logistics.getBizCode());
-            ELogisticsStatus pre = null;
-            ELogisticsStatus now = null;
-            EBizLogType bizLogType = null;
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
-                pre = ELogisticsStatus.YWDH_SEND;
-                now = ELogisticsStatus.YWDH_RECEIVE;
-                bizLogType = EBizLogType.YWDH_LOGISTICS;
-            }
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
-                pre = ELogisticsStatus.ZHFK_SEND;
-                now = ELogisticsStatus.ZHFK_RECEIVE;
-                bizLogType = EBizLogType.ZHFK_LOGISTICS;
-            }
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
-                pre = ELogisticsStatus.ZHDY_SEND;
-                now = ELogisticsStatus.ZHDY_RECEIVE;
-                bizLogType = EBizLogType.ZHDY_LOGISTICS;
-            }
+            // BudgetOrder budgetOrder = budgetOrderBO
+            // .getBudgetOrder(logistics.getBizCode());
+            // ELogisticsStatus pre = null;
+            // ELogisticsStatus now = null;
+            // EBizLogType bizLogType = null;
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+            // pre = ELogisticsStatus.YWDH_SEND;
+            // now = ELogisticsStatus.YWDH_RECEIVE;
+            // bizLogType = EBizLogType.YWDH_LOGISTICS;
+            // }
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
+            // pre = ELogisticsStatus.ZHFK_SEND;
+            // now = ELogisticsStatus.ZHFK_RECEIVE;
+            // bizLogType = EBizLogType.ZHFK_LOGISTICS;
+            // }
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+            // pre = ELogisticsStatus.ZHDY_SEND;
+            // now = ELogisticsStatus.ZHDY_RECEIVE;
+            // bizLogType = EBizLogType.ZHDY_LOGISTICS;
+            // }
             /*
              * sysBizLogBO .saveNewAndPreEndSYSBizLog(logistics.getBizCode(),
              * bizLogType, logistics.getCode(), pre.getCode(), now.getCode(),
@@ -192,7 +192,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
         String result = EBoolean.NO.getCode();
         logisticsBO.receiveLogistics(code, operator, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
-            result = budgetOrderBO.logicOrder(data.getBizCode(), operator);
+            if (ELogisticsCurNodeType.BANK_LOAN.getCode()
+                .equals(data.getCurNodeType())) {
+                result = budgetOrderBO.logicOrderLoan(data.getBizCode(),
+                    operator);
+            } else {
+                result = budgetOrderBO.logicOrderMortgage(data.getBizCode(),
+                    operator);
+            }
             // BudgetOrder budgetOrder = budgetOrderBO
             // .getBudgetOrder(data.getBizCode());
             // ELogisticsStatus pre = null;
@@ -262,29 +269,29 @@ public class LogisticsAOImpl implements ILogisticsAO {
              * ELogisticsStatus.SEND.getCode(), remark, operator, null);
              */
         } else {
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(data.getBizCode());
-            ELogisticsStatus pre = null;
-            ELogisticsStatus now = null;
-            EBizLogType bizLogType = null;
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
-                pre = ELogisticsStatus.YWDH_SEND;
-                now = ELogisticsStatus.YWDH_RECEIVE;
-                bizLogType = EBizLogType.YWDH_LOGISTICS;
-            }
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
-                pre = ELogisticsStatus.ZHFK_SEND;
-                now = ELogisticsStatus.ZHFK_RECEIVE;
-                bizLogType = EBizLogType.ZHFK_LOGISTICS;
-            }
-            if (budgetOrder.getCurNodeCode()
-                .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
-                pre = ELogisticsStatus.ZHDY_SEND;
-                now = ELogisticsStatus.ZHDY_RECEIVE;
-                bizLogType = EBizLogType.ZHDY_LOGISTICS;
-            }
+            // BudgetOrder budgetOrder = budgetOrderBO
+            // .getBudgetOrder(data.getBizCode());
+            // ELogisticsStatus pre = null;
+            // ELogisticsStatus now = null;
+            // EBizLogType bizLogType = null;
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
+            // pre = ELogisticsStatus.YWDH_SEND;
+            // now = ELogisticsStatus.YWDH_RECEIVE;
+            // bizLogType = EBizLogType.YWDH_LOGISTICS;
+            // }
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
+            // pre = ELogisticsStatus.ZHFK_SEND;
+            // now = ELogisticsStatus.ZHFK_RECEIVE;
+            // bizLogType = EBizLogType.ZHFK_LOGISTICS;
+            // }
+            // if (budgetOrder.getCurNodeCode()
+            // .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
+            // pre = ELogisticsStatus.ZHDY_SEND;
+            // now = ELogisticsStatus.ZHDY_RECEIVE;
+            // bizLogType = EBizLogType.ZHDY_LOGISTICS;
+            // }
             /*
              * sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBizCode(),
              * bizLogType, data.getCode(), pre.getCode(), now.getCode(), remark,
