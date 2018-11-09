@@ -366,6 +366,24 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getCurNodeCode(), null, operator,
             budgetOrder.getTeamCode());
+
+        if (EBudgetOrderNode.YWDH_APPROVE.getCode()
+            .equals(nodeFlow.getCurrentNode())) {
+            String newLogisticsCode = logisticsBO.saveLogistics(
+                ELogisticsType.BUDGET.getCode(),
+                ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),
+                budgetOrder.getCode(), operator, nodeFlow.getCurrentNode(),
+                nodeFlow.getNextNode(), null);
+            // 产生物流单后改变状态为物流传递中
+            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+
+            // 资料传递日志
+            sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
+                newLogisticsCode, budgetOrder.getCurNodeCode(),
+                budgetOrder.getTeamCode());
+            result = EBoolean.YES.getCode();
+
+        }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
 
         return result;

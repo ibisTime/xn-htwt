@@ -17,6 +17,7 @@ public class XN630040Req {
     private String updater;
 
     // 备注（选填）
+    @NotBlank(message = "参数名不能为空")
     private String remark;
 
     public String getCkey() {

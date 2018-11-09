@@ -2125,7 +2125,7 @@
 	<update id="update_interviewInternal">
 		UPDATE tdq_budget_order
 		SET
-		intev_cur_node_code = #{IntevCurNodeCode}
+		intev_cur_node_code = #{intevCurNodeCode}
 		,is_interview = #{isInterview}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -2142,7 +2142,7 @@
 	<update id="update_gps_manager_approve" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		advanf_cur_node_code = #{advanfCurNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2150,7 +2150,7 @@
 	<update id="update_install_gps" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		advanf_cur_node_code = #{advanfCurNodeCode}
 		,is_gps_az = #{isGpsAz}
 		WHERE code = #{code}
 	</update>
@@ -2172,7 +2172,7 @@
 		UPDATE tdq_budget_order
 		SET
 		bank_commit_datetime = #{bankCommitDatetime}
-		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2206,7 +2206,7 @@
 		,repay_first_month_amount = #{repayFirstMonthAmount}
 		,repay_month_amount = #{repayMonthAmount}
 		,bank_fk_datetime = #{bankFkDatetime}
-		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2219,7 +2219,7 @@
 		,receipt_bankcard_number = #{receiptBankcardNumber}
 		,receipt_pdf = #{receiptPdf}
 		,receipt_remark = #{receiptRemark}
-		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -2227,7 +2227,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
-		,intev_cur_node_code = #{IntevCurNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		,is_logistics = #{isLogistics}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -2238,7 +2238,7 @@
 		SET
 		pledge_datetime = #{pledgeDatetime}
 		,green_big_smj = #{greenBigSmj}
-		,cur_node_code = #{curNodeCode}
+		,advanf_cur_node_code = #{advanfCurNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -2248,6 +2248,7 @@
 		pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
 		,pledge_bank_commit_note = #{pledgeBankCommitNote}
 		,cur_node_code = #{curNodeCode}
+		,enter_fileList = #{enterFileList}
 		WHERE code = #{code}
 	</update>
 	
@@ -2263,7 +2264,6 @@
 		,car_xsz_smj = #{carXszSmj}
 		,duty_paid_prove_smj = #{dutyPaidProveSmj}
 		,pledge_status = #{pledgeStatus}
-		,enter_fileList = #{enterFileList}
 		WHERE code = #{code}
 	</update>
 	

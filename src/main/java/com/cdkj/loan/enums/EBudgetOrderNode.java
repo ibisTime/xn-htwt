@@ -24,13 +24,14 @@ public enum EBudgetOrderNode {
             "002_32","gps管理员审核通过"),
 
     COMMITBANK("002_15", "驻行人员回录提交放款材料"), ENTRYLOAN("002_16", "录入放款信息"), CONFIRMLOAN(
-            "002_17", "财务确认银行放款"), ENTRYMORTGAGE("002_18", "业务团队车辆抵押录入"), MORTGAGECOMMITBANK(
+            "002_17", "财务确认银行放款"), ENTRYMORTGAGE("002_18", "内勤录入发保合"), MORTGAGECOMMITBANK(
             "002_19", "驻行人员审核抵押材料"), ENTRYCOMMITBANK("002_20", "抵押提交银行"), MORTGAGEFINISH(
-            "002_21", "抵押完成"), ARCHIVE("002_22", "入档"), ARCHIVE_END("002_23","入档完成"),BANK_ALREADY_LOAN(
+            "002_21", "内勤录入抵押信息"), ARCHIVE("002_22", "入档"), ARCHIVE_END("002_23","入档完成"),BANK_ALREADY_LOAN(
             "002_31","银行已放款"),RESIDENT_MORTGAGE_APPLY("002_33","驻行抵押申请"),INSIDEJOB_CONFIRM(
-            "002_34","内勤确认"),INSIDEJOB_RECEIVE("002_35","内勤收件审核"),INSIDEJOB_ENTRY_MORTGAGE(
-            "002_36","内勤录入抵押信息"),
+            "002_34","内勤确认"),
             
+    RESIDENT_SEND_MORTGAGE("002_35","驻行寄送抵押合同"),INSIDEJOB_RECEIVE("002_36","内勤收件审核"),INSIDEJOB_SEND(
+            "002_37","内勤寄送材料"),YWDH_APPROVE("002_38","业务贷后审核材料"),
 
     // 客户作废的节点
     CANCEL_START("007_01", "申请作废"), CANCEL_BIZ_AUDIT("007_02", "业务总监审核"), CANCEL_FINANCE_AUDIT(

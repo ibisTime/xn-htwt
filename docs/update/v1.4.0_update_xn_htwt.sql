@@ -2,20 +2,41 @@ ALTER TABLE `tdq_budget_order`
 ADD COLUMN `intev_cur_node_code` varchar(32) NULL COMMENT '面签节点编号' AFTER `cur_node_code`;
 
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_29', '财务审核', '002');
-
-UPDATE `tsys_node_flow` SET `next_node`='002_07' WHERE `id`='63';
-INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_29', '002_07');
-DELETE FROM `tsys_node_flow` WHERE `id`='55';
-INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_30', '002_14');
-UPDATE `tsys_node_flow` SET `next_node`='002_13', `back_node`='002_05' WHERE `id`='60';
-UPDATE `tsys_node_flow` SET `next_node`='002_30' WHERE `id`='17';
-UPDATE `tsys_node_flow` SET `next_node`='002_31' WHERE `id`='21';
-INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_29', '财务审核', '002');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_30', '风控专员审核', '002');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_31', '银行已放款', '002');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_32', 'gps管理员审核通过', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_33', '驻行抵押申请', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_34', '内勤确认', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_35', '驻行寄送抵押合同', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_36', '内勤收件审核', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_37', '内勤寄送材料', '002');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_38', '业务贷后审核材料', '002');
+
+UPDATE `tsys_node` SET `name`='内勤录入发保合' WHERE `code`='002_18';
+UPDATE `tsys_node` SET `name`='内勤录入抵押信息' WHERE `code`='002_21';
+
+
+
+
+DELETE FROM `tsys_node_flow` WHERE `id`='55';
+
+UPDATE `tsys_node_flow` SET `next_node`='002_13', `back_node`='002_05' WHERE `id`='60';
+UPDATE `tsys_node_flow` SET `next_node`='002_30' WHERE `id`='17';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_30', '002_14');
+UPDATE `tsys_node_flow` SET `next_node`='002_31' WHERE `id`='21';
 UPDATE `tsys_node_flow` SET `next_node`='002_09' WHERE `id`='22';
 UPDATE `tsys_node_flow` SET `next_node`='002_32' WHERE `id`='14';
+DELETE FROM `tsys_node_flow` WHERE `id`='11';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_33', '002_34');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_34', '002_21');
+UPDATE `tsys_node_flow` SET `next_node`='002_22' WHERE `id`='24';
+UPDATE `tsys_node_flow` SET `next_node`='002_29' WHERE `id`='63';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_29', '002_07');
+UPDATE `tsys_node_flow` SET `next_node`='002_36' WHERE `id`='66';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_36', '002_21');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_38', '002_19');
+UPDATE `tsys_node_flow` SET `next_node`='002_38' WHERE `id`='25';
+
 
 
 

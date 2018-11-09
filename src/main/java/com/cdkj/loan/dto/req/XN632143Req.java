@@ -16,6 +16,7 @@ public class XN632143Req {
     @NotBlank
     private String approveResult;// 审核结果
 
+    @NotBlank
     private String approveNote;// 审核说明
 
     private String curNadeCode;// 退回节点

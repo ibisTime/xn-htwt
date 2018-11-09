@@ -1261,7 +1261,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
             reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
-            "taobaoReportTask");
+            "taobao_report");
         if (data != null) {
             data.setResult(post);
             data.setFoundDatetime(new Date());
@@ -1289,7 +1289,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
             reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
-            "taobaoReportTaskData");
+            "taobao_report");
         if (data != null) {
             data.setResult(doPost);
             data.setFoundDatetime(new Date());

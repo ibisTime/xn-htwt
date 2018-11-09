@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 预算单-抵押完成
+ * 预算单-内勤录入抵押信息
  * @author: xieyj 
  * @since: 2018年5月29日 下午10:31:16 
  * @history:
