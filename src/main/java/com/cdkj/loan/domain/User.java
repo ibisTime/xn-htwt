@@ -17,6 +17,9 @@ public class User extends ABaseDO {
     // 用户类型
     private String kind;
 
+    // 产生类型（0主动注册，1自动产生）
+    private String produceType;
+
     // 登录名
     private String loginName;
 
@@ -262,6 +265,14 @@ public class User extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getProduceType() {
+        return produceType;
+    }
+
+    public void setProduceType(String produceType) {
+        this.produceType = produceType;
     }
 
     public Date getCreateDatetimeStart() {

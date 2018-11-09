@@ -1571,9 +1571,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String userId = null;
         if (user == null) {
             // 用户代注册并实名认证
-            userId = userBO.doRegisterAndIdentify(budgetOrder.getMobile(),
-                budgetOrder.getIdKind(), budgetOrder.getApplyUserName(),
-                budgetOrder.getIdNo());
+            userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
+                budgetOrder.getMobile(), budgetOrder.getIdKind(),
+                budgetOrder.getApplyUserName(), budgetOrder.getIdNo());
             distributeAccount(userId, budgetOrder.getMobile(),
                 EUserKind.Customer.getCode());
         } else {

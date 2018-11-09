@@ -13,8 +13,8 @@ public interface IUserBO extends IPaginableBO<User> {
             String kind);
 
     // 车贷订单用户代注册实名认证
-    public String doRegisterAndIdentify(String mobile, String idKind,
-            String realName, String idNo);
+    public String doRegisterAndIdentify(String produceType, String mobile,
+            String idKind, String realName, String idNo);
 
     // 判断手机号是否存在
     public void isMobileExist(String mobile, String kind);

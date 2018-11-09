@@ -59,3 +59,11 @@ ADD COLUMN `duty_paid_prove_smj` tinytext NULL COMMENT '完税证明扫描件' A
 ADD COLUMN `supplement_note` tinytext NULL COMMENT '补充说明' AFTER `advance_fund_amount_pdf`,
 ADD COLUMN `is_interview` varchar(4) NULL COMMENT '是否面签完成' AFTER `interview_other_pdf`,
 ADD COLUMN `advanf_cur_node_code` varchar(32) NULL COMMENT '垫资节点编号' AFTER `intev_cur_node_code`;
+
+ALTER TABLE `tstd_user` 
+ADD COLUMN `produce_type` varchar(4) NULL COMMENT '产生类型' AFTER `kind`;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tstd_user SET produce_type='0';
+UPDATE tstd_user u,tdq_budget_order b SET u.produce_type='1' where u.user_id = b.apply_user_id;
+SET SQL_SAFE_UPDATES = 1;
