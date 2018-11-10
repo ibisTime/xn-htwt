@@ -28,6 +28,10 @@ public class XN632148Req extends APageReq {
 
     private List<String> curNodeCodeList;// 当前节点编号
 
+    private List<String> intevCurNodeCodeList;
+
+    private List<String> advanfCurNodeCodeList;
+
     private String isAdvanceFund;// 是否垫资
 
     // 入档位置
@@ -49,6 +53,22 @@ public class XN632148Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public List<String> getIntevCurNodeCodeList() {
+        return intevCurNodeCodeList;
+    }
+
+    public void setIntevCurNodeCodeList(List<String> intevCurNodeCodeList) {
+        this.intevCurNodeCodeList = intevCurNodeCodeList;
+    }
+
+    public List<String> getAdvanfCurNodeCodeList() {
+        return advanfCurNodeCodeList;
+    }
+
+    public void setAdvanfCurNodeCodeList(List<String> advanfCurNodeCodeList) {
+        this.advanfCurNodeCodeList = advanfCurNodeCodeList;
     }
 
     public String getEnterLocation() {

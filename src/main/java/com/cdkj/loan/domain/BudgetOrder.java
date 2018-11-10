@@ -970,6 +970,8 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> intevCurNodeCodeList;
 
+    private List<String> advanfCurNodeCodeList;
+
     // 还款业务编号模糊差查
     private String repayBizCodeForQuery;
 
@@ -1324,6 +1326,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setSaleUserName(String saleUserName) {
         this.saleUserName = saleUserName;
+    }
+
+    public List<String> getAdvanfCurNodeCodeList() {
+        return advanfCurNodeCodeList;
+    }
+
+    public void setAdvanfCurNodeCodeList(List<String> advanfCurNodeCodeList) {
+        this.advanfCurNodeCodeList = advanfCurNodeCodeList;
     }
 
     public String getIsLogistics() {

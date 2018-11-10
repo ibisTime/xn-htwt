@@ -42,6 +42,8 @@ public class XN632148 extends AProcessor {
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
+        condition.setIntevCurNodeCodeList(req.getIntevCurNodeCodeList());
+        condition.setAdvanfCurNodeCodeList(req.getAdvanfCurNodeCodeList());
         condition.setRoleCode(req.getRoleCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         condition.setIsGpsAz(req.getIsGpsAz());

@@ -431,6 +431,12 @@
 		            #{item}
 		        </foreach>
 			</if>
+			<if test="advanfCurNodeCodeList != null and advanfCurNodeCodeList.size() > 0 ">
+				AND t.advanf_cur_node_code in 
+				<foreach collection="advanfCurNodeCodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 			<if test="curNodeCodeDz != null and curNodeCodeDz != '' ">
 				<![CDATA[AND t.cur_node_code >= #{curNodeCodeDz}]]>
 			</if>
