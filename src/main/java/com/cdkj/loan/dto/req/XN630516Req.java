@@ -2,16 +2,10 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-/**
- * 预算单-财务审核
- * @author: xieyj 
- * @since: 2018年5月29日 下午10:31:16 
- * @history:
- */
-public class XN632143Req {
+public class XN630516Req {
 
     @NotBlank
-    private String code;// 预算单编号
+    private String code;// 还款业务编号
 
     @NotBlank
     private String approveResult;// 审核结果
@@ -20,7 +14,7 @@ public class XN632143Req {
     private String approveNote;// 审核说明
 
     @NotBlank
-    private String operator;// 操作人
+    private String updater;// 操作人
 
     public String getCode() {
         return code;
@@ -46,12 +40,12 @@ public class XN632143Req {
         this.approveNote = approveNote;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getUpdater() {
+        return updater;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
 }

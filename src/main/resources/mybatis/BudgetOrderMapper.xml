@@ -416,6 +416,9 @@
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
+			<if test="isInterview != null and isInterview != '' ">
+				AND t.is_interview = #{isInterview}
+			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>

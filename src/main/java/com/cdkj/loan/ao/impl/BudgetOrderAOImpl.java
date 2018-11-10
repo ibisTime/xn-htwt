@@ -1086,9 +1086,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
         if (!EBudgetOrderNode.FINANCEAUDIT.getCode().equals(preCurrentNode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "准入审查流程未走完，不能操作");
+                "当前节点不是财务审核节点，不能操作");
         }
         if (!EBoolean.YES.getCode().equals(budgetOrder.getIsInterview())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -1096,10 +1097,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         } else {
-            budgetOrder.setCurNodeCode(req.getCurNadeCode());
+            budgetOrder.setCurNodeCode(nodeFlow.getBackNode());
         }
         budgetOrder.setRemark(req.getApproveNote());
         budgetOrderBO.refreshAreaApprove(budgetOrder);

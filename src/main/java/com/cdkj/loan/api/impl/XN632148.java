@@ -45,6 +45,7 @@ public class XN632148 extends AProcessor {
         condition.setIntevCurNodeCodeList(req.getIntevCurNodeCodeList());
         condition.setAdvanfCurNodeCodeList(req.getAdvanfCurNodeCodeList());
         condition.setRoleCode(req.getRoleCode());
+        condition.setIsInterview(req.getIsInterview());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         condition.setIsGpsAz(req.getIsGpsAz());
         String orderColumn = req.getOrderColumn();

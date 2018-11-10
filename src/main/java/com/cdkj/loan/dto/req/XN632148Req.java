@@ -33,6 +33,9 @@ public class XN632148Req extends APageReq {
     private List<String> advanfCurNodeCodeList;
 
     private String isAdvanceFund;// 是否垫资
+    // 是否面签完成
+
+    private String isInterview;
 
     // 入档位置
     private String enterLocation;
@@ -53,6 +56,14 @@ public class XN632148Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getIsInterview() {
+        return isInterview;
+    }
+
+    public void setIsInterview(String isInterview) {
+        this.isInterview = isInterview;
     }
 
     public List<String> getIntevCurNodeCodeList() {

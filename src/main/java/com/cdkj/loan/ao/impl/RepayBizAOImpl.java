@@ -34,6 +34,8 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
+import com.cdkj.loan.dto.req.XN630515Req;
+import com.cdkj.loan.dto.req.XN630516Req;
 import com.cdkj.loan.dto.req.XN630551Req;
 import com.cdkj.loan.dto.req.XN630555Req;
 import com.cdkj.loan.dto.req.XN630557Req;
@@ -160,6 +162,72 @@ public class RepayBizAOImpl implements IRepayBizAO {
         } else {
             advanceRepayProductLoan(code, repayBiz);
         }
+    }
+
+    @Override
+    @Transactional
+    public void prepaymentApply(XN630515Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.TO_REPAY.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处于还款中");
+        }
+        // 判断还款计划中是否含有催收失败，进红名单处理，红名单处理中的状态，有则有逾期
+        List<RepayPlan> planList = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(req.getCode());
+        for (RepayPlan repayPlan : planList) {
+            if (ERepayPlanNode.HANDLER_TO_RED.getCode()
+                .equals(repayPlan.getCurNodeCode())
+                    || ERepayPlanNode.QKCSB_APPLY_TC.getCode()
+                        .equals(repayPlan.getCurNodeCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前有逾期未处理完成的还款计划，不能提前还款！");
+            }
+        }
+        // 当前节点
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        repayBiz.setCurNodeCode(ERepayBizNode.PREPAYMENT_APPROVE.getCode());
+        repayBiz.setPaperPhoto(req.getPaperPhoto());
+        repayBiz.setUpdater(req.getUpdater());
+        repayBiz.setUpdateDatetime(new Date());
+        repayBizBO.prepaymentApply(repayBiz);
+
+        // 日志记录
+        sysBizLogBO.recordCurOperate(repayBiz.getBudgetOrderCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
+            req.getRemark(), req.getUpdater(), repayBiz.getTeamCode());
+        sysBizLogBO.saveSYSBizLog(repayBiz.getBudgetOrderCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+            repayBiz.getTeamCode());
+    }
+
+    @Override
+    @Transactional
+    public void prepaymentApprove(XN630516Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.PREPAYMENT_APPROVE.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处提前还款审核节点，不能操作！");
+        }
+        // 当前节点
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
+        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
+            repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        } else {
+            repayBiz.setCurNodeCode(nodeFlow.getBackNode());
+        }
+        repayBiz.setUpdater(req.getUpdater());
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(req.getApproveNote());
+        repayBizBO.prepaymentApprove(repayBiz);
+
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getBudgetOrderCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
+            repayBiz.getCurNodeCode(), req.getApproveNote(), req.getUpdater(),
+            repayBiz.getTeamCode());
     }
 
     // 车贷订单提前还款

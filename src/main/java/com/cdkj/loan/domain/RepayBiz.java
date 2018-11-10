@@ -123,6 +123,9 @@ public class RepayBiz extends ABaseDO {
     // 黑名单处理结果备案(商品分期)
     private String blackHandleNote;
 
+    // 纸质申请照片
+    private String paperPhoto;
+
     // 是否提前结清(0=正常结清 1=提前结清)
     private String isAdvanceSettled;
 
@@ -349,6 +352,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setIsAdvanceSettled(String isAdvanceSettled) {
         this.isAdvanceSettled = isAdvanceSettled;
+    }
+
+    public String getPaperPhoto() {
+        return paperPhoto;
+    }
+
+    public void setPaperPhoto(String paperPhoto) {
+        this.paperPhoto = paperPhoto;
     }
 
     public String getCurNodeCode() {

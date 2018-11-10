@@ -96,6 +96,12 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void refreshAdvanceRepayProduct(RepayBiz repayBiz,
             Long realWithholdAmount);
 
+    // 提前还款申请
+    public void prepaymentApply(RepayBiz repayBiz);
+
+    // 提前还款审核
+    public void prepaymentApprove(RepayBiz repayBiz);
+
     // 产品正常还款
     public void refreshRepayAllProduct(String repayBizCode, Long realPayAmount);
 

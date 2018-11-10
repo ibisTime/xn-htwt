@@ -31,7 +31,7 @@ INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002'
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_34', '002_21');
 UPDATE `tsys_node_flow` SET `next_node`='002_22' WHERE `id`='24';
 UPDATE `tsys_node_flow` SET `next_node`='002_29' WHERE `id`='63';
-INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_29', '002_07');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('002', '002_29', '002_07', '002_28');
 UPDATE `tsys_node_flow` SET `next_node`='002_36' WHERE `id`='66';
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_36', '002_21');
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_38', '002_19');
@@ -62,8 +62,11 @@ ADD COLUMN `advanf_cur_node_code` varchar(32) NULL COMMENT '垫资节点编号' 
 
 ALTER TABLE `tstd_user` 
 ADD COLUMN `produce_type` varchar(4) NULL COMMENT '产生类型' AFTER `kind`;
-
 SET SQL_SAFE_UPDATES = 0;
 UPDATE tstd_user SET produce_type='0';
 UPDATE tstd_user u,tdq_budget_order b SET u.produce_type='1' where u.user_id = b.apply_user_id;
 SET SQL_SAFE_UPDATES = 1;
+
+
+ALTER TABLE `tdh_repay_biz` 
+ADD COLUMN `paper_photo` tinytext NULL COMMENT '纸质申请照片' AFTER `black_handle_note`;
