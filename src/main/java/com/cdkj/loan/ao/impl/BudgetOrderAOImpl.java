@@ -1346,8 +1346,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setRepayBankcardNumber(req.getRepayBankcardNumber());
         budgetOrder.setRepayBillDate(
             StringValidater.toInteger(req.getRepayBillDate()));
-        budgetOrder.setRepayBankDate(
-            StringValidater.toInteger(req.getRepayBankDate()));
+        budgetOrder.setRepayBankDate(DateUtil.strToDate(req.getRepayBankDate(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setRepayCompanyDate(DateUtil.strToDate(
             req.getRepayCompanyDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setRepayFirstMonthDatetime(

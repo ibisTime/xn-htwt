@@ -43,4 +43,10 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int updateSettleDaily(RepayPlan data);
 
+    // 上传还款截图
+    public void refreshPrepayPhoto(RepayPlan repayPlan);
+
+    // 还款审核
+    public void prepayPhotoApprove(RepayPlan repayPlan);
+
 }

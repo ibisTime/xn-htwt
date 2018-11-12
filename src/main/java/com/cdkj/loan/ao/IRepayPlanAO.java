@@ -5,6 +5,8 @@ import java.util.List;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630532Req;
+import com.cdkj.loan.dto.req.XN630544Req;
+import com.cdkj.loan.dto.req.XN630545Req;
 
 public interface IRepayPlanAO {
 
@@ -24,6 +26,12 @@ public interface IRepayPlanAO {
     public Object queryCurrentMonthRepayPage(int start, int limit,
             RepayPlan condition);
 
+    // 上传还款截图
+    public void prepayPhoto(XN630544Req req);
+
+    // 是否还款审核
+    public void prepayPhotoApprove(XN630545Req req);
+
     // 获取未结清贷款
     public Long getUnsettledLoan();
 
@@ -42,5 +50,8 @@ public interface IRepayPlanAO {
 
     // 每天凌晨定时更新还款计划状态为已结清
     public void doSettleDaily();
+
+    // 每天凌晨定时更新还款计划状态为已结清(商品)
+    public void doSettleDailyProduct();
 
 }

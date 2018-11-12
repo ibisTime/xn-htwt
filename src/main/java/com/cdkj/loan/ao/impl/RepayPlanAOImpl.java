@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -17,6 +18,7 @@ import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -30,12 +32,15 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Cost;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.dto.req.XN630535Req;
+import com.cdkj.loan.dto.req.XN630544Req;
+import com.cdkj.loan.dto.req.XN630545Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -88,6 +93,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
 
     @Override
     public Paginable<RepayPlan> queryRepayPlanPage(int start, int limit,
@@ -181,6 +189,62 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
         }
         return results;
+    }
+
+    @Override
+    @Transactional
+    public void prepayPhoto(XN630544Req req) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
+        String preCurNodeCode = repayPlan.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
+        if (!ERepayPlanNode.PRD_TO_REPAY.getCode()
+            .equals(repayPlan.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该商品不处于划款中，不能操作！");
+        }
+        repayPlan.setCurNodeCode(nodeFlow.getNextNode());
+        repayPlan.setPrepayPhoto(req.getPrepayPhoto());
+        repayPlanBO.refreshPrepayPhoto(repayPlan);
+
+    }
+
+    @Override
+    @Transactional
+    public void prepayPhotoApprove(XN630545Req req) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
+        String preCurNodeCode = repayPlan.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
+        if (!ERepayPlanNode.REPAY_APPROVE.getCode()
+            .equals(repayPlan.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该商品不处于还款审核，不能操作！");
+        }
+        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
+            repayPlan.setPayedAmount(repayPlan.getRepayAmount());
+            repayPlan.setOverplusAmount(StringValidater.toLong("0"));
+            repayPlan.setOverdueAmount(StringValidater.toLong("0"));
+            repayPlan.setCurNodeCode(nodeFlow.getNextNode());
+        } else {
+            if (repayPlan.getRepayDatetime().before(new Date())) {
+                repayPlan.setCurNodeCode(nodeFlow.getBackNode());
+            } else {
+                repayPlan.setPayedAmount(StringValidater.toLong("0"));
+                repayPlan.setOverplusAmount(repayPlan.getRepayAmount());
+                repayPlan.setOverdueAmount(repayPlan.getRepayAmount());
+                repayPlan.setCurNodeCode(ERepayPlanNode.PRD_OVERDUE.getCode());
+            }
+        }
+        repayPlanBO.prepayPhotoApprove(repayPlan);
+    }
+
+    public static void main(String[] args) {
+        String x = "2018-06-14 00:00:00";
+        Date xd = DateUtil.strToDate(x, DateUtil.DATA_TIME_PATTERN_1);
+        if (xd.before(new Date())) {
+            System.out.println(1);
+        } else {
+            System.out.println(2);
+        }
     }
 
     // 逾期处理
@@ -341,6 +405,35 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         logger.info("***************结束扫结束还款计划***************");
     }
 
+    @Override
+    public void doSettleDailyProduct() {
+        logger.info("***************开始扫结束还款计划***************");
+        SYSConfig sysConfig = sysConfigBO
+            .getSYSConfig(SysConstants.REPAYPLAN_STEP);
+        int step = Integer.valueOf(sysConfig.getCvalue()); // 每次处理的条数
+        while (true) {
+            RepayPlan condition = new RepayPlan();
+            // 10号还款，11号凌晨算正常还款
+            condition.setRepayEndDatetime(
+                DateUtil.getRelativeDateOfDays(DateUtil.getTodayStart(), -1));
+            condition.setCurNodeCode(ERepayPlanNode.PRD_TO_REPAY.getCode());
+            Paginable<RepayPlan> page = repayPlanBO.getPaginable(0, step,
+                condition);
+            if (null != page) {
+                List<RepayPlan> list = page.getList();
+                if (CollectionUtils.isNotEmpty(list)) {
+                    doDailyRepayPlan(list);
+                    if (list.size() < step) {// 最后一批
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+        logger.info("***************结束扫结束还款计划***************");
+    }
+
     // 逻辑:
     // 1、将本月还款计划更新为已还款
     // 2、如果最后一期还款计划已完成，将还款业务节点更改为提交结算单
@@ -365,4 +458,5 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             addCreditScore(repayPlan);
         }
     }
+
 }

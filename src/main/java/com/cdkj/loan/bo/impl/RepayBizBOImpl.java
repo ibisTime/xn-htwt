@@ -117,7 +117,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
             .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
         repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
 
-        repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
+        int i = 0;
+        String string = budgetOrder.getRepayBankDate().toString();
+        String[] split = string.split("-");
+        String s = split[split.length - 1];
+        i = StringValidater.toInteger(s);
+        repayBiz.setMonthDatetime(i);
         repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
         repayBiz.setLyDeposit(budgetOrder.getMonthDeposit());
         repayBiz.setCutLyDeposit(0L);
@@ -139,6 +144,15 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setTeamCode(budgetOrder.getTeamCode());
         repayBizDAO.insert(repayBiz);
         return repayBiz;
+    }
+
+    public static void main(String[] args) {
+        int i = 0;
+        String string = "2018-10-08";
+        String[] split = string.split("-");
+        String string2 = split[split.length - 1];
+        i = StringValidater.toInteger(string2);
+        System.out.println(i);
     }
 
     @Override

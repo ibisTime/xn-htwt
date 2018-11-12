@@ -1,22 +1,31 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ILimuCreditAO;
 import com.cdkj.loan.bo.ILimuCreditBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.LimuCredit;
 import com.cdkj.loan.dto.req.XN632949Req;
+import com.cdkj.loan.enums.ELimuCreditStatus;
 
 @Service
 public class LimuCreditAOImpl implements ILimuCreditAO {
 
     @Autowired
     private ILimuCreditBO limuCreditBO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
 
     @Override
     public void addLimuCredit(LimuCredit data) {
@@ -71,6 +80,15 @@ public class LimuCreditAOImpl implements ILimuCreditAO {
             // map.put(limuCredit.getBizType(),
             // limuCredit.getId() + "," + limuCredit.getStatus());
             // }
+            int days = DateUtil.daysBetween(limuCredit.getFoundDatetime(),
+                new Date());
+            Map<String, String> configsMap = sysConfigBO
+                .getConfigsMap("query_failure_days");
+            Integer d = StringValidater.toInteger(configsMap.get("days"));
+            if (d <= days) {
+                limuCredit.setStatus(ELimuCreditStatus.RENEW_QUERY.getCode());
+                limuCreditBO.refreshLimuCredit(limuCredit);
+            }
             map.put(limuCredit.getBizType(), "{\"id\":" + limuCredit.getId()
                     + "," + "\"status\":" + limuCredit.getStatus() + "}");
 

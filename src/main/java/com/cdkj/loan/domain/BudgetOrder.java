@@ -781,7 +781,7 @@ public class BudgetOrder extends ABaseDO {
     private int repayBillDate;
 
     // 银行还款日
-    private Integer repayBankDate;
+    private Date repayBankDate;
 
     // 公司还款日
     private Date repayCompanyDate;
@@ -2568,11 +2568,11 @@ public class BudgetOrder extends ABaseDO {
         this.repayBillDate = repayBillDate;
     }
 
-    public Integer getRepayBankDate() {
+    public Date getRepayBankDate() {
         return repayBankDate;
     }
 
-    public void setRepayBankDate(Integer repayBankDate) {
+    public void setRepayBankDate(Date repayBankDate) {
         this.repayBankDate = repayBankDate;
     }
 

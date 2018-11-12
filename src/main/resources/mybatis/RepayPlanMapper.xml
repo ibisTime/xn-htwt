@@ -19,6 +19,7 @@
 		<result column="overplus_amount" property="overplusAmount" />
 		<result column="overdue_amount" property="overdueAmount" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="prepay_photo" property="prepayPhoto" />
 		<result column="overdue_handler" property="overdueHandler" />
 		
 		<result column="overdue_handle_datetime" property="overdueHandleDatetime" />
@@ -120,6 +121,7 @@
 		,t.overplus_amount
 		,t.overdue_amount
 		,t.cur_node_code
+		,t.prepay_photo
 		,t.overdue_handler
 		,t.overdue_handle_datetime
 		,t.overdue_handle_note
@@ -179,6 +181,7 @@
 		,t.overplus_amount
 		,t.overdue_amount
 		,t.cur_node_code
+		,t.prepay_photo
 		,t.overdue_handler
 		,t.overdue_handle_datetime
 		,t.overdue_handle_note
@@ -487,6 +490,24 @@
 		cur_node_code = #{curNodeCode}
 		,overplus_amount = #{overplusAmount}
 		,real_repay_amount = #{realRepayAmount}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_prepayPhoto" parameterType="repayPlan">
+		UPDATE tdh_repay_plan 
+		SET
+		cur_node_code = #{curNodeCode}
+		,prepay_photo = #{prepayPhoto}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_prepayPhotoApprove" parameterType="repayPlan">
+		UPDATE tdh_repay_plan 
+		SET
+		cur_node_code = #{curNodeCode}
+		,payed_amount = #{payedAmount}
+		,overplus_amount = #{overplusAmount}
+		,overdue_amount = #{overdueAmount}
 		WHERE code = #{code}
 	</update>
 </mapper>

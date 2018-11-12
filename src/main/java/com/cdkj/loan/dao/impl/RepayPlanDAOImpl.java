@@ -9,7 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.RepayPlan;
 
 @Repository("repayPlanDAOImpl")
-public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO {
+public class RepayPlanDAOImpl extends AMybatisTemplate
+        implements IRepayPlanDAO {
 
     @Override
     public int insert(RepayPlan data) {
@@ -35,12 +36,13 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
 
     @Override
     public List<RepayPlan> selectList(RepayPlan condition) {
-        return super.selectList(NAMESPACE.concat("select_repayPlan"),
-            condition, RepayPlan.class);
+        return super.selectList(NAMESPACE.concat("select_repayPlan"), condition,
+            RepayPlan.class);
     }
 
     @Override
-    public List<RepayPlan> selectList(RepayPlan condition, int start, int count) {
+    public List<RepayPlan> selectList(RepayPlan condition, int start,
+            int count) {
         return super.selectList(NAMESPACE.concat("select_repayPlan"), start,
             count, condition, RepayPlan.class);
     }
@@ -117,9 +119,8 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
     @Override
     public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,
             int start, int pageSize) {
-        return super.selectList(
-            NAMESPACE.concat("select_repayPlan_byRoleCode"), condition,
-            RepayPlan.class);
+        return super.selectList(NAMESPACE.concat("select_repayPlan_byRoleCode"),
+            condition, RepayPlan.class);
     }
 
     @Override
@@ -135,6 +136,16 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
     @Override
     public int updateSettleDaily(RepayPlan data) {
         return super.update(NAMESPACE.concat("update_settleDaily"), data);
+    }
+
+    @Override
+    public void refreshPrepayPhoto(RepayPlan data) {
+        super.update(NAMESPACE.concat("update_prepayPhoto"), data);
+    }
+
+    @Override
+    public void prepayPhotoApprove(RepayPlan data) {
+        super.update(NAMESPACE.concat("update_prepayPhotoApprove"), data);
     }
 
 }

@@ -70,3 +70,14 @@ SET SQL_SAFE_UPDATES = 1;
 
 ALTER TABLE `tdh_repay_biz` 
 ADD COLUMN `paper_photo` tinytext NULL COMMENT '纸质申请照片' AFTER `black_handle_note`;
+
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'lmzx_status', '3', '查询失败', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'lmzx_status', '4', '重新查询', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('query_failure_days', 'days','90', 'admin', '2018-08-15 17:33:30', '立木征信重新查询天数', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
+ALTER TABLE `tdh_repay_plan` 
+ADD COLUMN `prepay_photo` tinytext NULL COMMENT '还款截图' AFTER `cur_node_code`;
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('006_06', '还款审核', '006');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('006', '006_06', '006_02', '006_01');
+UPDATE `tsys_node_flow` SET `next_node`='006_06', `back_node`='' WHERE `id`='42';

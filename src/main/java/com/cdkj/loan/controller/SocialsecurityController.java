@@ -23,6 +23,8 @@ import com.cdkj.loan.domain.LimuCredit;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELimuCreditStatus;
 import com.cdkj.loan.exception.BizException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 社保
@@ -80,7 +82,19 @@ public class SocialsecurityController {
         if (domain == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "回调结果为空！");
         }
-        limuCredit.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(domain, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        if (code.equals("0000")) {
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
+        } else {
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_FAILURE.getCode());
+        }
         limuCredit.setResult(domain);
         limuCredit.setCallbackDatetime(new Date());
         int i = limuCreditBO.refreshLimuCredit(limuCredit);
