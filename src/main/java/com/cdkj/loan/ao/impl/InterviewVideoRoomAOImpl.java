@@ -129,13 +129,13 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             "http://fcgi.video.qcloud.com/common_access?appid=1257046543&interface=Mix_StreamV2&t="
                     + time + "&sign=" + sign,
             jo.toString());
-        InterviewVideo interviewVideo = interviewVideoBO
-            .getInterviewVideoByStreamId(videoList.get(0).getStreamId());
+        // InterviewVideo interviewVideo = interviewVideoBO
+        // .getInterviewVideoByStreamId(videoList.get(0).getStreamId());
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
             .getInterviewVideoRoom(req.getRoomId());
-        videoRoom.setHlUrl(interviewVideo.getVideoUrl());
+        videoRoom.setHlUrl(videoList.get(0).getStreamId());
         interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
-        map.put("videoUrl", interviewVideo.getVideoUrl());
+        map.put("streamId", videoList.get(0).getStreamId());
         map.put("result", string);
         return map;
     }

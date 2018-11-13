@@ -30,4 +30,6 @@ public interface IGpsApplyBO extends IPaginableBO<GpsApply> {
 
     public void receiveGps(String code);
 
+    public void refreshGpsApply(GpsApply data);
+
 }

@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.GpsApply;
 import com.cdkj.loan.dto.req.XN632710Req;
 import com.cdkj.loan.dto.req.XN632711Req;
+import com.cdkj.loan.dto.req.XN632713Req;
 
 /**
  * GPS申领
@@ -28,4 +29,7 @@ public interface IGpsApplyAO {
     public List<GpsApply> queryGpsApplyList(GpsApply condition);
 
     public GpsApply getGpsApply(String code);
+
+    // GPS重新申领
+    public void againGpsApply(XN632713Req req);
 }

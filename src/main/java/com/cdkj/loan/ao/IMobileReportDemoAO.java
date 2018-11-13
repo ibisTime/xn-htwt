@@ -106,4 +106,6 @@ public interface IMobileReportDemoAO {
 
     // 车险查询
     Object carInsurance(XN632945Req req);
+
+    Object socialsecurity(String token, String bizType);
 }

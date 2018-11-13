@@ -497,7 +497,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         return post;
     }
 
-    private String socialsecurity(String token, String bizType) {
+    @Override
+    public Object socialsecurity(String token, String bizType) {
         HttpClient httpClient = new HttpClient();
         AbstractCredit credit = new AbstractCredit();
         Map<String, String> configsMap = sysConfigBO

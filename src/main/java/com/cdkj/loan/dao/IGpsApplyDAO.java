@@ -18,4 +18,6 @@ public interface IGpsApplyDAO extends IBaseDAO<GpsApply> {
 
     public void updateGpsApplyReceive(GpsApply data);
 
+    public void updateGpsApply(GpsApply data);
+
 }
