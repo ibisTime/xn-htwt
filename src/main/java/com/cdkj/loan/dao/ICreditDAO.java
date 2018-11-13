@@ -50,4 +50,7 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
     // 派单
     public void distributeLeaflets(Credit credit);
 
+    // 征信二手车评估报告
+    public void updateSecondCarReport(Credit credit);
+
 }

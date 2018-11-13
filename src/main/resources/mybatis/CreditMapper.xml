@@ -323,5 +323,12 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_secondCarReport" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		second_car_report = #{secondCarReport}
+		WHERE code = #{code}
+	</update>
+	
 	
 </mapper>

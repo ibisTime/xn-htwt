@@ -533,6 +533,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
         }
         budgetOrderBO.refreshBudgetOrder(data);
+
+        Credit credit = creditBO.getCreditBybudgetorder(req.getCode());
+        if (credit != null) {
+            if (credit.getSecondCarReport() == null) {
+                if (req.getSecondCarReport() == null) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "征信二手车评估报告未上传");
+                } else {
+                    credit.setSecondCarReport(req.getSecondCarReport());
+                    creditBO.refreshSecondCarReport(credit);
+                }
+            }
+        }
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.BUDGET_ORDER, data.getCode(), preNodeCode,

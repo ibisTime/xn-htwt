@@ -664,6 +664,17 @@ public class XN632120Req {
     // 是否融资
     private String isFinancing;
 
+    // 二手车评估报告
+    private String secondCarReport;
+
+    public String getSecondCarReport() {
+        return secondCarReport;
+    }
+
+    public void setSecondCarReport(String secondCarReport) {
+        this.secondCarReport = secondCarReport;
+    }
+
     public String getIsFinancing() {
         return isFinancing;
     }
