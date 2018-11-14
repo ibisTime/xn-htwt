@@ -1195,8 +1195,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void gpsManagerApprove(String code, String operator,
-            String approveResult, String approveNote,
-            List<BudgetOrderGps> list) {
+            String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         // 之前节点
         String preCurrentNode = budgetOrder.getAdvanfCurNodeCode();
@@ -1212,11 +1211,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         } else {
             budgetOrder.setAdvanfCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
+            List<BudgetOrderGps> list = budgetOrderGpsBO
+                .queryBudgetOrderGpsList(code);
             // gps使用状态改为未使用
             for (BudgetOrderGps budgetOrderGps : list) {
                 gpsBO.refreshUseGps(budgetOrderGps.getCode(), null,
                     EBoolean.NO);
             }
+            budgetOrderGpsBO.removeBudgetOrderGpsList(code);
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshGpsManagerApprove(budgetOrder);

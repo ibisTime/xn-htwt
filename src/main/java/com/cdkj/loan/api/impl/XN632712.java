@@ -24,7 +24,7 @@ public class XN632712 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        gpsApplyAO.approveNoGpsApply(req.getCode(), req.getOperater(),
+        gpsApplyAO.approveNoGpsApply(req.getCode(), req.getOperator(),
             req.getRemark());
         return new BooleanRes(true);
     }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
-import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632124Req;
@@ -86,8 +85,7 @@ public interface IBudgetOrderAO {
 
     // GPS管理员审核
     public void gpsManagerApprove(String code, String operator,
-            String approveResult, String approveNote,
-            List<BudgetOrderGps> list);
+            String approveResult, String approveNote);
 
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition);

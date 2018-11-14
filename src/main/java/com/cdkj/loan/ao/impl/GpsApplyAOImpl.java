@@ -156,7 +156,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
         gpsApplyBO.approveGpsApply(req.getCode(), EGpsApplyStatus.APPROVE_YES,
-            req.getOperater(), req.getRemark());
+            req.getOperator(), req.getRemark());
 
         for (XN632711ReqChild childReq : req.getGpsList()) {
             if (StringUtils.isBlank(childReq.getCode())) {
