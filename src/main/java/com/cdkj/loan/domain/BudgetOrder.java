@@ -699,6 +699,9 @@ public class BudgetOrder extends ABaseDO {
     // 是否面签完成
     private String isInterview;
 
+    // 是否录入发保合
+    private String isEntryMortgage;
+
     // 垫资日期
     private Date advanceFundDatetime;
 
@@ -764,6 +767,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 银行提交说明
     private String bankCommitNote;
+
+    // 是否抵押完成(1是0否)
+    private String isMortgage;
 
     // 还款卡银行行别
     private String repayBankCode;
@@ -1128,6 +1134,14 @@ public class BudgetOrder extends ABaseDO {
         this.curNodeCodeNoEnter = curNodeCodeNoEnter;
     }
 
+    public String getIsEntryMortgage() {
+        return isEntryMortgage;
+    }
+
+    public void setIsEntryMortgage(String isEntryMortgage) {
+        this.isEntryMortgage = isEntryMortgage;
+    }
+
     public String getEnterStatus() {
         return enterStatus;
     }
@@ -1238,6 +1252,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
         this.bankFkDatetimeStart = bankFkDatetimeStart;
+    }
+
+    public String getIsMortgage() {
+        return isMortgage;
+    }
+
+    public void setIsMortgage(String isMortgage) {
+        this.isMortgage = isMortgage;
     }
 
     public Date getBankFkDatetimeEnd() {

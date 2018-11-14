@@ -117,6 +117,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setSaleUserId(credit.getSaleUserId());
             data.setInsideJob(credit.getInsideJob());
             data.setIsInterview(EBoolean.NO.getCode());
+            data.setIsEntryMortgage(EBoolean.NO.getCode());
             data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
             data.setIntevCurNodeCode(EBudgetOrderNode.INTERVIEW.getCode());
             // 准入单插入团队编号 来自业务员的所属团队
@@ -125,6 +126,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setPledgeStatus(EBoolean.NO.getCode());
             data.setIsGpsAz(EBoolean.NO.getCode());
             data.setIsLogistics(EBoolean.NO.getCode());
+            data.setIsMortgage(EBoolean.NO.getCode());
             budgetOrderDAO.insert(data);
         }
         return code;

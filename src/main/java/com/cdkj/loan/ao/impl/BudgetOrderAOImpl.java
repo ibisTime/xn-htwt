@@ -1402,7 +1402,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String preCurrentNode = budgetOrder.getAdvanfCurNodeCode();
         if (!EBudgetOrderNode.ENTRYMORTGAGE.getCode().equals(preCurrentNode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是录入抵押信息节点，不能操作");
+                "当前节点不是内勤录入发保合节点，不能操作");
         }
 
         NodeFlow currentNodeFlow = nodeFlowBO
@@ -1411,6 +1411,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setPledgeDatetime(DateUtil.strToDate(
             req.getPledgeDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGreenBigSmj(req.getGreenBigSmj());
+        budgetOrder.setIsEntryMortgage(EBoolean.YES.getCode());
         budgetOrderBO.entryMortgage(budgetOrder);
 
         // 获取参考材料
@@ -1475,6 +1476,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         String substring = res.substring(0, res.length() - 1);
         budgetOrder.setEnterFileList(substring);
+        budgetOrder.setIsMortgage(EBoolean.YES.getCode());
         budgetOrderBO.refreshMortgageCommitBank(budgetOrder);
 
         // 日志记录

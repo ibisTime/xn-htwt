@@ -58,7 +58,9 @@ ADD COLUMN `car_xsz_smj` tinytext NULL COMMENT '车辆行驶证扫描件' AFTER 
 ADD COLUMN `duty_paid_prove_smj` tinytext NULL COMMENT '完税证明扫描件' AFTER `car_xsz_smj`,
 ADD COLUMN `supplement_note` tinytext NULL COMMENT '补充说明' AFTER `advance_fund_amount_pdf`,
 ADD COLUMN `is_interview` varchar(4) NULL COMMENT '是否面签完成' AFTER `interview_other_pdf`,
-ADD COLUMN `advanf_cur_node_code` varchar(32) NULL COMMENT '垫资节点编号' AFTER `intev_cur_node_code`;
+ADD COLUMN `advanf_cur_node_code` varchar(32) NULL COMMENT '垫资节点编号' AFTER `intev_cur_node_code`,
+ADD COLUMN `is_entryMortgage` varchar(4) NULL COMMENT '是否录入发保合' AFTER `is_interview`,
+ADD COLUMN `is_mortgage` varchar(4) NULL COMMENT '是否抵押完成' AFTER `bank_commit_note`;
 
 ALTER TABLE `tstd_user` 
 ADD COLUMN `produce_type` varchar(4) NULL COMMENT '产生类型' AFTER `kind`;
@@ -81,3 +83,17 @@ ADD COLUMN `prepay_photo` tinytext NULL COMMENT '还款截图' AFTER `cur_node_c
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('006_06', '还款审核', '006');
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('006', '006_06', '006_02', '006_01');
 UPDATE `tsys_node_flow` SET `next_node`='006_06', `back_node`='' WHERE `id`='42';
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tdq_budget_order SET is_entryMortgage='0';
+UPDATE tdq_budget_order SET is_entryMortgage='1' WHERE cur_node_code = '002_19';
+UPDATE tdq_budget_order SET is_entryMortgage='1' WHERE cur_node_code = '002_20';
+UPDATE tdq_budget_order SET is_entryMortgage='1' WHERE cur_node_code = '002_21';
+UPDATE tdq_budget_order SET is_entryMortgage='1' WHERE cur_node_code = '002_22';
+UPDATE tdq_budget_order SET is_entryMortgage='1' WHERE cur_node_code = '002_23';
+
+UPDATE tdq_budget_order SET is_mortgage='0';
+UPDATE tdq_budget_order SET is_mortgage='1' WHERE cur_node_code = '002_21';
+UPDATE tdq_budget_order SET is_mortgage='1' WHERE cur_node_code = '002_22';
+UPDATE tdq_budget_order SET is_mortgage='1' WHERE cur_node_code = '002_23';
+SET SQL_SAFE_UPDATES = 1;

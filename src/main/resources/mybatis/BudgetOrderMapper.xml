@@ -259,6 +259,7 @@
 		<result column="other_video" property="otherVideo" />
 		<result column="interview_other_pdf" property="interviewOtherPdf" />
 		<result column="is_interview" property="isInterview" />
+		<result column="is_entryMortgage" property="isEntryMortgage" />
 		<result column="advance_fund_datetime" property="advanceFundDatetime" />
 		
 		<result column="advance_fund_amount" property="advanceFundAmount" />
@@ -284,6 +285,7 @@
 		<result column="duty_paid_prove_smj" property="dutyPaidProveSmj" />
 		<result column="bank_commit_datetime" property="bankCommitDatetime" />
 		<result column="bank_commit_note" property="bankCommitNote" />
+		<result column="is_mortgage" property="isMortgage" />
 		<result column="repay_bank_code" property="repayBankCode" />
 		
 		<result column="repay_bank_name" property="repayBankName" />
@@ -418,6 +420,9 @@
 			</if>
 			<if test="isInterview != null and isInterview != '' ">
 				AND t.is_interview = #{isInterview}
+			</if>
+			<if test="isEntryMortgage != null and isEntryMortgage != '' ">
+				AND t.is_entryMortgage = #{isEntryMortgage}
 			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
@@ -736,6 +741,7 @@
 		,t.other_video
 		,t.interview_other_pdf
 		,t.is_interview
+		,t.is_entryMortgage
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
@@ -760,6 +766,7 @@
 		,t.duty_paid_prove_smj
 		,t.bank_commit_datetime
 		,t.bank_commit_note
+		,t.is_mortgage
 		
 		,t.bank_fk_datetime
 		,t.repay_bank_code
@@ -1195,6 +1202,7 @@
 		,t.other_video
 		,t.interview_other_pdf
 		,t.is_interview
+		,t.is_entryMortgage
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
@@ -1219,6 +1227,7 @@
 		,t.duty_paid_prove_smj
 		,t.bank_commit_datetime
 		,t.bank_commit_note
+		,t.is_mortgage
 		
 		,t.bank_fk_datetime
 		,t.repay_bank_code
@@ -1569,6 +1578,7 @@
 		,back_advance_water_bill
 		
 		,is_interview
+		,is_entryMortgage
 		,cur_node_code
 		,intev_cur_node_code
 		,cancel_node_code
@@ -1576,6 +1586,7 @@
 		,pledge_status
 		,is_gps_az
 		,is_logistics
+		,is_mortgage
 		,remark
 		)
 		VALUES(
@@ -1823,6 +1834,7 @@
 		,#{backAdvanceSubbranch}
 		,#{backAdvanceWaterBill}
 		,#{isInterview}
+		,#{isEntryMortgage}
 		,#{curNodeCode}
 		,#{intevCurNodeCode}
 		,#{cancelNodeCode}
@@ -1830,6 +1842,7 @@
 		,#{pledgeStatus}
 		,#{isGpsAz}
 		,#{isLogistics}
+		,#{isMortgage}
 		,#{remark}
 		)
 	</insert>
@@ -2248,6 +2261,7 @@
 		pledge_datetime = #{pledgeDatetime}
 		,green_big_smj = #{greenBigSmj}
 		,advanf_cur_node_code = #{advanfCurNodeCode}
+		,is_entryMortgage = #{isEntryMortgage}
 		WHERE code = #{code}
 	</update>
 	
@@ -2258,6 +2272,7 @@
 		,pledge_bank_commit_note = #{pledgeBankCommitNote}
 		,cur_node_code = #{curNodeCode}
 		,enter_fileList = #{enterFileList}
+		,is_mortgage = #{isMortgage}
 		WHERE code = #{code}
 	</update>
 	
