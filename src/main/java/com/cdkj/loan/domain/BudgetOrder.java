@@ -787,10 +787,10 @@ public class BudgetOrder extends ABaseDO {
     private int repayBillDate;
 
     // 银行还款日
-    private Date repayBankDate;
+    private int repayBankDate;
 
     // 公司还款日
-    private Date repayCompanyDate;
+    private int repayCompanyDate;
 
     // 首期月供金额
     private Long repayFirstMonthAmount;
@@ -2590,19 +2590,19 @@ public class BudgetOrder extends ABaseDO {
         this.repayBillDate = repayBillDate;
     }
 
-    public Date getRepayBankDate() {
+    public int getRepayBankDate() {
         return repayBankDate;
     }
 
-    public void setRepayBankDate(Date repayBankDate) {
+    public void setRepayBankDate(int repayBankDate) {
         this.repayBankDate = repayBankDate;
     }
 
-    public Date getRepayCompanyDate() {
+    public int getRepayCompanyDate() {
         return repayCompanyDate;
     }
 
-    public void setRepayCompanyDate(Date repayCompanyDate) {
+    public void setRepayCompanyDate(int repayCompanyDate) {
         this.repayCompanyDate = repayCompanyDate;
     }
 

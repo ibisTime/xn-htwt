@@ -117,12 +117,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
             .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
         repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
 
-        int i = 0;
-        String string = budgetOrder.getRepayBankDate().toString();
-        String[] split = string.split("-");
-        String s = split[split.length - 1];
-        i = StringValidater.toInteger(s);
-        repayBiz.setMonthDatetime(i);
+        // int i = 0;
+        // String string = budgetOrder.getRepayBankDate().toString();
+        // String[] split = string.split("-");
+        // String s = split[split.length - 1];
+        // i = StringValidater.toInteger(s);
+        repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
         repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
         repayBiz.setLyDeposit(budgetOrder.getMonthDeposit());
         repayBiz.setCutLyDeposit(0L);
