@@ -53,7 +53,7 @@
 				AND t.customer_name = #{customerName}
 			</if>
 			<if test="customerNameQuery != null and customerNameQuery != '' ">
-				AND t.customer_name like %#{customerNameQuery}%
+				AND t.customer_name like "%"#{customerNameQuery}"%"
 			</if>
 		</trim>
 	</sql>
