@@ -1370,8 +1370,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 res += str + ",";
             }
         }
-        String substring = res.substring(0, res.length() - 1);
-        budgetOrder.setEnterFileList(substring);
+        if (StringUtils.isNotBlank(res)) {
+            String substring = res.substring(0, res.length() - 1);
+            budgetOrder.setEnterFileList(substring);
+        }
         budgetOrderBO.refreshMortgageFinish(budgetOrder);
 
         // 日志记录
