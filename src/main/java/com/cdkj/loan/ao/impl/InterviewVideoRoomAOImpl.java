@@ -24,6 +24,7 @@ import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
 import com.cdkj.loan.dto.req.XN632952Req;
 import com.cdkj.loan.dto.req.XN632954Req;
+import com.cdkj.loan.enums.EBoolean;
 
 @Service
 public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
@@ -40,6 +41,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         InterviewVideoRoom data = new InterviewVideoRoom();
         data.setCreateDatetime(new Date());
         data.setBudgetCode(req.getBudgetCode());
+        data.setStatus(EBoolean.NO.getCode());
         return interviewVideoRoomBO.saveInterviewVideoRoom(data);
     }
 
@@ -137,6 +139,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
             .getInterviewVideoRoom(req.getRoomId());
         videoRoom.setHlUrl(videoList.get(0).getStreamId());
+        videoRoom.setStatus(EBoolean.YES.getCode());
         interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
         map.put("streamId", videoList.get(0).getStreamId());
         map.put("result", string);

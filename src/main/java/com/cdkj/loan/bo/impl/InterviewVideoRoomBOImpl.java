@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IInterviewVideoRoomDAO;
 import com.cdkj.loan.domain.InterviewVideoRoom;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -64,7 +65,8 @@ public class InterviewVideoRoomBOImpl extends
             condition.setCode(code);
             data = interviewVideoRoomDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "房间id不存在！");
             }
         }
         return data;

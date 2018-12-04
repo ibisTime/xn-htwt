@@ -13,7 +13,7 @@ import com.cdkj.loan.dto.req.XN632954Req;
 
 @Component
 public interface IInterviewVideoRoomAO {
-    static final String DEFAULT_ORDER_COLUMN = "code";
+    static final String DEFAULT_ORDER_COLUMN = "create_datetime";
 
     public String addInterviewVideoRoom(XN632950Req req);
 

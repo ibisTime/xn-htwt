@@ -5,6 +5,7 @@
 	<resultMap id="interviewVideoRoom_DB_Result" type="interviewVideoRoom">
 		<result column="code" property="code" />
 		<result column="hl_url" property="hlUrl" />
+		<result column="status" property="status" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="budget_code" property="budgetCode" />
 	</resultMap>
@@ -16,22 +17,22 @@
 			<if test="budgetCode != null and budgetCode != '' ">
 				AND t.budget_code = #{budgetCode}
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_interviewVideoRoom" parameterType="interviewVideoRoom" resultMap="interviewVideoRoom_DB_Result">
 		SELECT
 		t.code
 		,t.hl_url
+		,t.status
 		,t.create_datetime
 		,t.budget_code
 		FROM
-		tdq_interview_video_room t
+		tdq_interview_video_room t 
 		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
+		order by t.create_datetime
 	</select>
 
 	<select id="select_interviewVideoRoom_count" parameterType="interviewVideoRoom"
@@ -45,12 +46,14 @@
 		tdq_interview_video_room(
 		code
 		,hl_url
+		,status
 		,create_datetime
 		,budget_code
 		)
 		VALUES(
 		#{code}
 		,#{hlUrl}
+		,#{status}
 		,#{createDatetime}
 		,#{budgetCode}
 		)
@@ -60,6 +63,7 @@
 		UPDATE tdq_interview_video_room
 		SET
 		hl_url = #{hlUrl}
+		,status = #{status}
 		,create_datetime = #{createDatetime}
 		,budget_code = #{budgetCode}
 		WHERE code = #{code}
