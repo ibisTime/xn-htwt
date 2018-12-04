@@ -19,6 +19,9 @@ public class XN632185Req extends APageReq {
     // 是否垫资
     private String isAdvanceFund;
 
+    // 业务员（信贷专员）
+    private String saleUserId;
+
     // 申请时间起
     private String startDatetime;
 
@@ -31,6 +34,14 @@ public class XN632185Req extends APageReq {
 
     public void setApplyUserName(String applyUserName) {
         this.applyUserName = applyUserName;
+    }
+
+    public String getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
 
     public String getIsAdvanceFund() {
