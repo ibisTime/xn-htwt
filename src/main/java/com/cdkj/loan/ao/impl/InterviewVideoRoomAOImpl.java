@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import com.cdkj.loan.domain.InterviewVideoRoom;
 import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
 import com.cdkj.loan.dto.req.XN632952Req;
+import com.cdkj.loan.dto.req.XN632954Req;
 
 @Service
 public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
@@ -37,6 +39,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
     public String addInterviewVideoRoom(XN632950Req req) {
         InterviewVideoRoom data = new InterviewVideoRoom();
         data.setCreateDatetime(new Date());
+        data.setBudgetOrder(req.getBudgetCode());
         return interviewVideoRoomBO.saveInterviewVideoRoom(data);
     }
 
@@ -153,4 +156,16 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         return string;
     }
 
+    @Override
+    public Object foundRoomByBudgetOder(XN632954Req req) {
+        InterviewVideoRoom room = new InterviewVideoRoom();
+        room.setBudgetOrder(req.getBudgetCode());
+        List<InterviewVideoRoom> roomList = interviewVideoRoomBO
+            .queryInterviewVideoRoomList(room);
+        InterviewVideoRoom videoRoom = null;
+        if (CollectionUtils.isNotEmpty(roomList)) {
+            videoRoom = roomList.get(roomList.size() - 1);
+        }
+        return videoRoom;
+    }
 }

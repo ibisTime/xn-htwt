@@ -9,6 +9,7 @@ import com.cdkj.loan.domain.InterviewVideoRoom;
 import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
 import com.cdkj.loan.dto.req.XN632952Req;
+import com.cdkj.loan.dto.req.XN632954Req;
 
 @Component
 public interface IInterviewVideoRoomAO {
@@ -33,5 +34,8 @@ public interface IInterviewVideoRoomAO {
 
     // 查询录制文件
     public Object foundHlVideo(XN632952Req req);
+
+    // 面签视频：查询房间业务是否有房间
+    public Object foundRoomByBudgetOder(XN632954Req req);
 
 }

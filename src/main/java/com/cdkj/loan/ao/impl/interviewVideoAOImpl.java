@@ -50,4 +50,5 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
         interviewVideo.setRoomCode(req.getRoomId());
         return interviewVideoBO.getTotalCount(interviewVideo);
     }
+
 }

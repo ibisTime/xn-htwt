@@ -23,6 +23,17 @@ public class InterviewVideoRoom extends ABaseDO {
     // 创建时间
     private Date createDatetime;
 
+    // 预算单编号
+    private String budgetOrder;
+
+    public String getBudgetOrder() {
+        return budgetOrder;
+    }
+
+    public void setBudgetOrder(String budgetOrder) {
+        this.budgetOrder = budgetOrder;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }
