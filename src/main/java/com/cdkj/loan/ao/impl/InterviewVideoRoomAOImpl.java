@@ -39,7 +39,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
     public String addInterviewVideoRoom(XN632950Req req) {
         InterviewVideoRoom data = new InterviewVideoRoom();
         data.setCreateDatetime(new Date());
-        data.setBudgetOrder(req.getBudgetCode());
+        data.setBudgetCode(req.getBudgetCode());
         return interviewVideoRoomBO.saveInterviewVideoRoom(data);
     }
 
@@ -159,7 +159,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
     @Override
     public Object foundRoomByBudgetOder(XN632954Req req) {
         InterviewVideoRoom room = new InterviewVideoRoom();
-        room.setBudgetOrder(req.getBudgetCode());
+        room.setBudgetCode(req.getBudgetCode());
         List<InterviewVideoRoom> roomList = interviewVideoRoomBO
             .queryInterviewVideoRoomList(room);
         InterviewVideoRoom videoRoom = null;

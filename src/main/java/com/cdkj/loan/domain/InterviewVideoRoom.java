@@ -24,14 +24,14 @@ public class InterviewVideoRoom extends ABaseDO {
     private Date createDatetime;
 
     // 预算单编号
-    private String budgetOrder;
+    private String budgetCode;
 
-    public String getBudgetOrder() {
-        return budgetOrder;
+    public String getBudgetCode() {
+        return budgetCode;
     }
 
-    public void setBudgetOrder(String budgetOrder) {
-        this.budgetOrder = budgetOrder;
+    public void setBudgetCode(String budgetCode) {
+        this.budgetCode = budgetCode;
     }
 
     public void setCode(String code) {
