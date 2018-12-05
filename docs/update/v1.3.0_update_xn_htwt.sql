@@ -370,3 +370,6 @@ INSERT INTO `tdq_budget_order` (`code`,`repay_biz_code`,`loan_product_code`,`loa
 ALTER TABLE `tdq_interview_video_room` 
 ADD COLUMN `budget_code` VARCHAR(32) NULL COMMENT '预算单编号' AFTER `create_datetime`,
 ADD COLUMN `status` VARCHAR(4) NULL COMMENT '状态（0可用，1不可用）' AFTER `hl_url`;
+
+ALTER TABLE `tdq_interview_video_room` 
+ADD COLUMN `home_owner_id` VARCHAR(32) NULL COMMENT '房主id' AFTER `code`;

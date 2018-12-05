@@ -24,6 +24,7 @@ import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
 import com.cdkj.loan.dto.req.XN632952Req;
 import com.cdkj.loan.dto.req.XN632954Req;
+import com.cdkj.loan.dto.req.XN632955Req;
 import com.cdkj.loan.enums.EBoolean;
 
 @Service
@@ -39,6 +40,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
     @Transactional
     public String addInterviewVideoRoom(XN632950Req req) {
         InterviewVideoRoom data = new InterviewVideoRoom();
+        data.setHomeOwnerId(req.getHomeOwnerId());
         data.setCreateDatetime(new Date());
         data.setBudgetCode(req.getBudgetCode());
         data.setStatus(EBoolean.NO.getCode());
@@ -94,8 +96,8 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             jox.put("input_stream_id", videoList.get(j).getStreamId());
             JSONObject joxl = new JSONObject();
             joxl.put("image_layer", j + 1);
-            joxl.put("image_width", "160");
-            joxl.put("image_height", "160");
+            // joxl.put("image_width", "160");
+            // joxl.put("image_height", "160");
             joxl.put("location_x", "0");
             if (j == 1) {
                 joxl.put("location_y", "0");
@@ -170,5 +172,13 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             videoRoom = roomList.get(roomList.size() - 1);
         }
         return videoRoom;
+    }
+
+    @Override
+    public void destroyRoom(XN632955Req req) {
+        InterviewVideoRoom interviewVideoRoom = interviewVideoRoomBO
+            .getInterviewVideoRoom(req.getCode());
+        interviewVideoRoom.setStatus(EBoolean.YES.getCode());
+        interviewVideoRoomBO.refreshInterviewVideoRoom(interviewVideoRoom);
     }
 }

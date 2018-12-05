@@ -4,6 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IInterviewVideoRoomDAO">
 	<resultMap id="interviewVideoRoom_DB_Result" type="interviewVideoRoom">
 		<result column="code" property="code" />
+		<result column="home_owner_id" property="homeOwnerId" />
 		<result column="hl_url" property="hlUrl" />
 		<result column="status" property="status" />
 		<result column="create_datetime" property="createDatetime" />
@@ -13,6 +14,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="homeOwnerId != null and homeOwnerId != '' ">
+				AND t.home_owner_id = #{homeOwnerId}
 			</if>
 			<if test="budgetCode != null and budgetCode != '' ">
 				AND t.budget_code = #{budgetCode}
@@ -25,6 +29,7 @@
 	<select id="select_interviewVideoRoom" parameterType="interviewVideoRoom" resultMap="interviewVideoRoom_DB_Result">
 		SELECT
 		t.code
+		,t.home_owner_id
 		,t.hl_url
 		,t.status
 		,t.create_datetime
@@ -45,6 +50,7 @@
 		INSERT INTO
 		tdq_interview_video_room(
 		code
+		,home_owner_id
 		,hl_url
 		,status
 		,create_datetime
@@ -52,6 +58,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{homeOwnerId}
 		,#{hlUrl}
 		,#{status}
 		,#{createDatetime}
@@ -63,6 +70,7 @@
 		UPDATE tdq_interview_video_room
 		SET
 		hl_url = #{hlUrl}
+		,home_owner_id = #{homeOwnerId}
 		,status = #{status}
 		,create_datetime = #{createDatetime}
 		,budget_code = #{budgetCode}

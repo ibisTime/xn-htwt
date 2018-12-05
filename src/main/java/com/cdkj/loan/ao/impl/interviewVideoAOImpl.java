@@ -2,12 +2,14 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IInterviewVideoAO;
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.domain.InterviewVideo;
 import com.cdkj.loan.dto.req.XN632953Req;
 
@@ -48,7 +50,21 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
     public Object foundRoomTotal(XN632953Req req) {
         InterviewVideo interviewVideo = new InterviewVideo();
         interviewVideo.setRoomCode(req.getRoomId());
-        return interviewVideoBO.getTotalCount(interviewVideo);
+
+        long i = interviewVideoBO.getTotalCount(interviewVideo);
+
+        String bizId = "32810_" + MD5Util
+            .md5(req.getRoomId() + "_" + req.getUserId() + "_main");
+        List<InterviewVideo> videoList = interviewVideoBO
+            .queryInterviewVideoList(interviewVideo);
+        if (CollectionUtils.isNotEmpty(videoList)) {
+            for (InterviewVideo Video : videoList) {
+                if (bizId.equals(Video.getStreamId())) {
+                    i -= 1;
+                }
+            }
+        }
+        return i;
     }
 
 }
