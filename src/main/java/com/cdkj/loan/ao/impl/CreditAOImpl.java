@@ -30,6 +30,7 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632099Req;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
@@ -531,6 +532,34 @@ public class CreditAOImpl implements ICreditAO {
         // SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
         // credit.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
         // }
+    }
+
+    @Override
+    public void exchangeCreditUser(XN632099Req req) {
+        if (req.getCreditUserList().size() != 2) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "请选择两条记录再进行操作！");
+        }
+        for (String code : req.getCreditUserList()) {
+            CreditUser creditUser = creditUserBO.getCreditUser(code);
+            if (ELoanRole.APPLY_USER.getCode()
+                .equals(creditUser.getLoanRole())) {
+                creditUser.setLoanRole(ELoanRole.GHR.getCode());
+                creditUserBO.refreshCreditUserLoanRole(creditUser);
+            } else if (ELoanRole.GHR.getCode()
+                .equals(creditUser.getLoanRole())) {
+                creditUser.setLoanRole(ELoanRole.APPLY_USER.getCode());
+                creditUserBO.refreshCreditUserLoanRole(creditUser);
+                Credit credit = creditBO.getCredit(creditUser.getCreditCode());
+                credit.setUserName(creditUser.getUserName());
+                credit.setIdNo(creditUser.getIdNo());
+                credit.setMobile(creditUser.getMobile());
+                creditBO.setApplyUserInfo(credit);
+            } else {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "担保人不能置换！");
+            }
+        }
     }
 
 }

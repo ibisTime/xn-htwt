@@ -53,4 +53,7 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
     // 征信二手车评估报告
     public void updateSecondCarReport(Credit credit);
 
+    // 修改主贷人
+    public void updateCreditUser(Credit credit);
+
 }

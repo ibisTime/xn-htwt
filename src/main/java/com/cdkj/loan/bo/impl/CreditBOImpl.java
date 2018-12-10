@@ -170,4 +170,9 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         creditDAO.updateSecondCarReport(credit);
     }
 
+    @Override
+    public void refreshCreditUser(Credit credit) {
+        creditDAO.updateCreditUser(credit);
+    }
+
 }

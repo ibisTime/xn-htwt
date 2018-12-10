@@ -330,5 +330,12 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_creditUser" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		user_name = #{userName}
+		WHERE code = #{code}
+	</update>
+	
 	
 </mapper>

@@ -155,7 +155,7 @@
 	<update id="update_creditUser" parameterType="creditUser">
 		UPDATE tdq_credit_user
 		SET
-		relation = #{relation}
+		loan_role = #{loanRole}
 		WHERE 
 		code = #{code}
 	</update>

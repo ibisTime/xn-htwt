@@ -53,7 +53,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     }
 
     @Override
-    public void refreshCreditUserRelation(CreditUser creditUser) {
+    public void refreshCreditUserLoanRole(CreditUser creditUser) {
         creditUserDAO.updateCreditUser(creditUser);
     }
 

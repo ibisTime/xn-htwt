@@ -34,9 +34,6 @@ public class XN632802Req {
     // 入职时间
     private String entryDatetime;
 
-    // 部门编号
-    private String departmentCode;
-
     // 职务岗位编号
     private String postCode;
 
@@ -232,14 +229,6 @@ public class XN632802Req {
 
     public void setEntryDatetime(String entryDatetime) {
         this.entryDatetime = entryDatetime;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
     }
 
     public String getPostCode() {

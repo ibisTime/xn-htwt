@@ -132,4 +132,9 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
         super.update(NAMESPACE.concat("update_secondCarReport"), data);
     }
 
+    @Override
+    public void updateCreditUser(Credit data) {
+        super.update(NAMESPACE.concat("update_creditUser"), data);
+    }
+
 }
