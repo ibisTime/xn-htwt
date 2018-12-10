@@ -6,11 +6,15 @@
 		<result column="code" property="code" />
 		<result column="hl_url" property="hlUrl" />
 		<result column="create_datetime" property="createDatetime" />
+		<result column="budget_code" property="budgetCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="budgetCode != null and budgetCode != '' ">
+				AND t.budget_code = #{budgetCode}
 			</if>
 		</trim>
 	</sql>
@@ -19,6 +23,7 @@
 		t.code
 		,t.hl_url
 		,t.create_datetime
+		,t.budget_code
 		FROM
 		tdq_interview_video_room t
 		<include refid="where_condition" />
@@ -41,11 +46,13 @@
 		code
 		,hl_url
 		,create_datetime
+		,budget_code
 		)
 		VALUES(
 		#{code}
 		,#{hlUrl}
 		,#{createDatetime}
+		,#{budgetCode}
 		)
 	</insert>
 
@@ -54,6 +61,7 @@
 		SET
 		hl_url = #{hlUrl}
 		,create_datetime = #{createDatetime}
+		,budget_code = #{budgetCode}
 		WHERE code = #{code}
 	</update>
 
