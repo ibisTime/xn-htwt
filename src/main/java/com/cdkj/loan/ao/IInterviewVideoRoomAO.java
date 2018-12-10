@@ -10,10 +10,11 @@ import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
 import com.cdkj.loan.dto.req.XN632952Req;
 import com.cdkj.loan.dto.req.XN632954Req;
+import com.cdkj.loan.dto.req.XN632955Req;
 
 @Component
 public interface IInterviewVideoRoomAO {
-    static final String DEFAULT_ORDER_COLUMN = "code";
+    static final String DEFAULT_ORDER_COLUMN = "create_datetime";
 
     public String addInterviewVideoRoom(XN632950Req req);
 
@@ -37,5 +38,8 @@ public interface IInterviewVideoRoomAO {
 
     // 面签视频：查询房间业务是否有房间
     public Object foundRoomByBudgetOder(XN632954Req req);
+
+    // 销毁房间
+    public void destroyRoom(XN632955Req req);
 
 }

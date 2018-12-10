@@ -24,6 +24,8 @@ import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
 import com.cdkj.loan.dto.req.XN632952Req;
 import com.cdkj.loan.dto.req.XN632954Req;
+import com.cdkj.loan.dto.req.XN632955Req;
+import com.cdkj.loan.enums.EBoolean;
 
 @Service
 public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
@@ -38,8 +40,10 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
     @Transactional
     public String addInterviewVideoRoom(XN632950Req req) {
         InterviewVideoRoom data = new InterviewVideoRoom();
+        data.setHomeOwnerId(req.getHomeOwnerId());
         data.setCreateDatetime(new Date());
         data.setBudgetCode(req.getBudgetCode());
+        data.setStatus(EBoolean.NO.getCode());
         return interviewVideoRoomBO.saveInterviewVideoRoom(data);
     }
 
@@ -92,8 +96,8 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             jox.put("input_stream_id", videoList.get(j).getStreamId());
             JSONObject joxl = new JSONObject();
             joxl.put("image_layer", j + 1);
-            joxl.put("image_width", "160");
-            joxl.put("image_height", "160");
+            // joxl.put("image_width", "160");
+            // joxl.put("image_height", "160");
             joxl.put("location_x", "0");
             if (j == 1) {
                 joxl.put("location_y", "0");
@@ -124,7 +128,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
         jo.put("timestamp", time);
         String HL = OrderNoGenerater.generate("HL");
-        jo.put("eventId", HL.substring(2, 6));
+        jo.put("eventId", HL.substring(2, 8));
         jo.put("interface", interFace);
 
         String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
@@ -137,6 +141,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
             .getInterviewVideoRoom(req.getRoomId());
         videoRoom.setHlUrl(videoList.get(0).getStreamId());
+        videoRoom.setStatus(EBoolean.YES.getCode());
         interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
         map.put("streamId", videoList.get(0).getStreamId());
         map.put("result", string);
@@ -169,4 +174,11 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         return videoRoom;
     }
 
+    @Override
+    public void destroyRoom(XN632955Req req) {
+        InterviewVideoRoom interviewVideoRoom = interviewVideoRoomBO
+            .getInterviewVideoRoom(req.getCode());
+        interviewVideoRoom.setStatus(EBoolean.YES.getCode());
+        interviewVideoRoomBO.refreshInterviewVideoRoom(interviewVideoRoom);
+    }
 }

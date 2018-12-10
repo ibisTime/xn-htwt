@@ -17,8 +17,14 @@ public class InterviewVideoRoom extends ABaseDO {
     // 房间编号
     private String code;
 
+    // 房主id
+    private String homeOwnerId;
+
     // 混流视频下载地址
     private String hlUrl;
+
+    // 状态（0可用，1不可用）
+    private String status;
 
     // 创建时间
     private Date createDatetime;
@@ -32,6 +38,22 @@ public class InterviewVideoRoom extends ABaseDO {
 
     public void setBudgetCode(String budgetCode) {
         this.budgetCode = budgetCode;
+    }
+
+    public String getHomeOwnerId() {
+        return homeOwnerId;
+    }
+
+    public void setHomeOwnerId(String homeOwnerId) {
+        this.homeOwnerId = homeOwnerId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setCode(String code) {
