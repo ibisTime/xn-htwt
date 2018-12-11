@@ -43,6 +43,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     }
 
     @Override
+    public void removeCreditUser(String code) {
+        CreditUser creditUser = getCreditUser(code);
+        creditUserDAO.delete(creditUser);
+    }
+
+    @Override
     public void removeCreditUserByCreditCode(String creditCode) {
         CreditUser creditUser = new CreditUser();
         creditUser.setCreditCode(creditCode);

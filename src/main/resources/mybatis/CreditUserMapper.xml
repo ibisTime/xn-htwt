@@ -156,6 +156,7 @@
 		UPDATE tdq_credit_user
 		SET
 		loan_role = #{loanRole}
+		,relation = #{relation}
 		WHERE 
 		code = #{code}
 	</update>

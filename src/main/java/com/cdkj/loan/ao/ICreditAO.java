@@ -56,4 +56,7 @@ public interface ICreditAO {
     // 主贷人和配偶一键互换
     public void exchangeCreditUser(XN632099Req req);
 
+    // 内勤主管分配情况
+    public Object queryCreditListByJob(Credit condition);
+
 }

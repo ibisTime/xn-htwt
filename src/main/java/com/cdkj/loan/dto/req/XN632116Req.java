@@ -19,6 +19,9 @@ public class XN632116Req extends APageReq {
     // 客户姓名
     private String userName;
 
+    // 内勤
+    private String insideJob;
+
     // 团队编号
     private String teamCode;
 
@@ -43,6 +46,14 @@ public class XN632116Req extends APageReq {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public String getInsideJob() {
+        return insideJob;
+    }
+
+    public void setInsideJob(String insideJob) {
+        this.insideJob = insideJob;
     }
 
     public String getUserName() {

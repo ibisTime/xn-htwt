@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +40,7 @@ import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
+import com.cdkj.loan.dto.res.XN632917Res;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -362,6 +364,21 @@ public class CreditAOImpl implements ICreditAO {
         // 当前节点
         String preCurrentNode = credit.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            for (CreditUser creditUser : req.getCreditUserList()) {
+                CreditUser user = creditUserBO
+                    .getCreditUser(creditUser.getCode());
+                user.setRelation(creditUser.getRelation());
+                user.setLoanRole(creditUser.getLoanRole());
+                creditUserBO.refreshCreditUserLoanRole(user);
+                if (ELoanRole.APPLY_USER.getCode()
+                    .equals(creditUser.getLoanRole())) {
+                    credit.setUserName(creditUser.getUserName());
+                    credit.setIdNo(creditUser.getIdNo());
+                    credit.setMobile(creditUser.getMobile());
+                    creditBO.setApplyUserInfo(credit);
+                }
+            }
+
             // 审核通过，改变节点
             credit.setCurNodeCode(
                 nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
@@ -560,6 +577,25 @@ public class CreditAOImpl implements ICreditAO {
                     "担保人不能置换！");
             }
         }
+    }
+
+    @Override
+    public Object queryCreditListByJob(Credit condition) {
+        ArrayList<Object> list = new ArrayList<>();
+        SYSUser sysUser = new SYSUser();
+        sysUser.setRoleCode("SR20180000000000000NQZY");
+        List<SYSUser> userList = sysUserBO.queryUserList(sysUser);
+        for (SYSUser sUser : userList) {
+            XN632917Res res = new XN632917Res();
+            Credit credit = new Credit();
+            credit.setInsideJob(sUser.getUserId());
+            long count = creditBO.getTotalCount(credit);
+            res.setUderId(sUser.getUserId());
+            res.setName(sUser.getRealName());
+            res.setNumber(count + "");
+            list.add(res);
+        }
+        return list;
     }
 
 }
