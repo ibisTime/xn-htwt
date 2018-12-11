@@ -1337,8 +1337,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.autoinsurance.get"));
-        reqParam.add(new BasicNameValuePair("callBackUrl",
-            configsMap.get("localhostUrl") + "/socialsecurity"));
+        // reqParam.add(new BasicNameValuePair("callBackUrl",
+        // configsMap.get("localhostUrl") + "/socialsecurity"));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
         if (StringUtils.isNotBlank(req.getUsername())) {
@@ -1408,7 +1408,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         }
 
         // 查询结果
-        foundResult(reqParam, token, configsMap, id);
+        foundResult(token, configsMap, id, "autoinsurance");
 
         // map.put("\"id\":" + id, "\"result\":" + doPost);
         map.put("id", id);
@@ -1416,18 +1416,39 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         return map;
     }
 
-    private void foundResult(List<BasicNameValuePair> reqParam, String token,
-            Map<String, String> configsMap, String id) {
+    private void foundResult(String token, Map<String, String> configsMap,
+            String id, String bizType) {
         HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam
+            .add(new BasicNameValuePair("version", configsMap.get("version")));
         reqParam.add(new BasicNameValuePair("method", "api.common.getResult"));
         reqParam.add(new BasicNameValuePair("token", token));
-        reqParam.add(new BasicNameValuePair("bizType", "autoinsurance"));
+        reqParam.add(new BasicNameValuePair("bizType", bizType));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
 
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
         LimuCredit limuCredit = limuCreditBO
             .getLimuCredit(StringValidater.toInteger(id));
         limuCredit.setResult(doPost);
+        if ("0000".equals(code)) {
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
+        } else {
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_FAILURE.getCode());
+        }
         limuCreditBO.refreshLimuCredit(limuCredit);
     }
 }
