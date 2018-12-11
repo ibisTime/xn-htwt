@@ -1337,6 +1337,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.autoinsurance.get"));
+        reqParam.add(new BasicNameValuePair("callBackUrl",
+            configsMap.get("localhostUrl") + "/socialsecurity"));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
         if (StringUtils.isNotBlank(req.getUsername())) {
@@ -1385,6 +1387,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             data.setCustomerName(req.getCustomerName());
             data.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             data.setResult(doPost);
+            data.setToken(token);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
             id = data.getId() + "";
@@ -1395,6 +1398,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setCustomerName(req.getCustomerName());
             limuCredit.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             limuCredit.setResult(doPost);
+            limuCredit.setToken(token);
             limuCredit.setFoundDatetime(new Date());
             limuCredit.setBizType("autoinsurance");
             limuCreditBO.saveLimuCredit(limuCredit);
@@ -1416,7 +1420,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             Map<String, String> configsMap, String id) {
         HttpClient httpClient = new HttpClient();
         reqParam.add(new BasicNameValuePair("method", "api.common.getResult"));
-        reqParam.add(new BasicNameValuePair("type", token));
+        reqParam.add(new BasicNameValuePair("token", token));
+        reqParam.add(new BasicNameValuePair("bizType", "autoinsurance"));
+
         String doPost = httpClient
             .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
         LimuCredit limuCredit = limuCreditBO
