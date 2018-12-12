@@ -108,4 +108,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 物流传递中
     public void updateIsLogistics(BudgetOrder budgetOrder);
 
+    // 根据信贷专员或内勤查预算单客户
+    public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
+            int limit, BudgetOrder condition);
+
 }

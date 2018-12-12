@@ -3,7 +3,6 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.cdkj.loan.domain.CreditUser;
 
@@ -20,7 +19,6 @@ public class XN632113Req {
     private String code;
 
     // 征信人列表
-    @NotEmpty
     private List<CreditUser> creditUserList;
 
     // 审核结果

@@ -1304,6 +1304,27 @@
 		<include refid="where_condition" />
 	</select>
 	
+	<select id="select_budgetOrder_byUserId" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		t.code
+		,t.apply_user_name
+		,t.mobile
+		FROM
+		tdq_budget_order t 
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_budgetOrder_count_byUserId" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_budget_order t
+		<include refid="where_condition" />
+	</select>
+	
 	<select id="select_budgetOrder_dz" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
@@ -2262,6 +2283,14 @@
 		,green_big_smj = #{greenBigSmj}
 		,advanf_cur_node_code = #{advanfCurNodeCode}
 		,is_entryMortgage = #{isEntryMortgage}
+		
+		,car_settle_datetime = #{carSettleDatetime}
+		,car_invoice = #{carInvoice}
+		,car_jqx = #{carJqx}
+		,car_syx = #{carSyx}
+		,policy_datetime = #{policyDatetime}
+		,policy_due_date = #{policyDueDate}
+		,car_settle_other_pdf = #{carSettleOtherPdf}
 		WHERE code = #{code}
 	</update>
 	

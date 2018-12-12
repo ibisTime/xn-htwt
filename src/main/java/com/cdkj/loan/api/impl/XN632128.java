@@ -15,7 +15,7 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * 预算单-车辆落户
  * @author: CYL 
  * @since: 2018年5月30日 下午2:40:12 
- * @history:
+ * @history: 已融合进内勤录入发保合节点
  */
 public class XN632128 extends AProcessor {
     private IBudgetOrderAO budgetOrderAO = SpringContextHolder

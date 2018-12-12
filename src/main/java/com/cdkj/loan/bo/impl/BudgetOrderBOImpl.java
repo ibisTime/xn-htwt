@@ -333,8 +333,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             String newLogisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.BANK_LOAN.getCode(),
-                budgetOrder.getCode(), operator, nodeFlow.getCurrentNode(),
-                nodeFlow.getNextNode(), null);
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
             // 产生物流单后改变状态为物流传递中
             budgetOrder.setIsLogistics(EBoolean.YES.getCode());
 
@@ -374,8 +374,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             String newLogisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),
-                budgetOrder.getCode(), operator, nodeFlow.getCurrentNode(),
-                nodeFlow.getNextNode(), null);
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
             // 产生物流单后改变状态为物流传递中
             budgetOrder.setIsLogistics(EBoolean.YES.getCode());
 
@@ -467,6 +467,20 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public List<BudgetOrder> queryBudgetOrderByApplyUserName(
             BudgetOrder condition) {
         return budgetOrderDAO.queryBudgetOrderByApplyUserName(condition);
+    }
+
+    @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
+            int limit, BudgetOrder condition) {
+        prepare(condition);
+        long totalCount = budgetOrderDAO.selectTotalCountByUserId(condition);
+        Paginable<BudgetOrder> page = new Page<BudgetOrder>(start, limit,
+            totalCount);
+        List<BudgetOrder> dataList = budgetOrderDAO
+            .selectBudgetOrderListByUserId(condition, page.getStart(),
+                page.getPageSize());
+        page.setList(dataList);
+        return page;
     }
 
 }

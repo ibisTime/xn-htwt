@@ -88,4 +88,10 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 内勤确认
     void insidejobConfirm(BudgetOrder budgetOrder);
 
+    // 根据信贷专员或内勤查预算单客户
+    List<BudgetOrder> selectBudgetOrderListByUserId(BudgetOrder condition,
+            int start, int pageSize);
+
+    long selectTotalCountByUserId(BudgetOrder condition);
+
 }

@@ -536,13 +536,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         Credit credit = creditBO.getCreditBybudgetorder(req.getCode());
         if (credit != null) {
-            if (credit.getSecondCarReport() == null) {
-                if (req.getSecondCarReport() == null) {
-                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "征信二手车评估报告未上传");
-                } else {
-                    credit.setSecondCarReport(req.getSecondCarReport());
-                    creditBO.refreshSecondCarReport(credit);
+            if (!"0".equals(req.getBizType())) {
+                if (credit.getSecondCarReport() == null) {
+                    if (req.getSecondCarReport() == null) {
+                        throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                            "征信二手车评估报告未上传");
+                    } else {
+                        credit.setSecondCarReport(req.getSecondCarReport());
+                        creditBO.refreshSecondCarReport(credit);
+                    }
                 }
             }
         }
@@ -943,11 +945,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         budgetOrderBO.interview(budgetOrder);
 
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+        sysBizLogBO.recordCurOperate(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getIntevCurNodeCode(), null, req.getOperator(),
-            budgetOrder.getTeamCode());
+            null, req.getOperator(), budgetOrder.getTeamCode());
+        // 日志记录
+        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
+            budgetOrder.getIntevCurNodeCode(), budgetOrder.getTeamCode());
+        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+        // budgetOrder.getIntevCurNodeCode(), null, req.getOperator(),
+        // budgetOrder.getTeamCode());
     }
 
     @Override
@@ -1412,6 +1420,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getPledgeDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGreenBigSmj(req.getGreenBigSmj());
         budgetOrder.setIsEntryMortgage(EBoolean.YES.getCode());
+
+        budgetOrder.setCarSettleDatetime(DateUtil.strToDate(
+            req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setCarInvoice(req.getCarInvoice());
+        budgetOrder.setCarJqx(req.getCarJqx());
+        budgetOrder.setCarSyx(req.getCarSyx());
+        budgetOrder.setPolicyDatetime(DateUtil.strToDate(
+            req.getPolicyDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setPolicyDueDate(DateUtil.strToDate(req.getPolicyDueDate(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setCarSettleOtherPdf(req.getCarSettleOtherPdf());
+
         budgetOrderBO.entryMortgage(budgetOrder);
 
         // 获取参考材料
@@ -1542,7 +1562,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String logisticsCode = logisticsBO.saveLogistics(
             ELogisticsType.BUDGET.getCode(),
             ELogisticsCurNodeType.CAR_MORTGAGE.getCode(), budgetOrder.getCode(),
-            req.getOperator(), EBudgetOrderNode.INSIDEJOB_SEND.getCode(),
+            budgetOrder.getSaleUserId(),
+            EBudgetOrderNode.INSIDEJOB_SEND.getCode(),
             EBudgetOrderNode.YWDH_APPROVE.getCode(), null);
         // 产生物流单后改变状态为物流传递中
         budgetOrder.setIsLogistics(EBoolean.YES.getCode());
@@ -2431,6 +2452,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public List<BudgetOrder> queryBudgetOrderByApplyUserName(
             BudgetOrder condition) {
         return budgetOrderBO.queryBudgetOrderByApplyUserName(condition);
+    }
+
+    @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
+            int limit, BudgetOrder condition) {
+        return budgetOrderBO.queryBudgetOrderPageByUserId(start, limit,
+            condition);
     }
 
 }

@@ -241,4 +241,17 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
             BudgetOrder.class);
     }
 
+    @Override
+    public List<BudgetOrder> selectBudgetOrderListByUserId(
+            BudgetOrder condition, int start, int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_budgetOrder_byUserId"),
+            condition, BudgetOrder.class);
+    }
+
+    @Override
+    public long selectTotalCountByUserId(BudgetOrder condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_budgetOrder_count_byUserId"), condition);
+    }
+
 }

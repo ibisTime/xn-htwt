@@ -166,4 +166,8 @@ public interface IBudgetOrderAO {
     public List<BudgetOrder> queryBudgetOrderByApplyUserName(
             BudgetOrder condition);
 
+    // 根据信贷专员或内勤查预算单客户
+    public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
+            int limit, BudgetOrder condition);
+
 }
