@@ -29,4 +29,6 @@ public interface ILogisticsAO {
     public List<Logistics> queryLogisticsList(Logistics condition);
 
     public Logistics getLogistics(String code);
+
+    public void linshi();
 }
