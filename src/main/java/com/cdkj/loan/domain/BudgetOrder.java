@@ -1022,6 +1022,17 @@ public class BudgetOrder extends ABaseDO {
     // 内勤名称
     private String insideJobName;
 
+    // 征信二手车评估报告
+    private String secondCarReport;
+
+    public String getSecondCarReport() {
+        return secondCarReport;
+    }
+
+    public void setSecondCarReport(String secondCarReport) {
+        this.secondCarReport = secondCarReport;
+    }
+
     public String getInsideJobName() {
         return insideJobName;
     }

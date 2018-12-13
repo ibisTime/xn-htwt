@@ -537,14 +537,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Credit credit = creditBO.getCreditBybudgetorder(req.getCode());
         if (credit != null) {
             if (!"0".equals(req.getBizType())) {
-                if (credit.getSecondCarReport() == null) {
-                    if (req.getSecondCarReport() == null) {
-                        throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                            "征信二手车评估报告未上传");
-                    } else {
-                        credit.setSecondCarReport(req.getSecondCarReport());
-                        creditBO.refreshSecondCarReport(credit);
-                    }
+                if (req.getSecondCarReport() == null) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "征信二手车评估报告未上传");
+                } else {
+                    credit.setSecondCarReport(req.getSecondCarReport());
+                    creditBO.refreshSecondCarReport(credit);
                 }
             }
         }
@@ -1711,6 +1709,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // budgetOrder.setInsideJob(operator.getRealName());//
         // 内勤（使用这个业务单在日志表的最新操作人）
         // }
+
+        // 征信二手车评估报告
+        if (StringUtils.isNotBlank(budgetOrder.getCreditCode())) {
+            Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+            budgetOrder.setSecondCarReport(credit.getSecondCarReport());
+        }
 
         // 资料快递 通过类型，预算单号，收件节点，物流状态查找物流单
         Logistics logistics = new Logistics();
