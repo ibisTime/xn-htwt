@@ -237,16 +237,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlanBO.prepayPhotoApprove(repayPlan);
     }
 
-    public static void main(String[] args) {
-        String x = "2018-06-14 00:00:00";
-        Date xd = DateUtil.strToDate(x, DateUtil.DATA_TIME_PATTERN_1);
-        if (xd.before(new Date())) {
-            System.out.println(1);
-        } else {
-            System.out.println(2);
-        }
-    }
-
     // 逾期处理
     @Override
     @Transactional
@@ -403,6 +393,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             }
         }
         logger.info("***************结束扫结束还款计划***************");
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DateUtil.getLastDay());
     }
 
     @Override

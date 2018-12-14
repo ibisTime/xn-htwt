@@ -59,7 +59,7 @@ public class GpsAOImpl implements IGpsAO {
         data.setApplyStatus(EBoolean.NO.getCode());
         data.setUseStatus(EGpsUseStatus.UN_USE.getCode());
         data.setUpdater(updater);
-        data.setUpdatedatetime(new Date());
+        data.setUpdateDatetime(new Date());
         gpsBO.saveGps(data);
         return code;
     }
@@ -72,7 +72,7 @@ public class GpsAOImpl implements IGpsAO {
         gps.setGpsDevNo(gpsDevNo);
         gps.setGpsType(gpsType);
         gps.setUpdater(updater);
-        gps.setUpdatedatetime(new Date());
+        gps.setUpdateDatetime(new Date());
         gpsBO.editGps(gps);
     }
 

@@ -52,7 +52,7 @@ public class Gps extends ABaseDO {
 
     private String updater;
 
-    private Date updatedatetime;
+    private Date updateDatetime;
 
     /*****************/
     // 公司编号
@@ -86,12 +86,12 @@ public class Gps extends ABaseDO {
         this.updater = updater;
     }
 
-    public Date getUpdatedatetime() {
-        return updatedatetime;
+    public Date getUpdateDatetime() {
+        return updateDatetime;
     }
 
-    public void setUpdatedatetime(Date updatedatetime) {
-        this.updatedatetime = updatedatetime;
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public String getCustomerNameQuery() {
