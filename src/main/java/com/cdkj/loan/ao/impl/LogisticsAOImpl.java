@@ -407,8 +407,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void linshi() {
         BudgetOrder condition = new BudgetOrder();
         ArrayList<String> list = new ArrayList<String>();
-        list.add("002_09");
-        list.add("002_10");
+        list.add("002_09");// 业务团队安装GPS
+        list.add("002_10");// GPS管理员审核
+        list.add("002_11");// 业务团队车辆落户
+        list.add("002_07");// 财务垫资
         condition.setCurNodeCodeList(list);
         List<BudgetOrder> budgetOrderList = budgetOrderBO
             .queryBudgetOrderList(condition);
