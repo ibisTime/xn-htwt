@@ -46,6 +46,7 @@ public class XN632148 extends AProcessor {
         condition.setAdvanfCurNodeCodeList(req.getAdvanfCurNodeCodeList());
         condition.setRoleCode(req.getRoleCode());
         condition.setIsInterview(req.getIsInterview());
+        condition.setIsEntryMortgage(req.getIsEntryMortgage());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         condition.setIsGpsAz(req.getIsGpsAz());
         String orderColumn = req.getOrderColumn();

@@ -33,6 +33,8 @@ public class XN632148Req extends APageReq {
     private List<String> advanfCurNodeCodeList;
 
     private String isAdvanceFund;// 是否垫资
+
+    private String isEntryMortgage;// 是否录入发保合
     // 是否面签完成
 
     private String isInterview;
@@ -56,6 +58,14 @@ public class XN632148Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getIsEntryMortgage() {
+        return isEntryMortgage;
+    }
+
+    public void setIsEntryMortgage(String isEntryMortgage) {
+        this.isEntryMortgage = isEntryMortgage;
     }
 
     public String getIsInterview() {
