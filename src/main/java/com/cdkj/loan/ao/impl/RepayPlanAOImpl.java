@@ -299,8 +299,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Override
     @Transactional
-    public void payFee(String code, List<String> costList, String operator,
-            String payType) {
+    public void payFee(String code, List<String> costList, String payType,
+            String operator) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         // TODO 支付方式 扣款
         long totalFee = 0L;

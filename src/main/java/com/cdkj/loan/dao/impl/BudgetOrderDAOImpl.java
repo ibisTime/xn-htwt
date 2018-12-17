@@ -245,7 +245,7 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     public List<BudgetOrder> selectBudgetOrderListByUserId(
             BudgetOrder condition, int start, int pageSize) {
         return super.selectList(NAMESPACE.concat("select_budgetOrder_byUserId"),
-            condition, BudgetOrder.class);
+            start, pageSize, condition, BudgetOrder.class);
     }
 
     @Override

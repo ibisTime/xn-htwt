@@ -34,6 +34,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -76,6 +77,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         // undo 待验证库存数量和申请数量
         GpsApply data = new GpsApply();
         data.setType(req.getType());
+        data.setApplyType(req.getApplyType());
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
         if (StringUtils.isBlank(sysUser.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -90,6 +92,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             StringValidater.toInteger(req.getApplyWirelessCount()));
         data.setApplyCount(
             data.getApplyWiredCount() + data.getApplyWirelessCount());
+        data.setTeamCode(req.getTeamCode());
         if (StringUtils.isNotBlank(req.getBudgetOrderCode())) {
             // 验证预算单编号存不存在
             BudgetOrder budgetOrder = new BudgetOrder();
@@ -100,10 +103,20 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
                     "请检查客户姓名是否从下拉框中选择!");
             }
             data.setBudgetOrderCode(req.getBudgetOrderCode());
+            data.setTeamCode(domain.getTeamCode());
+            data.setInsideJob(domain.getInsideJob());
+            data.setSaleUserId(domain.getSaleUserId());
+        } else {
+            if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())) {
+                data.setInsideJob(req.getApplyUser());
+            } else if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
+                data.setSaleUserId(req.getApplyUser());
+            }
         }
         data.setCustomerName(req.getCustomerName());
         data.setMobile(req.getMobile());
         data.setCarFrameNo(req.getCarFrameNo());
+        data.setTeamCode(req.getTeamCode());
         data.setApplyDatetime(new Date());
         data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
         return gpsApplyBO.saveGpsApply(data);
@@ -210,13 +223,23 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         if (department != null) {
             gpsApply.setCompanyName(department.getName());
         }
-        if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
+        if (StringUtils.isNotBlank(gpsApply.getTeamCode())) {
             gpsApply.setTeamName(
-                bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
+                bizTeamBO.getBizTeam(gpsApply.getTeamCode()).getName());
         }
         if (StringUtils.isNotBlank(sysUser.getRoleCode())) {
             SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
             gpsApply.setRoleName(sysRole.getName());
+        }
+        if (StringUtils.isNotBlank(gpsApply.getInsideJob())) {
+            String realName = sysUserBO.getUser(gpsApply.getInsideJob())
+                .getRealName();
+            gpsApply.setInsideJobName(realName);
+        }
+        if (StringUtils.isNotBlank(gpsApply.getSaleUserId())) {
+            String realName = sysUserBO.getUser(gpsApply.getSaleUserId())
+                .getRealName();
+            gpsApply.setSaleUserName(realName);
         }
 
         // 审核时的gps列表

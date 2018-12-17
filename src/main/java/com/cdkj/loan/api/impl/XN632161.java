@@ -38,6 +38,7 @@ public class XN632161 extends AProcessor {
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;
         }
+        condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());

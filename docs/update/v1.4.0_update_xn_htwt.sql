@@ -132,3 +132,10 @@ UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = 
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_22';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_23';
 SET SQL_SAFE_UPDATES = 1;
+
+
+ALTER TABLE `tb_gps_apply` 
+ADD COLUMN `apply_type` varchar(4) NULL COMMENT '申请类型(1 本部 2 分部)' AFTER `type`,
+ADD COLUMN `team_code` varchar(32) NULL COMMENT '团队编号' AFTER `receive_datetime`,
+ADD COLUMN `inside_job` varchar(32) NULL COMMENT '团队内勤' AFTER `team_code`,
+ADD COLUMN `sale_user_id` varchar(32) NULL COMMENT '信贷专员' AFTER `inside_job`;

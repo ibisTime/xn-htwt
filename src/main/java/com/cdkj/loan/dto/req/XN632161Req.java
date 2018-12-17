@@ -21,6 +21,17 @@ public class XN632161Req extends APageReq {
     @NotBlank
     private String roleCode;// 角色编号
 
+    // 申请人姓名
+    private String applyUserName;
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
+
     public String getUserId() {
         return userId;
     }
