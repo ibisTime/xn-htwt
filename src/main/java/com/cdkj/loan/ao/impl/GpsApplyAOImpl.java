@@ -116,7 +116,6 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         data.setCustomerName(req.getCustomerName());
         data.setMobile(req.getMobile());
         data.setCarFrameNo(req.getCarFrameNo());
-        data.setTeamCode(req.getTeamCode());
         data.setApplyDatetime(new Date());
         data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
         return gpsApplyBO.saveGpsApply(data);
@@ -189,8 +188,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         }
         // 产生物流单
         logisticsBO.saveLogisticsGps(ELogisticsType.GPS.getCode(),
-            data.getCode(), data.getApplyUser(), "GPS物流传递",
-            data.getApplyUser());
+            data.getCode(), data.getApplyUser(), "GPS物流传递", data.getApplyUser(),
+            data.getTeamCode());
     }
 
     @Override
