@@ -206,6 +206,12 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     @Transactional
+    public void changeLoginPwdOSS(String userId, String newLoginPwd) {
+        userBO.refreshLoginPwd(userId, newLoginPwd);
+    }
+
+    @Override
+    @Transactional
     public void doResetLoginPwd(String mobile, String smsCaptcha,
             String newLoginPwd, String kind) {
         String userId = userBO.getUserId(mobile, kind);

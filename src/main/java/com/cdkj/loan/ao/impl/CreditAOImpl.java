@@ -516,6 +516,10 @@ public class CreditAOImpl implements ICreditAO {
             BizTeam team = bizTeamBO.getBizTeam(credit.getTeamCode());
             credit.setTeamName(team.getName());
         }
+        if (StringUtils.isNotBlank(credit.getInsideJob())) {
+            SYSUser insideJob = sysUserBO.getUser(credit.getInsideJob());
+            credit.setInsideJobName(insideJob.getRealName());
+        }
         // 获取操作日志中最新操作记录
         if (StringUtils.isNotBlank(credit.getCode())) {
             SYSBizLog sysBizLog = sysBizLogBO
