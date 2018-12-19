@@ -202,6 +202,16 @@ public class RepayBiz extends ABaseDO {
 
     private String realNameQuery;// 姓名模糊查
 
+    private Long retreatDeposit;// 可退押金金额
+
+    public Long getRetreatDeposit() {
+        return retreatDeposit;
+    }
+
+    public void setRetreatDeposit(Long retreatDeposit) {
+        this.retreatDeposit = retreatDeposit;
+    }
+
     public String getRealNameQuery() {
         return realNameQuery;
     }

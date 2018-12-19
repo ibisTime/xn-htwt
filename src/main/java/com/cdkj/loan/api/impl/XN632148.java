@@ -41,9 +41,38 @@ public class XN632148 extends AProcessor {
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        condition.setCurNodeCodeList(req.getCurNodeCodeList());
-        condition.setIntevCurNodeCodeList(req.getIntevCurNodeCodeList());
-        condition.setAdvanfCurNodeCodeList(req.getAdvanfCurNodeCodeList());
+        if (StringUtils.isNotBlank(req.getCurNodeCode())) {
+            boolean b = req.getCurNodeCodeList().contains(req.getCurNodeCode());
+            if (b == false) {
+                condition.setCurNodeCode("000_00");// 意为空
+            } else {
+                condition.setCurNodeCode(req.getCurNodeCode());
+            }
+        } else {
+            condition.setCurNodeCodeList(req.getCurNodeCodeList());
+        }
+        if (StringUtils.isNotBlank(req.getIntevCurNodeCode())) {
+            boolean b = req.getIntevCurNodeCodeList()
+                .contains(req.getIntevCurNodeCode());
+            if (b == false) {
+                condition.setIntevCurNodeCode("000_00");// 意为空
+            } else {
+                condition.setIntevCurNodeCode(req.getIntevCurNodeCode());
+            }
+        } else {
+            condition.setIntevCurNodeCodeList(req.getIntevCurNodeCodeList());
+        }
+        if (StringUtils.isNotBlank(req.getAdvanfCurNodeCode())) {
+            boolean b = req.getAdvanfCurNodeCodeList()
+                .contains(req.getAdvanfCurNodeCode());
+            if (b == false) {
+                condition.setAdvanfCurNodeCode("000_00");// 意为空
+            } else {
+                condition.setAdvanfCurNodeCode(req.getAdvanfCurNodeCode());
+            }
+        } else {
+            condition.setAdvanfCurNodeCodeList(req.getAdvanfCurNodeCodeList());
+        }
         condition.setRoleCode(req.getRoleCode());
         condition.setIsInterview(req.getIsInterview());
         condition.setIsEntryMortgage(req.getIsEntryMortgage());

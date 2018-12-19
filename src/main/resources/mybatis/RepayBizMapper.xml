@@ -570,6 +570,7 @@
 		SET
 		paper_photo = #{paperPhoto}
 		,cur_node_code = #{curNodeCode}
+		,is_advance_settled = #{isAdvanceSettled}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
@@ -580,6 +581,7 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,is_advance_settled = #{isAdvanceSettled}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

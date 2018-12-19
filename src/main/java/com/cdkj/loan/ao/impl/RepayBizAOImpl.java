@@ -128,6 +128,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         Long deposit = repayBiz.getLyDeposit() - repayBiz.getCutLyDeposit();
         Long amount = 0L;
+        Long retreatDeposit = repayBiz.getLyDeposit();
         for (RepayPlan repayPlan : repayPlanList) {
             // 实际退款金额
             Long shouldDeposit = repayPlan.getShouldDeposit();
@@ -135,11 +136,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
             // 借款余额
             Long overplusAmount = repayPlan.getOverplusAmount();
             amount = amount + overplusAmount;
+
+            // 可退押金金额
+            retreatDeposit += repayPlan.getOverdueDeposit();
         }
+        repayBiz.setRetreatDeposit(retreatDeposit);
         repayBiz.setActualRefunds(deposit);
         repayBiz.setLoanBalance(amount);
-        String bankName = bankBO.getBank(repayBiz.getLoanBank()).getBankName();
-        repayBiz.setLoanBankName(bankName);
+        // app取的银行编号为ICBC
+        // String bankName =
+        // bankBO.getBank(repayBiz.getLoanBank()).getBankName();
+        // repayBiz.setLoanBankName(bankName);
 
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
             repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
@@ -188,18 +195,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 当前节点
         String preCurNodeCode = repayBiz.getCurNodeCode();
         repayBiz.setCurNodeCode(ERepayBizNode.PREPAYMENT_APPROVE.getCode());
+        repayBiz.setIsAdvanceSettled(EBoolean.YES.getCode());
         repayBiz.setPaperPhoto(req.getPaperPhoto());
         repayBiz.setUpdater(req.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.prepaymentApply(repayBiz);
 
         // 日志记录
-        sysBizLogBO.recordCurOperate(repayBiz.getBudgetOrderCode(),
+        sysBizLogBO.recordCurOperate(repayBiz.getRefCode(),
             EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
             req.getRemark(), req.getUpdater(), repayBiz.getTeamCode());
-        sysBizLogBO.saveSYSBizLog(repayBiz.getBudgetOrderCode(),
-            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
-            repayBiz.getTeamCode());
+        sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(), EBizLogType.REPAY_BIZ,
+            req.getCode(), repayBiz.getCurNodeCode(), repayBiz.getTeamCode());
     }
 
     @Override
@@ -218,13 +225,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayBiz.setCurNodeCode(nodeFlow.getNextNode());
         } else {
             repayBiz.setCurNodeCode(nodeFlow.getBackNode());
+            repayBiz.setIsAdvanceSettled(EBoolean.NO.getCode());
         }
         repayBiz.setUpdater(req.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(req.getApproveNote());
         repayBizBO.prepaymentApprove(repayBiz);
 
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getBudgetOrderCode(),
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
             EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
             repayBiz.getCurNodeCode(), req.getApproveNote(), req.getUpdater(),
             repayBiz.getTeamCode());

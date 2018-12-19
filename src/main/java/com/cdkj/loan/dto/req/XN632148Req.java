@@ -26,6 +26,12 @@ public class XN632148Req extends APageReq {
 
     private String companyCode;// 公司编号
 
+    private String curNodeCode;// 当前节点编号
+
+    private String intevCurNodeCode;
+
+    private String advanfCurNodeCode;
+
     private List<String> curNodeCodeList;// 当前节点编号
 
     private List<String> intevCurNodeCodeList;
@@ -51,6 +57,30 @@ public class XN632148Req extends APageReq {
     private String keyword; // 关键字
 
     private String userId; // 操作人
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getIntevCurNodeCode() {
+        return intevCurNodeCode;
+    }
+
+    public void setIntevCurNodeCode(String intevCurNodeCode) {
+        this.intevCurNodeCode = intevCurNodeCode;
+    }
+
+    public String getAdvanfCurNodeCode() {
+        return advanfCurNodeCode;
+    }
+
+    public void setAdvanfCurNodeCode(String advanfCurNodeCode) {
+        this.advanfCurNodeCode = advanfCurNodeCode;
+    }
 
     public String getUserId() {
         return userId;

@@ -15,9 +15,6 @@ INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_38', '业务贷后
 UPDATE `tsys_node` SET `name`='内勤录入发保合' WHERE `code`='002_18';
 UPDATE `tsys_node` SET `name`='内勤录入抵押信息' WHERE `code`='002_21';
 
-
-
-
 DELETE FROM `tsys_node_flow` WHERE `id`='55';
 
 UPDATE `tsys_node_flow` SET `next_node`='002_13', `back_node`='002_05' WHERE `id`='60';
@@ -36,10 +33,6 @@ UPDATE `tsys_node_flow` SET `next_node`='002_36' WHERE `id`='66';
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_36', '002_21');
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_38', '002_19');
 UPDATE `tsys_node_flow` SET `next_node`='002_38' WHERE `id`='25';
-
-
-
-
 
 INSERT INTO `tsys_role_node` (`role_code`, `node_code`) VALUES ('RO201800000000000001', '002_29');
 
@@ -98,6 +91,47 @@ UPDATE tdq_budget_order SET is_mortgage='1' WHERE cur_node_code = '002_22';
 UPDATE tdq_budget_order SET is_mortgage='1' WHERE cur_node_code = '002_23';
 SET SQL_SAFE_UPDATES = 1;
 
+ALTER TABLE `tb_gps_apply` 
+ADD COLUMN `apply_type` varchar(4) NULL COMMENT '申请类型(1 本部 2 分部)' AFTER `type`,
+ADD COLUMN `team_code` varchar(32) NULL COMMENT '团队编号' AFTER `receive_datetime`,
+ADD COLUMN `inside_job` varchar(32) NULL COMMENT '团队内勤' AFTER `team_code`,
+ADD COLUMN `sale_user_id` varchar(32) NULL COMMENT '信贷专员' AFTER `inside_job`;
+
+
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_37', '002_38');
+
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'produce_type', '用户产生类型', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'produce_type', '0', '主动注册', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'produce_type', '1', '自动产生', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
+
+
+DROP TABLE IF EXISTS `tsys_sms`;
+CREATE TABLE `tsys_sms` (
+  `code` varchar(32) DEFAULT NULL COMMENT '编号',
+  `type` varchar(32) DEFAULT NULL COMMENT '消息类型',
+  `title` varchar(255) DEFAULT NULL COMMENT '消息标题',
+  `content` TEXT DEFAULT NULL COMMENT '消息内容',
+  `status` varchar(32) DEFAULT NULL COMMENT '状态',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_07', '002_33');
+UPDATE `tsys_node` SET `name`='提前还款审核' WHERE `code`='003_20';
+DELETE FROM `tsys_node` WHERE `code`='003_21';
+DELETE FROM `tsys_node` WHERE `code`='003_22';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('003', '003_20', '003_02', '003_01');
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM tdq_logistics WHERE code ='L201811010737293924675';
+DELETE FROM tdq_logistics WHERE code ='L201812101620098231500';
+DELETE FROM tdq_logistics WHERE code ='L201812101105038134821';
+SET SQL_SAFE_UPDATES = 1;
+
 
 SET SQL_SAFE_UPDATES = 0;
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_05';
@@ -126,45 +160,9 @@ UPDATE tdq_budget_order SET intev_cur_node_code='002_05',is_interview = '0',is_g
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_28';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_04';
 
-UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_19';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_20';
+UPDATE tdq_budget_order SET cur_node_code='002_21',intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_19';
+UPDATE tdq_budget_order SET cur_node_code='002_21',intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_20';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_21';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_22';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_23';
 SET SQL_SAFE_UPDATES = 1;
-
-
-ALTER TABLE `tb_gps_apply` 
-ADD COLUMN `apply_type` varchar(4) NULL COMMENT '申请类型(1 本部 2 分部)' AFTER `type`,
-ADD COLUMN `team_code` varchar(32) NULL COMMENT '团队编号' AFTER `receive_datetime`,
-ADD COLUMN `inside_job` varchar(32) NULL COMMENT '团队内勤' AFTER `team_code`,
-ADD COLUMN `sale_user_id` varchar(32) NULL COMMENT '信贷专员' AFTER `inside_job`;
-
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201812121616423272828','财务审核','2','/check','0','U201806141609052491026','2018-12-12 16:16:42','','SM201805291018133331107');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201812121623081465381','财务审核','2','/check','0','U201806141609052491026','2018-12-12 16:23:08','','SM201810101415345789815');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201812121707299432066','录入发保合','1','/biz/insurance.htm','5','U201806141609052491026','2018-12-12 17:07:29','','SM201805291007027185682');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201812121708408358035','录入','2','/edit','1','U201806141609052491026','2018-12-12 17:08:40','','SM201812121707299432066');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201812121708535448329','详情','2','/detail','2','U201806141609052491026','2018-12-12 17:08:53','','SM201812121707299432066');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201812121932571376278','详情','2','/detail','5','U201806141609052491026','2018-12-12 19:32:57','','SM201805291024417046938');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201902051915206404059','内勤主管分配情况','1','/statistic/nqzgfpqk.htm','6','U201806141609052491026','2019-02-05 19:15:20','','SM201808281919108592405');
-
-INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_37', '002_38');
-
-INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'produce_type', '用户产生类型', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'produce_type', '0', '主动注册', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'produce_type', '1', '自动产生', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
-
-
-DROP TABLE IF EXISTS `tsys_sms`;
-CREATE TABLE `tsys_sms` (
-  `code` varchar(32) DEFAULT NULL COMMENT '编号',
-  `type` varchar(32) DEFAULT NULL COMMENT '消息类型',
-  `title` varchar(255) DEFAULT NULL COMMENT '消息标题',
-  `content` TEXT DEFAULT NULL COMMENT '消息内容',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态',
-  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
