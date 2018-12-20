@@ -1076,8 +1076,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.BANK_LOAN.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode(),
-                nodeFlow.getNextNode(), null);
+                preCurrentNode, nodeFlow.getNextNode(), null);
             // 产生物流单后改变状态为物流传递中
             budgetOrder.setIsLogistics(EBoolean.YES.getCode());
             budgetOrderBO.updateIsLogistics(budgetOrder);
@@ -1720,7 +1719,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Logistics logistics = new Logistics();
         logistics.setType(ELogisticsType.BUDGET.getCode());
         logistics.setBizCode(budgetOrder.getCode());
-        logistics.setFromNodeCode(EBudgetOrderNode.CARSETTLE.getCode());
+        logistics.setFromNodeCode(EBudgetOrderNode.INSIDEJOB_SEND.getCode());
         logistics.setToNodeCode(EBudgetOrderNode.DHAPPROVEDATA.getCode());
         logistics.setStatus(ELogisticsStatus.RECEIVED.getCode());
         List<Logistics> logisticsList = logisticsBO

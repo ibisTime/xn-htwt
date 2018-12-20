@@ -77,6 +77,7 @@ public class XN632148 extends AProcessor {
         condition.setIsInterview(req.getIsInterview());
         condition.setIsEntryMortgage(req.getIsEntryMortgage());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
+        condition.setIsMortgage(req.getIsMortgage());
         condition.setIsGpsAz(req.getIsGpsAz());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

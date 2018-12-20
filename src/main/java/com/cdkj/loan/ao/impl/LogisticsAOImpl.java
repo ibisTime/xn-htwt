@@ -411,6 +411,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         list.add("002_10");// GPS管理员审核
         list.add("002_11");// 业务团队车辆落户
         list.add("002_07");// 财务垫资
+        list.add("002_13");// 业务贷后审核材料
         condition.setCurNodeCodeList(list);
         List<BudgetOrder> budgetOrderList = budgetOrderBO
             .queryBudgetOrderList(condition);
@@ -421,7 +422,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 ELogisticsCurNodeType.BANK_LOAN.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 EBudgetOrderNode.INSIDEJOB_SEND.getCode(),
-                EBudgetOrderNode.YWDH_APPROVE.getCode(), null);
+                EBudgetOrderNode.DHAPPROVEDATA.getCode(), null);
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.LOGISTICS, logisticsCode,

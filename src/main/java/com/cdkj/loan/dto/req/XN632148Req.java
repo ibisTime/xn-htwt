@@ -41,8 +41,11 @@ public class XN632148Req extends APageReq {
     private String isAdvanceFund;// 是否垫资
 
     private String isEntryMortgage;// 是否录入发保合
-    // 是否面签完成
 
+    // 是否抵押完成(1是0否)
+    private String isMortgage;
+
+    // 是否面签完成
     private String isInterview;
 
     // 入档位置
@@ -64,6 +67,14 @@ public class XN632148Req extends APageReq {
 
     public void setCurNodeCode(String curNodeCode) {
         this.curNodeCode = curNodeCode;
+    }
+
+    public String getIsMortgage() {
+        return isMortgage;
+    }
+
+    public void setIsMortgage(String isMortgage) {
+        this.isMortgage = isMortgage;
     }
 
     public String getIntevCurNodeCode() {

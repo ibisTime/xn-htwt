@@ -424,6 +424,9 @@
 			<if test="isEntryMortgage != null and isEntryMortgage != '' ">
 				AND t.is_entryMortgage = #{isEntryMortgage}
 			</if>
+			<if test="isMortgage != null and isMortgage != '' ">
+				AND t.is_mortgage = #{isMortgage}
+			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>

@@ -98,15 +98,15 @@ ADD COLUMN `inside_job` varchar(32) NULL COMMENT '团队内勤' AFTER `team_code
 ADD COLUMN `sale_user_id` varchar(32) NULL COMMENT '信贷专员' AFTER `inside_job`;
 
 
-INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_37', '002_38');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('002', '002_37', '002_13');
 
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'produce_type', '用户产生类型', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'produce_type', '0', '主动注册', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'produce_type', '1', '自动产生', 'admin', '2018-10-25 09:59:32', 'CD-HTWT000020', 'CD-HTWT000020');
 
 
-DROP TABLE IF EXISTS `tsys_sms`;
-CREATE TABLE `tsys_sms` (
+DROP TABLE IF EXISTS `tstd_sms`;
+CREATE TABLE `tstd_sms` (
   `code` varchar(32) DEFAULT NULL COMMENT '编号',
   `type` varchar(32) DEFAULT NULL COMMENT '消息类型',
   `title` varchar(255) DEFAULT NULL COMMENT '消息标题',
@@ -130,26 +130,40 @@ SET SQL_SAFE_UPDATES = 0;
 DELETE FROM tdq_logistics WHERE code ='L201811010737293924675';
 DELETE FROM tdq_logistics WHERE code ='L201812101620098231500';
 DELETE FROM tdq_logistics WHERE code ='L201812101105038134821';
+DELETE FROM `tsys_biz_log` WHERE `id`='4888';
+DELETE FROM `tsys_biz_log` WHERE `id`='7671';
+DELETE FROM `tsys_biz_log` WHERE `id`='7574';
 SET SQL_SAFE_UPDATES = 1;
+
+ALTER TABLE `tb_gps_apply` 
+CHANGE COLUMN `type` `type` VARCHAR(4) NULL COMMENT '类型(1 公司 2 个人)' ;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tb_gps SET use_status='0';
+UPDATE tb_gps SET use_status='1' WHERE code in 
+(select code from tdq_budget_order_gps where budget_order in 
+(select code from tdq_budget_order where cur_node_code in ('002_19','002_20','002_21','002_22','002_23')));
+SET SQL_SAFE_UPDATES = 1;
+
 
 
 SET SQL_SAFE_UPDATES = 0;
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_05';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_08',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_08';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_26',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_26';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_07';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_13',cur_node_code = '002_29',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_07';
 
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_11';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_13',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_13';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_14',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_14';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_15',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_15';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_16',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_16';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_17',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_17';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_13',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_11';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_13',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_13';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_14',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_14';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_15',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_15';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_16',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_16';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_17',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_17';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_18';
 
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_09';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_10';
-UPDATE tdq_budget_order SET intev_cur_node_code='002_37',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_12';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_13',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_09';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_13',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_10';
+UPDATE tdq_budget_order SET intev_cur_node_code='002_13',cur_node_code = '002_33',advanf_cur_node_code = '002_18',is_interview = '1',is_gps_az = '0' WHERE cur_node_code = '002_12';
 
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_01';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_24';

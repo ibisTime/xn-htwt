@@ -21,7 +21,6 @@ public class XN632124Req {
     private String pledgeUser;
 
     // 代理人身份证复印件
-    @NotBlank
     private String pledgeUserIdCardCopy;
 
     @NotBlank
