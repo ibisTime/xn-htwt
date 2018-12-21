@@ -78,4 +78,8 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 更新逾期金额和次数
     public void repayOverDue(RepayBiz repayBiz);
 
+    public void updateBizByPayFee(RepayBiz repayBiz);
+
+    public void updateRestPeriods(RepayBiz repayBiz);
+
 }

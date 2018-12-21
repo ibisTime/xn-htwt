@@ -122,5 +122,11 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 更新逾期金额
     public void repayOverdue(RepayBiz repayBiz);
 
+    // 缴纳清收成本后更新还款业务
+    public void refreshBizByPayFee(RepayBiz repayBiz);
+
+    // 更新剩余期数
+    public void refreshRestPeriods(RepayBiz repayBiz);
+
     // ********************************common********************************
 }

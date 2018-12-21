@@ -281,6 +281,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setTotalFee(totalFee);
         if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
+            // 剩余期数 = 总期数-还款计划的当前期数
+            repayBiz.setRestPeriods(
+                repayBiz.getPeriods() - repayPlan.getCurPeriods());
+            repayBizBO.refreshRestPeriods(repayBiz);
         } else if (EDealResult.RED.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
             // 更新还款业务未申请拖车节点
@@ -315,6 +319,16 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         }
         repayPlan.setPayedFee(totalFee + repayPlan.getPayedFee());
         repayPlanBO.payFee(repayPlan);
+
+        // 更新还款业务
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+        // 剩余期数 = 总期数-还款计划的当前期数
+        // repayBiz
+        // .setRestPeriods(repayBiz.getPeriods() - repayPlan.getCurPeriods());
+        repayBiz.setRestAmount(
+            repayBiz.getRestAmount() - repayPlan.getRepayCapital());
+        repayBiz.setOverdueAmount(0L);
+        repayBizBO.refreshBizByPayFee(repayBiz);
     }
 
     @Override

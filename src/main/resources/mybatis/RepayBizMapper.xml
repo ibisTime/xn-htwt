@@ -596,4 +596,19 @@
 		,cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_bizByPayFee" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		overdue_amount = #{overdueAmount}
+		,rest_amount = #{restAmount}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_restPeriods" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		rest_periods = #{restPeriods}
+		WHERE code = #{code}
+	</update>
 </mapper>

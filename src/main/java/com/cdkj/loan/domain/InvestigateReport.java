@@ -77,6 +77,18 @@ public class InvestigateReport extends ABaseDO {
     // 流水时间止
     private Date jourDatetimeEnd;
 
+    // 流水结息1
+    private String jourInterest1;
+
+    // 流水结息2
+    private String jourInterest2;
+
+    // 结息1
+    private Long interest1;
+
+    // 结息2
+    private Long interest2;
+
     // 收入
     private Long jourIncome;
 
@@ -92,6 +104,9 @@ public class InvestigateReport extends ABaseDO {
     // 月均支出
     private Long jourMonthExpend;
 
+    // 流水图片
+    private String jourPic;
+
     // 银行流水情况
     private String jourRemark;
 
@@ -100,6 +115,18 @@ public class InvestigateReport extends ABaseDO {
 
     // 支付宝流水时间止
     private Date zfbJourDatetimeEnd;
+
+    // 支付宝流水结息1
+    private String zfbJourInterest1;
+
+    // 支付宝流水结息2
+    private String zfbJourInterest2;
+
+    // 支付宝结息1
+    private Long zfbInterest1;
+
+    // 支付宝结息2
+    private Long zfbInterest2;
 
     // 支付宝收入
     private Long zfbJourIncome;
@@ -116,6 +143,9 @@ public class InvestigateReport extends ABaseDO {
     // 支付宝月均支出
     private Long zfbJourMonthExpend;
 
+    // 支付宝流水图片
+    private String zfbJourPic;
+
     // 支付宝流水情况
     private String zfbJourRemark;
 
@@ -124,6 +154,18 @@ public class InvestigateReport extends ABaseDO {
 
     // 微信流水时间止
     private Date wxJourDatetimeEnd;
+
+    // 微信流水结息1
+    private String wxJourInterest1;
+
+    // 微信流水结息2
+    private String wxJourInterest2;
+
+    // 微信结息1
+    private Long wxInterest1;
+
+    // 微信结息2
+    private Long wxInterest2;
 
     // 微信收入
     private Long wxJourIncome;
@@ -139,6 +181,9 @@ public class InvestigateReport extends ABaseDO {
 
     // 微信月均支出
     private Long wxJourMonthExpend;
+
+    // 微信流水图片
+    private String wxJourPic;
 
     // 微信流水情况
     private String wxJourRemark;
@@ -552,6 +597,126 @@ public class InvestigateReport extends ABaseDO {
 
     public void setZfbJourBalance(Long zfbJourBalance) {
         this.zfbJourBalance = zfbJourBalance;
+    }
+
+    public String getJourInterest1() {
+        return jourInterest1;
+    }
+
+    public void setJourInterest1(String jourInterest1) {
+        this.jourInterest1 = jourInterest1;
+    }
+
+    public String getJourInterest2() {
+        return jourInterest2;
+    }
+
+    public void setJourInterest2(String jourInterest2) {
+        this.jourInterest2 = jourInterest2;
+    }
+
+    public Long getInterest1() {
+        return interest1;
+    }
+
+    public void setInterest1(Long interest1) {
+        this.interest1 = interest1;
+    }
+
+    public Long getInterest2() {
+        return interest2;
+    }
+
+    public void setInterest2(Long interest2) {
+        this.interest2 = interest2;
+    }
+
+    public String getJourPic() {
+        return jourPic;
+    }
+
+    public void setJourPic(String jourPic) {
+        this.jourPic = jourPic;
+    }
+
+    public String getZfbJourInterest1() {
+        return zfbJourInterest1;
+    }
+
+    public void setZfbJourInterest1(String zfbJourInterest1) {
+        this.zfbJourInterest1 = zfbJourInterest1;
+    }
+
+    public String getZfbJourInterest2() {
+        return zfbJourInterest2;
+    }
+
+    public void setZfbJourInterest2(String zfbJourInterest2) {
+        this.zfbJourInterest2 = zfbJourInterest2;
+    }
+
+    public Long getZfbInterest1() {
+        return zfbInterest1;
+    }
+
+    public void setZfbInterest1(Long zfbInterest1) {
+        this.zfbInterest1 = zfbInterest1;
+    }
+
+    public Long getZfbInterest2() {
+        return zfbInterest2;
+    }
+
+    public void setZfbInterest2(Long zfbInterest2) {
+        this.zfbInterest2 = zfbInterest2;
+    }
+
+    public String getZfbJourPic() {
+        return zfbJourPic;
+    }
+
+    public void setZfbJourPic(String zfbJourPic) {
+        this.zfbJourPic = zfbJourPic;
+    }
+
+    public String getWxJourInterest1() {
+        return wxJourInterest1;
+    }
+
+    public void setWxJourInterest1(String wxJourInterest1) {
+        this.wxJourInterest1 = wxJourInterest1;
+    }
+
+    public String getWxJourInterest2() {
+        return wxJourInterest2;
+    }
+
+    public void setWxJourInterest2(String wxJourInterest2) {
+        this.wxJourInterest2 = wxJourInterest2;
+    }
+
+    public Long getWxInterest1() {
+        return wxInterest1;
+    }
+
+    public void setWxInterest1(Long wxInterest1) {
+        this.wxInterest1 = wxInterest1;
+    }
+
+    public Long getWxInterest2() {
+        return wxInterest2;
+    }
+
+    public void setWxInterest2(Long wxInterest2) {
+        this.wxInterest2 = wxInterest2;
+    }
+
+    public String getWxJourPic() {
+        return wxJourPic;
+    }
+
+    public void setWxJourPic(String wxJourPic) {
+        this.wxJourPic = wxJourPic;
     }
 
     public Long getZfbJourMonthIncome() {

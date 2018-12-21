@@ -455,4 +455,14 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     }
 
+    @Override
+    public void refreshBizByPayFee(RepayBiz repayBiz) {
+        repayBizDAO.updateBizByPayFee(repayBiz);
+    }
+
+    @Override
+    public void refreshRestPeriods(RepayBiz repayBiz) {
+        repayBizDAO.updateRestPeriods(repayBiz);
+    }
+
 }

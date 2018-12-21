@@ -837,6 +837,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setZfbJourDatetimeEnd(budgetOrder.getZfbJourDatetimeEnd());
 
                 investigateReport
+                    .setZfbJourInterest1(budgetOrder.getZfbJourInterest1());
+                investigateReport
+                    .setZfbJourInterest2(budgetOrder.getZfbJourInterest2());
+                investigateReport
+                    .setZfbInterest1(budgetOrder.getZfbInterest1());
+                investigateReport
+                    .setZfbInterest2(budgetOrder.getZfbInterest2());
+
+                investigateReport
                     .setZfbJourIncome(budgetOrder.getZfbJourIncome());
                 investigateReport
                     .setZfbJourExpend(budgetOrder.getZfbJourExpend());
@@ -846,6 +855,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setZfbJourMonthIncome(budgetOrder.getZfbJourMonthIncome());
                 investigateReport
                     .setZfbJourMonthExpend(budgetOrder.getZfbJourMonthExpend());
+                investigateReport.setZfbJourPic(budgetOrder.getZfbJourPic());
                 investigateReport
                     .setZfbJourRemark(budgetOrder.getZfbJourRemark());
 
@@ -853,6 +863,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     budgetOrder.getWxJourDatetimeStart());
                 investigateReport
                     .setWxJourDatetimeEnd(budgetOrder.getWxJourDatetimeEnd());
+                investigateReport
+                    .setWxJourInterest1(budgetOrder.getWxJourInterest1());
+                investigateReport
+                    .setWxJourInterest2(budgetOrder.getWxJourInterest2());
+                investigateReport.setWxInterest1(budgetOrder.getWxInterest1());
+                investigateReport.setWxInterest2(budgetOrder.getWxInterest2());
+
                 investigateReport
                     .setWxJourIncome(budgetOrder.getWxJourIncome());
                 investigateReport
@@ -863,6 +880,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setWxJourMonthIncome(budgetOrder.getWxJourMonthIncome());
                 investigateReport
                     .setWxJourMonthExpend(budgetOrder.getWxJourMonthExpend());
+                investigateReport.setWxJourPic(budgetOrder.getWxJourPic());
                 investigateReport
                     .setWxJourRemark(budgetOrder.getWxJourRemark());
 
@@ -870,6 +888,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setJourDatetimeStart(budgetOrder.getJourDatetimeStart());
                 investigateReport
                     .setJourDatetimeEnd(budgetOrder.getJourDatetimeEnd());
+                investigateReport
+                    .setJourInterest1(budgetOrder.getJourInterest1());
+                investigateReport
+                    .setJourInterest2(budgetOrder.getJourInterest2());
+                investigateReport.setInterest1(budgetOrder.getInterest1());
+                investigateReport.setInterest2(budgetOrder.getInterest2());
+
                 investigateReport.setJourIncome(budgetOrder.getJourIncome());
                 investigateReport.setJourExpend(budgetOrder.getJourExpend());
                 investigateReport.setJourBalance(budgetOrder.getJourBalance());
@@ -877,6 +902,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setJourMonthIncome(budgetOrder.getJourMonthIncome());
                 investigateReport
                     .setJourMonthExpend(budgetOrder.getJourMonthExpend());
+                investigateReport.setJourPic(budgetOrder.getJourPic());
                 investigateReport.setJourRemark(budgetOrder.getJourRemark());
 
                 investigateReport
