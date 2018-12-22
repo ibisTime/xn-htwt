@@ -263,6 +263,22 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 "当前还款业务不是还款中，暂无法处理");
         }
 
+        List<RepayPlan> overdueRepayPlanList = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(repayPlan.getRepayBizCode(),
+                ERepayPlanNode.OVERDUE);
+        int i = 100;
+        if (CollectionUtils.isNotEmpty(overdueRepayPlanList)) {
+            for (RepayPlan domain : overdueRepayPlanList) {
+                if (domain.getCurPeriods() < i) {
+                    i = domain.getCurPeriods();
+                }
+            }
+            if (i != repayPlan.getCurPeriods()) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    repayBiz.getRealName() + "的第" + i + "期的还款计划逾期未处理，请先处理！");
+            }
+        }
+
         // 删除原来费用清单
         costAO.dropCost(req.getCode());
         // 添加费用清单
@@ -281,10 +297,23 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setTotalFee(totalFee);
         if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
-            // 剩余期数 = 总期数-还款计划的当前期数
-            repayBiz.setRestPeriods(
-                repayBiz.getPeriods() - repayPlan.getCurPeriods());
-            repayBizBO.refreshRestPeriods(repayBiz);
+            // TODO 判断是否为当月还款计划，处理之前的逾期名单不用减期数
+            RepayPlan curMonth = repayPlanBO
+                .getRepayPlanCurMonth(repayPlan.getRepayBizCode());
+            if (curMonth.getCode().equals(repayPlan.getCode())) {
+                // 剩余期数 = 总期数-还款计划的当前期数
+                repayBiz.setRestPeriods(
+                    repayBiz.getPeriods() - repayPlan.getCurPeriods());
+                repayBiz.setCurOverdueCount(0);
+                repayBiz.setOverdueAmount(0L);
+            } else {
+                repayBiz.setOverdueAmount(
+                    repayBiz.getOverdueAmount() - repayPlan.getOverdueAmount());
+            }
+            repayBiz.setRestAmount(
+                repayBiz.getRestAmount() - repayPlan.getOverdueAmount());
+            repayBizBO.refreshBizByPayFee(repayBiz);
+
         } else if (EDealResult.RED.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
             // 更新还款业务未申请拖车节点
@@ -318,6 +347,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             costBO.refreshRepay(cost, payType);
         }
         repayPlan.setPayedFee(totalFee + repayPlan.getPayedFee());
+        // 如果是绿名单缴纳，剩余欠款改为0
+        if (ERepayPlanNode.HANDLER_TO_GREEN.getCode()
+            .equals(repayPlan.getCurNodeCode())) {
+            repayPlan.setOverplusAmount(0L);
+            repayPlan.setPayedAmount(repayPlan.getRepayCapital());
+        }
         repayPlanBO.payFee(repayPlan);
 
         // 更新还款业务
@@ -325,17 +360,14 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         // 剩余期数 = 总期数-还款计划的当前期数
         // repayBiz
         // .setRestPeriods(repayBiz.getPeriods() - repayPlan.getCurPeriods());
-        repayBiz.setRestAmount(
-            repayBiz.getRestAmount() - repayPlan.getRepayCapital());
-        repayBiz.setOverdueAmount(0L);
-        repayBizBO.refreshBizByPayFee(repayBiz);
+
     }
 
     @Override
     public void chargeRepayAmount(String code, String operator,
             String payType) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
-        repayPlan.setRealRepayAmount(repayPlan.getOverdueAmount());
+        repayPlan.setPayedAmount(repayPlan.getOverdueAmount());
         repayPlan.setIsRepay(EResultStatus.YES.getCode());
         // TODO 支付方式
         repayPlanBO.repayAmount(repayPlan);

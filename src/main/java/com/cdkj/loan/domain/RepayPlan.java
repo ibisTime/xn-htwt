@@ -45,7 +45,7 @@ public class RepayPlan extends ABaseDO {
     // 本期还款金额
     private Long repayAmount;
 
-    // 已还金额
+    // 实际代偿金额
     private Long payedAmount;
 
     // 剩余欠款
@@ -86,7 +86,7 @@ public class RepayPlan extends ABaseDO {
     // 已催款次数
     private int remindCount;
 
-    // 实际代偿金额
+    // 已还金额(实还金额)
     private Long realRepayAmount;
 
     // 代偿是否缴纳

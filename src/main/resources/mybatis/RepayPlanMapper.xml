@@ -72,6 +72,9 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
+			<if test="curPeriods != null and curPeriods != '' ">
+				AND t.cur_periods = #{curPeriods}
+			</if>
 			<if test="repayDatetime != null and repayDatetime != '' ">
 				AND t.repay_datetime = #{repayDatetime}
 			</if>
@@ -384,6 +387,8 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,overdue_amount = #{overdueAmount}
+		,real_repay_amount = #{realRepayAmount}
+		,overplus_amount = #{overplusAmount}
 		WHERE code = #{code}
 	</update>
 	
@@ -473,13 +478,15 @@
 		UPDATE tdh_repay_plan
 		SET
 		payed_fee = #{payedFee}
+		,payed_amount = #{payedAmount}
+		,overplus_amount = #{overplusAmount}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_repayAmount" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		real_repay_amount = #{realRepayAmount}
+		payed_amount = #{payedAmount}
 		,is_repay = #{isRepay}
 		WHERE code = #{code}
 	</update>

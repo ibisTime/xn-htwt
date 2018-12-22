@@ -2032,9 +2032,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void doSmsInterviewInform(String budgetOrderCode, String roomId) {
         BudgetOrder data = budgetOrderBO.getBudgetOrder(budgetOrderCode);
-        if (!EBudgetOrderNode.INTERVIEW.getCode().equals(data.getCurNodeCode())
+        if (!EBudgetOrderNode.INTERVIEW.getCode()
+            .equals(data.getIntevCurNodeCode())
                 && !EBudgetOrderNode.AGAIN_INTERVIEW.getCode()
-                    .equals(data.getCurNodeCode())) {
+                    .equals(data.getIntevCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是面签节点");
         }

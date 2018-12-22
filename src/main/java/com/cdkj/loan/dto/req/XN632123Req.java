@@ -14,15 +14,12 @@ public class XN632123Req {
     private String code;// 预算单编号
 
     // 银行视频
-    @NotBlank
     private String bankVideo;
 
     // 银行面签照片
-    @NotBlank
     private String bankPhoto;
 
     // 公司视频
-    @NotBlank
     private String companyVideo;
 
     // 公司合同
@@ -32,7 +29,6 @@ public class XN632123Req {
     private String bankContract;
 
     // 资金划转授权书
-    @NotBlank
     private String advanceFundAmountPdf;
 
     // 其他视频
