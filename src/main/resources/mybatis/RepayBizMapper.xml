@@ -592,6 +592,7 @@
 		UPDATE tdh_repay_biz
 		SET
 		overdue_amount = #{overdueAmount}
+		,rest_amount = #{restAmount}
 		,total_overdue_count = #{totalOverdueCount}
 		,cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}
