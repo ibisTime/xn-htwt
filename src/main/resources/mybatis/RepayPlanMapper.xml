@@ -401,6 +401,8 @@
 		,deposit_way = #{depositWay}
 		,total_fee = #{totalFee}
 		,overdue_handle_note = #{overdueHandleNote}
+		,real_repay_amount = #{realRepayAmount}
+		,overplus_amount = #{overplusAmount}
 		WHERE code = #{code}
 	</update>
 	

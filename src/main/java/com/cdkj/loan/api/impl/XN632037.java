@@ -25,6 +25,7 @@ public class XN632037 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Bank condition = new Bank();
+        condition.setCode(req.getCode());
         condition.setBankCode(req.getBankCode());
         condition.setBankName(req.getBankName());
         condition.setSubbranch(req.getSubbranch());

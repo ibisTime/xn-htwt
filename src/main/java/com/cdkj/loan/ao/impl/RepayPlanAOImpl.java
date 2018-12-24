@@ -297,19 +297,19 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setTotalFee(totalFee);
         if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
+            repayPlan.setOverplusAmount(0L);
+            repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
             // TODO 判断是否为当月还款计划，处理之前的逾期名单不用减期数
             RepayPlan curMonth = repayPlanBO
                 .getRepayPlanCurMonth(repayPlan.getRepayBizCode());
             if (curMonth.getCode().equals(repayPlan.getCode())) {
-                // 剩余期数 = 总期数-还款计划的当前期数
-                repayBiz.setRestPeriods(
-                    repayBiz.getPeriods() - repayPlan.getCurPeriods());
                 repayBiz.setCurOverdueCount(0);
                 repayBiz.setOverdueAmount(0L);
             } else {
                 repayBiz.setOverdueAmount(
                     repayBiz.getOverdueAmount() - repayPlan.getOverdueAmount());
             }
+            repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
             repayBiz.setRestAmount(
                 repayBiz.getRestAmount() - repayPlan.getOverdueAmount());
             repayBizBO.refreshBizByPayFee(repayBiz);

@@ -1493,7 +1493,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
         budgetOrder.setPledgeBankCommitDatetime(DateUtil.strToDate(
             pledgeBankCommitDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setRemark(pledgeBankCommitNote);
+        budgetOrder.setBankCommitNote(pledgeBankCommitNote);
 
         // 获取所有物流单的材料清单，去重
         Logistics logistics = new Logistics();

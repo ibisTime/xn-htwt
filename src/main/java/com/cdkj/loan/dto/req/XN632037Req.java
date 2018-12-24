@@ -7,6 +7,10 @@ package com.cdkj.loan.dto.req;
  * @history:
  */
 public class XN632037Req {
+
+    // 编号
+    private String code;
+
     // 银行编号
     private String bankCode;
 
@@ -18,6 +22,14 @@ public class XN632037Req {
 
     // 分支
     private String subbranch;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getSubbranch() {
         return subbranch;

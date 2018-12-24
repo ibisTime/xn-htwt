@@ -332,6 +332,7 @@
 		real_name = #{realName}
 		,id_no = #{idNo}
 		,mobile = #{mobile}
+		,avatar = #{avatar}
 		,job_no = #{jobNo}
 		,entry_datetime = #{entryDatetime}
 		,department_code = #{departmentCode}

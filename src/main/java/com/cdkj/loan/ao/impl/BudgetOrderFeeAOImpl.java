@@ -80,6 +80,11 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
                     .getUser(budgetOrderFee.getUserId());
                 budgetOrderFee.setUserName(saleUser.getRealName());
             }
+            if (StringUtils.isNotBlank(budgetOrderFee.getBudgetOrder())) {
+                BudgetOrder budgetOrder = budgetOrderBO
+                    .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+                budgetOrderFee.setCurNodeCode(budgetOrder.getCurNodeCode());
+            }
         }
 
         return paginable;

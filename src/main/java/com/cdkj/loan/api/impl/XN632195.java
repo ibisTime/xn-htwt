@@ -39,6 +39,16 @@ public class XN632195 extends AProcessor {
             DateUtil.strToDate(req.getAdvanceFundDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
+        if (StringUtils.isNotBlank(req.getCurNodeCode())) {
+            boolean b = req.getCurNodeCodeList().contains(req.getCurNodeCode());
+            if (b == false) {
+                condition.setCurNodeCode("000_00");// 意为空
+            } else {
+                condition.setCurNodeCode(req.getCurNodeCode());
+            }
+        } else {
+            condition.setCurNodeCodeList(req.getCurNodeCodeList());
+        }
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

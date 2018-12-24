@@ -28,6 +28,17 @@ public class XN632185Req extends APageReq {
     // 申请时间止
     private String endDatetime;
 
+    // 当前节点编号
+    private String curNodeCode;
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
     public String getApplyUserName() {
         return applyUserName;
     }

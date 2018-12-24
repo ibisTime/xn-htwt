@@ -128,7 +128,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setCutLyDeposit(0L);
         repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
 
-        repayBiz.setRestAmount(budgetOrder.getLoanAmount());
+        // 剩余欠款：首期月供+每期月供*（期数-1）
+        Long restAmount = budgetOrder
+            .getRepayFirstMonthAmount() + budgetOrder.getRepayMonthAmount()
+                    * (StringValidater.toLong(budgetOrder.getLoanPeriod()) - 1);
+        repayBiz.setRestAmount(restAmount);
         repayBiz.setRestTotalCost(0L);
         repayBiz.setTotalInDeposit(0L);
         repayBiz.setOverdueAmount(0L);
@@ -144,15 +148,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setTeamCode(budgetOrder.getTeamCode());
         repayBizDAO.insert(repayBiz);
         return repayBiz;
-    }
-
-    public static void main(String[] args) {
-        int i = 0;
-        String string = "2018-10-08";
-        String[] split = string.split("-");
-        String string2 = split[split.length - 1];
-        i = StringValidater.toInteger(string2);
-        System.out.println(i);
     }
 
     @Override

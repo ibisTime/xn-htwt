@@ -30,7 +30,6 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.ESysUserType;
-import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
@@ -91,8 +90,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         sysUserBO.saveUser(data);
 
         // 注册腾讯云用户
-        tencentBO.register(userId, realName, ESystemCode.HTWT.getCode(),
-            ESystemCode.HTWT.getCode());
+        // tencentBO.register(userId, realName, ESystemCode.HTWT.getCode(),
+        // ESystemCode.HTWT.getCode());
 
         return userId;
     }

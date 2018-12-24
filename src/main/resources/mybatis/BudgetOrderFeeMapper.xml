@@ -33,6 +33,9 @@
 			<if test="budgetOrder != null and budgetOrder != '' ">
 				AND t.budget_order = #{budgetOrder}
 			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND tb.cur_node_code = #{curNodeCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrderFee" parameterType="budgetOrderFee" resultMap="budgetOrderFee_DB_Result">
@@ -50,7 +53,7 @@
 		,t.remark
 		,t.budget_order
 		FROM
-		tdq_budget_order_fee t
+		tdq_budget_order_fee t left join tdq_budget_order tb on (tb.code = t.budget_order)
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -61,7 +64,7 @@
 
 	<select id="select_budgetOrderFee_count" parameterType="budgetOrderFee"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_budget_order_fee t
+		SELECT count(1) FROM tdq_budget_order_fee t left join tdq_budget_order tb on (tb.code = t.budget_order)
 		<include refid="where_condition" />
 	</select>
 

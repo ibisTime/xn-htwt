@@ -37,6 +37,7 @@ public class XN632185 extends AProcessor {
             req.getStartDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(req.getEndDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setCurNodeCode(req.getCurNodeCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

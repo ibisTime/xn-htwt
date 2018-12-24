@@ -190,6 +190,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
         data.setMobile(req.getMobile());
+        data.setAvatar(req.getAvatar());
         data.setJobNo(req.getJobNo());
         data.setEntryDatetime(DateUtil.strToDate(req.getEntryDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
