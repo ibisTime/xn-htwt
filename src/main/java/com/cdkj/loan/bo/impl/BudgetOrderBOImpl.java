@@ -319,7 +319,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrder.setIntevCurNodeCode(nodeFlow.getNextNode());
         // 状态为不在物流传递中
         budgetOrder.setIsLogistics(EBoolean.NO.getCode());
-        // 日志
+        // 准入单日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getIntevCurNodeCode(), null, operator,

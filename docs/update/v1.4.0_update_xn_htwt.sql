@@ -151,20 +151,21 @@ ADD COLUMN `jour_interest1` varchar(255) NULL COMMENT '流水结息1' AFTER `jou
 ADD COLUMN `jour_interest2` varchar(255) NULL COMMENT '流水结息2' AFTER `jour_interest1`,
 ADD COLUMN `interest1` varchar(255) NULL COMMENT '结息1' AFTER `jour_interest2`,
 ADD COLUMN `interest2` varchar(255) NULL COMMENT '结息2' AFTER `interest1`,
-ADD COLUMN `jour_pic` varchar(255) NULL COMMENT '流水图片' AFTER `jour_month_expend`,
+ADD COLUMN `jour_pic` TEXT NULL COMMENT '流水图片' AFTER `jour_month_expend`,
 ADD COLUMN `zfb_jour_interest1` varchar(255) NULL COMMENT '支付宝流水结息1' AFTER `zfb_jour_datetime_end`,
 ADD COLUMN `zfb_jour_interest2` varchar(255) NULL COMMENT '支付宝流水结息2' AFTER `zfb_jour_interest1`,
 ADD COLUMN `zfb_interest1` varchar(255) NULL COMMENT '支付宝结息1' AFTER `zfb_jour_interest2`,
 ADD COLUMN `zfb_interest2` varchar(255) NULL COMMENT '支付宝结息2' AFTER `zfb_interest1`,
-ADD COLUMN `zfb_jour_pic` varchar(255) NULL COMMENT '支付宝流水图片' AFTER `zfb_jour_month_expend`,
+ADD COLUMN `zfb_jour_pic` TEXT NULL COMMENT '支付宝流水图片' AFTER `zfb_jour_month_expend`,
 ADD COLUMN `wx_jour_interest1` varchar(255) NULL COMMENT '微信流水结息1' AFTER `wx_jour_datetime_end`,
 ADD COLUMN `wx_jour_interest2` varchar(255) NULL COMMENT '微信流水结息2' AFTER `wx_jour_interest1`,
 ADD COLUMN `wx_interest1` varchar(255) NULL COMMENT '微信结息1' AFTER `wx_jour_interest2`,
 ADD COLUMN `wx_interest2` varchar(255) NULL COMMENT '微信结息2' AFTER `wx_interest1`,
-ADD COLUMN `wx_jour_pic` varchar(255) NULL COMMENT '微信流水图片' AFTER `wx_jour_month_expend`;
+ADD COLUMN `wx_jour_pic` TEXT NULL COMMENT '微信流水图片' AFTER `wx_jour_month_expend`;
 
 
 SET SQL_SAFE_UPDATES = 0;
+UPDATE tdq_budget_order SET is_logistics='0';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_05';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_08',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_08';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_26',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_26';

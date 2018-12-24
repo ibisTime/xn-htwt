@@ -234,6 +234,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
              * ELogisticsStatus.RECEIVE.getCode(), remark, operator);
              */
         }
+        // 资料传递日志
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.LOGISTICS.getCode(), code,
+            data.getToNodeCode(), remark, operator);
         return new BooleanRes(true, result);
     }
 

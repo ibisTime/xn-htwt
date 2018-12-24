@@ -399,6 +399,11 @@ public class CreditAOImpl implements ICreditAO {
                 budgetCode, EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode(),
                 credit.getTeamCode());
 
+            // 面签开始的日志记录
+            sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
+                budgetCode, EBudgetOrderNode.INTERVIEW.getCode(),
+                credit.getTeamCode());
+
         } else {
             credit.setCurNodeCode(
                 nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
