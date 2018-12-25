@@ -722,21 +722,26 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             budgetOrder.setCurNodeCode(EBudgetOrderNode.FINANCEAUDIT.getCode());
             /**************生成 手续费************/
-            BudgetOrderFee data = new BudgetOrderFee();
-            data.setCompanyCode(budgetOrder.getCompanyCode());
-            data.setUserId(budgetOrder.getSaleUserId());
-            data.setCustomerName(budgetOrder.getApplyUserName());
-            // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+服务费
-            data.setShouldAmount(budgetOrder.getBankFee()
-                    + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
-                    + budgetOrder.getMonthDeposit()
-                    + budgetOrder.getCompanyFee() + budgetOrder.getTeamFee());
-            data.setRealAmount(0L);
-            data.setIsSettled(EBoolean.NO.getCode());
-            data.setUpdater(operator);
-            data.setUpdateDatetime(new Date());
-            data.setBudgetOrder(code);
-            budgetOrderFeeBO.saveBudgetOrderFee(data);
+            BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
+                .getBudgetOrderFeeByBudget(code);
+            if (budgetOrderFee == null) {
+                BudgetOrderFee data = new BudgetOrderFee();
+                data.setCompanyCode(budgetOrder.getCompanyCode());
+                data.setUserId(budgetOrder.getSaleUserId());
+                data.setCustomerName(budgetOrder.getApplyUserName());
+                // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+服务费
+                data.setShouldAmount(budgetOrder.getBankFee()
+                        + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
+                        + budgetOrder.getMonthDeposit()
+                        + budgetOrder.getCompanyFee()
+                        + budgetOrder.getTeamFee());
+                data.setRealAmount(0L);
+                data.setIsSettled(EBoolean.NO.getCode());
+                data.setUpdater(operator);
+                data.setUpdateDatetime(new Date());
+                data.setBudgetOrder(code);
+                budgetOrderFeeBO.saveBudgetOrderFee(data);
+            }
             /**************生成 手续费************/
             // 征信单回写准入单编号
             Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
@@ -1706,6 +1711,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setSaleUserName(sysUser.getRealName());
         }
 
+        // 区域经理名称
+        SYSBizLog sysBizLog = new SYSBizLog();
+        sysBizLog.setParentOrder(budgetOrder.getCode());
+        sysBizLog.setDealNode(EBudgetOrderNode.AREA_APPROVE.getCode());
+        List<SYSBizLog> bizLogList = sysBizLogBO.querySYSBizLogList(sysBizLog);
+        if (CollectionUtils.isNotEmpty(bizLogList)) {
+            SYSBizLog bizLog = bizLogList.get(bizLogList.size() - 1);
+            budgetOrder.setAreaName(bizLog.getOperatorName());
+            budgetOrder.setAreaMobile(bizLog.getOperatorMobile());
+        }
+
         // 贷款银行
         if (StringUtils.isNotBlank(budgetOrder.getLoanBank())) {
             Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
@@ -2048,11 +2064,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void dataSupplement(XN632141Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.COMMITBANK.getCode()
-            .equals(budgetOrder.getCurNodeCode())
+            .equals(budgetOrder.getIntevCurNodeCode())
                 && !EBudgetOrderNode.ENTRYLOAN.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
+                    .equals(budgetOrder.getIntevCurNodeCode())
                 && !EBudgetOrderNode.CONFIRMLOAN.getCode()
-                    .equals(budgetOrder.getCurNodeCode())) {
+                    .equals(budgetOrder.getIntevCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不能资料补录！");
         }
@@ -2273,7 +2289,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             int limit, BudgetOrder condition, String roleCode) {
         if (!"RO201800000000000001".equals(roleCode)
                 && condition.getTeamCode() == null) {
-            return null;
+            condition.setTeamCode("000000000000000");// 意为空
         }
         if ("RO201800000000000001".equals(roleCode)) {
             condition.setTeamCode(null);

@@ -22,4 +22,6 @@ public interface IStorageInBO extends IPaginableBO<StorageIn> {
     public List<StorageIn> queryStorageInList(StorageIn condition);
 
     public StorageIn getStorageIn(String code);
+
+    public StorageIn getStorageInByProduct(String productCode);
 }

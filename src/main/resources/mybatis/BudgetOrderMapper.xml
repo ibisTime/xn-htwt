@@ -478,6 +478,9 @@
 			<if test="intevCurNodeCode != null and intevCurNodeCode != ''">
 				AND t.intev_cur_node_code = #{intevCurNodeCode}
 			</if>
+			<if test="advanfCurNodeCode != null and advanfCurNodeCode != ''">
+				AND t.advanf_cur_node_code = #{advanfCurNodeCode}
+			</if>
 			<if test="curNodeCodeNoEnter != null and curNodeCodeNoEnter != ''">
 				AND t.cur_node_code != #{curNodeCodeNoEnter}
 			</if>

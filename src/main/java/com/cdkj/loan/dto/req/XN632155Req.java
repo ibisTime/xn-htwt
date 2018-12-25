@@ -23,6 +23,9 @@ public class XN632155Req extends APageReq {
     // 状态
     private String status;
 
+    // 角色编号
+    private String roleCode;
+
     // 收件人
     private String receiver;
 
@@ -34,6 +37,14 @@ public class XN632155Req extends APageReq {
 
     // 状态List
     private List<String> statusList;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
 
     public List<String> getStatusList() {
         return statusList;

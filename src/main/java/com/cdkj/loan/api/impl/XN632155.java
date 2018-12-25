@@ -35,6 +35,9 @@ public class XN632155 extends AProcessor {
         condition.setType(req.getType());
         condition.setTypeList(req.getTypeList());
         condition.setReceiver(req.getReceiver());
+        if ("RO201800000000000001".equals(req.getRoleCode())) {
+            condition.setReceiver(null);
+        }
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ILogisticsAO.DEFAULT_ORDER_COLUMN;

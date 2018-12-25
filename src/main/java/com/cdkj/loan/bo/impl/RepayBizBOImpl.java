@@ -1,7 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -229,16 +228,29 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setFxDeposit(0L);
         Date date = DateUtils.addMonths(order.getApplyDatetime(), 1);
         repayBiz.setFirstRepayDatetime(date);
-        Long monthlyAmount = new BigDecimal(order.getLoanAmount())
-            .divide(new BigDecimal(order.getPeriods()), 0, RoundingMode.DOWN)
-            .longValue();
+
+        // 手续费总额 = 贷款总额*银行利率
+        BigDecimal loanmount = new BigDecimal(order.getLoanAmount());
+        BigDecimal sxfAmount = loanmount
+            .multiply(new BigDecimal(order.getBankRate()));
+        // 月供=（贷款额+手续费）/期数 （像下取整）
+        BigDecimal periods = new BigDecimal(order.getPeriods());
+        BigDecimal monthAmount = (loanmount.add(sxfAmount)).divide(periods);
+        // 首期月供 = 月供*期数+首付-车辆总价
+        // 车辆总价=贷款额+首付
+        BigDecimal firstMonthAmount = monthAmount.multiply(periods)
+            .subtract(loanmount);
+
+        // Long monthlyAmount = new BigDecimal(order.getLoanAmount())
+        // .divide(new BigDecimal(order.getPeriods()), 0, RoundingMode.DOWN)
+        // .longValue();
         // long long3 = (long) (long2 * order.getBankRate());
-        repayBiz.setFirstRepayAmount(monthlyAmount);
+        repayBiz.setFirstRepayAmount(firstMonthAmount.longValue());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(order.getApplyDatetime());
         int i = calendar.get(Calendar.DAY_OF_MONTH);
         repayBiz.setMonthDatetime(i);
-        repayBiz.setMonthAmount(monthlyAmount);
+        repayBiz.setMonthAmount(monthAmount.longValue());
 
         repayBiz.setLyDeposit(0L);
         repayBiz.setCutLyDeposit(0L);
@@ -360,6 +372,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setReleaseDatetime(releaseDatetime);
+        repayBiz.setRestAmount(0L);
         repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
 

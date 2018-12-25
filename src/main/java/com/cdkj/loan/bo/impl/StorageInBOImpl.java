@@ -74,4 +74,11 @@ public class StorageInBOImpl extends PaginableBOImpl<StorageIn>
         }
         return data;
     }
+
+    @Override
+    public StorageIn getStorageInByProduct(String productCode) {
+        StorageIn storageIn = new StorageIn();
+        storageIn.setProductCode(productCode);
+        return storageInDAO.select(storageIn);
+    }
 }

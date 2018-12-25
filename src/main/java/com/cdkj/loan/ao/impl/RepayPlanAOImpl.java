@@ -191,6 +191,11 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         return results;
     }
 
+    public static void main(String[] args) {
+        System.out.println(DateUtil.getFirstDay());
+        System.out.println(DateUtil.getLastDay());
+    }
+
     @Override
     @Transactional
     public void prepayPhoto(XN630544Req req) {
@@ -439,10 +444,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             }
         }
         logger.info("***************结束扫结束还款计划***************");
-    }
-
-    public static void main(String[] args) {
-        System.out.println(DateUtil.getLastDay());
     }
 
     @Override

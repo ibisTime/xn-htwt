@@ -16,9 +16,12 @@ public interface IBudgetOrderFeeBO extends IPaginableBO<BudgetOrderFee> {
     // 手续费新增
     public String saveBudgetOrderFee(BudgetOrderFee data);
 
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition);
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(
+            BudgetOrderFee condition);
 
     public BudgetOrderFee getBudgetOrderFee(String code);
+
+    public BudgetOrderFee getBudgetOrderFeeByBudget(String budgetOrderCode);
 
     public void refreshBudgetOrderFee(BudgetOrderFee budgetOrderFee);
 

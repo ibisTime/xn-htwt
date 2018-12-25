@@ -118,6 +118,9 @@
 			<if test="logisticsCompany != null and logisticsCompany != '' ">
 				AND t.logistics_company = #{logisticsCompany}
 			</if>
+			<if test="realName != null and realName != '' ">
+				AND u.real_name = #{realName}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_order" parameterType="order" resultMap="order_DB_Result">
@@ -161,7 +164,7 @@
 		
 		,t.remark
 		FROM
-		tmall_order t
+		tmall_order t left join tstd_user u on t.apply_user = u.user_id
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -172,7 +175,7 @@
 
 	<select id="select_order_count" parameterType="order"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tmall_order t 
+		SELECT count(1) FROM tmall_order t left join tstd_user u on t.apply_user = u.user_id
 		<include refid="where_condition" />
 	</select>
 

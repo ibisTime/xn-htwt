@@ -25,8 +25,8 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     public String saveBudgetOrderFee(BudgetOrderFee data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.BUDGET_ORDER_FEE.getCode());
             data.setCode(code);
             budgetOrderFeeDAO.insert(data);
         }
@@ -34,7 +34,8 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(
+            BudgetOrderFee condition) {
         return budgetOrderFeeDAO.selectList(condition);
     }
 
@@ -57,5 +58,12 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
         if (null != budgetOrderFee) {
             budgetOrderFeeDAO.updateBudgetOrderFeeRealAmount(budgetOrderFee);
         }
+    }
+
+    @Override
+    public BudgetOrderFee getBudgetOrderFeeByBudget(String budgetOrderCode) {
+        BudgetOrderFee condition = new BudgetOrderFee();
+        condition.setBudgetOrder(budgetOrderCode);
+        return budgetOrderFeeDAO.select(condition);
     }
 }

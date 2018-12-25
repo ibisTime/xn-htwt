@@ -27,6 +27,9 @@ public class XN808065Req extends APageReq {
     // 下单人（选填）
     private String applyUser;
 
+    // 下单人姓名
+    private String realName;
+
     // 状态（选填）
     private String status;
 
@@ -63,6 +66,14 @@ public class XN808065Req extends APageReq {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getPayDatetimeStart() {
