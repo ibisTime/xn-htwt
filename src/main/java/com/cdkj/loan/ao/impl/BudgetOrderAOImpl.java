@@ -775,159 +775,178 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 /**************生成返点数据***************/
 
                 /*************生成调查报告****************/
-                InvestigateReport investigateReport = new InvestigateReport();
-                investigateReport.setBudgetOrderCode(budgetOrder.getCode());
-                investigateReport
-                    .setRepayBizCode(budgetOrder.getRepayBizCode());
-                investigateReport.setCompanyCode(budgetOrder.getCompanyCode());
-                investigateReport.setBizType(budgetOrder.getBizType());
-                investigateReport.setTeamCode(budgetOrder.getTeamCode());
-                investigateReport
-                    .setApplyUserName(budgetOrder.getApplyUserName());
-                investigateReport.setApplyDatetime(new Date());
-                investigateReport.setLoanBank(budgetOrder.getLoanBank());
-                investigateReport.setLoanAmount(budgetOrder.getLoanAmount());
-                investigateReport.setLoanPeriod(budgetOrder.getLoanPeriod());
-                investigateReport
-                    .setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
-                investigateReport.setSaleUserId(budgetOrder.getSaleUserId());
-                String gender = budgetOrder.getGender();
-                if (gender == "1") {
-                    gender = "男";
-                } else {
-                    gender = "女";
+                InvestigateReport report = new InvestigateReport();
+                report.setBudgetOrderCode(code);
+                List<InvestigateReport> reportList = investigateReportBO
+                    .queryInvestigateReportList(report);
+                if (CollectionUtils.isEmpty(reportList)) {
+                    InvestigateReport investigateReport = new InvestigateReport();
+                    investigateReport.setBudgetOrderCode(budgetOrder.getCode());
+                    investigateReport
+                        .setRepayBizCode(budgetOrder.getRepayBizCode());
+                    investigateReport
+                        .setCompanyCode(budgetOrder.getCompanyCode());
+                    investigateReport.setBizType(budgetOrder.getBizType());
+                    investigateReport.setTeamCode(budgetOrder.getTeamCode());
+                    investigateReport
+                        .setApplyUserName(budgetOrder.getApplyUserName());
+                    investigateReport.setApplyDatetime(new Date());
+                    investigateReport.setLoanBank(budgetOrder.getLoanBank());
+                    investigateReport
+                        .setLoanAmount(budgetOrder.getLoanAmount());
+                    investigateReport
+                        .setLoanPeriod(budgetOrder.getLoanPeriod());
+                    investigateReport
+                        .setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
+                    investigateReport
+                        .setSaleUserId(budgetOrder.getSaleUserId());
+                    String gender = budgetOrder.getGender();
+                    if (gender == "1") {
+                        gender = "男";
+                    } else {
+                        gender = "女";
+                    }
+                    String education = budgetOrder.getEducation();
+                    if (education == "1") {
+                        education = "博士及以上";
+                    } else if (education == "2") {
+                        education = "硕士";
+                    } else if (education == "3") {
+                        education = "大学本科";
+                    } else if (education == "4") {
+                        education = "大学专科";
+                    } else {
+                        education = "高中及以下";
+                    }
+                    String marryState = budgetOrder.getMarryState();
+                    if (marryState == "1") {
+                        marryState = "未婚";
+                    } else if (marryState == "2") {
+                        marryState = "已婚";
+                    } else if (marryState == "3") {
+                        marryState = "离异";
+                    } else {
+                        marryState = "丧偶";
+                    }
+                    String customerInformation = "借款人:"
+                            + budgetOrder.getApplyUserName() + ", "
+                            + budgetOrder.getAge() + "岁, " + marryState + ", "
+                            + "性别：" + gender + ", " + "学历：" + education + ", "
+                            + "民族：" + budgetOrder.getNation() + ", " + "身份证号："
+                            + budgetOrder.getIdNo() + ", " + "政治面貌："
+                            + budgetOrder.getPolitical() + ", " + "户口所在地："
+                            + budgetOrder.getResidenceAddress() + ", "
+                            + "现在家庭住址：" + budgetOrder.getNowAddress() + ", "
+                            + "联系电话：" + budgetOrder.getMobile() + ", " + "家有"
+                            + budgetOrder.getFamilyNumber() + "口人，" + "邮编："
+                            + budgetOrder.getPostCode1() + ",   "
+                            + "借款人无重大疾病，身体健康";
+                    investigateReport
+                        .setCustomerInformation(customerInformation);
+                    CreditUser domain = creditUserBO.getCreditUserByCreditCode(
+                        budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+                    investigateReport.setBankCreditResultRemark(
+                        domain.getBankCreditResultRemark());
+                    investigateReport.setJourDatetimeStart(
+                        budgetOrder.getJourDatetimeStart());
+                    investigateReport.setZfbJourDatetimeEnd(
+                        budgetOrder.getZfbJourDatetimeEnd());
+
+                    investigateReport
+                        .setZfbJourInterest1(budgetOrder.getZfbJourInterest1());
+                    investigateReport
+                        .setZfbJourInterest2(budgetOrder.getZfbJourInterest2());
+                    investigateReport
+                        .setZfbInterest1(budgetOrder.getZfbInterest1());
+                    investigateReport
+                        .setZfbInterest2(budgetOrder.getZfbInterest2());
+
+                    investigateReport
+                        .setZfbJourIncome(budgetOrder.getZfbJourIncome());
+                    investigateReport
+                        .setZfbJourExpend(budgetOrder.getZfbJourExpend());
+                    investigateReport
+                        .setZfbJourBalance(budgetOrder.getZfbJourBalance());
+                    investigateReport.setZfbJourMonthIncome(
+                        budgetOrder.getZfbJourMonthIncome());
+                    investigateReport.setZfbJourMonthExpend(
+                        budgetOrder.getZfbJourMonthExpend());
+                    investigateReport
+                        .setZfbJourPic(budgetOrder.getZfbJourPic());
+                    investigateReport
+                        .setZfbJourRemark(budgetOrder.getZfbJourRemark());
+
+                    investigateReport.setWxJourDatetimeStart(
+                        budgetOrder.getWxJourDatetimeStart());
+                    investigateReport.setWxJourDatetimeEnd(
+                        budgetOrder.getWxJourDatetimeEnd());
+                    investigateReport
+                        .setWxJourInterest1(budgetOrder.getWxJourInterest1());
+                    investigateReport
+                        .setWxJourInterest2(budgetOrder.getWxJourInterest2());
+                    investigateReport
+                        .setWxInterest1(budgetOrder.getWxInterest1());
+                    investigateReport
+                        .setWxInterest2(budgetOrder.getWxInterest2());
+
+                    investigateReport
+                        .setWxJourIncome(budgetOrder.getWxJourIncome());
+                    investigateReport
+                        .setWxJourExpend(budgetOrder.getWxJourExpend());
+                    investigateReport
+                        .setWxJourBalance(budgetOrder.getWxJourBalance());
+                    investigateReport.setWxJourMonthIncome(
+                        budgetOrder.getWxJourMonthIncome());
+                    investigateReport.setWxJourMonthExpend(
+                        budgetOrder.getWxJourMonthExpend());
+                    investigateReport.setWxJourPic(budgetOrder.getWxJourPic());
+                    investigateReport
+                        .setWxJourRemark(budgetOrder.getWxJourRemark());
+
+                    investigateReport.setJourDatetimeStart(
+                        budgetOrder.getJourDatetimeStart());
+                    investigateReport
+                        .setJourDatetimeEnd(budgetOrder.getJourDatetimeEnd());
+                    investigateReport
+                        .setJourInterest1(budgetOrder.getJourInterest1());
+                    investigateReport
+                        .setJourInterest2(budgetOrder.getJourInterest2());
+                    investigateReport.setInterest1(budgetOrder.getInterest1());
+                    investigateReport.setInterest2(budgetOrder.getInterest2());
+
+                    investigateReport
+                        .setJourIncome(budgetOrder.getJourIncome());
+                    investigateReport
+                        .setJourExpend(budgetOrder.getJourExpend());
+                    investigateReport
+                        .setJourBalance(budgetOrder.getJourBalance());
+                    investigateReport
+                        .setJourMonthIncome(budgetOrder.getJourMonthIncome());
+                    investigateReport
+                        .setJourMonthExpend(budgetOrder.getJourMonthExpend());
+                    investigateReport.setJourPic(budgetOrder.getJourPic());
+                    investigateReport
+                        .setJourRemark(budgetOrder.getJourRemark());
+
+                    investigateReport
+                        .setHouseContract(budgetOrder.getHouseContract());
+                    investigateReport
+                        .setHousePicture(budgetOrder.getHousePicture());
+                    String basicsInformation = "品牌：" + budgetOrder.getCarBrand()
+                            + "," + "车型：" + budgetOrder.getCarModel() + ","
+                            + "新手指导价" + budgetOrder.getOriginalPrice() / 1000
+                            + "," + "落户地点：" + budgetOrder.getSettleAddress();
+                    investigateReport.setBasicsInformation(basicsInformation);
+                    investigateReport.setCurNodeCode(
+                        EInvestigateReportNode.COMMIT_APPLY.getCode());
+                    String irCode = investigateReportBO
+                        .saveInvestigateReport(investigateReport);
+                    // 日志记录
+                    sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                        EBizLogType.INVESTIGATEREPORT, irCode,
+                        investigateReport.getCurNodeCode(),
+                        investigateReport.getTeamCode());
                 }
-                String education = budgetOrder.getEducation();
-                if (education == "1") {
-                    education = "博士及以上";
-                } else if (education == "2") {
-                    education = "硕士";
-                } else if (education == "3") {
-                    education = "大学本科";
-                } else if (education == "4") {
-                    education = "大学专科";
-                } else {
-                    education = "高中及以下";
-                }
-                String marryState = budgetOrder.getMarryState();
-                if (marryState == "1") {
-                    marryState = "未婚";
-                } else if (marryState == "2") {
-                    marryState = "已婚";
-                } else if (marryState == "3") {
-                    marryState = "离异";
-                } else {
-                    marryState = "丧偶";
-                }
-                String customerInformation = "借款人:"
-                        + budgetOrder.getApplyUserName() + ", "
-                        + budgetOrder.getAge() + "岁, " + marryState + ", "
-                        + "性别：" + gender + ", " + "学历：" + education + ", "
-                        + "民族：" + budgetOrder.getNation() + ", " + "身份证号："
-                        + budgetOrder.getIdNo() + ", " + "政治面貌："
-                        + budgetOrder.getPolitical() + ", " + "户口所在地："
-                        + budgetOrder.getResidenceAddress() + ", " + "现在家庭住址："
-                        + budgetOrder.getNowAddress() + ", " + "联系电话："
-                        + budgetOrder.getMobile() + ", " + "家有"
-                        + budgetOrder.getFamilyNumber() + "口人，" + "邮编："
-                        + budgetOrder.getPostCode1() + ",   " + "借款人无重大疾病，身体健康";
-                investigateReport.setCustomerInformation(customerInformation);
-                CreditUser domain = creditUserBO.getCreditUserByCreditCode(
-                    budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
-                investigateReport.setBankCreditResultRemark(
-                    domain.getBankCreditResultRemark());
-                investigateReport
-                    .setJourDatetimeStart(budgetOrder.getJourDatetimeStart());
-                investigateReport
-                    .setZfbJourDatetimeEnd(budgetOrder.getZfbJourDatetimeEnd());
-
-                investigateReport
-                    .setZfbJourInterest1(budgetOrder.getZfbJourInterest1());
-                investigateReport
-                    .setZfbJourInterest2(budgetOrder.getZfbJourInterest2());
-                investigateReport
-                    .setZfbInterest1(budgetOrder.getZfbInterest1());
-                investigateReport
-                    .setZfbInterest2(budgetOrder.getZfbInterest2());
-
-                investigateReport
-                    .setZfbJourIncome(budgetOrder.getZfbJourIncome());
-                investigateReport
-                    .setZfbJourExpend(budgetOrder.getZfbJourExpend());
-                investigateReport
-                    .setZfbJourBalance(budgetOrder.getZfbJourBalance());
-                investigateReport
-                    .setZfbJourMonthIncome(budgetOrder.getZfbJourMonthIncome());
-                investigateReport
-                    .setZfbJourMonthExpend(budgetOrder.getZfbJourMonthExpend());
-                investigateReport.setZfbJourPic(budgetOrder.getZfbJourPic());
-                investigateReport
-                    .setZfbJourRemark(budgetOrder.getZfbJourRemark());
-
-                investigateReport.setWxJourDatetimeStart(
-                    budgetOrder.getWxJourDatetimeStart());
-                investigateReport
-                    .setWxJourDatetimeEnd(budgetOrder.getWxJourDatetimeEnd());
-                investigateReport
-                    .setWxJourInterest1(budgetOrder.getWxJourInterest1());
-                investigateReport
-                    .setWxJourInterest2(budgetOrder.getWxJourInterest2());
-                investigateReport.setWxInterest1(budgetOrder.getWxInterest1());
-                investigateReport.setWxInterest2(budgetOrder.getWxInterest2());
-
-                investigateReport
-                    .setWxJourIncome(budgetOrder.getWxJourIncome());
-                investigateReport
-                    .setWxJourExpend(budgetOrder.getWxJourExpend());
-                investigateReport
-                    .setWxJourBalance(budgetOrder.getWxJourBalance());
-                investigateReport
-                    .setWxJourMonthIncome(budgetOrder.getWxJourMonthIncome());
-                investigateReport
-                    .setWxJourMonthExpend(budgetOrder.getWxJourMonthExpend());
-                investigateReport.setWxJourPic(budgetOrder.getWxJourPic());
-                investigateReport
-                    .setWxJourRemark(budgetOrder.getWxJourRemark());
-
-                investigateReport
-                    .setJourDatetimeStart(budgetOrder.getJourDatetimeStart());
-                investigateReport
-                    .setJourDatetimeEnd(budgetOrder.getJourDatetimeEnd());
-                investigateReport
-                    .setJourInterest1(budgetOrder.getJourInterest1());
-                investigateReport
-                    .setJourInterest2(budgetOrder.getJourInterest2());
-                investigateReport.setInterest1(budgetOrder.getInterest1());
-                investigateReport.setInterest2(budgetOrder.getInterest2());
-
-                investigateReport.setJourIncome(budgetOrder.getJourIncome());
-                investigateReport.setJourExpend(budgetOrder.getJourExpend());
-                investigateReport.setJourBalance(budgetOrder.getJourBalance());
-                investigateReport
-                    .setJourMonthIncome(budgetOrder.getJourMonthIncome());
-                investigateReport
-                    .setJourMonthExpend(budgetOrder.getJourMonthExpend());
-                investigateReport.setJourPic(budgetOrder.getJourPic());
-                investigateReport.setJourRemark(budgetOrder.getJourRemark());
-
-                investigateReport
-                    .setHouseContract(budgetOrder.getHouseContract());
-                investigateReport
-                    .setHousePicture(budgetOrder.getHousePicture());
-                String basicsInformation = "品牌：" + budgetOrder.getCarBrand()
-                        + "," + "车型：" + budgetOrder.getCarModel() + ","
-                        + "新手指导价" + budgetOrder.getOriginalPrice() / 1000 + ","
-                        + "落户地点：" + budgetOrder.getSettleAddress();
-                investigateReport.setBasicsInformation(basicsInformation);
-                investigateReport.setCurNodeCode(
-                    EInvestigateReportNode.COMMIT_APPLY.getCode());
-                String irCode = investigateReportBO
-                    .saveInvestigateReport(investigateReport);
-                // 日志记录
-                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-                    EBizLogType.INVESTIGATEREPORT, irCode,
-                    investigateReport.getCurNodeCode(),
-                    investigateReport.getTeamCode());
                 /*************生成调查报告****************/
             }
 
@@ -1758,7 +1777,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Logistics logistics = new Logistics();
         logistics.setType(ELogisticsType.BUDGET.getCode());
         logistics.setBizCode(budgetOrder.getCode());
-        logistics.setFromNodeCode(EBudgetOrderNode.INSIDEJOB_SEND.getCode());
+        logistics.setFromNodeCode(
+            EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode());
         logistics.setToNodeCode(EBudgetOrderNode.DHAPPROVEDATA.getCode());
         logistics.setStatus(ELogisticsStatus.RECEIVED.getCode());
         List<Logistics> logisticsList = logisticsBO
@@ -1788,11 +1808,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setInformationExpress(informationExpress);
         }
         // 收件时间
-        logistics.setFromNodeCode(EBudgetOrderNode.DHAPPROVEDATA.getCode());
+        logistics.setFromNodeCode(null);
         logistics.setToNodeCode(EBudgetOrderNode.COMMITBANK3.getCode());
         logisticsList = logisticsBO.queryLogisticsList(logistics);
         if (CollectionUtils.isNotEmpty(logisticsList)) {
-            Logistics domain = logisticsList.get(0);
+            Logistics domain = logisticsList.get(logisticsList.size() - 1);
             budgetOrder.setReceiptDatetime(domain.getReceiptDatetime());
         }
     }

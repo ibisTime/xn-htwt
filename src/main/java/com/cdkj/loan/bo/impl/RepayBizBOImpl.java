@@ -229,17 +229,18 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         Date date = DateUtils.addMonths(order.getApplyDatetime(), 1);
         repayBiz.setFirstRepayDatetime(date);
 
+        // 贷款总额 = 贷款额+服务费(0)
         // 手续费总额 = 贷款总额*银行利率
         BigDecimal loanmount = new BigDecimal(order.getLoanAmount());
         BigDecimal sxfAmount = loanmount
             .multiply(new BigDecimal(order.getBankRate()));
-        // 月供=（贷款额+手续费）/期数 （像下取整）
+        // 月供=（贷款总额+手续费）/期数 （像下取整）
         BigDecimal periods = new BigDecimal(order.getPeriods());
-        BigDecimal monthAmount = (loanmount.add(sxfAmount)).divide(periods);
-        // 首期月供 = 月供*期数+首付-车辆总价
-        // 车辆总价=贷款额+首付
-        BigDecimal firstMonthAmount = monthAmount.multiply(periods)
-            .subtract(loanmount);
+        BigDecimal monthAmount = (loanmount.add(sxfAmount)).divide(periods, 0,
+            1);
+        // 首期月供 = -(月供*(期数-1)-贷款总额-手续费)
+        BigDecimal firstMonthAmount = loanmount.add(sxfAmount).subtract(
+            monthAmount.multiply(periods.subtract(new BigDecimal(1))));
 
         // Long monthlyAmount = new BigDecimal(order.getLoanAmount())
         // .divide(new BigDecimal(order.getPeriods()), 0, RoundingMode.DOWN)

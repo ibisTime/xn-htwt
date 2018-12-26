@@ -165,6 +165,13 @@ ADD COLUMN `wx_jour_pic` TEXT NULL COMMENT '微信流水图片' AFTER `wx_jour_m
 
 
 SET SQL_SAFE_UPDATES = 0;
+CREATE TABLE tmp as select code from tdq_investigate_report group by budget_order_code having count(budget_order_code) > 1;
+DELETE FROM tdq_investigate_report  WHERE code in (SELECT code FROM tmp);
+drop table tmp;
+SET SQL_SAFE_UPDATES = 1;
+
+
+SET SQL_SAFE_UPDATES = 0;
 UPDATE tdq_budget_order SET is_logistics='0';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_05',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_05';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_08',cur_node_code = '002_29',is_interview = '0',is_gps_az = '0' WHERE cur_node_code = '002_08';

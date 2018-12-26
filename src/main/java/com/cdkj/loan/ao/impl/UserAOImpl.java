@@ -75,8 +75,8 @@ public class UserAOImpl implements IUserAO {
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
 
         // 注册腾讯云用户
-        tencentBO.register(userId, nickname, ESystemCode.HTWT.getCode(),
-            ESystemCode.HTWT.getCode());
+        // tencentBO.register(userId, nickname, ESystemCode.HTWT.getCode(),
+        // ESystemCode.HTWT.getCode());
 
         // 分配账户
         distributeAccount(userId, mobile, kind);

@@ -424,7 +424,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.BANK_LOAN.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                EBudgetOrderNode.INSIDEJOB_SEND.getCode(),
+                EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode(),
                 EBudgetOrderNode.DHAPPROVEDATA.getCode(), null);
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
