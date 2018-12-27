@@ -119,7 +119,7 @@ public interface IBudgetOrderAO {
     public void mortgageCommitbank(XN632149Req req);
 
     // 抵押完成
-    public void mortgageFinish(XN632133Req req);
+    public String mortgageFinish(XN632133Req req);
 
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
             int limit, BudgetOrder condition, String operator);

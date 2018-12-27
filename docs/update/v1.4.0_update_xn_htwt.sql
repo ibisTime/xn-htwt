@@ -125,11 +125,13 @@ UPDATE `tsys_node` SET `name`='提前还款审核' WHERE `code`='003_20';
 DELETE FROM `tsys_node` WHERE `code`='003_21';
 DELETE FROM `tsys_node` WHERE `code`='003_22';
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('003', '003_20', '003_02', '003_01');
+UPDATE `tsys_node` SET `name`='已结清' WHERE `code`='005_03';
+UPDATE `tsys_node` SET `name`='确认结清' WHERE `code`='005_02';
+
 
 SET SQL_SAFE_UPDATES = 0;
 DELETE FROM tdq_logistics WHERE code ='L201811010737293924675';
 DELETE FROM tdq_logistics WHERE code ='L201812101620098231500';
-DELETE FROM tdq_logistics WHERE code ='L201812101105038134821';
 DELETE FROM `tsys_biz_log` WHERE `id`='4888';
 DELETE FROM `tsys_biz_log` WHERE `id`='7671';
 DELETE FROM `tsys_biz_log` WHERE `id`='7574';

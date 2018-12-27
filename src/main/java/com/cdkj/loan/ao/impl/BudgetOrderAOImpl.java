@@ -1271,6 +1271,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     EBoolean.NO);
             }
             budgetOrderGpsBO.removeBudgetOrderGpsList(code);
+            budgetOrder.setIsGpsAz(EBoolean.NO.getCode());
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshGpsManagerApprove(budgetOrder);
@@ -1580,7 +1581,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void mortgageFinish(XN632133Req req) {
+    public String mortgageFinish(XN632133Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
@@ -1589,6 +1590,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是内勤录入抵押信息节点，不能操作");
         }
+        String result = EBoolean.NO.getCode();
 
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setCarNumber(req.getCarNumber());
@@ -1612,6 +1614,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 产生物流单后改变状态为物流传递中
         // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
         // budgetOrderBO.updateIsLogistics(budgetOrder);
+        result = EBoolean.YES.getCode();
 
         // 资料传递日志
         sysBizLogBO.saveSYSBizLog(req.getCode(), EBizLogType.LOGISTICS,
@@ -1623,6 +1626,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             budgetOrder.getCurNodeCode(), null, req.getOperator(),
             budgetOrder.getTeamCode());
+
+        return result;
     }
 
     @Override
@@ -1777,14 +1782,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Logistics logistics = new Logistics();
         logistics.setType(ELogisticsType.BUDGET.getCode());
         logistics.setBizCode(budgetOrder.getCode());
-        logistics.setFromNodeCode(
-            EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode());
+        // logistics.setFromNodeCode(
+        // EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode());
         logistics.setToNodeCode(EBudgetOrderNode.DHAPPROVEDATA.getCode());
         logistics.setStatus(ELogisticsStatus.RECEIVED.getCode());
         List<Logistics> logisticsList = logisticsBO
             .queryLogisticsList(logistics);
         if (CollectionUtils.isNotEmpty(logisticsList)) {
-            Logistics domain = logisticsList.get(0);
+            Logistics domain = logisticsList.get(logisticsList.size() - 1);
             String companyName = "";
             if (StringUtils.isNotBlank(domain.getLogisticsCompany())) {
                 SYSDict dict = sysDictBO.getSYSDictByParentKeyAndDkey(
@@ -2083,8 +2088,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void dataSupplement(XN632141Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-        if (!EBudgetOrderNode.COMMITBANK.getCode()
+        if (!EBudgetOrderNode.DHAPPROVEDATA.getCode()
             .equals(budgetOrder.getIntevCurNodeCode())
+                && !EBudgetOrderNode.COMMITBANK3.getCode()
+                    .equals(budgetOrder.getIntevCurNodeCode())
+                && !EBudgetOrderNode.COMMITBANK.getCode()
+                    .equals(budgetOrder.getIntevCurNodeCode())
                 && !EBudgetOrderNode.ENTRYLOAN.getCode()
                     .equals(budgetOrder.getIntevCurNodeCode())
                 && !EBudgetOrderNode.CONFIRMLOAN.getCode()

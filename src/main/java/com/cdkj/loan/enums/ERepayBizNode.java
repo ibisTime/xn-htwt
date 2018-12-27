@@ -23,8 +23,8 @@ public enum ERepayBizNode {
             "003_20", "提前还款审核"),
 
     // 商品分期的节点
-    PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(
-            "005_03", "确认结清"), PRO_BAD_DEBT("005_04", "确认不还");
+    PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "确认结清"), PRO_CONFIRM_SETTLE(
+            "005_03", "已结清"), PRO_BAD_DEBT("005_04", "确认不还");
 
     public static Map<String, ERepayBizNode> getMap() {
         Map<String, ERepayBizNode> map = new HashMap<String, ERepayBizNode>();

@@ -32,6 +32,7 @@ public class XN632205 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setRepayBizCode(req.getRepayBizCode());
         condition.setApplyUserName(req.getApplyUserName());
+        condition.setSaleUserId(req.getSaleUserId());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));

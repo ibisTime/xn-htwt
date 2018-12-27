@@ -58,8 +58,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     private IBankBO bankBO;
 
     @Override
-    public String saveBudgetOrder(Credit credit) {
-        List<CreditUser> creditUserList = credit.getCreditUserList();
+    public String saveBudgetOrder(Credit credit,
+            List<CreditUser> creditUserList) {
         CreditUser applyCreditUser = null;
         CreditUser ghrCreditUser = null;
         CreditUser guaCreditUser = null;
@@ -335,8 +335,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 ELogisticsCurNodeType.BANK_LOAN.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
-            // 产生物流单后改变状态为物流传递中
-            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+            // // 产生物流单后改变状态为物流传递中
+            // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
 
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
@@ -377,7 +377,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
             // 产生物流单后改变状态为物流传递中
-            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+            // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
 
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,

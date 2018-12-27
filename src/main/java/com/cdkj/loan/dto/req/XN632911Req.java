@@ -17,9 +17,19 @@ public class XN632911Req extends APageReq {
 
     private String teamCode;// 团队编号
 
-    private String refOrder;// 业务编号
+    private String parentOrder;// 业务编号
 
     private String refType;// 流程类型
+
+    private String applyUserName;// 客户姓名
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
 
     public String getRoleCode() {
         return roleCode;
@@ -37,12 +47,12 @@ public class XN632911Req extends APageReq {
         this.teamCode = teamCode;
     }
 
-    public String getRefOrder() {
-        return refOrder;
+    public String getParentOrder() {
+        return parentOrder;
     }
 
-    public void setRefOrder(String refOrder) {
-        this.refOrder = refOrder;
+    public void setParentOrder(String parentOrder) {
+        this.parentOrder = parentOrder;
     }
 
     public String getRefType() {

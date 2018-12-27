@@ -107,6 +107,9 @@
 			<if test="applyUserName != null and applyUserName != '' ">
 				AND t.apply_user_name = #{applyUserName}
 			</if>
+			<if test="saleUserId != null and saleUserId != '' ">
+				AND t.sale_user_id = #{saleUserId}
+			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
 			</if>
@@ -121,6 +124,9 @@
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="budgetOrderCode != null and budgetOrderCode != '' ">
+				AND t.budget_order_code = #{budgetOrderCode}
 			</if>
 		</trim>
 	</sql>

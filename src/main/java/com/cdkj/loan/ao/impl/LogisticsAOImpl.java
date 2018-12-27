@@ -429,7 +429,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.LOGISTICS, logisticsCode,
-                EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode(),
+                EBudgetOrderNode.DHAPPROVEDATA.getCode(),
                 budgetOrder.getTeamCode());
         }
     }

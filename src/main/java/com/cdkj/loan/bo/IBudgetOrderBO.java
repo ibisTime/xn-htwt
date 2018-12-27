@@ -6,10 +6,12 @@ import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditUser;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
-    public String saveBudgetOrder(Credit credit);
+    public String saveBudgetOrder(Credit credit,
+            List<CreditUser> creditUserList);
 
     public void refreshBudgetOrder(BudgetOrder data);
 

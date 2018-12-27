@@ -2192,6 +2192,7 @@
 		UPDATE tdq_budget_order
 		SET
 		advanf_cur_node_code = #{advanfCurNodeCode}
+		,is_gps_az = #{isGpsAz}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>

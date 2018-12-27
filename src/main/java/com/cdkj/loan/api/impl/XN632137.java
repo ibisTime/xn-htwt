@@ -26,7 +26,7 @@ public class XN632137 extends AProcessor {
     public Object doBusiness() throws BizException {
         budgetOrderAO.interviewInternalApprove(req.getCode(), req.getOperator(),
             req.getApproveResult(), req.getApproveNote());
-        return new BooleanRes(true);
+        return new BooleanRes(true, req.getApproveResult());
     }
 
     @Override

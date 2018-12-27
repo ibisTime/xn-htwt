@@ -64,6 +64,16 @@ public class SYSBizLog extends ABaseDO {
 
     private String logisticsStatus;// 物流单状态
 
+    private String applyUserName;// 客户姓名
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
+
     public String getBizOrderType() {
         return bizOrderType;
     }
