@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 业务报表
  * @author: jiafr 
@@ -20,6 +22,17 @@ public class XN632915Req extends APageReq {
     private String loanPeriod;// 贷款期限
 
     private String curNodeCode;// 贷款进度
+
+    @NotBlank
+    private String userId;// 用户编号
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getCurNodeCode() {
         return curNodeCode;

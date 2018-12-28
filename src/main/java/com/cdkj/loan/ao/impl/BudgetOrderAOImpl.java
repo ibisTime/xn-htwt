@@ -1667,12 +1667,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             userId = user.getUserId();
         }
 
+        Bank bank = bankBO.getBank(budgetOrder.getRepayBankCode());
+
         // 绑定用户银行卡
         String bankcardCode = bankcardBO.bind(userId,
             budgetOrder.getApplyUserName(),
-            budgetOrder.getRepayBankcardNumber(),
-            budgetOrder.getRepayBankCode(), budgetOrder.getRepayBankName(),
-            budgetOrder.getRepaySubbranch());
+            budgetOrder.getRepayBankcardNumber(), bank.getBankCode(),
+            budgetOrder.getRepayBankName(), budgetOrder.getRepaySubbranch());
 
         // 自动生成还款业务
         RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(budgetOrder,
@@ -2355,7 +2356,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public Paginable<BudgetOrder> queryBudgetOrderPageForBizReport(int start,
-            int limit, BudgetOrder condition) {
+            int limit, BudgetOrder condition, String userId) {
+        SYSUser user = sysUserBO.getUser(userId);
+        if (ESysRole.SALE.getCode().equals(user.getRoleCode())) {
+            condition.setSaleUserId(userId);
+        } else if (ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
+            condition.setInsideJob(userId);
+        }
         Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginable(start,
             limit, condition);
         List<BudgetOrder> list = paginable.getList();

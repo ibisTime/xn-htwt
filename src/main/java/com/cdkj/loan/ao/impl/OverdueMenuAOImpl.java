@@ -20,6 +20,7 @@ import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.OverdueMenu;
 import com.cdkj.loan.domain.RepayBiz;
@@ -65,8 +66,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             RepayBiz condition = new RepayBiz();
             condition.setRealName(overdue.getRealName());
             condition.setIdNo(overdue.getIdNo());
-            String bankName = bankBO.getBank(loanBankCode).getBankName();
-            condition.setLoanBank(loanBankCode);
+            Bank bank = bankBO.getBank(loanBankCode);
+            condition.setLoanBank(bank.getBankCode());
             condition
                 .setLoanAmount(StringValidater.toLong(overdue.getLoanAmount()));
             condition
@@ -152,7 +153,7 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             overdueMenu.setRemainAmount(
                 StringValidater.toLong(overdue.getRemainAmount()));
             overdueMenu.setLoanBankCode(loanBankCode);
-            overdueMenu.setLoanBankName(bankName);
+            overdueMenu.setLoanBankName(bank.getBankName());
 
             overdueMenu.setImportDatetime(new Date());
             overdueMenuBO.saveOverdueMenu(overdueMenu);

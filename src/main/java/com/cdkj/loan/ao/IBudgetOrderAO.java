@@ -153,7 +153,7 @@ public interface IBudgetOrderAO {
 
     // 业务报表
     public Object queryBudgetOrderPageForBizReport(int start, int limit,
-            BudgetOrder condition);
+            BudgetOrder condition, String userId);
 
     // 进度报表
     public Object queryBudgetOrderPageForProgress(XN632913Req req);

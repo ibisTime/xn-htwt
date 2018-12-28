@@ -172,6 +172,11 @@ DELETE FROM tdq_investigate_report  WHERE code in (SELECT code FROM tmp);
 drop table tmp;
 SET SQL_SAFE_UPDATES = 1;
 
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tstd_bankcard c,tb_bank b SET c.bank_code=b.bank_code WHERE c.bank_code = b.code;
+UPDATE tdh_repay_biz r,tb_bank b SET r.loan_bank=b.bank_code WHERE r.loan_bank = b.code;
+SET SQL_SAFE_UPDATES = 1;
+
 
 SET SQL_SAFE_UPDATES = 0;
 UPDATE tdq_budget_order SET is_logistics='0';

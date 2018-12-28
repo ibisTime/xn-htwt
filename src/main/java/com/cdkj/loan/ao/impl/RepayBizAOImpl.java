@@ -14,6 +14,7 @@ import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBizTeamBO;
+import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -85,6 +86,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IBankBO bankBO;
 
     @Autowired
+    private IChannelBankBO channelBankBO;
+
+    @Autowired
     private INodeFlowBO nodeFlowBO;
 
     @Autowired
@@ -144,9 +148,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setActualRefunds(deposit);
         repayBiz.setLoanBalance(amount);
         // app取的银行编号为ICBC
-        // String bankName =
-        // bankBO.getBank(repayBiz.getLoanBank()).getBankName();
-        // repayBiz.setLoanBankName(bankName);
+        String bankName = channelBankBO.getChannelBank(repayBiz.getLoanBank())
+            .getBankName();
+        repayBiz.setLoanBankName(bankName);
 
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
             repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);

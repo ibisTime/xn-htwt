@@ -225,7 +225,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 "该商品不处于还款审核，不能操作！");
         }
         if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
-            repayPlan.setPayedAmount(repayPlan.getRepayAmount());
+            repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
             repayPlan.setOverplusAmount(StringValidater.toLong("0"));
             repayPlan.setOverdueAmount(StringValidater.toLong("0"));
             repayPlan.setCurNodeCode(nodeFlow.getNextNode());
@@ -233,7 +233,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             if (repayPlan.getRepayDatetime().before(new Date())) {
                 repayPlan.setCurNodeCode(nodeFlow.getBackNode());
             } else {
-                repayPlan.setPayedAmount(StringValidater.toLong("0"));
+                repayPlan.setRealRepayAmount(StringValidater.toLong("0"));
                 repayPlan.setOverplusAmount(repayPlan.getRepayAmount());
                 repayPlan.setOverdueAmount(repayPlan.getRepayAmount());
                 repayPlan.setCurNodeCode(ERepayPlanNode.PRD_OVERDUE.getCode());
@@ -304,7 +304,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
             repayPlan.setOverplusAmount(0L);
             repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
-            // TODO 判断是否为当月还款计划，处理之前的逾期名单不用减期数
+
             RepayPlan curMonth = repayPlanBO
                 .getRepayPlanCurMonth(repayPlan.getRepayBizCode());
             if (curMonth.getCode().equals(repayPlan.getCode())) {
