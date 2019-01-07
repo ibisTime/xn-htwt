@@ -212,3 +212,6 @@ UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = 
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_22';
 UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = '002_32',is_interview = '1',is_gps_az = '1' WHERE cur_node_code = '002_23';
 SET SQL_SAFE_UPDATES = 1;
+
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_39', '准入完成，面签未完成', '002');

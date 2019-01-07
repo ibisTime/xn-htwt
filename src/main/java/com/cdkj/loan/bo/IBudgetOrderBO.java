@@ -114,4 +114,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
             int limit, BudgetOrder condition);
 
+    // 改节点
+    public void refreshBudgetOrderCurNode(BudgetOrder budgetOrder);
+
 }

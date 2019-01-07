@@ -14,9 +14,10 @@ public enum EBudgetOrderNode {
             "002_25", "内勤主管审核"), RISK_ONE_APPROVE("002_02", "风控一审"),RISK_TWO_APPROVE(
             "002_27", "风控二审"), RISK_CHARGE_APPROVE("002_03", "风控终审"),YBIZ_CHARGE_APPROVE(
             "002_28", "业务总监审核"), AGAIN_WRITE("002_04", "重新填写准入申请单"), INTERVIEW(
-            "002_05", "面签"), INTERVIEW_INTERNAL_APPROVE("002_26", "内勤主管审核(面签)"), FINANCEAUDIT(
-            "002_29","财务审核"),ADVANCEFUND("002_07", "财务垫资"), AGAIN_INTERVIEW("002_08", "重新面签"),
-            RISK_CONTROLLER_APPROVE("002_30","风控专员审核"),
+            "002_05", "面签"), INTERVIEW_INTERNAL_APPROVE("002_26", "内勤主管审核(面签)"),BUDFINSH_INTEVUNDONE(
+            "002_39","准入完成，面签未完成"), FINANCEAUDIT("002_29","财务审核"),ADVANCEFUND(
+            "002_07", "财务垫资"), AGAIN_INTERVIEW("002_08", "重新面签"), RISK_CONTROLLER_APPROVE(
+            "002_30","风控专员审核"),
 
     GPSAZ("002_09", "业务团队安装GPS"), GPSMANAGERAPPROVE("002_10", "GPS管理员审核"), AGAINGPSAZ(
             "002_12", "业务团队重新安装GPS"), CARSETTLE("002_11", "业务团队车辆落户"), DHAPPROVEDATA(

@@ -94,4 +94,6 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     long selectTotalCountByUserId(BudgetOrder condition);
 
+    void updateCurNodeCode(BudgetOrder budgetOrder);
+
 }

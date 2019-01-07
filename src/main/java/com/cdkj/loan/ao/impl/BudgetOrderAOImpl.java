@@ -720,7 +720,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(EBudgetOrderNode.FINANCEAUDIT.getCode());
+            if (EBoolean.YES.getCode().equals(budgetOrder.getIsInterview())) {
+                budgetOrder
+                    .setCurNodeCode(EBudgetOrderNode.FINANCEAUDIT.getCode());
+            } else {
+                budgetOrder.setCurNodeCode(
+                    EBudgetOrderNode.BUDFINSH_INTEVUNDONE.getCode());
+            }
             /**************生成 手续费************/
             BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
                 .getBudgetOrderFeeByBudget(code);
@@ -958,11 +964,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshbizChargeApprove(budgetOrder);
 
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getCurNodeCode(), approveNote, operator,
-            budgetOrder.getTeamCode());
+        if (EBoolean.YES.getCode().equals(budgetOrder.getIsInterview())) {
+            // 日志记录
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+                EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+                budgetOrder.getCurNodeCode(), approveNote, operator,
+                budgetOrder.getTeamCode());
+        } else {
+            // 如果走到中间节点，处理之前的日志
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BUDGET_ORDER.getCode(),
+                budgetOrder.getCode(), preCurrentNode, approveNote, operator);
+        }
     }
 
     @Override
@@ -1133,6 +1145,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 logisticsCode, budgetOrder.getIntevCurNodeCode(),
                 budgetOrder.getTeamCode());
             budgetOrder.setIsInterview(EBoolean.YES.getCode());
+
+            // 如果主流程节点在中间节点，往后走一步
+            if (EBudgetOrderNode.BUDFINSH_INTEVUNDONE.getCode()
+                .equals(budgetOrder.getCurNodeCode())) {
+                budgetOrder
+                    .setCurNodeCode(EBudgetOrderNode.FINANCEAUDIT.getCode());
+                budgetOrderBO.refreshBudgetOrderCurNode(budgetOrder);
+
+                // 生成下一步日志
+                sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
+                    EBudgetOrderNode.FINANCEAUDIT.getCode(),
+                    budgetOrder.getTeamCode());
+            }
         } else {
             budgetOrder.setIntevCurNodeCode(nodeFlow.getBackNode());
         }

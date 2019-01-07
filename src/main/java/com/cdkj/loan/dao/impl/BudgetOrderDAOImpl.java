@@ -254,4 +254,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
             NAMESPACE.concat("select_budgetOrder_count_byUserId"), condition);
     }
 
+    @Override
+    public void updateCurNodeCode(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_curNodeCode"), data);
+    }
+
 }
