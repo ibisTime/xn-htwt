@@ -214,4 +214,11 @@ UPDATE tdq_budget_order SET intev_cur_node_code='002_31',advanf_cur_node_code = 
 SET SQL_SAFE_UPDATES = 1;
 
 
+SET SQL_SAFE_UPDATES = 0;
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('002_39', '准入完成，面签未完成', '002');
+CREATE TABLE tmp as SELECT id FROM tsys_biz_log where deal_node = '002_29' and status = '0' and parent_order in (select code from tdq_budget_order where cur_node_code = '002_29' and is_interview = '0');
+DELETE FROM tsys_biz_log  WHERE id in (SELECT id FROM tmp);
+drop table tmp;
+UPDATE tdq_budget_order SET cur_node_code='002_39' WHERE cur_node_code = '002_29' and is_interview = '0';
+SET SQL_SAFE_UPDATES = 1;
+
