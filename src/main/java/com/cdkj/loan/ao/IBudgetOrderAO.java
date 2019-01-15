@@ -149,7 +149,7 @@ public interface IBudgetOrderAO {
 
     // 团队报表
     public Paginable<BudgetOrder> queryBudgetOrderPageByTeamCode(int start,
-            int limit, BudgetOrder condition, String roleCode);
+            int limit, BudgetOrder condition, String userId);
 
     // 业务报表
     public Object queryBudgetOrderPageForBizReport(int start, int limit,

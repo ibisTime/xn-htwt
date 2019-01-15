@@ -2341,13 +2341,22 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public Paginable<BudgetOrder> queryBudgetOrderPageByTeamCode(int start,
-            int limit, BudgetOrder condition, String roleCode) {
-        if (!"RO201800000000000001".equals(roleCode)
-                && condition.getTeamCode() == null) {
-            condition.setTeamCode("000000000000000");// 意为空
-        }
-        if ("RO201800000000000001".equals(roleCode)) {
-            condition.setTeamCode(null);
+            int limit, BudgetOrder condition, String userId) {
+        // 记得有这需求，联否
+        // if (!"RO201800000000000001".equals(roleCode)
+        // && condition.getTeamCode() == null) {
+        // condition.setTeamCode("000000000000000");// 意为空
+        // }
+        // if ("RO201800000000000001".equals(roleCode)) {
+        // condition.setTeamCode(null);
+        // }
+        SYSUser user = sysUserBO.getUser(userId);
+        if (ESysRole.SALE.getCode().equals(user.getRoleCode())) {
+            condition.setSaleUserId(userId);
+        } else if (ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
+            condition.setInsideJob(userId);
+        } else if (ESysRole.LEADER.getCode().equals(user.getRoleCode())) {
+            condition.setTeamCode(user.getTeamCode());
         }
         Paginable<BudgetOrder> page = budgetOrderBO
             .getPaginableByTeamCode(start, limit, condition);
