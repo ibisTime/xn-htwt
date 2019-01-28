@@ -16,14 +16,8 @@ public class XN632131Req {
     @NotBlank
     private String operator;// 操作人
 
-    // 抵押日期
-    private String pledgeDatetime;
-
     // 绿大本扫描件
     private String greenBigSmj;
-
-    // 车辆落户日期
-    private String carSettleDatetime;
 
     // 发票
     private String carInvoice;
@@ -42,14 +36,6 @@ public class XN632131Req {
 
     // 其他资料
     private String carSettleOtherPdf;
-
-    public String getCarSettleDatetime() {
-        return carSettleDatetime;
-    }
-
-    public void setCarSettleDatetime(String carSettleDatetime) {
-        this.carSettleDatetime = carSettleDatetime;
-    }
 
     public String getCarInvoice() {
         return carInvoice;
@@ -113,14 +99,6 @@ public class XN632131Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getPledgeDatetime() {
-        return pledgeDatetime;
-    }
-
-    public void setPledgeDatetime(String pledgeDatetime) {
-        this.pledgeDatetime = pledgeDatetime;
     }
 
     public String getGreenBigSmj() {

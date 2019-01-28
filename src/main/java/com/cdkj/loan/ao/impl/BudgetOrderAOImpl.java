@@ -1486,13 +1486,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         NodeFlow currentNodeFlow = nodeFlowBO
             .getNodeFlowByCurrentNode(preCurrentNode);
         budgetOrder.setAdvanfCurNodeCode(currentNodeFlow.getNextNode());
-        budgetOrder.setPledgeDatetime(DateUtil.strToDate(
-            req.getPledgeDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGreenBigSmj(req.getGreenBigSmj());
         budgetOrder.setIsEntryMortgage(EBoolean.YES.getCode());
 
-        budgetOrder.setCarSettleDatetime(DateUtil.strToDate(
-            req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setCarInvoice(req.getCarInvoice());
         budgetOrder.setCarJqx(req.getCarJqx());
         budgetOrder.setCarSyx(req.getCarSyx());
@@ -1625,6 +1621,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarBigSmj(req.getCarBigSmj());
         budgetOrder.setCarXszSmj(req.getCarXszSmj());
         budgetOrder.setDutyPaidProveSmj(req.getDutyPaidProveSmj());
+        budgetOrder.setPledgeDatetime(DateUtil.strToDate(
+            req.getPledgeDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setCarSettleDatetime(DateUtil.strToDate(
+            req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setPledgeStatus(EBoolean.YES.getCode());
 
         budgetOrderBO.refreshMortgageFinish(budgetOrder);

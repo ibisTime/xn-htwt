@@ -41,6 +41,12 @@ public class XN632133Req {
     @NotBlank
     private String dutyPaidProveSmj;
 
+    // 抵押日期
+    private String pledgeDatetime;
+
+    // 车辆落户日期
+    private String carSettleDatetime;
+
     @NotBlank
     private String operator;// 操作人
 
@@ -106,6 +112,22 @@ public class XN632133Req {
 
     public void setCarKey(String carKey) {
         this.carKey = carKey;
+    }
+
+    public String getPledgeDatetime() {
+        return pledgeDatetime;
+    }
+
+    public void setPledgeDatetime(String pledgeDatetime) {
+        this.pledgeDatetime = pledgeDatetime;
+    }
+
+    public String getCarSettleDatetime() {
+        return carSettleDatetime;
+    }
+
+    public void setCarSettleDatetime(String carSettleDatetime) {
+        this.carSettleDatetime = carSettleDatetime;
     }
 
     public String getCarBigSmj() {
