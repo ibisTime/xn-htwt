@@ -9,6 +9,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.dto.req.XN632124Req;
 import com.cdkj.loan.dto.req.XN632125Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
@@ -17,6 +18,9 @@ import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.dto.req.XN632141Req;
+import com.cdkj.loan.dto.req.XN632143Req;
+import com.cdkj.loan.dto.req.XN632144Req;
+import com.cdkj.loan.dto.req.XN632149Req;
 import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
@@ -59,16 +63,21 @@ public interface IBudgetOrderAO {
     // 面签
     public void interview(XN632123Req req);
 
-    // 业务总监审核
-    // public void bizChargeApprove(String code, String operator,
-    // String approveResult, String approveNote);
-
     // 面签内勤主管审核
     public void interviewInternalApprove(String code, String operator,
             String approveResult, String approveNote);
 
+    // 财务审核
+    public void financeAudit(XN632143Req req);
+
     // 财务确认垫资
     public void advanceFund(XN632125Req req);
+
+    // 驻行抵押申请
+    public void residentMortgageApply(XN632144Req req);
+
+    // 内勤确认
+    public void insidejobConfirm(XN632124Req req);
 
     // 安装GPS
     public void installGps(String code, String operator,
@@ -106,8 +115,11 @@ public interface IBudgetOrderAO {
     public void mortgageCommitBank(String code, String operator,
             String pledgeBankCommitDatetime, String pledgeBankCommitNote);
 
+    // 驻行人员审核抵押材料
+    public void mortgageCommitbank(XN632149Req req);
+
     // 抵押完成
-    public void mortgageFinish(XN632133Req req);
+    public String mortgageFinish(XN632133Req req);
 
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
             int limit, BudgetOrder condition, String operator);
@@ -137,11 +149,11 @@ public interface IBudgetOrderAO {
 
     // 团队报表
     public Paginable<BudgetOrder> queryBudgetOrderPageByTeamCode(int start,
-            int limit, BudgetOrder condition, String roleCode);
+            int limit, BudgetOrder condition, String userId);
 
     // 业务报表
     public Object queryBudgetOrderPageForBizReport(int start, int limit,
-            BudgetOrder condition);
+            BudgetOrder condition, String userId);
 
     // 进度报表
     public Object queryBudgetOrderPageForProgress(XN632913Req req);
@@ -153,5 +165,9 @@ public interface IBudgetOrderAO {
     // 根据客户姓名查询预算单
     public List<BudgetOrder> queryBudgetOrderByApplyUserName(
             BudgetOrder condition);
+
+    // 根据信贷专员或内勤查预算单客户
+    public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
+            int limit, BudgetOrder condition);
 
 }

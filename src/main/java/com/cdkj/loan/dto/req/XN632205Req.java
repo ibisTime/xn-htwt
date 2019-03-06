@@ -16,6 +16,9 @@ public class XN632205Req extends APageReq {
     // 客户姓名
     private String applyUserName;
 
+    // 信贷专员
+    private String saleUserId;
+
     // 申请时间起
     private String applyDatetimeStart;
 
@@ -31,6 +34,14 @@ public class XN632205Req extends APageReq {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
+    }
+
+    public String getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
 
     public String getApplyUserName() {

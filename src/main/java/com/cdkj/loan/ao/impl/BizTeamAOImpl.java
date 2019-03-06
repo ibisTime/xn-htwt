@@ -92,15 +92,16 @@ public class BizTeamAOImpl implements IBizTeamAO {
 
         data.setName(req.getName());
         data.setCaptain(req.getCaptain());
-        // 保存团队长的teamCode
-        SYSUser user = sysUserBO.getUser(req.getCaptain());
-        user.setTeamCode(req.getCode());
-        sysUserBO.refreshUserByteamCode(user);
 
         // 去掉原团队长的团队编号
         SYSUser puser = sysUserBO.getUser(preCaptain);
         puser.setTeamCode(null);
         sysUserBO.refreshUserByteamCode(puser);
+
+        // 保存团队长的teamCode
+        SYSUser user = sysUserBO.getUser(req.getCaptain());
+        user.setTeamCode(req.getCode());
+        sysUserBO.refreshUserByteamCode(user);
 
         data.setCompanyCode(captain.getCompanyCode());
         data.setUpdater(req.getUpdater());

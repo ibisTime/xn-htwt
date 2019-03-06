@@ -273,13 +273,25 @@ public class ProductAOImpl implements IProductAO {
             List<ProductSpecs> productSpecsList = productSpecsBO
                 .queryProductSpecsList(code);
             for (ProductSpecs productSpecs : productSpecsList) {
+                // Double sfAmount = productSpecs.getPrice()
+                // * productSpecs.getSfRate();
+                // Double amount = productSpecs.getPrice() - sfAmount;
+                // Double monthAmount = amount / productSpecs.getPeriods();
+                // BigDecimal aBigDecimal = new BigDecimal(monthAmount);
+                // aBigDecimal.setScale(0, RoundingMode.DOWN);
+                // productSpecs.setMonthAmount(aBigDecimal.longValue());
+
                 Double sfAmount = productSpecs.getPrice()
                         * productSpecs.getSfRate();
-                Double amount = productSpecs.getPrice() - sfAmount;
-                Double monthAmount = amount / productSpecs.getPeriods();
-                BigDecimal aBigDecimal = new BigDecimal(monthAmount);
-                aBigDecimal.setScale(0, RoundingMode.DOWN);
-                productSpecs.setMonthAmount(aBigDecimal.longValue());
+                BigDecimal loanmount = new BigDecimal(
+                    productSpecs.getPrice() - sfAmount);
+                BigDecimal sxfAmount = loanmount
+                    .multiply(new BigDecimal(productSpecs.getBankRate()));
+                // 月供=（贷款总额+手续费）/期数 （像下取整）
+                BigDecimal periods = new BigDecimal(productSpecs.getPeriods());
+                BigDecimal monthAmount = (loanmount.add(sxfAmount))
+                    .divide(periods, 0, 1);
+                productSpecs.setMonthAmount(monthAmount.longValue());
             }
             product.setProductSpecsList(productSpecsList);
         }

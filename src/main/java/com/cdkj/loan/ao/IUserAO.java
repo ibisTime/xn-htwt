@@ -25,6 +25,9 @@ public interface IUserAO {
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha);
 
+    // 管理员重置登录密码
+    public void changeLoginPwdOSS(String userId, String newLoginPwd);
+
     // 重置登录密码
     public void doResetLoginPwd(String mobile, String smsCaptcha,
             String newLoginPwd, String kind);

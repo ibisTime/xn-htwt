@@ -25,5 +25,4 @@ public interface IInterviewVideoAO {
     public InterviewVideo getInterviewVideo(int id);
 
     public Object foundRoomTotal(XN632953Req req);
-
 }

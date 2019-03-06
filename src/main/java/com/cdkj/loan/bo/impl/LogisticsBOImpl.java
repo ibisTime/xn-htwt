@@ -46,13 +46,15 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     private ISYSBizLogBO sysBizLogBO;
 
     @Override
-    public String saveLogistics(String type, String bizCode, String userId,
-            String fromNodeCode, String toNodeCode, String refFileList) {
+    public String saveLogistics(String type, String curNodeType, String bizCode,
+            String userId, String fromNodeCode, String toNodeCode,
+            String refFileList) {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
+        data.setCurNodeType(curNodeType);
         data.setBizCode(bizCode);
         data.setUserId(userId);
         // 找到团队
@@ -68,7 +70,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
     @Override
     public String saveLogisticsGps(String type, String bizCode, String userId,
-            String refFileList, String receiver) {
+            String refFileList, String receiver, String teamCode) {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
@@ -77,9 +79,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         data.setBizCode(bizCode);
         data.setUserId(userId);
 
-        // 找到团队
-        SYSUser sysUser = sysUserBO.getUser(userId);
-        data.setTeamCode(sysUser.getTeamCode());
+        data.setTeamCode(teamCode);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
         data.setReceiver(receiver);
 

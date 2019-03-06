@@ -6,7 +6,7 @@ public class XN630543Req extends APageReq {
 
     private String userId;// 用户编号
 
-    private String refType;// 类型，0=商品，1=车贷
+    private String refType;// 类型，1=商品，0=车贷
 
     public String getRefType() {
         return refType;

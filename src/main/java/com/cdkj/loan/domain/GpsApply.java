@@ -21,6 +21,9 @@ public class GpsApply extends ABaseDO {
     // 类型(1 有线 2 无线)
     private String type;
 
+    // 申请类型(1 本部 2 分部)
+    private String applyType;
+
     // 公司编号
     private String companyCode;
 
@@ -60,11 +63,22 @@ public class GpsApply extends ABaseDO {
     // 收货日期
     private Date receiveDatetime;
 
+    // 团队编号
+    private String teamCode;
+
+    // 团队内勤
+    private String insideJob;
+
+    // 信贷专员
+    private String saleUserId;
+
     // 状态(0 待审核 1 审核通过,待发货 2 审核不通过 3 已发货,待收货 4 已收货)
     private String status;
 
+    // 操作人
     private String operator;
 
+    // 操作时间
     private Date updateDatetime;
 
     // 备注
@@ -80,6 +94,12 @@ public class GpsApply extends ABaseDO {
     // 团队名称
     private String teamName;
 
+    // 团队内勤
+    private String insideJobName;
+
+    // 信贷专员
+    private String saleUserName;
+
     // 角色名称
     private String roleName;
 
@@ -92,6 +112,30 @@ public class GpsApply extends ABaseDO {
 
     public void setGpsList(List<Gps> gpsList) {
         this.gpsList = gpsList;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
+
+    public String getInsideJob() {
+        return insideJob;
+    }
+
+    public void setInsideJob(String insideJob) {
+        this.insideJob = insideJob;
+    }
+
+    public String getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
 
     public String getOperator() {
@@ -116,6 +160,22 @@ public class GpsApply extends ABaseDO {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public String getInsideJobName() {
+        return insideJobName;
+    }
+
+    public void setInsideJobName(String insideJobName) {
+        this.insideJobName = insideJobName;
+    }
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
     }
 
     public String getBudgetOrderCode() {
@@ -172,6 +232,14 @@ public class GpsApply extends ABaseDO {
 
     public String getType() {
         return type;
+    }
+
+    public String getApplyType() {
+        return applyType;
+    }
+
+    public void setApplyType(String applyType) {
+        this.applyType = applyType;
     }
 
     public void setCompanyCode(String companyCode) {

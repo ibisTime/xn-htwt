@@ -11,6 +11,17 @@ public class XN632700Req {
     @NotBlank
     private String gpsType;
 
+    @NotBlank
+    private String updater;
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
     public String getGpsDevNo() {
         return gpsDevNo;
     }

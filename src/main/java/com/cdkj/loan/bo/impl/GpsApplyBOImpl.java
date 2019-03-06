@@ -125,4 +125,5 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
         }
         return data;
     }
+
 }

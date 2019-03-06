@@ -78,6 +78,10 @@ public class AccountBOImpl extends PaginableBOImpl<Account>
         return accountNumber;
     }
 
+    public static void main(String[] args) {
+        System.out.println(BigDecimal.ZERO);
+    }
+
     @Override
     public Account changeAmount(Account dbAccount, BigDecimal transAmount,
             EChannelType channelType, String channelOrder, String payGroup,

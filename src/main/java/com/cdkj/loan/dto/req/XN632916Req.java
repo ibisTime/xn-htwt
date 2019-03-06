@@ -24,14 +24,14 @@ public class XN632916Req extends APageReq {
     private String teamCode;// 团队编号
 
     @NotBlank
-    private String roleCode;// 角色编号
+    private String userId;// 用户编号
 
-    public String getRoleCode() {
-        return roleCode;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTeamCode() {

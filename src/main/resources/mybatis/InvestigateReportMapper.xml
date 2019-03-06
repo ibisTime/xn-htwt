@@ -24,27 +24,42 @@
 		<result column="apply_work_and_jour" property="applyWorkAndJour" />
 		<result column="jour_datetime_start" property="jourDatetimeStart" />
 		<result column="jour_datetime_end" property="jourDatetimeEnd" />
+		<result column="jour_interest1" property="jourInterest1" />
+		<result column="jour_interest2" property="jourInterest2" />
+		<result column="interest1" property="interest1" />
+		<result column="interest2" property="interest2" />
 		<result column="jour_income" property="jourIncome" />
 		<result column="jour_expend" property="jourExpend" />
 		<result column="jour_balance" property="jourBalance" />
 		<result column="jour_month_income" property="jourMonthIncome" />
 		<result column="jour_month_expend" property="jourMonthExpend" />
+		<result column="jour_pic" property="jourPic" />
 		<result column="jour_remark" property="jourRemark" />
 		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
 		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
+		<result column="zfb_jour_interest1" property="zfbJourInterest1" />
+		<result column="zfb_jour_interest2" property="zfbJourInterest2" />
+		<result column="zfb_interest1" property="zfbInterest1" />
+		<result column="zfb_interest2" property="zfbInterest2" />
 		<result column="zfb_jour_income" property="zfbJourIncome" />
 		<result column="zfb_jour_expend" property="zfbJourExpend" />
 		<result column="zfb_jour_balance" property="zfbJourBalance" />
 		<result column="zfb_jour_month_income" property="zfbJourMonthIncome" />
 		<result column="zfb_jour_month_expend" property="zfbJourMonthExpend" />
+		<result column="zfb_jour_pic" property="zfbJourPic" />
 		<result column="zfb_jour_remark" property="zfbJourRemark" />
 		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
 		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
+		<result column="wx_jour_interest1" property="wxJourInterest1" />
+		<result column="wx_jour_interest2" property="wxJourInterest2" />
+		<result column="wx_interest1" property="wxInterest1" />
+		<result column="wx_interest2" property="wxInterest2" />
 		<result column="wx_jour_income" property="wxJourIncome" />
 		<result column="wx_jour_expend" property="wxJourExpend" />
 		<result column="wx_jour_balance" property="wxJourBalance" />
 		<result column="wx_jour_month_income" property="wxJourMonthIncome" />
 		<result column="wx_jour_month_expend" property="wxJourMonthExpend" />
+		<result column="wx_jour_pic" property="wxJourPic" />
 		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="house_contract" property="houseContract" />
 		<result column="home_visit" property="homeVisit" />
@@ -92,6 +107,9 @@
 			<if test="applyUserName != null and applyUserName != '' ">
 				AND t.apply_user_name = #{applyUserName}
 			</if>
+			<if test="saleUserId != null and saleUserId != '' ">
+				AND t.sale_user_id = #{saleUserId}
+			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
 			</if>
@@ -106,6 +124,9 @@
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="budgetOrderCode != null and budgetOrderCode != '' ">
+				AND t.budget_order_code = #{budgetOrderCode}
 			</if>
 		</trim>
 	</sql>
@@ -132,27 +153,42 @@
 		,t.apply_work_and_jour
 		,t.jour_datetime_start
 		,t.jour_datetime_end
+		,t.jour_interest1
+		,t.jour_interest2
+		,t.interest1
+		,t.interest2
 		,t.jour_income
 		,t.jour_expend
 		,t.jour_balance
 		,t.jour_month_income
 		,t.jour_month_expend
+		,t.jour_pic
 		,t.jour_remark
 		,t.zfb_jour_datetime_start
 		,t.zfb_jour_datetime_end
+		,t.zfb_jour_interest1
+		,t.zfb_jour_interest2
+		,t.zfb_interest1
+		,t.zfb_interest2
 		,t.zfb_jour_income
 		,t.zfb_jour_expend
 		,t.zfb_jour_balance
 		,t.zfb_jour_month_income
 		,t.zfb_jour_month_expend
+		,t.zfb_jour_pic
 		,t.zfb_jour_remark
 		,t.wx_jour_datetime_start
 		,t.wx_jour_datetime_end
+		,t.wx_jour_interest1
+		,t.wx_jour_interest2
+		,t.wx_interest1
+		,t.wx_interest2
 		,t.wx_jour_income
 		,t.wx_jour_expend
 		,t.wx_jour_balance
 		,t.wx_jour_month_income
 		,t.wx_jour_month_expend
+		,t.wx_jour_pic
 		,t.wx_jour_remark
 		,t.house_contract
 		,t.home_visit
@@ -231,27 +267,42 @@
 		,apply_work_and_jour
 		,jour_datetime_start
 		,jour_datetime_end
+		,jour_interest1
+		,jour_interest2
+		,interest1
+		,interest2
 		,jour_income
 		,jour_expend
 		,jour_balance
 		,jour_month_income
 		,jour_month_expend
+		,jour_pic
 		,jour_remark
 		,zfb_jour_datetime_start
 		,zfb_jour_datetime_end
+		,zfb_jour_interest1
+		,zfb_jour_interest2
+		,zfb_interest1
+		,zfb_interest2
 		,zfb_jour_income
 		,zfb_jour_expend
 		,zfb_jour_balance
 		,zfb_jour_month_income
 		,zfb_jour_month_expend
+		,zfb_jour_pic
 		,zfb_jour_remark
 		,wx_jour_datetime_start
 		,wx_jour_datetime_end
+		,wx_jour_interest1
+		,wx_jour_interest2
+		,wx_interest1
+		,wx_interest2
 		,wx_jour_income
 		,wx_jour_expend
 		,wx_jour_balance
 		,wx_jour_month_income
 		,wx_jour_month_expend
+		,wx_jour_pic
 		,wx_jour_remark
 		,house_contract
 		,home_visit
@@ -313,27 +364,42 @@
 		,#{applyWorkAndJour}
 		,#{jourDatetimeStart}
 		,#{jourDatetimeEnd}
+		,#{jourInterest1}
+		,#{jourInterest2}
+		,#{interest1}
+		,#{interest2}
 		,#{jourIncome}
 		,#{jourExpend}
 		,#{jourBalance}
 		,#{jourMonthIncome}
 		,#{jourMonthExpend}
+		,#{jourPic}
 		,#{jourRemark}
 		,#{zfbJourDatetimeStart}
 		,#{zfbJourDatetimeEnd}
+		,#{zfbJourInterest1}
+		,#{zfbJourInterest2}
+		,#{zfbInterest1}
+		,#{zfbInterest2}
 		,#{zfbJourIncome}
 		,#{zfbJourExpend}
 		,#{zfbJourBalance}
 		,#{zfbJourMonthIncome}
 		,#{zfbJourMonthExpend}
+		,#{zfbJourPic}
 		,#{zfbJourRemark}
 		,#{wxJourDatetimeStart}
 		,#{wxJourDatetimeEnd}
+		,#{wxJourInterest1}
+		,#{wxJourInterest2}
+		,#{wxInterest1}
+		,#{wxInterest2}
 		,#{wxJourIncome}
 		,#{wxJourExpend}
 		,#{wxJourBalance}
 		,#{wxJourMonthIncome}
 		,#{wxJourMonthExpend}
+		,#{wxJourPic}
 		,#{wxJourRemark}
 		,#{houseContract}
 		,#{homeVisit}

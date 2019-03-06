@@ -26,9 +26,27 @@ public class XN632148Req extends APageReq {
 
     private String companyCode;// 公司编号
 
+    private String curNodeCode;// 当前节点编号
+
+    private String intevCurNodeCode;
+
+    private String advanfCurNodeCode;
+
     private List<String> curNodeCodeList;// 当前节点编号
 
+    private List<String> intevCurNodeCodeList;
+
+    private List<String> advanfCurNodeCodeList;
+
     private String isAdvanceFund;// 是否垫资
+
+    private String isEntryMortgage;// 是否录入发保合
+
+    // 是否抵押完成(1是0否)
+    private String isMortgage;
+
+    // 是否面签完成
+    private String isInterview;
 
     // 入档位置
     private String enterLocation;
@@ -43,12 +61,76 @@ public class XN632148Req extends APageReq {
 
     private String userId; // 操作人
 
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getIsMortgage() {
+        return isMortgage;
+    }
+
+    public void setIsMortgage(String isMortgage) {
+        this.isMortgage = isMortgage;
+    }
+
+    public String getIntevCurNodeCode() {
+        return intevCurNodeCode;
+    }
+
+    public void setIntevCurNodeCode(String intevCurNodeCode) {
+        this.intevCurNodeCode = intevCurNodeCode;
+    }
+
+    public String getAdvanfCurNodeCode() {
+        return advanfCurNodeCode;
+    }
+
+    public void setAdvanfCurNodeCode(String advanfCurNodeCode) {
+        this.advanfCurNodeCode = advanfCurNodeCode;
+    }
+
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getIsEntryMortgage() {
+        return isEntryMortgage;
+    }
+
+    public void setIsEntryMortgage(String isEntryMortgage) {
+        this.isEntryMortgage = isEntryMortgage;
+    }
+
+    public String getIsInterview() {
+        return isInterview;
+    }
+
+    public void setIsInterview(String isInterview) {
+        this.isInterview = isInterview;
+    }
+
+    public List<String> getIntevCurNodeCodeList() {
+        return intevCurNodeCodeList;
+    }
+
+    public void setIntevCurNodeCodeList(List<String> intevCurNodeCodeList) {
+        this.intevCurNodeCodeList = intevCurNodeCodeList;
+    }
+
+    public List<String> getAdvanfCurNodeCodeList() {
+        return advanfCurNodeCodeList;
+    }
+
+    public void setAdvanfCurNodeCodeList(List<String> advanfCurNodeCodeList) {
+        this.advanfCurNodeCodeList = advanfCurNodeCodeList;
     }
 
     public String getEnterLocation() {

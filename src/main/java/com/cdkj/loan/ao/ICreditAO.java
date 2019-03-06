@@ -2,6 +2,7 @@ package com.cdkj.loan.ao;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.dto.req.XN632099Req;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632112Req;
@@ -51,5 +52,11 @@ public interface ICreditAO {
 
     // 派单
     public void distributeLeaflets(XN632119Req req);
+
+    // 主贷人和配偶一键互换
+    public void exchangeCreditUser(XN632099Req req);
+
+    // 内勤主管分配情况
+    public Object queryCreditListByJob(Credit condition);
 
 }

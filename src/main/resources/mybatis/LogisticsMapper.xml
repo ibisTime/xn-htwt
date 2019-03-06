@@ -5,6 +5,7 @@
 	<resultMap id="logistics_DB_result" type="logistics">
 		<result column="code" property="code" />
 		<result column="type" property="type" />
+		<result column="cur_node_type" property="curNodeType" />
 		<result column="biz_code" property="bizCode" />
 		<result column="user_id" property="userId" />
 		<result column="team_code" property="teamCode" />
@@ -74,6 +75,7 @@
 		SELECT
 		t.code
 		,t.type
+		,t.cur_node_type
 		,t.biz_code
 		,t.user_id
 		,t.team_code
@@ -111,6 +113,7 @@
 		INSERT INTO tdq_logistics(
 		code
 		,type
+		,cur_node_type
 		,biz_code
 		,user_id
 		,team_code
@@ -123,6 +126,7 @@
 		VALUES(
 		#{code}
 		,#{type}
+		,#{curNodeType}
 		,#{bizCode}
 		,#{userId}
 		,#{teamCode}

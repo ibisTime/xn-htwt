@@ -25,6 +25,17 @@ public class XN632165Req extends APageReq {
     // 准入单编号
     private String budgetOrder;
 
+    // 预算单节点
+    private String curNodeCode;
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
     public String getUserId() {
         return userId;
     }

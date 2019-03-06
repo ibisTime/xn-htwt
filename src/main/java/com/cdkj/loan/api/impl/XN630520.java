@@ -1,5 +1,6 @@
 package com.cdkj.loan.api.impl;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IRepayBizAO;
@@ -27,8 +28,21 @@ public class XN630520 extends AProcessor {
         condition.setUserId(req.getUserId());
         condition.setRefType(req.getRefType());
         condition.setRealNameQuery(req.getRealName());
-        condition.setCurNodeCodeList(req.getCurNodeCodeList());
-        condition.setCurNodeCode(req.getCurNodeCode());
+        if (StringUtils.isNotBlank(req.getCurNodeCode())) {
+            if (CollectionUtils.isNotEmpty(req.getCurNodeCodeList())) {
+                boolean b = req.getCurNodeCodeList()
+                    .contains(req.getCurNodeCode());
+                if (b == false) {
+                    condition.setCurNodeCode("000_00");// 意为空
+                } else {
+                    condition.setCurNodeCode(req.getCurNodeCode());
+                }
+            } else {
+                condition.setCurNodeCode(req.getCurNodeCode());
+            }
+        } else {
+            condition.setCurNodeCodeList(req.getCurNodeCodeList());
+        }
         condition.setTeamCode(req.getTeamCode());
         condition.setKeyword(req.getKeyword());
         String orderColumn = req.getOrderColumn();

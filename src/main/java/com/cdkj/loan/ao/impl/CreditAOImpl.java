@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632099Req;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
@@ -38,6 +40,7 @@ import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
+import com.cdkj.loan.dto.res.XN632917Res;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -361,12 +364,28 @@ public class CreditAOImpl implements ICreditAO {
         // 当前节点
         String preCurrentNode = credit.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            for (CreditUser creditUser : req.getCreditUserList()) {
+                CreditUser user = creditUserBO
+                    .getCreditUser(creditUser.getCode());
+                user.setRelation(creditUser.getRelation());
+                user.setLoanRole(creditUser.getLoanRole());
+                creditUserBO.refreshCreditUserLoanRole(user);
+                if (ELoanRole.APPLY_USER.getCode()
+                    .equals(creditUser.getLoanRole())) {
+                    credit.setUserName(creditUser.getUserName());
+                    credit.setIdNo(creditUser.getIdNo());
+                    credit.setMobile(creditUser.getMobile());
+                    creditBO.setApplyUserInfo(credit);
+                }
+            }
+
             // 审核通过，改变节点
             credit.setCurNodeCode(
                 nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
                     .getNextNode());
             // 保存准入单
-            String budgetCode = budgetOrderBO.saveBudgetOrder(credit);
+            String budgetCode = budgetOrderBO.saveBudgetOrder(credit,
+                req.getCreditUserList());
 
             // 准入单编号回写征信单
             credit.setBudgetCode(budgetCode);
@@ -379,6 +398,11 @@ public class CreditAOImpl implements ICreditAO {
             // 准入单开始的日志记录
             sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
                 budgetCode, EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode(),
+                credit.getTeamCode());
+
+            // 面签开始的日志记录
+            sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
+                budgetCode, EBudgetOrderNode.INTERVIEW.getCode(),
                 credit.getTeamCode());
 
         } else {
@@ -498,6 +522,10 @@ public class CreditAOImpl implements ICreditAO {
             BizTeam team = bizTeamBO.getBizTeam(credit.getTeamCode());
             credit.setTeamName(team.getName());
         }
+        if (StringUtils.isNotBlank(credit.getInsideJob())) {
+            SYSUser insideJob = sysUserBO.getUser(credit.getInsideJob());
+            credit.setInsideJobName(insideJob.getRealName());
+        }
         // 获取操作日志中最新操作记录
         if (StringUtils.isNotBlank(credit.getCode())) {
             SYSBizLog sysBizLog = sysBizLogBO
@@ -531,6 +559,53 @@ public class CreditAOImpl implements ICreditAO {
         // SYSUser operator = sysUserBO.getUser(bizLog.getOperator());
         // credit.setInsideJob(operator.getRealName());// 内勤（使用这个业务单在日志表的最新操作人）
         // }
+    }
+
+    @Override
+    public void exchangeCreditUser(XN632099Req req) {
+        if (req.getCreditUserList().size() != 2) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "请选择两条记录再进行操作！");
+        }
+        for (String code : req.getCreditUserList()) {
+            CreditUser creditUser = creditUserBO.getCreditUser(code);
+            if (ELoanRole.APPLY_USER.getCode()
+                .equals(creditUser.getLoanRole())) {
+                creditUser.setLoanRole(ELoanRole.GHR.getCode());
+                creditUserBO.refreshCreditUserLoanRole(creditUser);
+            } else if (ELoanRole.GHR.getCode()
+                .equals(creditUser.getLoanRole())) {
+                creditUser.setLoanRole(ELoanRole.APPLY_USER.getCode());
+                creditUserBO.refreshCreditUserLoanRole(creditUser);
+                Credit credit = creditBO.getCredit(creditUser.getCreditCode());
+                credit.setUserName(creditUser.getUserName());
+                credit.setIdNo(creditUser.getIdNo());
+                credit.setMobile(creditUser.getMobile());
+                creditBO.setApplyUserInfo(credit);
+            } else {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "担保人不能置换！");
+            }
+        }
+    }
+
+    @Override
+    public Object queryCreditListByJob(Credit condition) {
+        ArrayList<Object> list = new ArrayList<>();
+        SYSUser sysUser = new SYSUser();
+        sysUser.setRoleCode("SR20180000000000000NQZY");
+        List<SYSUser> userList = sysUserBO.queryUserList(sysUser);
+        for (SYSUser sUser : userList) {
+            XN632917Res res = new XN632917Res();
+            Credit credit = new Credit();
+            credit.setInsideJob(sUser.getUserId());
+            long count = creditBO.getTotalCount(credit);
+            res.setUderId(sUser.getUserId());
+            res.setName(sUser.getRealName());
+            res.setNumber(count + "");
+            list.add(res);
+        }
+        return list;
     }
 
 }

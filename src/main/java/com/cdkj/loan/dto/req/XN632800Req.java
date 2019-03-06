@@ -24,6 +24,9 @@ public class XN632800Req {
     @NotBlank
     private String mobile;
 
+    // 头像
+    private String avatar;
+
     // 工号
     @NotBlank
     private String jobNo;
@@ -31,10 +34,6 @@ public class XN632800Req {
     // 入职时间
     @NotBlank
     private String entryDatetime;
-
-    // 部门编号
-    @NotBlank
-    private String departmentCode;
 
     // 职务岗位编号
     @NotBlank
@@ -193,8 +192,17 @@ public class XN632800Req {
         return socialRelationList;
     }
 
-    public void setSocialRelationList(List<XN632800ReqChild> socialRelationList) {
+    public void setSocialRelationList(
+            List<XN632800ReqChild> socialRelationList) {
         this.socialRelationList = socialRelationList;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getRealName() {
@@ -235,14 +243,6 @@ public class XN632800Req {
 
     public void setEntryDatetime(String entryDatetime) {
         this.entryDatetime = entryDatetime;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
     }
 
     public String getPostCode() {

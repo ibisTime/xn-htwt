@@ -16,6 +16,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
@@ -290,6 +291,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         User user = new User();
         user.setUserId(userId);
         user.setKind(kind);
+        user.setProduceType(EBoolean.NO.getCode());
         user.setLoginName(mobile);
         user.setMobile(mobile);
 
@@ -302,13 +304,14 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public String doRegisterAndIdentify(String mobile, String idKind,
-            String realName, String idNo) {
+    public String doRegisterAndIdentify(String produceType, String mobile,
+            String idKind, String realName, String idNo) {
         String userId = OrderNoGenerater.generate("U");
         String loginPwd = "888888";
         User user = new User();
         user.setUserId(userId);
         user.setKind(EUserKind.Customer.getCode());
+        user.setProduceType(produceType);
         user.setMobile(mobile);
         user.setLoginName(mobile);
         user.setLoginPwd(MD5Util.md5(loginPwd));

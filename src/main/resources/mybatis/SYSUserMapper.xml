@@ -177,6 +177,7 @@
 		UPDATE tsys_user
 		SET
 		mobile = #{mobile}
+		,photo = #{photo}
 		,real_name = #{realName}
 		,post_code = #{postCode}
 		,department_code = #{departmentCode}

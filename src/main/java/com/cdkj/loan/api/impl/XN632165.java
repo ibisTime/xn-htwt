@@ -33,6 +33,7 @@ public class XN632165 extends AProcessor {
         condition.setCustomerName(req.getCustomerName());
         condition.setIsSettled(req.getIsSettled());
         condition.setBudgetOrder(req.getBudgetOrder());
+        condition.setCurNodeCode(req.getCurNodeCode());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IBudgetOrderFeeAO.DEFAULT_ORDER_COLUMN;

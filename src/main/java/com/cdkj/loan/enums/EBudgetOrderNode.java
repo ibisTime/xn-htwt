@@ -14,18 +14,25 @@ public enum EBudgetOrderNode {
             "002_25", "内勤主管审核"), RISK_ONE_APPROVE("002_02", "风控一审"),RISK_TWO_APPROVE(
             "002_27", "风控二审"), RISK_CHARGE_APPROVE("002_03", "风控终审"),YBIZ_CHARGE_APPROVE(
             "002_28", "业务总监审核"), AGAIN_WRITE("002_04", "重新填写准入申请单"), INTERVIEW(
-            "002_05", "面签"), INTERVIEW_INTERNAL_APPROVE("002_26", "内勤主管审核(面签)"), ADVANCEFUND(
-            "002_07", "财务垫资"), AGAIN_INTERVIEW("002_08", "重新面签"),
+            "002_05", "面签"), INTERVIEW_INTERNAL_APPROVE("002_26", "内勤主管审核(面签)"),BUDFINSH_INTEVUNDONE(
+            "002_39","准入完成，面签未完成"), FINANCEAUDIT("002_29","财务审核"),ADVANCEFUND(
+            "002_07", "财务垫资"), AGAIN_INTERVIEW("002_08", "重新面签"), RISK_CONTROLLER_APPROVE(
+            "002_30","风控专员审核"),
 
     GPSAZ("002_09", "业务团队安装GPS"), GPSMANAGERAPPROVE("002_10", "GPS管理员审核"), AGAINGPSAZ(
             "002_12", "业务团队重新安装GPS"), CARSETTLE("002_11", "业务团队车辆落户"), DHAPPROVEDATA(
-            "002_13", "业务贷后审核材料"), COMMITBANK3("002_14", "驻行人员审核放款材料"),
+            "002_13", "业务贷后审核材料"), COMMITBANK3("002_14", "驻行人员审核放款材料"),GPS_APPROVE_PASS(
+            "002_32","gps管理员审核通过"),
 
     COMMITBANK("002_15", "驻行人员回录提交放款材料"), ENTRYLOAN("002_16", "录入放款信息"), CONFIRMLOAN(
-            "002_17", "财务确认银行放款"), ENTRYMORTGAGE("002_18", "业务团队车辆抵押录入"), MORTGAGECOMMITBANK(
+            "002_17", "财务确认银行放款"), ENTRYMORTGAGE("002_18", "内勤录入发保合"), MORTGAGECOMMITBANK(
             "002_19", "驻行人员审核抵押材料"), ENTRYCOMMITBANK("002_20", "抵押提交银行"), MORTGAGEFINISH(
-            "002_21", "抵押完成"), ARCHIVE("002_22", "入档"), ARCHIVE_END("002_23",
-            "入档完成"),
+            "002_21", "内勤录入抵押信息"), ARCHIVE("002_22", "入档"), ARCHIVE_END("002_23","入档完成"),BANK_ALREADY_LOAN(
+            "002_31","银行已放款"),RESIDENT_MORTGAGE_APPLY("002_33","驻行抵押申请"),INSIDEJOB_CONFIRM(
+            "002_34","内勤确认"),
+            
+    RESIDENT_SEND_MORTGAGE("002_35","驻行寄送抵押合同"),INSIDEJOB_RECEIVE("002_36","内勤收件审核"),INSIDEJOB_SEND(
+            "002_37","内勤寄送材料"),YWDH_APPROVE("002_38","业务贷后审核材料"),
 
     // 客户作废的节点
     CANCEL_START("007_01", "申请作废"), CANCEL_BIZ_AUDIT("007_02", "业务总监审核"), CANCEL_FINANCE_AUDIT(

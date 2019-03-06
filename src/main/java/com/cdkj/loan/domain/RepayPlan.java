@@ -45,17 +45,19 @@ public class RepayPlan extends ABaseDO {
     // 本期还款金额
     private Long repayAmount;
 
-    // 已还金额
+    // 实际代偿金额
     private Long payedAmount;
 
     // 剩余欠款
-    private long overplusAmount;
+    private Long overplusAmount;
 
     // 逾期金额
     private Long overdueAmount;
 
     // 节点
     private String curNodeCode;
+
+    private String prepayPhoto;// 还款截图
 
     // 逾期处理人
     private String overdueHandler;
@@ -84,7 +86,7 @@ public class RepayPlan extends ABaseDO {
     // 已催款次数
     private int remindCount;
 
-    // 实际代偿金额
+    // 已还金额(实还金额)
     private Long realRepayAmount;
 
     // 代偿是否缴纳
@@ -395,6 +397,14 @@ public class RepayPlan extends ABaseDO {
         this.tsBankName = tsBankName;
     }
 
+    public String getPrepayPhoto() {
+        return prepayPhoto;
+    }
+
+    public void setPrepayPhoto(String prepayPhoto) {
+        this.prepayPhoto = prepayPhoto;
+    }
+
     public String getTsSubbranch() {
         return tsSubbranch;
     }
@@ -611,11 +621,11 @@ public class RepayPlan extends ABaseDO {
         this.remindCount = remindCount;
     }
 
-    public long getOverplusAmount() {
+    public Long getOverplusAmount() {
         return overplusAmount;
     }
 
-    public void setOverplusAmount(long overplusAmount) {
+    public void setOverplusAmount(Long overplusAmount) {
         this.overplusAmount = overplusAmount;
     }
 

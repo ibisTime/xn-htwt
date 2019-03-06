@@ -49,4 +49,12 @@ public interface ICreditBO extends IPaginableBO<Credit> {
     // 派单
     public void distributeLeaflets(Credit credit);
 
+    public Credit getCreditBybudgetorder(String code);
+
+    // 征信二手车评估报告
+    public void refreshSecondCarReport(Credit credit);
+
+    // 修改主贷人
+    public void refreshCreditUser(Credit credit);
+
 }

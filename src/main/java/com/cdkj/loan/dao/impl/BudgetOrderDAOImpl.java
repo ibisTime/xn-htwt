@@ -48,6 +48,11 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void updaterInterviewInternal(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_interviewInternal"), data);
+    }
+
+    @Override
     public void updaterBizChargeApprove(BudgetOrder data) {
         super.update(NAMESPACE.concat("update_biz_charge_approve"), data);
     }
@@ -155,6 +160,16 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void residentMortgageApply(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_residentMortgageApply"), data);
+    }
+
+    @Override
+    public void insidejobConfirm(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_insidejobConfirm"), data);
+    }
+
+    @Override
     public List<BudgetOrder> selectBudgetOrderByRoleCodeList(
             BudgetOrder condition, int start, int count) {
         return super.selectList(
@@ -224,6 +239,24 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         return super.selectList(
             NAMESPACE.concat("select_budgetOrder_byApplyUserName"), condition,
             BudgetOrder.class);
+    }
+
+    @Override
+    public List<BudgetOrder> selectBudgetOrderListByUserId(
+            BudgetOrder condition, int start, int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_budgetOrder_byUserId"),
+            start, pageSize, condition, BudgetOrder.class);
+    }
+
+    @Override
+    public long selectTotalCountByUserId(BudgetOrder condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_budgetOrder_count_byUserId"), condition);
+    }
+
+    @Override
+    public void updateCurNodeCode(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_curNodeCode"), data);
     }
 
 }

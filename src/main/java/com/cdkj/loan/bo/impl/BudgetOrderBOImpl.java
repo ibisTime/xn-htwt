@@ -31,6 +31,7 @@ import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
@@ -57,8 +58,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     private IBankBO bankBO;
 
     @Override
-    public String saveBudgetOrder(Credit credit) {
-        List<CreditUser> creditUserList = credit.getCreditUserList();
+    public String saveBudgetOrder(Credit credit,
+            List<CreditUser> creditUserList) {
         CreditUser applyCreditUser = null;
         CreditUser ghrCreditUser = null;
         CreditUser guaCreditUser = null;
@@ -115,13 +116,17 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
             data.setInsideJob(credit.getInsideJob());
+            data.setIsInterview(EBoolean.NO.getCode());
+            data.setIsEntryMortgage(EBoolean.NO.getCode());
             data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+            data.setIntevCurNodeCode(EBudgetOrderNode.INTERVIEW.getCode());
             // 准入单插入团队编号 来自业务员的所属团队
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             data.setTeamCode(user.getTeamCode());
             data.setPledgeStatus(EBoolean.NO.getCode());
             data.setIsGpsAz(EBoolean.NO.getCode());
             data.setIsLogistics(EBoolean.NO.getCode());
+            data.setIsMortgage(EBoolean.NO.getCode());
             budgetOrderDAO.insert(data);
         }
         return code;
@@ -163,6 +168,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
+    public void refreshInterviewInternal(BudgetOrder data) {
+        budgetOrderDAO.updaterInterviewInternal(data);
+    }
+
+    @Override
     public void refreshbizChargeApprove(BudgetOrder data) {
         if (StringUtils.isNotBlank(data.getCode())) {
             budgetOrderDAO.updaterBizChargeApprove(data);
@@ -174,6 +184,16 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         if (StringUtils.isNotBlank(data.getCode())) {
             budgetOrderDAO.updaterAdvancefund(data);
         }
+    }
+
+    @Override
+    public void residentMortgageApply(BudgetOrder budgetOrder) {
+        budgetOrderDAO.residentMortgageApply(budgetOrder);
+    }
+
+    @Override
+    public void insidejobConfirm(BudgetOrder budgetOrder) {
+        budgetOrderDAO.insidejobConfirm(budgetOrder);
     }
 
     @Override
@@ -290,7 +310,51 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
      * @see com.cdkj.loan.bo.IBudgetOrderBO#logicOrder(com.cdkj.loan.domain.BudgetOrder)
      */
     @Override
-    public String logicOrder(String code, String operator) {
+    public String logicOrderLoan(String code, String operator) {
+        String result = EBoolean.NO.getCode();
+
+        BudgetOrder budgetOrder = getBudgetOrder(code);
+        String preCurNodeCode = budgetOrder.getIntevCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
+        budgetOrder.setIntevCurNodeCode(nodeFlow.getNextNode());
+        // 状态为不在物流传递中
+        budgetOrder.setIsLogistics(EBoolean.NO.getCode());
+        // 准入单日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
+            budgetOrder.getIntevCurNodeCode(), null, operator,
+            budgetOrder.getTeamCode());
+        if (EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode()
+            .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.DHAPPROVEDATA.getCode()
+                    .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.RISK_CONTROLLER_APPROVE.getCode()
+                    .equals(nodeFlow.getCurrentNode())) {
+            String newLogisticsCode = logisticsBO.saveLogistics(
+                ELogisticsType.BUDGET.getCode(),
+                ELogisticsCurNodeType.BANK_LOAN.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
+            // // 产生物流单后改变状态为物流传递中
+            // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+
+            // 资料传递日志
+            sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
+                newLogisticsCode, budgetOrder.getIntevCurNodeCode(),
+                budgetOrder.getTeamCode());
+            result = EBoolean.YES.getCode();
+
+        }
+        budgetOrderDAO.updaterLogicNode(budgetOrder);
+
+        return result;
+    }
+
+    /** 
+     * @see com.cdkj.loan.bo.IBudgetOrderBO#logicOrder(com.cdkj.loan.domain.BudgetOrder)
+     */
+    @Override
+    public String logicOrderMortgage(String code, String operator) {
         String result = EBoolean.NO.getCode();
 
         BudgetOrder budgetOrder = getBudgetOrder(code);
@@ -304,14 +368,16 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getCurNodeCode(), null, operator,
             budgetOrder.getTeamCode());
-        if (EBudgetOrderNode.DHAPPROVEDATA.getCode()
+
+        if (EBudgetOrderNode.YWDH_APPROVE.getCode()
             .equals(nodeFlow.getCurrentNode())) {
             String newLogisticsCode = logisticsBO.saveLogistics(
-                ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
-                operator, nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
-                null);
+                ELogisticsType.BUDGET.getCode(),
+                ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
             // 产生物流单后改变状态为物流传递中
-            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+            // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
 
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
@@ -401,6 +467,25 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public List<BudgetOrder> queryBudgetOrderByApplyUserName(
             BudgetOrder condition) {
         return budgetOrderDAO.queryBudgetOrderByApplyUserName(condition);
+    }
+
+    @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
+            int limit, BudgetOrder condition) {
+        prepare(condition);
+        long totalCount = budgetOrderDAO.selectTotalCountByUserId(condition);
+        Paginable<BudgetOrder> page = new Page<BudgetOrder>(start, limit,
+            totalCount);
+        List<BudgetOrder> dataList = budgetOrderDAO
+            .selectBudgetOrderListByUserId(condition, page.getStart(),
+                page.getPageSize());
+        page.setList(dataList);
+        return page;
+    }
+
+    @Override
+    public void refreshBudgetOrderCurNode(BudgetOrder budgetOrder) {
+        budgetOrderDAO.updateCurNodeCode(budgetOrder);
     }
 
 }

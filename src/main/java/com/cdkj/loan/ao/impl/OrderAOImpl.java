@@ -126,6 +126,13 @@ public class OrderAOImpl implements IOrderAO {
         // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "库存不够，不能下单");
         // }
 
+        // 判断是否有真实姓名
+        User user = userBO.getUser(req.getApplyUser());
+        if (StringUtils.isBlank(user.getRealName())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "你还没有填写真实姓名，请实名认证后下单！");
+        }
+
         // 判断信用分是否足够
         Account account = new Account();
         account.setUserId(req.getApplyUser());

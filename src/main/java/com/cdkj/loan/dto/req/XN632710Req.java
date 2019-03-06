@@ -12,6 +12,9 @@ public class XN632710Req {
     // 类型(1 有线 2 无线)
     private String type;
 
+    // 申请类型(1 本部 2 分部)
+    private String applyType;
+
     // 申请人
     @NotBlank
     private String applyUser;
@@ -34,6 +37,9 @@ public class XN632710Req {
     // 车架号
     private String carFrameNo;
 
+    // 团队编号
+    private String teamCode;
+
     // 申请原因
     private String applyReason;
 
@@ -43,6 +49,22 @@ public class XN632710Req {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getApplyType() {
+        return applyType;
+    }
+
+    public void setApplyType(String applyType) {
+        this.applyType = applyType;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
     }
 
     public String getBudgetOrderCode() {

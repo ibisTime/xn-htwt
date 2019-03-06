@@ -22,6 +22,7 @@ import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.common.PropertiesUtil;
 import com.cdkj.loan.controller.AbstractCredit;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.creditCommon.HttpClient;
 import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.LimuCredit;
@@ -109,7 +110,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             "identity");
         if (data != null) {
             data.setCustomerName(req.getName());
-            data.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
+            data.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
@@ -119,7 +120,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getIdentityNo());
             limuCredit.setCustomerName(req.getName());
-            limuCredit.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
             limuCredit.setBizType("identity");
@@ -293,7 +294,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             "bankcard4check");
         if (data != null) {
             data.setCustomerName(req.getCustomerName());
-            data.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
+            data.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
@@ -303,7 +304,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getBankCardNo());
             limuCredit.setCustomerName(req.getCustomerName());
-            limuCredit.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
             limuCredit.setResult(doPost);
             limuCredit.setFoundDatetime(new Date());
             limuCredit.setBizType("bankcard4check");
@@ -477,16 +478,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     data.setCustomerName(req.getCustomerName());
                     data.setUserId(req.getIdNo());
                     data.setToken(token);
-                    data.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    data.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
                     limuCredit.setUserId(req.getIdNo());
                     limuCredit.setCustomerName(req.getCustomerName());
                     limuCredit.setToken(token);
-                    limuCredit.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    limuCredit
+                        .setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
                     limuCredit.setFoundDatetime(new Date());
                     limuCreditBO.refreshLimuCredit(limuCredit);
                 }
@@ -617,16 +617,15 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     data.setUserId(req.getIdNo());
                     data.setCustomerName(req.getCustomerName());
                     data.setToken(token);
-                    data.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    data.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                 } else {
                     limuCredit.setUserId(req.getIdNo());
                     limuCredit.setCustomerName(req.getCustomerName());
                     limuCredit.setToken(token);
-                    limuCredit.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    limuCredit
+                        .setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
                     limuCredit.setFoundDatetime(new Date());
                     limuCreditBO.refreshLimuCredit(limuCredit);
                 }
@@ -697,8 +696,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                     data.setUserId(req.getIdNo());
                     data.setCustomerName(req.getCustomerName());
                     data.setToken(token);
-                    data.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    data.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
                     data.setFoundDatetime(new Date());
                     limuCreditBO.saveLimuCredit(data);
                     LimuCredit lmCredit = limuCreditBO
@@ -707,8 +705,8 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 } else {
                     limuCredit.setCustomerName(req.getCustomerName());
                     limuCredit.setToken(token);
-                    limuCredit.setStatus(
-                        ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                    limuCredit
+                        .setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
                     limuCredit.setFoundDatetime(new Date());
                     limuCreditBO.refreshLimuCredit(limuCredit);
                     id = limuCredit.getId() + "";
@@ -775,14 +773,14 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                         data.setCustomerName(req.getCustomerName());
                         data.setToken(token);
                         data.setStatus(
-                            ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                            ELimuCreditStatus.IN_THE_QUERY.getCode());
                         data.setFoundDatetime(new Date());
                         limuCreditBO.saveLimuCredit(data);
                     } else {
                         limuCredit.setCustomerName(req.getCustomerName());
                         limuCredit.setToken(token);
                         limuCredit.setStatus(
-                            ELimuCreditStatus.PENDING_CALLBACK.getCode());
+                            ELimuCreditStatus.IN_THE_QUERY.getCode());
                         limuCredit.setFoundDatetime(new Date());
                         limuCreditBO.refreshLimuCredit(limuCredit);
                     }
@@ -968,7 +966,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         if (data != null) {
             data.setCustomerName(req.getIdentityName());
             data.setToken(token);
-            data.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            data.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
             id = data.getId() + "";
@@ -978,7 +976,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setUserName(req.getUsername());
             limuCredit.setCustomerName(req.getIdentityName());
             limuCredit.setToken(token);
-            limuCredit.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            limuCredit.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             limuCredit.setFoundDatetime(new Date());
             limuCredit.setBizType("mobileReportTask");
             limuCreditBO.saveLimuCredit(limuCredit);
@@ -1090,7 +1088,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             "mobileReportTask");
         if (data != null) {
             data.setResult(doPost);
-            data.setStatus(ELimuCreditStatus.ALREADY_CALLBACK.getCode());
+            data.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
         } else {
@@ -1186,7 +1184,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         if (data != null) {
             data.setCustomerName(req.getIdentityName());
             data.setToken(token);
-            data.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            data.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
             id = data.getId() + "";
@@ -1195,7 +1193,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setUserName(req.getUsername());
             limuCredit.setCustomerName(req.getIdentityName());
             limuCredit.setToken(token);
-            limuCredit.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            limuCredit.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             String uid = req.getIdentityCardNo();
             limuCredit.setUserId(uid);
             limuCredit.setFoundDatetime(new Date());
@@ -1260,7 +1258,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
             reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
-            "taobaoReportTask");
+            "taobao_report");
         if (data != null) {
             data.setResult(post);
             data.setFoundDatetime(new Date());
@@ -1288,7 +1286,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             configsMap.get("apiUrl") + "/taobao_report/v1/task/report",
             reqParam);
         LimuCredit data = limuCreditBO.getLimuCreditByToken(req.getTokendb(),
-            "taobaoReportTaskData");
+            "taobao_report");
         if (data != null) {
             data.setResult(doPost);
             data.setFoundDatetime(new Date());
@@ -1339,9 +1337,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
         reqParam
             .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
         reqParam.add(new BasicNameValuePair("method", "api.autoinsurance.get"));
+        // reqParam.add(new BasicNameValuePair("callBackUrl",
+        // configsMap.get("localhostUrl") + "/socialsecurity"));
         reqParam
             .add(new BasicNameValuePair("version", configsMap.get("version")));
-        reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        if (StringUtils.isNotBlank(req.getUsername())) {
+            reqParam.add(new BasicNameValuePair("username", req.getUsername()));
+        }
         if (StringUtils.isNotBlank(req.getPassword())) {
             try {
                 reqParam.add(new BasicNameValuePair("password", new String(
@@ -1350,8 +1352,13 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 e1.printStackTrace();
             }
         }
-        reqParam.add(new BasicNameValuePair("policyNo", req.getPolicyNo()));
-        reqParam.add(new BasicNameValuePair("identityNo", req.getIdentityNo()));
+        if (StringUtils.isNotBlank(req.getPolicyNo())) {
+            reqParam.add(new BasicNameValuePair("policyNo", req.getPolicyNo()));
+        }
+        if (StringUtils.isNotBlank(req.getIdentityNo())) {
+            reqParam
+                .add(new BasicNameValuePair("identityNo", req.getIdentityNo()));
+        }
         reqParam.add(new BasicNameValuePair("type", req.getType()));
         reqParam.add(new BasicNameValuePair("insuranceCompany",
             req.getInsuranceCompany()));
@@ -1368,6 +1375,7 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             e.printStackTrace();
         }
         String code = rootNode.get("code").textValue();
+        String token = rootNode.get("token").textValue();
         if (!"0010".equals(code)) {
             map.put("id", id);
             map.put("result", doPost);
@@ -1377,8 +1385,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             "autoinsurance");
         if (data != null) {
             data.setCustomerName(req.getCustomerName());
-            data.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            data.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             data.setResult(doPost);
+            data.setToken(token);
             data.setFoundDatetime(new Date());
             limuCreditBO.refreshLimuCredit(data);
             id = data.getId() + "";
@@ -1387,8 +1396,9 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
             limuCredit.setUserId(req.getIdentityNo());
             limuCredit.setUserName(req.getIdentityNo());
             limuCredit.setCustomerName(req.getCustomerName());
-            limuCredit.setStatus(ELimuCreditStatus.PENDING_CALLBACK.getCode());
+            limuCredit.setStatus(ELimuCreditStatus.IN_THE_QUERY.getCode());
             limuCredit.setResult(doPost);
+            limuCredit.setToken(token);
             limuCredit.setFoundDatetime(new Date());
             limuCredit.setBizType("autoinsurance");
             limuCreditBO.saveLimuCredit(limuCredit);
@@ -1396,9 +1406,49 @@ public class MobileReportDemoAOImpl implements IMobileReportDemoAO {
                 .getLimuCreditByUid(req.getIdentityNo(), "autoinsurance");
             id = lmCredit.getId() + "";
         }
+
+        // 查询结果
+        foundResult(token, configsMap, id, "autoinsurance");
+
         // map.put("\"id\":" + id, "\"result\":" + doPost);
         map.put("id", id);
         map.put("result", doPost);
         return map;
+    }
+
+    private void foundResult(String token, Map<String, String> configsMap,
+            String id, String bizType) {
+        HttpClient httpClient = new HttpClient();
+        AbstractCredit credit = new AbstractCredit();
+        List<BasicNameValuePair> reqParam = new ArrayList<BasicNameValuePair>();
+        reqParam
+            .add(new BasicNameValuePair("apiKey", configsMap.get("apiKey")));
+        reqParam
+            .add(new BasicNameValuePair("version", configsMap.get("version")));
+        reqParam.add(new BasicNameValuePair("method", "api.common.getResult"));
+        reqParam.add(new BasicNameValuePair("token", token));
+        reqParam.add(new BasicNameValuePair("bizType", bizType));
+        reqParam.add(new BasicNameValuePair("sign",
+            credit.getSign(reqParam, configsMap.get("apiSecret"))));// 请求参数签名
+
+        String doPost = httpClient
+            .doPost(configsMap.get("apiUrl") + "/api/gateway", reqParam);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readValue(doPost, JsonNode.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String code = rootNode.get("code").textValue();
+        LimuCredit limuCredit = limuCreditBO
+            .getLimuCredit(StringValidater.toInteger(id));
+        limuCredit.setResult(doPost);
+        if ("0000".equals(code)) {
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_SUCCESS.getCode());
+        } else {
+            limuCredit.setStatus(ELimuCreditStatus.QUERY_FAILURE.getCode());
+        }
+        limuCreditBO.refreshLimuCredit(limuCredit);
     }
 }

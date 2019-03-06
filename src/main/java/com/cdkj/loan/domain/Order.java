@@ -150,6 +150,9 @@ public class Order extends ABaseDO {
     // 下单人
     private User user;
 
+    // 下单人姓名
+    private String realName;
+
     // 状态list
     private List<String> statusList;
 
@@ -177,6 +180,14 @@ public class Order extends ABaseDO {
 
     public void setBankcardNumber(String bankcardNumber) {
         this.bankcardNumber = bankcardNumber;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getCode() {

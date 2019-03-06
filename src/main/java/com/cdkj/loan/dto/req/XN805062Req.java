@@ -1,18 +1,15 @@
 package com.cdkj.loan.dto.req;
 
-public class XN805062Req {
+import org.hibernate.validator.constraints.NotBlank;
 
+public class XN805062Req {
     // userId（必填）
+    @NotBlank
     private String userId;
 
-    // 新手机号（必填）
-    private String newMobile;
-
-    // 验证码（必填）
-    private String smsCaptcha;
-
-    // 支付密码（必填）
-    private String tradePwd;
+    // 新登录密码(必填)
+    @NotBlank
+    private String newLoginPwd;
 
     public String getUserId() {
         return userId;
@@ -22,27 +19,12 @@ public class XN805062Req {
         this.userId = userId;
     }
 
-    public String getNewMobile() {
-        return newMobile;
+    public String getNewLoginPwd() {
+        return newLoginPwd;
     }
 
-    public void setNewMobile(String newMobile) {
-        this.newMobile = newMobile;
+    public void setNewLoginPwd(String newLoginPwd) {
+        this.newLoginPwd = newLoginPwd;
     }
 
-    public String getSmsCaptcha() {
-        return smsCaptcha;
-    }
-
-    public void setSmsCaptcha(String smsCaptcha) {
-        this.smsCaptcha = smsCaptcha;
-    }
-
-    public String getTradePwd() {
-        return tradePwd;
-    }
-
-    public void setTradePwd(String tradePwd) {
-        this.tradePwd = tradePwd;
-    }
 }

@@ -60,8 +60,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信单不存在");
         }
 
-        if (!ECreditNode.INPUT_CREDIT_RESULT.getCode().equals(
-            credit.getCurNodeCode())) {
+        if (!ECreditNode.INPUT_CREDIT_RESULT.getCode()
+            .equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是录入征信结果节点，不能操作");
         }
@@ -79,17 +79,22 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
         // 之前节点
         String preCurrentNode = credit.getCurNodeCode();
-        credit.setCurNodeCode(nodeFlowBO.getNodeFlow(credit.getCurNodeCode())
-            .getNextNode());
+        credit.setCurNodeCode(
+            nodeFlowBO.getNodeFlow(credit.getCurNodeCode()).getNextNode());
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap().get(
-            credit.getCurNodeCode());
+        ECreditNode currentNode = ECreditNode.getMap()
+            .get(credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator(),
             credit.getTeamCode());
 
+    }
+
+    @Override
+    public Object changeLender(String selfCode, String wifeCode) {
+        return null;
     }
 }

@@ -95,8 +95,8 @@ public class CompProductAOImpl implements ICompProductAO {
 
     private void initCompProduct(CompProduct compProduct) {
         // 类别
-        CompCategory compCategory = compCategoryBO.getCompCategory(compProduct
-            .getCategoryCode());
+        CompCategory compCategory = compCategoryBO
+            .getCompCategory(compProduct.getCategoryCode());
         compProduct.setCompCategory(compCategory);
 
         // 更新人转义

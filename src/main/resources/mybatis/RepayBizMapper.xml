@@ -46,6 +46,7 @@
 		
 		<result column="cur_overdue_count" property="curOverdueCount" />
 		<result column="black_handle_note" property="blackHandleNote" />
+		<result column="paper_photo" property="paperPhoto" />
 		<result column="is_advance_settled" property="isAdvanceSettled" />
 		<result column="settle_attach" property="settleAttach" />
 		<result column="settle_datetime" property="settleDatetime" />
@@ -155,6 +156,7 @@
 		,t.total_overdue_count
 		,t.cur_overdue_count
 		,t.black_handle_note
+		,t.paper_photo
 		,t.is_advance_settled
 		
 		,t.settle_attach
@@ -218,6 +220,7 @@
 		,t.total_overdue_count
 		,t.cur_overdue_count
 		,t.black_handle_note
+		,t.paper_photo
 		,t.is_advance_settled
 		
 		,t.settle_attach
@@ -465,9 +468,11 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,rest_amount = #{restAmount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,release_datetime = #{releaseDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -484,6 +489,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -493,6 +499,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -502,6 +509,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -511,6 +519,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -520,6 +529,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -529,6 +539,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -538,6 +549,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -549,8 +561,31 @@
 		,rest_amount = #{restAmount}
 		,overdue_amount = #{overdueAmount}
 		,updater = #{updater}
-		
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_prepaymentApply" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		paper_photo = #{paperPhoto}
+		,cur_node_code = #{curNodeCode}
+		,is_advance_settled = #{isAdvanceSettled}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_prepaymentApprove" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,is_advance_settled = #{isAdvanceSettled}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -558,7 +593,27 @@
 		UPDATE tdh_repay_biz
 		SET
 		overdue_amount = #{overdueAmount}
+		,rest_amount = #{restAmount}
 		,total_overdue_count = #{totalOverdueCount}
+		,rest_periods = #{restPeriods}
+		,cur_overdue_count = #{curOverdueCount}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_bizByPayFee" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		overdue_amount = #{overdueAmount}
+		,rest_amount = #{restAmount}
+		,rest_periods = #{restPeriods}
+		,cur_overdue_count = #{curOverdueCount}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_restPeriods" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		rest_periods = #{restPeriods}
 		,cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}
 	</update>

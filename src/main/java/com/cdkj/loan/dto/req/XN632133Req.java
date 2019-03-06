@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 预算单-抵押完成
+ * 预算单-内勤录入抵押信息
  * @author: xieyj 
  * @since: 2018年5月29日 下午10:31:16 
  * @history:
@@ -14,19 +14,38 @@ public class XN632133Req {
     private String code;// 预算单编号
 
     // 车牌号
+    @NotBlank
     private String carNumber;
 
     // 登记证书
+    @NotBlank
     private String carRegcerti;
 
     // 车辆批单
+    @NotBlank
     private String carPd;
 
     // 车钥匙
+    @NotBlank
     private String carKey;
 
     // 大本扫描件
+    @NotBlank
     private String carBigSmj;
+
+    // 车辆行驶证扫描件
+    @NotBlank
+    private String carXszSmj;
+
+    // 完税证明扫描件
+    @NotBlank
+    private String dutyPaidProveSmj;
+
+    // 抵押日期
+    private String pledgeDatetime;
+
+    // 车辆落户日期
+    private String carSettleDatetime;
 
     @NotBlank
     private String operator;// 操作人
@@ -37,6 +56,22 @@ public class XN632133Req {
 
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
+    }
+
+    public String getCarXszSmj() {
+        return carXszSmj;
+    }
+
+    public void setCarXszSmj(String carXszSmj) {
+        this.carXszSmj = carXszSmj;
+    }
+
+    public String getDutyPaidProveSmj() {
+        return dutyPaidProveSmj;
+    }
+
+    public void setDutyPaidProveSmj(String dutyPaidProveSmj) {
+        this.dutyPaidProveSmj = dutyPaidProveSmj;
     }
 
     public String getCode() {
@@ -77,6 +112,22 @@ public class XN632133Req {
 
     public void setCarKey(String carKey) {
         this.carKey = carKey;
+    }
+
+    public String getPledgeDatetime() {
+        return pledgeDatetime;
+    }
+
+    public void setPledgeDatetime(String pledgeDatetime) {
+        this.pledgeDatetime = pledgeDatetime;
+    }
+
+    public String getCarSettleDatetime() {
+        return carSettleDatetime;
+    }
+
+    public void setCarSettleDatetime(String carSettleDatetime) {
+        this.carSettleDatetime = carSettleDatetime;
     }
 
     public String getCarBigSmj() {

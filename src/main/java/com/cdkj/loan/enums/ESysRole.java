@@ -1,19 +1,12 @@
-/**
- * @Title ECheckResult.java 
- * @Package com.ibis.account.enums 
- * @Description 
- * @author miyb  
- * @date 2015-2-26 下午2:58:54 
- * @version V1.0   
- */
 package com.cdkj.loan.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/** 
- * @author: miyb 
- * @since: 2015-2-26 下午2:58:54 
+/**
+ * 角色
+ * @author: CYL 
+ * @since: 2018年11月10日 下午2:01:58 
  * @history:
  */
 public enum ESysRole {

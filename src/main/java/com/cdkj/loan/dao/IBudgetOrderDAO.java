@@ -17,6 +17,8 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     void updaterInterview(BudgetOrder data);
 
+    void updaterInterviewInternal(BudgetOrder data);
+
     void updaterIskChargeApprove(BudgetOrder data);
 
     void updaterBizChargeApprove(BudgetOrder data);
@@ -79,5 +81,19 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 物流传递中
     void updateIsLogistics(BudgetOrder budgetOrder);
+
+    // 驻行抵押申请
+    void residentMortgageApply(BudgetOrder budgetOrder);
+
+    // 内勤确认
+    void insidejobConfirm(BudgetOrder budgetOrder);
+
+    // 根据信贷专员或内勤查预算单客户
+    List<BudgetOrder> selectBudgetOrderListByUserId(BudgetOrder condition,
+            int start, int pageSize);
+
+    long selectTotalCountByUserId(BudgetOrder condition);
+
+    void updateCurNodeCode(BudgetOrder budgetOrder);
 
 }

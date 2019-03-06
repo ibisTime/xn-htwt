@@ -70,8 +70,8 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         }
 
         data.setApplyDatetime(new Date());
-        data.setTripDatetimeStart(DateUtil.strToDate(
-            req.getTripDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setTripDatetimeStart(DateUtil.strToDate(req.getTripDatetimeStart(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setTripDatetimeEnd(DateUtil.strToDate(req.getTripDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setTripReason(req.getTripReason());
@@ -81,8 +81,8 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         if (null == req.getAircraftBudget()) {
             data.setAircraftBudget(0L);
         } else {
-            data.setAircraftBudget(StringValidater.toLong(req
-                .getAircraftBudget()));
+            data.setAircraftBudget(
+                StringValidater.toLong(req.getAircraftBudget()));
         }
         data.setTrainFeeStandard(req.getTrainFeeStandard());
         data.setTrainDays(req.getTrainDays());
@@ -113,15 +113,17 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         if (null == req.getEntertainmentCost()) {
             data.setEntertainmentCost(0L);
         } else {
-            data.setEntertainmentCost(StringValidater.toLong(req
-                .getEntertainmentCost()));
+            data.setEntertainmentCost(
+                StringValidater.toLong(req.getEntertainmentCost()));
         }
 
         data.setOther(req.getOther());
         Long subtotal = 0L;
-        subtotal = data.getAircraftBudget() + data.getTrainBudget()
-                + data.getUrbanBudget() + data.getHotelCost()
-                + data.getFoodSubsidy() + data.getEntertainmentCost();
+        subtotal = getLong(data.getAircraftBudget())
+                + getLong(data.getTrainBudget())
+                + getLong(data.getUrbanBudget()) + getLong(data.getHotelCost())
+                + getLong(data.getFoodSubsidy())
+                + getLong(data.getEntertainmentCost());
         data.setSubtotal(subtotal);
         if (null == req.getSpareCash()) {
             data.setSpareCash(0L);
@@ -130,7 +132,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         }
 
         Long costTotal = 0L;
-        costTotal = data.getSpareCash() + subtotal;
+        costTotal = getLong(data.getSpareCash()) + subtotal;
         data.setCostTotal(costTotal);
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -149,13 +151,21 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         return code;
     }
 
+    private Long getLong(Object obj) {
+        if (null == obj) {
+            return 0L;
+        } else {
+            return (Long) obj;
+        }
+    }
+
     @Override
     public void departmentAudit(String code, String operator,
             String approveResult, String approveNote) {
         BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
         String preCurNodeCode = data.getCurNodeCode();// 当前节点
-        if (!EBusinessTripApplyNode.DEPARTMENT_AUDIT.getCode().equals(
-            preCurNodeCode)) {
+        if (!EBusinessTripApplyNode.DEPARTMENT_AUDIT.getCode()
+            .equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是部门主管审核节点，不能操作");
         }
@@ -177,12 +187,12 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
     }
 
     @Override
-    public void financeAudit(String code, String operator,
-            String approveResult, String approveNote) {
+    public void financeAudit(String code, String operator, String approveResult,
+            String approveNote) {
         BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
         String preCurNodeCode = data.getCurNodeCode();// 当前节点
-        if (!EBusinessTripApplyNode.FINANCE_AUDIT.getCode().equals(
-            preCurNodeCode)) {
+        if (!EBusinessTripApplyNode.FINANCE_AUDIT.getCode()
+            .equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是财务主管审核节点，不能操作");
         }
@@ -204,12 +214,12 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
     }
 
     @Override
-    public void generalAudit(String code, String operator,
-            String approveResult, String approveNote) {
+    public void generalAudit(String code, String operator, String approveResult,
+            String approveNote) {
         BusinessTripApply data = businessTripApplyBO.getBusinessTripApply(code);
         String preCurNodeCode = data.getCurNodeCode();// 当前节点
-        if (!EBusinessTripApplyNode.GENERAL_AUDIT.getCode().equals(
-            preCurNodeCode)) {
+        if (!EBusinessTripApplyNode.GENERAL_AUDIT.getCode()
+            .equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是总经理审核节点，不能操作");
         }
@@ -227,9 +237,8 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
             data.setCurNodeCode(currentNode.getBackNode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-                EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(),
-                preCurNodeCode, data.getCurNodeCode(), approveNote, operator,
-                null);
+                EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preCurNodeCode,
+                data.getCurNodeCode(), approveNote, operator, null);
         }
         businessTripApplyBO.generalAudit(data);
     }
@@ -292,8 +301,8 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         }
 
         if (StringUtils.isNotBlank(data.getDepartmentCode())) {
-            Department department = departmentBO.getDepartment(data
-                .getDepartmentCode());
+            Department department = departmentBO
+                .getDepartment(data.getDepartmentCode());
             data.setDepartmentName(department.getName());
         }
 

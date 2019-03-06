@@ -258,12 +258,15 @@
 		<result column="interview_contract" property="interviewContract" />
 		<result column="other_video" property="otherVideo" />
 		<result column="interview_other_pdf" property="interviewOtherPdf" />
+		<result column="is_interview" property="isInterview" />
+		<result column="is_entryMortgage" property="isEntryMortgage" />
 		<result column="advance_fund_datetime" property="advanceFundDatetime" />
 		
 		<result column="advance_fund_amount" property="advanceFundAmount" />
 		<result column="bill_pdf" property="billPdf" />
 		<result column="advance_note" property="advanceNote" />
 		<result column="advance_fund_amount_pdf" property="advanceFundAmountPdf" />
+		<result column="supplement_note" property="supplementNote" />
 		<result column="car_settle_datetime" property="carSettleDatetime" />
 		<result column="car_number" property="carNumber" />
 		<result column="car_invoice" property="carInvoice" />
@@ -278,8 +281,11 @@
 		
 		<result column="car_key" property="carKey" />
 		<result column="car_big_smj" property="carBigSmj" />
+		<result column="car_xsz_smj" property="carXszSmj" />
+		<result column="duty_paid_prove_smj" property="dutyPaidProveSmj" />
 		<result column="bank_commit_datetime" property="bankCommitDatetime" />
 		<result column="bank_commit_note" property="bankCommitNote" />
+		<result column="is_mortgage" property="isMortgage" />
 		<result column="repay_bank_code" property="repayBankCode" />
 		
 		<result column="repay_bank_name" property="repayBankName" />
@@ -326,6 +332,8 @@
 		<result column="back_advance_subbranch" property="backAdvanceSubbranch" />
 		<result column="back_advance_water_bill" property="backAdvanceWaterBill" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="intev_cur_node_code" property="intevCurNodeCode" />
+		<result column="advanf_cur_node_code" property="advanfCurNodeCode" />
 		
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="frozen_status" property="frozenStatus" />
@@ -410,12 +418,33 @@
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
+			<if test="isInterview != null and isInterview != '' ">
+				AND t.is_interview = #{isInterview}
+			</if>
+			<if test="isEntryMortgage != null and isEntryMortgage != '' ">
+				AND t.is_entryMortgage = #{isEntryMortgage}
+			</if>
+			<if test="isMortgage != null and isMortgage != '' ">
+				AND t.is_mortgage = #{isMortgage}
+			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>
 			<if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
 				AND t.cur_node_code in 
 				<foreach collection="curNodeCodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
+			<if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0 ">
+				AND t.intev_cur_node_code in 
+				<foreach collection="intevCurNodeCodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
+			<if test="advanfCurNodeCodeList != null and advanfCurNodeCodeList.size() > 0 ">
+				AND t.advanf_cur_node_code in 
+				<foreach collection="advanfCurNodeCodeList" index="index" item="item" open="(" separator="," close=")">
 		            #{item}
 		        </foreach>
 			</if>
@@ -445,6 +474,12 @@
 			</if>
 			<if test="curNodeCode != null and curNodeCode != ''">
 				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="intevCurNodeCode != null and intevCurNodeCode != ''">
+				AND t.intev_cur_node_code = #{intevCurNodeCode}
+			</if>
+			<if test="advanfCurNodeCode != null and advanfCurNodeCode != ''">
+				AND t.advanf_cur_node_code = #{advanfCurNodeCode}
 			</if>
 			<if test="curNodeCodeNoEnter != null and curNodeCodeNoEnter != ''">
 				AND t.cur_node_code != #{curNodeCodeNoEnter}
@@ -711,12 +746,15 @@
 		,t.bank_contract
 		,t.other_video
 		,t.interview_other_pdf
+		,t.is_interview
+		,t.is_entryMortgage
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
 		,t.bill_pdf
 		,t.advance_note
 		,t.advance_fund_amount_pdf
+		,t.supplement_note
 		,t.car_settle_datetime
 		
 		,t.car_number
@@ -730,8 +768,11 @@
 		,t.car_pd
 		,t.car_key
 		,t.car_big_smj
+		,t.car_xsz_smj
+		,t.duty_paid_prove_smj
 		,t.bank_commit_datetime
 		,t.bank_commit_note
+		,t.is_mortgage
 		
 		,t.bank_fk_datetime
 		,t.repay_bank_code
@@ -779,6 +820,8 @@
 		,t.back_advance_water_bill
 		
 		,t.cur_node_code
+		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
@@ -869,6 +912,8 @@
 		,t.apply_datetime
 		
 		,t.cur_node_code
+		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		,t.remark
 		,t.team_code
 		,t.back_advance_status
@@ -1162,12 +1207,15 @@
 		,t.bank_contract
 		,t.other_video
 		,t.interview_other_pdf
+		,t.is_interview
+		,t.is_entryMortgage
 		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
 		,t.bill_pdf
 		,t.advance_note
 		,t.advance_fund_amount_pdf
+		,t.supplement_note
 		,t.car_settle_datetime
 		
 		,t.car_number
@@ -1181,8 +1229,11 @@
 		,t.car_pd
 		,t.car_key
 		,t.car_big_smj
+		,t.car_xsz_smj
+		,t.duty_paid_prove_smj
 		,t.bank_commit_datetime
 		,t.bank_commit_note
+		,t.is_mortgage
 		
 		,t.bank_fk_datetime
 		,t.repay_bank_code
@@ -1230,13 +1281,15 @@
 		,t.back_advance_water_bill
 		
 		,t.cur_node_code
+		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		,t.cancel_node_code
 		,t.frozen_status
 		,t.is_gps_az
 		,t.is_logistics
 		,t.remark
 		FROM
-		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		tdq_budget_order t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code or t.advanf_cur_node_code = trn.node_code)
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -1247,11 +1300,32 @@
 
 	<select id="select_budgetOrder_count_byRoleCode" parameterType="budgetOrder"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code or t.advanf_cur_node_code = trn.node_code)
 		<include refid="where_condition" />) tb
 	</select>
 	
 	<select id="select_budgetOrder_count_byDz" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_budget_order t
+		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_budgetOrder_byUserId" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		t.code
+		,t.apply_user_name
+		,t.mobile
+		FROM
+		tdq_budget_order t 
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_budgetOrder_count_byUserId" parameterType="budgetOrder"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tdq_budget_order t
 		<include refid="where_condition" />
@@ -1269,6 +1343,8 @@
 		,t.inside_job
 		,t.advance_fund_datetime
 		,t.cur_node_code
+		,t.intev_cur_node_code
+		,t.advanf_cur_node_code
 		FROM
 		tdq_budget_order t 
 		<include refid="where_condition" />
@@ -1528,12 +1604,16 @@
 		,back_advance_subbranch
 		,back_advance_water_bill
 		
+		,is_interview
+		,is_entryMortgage
 		,cur_node_code
+		,intev_cur_node_code
 		,cancel_node_code
 		,frozen_status
 		,pledge_status
 		,is_gps_az
 		,is_logistics
+		,is_mortgage
 		,remark
 		)
 		VALUES(
@@ -1780,12 +1860,16 @@
 		,#{backAdvanceOpenBank}
 		,#{backAdvanceSubbranch}
 		,#{backAdvanceWaterBill}
+		,#{isInterview}
+		,#{isEntryMortgage}
 		,#{curNodeCode}
+		,#{intevCurNodeCode}
 		,#{cancelNodeCode}
 		,#{frozenStatus}
 		,#{pledgeStatus}
 		,#{isGpsAz}
 		,#{isLogistics}
+		,#{isMortgage}
 		,#{remark}
 		)
 	</insert>
@@ -2075,7 +2159,7 @@
 	<update id="update_interview" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		intev_cur_node_code = #{intevCurNodeCode}
 		,bank_video = #{bankVideo}
 		,bank_photo = #{bankPhoto}
 		,company_video = #{companyVideo}
@@ -2084,6 +2168,15 @@
 		,advance_fund_amount_pdf = #{advanceFundAmountPdf}
 		,other_video = #{otherVideo}
 		,interview_other_pdf = #{interviewOtherPdf}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_interviewInternal">
+		UPDATE tdq_budget_order
+		SET
+		intev_cur_node_code = #{intevCurNodeCode}
+		,is_interview = #{isInterview}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -2098,7 +2191,8 @@
 	<update id="update_gps_manager_approve" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		advanf_cur_node_code = #{advanfCurNodeCode}
+		,is_gps_az = #{isGpsAz}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2106,7 +2200,7 @@
 	<update id="update_install_gps" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		advanf_cur_node_code = #{advanfCurNodeCode}
 		,is_gps_az = #{isGpsAz}
 		WHERE code = #{code}
 	</update>
@@ -2119,6 +2213,7 @@
 		,bill_pdf = #{billPdf}
 		,advance_note = #{advanceNote}
 		,cur_node_code = #{curNodeCode}
+		,advanf_cur_node_code = #{advanfCurNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2127,7 +2222,7 @@
 		UPDATE tdq_budget_order
 		SET
 		bank_commit_datetime = #{bankCommitDatetime}
-		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2161,7 +2256,7 @@
 		,repay_first_month_amount = #{repayFirstMonthAmount}
 		,repay_month_amount = #{repayMonthAmount}
 		,bank_fk_datetime = #{bankFkDatetime}
-		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -2174,7 +2269,7 @@
 		,receipt_bankcard_number = #{receiptBankcardNumber}
 		,receipt_pdf = #{receiptPdf}
 		,receipt_remark = #{receiptRemark}
-		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -2182,6 +2277,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
 		,is_logistics = #{isLogistics}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -2190,9 +2286,16 @@
 	<update id="update_entry_mortgage" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		pledge_datetime = #{pledgeDatetime}
-		,green_big_smj = #{greenBigSmj}
-		,cur_node_code = #{curNodeCode}
+		green_big_smj = #{greenBigSmj}
+		,advanf_cur_node_code = #{advanfCurNodeCode}
+		,is_entryMortgage = #{isEntryMortgage}
+		
+		,car_invoice = #{carInvoice}
+		,car_jqx = #{carJqx}
+		,car_syx = #{carSyx}
+		,policy_datetime = #{policyDatetime}
+		,policy_due_date = #{policyDueDate}
+		,car_settle_other_pdf = #{carSettleOtherPdf}
 		WHERE code = #{code}
 	</update>
 	
@@ -2202,6 +2305,8 @@
 		pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
 		,pledge_bank_commit_note = #{pledgeBankCommitNote}
 		,cur_node_code = #{curNodeCode}
+		,enter_fileList = #{enterFileList}
+		,is_mortgage = #{isMortgage}
 		WHERE code = #{code}
 	</update>
 	
@@ -2214,8 +2319,11 @@
 		,car_pd = #{carPd}
 		,car_key = #{carKey}
 		,car_big_smj = #{carBigSmj}
+		,car_xsz_smj = #{carXszSmj}
+		,duty_paid_prove_smj = #{dutyPaidProveSmj}
+		,pledge_datetime = #{pledgeDatetime}
+		,car_settle_datetime = #{carSettleDatetime}
 		,pledge_status = #{pledgeStatus}
-		,enter_fileList = #{enterFileList}
 		WHERE code = #{code}
 	</update>
 	
@@ -2267,6 +2375,24 @@
 		,cancel_node_code = #{cancelNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_residentMortgageApply" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,supplement_note = #{supplementNote}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_insidejobConfirm" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,pledge_user = #{pledgeUser}
+		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_cancel_finance_audit" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
@@ -2430,6 +2556,7 @@
 		,t.sale_user_id
 		,t.apply_user_name
 		,t.id_no
+		,t.inside_job
 		,t.loan_period
 		,t.car_brand
 		,t.loan_amount
@@ -2458,6 +2585,13 @@
 		UPDATE tdq_budget_order
 		SET
 		is_logistics = #{isLogistics}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_curNodeCode">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 

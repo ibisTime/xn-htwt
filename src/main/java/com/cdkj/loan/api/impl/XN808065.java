@@ -35,6 +35,7 @@ public class XN808065 extends AProcessor {
         condition.setReceiver(req.getReceiver());
         condition.setReMobile(req.getReMobile());
         condition.setApplyUser(req.getApplyUser());
+        condition.setRealName(req.getRealName());
         condition.setStatus(req.getStatus());
         condition.setPayType(req.getPayType());
         condition.setPayGroup(req.getPayGroup());

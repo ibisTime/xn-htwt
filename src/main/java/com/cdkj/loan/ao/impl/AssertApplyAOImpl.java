@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IAssertGoodsBO;
 import com.cdkj.loan.bo.IAssertUserBO;
 import com.cdkj.loan.bo.ICompProductBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IStorageInBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.AssertApply;
@@ -21,6 +22,7 @@ import com.cdkj.loan.domain.AssertGoods;
 import com.cdkj.loan.domain.AssertUser;
 import com.cdkj.loan.domain.CompProduct;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.StorageIn;
 import com.cdkj.loan.dto.req.XN632640Req;
 import com.cdkj.loan.dto.req.XN632640ReqChild1;
 import com.cdkj.loan.dto.req.XN632640ReqChild2;
@@ -54,6 +56,9 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
     @Autowired
     private IArchiveBO archiveBO;
 
+    @Autowired
+    private IStorageInBO storageInBO;
+
     @Override
     public String addAssertApply(XN632640Req req) {
         AssertApply data = new AssertApply();
@@ -62,6 +67,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
         data.setRemark(req.getRemark());
         data.setPdf(req.getPdf());
         data.setApplyUser(req.getApplyUser());
+        data.setApplyDatetime(new Date());
         data.setType(req.getType());
         data.setStatus("0");
         data.setUpdater(req.getUpdater());
@@ -140,6 +146,9 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 CompProduct compProduct = compProductBO
                     .getCompProduct(assertGoods.getProductCode());
                 assertGoods.setProductName(compProduct.getName());
+                StorageIn storageIn = storageInBO
+                    .getStorageInByProduct(assertGoods.getProductCode());
+                assertGoods.setPrice(storageIn.getPrice().toString());
             }
             assertApply.setAssertGoodsList(assertGoodsList);
         }

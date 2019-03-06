@@ -158,4 +158,21 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         }
     }
 
+    @Override
+    public Credit getCreditBybudgetorder(String code) {
+        Credit credit = new Credit();
+        credit.setBudgetCode(code);
+        return creditDAO.select(credit);
+    }
+
+    @Override
+    public void refreshSecondCarReport(Credit credit) {
+        creditDAO.updateSecondCarReport(credit);
+    }
+
+    @Override
+    public void refreshCreditUser(Credit credit) {
+        creditDAO.updateCreditUser(credit);
+    }
+
 }

@@ -404,4 +404,8 @@
 		<property name="paginableDAO" ref="interviewVideoDAOImpl"/>
 	</bean>
 	
+	<bean id="smsBO" class="com.cdkj.loan.bo.impl.SmsBOImpl">
+		<property name="paginableDAO" ref="smsDAOImpl"/>
+	</bean>
+	
 </beans>

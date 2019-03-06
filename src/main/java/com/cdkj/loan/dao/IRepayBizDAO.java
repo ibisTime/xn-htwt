@@ -16,6 +16,12 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     public int updateEnterBlackList(RepayBiz data);
 
+    // 提前还款申请
+    public void prepaymentApply(RepayBiz repayBiz);
+
+    // 提前还款审核
+    public void prepaymentApprove(RepayBiz repayBiz);
+
     public int updateConfirmSettledProduct(RepayBiz data);
 
     public int updateRepayBizRestAmount(RepayBiz data);
@@ -71,4 +77,9 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     // 更新逾期金额和次数
     public void repayOverDue(RepayBiz repayBiz);
+
+    public void updateBizByPayFee(RepayBiz repayBiz);
+
+    public void updateRestPeriods(RepayBiz repayBiz);
+
 }

@@ -160,5 +160,7 @@
 		<typeAlias alias="interviewVideoRoom" type="com.cdkj.loan.domain.InterviewVideoRoom" />
 		<typeAlias alias="interviewVideo" type="com.cdkj.loan.domain.InterviewVideo" />
 
+		<typeAlias alias="sms" type="com.cdkj.loan.domain.Sms" />
+
 	</typeAliases>
 </configuration>

@@ -72,6 +72,17 @@ public class BudgetOrderFee extends ABaseDO {
     // 预算单
     private BudgetOrder budgetOrderObject;
 
+    // 预算单节点
+    private String curNodeCode;
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
     public String getCustomerName() {
         return customerName;
     }

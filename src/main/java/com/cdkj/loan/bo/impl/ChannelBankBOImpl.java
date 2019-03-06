@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IChannelBankDAO;
 import com.cdkj.loan.domain.ChannelBank;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -77,7 +78,8 @@ public class ChannelBankBOImpl extends PaginableBOImpl<ChannelBank>
             condition.setId(id);
             data = channelBankDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "渠道银行不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "渠道银行不存在");
             }
         }
         return data;
@@ -92,6 +94,9 @@ public class ChannelBankBOImpl extends PaginableBOImpl<ChannelBank>
             List<ChannelBank> list = channelBankDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 data = list.get(0);
+            } else {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "渠道银行不存在");
             }
         }
         return data;

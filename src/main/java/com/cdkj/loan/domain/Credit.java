@@ -110,6 +110,9 @@ public class Credit extends ABaseDO {
     // 团队名称
     private String teamName;
 
+    // 内勤
+    private String insideJobName;
+
     // 节点操作人
     private String updaterName;
 
@@ -127,6 +130,14 @@ public class Credit extends ABaseDO {
 
     public void setInsideJob(String insideJob) {
         this.insideJob = insideJob;
+    }
+
+    public String getInsideJobName() {
+        return insideJobName;
+    }
+
+    public void setInsideJobName(String insideJobName) {
+        this.insideJobName = insideJobName;
     }
 
     public String getIsCancel() {

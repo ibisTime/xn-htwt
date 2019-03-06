@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 /**
  * 分页查询客户作废
  * @author: jiafr 
@@ -17,6 +19,26 @@ public class XN632195Req extends APageReq {
     private String advanceFundDatetimeStart;
 
     private String advanceFundDatetimeEnd;
+
+    private String curNodeCode;// 当前节点编号
+
+    private List<String> curNodeCodeList;// 当前节点编号
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
 
     public String getApplyUserName() {
         return applyUserName;

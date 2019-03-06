@@ -12,4 +12,7 @@ public interface ICreditUserAO {
 
     // 查看征信报告详情
     public CreditUser getCreditUserReport(String code);
+
+    // 主贷人和配偶一键互换
+    public Object changeLender(String selfCode, String wifeCode);
 }

@@ -696,6 +696,12 @@ public class BudgetOrder extends ABaseDO {
     // 面签其他资料
     private String interviewOtherPdf;
 
+    // 是否面签完成
+    private String isInterview;
+
+    // 是否录入发保合
+    private String isEntryMortgage;
+
     // 垫资日期
     private Date advanceFundDatetime;
 
@@ -710,6 +716,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 资金划转授权书
     private String advanceFundAmountPdf;
+
+    // 驻行申请：补充说明
+    private String supplementNote;
 
     // 车辆落户日期
     private Date carSettleDatetime;
@@ -747,11 +756,20 @@ public class BudgetOrder extends ABaseDO {
     // 大本扫描件
     private String carBigSmj;
 
+    // 车辆行驶证扫描件
+    private String carXszSmj;
+
+    // 完税证明扫描件
+    private String dutyPaidProveSmj;
+
     // 银行提交时间
     private Date bankCommitDatetime;
 
     // 银行提交说明
     private String bankCommitNote;
+
+    // 是否抵押完成(1是0否)
+    private String isMortgage;
 
     // 还款卡银行行别
     private String repayBankCode;
@@ -769,10 +787,10 @@ public class BudgetOrder extends ABaseDO {
     private int repayBillDate;
 
     // 银行还款日
-    private Integer repayBankDate;
+    private int repayBankDate;
 
     // 公司还款日
-    private Date repayCompanyDate;
+    private int repayCompanyDate;
 
     // 首期月供金额
     private Long repayFirstMonthAmount;
@@ -873,6 +891,12 @@ public class BudgetOrder extends ABaseDO {
     // 当前节点编号
     private String curNodeCode;
 
+    // 面签节点编号
+    private String intevCurNodeCode;
+
+    // 垫资节点编号
+    private String advanfCurNodeCode;
+
     // 客户申请作废时的节点编号
     private String cancelNodeCode;
 
@@ -950,6 +974,10 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> curNodeCodeList;
 
+    private List<String> intevCurNodeCodeList;
+
+    private List<String> advanfCurNodeCodeList;
+
     // 还款业务编号模糊差查
     private String repayBizCodeForQuery;
 
@@ -994,12 +1022,39 @@ public class BudgetOrder extends ABaseDO {
     // 内勤名称
     private String insideJobName;
 
+    // 征信二手车评估报告
+    private String secondCarReport;
+
+    public String getSecondCarReport() {
+        return secondCarReport;
+    }
+
+    public void setSecondCarReport(String secondCarReport) {
+        this.secondCarReport = secondCarReport;
+    }
+
     public String getInsideJobName() {
         return insideJobName;
     }
 
     public void setInsideJobName(String insideJobName) {
         this.insideJobName = insideJobName;
+    }
+
+    public String getAdvanfCurNodeCode() {
+        return advanfCurNodeCode;
+    }
+
+    public void setAdvanfCurNodeCode(String advanfCurNodeCode) {
+        this.advanfCurNodeCode = advanfCurNodeCode;
+    }
+
+    public List<String> getIntevCurNodeCodeList() {
+        return intevCurNodeCodeList;
+    }
+
+    public void setIntevCurNodeCodeList(List<String> intevCurNodeCodeList) {
+        this.intevCurNodeCodeList = intevCurNodeCodeList;
     }
 
     public String getAreaName() {
@@ -1088,6 +1143,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCurNodeCodeNoEnter(String curNodeCodeNoEnter) {
         this.curNodeCodeNoEnter = curNodeCodeNoEnter;
+    }
+
+    public String getIsEntryMortgage() {
+        return isEntryMortgage;
+    }
+
+    public void setIsEntryMortgage(String isEntryMortgage) {
+        this.isEntryMortgage = isEntryMortgage;
     }
 
     public String getEnterStatus() {
@@ -1202,6 +1265,14 @@ public class BudgetOrder extends ABaseDO {
         this.bankFkDatetimeStart = bankFkDatetimeStart;
     }
 
+    public String getIsMortgage() {
+        return isMortgage;
+    }
+
+    public void setIsMortgage(String isMortgage) {
+        this.isMortgage = isMortgage;
+    }
+
     public Date getBankFkDatetimeEnd() {
         return bankFkDatetimeEnd;
     }
@@ -1232,6 +1303,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCancelNodeCode(String cancelNodeCode) {
         this.cancelNodeCode = cancelNodeCode;
+    }
+
+    public String getIntevCurNodeCode() {
+        return intevCurNodeCode;
+    }
+
+    public void setIntevCurNodeCode(String intevCurNodeCode) {
+        this.intevCurNodeCode = intevCurNodeCode;
     }
 
     public String getFrozenStatus() {
@@ -1280,6 +1359,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setSaleUserName(String saleUserName) {
         this.saleUserName = saleUserName;
+    }
+
+    public List<String> getAdvanfCurNodeCodeList() {
+        return advanfCurNodeCodeList;
+    }
+
+    public void setAdvanfCurNodeCodeList(List<String> advanfCurNodeCodeList) {
+        this.advanfCurNodeCodeList = advanfCurNodeCodeList;
     }
 
     public String getIsLogistics() {
@@ -1602,6 +1689,14 @@ public class BudgetOrder extends ABaseDO {
         this.isCardMailAddress = isCardMailAddress;
     }
 
+    public String getIsInterview() {
+        return isInterview;
+    }
+
+    public void setIsInterview(String isInterview) {
+        this.isInterview = isInterview;
+    }
+
     public String getPostCode1() {
         return postCode1;
     }
@@ -1832,6 +1927,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setOtherVideo(String otherVideo) {
         this.otherVideo = otherVideo;
+    }
+
+    public String getSupplementNote() {
+        return supplementNote;
+    }
+
+    public void setSupplementNote(String supplementNote) {
+        this.supplementNote = supplementNote;
     }
 
     public String getMateCompanyContactNo() {
@@ -2426,6 +2529,22 @@ public class BudgetOrder extends ABaseDO {
         this.carBigSmj = carBigSmj;
     }
 
+    public String getCarXszSmj() {
+        return carXszSmj;
+    }
+
+    public void setCarXszSmj(String carXszSmj) {
+        this.carXszSmj = carXszSmj;
+    }
+
+    public String getDutyPaidProveSmj() {
+        return dutyPaidProveSmj;
+    }
+
+    public void setDutyPaidProveSmj(String dutyPaidProveSmj) {
+        this.dutyPaidProveSmj = dutyPaidProveSmj;
+    }
+
     public Date getBankCommitDatetime() {
         return bankCommitDatetime;
     }
@@ -2482,19 +2601,19 @@ public class BudgetOrder extends ABaseDO {
         this.repayBillDate = repayBillDate;
     }
 
-    public Integer getRepayBankDate() {
+    public int getRepayBankDate() {
         return repayBankDate;
     }
 
-    public void setRepayBankDate(Integer repayBankDate) {
+    public void setRepayBankDate(int repayBankDate) {
         this.repayBankDate = repayBankDate;
     }
 
-    public Date getRepayCompanyDate() {
+    public int getRepayCompanyDate() {
         return repayCompanyDate;
     }
 
-    public void setRepayCompanyDate(Date repayCompanyDate) {
+    public void setRepayCompanyDate(int repayCompanyDate) {
         this.repayCompanyDate = repayCompanyDate;
     }
 

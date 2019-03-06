@@ -16,12 +16,23 @@ public class XN632702Req {
     @NotBlank
     private String gpsType;
 
+    @NotBlank
+    private String updater;
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
     public String getGpsDevNo() {

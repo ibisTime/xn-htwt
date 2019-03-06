@@ -8,6 +8,8 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
+import com.cdkj.loan.dto.req.XN630515Req;
+import com.cdkj.loan.dto.req.XN630516Req;
 import com.cdkj.loan.dto.req.XN630551Req;
 import com.cdkj.loan.dto.req.XN630555Req;
 import com.cdkj.loan.dto.req.XN630557Req;
@@ -24,6 +26,12 @@ public interface IRepayBizAO {
 
     // 提前还款，车贷和商品分期都有
     public void advanceRepay(String code, String updater, String remark);
+
+    // 提前还款申请
+    public void prepaymentApply(XN630515Req req);
+
+    // 提前还款审核
+    public void prepaymentApprove(XN630516Req req);
 
     // ********************************car********************************
 

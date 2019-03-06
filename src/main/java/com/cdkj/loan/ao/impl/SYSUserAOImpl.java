@@ -30,7 +30,6 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.ESysUserType;
-import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
@@ -64,8 +63,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String realName, String roleCode, String postCode,
-            String archiveCode) {
+            String mobile, String avatar, String realName, String roleCode,
+            String postCode, String archiveCode) {
 
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
@@ -75,6 +74,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         // 判断手机号是否存在
         doCheckMobile(mobile);
         data.setMobile(mobile);
+        data.setPhoto(avatar);
         data.setRealName(realName);
         data.setLoginPwd(MD5Util.md5(loginPwd));
         data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
@@ -90,8 +90,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         sysUserBO.saveUser(data);
 
         // 注册腾讯云用户
-        tencentBO.register(userId, realName, ESystemCode.HTWT.getCode(),
-            ESystemCode.HTWT.getCode());
+        // tencentBO.register(userId, realName, ESystemCode.HTWT.getCode(),
+        // ESystemCode.HTWT.getCode());
 
         return userId;
     }

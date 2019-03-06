@@ -75,8 +75,8 @@ public class UserAOImpl implements IUserAO {
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
 
         // 注册腾讯云用户
-        tencentBO.register(userId, nickname, ESystemCode.HTWT.getCode(),
-            ESystemCode.HTWT.getCode());
+        // tencentBO.register(userId, nickname, ESystemCode.HTWT.getCode(),
+        // ESystemCode.HTWT.getCode());
 
         // 分配账户
         distributeAccount(userId, mobile, kind);
@@ -202,6 +202,12 @@ public class UserAOImpl implements IUserAO {
                         DateUtil.DATA_TIME_PATTERN_1)
                     + "提交的更改绑定手机号码服务已通过，现绑定手机号码为" + newMobile
                     + "，请妥善保管您的账户相关信息。");
+    }
+
+    @Override
+    @Transactional
+    public void changeLoginPwdOSS(String userId, String newLoginPwd) {
+        userBO.refreshLoginPwd(userId, newLoginPwd);
     }
 
     @Override

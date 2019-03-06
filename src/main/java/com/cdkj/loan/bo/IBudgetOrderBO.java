@@ -6,10 +6,12 @@ import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditUser;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
-    public String saveBudgetOrder(Credit credit);
+    public String saveBudgetOrder(Credit credit,
+            List<CreditUser> creditUserList);
 
     public void refreshBudgetOrder(BudgetOrder data);
 
@@ -19,6 +21,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public void refreshriskApprove(BudgetOrder budgetOrder);
 
     public void interview(BudgetOrder budgetOrder);
+
+    public void refreshInterviewInternal(BudgetOrder budgetOrder);
 
     public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition);
 
@@ -31,6 +35,12 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public void refreshbizChargeApprove(BudgetOrder budgetOrder);
 
     public void advancefund(BudgetOrder budgetOrder);
+
+    // 驻行抵押申请
+    public void residentMortgageApply(BudgetOrder budgetOrder);
+
+    // 内勤确认
+    public void insidejobConfirm(BudgetOrder budgetOrder);
 
     public void refreshGpsManagerApprove(BudgetOrder budgetOrder);
 
@@ -61,7 +71,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
             String userId);
 
     // 物流流转
-    public String logicOrder(String code, String operator);
+    public String logicOrderLoan(String code, String operator);
+
+    // 物流流转
+    public String logicOrderMortgage(String code, String operator);
 
     public Paginable<BudgetOrder> getPaginableByRoleCode(int start,
             int pageSize, BudgetOrder condition);
@@ -96,5 +109,12 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     // 物流传递中
     public void updateIsLogistics(BudgetOrder budgetOrder);
+
+    // 根据信贷专员或内勤查预算单客户
+    public Paginable<BudgetOrder> queryBudgetOrderPageByUserId(int start,
+            int limit, BudgetOrder condition);
+
+    // 改节点
+    public void refreshBudgetOrderCurNode(BudgetOrder budgetOrder);
 
 }

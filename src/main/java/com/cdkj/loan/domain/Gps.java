@@ -50,6 +50,10 @@ public class Gps extends ABaseDO {
     // 客户姓名
     private String customerName;
 
+    private String updater;
+
+    private Date updateDatetime;
+
     /*****************/
     // 公司编号
     private String companyName;
@@ -72,6 +76,22 @@ public class Gps extends ABaseDO {
 
     public void setApplyUserRole(String applyUserRole) {
         this.applyUserRole = applyUserRole;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public String getCustomerNameQuery() {

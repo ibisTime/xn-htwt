@@ -37,6 +37,17 @@ public class CompCategory extends ABaseDO {
     // 更新人姓名
     private String updaterName;
 
+    // 单价
+    private Long price;
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
     public String getUpdaterName() {
         return updaterName;
     }

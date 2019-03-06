@@ -23,7 +23,8 @@ public class XN632702 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        gpsAO.editGps(req.getCode(), req.getGpsDevNo(), req.getGpsType());
+        gpsAO.editGps(req.getCode(), req.getGpsDevNo(), req.getGpsType(),
+            req.getUpdater());
         return new BooleanRes(true);
     }
 

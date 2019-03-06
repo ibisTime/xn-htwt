@@ -5,6 +5,7 @@
 	<resultMap id="gpsApply_DB_Result" type="gpsApply">
 		<result column="code" property="code" />
 		<result column="type" property="type" />
+		<result column="apply_type" property="applyType" />
 		<result column="company_code" property="companyCode" />
 		<result column="apply_user" property="applyUser" />
 		<result column="apply_datetime" property="applyDatetime" />
@@ -19,6 +20,12 @@
 		<result column="car_frame_no" property="carFrameNo" />
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="receive_datetime" property="receiveDatetime" />
+<<<<<<< HEAD
+=======
+		<result column="team_code" property="teamCode" />
+		<result column="inside_job" property="insideJob" />
+		<result column="sale_user_id" property="saleUserId" />
+>>>>>>> refs/remotes/origin/branch_v1.4.0
 		<result column="operator" property="operator" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="status" property="status" />
@@ -49,6 +56,7 @@
 		SELECT
 		t.code
 		,t.type
+		,t.apply_type
 		,t.company_code
 		,t.apply_user
 		,t.apply_datetime
@@ -63,6 +71,12 @@
 		,t.car_frame_no
 		,t.send_datetime
 		,t.receive_datetime
+<<<<<<< HEAD
+=======
+		,t.team_code
+		,t.inside_job
+		,t.sale_user_id
+>>>>>>> refs/remotes/origin/branch_v1.4.0
 		,t.operator
 		,t.update_datetime
 		,t.status
@@ -88,6 +102,7 @@
 		tb_gps_apply(
 		code
 		,type
+		,apply_type
 		,company_code
 		,apply_user
 		,apply_datetime
@@ -97,6 +112,9 @@
 		,apply_wired_count
 		,apply_wireless_count
 		,budget_order_code
+		,team_code
+		,inside_job
+		,sale_user_id
 		,customer_name
 		,mobile
 		,car_frame_no
@@ -106,6 +124,7 @@
 		VALUES(
 		#{code}
 		,#{type}
+		,#{applyType}
 		,#{companyCode}
 		,#{applyUser}
 		,#{applyDatetime}
@@ -115,6 +134,9 @@
 		,#{applyWiredCount}
 		,#{applyWirelessCount}
 		,#{budgetOrderCode}
+		,#{teamCode}
+		,#{insideJob}
+		,#{saleUserId}
 		,#{customerName}
 		,#{mobile}
 		,#{carFrameNo}
@@ -123,6 +145,28 @@
 		)
 	</insert>
 	
+	<update id="update_gpsApply" parameterType="gpsApply">
+		UPDATE tb_gps_apply
+		SET
+		type = #{type}
+		,company_code = #{companyCode}
+		,apply_user = #{applyUser}
+		,apply_datetime = #{applyDatetime}
+		,apply_reason = #{applyReason}
+		,apply_count = #{applyCount}
+		,apply_wired_count = #{applyWiredCount}
+		,apply_wireless_count = #{applyWirelessCount}
+		,budget_order_code = #{budgetOrderCode}
+		,customer_name = #{customerName}
+		,mobile = #{mobile}
+		,car_frame_no = #{carFrameNo}
+		,status = #{status}
+		,operator = #{operator}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
 	<update id="update_gpsApply" parameterType="gpsApply">
 		UPDATE tb_gps_apply
 		SET

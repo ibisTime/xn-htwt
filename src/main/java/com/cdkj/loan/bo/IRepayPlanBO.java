@@ -14,10 +14,11 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public RepayPlan getRepayPlanCurMonth(String repayBizCode);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
-
     public List<RepayPlan> queryRepayPlanListByRepayBizCode(
-            String repayBizCode, ERepayPlanNode repayPlanNode);
+            String repayBizCode);
+
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode,
+            ERepayPlanNode repayPlanNode);
 
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode);
@@ -32,6 +33,12 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 支付成功更新
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount);
+
+    // 上传还款截图
+    public void refreshPrepayPhoto(RepayPlan repayPlan);
+
+    // 还款审核
+    public void prepayPhotoApprove(RepayPlan repayPlan);
 
     // 进入逾期
     public void refreshRepayPlanOverdue(RepayPlan repayPlan);
@@ -84,4 +91,5 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 还款计划结清
     public void refreshSettleDaily(RepayPlan data, Long repayAmount);
+
 }

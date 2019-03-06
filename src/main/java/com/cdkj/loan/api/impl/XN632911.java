@@ -29,10 +29,11 @@ public class XN632911 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSBizLog condition = new SYSBizLog();
+        condition.setApplyUserName(req.getApplyUserName());
         condition.setRoleCode(req.getRoleCode());
         condition.setTeamCode(req.getTeamCode());
         condition.setRefType(req.getRefType());
-        condition.setRefOrder(req.getRefOrder());
+        condition.setParentOrder(req.getParentOrder());
         condition.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         condition.setIsLogistics(EBoolean.NO.getCode());
 
