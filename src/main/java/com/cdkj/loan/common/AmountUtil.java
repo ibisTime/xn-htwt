@@ -28,7 +28,7 @@ public class AmountUtil {
     public static double div(Double amount, Long number) {
         BigDecimal a = new BigDecimal(Double.toString(amount));
         BigDecimal b = new BigDecimal(Double.toString(number));
-        return a.divide(b).doubleValue();
+        return a.divide(b, 10, BigDecimal.ROUND_HALF_DOWN).doubleValue();
     }
 
     public static long div(Long amount, double rate) {

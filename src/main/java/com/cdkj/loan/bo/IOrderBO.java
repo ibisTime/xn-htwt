@@ -22,10 +22,6 @@ public interface IOrderBO extends IPaginableBO<Order> {
 
     public int promptToSend(Order data);
 
-    public int deliverLogistics(String code, String logisticsCompany,
-            String logisticsCode, String deliverer, String deliveryDatetime,
-            String pdf, String updater, String remark);
-
     public int refreshPayYESuccess(Order order, Long payAmount, String payType);
 
     public int refreshPaySuccess(Order order, Long payAmount, String payCode);
@@ -34,8 +30,6 @@ public interface IOrderBO extends IPaginableBO<Order> {
             String payType, String payGroup, String payCode);
 
     public int refreshYunfei(Order order, Long yunfei);
-
-    public int confirm(Order order, String updater, String remark);
 
     public int comment(Order order);
 

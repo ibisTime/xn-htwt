@@ -6,6 +6,8 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class Series extends ABaseDO {
 
+    private static final long serialVersionUID = -6146787706371232676L;
+
     private String code;// 编号
 
     private String brandCode; // 品牌编号

@@ -20,12 +20,11 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IExpressRuleBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IOrderDAO;
-import com.cdkj.loan.dao.IProductOrderDAO;
+import com.cdkj.loan.dao.ISpecsOrderDAO;
 import com.cdkj.loan.domain.Order;
-import com.cdkj.loan.domain.ProductOrder;
+import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EOrderStatus;
 import com.cdkj.loan.enums.EPayType;
@@ -46,7 +45,7 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
     private IOrderDAO orderDAO;
 
     @Autowired
-    private IProductOrderDAO productOrderDAO;
+    private ISpecsOrderDAO productOrderDAO;
 
     @Autowired
     private IExpressRuleBO expressRuleBO;
@@ -97,9 +96,9 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
             if (data == null) {
                 throw new BizException("xn0000", "订单不存在");
             }
-            ProductOrder imCondition = new ProductOrder();
+            SpecsOrder imCondition = new SpecsOrder();
             imCondition.setOrderCode(code);
-            List<ProductOrder> productOrderList = productOrderDAO
+            List<SpecsOrder> productOrderList = productOrderDAO
                 .selectList(imCondition);
             data.setProductOrderList(productOrderList);
         }
@@ -107,8 +106,7 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
     }
 
     @Override
-    public int refreshPayYESuccess(Order order, Long payAmount,
-            String payType) {
+    public int refreshPayYESuccess(Order order, Long payAmount, String payType) {
         int count = 0;
         if (order != null && StringUtils.isNotBlank(order.getCode())) {
             Date now = new Date();
@@ -188,38 +186,6 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
     }
 
     @Override
-    public int deliverLogistics(String code, String logisticsCompany,
-            String logisticsCode, String deliverer, String deliveryDatetime,
-            String pdf, String updater, String remark) {
-        Order order = new Order();
-        order.setCode(code);
-        order.setStatus(EOrderStatus.SEND.getCode());
-        order.setDeliverer(deliverer);
-        order.setDeliveryDatetime(
-            DateUtil.strToDate(deliveryDatetime, DateUtil.DATA_TIME_PATTERN_1));
-        order.setLogisticsCompany(logisticsCompany);
-        order.setLogisticsCode(logisticsCode);
-        order.setPdf(pdf);
-        order.setUpdater(updater);
-        order.setUpdateDatetime(new Date());
-        order.setRemark(remark);
-        return orderDAO.updateDeliverLogistics(order);
-    }
-
-    @Override
-    public int confirm(Order order, String signer, String remark) {
-        int count = 0;
-        if (order != null && StringUtils.isNotBlank(order.getCode())) {
-            order.setStatus(EOrderStatus.RECEIVE.getCode());
-            order.setSigner(signer);
-            order.setSignDatetime(new Date());
-            order.setRemark(remark);
-            count = orderDAO.updateConfirm(order);
-        }
-        return count;
-    }
-
-    @Override
     public int comment(Order order) {
         int count = 0;
         if (order != null && StringUtils.isNotBlank(order.getCode())) {
@@ -254,8 +220,8 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
         if (StringUtils.isNotBlank(code)) {
             Order data = new Order();
             data.setCode(code);
-            payGroup = OrderNoGenerater
-                .generate(EGeneratePrefix.PAY_GROUP.getCode());
+            payGroup = OrderNoGenerater.generate(EGeneratePrefix.PAY_GROUP
+                .getCode());
             data.setPayGroup(payGroup);
             data.setPayType(payType.getCode());
             orderDAO.updatePayGroup(data);
@@ -270,8 +236,8 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
         if (StringUtils.isNotBlank(code)) {
             Order data = new Order();
             data.setCode(code);
-            payGroup = OrderNoGenerater
-                .generate(EGeneratePrefix.PAY_GROUP.getCode());
+            payGroup = OrderNoGenerater.generate(EGeneratePrefix.PAY_GROUP
+                .getCode());
             data.setPayGroup(payGroup);
             data.setPayType(payType.getCode());
             data.setDkAmount(dkCnyAmount);

@@ -10,18 +10,6 @@ public class XN630422Req {
     @NotBlank(message = "名称不能为空")
     private String name; // 名称
 
-    @NotBlank(message = "车系名称不能为空")
-    private String seriesCode; // 车系名称
-
-    @NotBlank(message = "车系名称不能为空")
-    private String seriesName; // 车系名称
-
-    @NotBlank(message = "品牌编号不能为空")
-    private String brandCode; // 品牌编号
-
-    @NotBlank(message = "品牌名称不能为空")
-    private String brandName; // 品牌名称
-
     @NotBlank(message = "原价不能为空")
     private String originalPrice; // 原价
 
@@ -62,38 +50,6 @@ public class XN630422Req {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSeriesCode() {
-        return seriesCode;
-    }
-
-    public void setSeriesCode(String seriesCode) {
-        this.seriesCode = seriesCode;
-    }
-
-    public String getSeriesName() {
-        return seriesName;
-    }
-
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
-    }
-
-    public String getBrandCode() {
-        return brandCode;
-    }
-
-    public void setBrandCode(String brandCode) {
-        this.brandCode = brandCode;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
     }
 
     public String getOriginalPrice() {

@@ -41,7 +41,7 @@
 		<typeAlias alias="category" type="com.cdkj.loan.domain.Category" />
 		<typeAlias alias="product" type="com.cdkj.loan.domain.Product" />
 		<typeAlias alias="order" type="com.cdkj.loan.domain.Order" />
-		<typeAlias alias="productOrder" type="com.cdkj.loan.domain.ProductOrder" />
+		<typeAlias alias="specsOrder" type="com.cdkj.loan.domain.SpecsOrder" />
 		<typeAlias alias="productSpecs" type="com.cdkj.loan.domain.ProductSpecs" />
 		
 		<!-- 车贷业务+分期业务  -->

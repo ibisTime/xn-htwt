@@ -67,6 +67,9 @@ public class Product extends ABaseDO {
     // 状态
     private String status;
 
+    // 已购买人数（确认收货之后）
+    private Integer boughtCount;
+
     // 更新人
     private String updater;
 
@@ -75,9 +78,6 @@ public class Product extends ABaseDO {
 
     // 备注
     private String remark;
-
-    // 已购买人数（确认收货之后）
-    private Integer boughtCount;
 
     // ******************db properties ********************
 

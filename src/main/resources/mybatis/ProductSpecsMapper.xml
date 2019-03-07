@@ -112,10 +112,34 @@
 		quantity = quantity - ${quantity}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_productSpecs" parameterType="product">
+		UPDATE tmall_product_specs
+		SET
+		name=#{name}
+		,pic=#{pic}
+		,original_price=#{originalPrice}
+		
+		,price=#{price}
+		,sf_rate=#{sfRate}
+		,periods=#{periods}
+		,bank_rate=#{bankRate}
+		,quantity=#{quantity}
+		
+		,province=#{province}
+		,weight=#{weight}
+		,order_no=#{orderNo}
+		WHERE code = #{code}
+	</update>
 
 	 <delete id="delete_byProductCode" parameterType="productSpecs">
 		DELETE FROM tmall_product_specs
 		WHERE product_code = #{productCode}
+	</delete>
+	
+	<delete id="delete_productSpecs" parameterType="productSpecs">
+		DELETE FROM tmall_product_specs
+		WHERE code = #{code}
 	</delete>
 
 </mapper>

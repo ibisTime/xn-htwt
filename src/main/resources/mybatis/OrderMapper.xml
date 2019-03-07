@@ -4,8 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IOrderDAO">
 	<resultMap id="order_DB_Result" type="order">
 		<result column="code" property="code" />
-		<result column="repay_biz_code" property="repayBizCode" />
-		<result column="bankcard_code" property="bankcardCode" />
+		
 		<result column="receiver" property="receiver" />
 		<result column="re_mobile" property="reMobile" />
 		<result column="re_address" property="reAddress" />
@@ -16,11 +15,6 @@
 		<result column="amount" property="amount" />
 		<result column="yunfei" property="yunfei" />
 		
-		<result column="sf_rate" property="sfRate" />
-		<result column="sf_amount" property="sfAmount" />
-		<result column="loan_amount" property="loanAmount" />
-		<result column="periods" property="periods" />
-		<result column="bank_rate" property="bankRate" />
 		
 		<result column="status" property="status" />
 		<result column="pay_type" property="payType" />
@@ -29,14 +23,7 @@
 		<result column="pay_datetime" property="payDatetime" />
 		
 		<result column="pay_amount" property="payAmount" />
-		<result column="deliverer" property="deliverer" />
-		<result column="delivery_datetime" property="deliveryDatetime" />
-		<result column="logistics_company" property="logisticsCompany" />
-		<result column="logistics_code" property="logisticsCode" />
 		
-		<result column="pdf" property="pdf" />
-		<result column="signer" property="signer" />
-		<result column="sign_datetime" property="signDatetime" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		
@@ -126,8 +113,6 @@
 	<select id="select_order" parameterType="order" resultMap="order_DB_Result">
 		SELECT
 		t.code
-		,t.repay_biz_code
-		,t.bankcard_code
 		,t.receiver
 		,t.re_mobile
 		,t.re_address
@@ -138,11 +123,6 @@
 		,t.amount
 		,t.yunfei
 		
-		,t.sf_rate
-		,t.sf_amount
-		,t.loan_amount
-		,t.periods
-		,t.bank_rate
 		
 		,t.status
 		,t.pay_type
@@ -151,14 +131,6 @@
 		,t.pay_datetime
 		
 		,t.pay_amount
-		,t.deliverer
-		,t.delivery_datetime
-		,t.logistics_company
-		,t.logistics_code
-		
-		,t.pdf
-		,t.signer
-		,t.sign_datetime
 		,t.updater
 		,t.update_datetime
 		
@@ -183,8 +155,6 @@
 		INSERT INTO tmall_order(
 		
 		code
-		,repay_biz_code
-		,bankcard_code
 		,receiver
 		,re_mobile
 		,re_address
@@ -193,13 +163,6 @@
 		,apply_note
 		,apply_datetime
 		,amount
-		,yunfei
-		,sf_rate
-		
-		,sf_amount
-		,loan_amount
-		,periods
-		,bank_rate
 		,status
 		
 		,pay_amount
@@ -210,8 +173,6 @@
 		)
 		VALUES(
 		#{code}
-		,#{repayBizCode}
-		,#{bankcardCode}
 		,#{receiver}
 		,#{reMobile}
 		,#{reAddress}
@@ -220,13 +181,6 @@
 		,#{applyNote}
 		,#{applyDatetime}
 		,#{amount}
-		,#{yunfei}
-		,#{sfRate}
-		
-		,#{sfAmount}
-		,#{loanAmount}
-		,#{periods}
-		,#{bankRate}
 		,#{status}
 		
 		,#{payAmount}

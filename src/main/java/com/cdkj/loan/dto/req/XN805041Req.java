@@ -17,9 +17,6 @@ public class XN805041Req {
     @NotBlank
     private String smsCaptcha; // 手机验证码
 
-    @NotBlank
-    private String kind; // 用户类型
-
     public String getMobile() {
         return mobile;
     }
@@ -50,14 +47,6 @@ public class XN805041Req {
 
     public void setSmsCaptcha(String smsCaptcha) {
         this.smsCaptcha = smsCaptcha;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
     }
 
 }

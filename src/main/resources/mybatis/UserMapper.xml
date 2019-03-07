@@ -4,7 +4,6 @@
 <mapper namespace="com.cdkj.loan.dao.IUserDAO">
 	<resultMap id="user_DB_Result" type="user">
 		<result column="user_id" property="userId" />
-		<result column="kind" property="kind" />
 		<result column="produce_type" property="produceType" />
 		<result column="login_name" property="loginName" />
 		<result column="mobile" property="mobile" />
@@ -27,9 +26,6 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
-			</if>
-			<if test="kind != null and kind != '' ">
-				AND t.kind = #{kind}
 			</if>
 			<if test="loginName != null and loginName != '' ">
 				AND t.login_name = #{loginName}
@@ -98,7 +94,6 @@
 	<select id="select_user" parameterType="user" resultMap="user_DB_Result">
 		SELECT
 		user_id
-		,kind
 		,produce_type
 		,login_name
 		,mobile
@@ -133,7 +128,6 @@
 	<insert id="insert_user" parameterType="user">
 		INSERT INTO tstd_user(
 		user_id
-		,kind
 		,produce_type
 		,login_name
 		,mobile
@@ -154,7 +148,6 @@
 		)
 		VALUES(
 		#{userId}
-		,#{kind}
 		,#{produceType}
 		,#{loginName}
 		,#{mobile}

@@ -32,7 +32,6 @@ import com.cdkj.loan.enums.ECaptchaType;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
-import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -63,13 +62,14 @@ public class UserAOImpl implements IUserAO {
             String smsCaptcha, String kind) {
 
         // 验证手机号是否存在
-        userBO.isMobileExist(mobile, kind);
+        userBO.isMobileExist(mobile);
 
         // 检查昵称是否已经被使用
         userBO.isNicknameExist(nickname, kind);
 
         // 验证短信验证码
-        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode());
+        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
+        // ECaptchaType.C_REG.getCode());
 
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
@@ -117,8 +117,8 @@ public class UserAOImpl implements IUserAO {
         currencyList.add(ECurrency.XYF.getCode());
 
         for (String currency : currencyList) {
-            accountBO.distributeAccount(userId, mobile,
-                EAccountType.getAccountType(kind), currency);
+            accountBO.distributeAccount(userId, mobile, EAccountType.Customer,
+                currency);
         }
     }
 
@@ -147,7 +147,6 @@ public class UserAOImpl implements IUserAO {
 
         User condition = new User();
         condition.setLoginName(loginName);
-        condition.setKind(kind);
         List<User> userList1 = userBO.queryUserList(condition);
 
         if (CollectionUtils.isEmpty(userList1)) {
@@ -162,9 +161,9 @@ public class UserAOImpl implements IUserAO {
 
         User user = userList2.get(0);
         if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
-                        + "，请联系工作人员");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该账号"
+                    + EUserStatus.getMap().get(user.getStatus()).getValue()
+                    + "，请联系工作人员");
         }
 
         return user.getUserId();
@@ -182,12 +181,11 @@ public class UserAOImpl implements IUserAO {
 
         String oldMobile = user.getMobile();
         if (newMobile.equals(oldMobile)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "新手机与原手机一致");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "新手机与原手机一致");
         }
 
         // 验证手机号
-        userBO.isMobileExist(newMobile, user.getKind());
+        userBO.isMobileExist(newMobile);
 
         // 短信验证码是否正确（往新手机号发送）
         smsOutBO.checkCaptcha(newMobile, smsCaptcha,
@@ -196,8 +194,11 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshMobile(userId, newMobile);
 
         // 发送短信
-        smsOutBO.sendSmsOut(oldMobile,
-            "尊敬的" + PhoneUtil.hideMobile(oldMobile) + "用户，您于"
+        smsOutBO.sendSmsOut(
+            oldMobile,
+            "尊敬的"
+                    + PhoneUtil.hideMobile(oldMobile)
+                    + "用户，您于"
                     + DateUtil.dateToStr(new Date(),
                         DateUtil.DATA_TIME_PATTERN_1)
                     + "提交的更改绑定手机号码服务已通过，现绑定手机号码为" + newMobile
@@ -241,18 +242,14 @@ public class UserAOImpl implements IUserAO {
         // 重置
         userBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
-        if (EUserKind.Customer.getCode().equals(user.getKind())
-                || EUserKind.Merchant.getCode().equals(user.getKind())) {
-            smsOutBO.sendSmsOut(user.getMobile(),
-                "尊敬的" + PhoneUtil.hideMobile(user.getMobile())
-                        + "用户，您的登录密码修改成功。请妥善保管您的账户相关信息。");
-        }
+        smsOutBO.sendSmsOut(user.getMobile(),
+            "尊敬的" + PhoneUtil.hideMobile(user.getMobile())
+                    + "用户，您的登录密码修改成功。请妥善保管您的账户相关信息。");
     }
 
     @Override
     @Transactional
-    public void doSetTradePwd(String userId, String tradePwd,
-            String smsCaptcha) {
+    public void doSetTradePwd(String userId, String tradePwd, String smsCaptcha) {
         User user = userBO.getUser(userId);
         // 短信验证码是否正确
         smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha, "805066");
@@ -334,8 +331,8 @@ public class UserAOImpl implements IUserAO {
     public User getUser(String userId) {
         User user = userBO.getUser(userId);
         if (user == null) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                userId + "用户不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), userId
+                    + "用户不存在");
         } else {
             // 是否设置过交易密码
             if (StringUtils.isNotBlank(user.getTradePwdStrength())) {
@@ -378,11 +375,9 @@ public class UserAOImpl implements IUserAO {
             userStatus = EUserStatus.NORMAL;
         }
         userBO.refreshStatus(userId, userStatus, updater, remark);
-        if (!EUserKind.Plat.getCode().equals(user.getKind())) {
-            // 发送短信
-            smsOutBO.sendSmsOut(mobile,
-                "尊敬的" + PhoneUtil.hideMobile(mobile) + smsContent);
-        }
+        // 发送短信
+        smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
+                + smsContent);
     }
 
 }

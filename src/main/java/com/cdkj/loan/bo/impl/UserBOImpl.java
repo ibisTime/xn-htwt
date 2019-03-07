@@ -17,7 +17,6 @@ import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -28,12 +27,11 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     private IUserDAO userDAO;
 
     @Override
-    public void isMobileExist(String mobile, String kind) {
+    public void isMobileExist(String mobile) {
         if (StringUtils.isNotBlank(mobile)) { // 判断格式
                                               // PhoneUtil.checkMobile(mobile);
             User condition = new User();
             condition.setMobile(mobile);
-            condition.setKind(kind);
 
             long count = getTotalCount(condition);
             if (count > 0) {
@@ -48,7 +46,6 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (StringUtils.isNotBlank(nickname)) { // 判断格式 User condition = new
             User condition = new User(); // User();
             condition.setNickname(nickname);
-            condition.setKind(kind);
             long count = getTotalCount(condition);
             if (count > 0) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -114,8 +111,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public void refreshStatus(String userId, EUserStatus status, String updater,
-            String remark) {
+    public void refreshStatus(String userId, EUserStatus status,
+            String updater, String remark) {
         if (StringUtils.isNotBlank(userId)) {
             User data = new User();
             data.setUserId(userId);
@@ -129,8 +126,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     @Override
     public void checkTradePwd(String userId, String tradePwd) {
-        if (StringUtils.isNotBlank(userId)
-                && StringUtils.isNotBlank(tradePwd)) {
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(tradePwd)) {
             User user = this.getUser(userId);
             if (StringUtils.isBlank(user.getTradePwdStrength())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -150,8 +146,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     @Override
     public void checkLoginPwd(String userId, String loginPwd) {
-        if (StringUtils.isNotBlank(userId)
-                && StringUtils.isNotBlank(loginPwd)) {
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(loginPwd)) {
             User condition = new User();
             condition.setUserId(userId);
             condition.setLoginPwd(MD5Util.md5(loginPwd));
@@ -243,7 +238,6 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (StringUtils.isNotBlank(mobile) && StringUtils.isNotBlank(kind)) {
             User condition = new User();
             condition.setMobile(mobile);
-            condition.setKind(kind);
             List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 user = list.get(0);
@@ -258,14 +252,13 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (StringUtils.isNotBlank(mobile) && StringUtils.isNotBlank(kind)) {
             User condition = new User();
             condition.setMobile(mobile);
-            condition.setKind(kind);
             List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 User data = list.get(0);
                 userId = data.getUserId();
             } else
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "手机号[" + mobile + "]用户不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "手机号["
+                        + mobile + "]用户不存在");
         }
         return userId;
     }
@@ -290,11 +283,10 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         String userId = OrderNoGenerater.generate("U");
         User user = new User();
         user.setUserId(userId);
-        user.setKind(kind);
         user.setProduceType(EBoolean.NO.getCode());
         user.setLoginName(mobile);
         user.setMobile(mobile);
-
+        user.setNickname(nickname);
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         user.setStatus(EUserStatus.NORMAL.getCode());
@@ -310,7 +302,6 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         String loginPwd = "888888";
         User user = new User();
         user.setUserId(userId);
-        user.setKind(EUserKind.Customer.getCode());
         user.setProduceType(produceType);
         user.setMobile(mobile);
         user.setLoginName(mobile);

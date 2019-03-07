@@ -17,7 +17,7 @@ public interface IUserBO extends IPaginableBO<User> {
             String idKind, String realName, String idNo);
 
     // 判断手机号是否存在
-    public void isMobileExist(String mobile, String kind);
+    public void isMobileExist(String mobile);
 
     // 判断昵称是否存在
     public void isNicknameExist(String nickname, String kind);
@@ -38,8 +38,8 @@ public interface IUserBO extends IPaginableBO<User> {
     public void refreshPhoto(String userId, String photo);
 
     // 更新状态
-    public void refreshStatus(String userId, EUserStatus normal, String updater,
-            String remark);
+    public void refreshStatus(String userId, EUserStatus normal,
+            String updater, String remark);
 
     // 验证支付密码:拿tradePwd进行MD5后与数据库中userId得数据库支付密码比对
     public void checkTradePwd(String userId, String tradePwd);

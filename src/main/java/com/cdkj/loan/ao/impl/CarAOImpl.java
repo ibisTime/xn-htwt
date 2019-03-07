@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarAO;
+import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
 import com.cdkj.loan.enums.EBrandStatus;
@@ -28,15 +32,24 @@ public class CarAOImpl implements ICarAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private ISeriesBO seriesBO;
+
+    @Autowired
+    private IBrandBO brandBO;
+
     @Override
     public String addCar(XN630420Req req) {
         Car car = new Car();
 
+        Series series = seriesBO.getSeries(req.getSeriesCode());
+
+        Brand brand = brandBO.getBrand(series.getBrandCode());
         car.setName(req.getName());
         car.setSeriesCode(req.getSeriesCode());
-        car.setSeriesName(req.getSeriesName());
-        car.setBrandCode(req.getBrandCode());
-        car.setBrandName(req.getBrandName());
+        car.setSeriesName(series.getName());
+        car.setBrandCode(brand.getCode());
+        car.setBrandName(brand.getName());
 
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
@@ -61,10 +74,6 @@ public class CarAOImpl implements ICarAO {
             throw new BizException("xn0000", "品牌已上架，请在下架后修改");
         }
         car.setName(req.getName());
-        car.setSeriesCode(req.getSeriesCode());
-        car.setSeriesName(req.getSeriesName());
-        car.setBrandCode(req.getBrandCode());
-        car.setBrandName(req.getBrandName());
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));

@@ -8,17 +8,11 @@ import java.util.List;
  * @since: 2016年5月23日 上午8:46:53 
  * @history:
  */
-public class XN808068Req extends APageReq {
-
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 1L;
-
-    // 状态列表
-    private List<String> statusList;
+public class XN808070Req {
 
     // 状态
+    private List<String> statusList;
+
     private String status;
 
     // 下单人
@@ -32,6 +26,14 @@ public class XN808068Req extends APageReq {
 
     // 物流单号
     private String logisticsCode;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getDeiverer() {
         return deiverer;
@@ -71,14 +73,6 @@ public class XN808068Req extends APageReq {
 
     public void setApplyUser(String applyUser) {
         this.applyUser = applyUser;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
 }

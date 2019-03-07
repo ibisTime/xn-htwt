@@ -14,9 +14,6 @@ public class User extends ABaseDO {
     // 编号
     private String userId;
 
-    // 用户类型
-    private String kind;
-
     // 产生类型（0主动注册，1自动产生）
     private String produceType;
 
@@ -109,14 +106,6 @@ public class User extends ABaseDO {
 
     public void setUserId(String userId2) {
         this.userId = userId2;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
     }
 
     public String getLoginName() {
