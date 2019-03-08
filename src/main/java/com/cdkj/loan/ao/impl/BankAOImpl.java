@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IBankRateBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.SYSUser;
@@ -58,11 +59,11 @@ public class BankAOImpl implements IBankAO {
         data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
-        data.setRate12(0.0d);
-        data.setRate18(0.0d);
-        data.setRate24(0.0d);
+        data.setRate12(StringValidater.toDouble(req.getRate12()));
+        data.setRate18(StringValidater.toDouble(req.getRate18()));
+        data.setRate24(StringValidater.toDouble(req.getRate24()));
 
-        data.setRate36(0.0d);
+        data.setRate36(StringValidater.toDouble(req.getRate36()));
         data.setStatus(EBoolean.YES.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -104,10 +105,10 @@ public class BankAOImpl implements IBankAO {
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
 
-        data.setRate12(0.0d);
-        data.setRate18(0.0d);
-        data.setRate24(0.0d);
-        data.setRate36(0.0d);
+        data.setRate12(StringValidater.toDouble(req.getRate12()));
+        data.setRate18(StringValidater.toDouble(req.getRate18()));
+        data.setRate24(StringValidater.toDouble(req.getRate24()));
+        data.setRate36(StringValidater.toDouble(req.getRate36()));
 
         data.setStatus(req.getStatus());
         data.setUpdater(req.getUpdater());

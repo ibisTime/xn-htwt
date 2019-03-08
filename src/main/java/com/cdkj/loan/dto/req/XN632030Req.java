@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -35,17 +33,11 @@ public class XN632030Req {
     // 36期
     private String rate36;
 
-    // 状态
-    private String status;
-
     // 更新人
     private String updater;
 
     // 备注
     private String remark;
-
-    // 利率列表
-    private List<XN632030ReqRate> bankRateList;
 
     public String getSubbranch() {
         return subbranch;
@@ -103,14 +95,6 @@ public class XN632030Req {
         this.rate36 = rate36;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getUpdater() {
         return updater;
     }
@@ -125,14 +109,6 @@ public class XN632030Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public List<XN632030ReqRate> getBankRateList() {
-        return bankRateList;
-    }
-
-    public void setBankRateList(List<XN632030ReqRate> bankRateList) {
-        this.bankRateList = bankRateList;
     }
 
 }
