@@ -1,12 +1,17 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
 public class Car extends ABaseDO {
 
+    private static final long serialVersionUID = 8968327303357507883L;
+
     private String code; // 编号
+
+    private String isReferee;// 是否推荐
 
     private String name; // 名称
 
@@ -18,11 +23,27 @@ public class Car extends ABaseDO {
 
     private String brandName;// 品牌名称
 
+    private String level;// 级别
+
+    private String version;// 规格/版本
+
+    private String structure;// 结构
+
+    private Double displacment;// 排量
+
+    private String fromPlace;// 车源地
+
+    private String procedure;// 手续
+
     private Long originalPrice;// 原价
 
     private Long salePrice;// 参考价
 
     private Long sfAmount; // 首付金额
+
+    private String jsqByhf;// 必要花费
+
+    private String jsqSybx;// 商业保险
 
     private Integer location;// UI位置
 
@@ -31,6 +52,8 @@ public class Car extends ABaseDO {
     private String slogan;// 广告语
 
     private String advPic;// 广告图
+
+    private Long picNumber;// 图片数量
 
     private String pic;// 缩略图
 
@@ -48,6 +71,83 @@ public class Car extends ABaseDO {
 
     // 最新修改人姓名
     private String updaterName;
+
+    // 排量起
+    private Double displacementStart;
+
+    // 排量止
+    private Double displacementEnd;
+
+    // 价格起
+    private Long priceStart;
+
+    // 价格止
+    private Long priceEnd;
+
+    // 级别列表
+    private List<String> levelList;
+
+    // 结构列表
+    private List<String> structureList;
+
+    // 规格版本列表
+    private List<String> versionList;
+
+    public Double getDisplacementStart() {
+        return displacementStart;
+    }
+
+    public void setDisplacementStart(Double displacementStart) {
+        this.displacementStart = displacementStart;
+    }
+
+    public Double getDisplacementEnd() {
+        return displacementEnd;
+    }
+
+    public void setDisplacementEnd(Double displacementEnd) {
+        this.displacementEnd = displacementEnd;
+    }
+
+    public Long getPriceStart() {
+        return priceStart;
+    }
+
+    public void setPriceStart(Long priceStart) {
+        this.priceStart = priceStart;
+    }
+
+    public Long getPriceEnd() {
+        return priceEnd;
+    }
+
+    public void setPriceEnd(Long priceEnd) {
+        this.priceEnd = priceEnd;
+    }
+
+    public List<String> getLevelList() {
+        return levelList;
+    }
+
+    public void setLevelList(List<String> levelList) {
+        this.levelList = levelList;
+    }
+
+    public List<String> getStructureList() {
+        return structureList;
+    }
+
+    public void setStructureList(List<String> structureList) {
+        this.structureList = structureList;
+    }
+
+    public List<String> getVersionList() {
+        return versionList;
+    }
+
+    public void setVersionList(List<String> versionList) {
+        this.versionList = versionList;
+    }
 
     public String getUpdaterName() {
         return updaterName;
@@ -207,6 +307,86 @@ public class Car extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getStructure() {
+        return structure;
+    }
+
+    public void setStructure(String structure) {
+        this.structure = structure;
+    }
+
+    public Double getDisplacment() {
+        return displacment;
+    }
+
+    public void setDisplacment(Double displacment) {
+        this.displacment = displacment;
+    }
+
+    public String getFromPlace() {
+        return fromPlace;
+    }
+
+    public void setFromPlace(String fromPlace) {
+        this.fromPlace = fromPlace;
+    }
+
+    public String getProcedure() {
+        return procedure;
+    }
+
+    public void setProcedure(String procedure) {
+        this.procedure = procedure;
+    }
+
+    public String getJsqByhf() {
+        return jsqByhf;
+    }
+
+    public void setJsqByhf(String jsqByhf) {
+        this.jsqByhf = jsqByhf;
+    }
+
+    public String getJsqSybx() {
+        return jsqSybx;
+    }
+
+    public void setJsqSybx(String jsqSybx) {
+        this.jsqSybx = jsqSybx;
+    }
+
+    public Long getPicNumber() {
+        return picNumber;
+    }
+
+    public void setPicNumber(Long picNumber) {
+        this.picNumber = picNumber;
     }
 
 }

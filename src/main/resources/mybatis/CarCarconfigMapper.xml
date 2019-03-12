@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICarCarconfigDAO">
+	<resultMap id="carCarconfig_DB_Result" type="carCarconfig">
+		<result column="code" property="code" />
+		<result column="car_code" property="carCode" />
+		<result column="config_code" property="configCode" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_carCarconfig" parameterType="carCarconfig" resultMap="carCarconfig_DB_Result">
+		SELECT
+		t.code
+		,t.car_code
+		,t.config_code
+		FROM
+		tht_car_carconfig t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_carCarconfig_count" parameterType="carCarconfig"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tht_car_carconfig t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_carCarconfig" parameterType="carCarconfig">
+		INSERT INTO
+		tht_car_carconfig(
+		code
+		,car_code
+		,config_code
+		)
+		VALUES(
+		#{code}
+		,#{carCode}
+		,#{configCode}
+		)
+	</insert>
+
+	<update id="update_carCarconfig" parameterType="carCarconfig">
+		UPDATE tht_car_carconfig
+		SET
+		car_code = #{carCode}
+		,config_code = #{configCode}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

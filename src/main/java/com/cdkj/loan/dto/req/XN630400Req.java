@@ -4,6 +4,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630400Req {
 
+    // 是否推荐（必填）
+    @NotBlank
+    private String isReferee;
+
     // 名称（必填）
     @NotBlank(message = "名称不能为空")
     private String name;
@@ -73,6 +77,14 @@ public class XN630400Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
     }
 
 }

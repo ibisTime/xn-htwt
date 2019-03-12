@@ -19,8 +19,14 @@ public class XN630412Req {
     @NotBlank(message = "广告图不能为空")
     private String advPic;// 广告图
 
-    @NotBlank(message = "价格区间不能为空")
-    private String price;// 价格区间
+    @NotBlank
+    private String picNumber;// 图片数量
+
+    @NotBlank
+    private String level;// 级别
+
+    @NotBlank
+    private String isReferee;// 是否推荐
 
     @NotBlank(message = "最新修改人不能为空")
     private String updater;// 最新修改人
@@ -67,14 +73,6 @@ public class XN630412Req {
         this.advPic = advPic;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getUpdater() {
         return updater;
     }
@@ -89,6 +87,30 @@ public class XN630412Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getPicNumber() {
+        return picNumber;
+    }
+
+    public void setPicNumber(String picNumber) {
+        this.picNumber = picNumber;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
     }
 
 }

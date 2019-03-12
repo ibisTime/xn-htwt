@@ -41,8 +41,8 @@ public class SeriesDAOImpl extends AMybatisTemplate implements ISeriesDAO {
 
     @Override
     public List<Series> selectList(Series condition, int start, int count) {
-        return super.selectList(NAMESPACE.concat("select_series"), start, count,
-            condition, Series.class);
+        return super.selectList(NAMESPACE.concat("select_series"), start,
+            count, condition, Series.class);
     }
 
     @Override
@@ -58,6 +58,16 @@ public class SeriesDAOImpl extends AMybatisTemplate implements ISeriesDAO {
     @Override
     public int updateDown(Series data) {
         return super.update(NAMESPACE.concat("update_series_down"), data);
+    }
+
+    @Override
+    public int updateHighest(Series data) {
+        return super.update(NAMESPACE.concat("update_series_highest"), data);
+    }
+
+    @Override
+    public int updateLowest(Series data) {
+        return super.update(NAMESPACE.concat("update_series_lowest"), data);
     }
 
 }

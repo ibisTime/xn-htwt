@@ -10,6 +10,16 @@ public class XN630416Req {
 
     private String status; // 状态（选填）
 
+    private String isReferee;// 是否推荐
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
+    }
+
     public String getName() {
         return name;
     }

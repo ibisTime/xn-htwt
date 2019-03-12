@@ -33,7 +33,12 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(StringValidater.toLong(req.getPrice()));
+        series.setPicNumber(StringValidater.toLong(req.getPicNumber()));
+        series.setPrice(Long.valueOf(0));
+        series.setHighest(Long.valueOf(0));
+        series.setLowest(Long.valueOf(0));
+        series.setLevel(req.getLevel());
+        series.setIsReferee(req.getIsReferee());
         series.setStatus(EBrandStatus.TO_UP.getCode());
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
@@ -51,7 +56,9 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(StringValidater.toLong(req.getPrice()));
+        series.setPicNumber(StringValidater.toLong(req.getPicNumber()));
+        series.setLevel(req.getLevel());
+        series.setIsReferee(req.getIsReferee());
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
         series.setRemark(req.getRemark());

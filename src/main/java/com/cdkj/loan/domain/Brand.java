@@ -14,6 +14,9 @@ public class Brand extends ABaseDO {
     // 编号
     private String code;
 
+    // 是否推荐
+    private String isReferee;
+
     // 字母序号
     private String letter;
 
@@ -108,6 +111,14 @@ public class Brand extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
     }
 
 }

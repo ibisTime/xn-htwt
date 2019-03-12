@@ -32,16 +32,15 @@ public class XN805120 extends AProcessor {
         condition.setLoginName(req.getLoginName());
         condition.setMobileForQuery(req.getMobile());
         condition.setNicknameForQuery(req.getNickname());
-        condition.setKind(req.getKind());
         condition.setIdKind(req.getIdKind());
 
         condition.setIdNo(req.getIdNo());
         condition.setRealNameForQuery(req.getRealName());
         condition.setStatus(req.getStatus());
-        condition.setCreateDatetimeStart(
-            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
-        condition.setCreateDatetimeEnd(
-            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
+        condition.setCreateDatetimeStart(DateUtil.getFrontDate(
+            req.getCreateDatetimeStart(), false));
+        condition.setCreateDatetimeEnd(DateUtil.getFrontDate(
+            req.getCreateDatetimeEnd(), true));
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

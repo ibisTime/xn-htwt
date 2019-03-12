@@ -24,6 +24,7 @@ public class BrandAOImpl implements IBrandAO {
     @Override
     public String addBrand(XN630400Req req) {
         Brand brand = new Brand();
+        brand.setIsReferee(req.getIsReferee());
         brand.setLetter(req.getLetter());
         brand.setLogo(req.getLogo());
         brand.setName(req.getName());
@@ -42,6 +43,7 @@ public class BrandAOImpl implements IBrandAO {
         if (EBrandStatus.UP.getCode().equals(brand.getStatus())) {
             throw new BizException("xn0000", "品牌已上架，请在下架后修改");
         }
+        brand.setIsReferee(req.getIsReferee());
         brand.setLogo(req.getLogo());
         brand.setName(req.getName());
         brand.setDescription(req.getDescription());
@@ -78,8 +80,7 @@ public class BrandAOImpl implements IBrandAO {
     }
 
     @Override
-    public Paginable<Brand> queryBrandPage(int start, int limit,
-            Brand condition) {
+    public Paginable<Brand> queryBrandPage(int start, int limit, Brand condition) {
         return brandBO.getPaginable(start, limit, condition);
     }
 

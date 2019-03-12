@@ -29,6 +29,7 @@ public class XN630416 extends AProcessor {
         Series condition = new Series();
         condition.setName(req.getName());
         condition.setBrandCode(req.getBrandCode());
+        condition.setIsReferee(req.getIsReferee());
         if (StringUtils.isNotBlank(req.getLocation())) {
             condition.setLocation(StringValidater.toInteger(req.getLocation()));
         }

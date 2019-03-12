@@ -12,4 +12,8 @@ public interface ISeriesDAO extends IBaseDAO<Series> {
     public int updateUp(Series data);
 
     public int updateDown(Series data);
+
+    public int updateHighest(Series data);
+
+    public int updateLowest(Series data);
 }

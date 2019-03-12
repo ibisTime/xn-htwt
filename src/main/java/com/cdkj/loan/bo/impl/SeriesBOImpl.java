@@ -30,8 +30,8 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
         String code = null;
         if (data != null) {
             if (data.getCode() == null) {
-                code = OrderNoGenerater
-                    .generate(EGeneratePrefix.Series.getCode());
+                code = OrderNoGenerater.generate(EGeneratePrefix.Series
+                    .getCode());
                 data.setCode(code);
             }
             seriesDAO.insert(data);
@@ -71,6 +71,18 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
     @Override
     public int downSeries(Series data) {
         return seriesDAO.updateDown(data);
+    }
+
+    @Override
+    public void refreshHighest(Series data, Long highest) {
+        data.setHighest(highest);
+        seriesDAO.updateHighest(data);
+    }
+
+    @Override
+    public void refreshLowest(Series data, Long lowest) {
+        data.setLowest(lowest);
+        seriesDAO.updateLowest(data);
     }
 
 }

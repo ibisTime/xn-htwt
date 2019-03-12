@@ -32,6 +32,7 @@ public class XN630415 extends AProcessor {
         condition.setName(req.getName());
         condition.setBrandCode(req.getBrandCode());
         condition.setStatus(req.getStatus());
+        condition.setIsReferee(req.getIsReferee());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

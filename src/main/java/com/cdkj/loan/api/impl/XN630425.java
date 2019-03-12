@@ -35,6 +35,17 @@ public class XN630425 extends AProcessor {
         condition.setSeriesCode(req.getSeriesCode());
         condition.setSeriesName(req.getSeriesName());
         condition.setStatus(req.getStatus());
+        condition.setIsReferee(req.getIsReferee());
+        condition.setLocation(StringValidater.toInteger(req.getLocation()));
+        condition.setDisplacementStart(StringValidater.toDouble(req
+            .getDisplacementStart()));
+        condition.setDisplacementEnd(StringValidater.toDouble(req
+            .getDisplacementEnd()));
+        condition.setPriceEnd(StringValidater.toLong(req.getPriceEnd()));
+        condition.setPriceStart(StringValidater.toLong(req.getPriceStart()));
+        condition.setLevelList(req.getLevelList());
+        condition.setStructureList(req.getStructureList());
+        condition.setVersionList(req.getVersionList());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

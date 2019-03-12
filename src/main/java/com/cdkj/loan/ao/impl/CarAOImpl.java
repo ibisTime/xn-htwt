@@ -43,6 +43,16 @@ public class CarAOImpl implements ICarAO {
         Car car = new Car();
 
         Series series = seriesBO.getSeries(req.getSeriesCode());
+        Long price = StringValidater.toLong(req.getSalePrice());
+        // 车系价格区间更改
+        if (null == series.getHighest() && null == series.getLowest()) {
+            seriesBO.refreshHighest(series, price);
+            seriesBO.refreshLowest(series, price);
+        } else if (price < series.getLowest()) {
+            seriesBO.refreshLowest(series, price);
+        } else if (price > series.getHighest()) {
+            seriesBO.refreshHighest(series, price);
+        }
 
         Brand brand = brandBO.getBrand(series.getBrandCode());
         car.setName(req.getName());
@@ -51,12 +61,22 @@ public class CarAOImpl implements ICarAO {
         car.setBrandCode(brand.getCode());
         car.setBrandName(brand.getName());
 
+        car.setLevel(req.getLevel());
+        car.setVersion(req.getVersion());
+        car.setStructure(req.getStructure());
+        car.setDisplacment(StringValidater.toDouble(req.getDisplacement()));
+        car.setFromPlace(req.getFromPlace());
+        car.setProcedure(req.getProcedure());
+
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
-        car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
+        car.setSalePrice(price);
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        car.setJsqByhf(req.getJsqByhf());
+        car.setJsqSybx(req.getJsqSybx());
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
 
+        car.setPicNumber(StringValidater.toLong(req.getPicNumber()));
         car.setPic(req.getPic());
         car.setDescription(req.getDescription());
         car.setStatus(EBrandStatus.TO_UP.getCode());
@@ -70,19 +90,40 @@ public class CarAOImpl implements ICarAO {
     @Override
     public void editCar(XN630422Req req) {
         Car car = carBO.getCar(req.getCode());
+        Series series = seriesBO.getSeries(car.getSeriesCode());
+        Long price = StringValidater.toLong(req.getSalePrice());
         if (EBrandStatus.UP.getCode().equals(car.getStatus())) {
             throw new BizException("xn0000", "品牌已上架，请在下架后修改");
         }
+        // 车系价格区间更改
+        if (price < series.getLowest()) {
+            seriesBO.refreshLowest(series, price);
+        } else if (price > series.getHighest()) {
+            seriesBO.refreshHighest(series, price);
+        }
         car.setName(req.getName());
+        car.setLevel(req.getLevel());
+        car.setVersion(req.getVersion());
+        car.setStructure(req.getStructure());
+        car.setDisplacment(StringValidater.toDouble(req.getDisplacement()));
+        car.setFromPlace(req.getFromPlace());
+        car.setProcedure(req.getProcedure());
+
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
-        car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
+        car.setSalePrice(price);
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        car.setJsqByhf(req.getJsqByhf());
+        car.setJsqSybx(req.getJsqSybx());
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
+
+        car.setPicNumber(StringValidater.toLong(req.getPicNumber()));
         car.setPic(req.getPic());
         car.setDescription(req.getDescription());
+        car.setStatus(EBrandStatus.TO_UP.getCode());
         car.setUpdater(req.getUpdater());
         car.setUpdateDatetime(new Date());
+
         car.setRemark(req.getRemark());
         carBO.editCar(car);
     }

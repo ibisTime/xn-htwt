@@ -18,7 +18,17 @@ public class Series extends ABaseDO {
 
     private String advPic;// 广告图
 
+    private Long picNumber;// 图片数量
+
     private Long price;// 价格区间
+
+    private Long highest;// 最高价
+
+    private Long lowest;// 最低价
+
+    private String level;// 级别
+
+    private String isReferee;// 是否推荐
 
     private Integer location;// UI位置
 
@@ -139,6 +149,46 @@ public class Series extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Long getPicNumber() {
+        return picNumber;
+    }
+
+    public void setPicNumber(Long picNumber) {
+        this.picNumber = picNumber;
+    }
+
+    public Long getHighest() {
+        return highest;
+    }
+
+    public void setHighest(Long highest) {
+        this.highest = highest;
+    }
+
+    public Long getLowest() {
+        return lowest;
+    }
+
+    public void setLowest(Long lowest) {
+        this.lowest = lowest;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
     }
 
 }

@@ -99,6 +99,10 @@
 		<property name="paginableDAO" ref="carOrderDAOImpl"/>
 	</bean>	
 	
+	<bean id="carconfigBO" class="com.cdkj.loan.bo.impl.CarconfigBOImpl">
+		<property name="paginableDAO" ref="carconfigDAOImpl"/>
+	</bean>
+	
 	<bean id="categoryBO" class="com.cdkj.loan.bo.impl.CategoryBOImpl">
 		<property name="paginableDAO" ref="categoryDAOImpl" />
 	</bean>

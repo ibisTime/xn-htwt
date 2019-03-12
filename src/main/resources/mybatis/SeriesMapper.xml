@@ -8,7 +8,12 @@
 		<result column="name" property="name" />
 		<result column="slogan" property="slogan" />
 		<result column="adv_pic" property="advPic" />
+		<result column="pic_number" property="picNumber" />
 		<result column="price" property="price" />
+		<result column="highest" property="highest" />
+		<result column="lowest" property="lowest" />
+		<result column="level" property="level" />
+		<result column="is_referee" property="isReferee" />
 		<result column="location" property="location" />
 		<result column="order_no" property="orderNo" />
 		<result column="status" property="status" />
@@ -21,6 +26,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="level != null and level != '' ">
+				AND t.level = #{level}
+			</if>
+			<if test="isReferee != null and isReferee != '' ">
+				AND t.is_referee = #{isReferee}
 			</if>
 			<if test="brandCode != null and brandCode != '' ">
 				AND t.brand_code = #{brandCode}
@@ -65,7 +76,12 @@
 		,name
 		,slogan
 		,adv_pic
+		,pic_number
 		,price
+		,highest
+		,lowest
+		,level
+		,is_referee
 		,location
 		,order_no
 		,status
@@ -94,7 +110,12 @@
 		,name
 		,slogan
 		,adv_pic
+		,pic_number
 		,price
+		,highest
+		,lowest
+		,level
+		,is_referee
 		,location
 		,order_no
 		,status
@@ -108,7 +129,12 @@
 		,#{name}
 		,#{slogan}
 		,#{advPic}
+		,#{picNumber}
 		,#{price}
+		,#{highest}
+		,#{lowest}
+		,#{level}
+		,#{isReferee}
 		,#{location}
 		,#{orderNo}
 		,#{status}
@@ -123,8 +149,11 @@
 		brand_code = #{brandCode}     
 		,name  = #{name}           
 		,slogan = #{slogan}         
-		,adv_pic  = #{advPic}        
-		,price = #{price}          
+		,adv_pic  = #{advPic}  
+		,pic_number=#{picNumber}      
+		,price = #{price}
+		,level=#{level}
+		,is_referee=#{isReferee}          
 		,updater = #{updater}        
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}         
@@ -150,4 +179,18 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_series_highest" parameterType="series">
+		UPDATE tht_series SET
+		highest = #{highest}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_series_lowest" parameterType="series">
+		UPDATE tht_series SET
+		lowest = #{lowest}
+		WHERE code = #{code}
+	</update>
+	
+	
 </mapper>
