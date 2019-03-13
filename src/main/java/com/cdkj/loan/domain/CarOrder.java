@@ -13,6 +13,8 @@ public class CarOrder extends ABaseDO {
 
     private String userMobile; // 申请人手机号
 
+    private String name;// 名字
+
     private String brandCode; // 品牌编号
 
     private String brandName; // 品牌名称
@@ -69,6 +71,14 @@ public class CarOrder extends ABaseDO {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Car getCar() {

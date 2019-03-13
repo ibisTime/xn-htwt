@@ -6,6 +6,7 @@
 		<result column="code" property="code" />
 		<result column="user_id" property="userId" />
 		<result column="user_mobile" property="userMobile" />
+		<result column="name" property="name" />
 		<result column="brand_Code" property="brandCode" />
 		<result column="brand_name" property="brandName" />
 		<result column="series_code" property="seriesCode" />
@@ -96,6 +97,7 @@
 		code
 		,user_id
 		,user_mobile
+		,name
 		,brand_code
 		,brand_name
 		,series_code
@@ -132,6 +134,7 @@
 		code
 		,user_id
 		,user_mobile
+		,name
 		,brand_code
 		,brand_name
 		,series_code
@@ -153,6 +156,7 @@
 		#{code}
 		,#{userId}
 		,#{userMobile}
+		,#{name}
 		,#{brandCode}
 		,#{brandName}
 		,#{seriesCode}

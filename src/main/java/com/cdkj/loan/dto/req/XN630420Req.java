@@ -14,6 +14,9 @@ public class XN630420Req {
     private String seriesCode; // 车系名称
 
     @NotBlank
+    private String bankCode;// 银行编号
+
+    @NotBlank
     private String level;// 级别
 
     @NotBlank
@@ -39,6 +42,9 @@ public class XN630420Req {
 
     @NotBlank(message = "首付金额不能为空")
     private String sfAmount; // 首付金额
+
+    @NotBlank
+    private String fwAmount;// 服务费
 
     @NotBlank
     private String jsqByhf;
@@ -232,6 +238,22 @@ public class XN630420Req {
 
     public void setPicNumber(String picNumber) {
         this.picNumber = picNumber;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getFwAmount() {
+        return fwAmount;
+    }
+
+    public void setFwAmount(String fwAmount) {
+        this.fwAmount = fwAmount;
     }
 
 }

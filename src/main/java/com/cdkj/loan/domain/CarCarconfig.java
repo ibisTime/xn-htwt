@@ -10,39 +10,51 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class CarCarconfig extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 车型编号
-	private String carCode;
+    // 车型编号
+    private String carCode;
 
-	// 配置编号
-	private String configCode;
+    // 配置编号
+    private String configCode;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    // ******************************
 
-	public String getCode() {
-		return code;
-	}
+    private Carconfig config;
 
-	public void setCarCode(String carCode) {
-		this.carCode = carCode;
-	}
+    public Carconfig getConfig() {
+        return config;
+    }
 
-	public String getCarCode() {
-		return carCode;
-	}
+    public void setConfig(Carconfig config) {
+        this.config = config;
+    }
 
-	public void setConfigCode(String configCode) {
-		this.configCode = configCode;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getConfigCode() {
-		return configCode;
-	}
+    public String getCode() {
+        return code;
+    }
+
+    public void setCarCode(String carCode) {
+        this.carCode = carCode;
+    }
+
+    public String getCarCode() {
+        return carCode;
+    }
+
+    public void setConfigCode(String configCode) {
+        this.configCode = configCode;
+    }
+
+    public String getConfigCode() {
+        return configCode;
+    }
 
 }

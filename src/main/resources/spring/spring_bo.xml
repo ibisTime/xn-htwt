@@ -103,6 +103,18 @@
 		<property name="paginableDAO" ref="carconfigDAOImpl"/>
 	</bean>
 	
+	<bean id="carCarconfigBO" class="com.cdkj.loan.bo.impl.CarCarconfigBOImpl">
+		<property name="paginableDAO" ref="carCarconfigDAOImpl"/>
+	</bean>
+	
+	<bean id="carNewsBO" class="com.cdkj.loan.bo.impl.CarNewsBOImpl">
+		<property name="paginableDAO" ref="carNewsDAOImpl"/>
+	</bean>
+	
+	<bean id="actionBO" class="com.cdkj.loan.bo.impl.ActionBOImpl">
+		<property name="paginableDAO" ref="actionDAOImpl"/>
+	</bean> 
+	
 	<bean id="categoryBO" class="com.cdkj.loan.bo.impl.CategoryBOImpl">
 		<property name="paginableDAO" ref="categoryDAOImpl" />
 	</bean>

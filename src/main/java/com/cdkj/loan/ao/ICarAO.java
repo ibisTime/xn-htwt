@@ -3,7 +3,9 @@ package com.cdkj.loan.ao;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.Calculate;
 import com.cdkj.loan.domain.Car;
+import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
 
@@ -30,6 +32,8 @@ public interface ICarAO {
     public Car getCar(String code);
 
     // 列表查询
-    public List<Car> queryCarList(Car condition);
+    public List<Series> queryCarList(Car condition);
 
+    // 车贷计算器
+    public Calculate calculate(String carCode, String period, String isTotal);
 }

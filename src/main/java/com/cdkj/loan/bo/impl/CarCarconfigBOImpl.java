@@ -14,7 +14,6 @@ import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
-//CHECK ��鲢��ע�� 
 @Component
 public class CarCarconfigBOImpl extends PaginableBOImpl<CarCarconfig> implements
         ICarCarconfigBO {
@@ -72,5 +71,13 @@ public class CarCarconfigBOImpl extends PaginableBOImpl<CarCarconfig> implements
             }
         }
         return data;
+    }
+
+    @Override
+    public List<CarCarconfig> getCarconfigs(String carCode) {
+        CarCarconfig condition = new CarCarconfig();
+        condition.setCarCode(carCode);
+        List<CarCarconfig> carconfigs = carCarconfigDAO.selectList(condition);
+        return carconfigs;
     }
 }

@@ -13,13 +13,8 @@ public class XN630430Req {
     @NotBlank(message = "车型编号不能为空")
     private String carCode; // 车型编号
 
-    @NotBlank(message = "分期期数不能为空")
-    private String periods; // 分期期数
-
-    @NotBlank(message = "计算器信息不能为空")
-    private String saleDesc; // 计算器信息
-
-    private String remark; // 备注
+    @NotBlank
+    private String name;// 申请人姓名
 
     public String getUserId() {
         return userId;
@@ -45,28 +40,12 @@ public class XN630430Req {
         this.carCode = carCode;
     }
 
-    public String getPeriods() {
-        return periods;
+    public String getName() {
+        return name;
     }
 
-    public void setPeriods(String periods) {
-        this.periods = periods;
-    }
-
-    public String getSaleDesc() {
-        return saleDesc;
-    }
-
-    public void setSaleDesc(String saleDesc) {
-        this.saleDesc = saleDesc;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

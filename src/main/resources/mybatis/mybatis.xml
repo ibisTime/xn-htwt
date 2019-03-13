@@ -36,7 +36,10 @@
 		<typeAlias alias="series" type="com.cdkj.loan.domain.Series" />
 		<typeAlias alias="car" type="com.cdkj.loan.domain.Car" />
 		<typeAlias alias="carorder" type="com.cdkj.loan.domain.CarOrder" />
-		<typeAlias alias="carconfig" type="com.cdkj.loan.domain.CarOrder" />
+		<typeAlias alias="carconfig" type="com.cdkj.loan.domain.Carconfig" />
+		<typeAlias alias="carCarconfig" type="com.cdkj.loan.domain.CarCarconfig" />
+		<typeAlias alias="carNews" type="com.cdkj.loan.domain.CarNews" />
+		<typeAlias alias="action" type="com.cdkj.loan.domain.Action" />
 		
 		
 		<!-- 商城业务  -->

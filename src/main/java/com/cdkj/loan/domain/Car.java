@@ -23,6 +23,8 @@ public class Car extends ABaseDO {
 
     private String brandName;// 品牌名称
 
+    private String bankCode;// 银行编号
+
     private String level;// 级别
 
     private String version;// 规格/版本
@@ -40,6 +42,8 @@ public class Car extends ABaseDO {
     private Long salePrice;// 参考价
 
     private Long sfAmount; // 首付金额
+
+    private Long fwAmount;// 服务费
 
     private String jsqByhf;// 必要花费
 
@@ -147,6 +151,14 @@ public class Car extends ABaseDO {
 
     public void setVersionList(List<String> versionList) {
         this.versionList = versionList;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
     }
 
     public String getUpdaterName() {
@@ -387,6 +399,14 @@ public class Car extends ABaseDO {
 
     public void setPicNumber(Long picNumber) {
         this.picNumber = picNumber;
+    }
+
+    public Long getFwAmount() {
+        return fwAmount;
+    }
+
+    public void setFwAmount(Long fwAmount) {
+        this.fwAmount = fwAmount;
     }
 
 }

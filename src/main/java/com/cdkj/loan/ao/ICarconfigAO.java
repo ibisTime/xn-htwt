@@ -3,6 +3,7 @@ package com.cdkj.loan.ao;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.Carconfig;
 
 public interface ICarconfigAO {
@@ -24,5 +25,7 @@ public interface ICarconfigAO {
     public Carconfig getCarconfig(String code);
 
     public void setCarConfig(String carCode, List<String> configCodeList);
+
+    public List<CarCarconfig> getCarCarconfigsByCar(String carCode);
 
 }

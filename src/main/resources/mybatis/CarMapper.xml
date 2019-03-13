@@ -10,6 +10,7 @@
 		<result column="series_name" property="seriesName" />
 		<result column="brand_code" property="brandCode" />
 		<result column="brand_name" property="brandName" />
+		<result column="bank_code" property="bankCode" />
 		<result column="level" property="level" />
 		<result column="version" property="version" />
 		<result column="structure" property="structure" />
@@ -19,6 +20,7 @@
 		<result column="original_price" property="originalPrice" />
 		<result column="sale_price" property="salePrice" />
 		<result column="sf_amount" property="sfAmount" />
+		<result column="fw_amount" property="fwAmount" />
 		<result column="jsq_byhf" property="jsqByhf" />
 		<result column="jsq_sybx" property="jsqSybx" />
 		<result column="location" property="location" />
@@ -141,6 +143,7 @@
 		,series_name
 		,brand_code
 		,brand_name
+		,bank_code
 		,level
 		,version
 		,structure
@@ -150,6 +153,7 @@
 		,original_price
 		,sale_price
 		,sf_amount
+		,fw_amount
 		,jsq_byhf
 		,jsq_sybx
 		,location
@@ -187,6 +191,7 @@
 		,series_name
 		,brand_code
 		,brand_name
+		,bank_code
 		,level
 		,version
 		,structure
@@ -196,6 +201,7 @@
 		,original_price
 		,sale_price
 		,sf_amount
+		,fw_amount
 		,jsq_byhf
 		,jsq_sybx
 		,location
@@ -218,6 +224,7 @@
 		,#{seriesName}
 		,#{brandCode}
 		,#{brandName}
+		,#{bankCode}
 		,#{level}
 		,#{version}
 		,#{structure}
@@ -227,6 +234,7 @@
 		,#{originalPrice}
 		,#{salePrice}
 		,#{sfAmount}
+		,#{fwAmount}
 		,#{jsqByhf}
 		,#{jsqSybx}
 		,#{location}
@@ -250,7 +258,8 @@
 		,series_code = #{seriesCode}   
 		,series_name = #{seriesName}   
 		,brand_code = #{brandCode}    
-		,brand_name = #{brandName}  
+		,brand_name = #{brandName} 
+		,bank_code=#{bankCode} 
 		,level=#{level}
 		,version=#{version}
 		,structure=#{structure}
@@ -260,6 +269,7 @@
 		,original_price = #{originalPrice}
 		,sale_price = #{salePrice}
 		,sf_amount = #{sfAmount} 
+		,fw_amount=#{fwAmount}
 		,jsq_byhf=#{jsqByhf}
 		,jsq_sybx=#{jsqSybx}   
 		,location = #{location}     

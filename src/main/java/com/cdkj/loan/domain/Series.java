@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -46,6 +47,26 @@ public class Series extends ABaseDO {
 
     // 最新修改人姓名
     private String updaterName;
+
+    private List<Car> cars;
+
+    private Long carNumber;
+
+    public Long getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(Long carNumber) {
+        this.carNumber = carNumber;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 
     public String getUpdaterName() {
         return updaterName;

@@ -9,20 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "carCarconfig";
+    private static String key = "action";
 
     // 实体名称
-    private static String keyName = "车型配置";
+    private static String keyName = "用户行为";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tht_car_carconfig";
+    private static String dbname = "tht_action";
 
-    private static String[] DBwords = { "code", "car_code", "config_code" };
+    private static String[] DBwords = { "code", "type", "to_type", "to_code",
+            "creater", "create_datetime", "remark" };
 
-    private static String[] DBwordsName = { "编号", "车型编号", "配置编号" };
+    private static String[] DBwordsName = { "编号", "类型", "对象类型", "对象编号", "行为用户",
+            "行为时间", "备注" };
 
     public void testname() throws Exception {
     }

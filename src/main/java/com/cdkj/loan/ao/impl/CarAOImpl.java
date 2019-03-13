@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,13 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Brand;
+import com.cdkj.loan.domain.Calculate;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Series;
@@ -38,10 +42,13 @@ public class CarAOImpl implements ICarAO {
     @Autowired
     private IBrandBO brandBO;
 
+    @Autowired
+    private IBankBO bankBO;
+
     @Override
     public String addCar(XN630420Req req) {
         Car car = new Car();
-
+        bankBO.getBank(req.getBankCode());
         Series series = seriesBO.getSeries(req.getSeriesCode());
         Long price = StringValidater.toLong(req.getSalePrice());
         // 车系价格区间更改
@@ -60,6 +67,7 @@ public class CarAOImpl implements ICarAO {
         car.setSeriesName(series.getName());
         car.setBrandCode(brand.getCode());
         car.setBrandName(brand.getName());
+        car.setBankCode(req.getBankCode());
 
         car.setLevel(req.getLevel());
         car.setVersion(req.getVersion());
@@ -71,6 +79,7 @@ public class CarAOImpl implements ICarAO {
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(price);
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        car.setFwAmount(StringValidater.toLong(req.getFwAmount()));
         car.setJsqByhf(req.getJsqByhf());
         car.setJsqSybx(req.getJsqSybx());
         car.setSlogan(req.getSlogan());
@@ -168,12 +177,27 @@ public class CarAOImpl implements ICarAO {
     }
 
     @Override
-    public List<Car> queryCarList(Car condition) {
+    public List<Series> queryCarList(Car condition) {
+        List<Series> seriesList = seriesBO.querySeries(null);
         List<Car> queryCar = carBO.queryCar(condition);
-        for (Car car : queryCar) {
-            initCar(car);
+
+        for (Series series : seriesList) {
+            // 统计符合条件车型数
+            Long carNumber = Long.valueOf(0);
+            // 符合条件车型加入列表
+            List<Car> cars = new ArrayList<Car>();
+            for (Car car : queryCar) {
+                if (car.getSeriesCode().equals(series.getCode())
+                        && EBrandStatus.UP.getCode().equals(series.getStatus())) {
+                    cars.add(car);
+                    carNumber++;
+                }
+            }
+            series.setCarNumber(carNumber);
+            series.setCars(cars);
         }
-        return queryCar;
+
+        return seriesList;
     }
 
     private void initCar(Car car) {
@@ -181,6 +205,23 @@ public class CarAOImpl implements ICarAO {
             SYSUser user = sysUserBO.getUser(car.getUpdater());
             car.setUpdaterName(user.getRealName());
         }
+    }
+
+    @Override
+    public Calculate calculate(String carCode, String period, String isTotal) {
+        Car car = carBO.getCar(carCode);
+        Bank bank = bankBO.getBank(car.getBankCode());
+        Calculate calculate = null;
+        if ("12".equals(period)) {
+            calculate = new Calculate(bank.getRate12(), car, period, isTotal);
+        } else if ("18".equals(period)) {
+            calculate = new Calculate(bank.getRate18(), car, period, isTotal);
+        } else if ("24".equals(period)) {
+            calculate = new Calculate(bank.getRate24(), car, period, isTotal);
+        } else if ("36".equals(period)) {
+            calculate = new Calculate(bank.getRate36(), car, period, isTotal);
+        }
+        return calculate;
     }
 
 }

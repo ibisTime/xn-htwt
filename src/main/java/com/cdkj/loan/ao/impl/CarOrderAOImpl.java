@@ -14,7 +14,6 @@ import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarOrder;
@@ -50,6 +49,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
         CarOrder carOrder = new CarOrder();
         carOrder.setUserId(req.getUserId());
         carOrder.setUserMobile(req.getUserMobile());
+        carOrder.setName(req.getName());
         carOrder.setBrandCode(brand.getCode());
         carOrder.setBrandName(brand.getName());
         carOrder.setSeriesCode(series.getCode());
@@ -60,11 +60,8 @@ public class CarOrderAOImpl implements ICarOrderAO {
         carOrder.setSfRate(AmountUtil.div(car.getSfAmount().doubleValue(),
             car.getSalePrice()));
         carOrder.setSfAmount(car.getSfAmount());
-        carOrder.setPeriods(StringValidater.toInteger(req.getPeriods()));
         carOrder.setCreateDatetime(new Date());
-        carOrder.setSaleDesc(req.getSaleDesc());
         carOrder.setStatus(ECarOrderStatus.DCL.getCode());
-        carOrder.setRemark(req.getRemark());
         return carOrderBO.saveCarOrder(carOrder);
     }
 
