@@ -10,6 +10,8 @@ public interface IActionBO extends IPaginableBO<Action> {
 
     public boolean isActionExist(String code);
 
+    public boolean isExist(String creater, String toType, String type);
+
     public String saveAction(String type, String toType, String toCode,
             String creater, String remark);
 

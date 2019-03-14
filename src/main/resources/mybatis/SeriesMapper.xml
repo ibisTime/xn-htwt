@@ -71,23 +71,23 @@
 	
 	<select id="select_series" parameterType="series" resultMap="series_DB_Result">
 		SELECT
-		code
-		,brand_code
-		,name
-		,slogan
-		,adv_pic
-		,pic_number
-		,price
-		,highest
-		,lowest
-		,level
-		,is_referee
-		,location
-		,order_no
-		,status
-		,updater
-		,update_datetime
-		,remark
+		t.code
+		,t.brand_code
+		,t.name
+		,t.slogan
+		,t.adv_pic
+		,t.pic_number
+		,t.price
+		,t.highest
+		,t.lowest
+		,t.level
+		,t.is_referee
+		,t.location
+		,t.order_no
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
 		FROM
 		tht_series t
 		<include refid="where_condition" />

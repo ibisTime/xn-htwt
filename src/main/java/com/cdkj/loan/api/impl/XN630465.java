@@ -29,6 +29,7 @@ public class XN630465 extends AProcessor {
         condition.setType(req.getType());
         condition.setToCode(req.getToCode());
         condition.setToType(req.getToType());
+        condition.setCreater(req.getCreater());
 
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());

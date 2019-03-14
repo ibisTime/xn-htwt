@@ -52,16 +52,16 @@
 	
 	<select id="select_brand" parameterType="brand" resultMap="brand_DB_Result">
 		SELECT
-		code
-		,is_referee
-		,letter
-		,logo
-		,name
-		,description
-		,status
-		,updater
-		,update_datetime
-		,remark
+		t.code
+		,t.is_referee
+		,t.letter
+		,t.logo
+		,t.name
+		,t.description
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
 		FROM
 		tht_brand t
 		<include refid="where_condition" />

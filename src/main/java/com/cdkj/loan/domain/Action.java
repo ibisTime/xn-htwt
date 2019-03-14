@@ -35,6 +35,28 @@ public class Action extends ABaseDO {
     // 备注
     private String remark;
 
+    // **********************************
+
+    private Car car;
+
+    private CarNews carNews;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public CarNews getCarNews() {
+        return carNews;
+    }
+
+    public void setCarNews(CarNews carNews) {
+        this.carNews = carNews;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

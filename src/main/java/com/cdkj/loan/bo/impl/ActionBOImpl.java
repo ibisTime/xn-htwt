@@ -39,7 +39,7 @@ public class ActionBOImpl extends PaginableBOImpl<Action> implements IActionBO {
             .getCode());
         Action data = new Action();
         data.setCode(code);
-        data.setType(toType);
+        data.setType(type);
         data.setToType(toType);
         data.setToCode(toCode);
         data.setCreater(creater);
@@ -85,5 +85,17 @@ public class ActionBOImpl extends PaginableBOImpl<Action> implements IActionBO {
             }
         }
         return data;
+    }
+
+    @Override
+    public boolean isExist(String creater, String toType, String type) {
+        Action condition = new Action();
+        condition.setCreater(creater);
+        condition.setType(type);
+        condition.setToType(toType);
+        if (actionDAO.selectTotalCount(condition) > 0) {
+            return true;
+        }
+        return false;
     }
 }

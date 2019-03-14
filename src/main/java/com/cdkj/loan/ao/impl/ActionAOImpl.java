@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IActionAO;
 import com.cdkj.loan.bo.IActionBO;
+import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarNewsBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Action;
@@ -25,6 +26,9 @@ public class ActionAOImpl implements IActionAO {
     @Autowired
     private ICarNewsBO carNewsBO;
 
+    @Autowired
+    private ICarBO carBO;
+
     @Override
     public String addAction(String type, String toType, String toCode,
             String creater, String remark) {
@@ -33,6 +37,12 @@ public class ActionAOImpl implements IActionAO {
                 && EActionType.feet.getCode().equals(type)) {
             CarNews carNews = carNewsBO.getCarNews(toCode);
             carNewsBO.addReadCount(carNews);
+        }
+        // 是否重复收藏
+        if (EActionToType.car.getCode().equals(toType)
+                && EActionType.collect.getCode().equals(type)
+                && actionBO.isExist(creater, toType, toType)) {
+            throw new BizException("xn0000", "已收藏，无需重复收藏");
         }
         return actionBO.saveAction(type, toType, toCode, creater, remark);
     }
@@ -56,16 +66,34 @@ public class ActionAOImpl implements IActionAO {
     @Override
     public Paginable<Action> queryActionPage(int start, int limit,
             Action condition) {
-        return actionBO.getPaginable(start, limit, condition);
+        Paginable<Action> page = actionBO.getPaginable(start, limit, condition);
+        for (Action action : page.getList()) {
+            init(action);
+        }
+        return page;
     }
 
     @Override
     public List<Action> queryActionList(Action condition) {
-        return actionBO.queryActionList(condition);
+        List<Action> dataList = actionBO.queryActionList(condition);
+        for (Action action : dataList) {
+            init(action);
+        }
+        return dataList;
     }
 
     @Override
     public Action getAction(String code) {
-        return actionBO.getAction(code);
+        Action action = actionBO.getAction(code);
+        init(action);
+        return action;
+    }
+
+    private void init(Action action) {
+        if (EActionToType.car.getCode().equals(action.getToType())) {
+            action.setCar(carBO.getCar(action.getToCode()));
+        } else if (EActionToType.news.getCode().equals(action.getToType())) {
+            action.setCarNews(carNewsBO.getCarNews(action.getToCode()));
+        }
     }
 }

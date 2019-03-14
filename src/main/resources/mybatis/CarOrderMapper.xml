@@ -94,26 +94,26 @@
 	</sql>
 	<select id="select_carOrder" parameterType="carOrder" resultMap="carOrder_DB_Result">
 		SELECT
-		code
-		,user_id
-		,user_mobile
-		,name
-		,brand_code
-		,brand_name
-		,series_code
-		,series_name
-		,car_code
-		,car_name
-		,price
-		,sf_rate
-		,sf_amount
-		,periods
-		,create_datetime
-		,sale_desc
-		,status
-		,handler
-		,handle_datetime
-		,remark
+		t.code
+		,t.user_id
+		,t.user_mobile
+		,t.name
+		,t.brand_code
+		,t.brand_name
+		,t.series_code
+		,t.series_name
+		,t.car_code
+		,t.car_name
+		,t.price
+		,t.sf_rate
+		,t.sf_amount
+		,t.periods
+		,t.create_datetime
+		,t.sale_desc
+		,t.status
+		,t.handler
+		,t.handle_datetime
+		,t.remark
 		FROM
 		tht_car_order t
 		<include refid="where_condition" />
