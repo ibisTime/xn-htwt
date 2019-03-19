@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -29,6 +30,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -40,8 +42,8 @@ import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
-        implements IRepayBizBO {
+public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
+        IRepayBizBO {
 
     @Autowired
     private IRepayBizDAO repayBizDAO;
@@ -60,6 +62,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Autowired
     private IRepayPlanBO repayPlanBO;
+
+    @Autowired
+    private IOrderBO orderBO;
 
     @Override
     public void refreshBankcardNew(String code, String bankcardCode,
@@ -80,8 +85,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setCode(code);
         String bankcardCodelist = repayBiz.getBankcardCode();
         if (!bankcardCode.equals(bankcardCodelist)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "还款卡编号" + bankcardCode + "不存在，请重新添加！！！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "还款卡编号"
+                    + bankcardCode + "不存在，请重新添加！！！");
         }
         repayBiz.setBankcardCode(bankcardCode);
         repayBiz.setUpdater(updater);
@@ -94,8 +99,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public RepayBiz generateCarLoanRepayBiz(BudgetOrder budgetOrder,
             String userId, String bankcardCode, String operator) {
         RepayBiz repayBiz = new RepayBiz();
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.REPAY_BIZ.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+            .getCode());
         repayBiz.setCode(code);
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(budgetOrder.getCode());
@@ -113,8 +118,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setLoanAmount(budgetOrder.getLoanAmount());
 
         repayBiz.setFxDeposit(0L);
-        repayBiz
-            .setPeriods(StringValidater.toInteger(budgetOrder.getLoanPeriod()));
+        repayBiz.setPeriods(StringValidater.toInteger(budgetOrder
+            .getLoanPeriod()));
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         repayBiz.setBankRate(0.0);// 作废
 
@@ -141,9 +146,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
 
         // 剩余欠款：首期月供+每期月供*（期数-1）
-        Long restAmount = budgetOrder
-            .getRepayFirstMonthAmount() + budgetOrder.getRepayMonthAmount()
-                    * (StringValidater.toLong(budgetOrder.getLoanPeriod()) - 1);
+        Long restAmount = budgetOrder.getRepayFirstMonthAmount()
+                + budgetOrder.getRepayMonthAmount()
+                * (StringValidater.toLong(budgetOrder.getLoanPeriod()) - 1);
         repayBiz.setRestAmount(restAmount);
         repayBiz.setRestTotalCost(0L);
         repayBiz.setTotalInDeposit(0L);
@@ -204,10 +209,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public RepayBiz generateProductLoanRepayBiz(Order order) {
+    public RepayBiz generateProductLoanRepayBiz(SpecsOrder specsOrder) {
+        Order order = orderBO.getOrder(specsOrder.getOrderCode());
         RepayBiz repayBiz = new RepayBiz();
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.REPAY_BIZ.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+            .getCode());
 
         repayBiz.setCode(code);
         repayBiz.setRefType(ERepayBizType.PRODUCT.getCode());
@@ -217,24 +223,24 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setIdKind(applyUser.getIdKind());
         repayBiz.setIdNo(applyUser.getIdNo());
 
-        repayBiz.setBankcardCode(order.getBankcardCode());
+        repayBiz.setBankcardCode(specsOrder.getBankcardCode());
         repayBiz.setRefType(ERepayBizType.PRODUCT.getCode());
         repayBiz.setRefCode(order.getCode());
 
         repayBiz.setBizPrice(order.getAmount());
-        repayBiz.setSfRate(order.getSfRate());
-        repayBiz.setSfAmount(order.getSfAmount());
-        String bankCode = bankcardAO.getBankcard(order.getBankcardCode())
+        repayBiz.setSfRate(specsOrder.getSfRate());
+        repayBiz.setSfAmount(specsOrder.getSfAmount());
+        String bankCode = bankcardAO.getBankcard(specsOrder.getBankcardCode())
             .getBankCode();
         repayBiz.setLoanBank(bankCode);// 存ICBC样式
-        repayBiz.setLoanAmount(order.getLoanAmount());
+        repayBiz.setLoanAmount(specsOrder.getLoanAmount());
 
-        repayBiz.setPeriods(order.getPeriods());
-        repayBiz.setRestPeriods(order.getPeriods());
-        repayBiz.setBankRate(order.getBankRate());
+        repayBiz.setPeriods(specsOrder.getPeriods());
+        repayBiz.setRestPeriods(specsOrder.getPeriods());
+        repayBiz.setBankRate(specsOrder.getBankRate());
         Date now = new Date();
         repayBiz.setLoanStartDatetime(now);
-        Date addMonths = DateUtils.addMonths(now, order.getPeriods());
+        Date addMonths = DateUtils.addMonths(now, specsOrder.getPeriods());
         repayBiz.setLoanEndDatetime(addMonths);
 
         // repayBiz.setBankFkDatetime(now);
@@ -244,11 +250,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
         // 贷款总额 = 贷款额+服务费(0)
         // 手续费总额 = 贷款总额*银行利率
-        BigDecimal loanmount = new BigDecimal(order.getLoanAmount());
-        BigDecimal sxfAmount = loanmount
-            .multiply(new BigDecimal(order.getBankRate()));
+        BigDecimal loanmount = new BigDecimal(specsOrder.getLoanAmount());
+        BigDecimal sxfAmount = loanmount.multiply(new BigDecimal(specsOrder
+            .getBankRate()));
         // 月供=（贷款总额+手续费）/期数 （像下取整）
-        BigDecimal periods = new BigDecimal(order.getPeriods());
+        BigDecimal periods = new BigDecimal(specsOrder.getPeriods());
         BigDecimal monthAmount = (loanmount.add(sxfAmount)).divide(periods, 0,
             1);
         // 首期月供 = -(月供*(期数-1)-贷款总额-手续费)
@@ -269,7 +275,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setLyDeposit(0L);
         repayBiz.setCutLyDeposit(0L);
         repayBiz.setCurNodeCode(ERepayBizNode.PRO_TO_REPAY.getCode());
-        repayBiz.setRestAmount(order.getLoanAmount());
+        repayBiz.setRestAmount(specsOrder.getLoanAmount());
         repayBiz.setRestTotalCost(0L);
 
         repayBiz.setTotalInDeposit(0L);
@@ -289,8 +295,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount,
             int restPeriods) {
         if (repayBiz != null && realWithholdAmount != null) {
-            repayBiz
-                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
+            repayBiz.setRestAmount(repayBiz.getRestAmount()
+                    - realWithholdAmount);
             repayBiz.setRestPeriods(repayBiz.getRestPeriods() - restPeriods);
             repayBizDAO.updateRepayBizRestAmount(repayBiz);
         }
@@ -483,8 +489,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void refreshRepayAllProduct(String repayBizCode,
-            Long realPayAmount) {
+    public void refreshRepayAllProduct(String repayBizCode, Long realPayAmount) {
         // TODO Auto-generated method stub
 
     }

@@ -251,9 +251,13 @@ public class OrderAOImpl implements IOrderAO {
         // 验证产品是否有未上架的
         doCheckProductOnline(order);
 
-        RepayBiz repayBiz = repayBizBO.generateProductLoanRepayBiz(order);
-
-        repayPlanBO.genereateNewRepayPlan(repayBiz);
+        List<SpecsOrder> specsOrders = specsOrderBO.queryListByOrderCode(order
+            .getCode());
+        for (SpecsOrder specsOrder : specsOrders) {
+            RepayBiz repayBiz = repayBizBO
+                .generateProductLoanRepayBiz(specsOrder);
+            repayPlanBO.genereateNewRepayPlan(repayBiz);
+        }
 
         List<SpecsOrder> orderList = specsOrderBO.queryListByOrderCode(code);
         for (SpecsOrder specsOrder : orderList) {

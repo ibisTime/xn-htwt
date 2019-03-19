@@ -28,6 +28,8 @@ public class XN630426Req extends APageReq {
 
     private String priceEnd;
 
+    private String queryName;
+
     private List<String> levelList;
 
     private List<String> structureList;
@@ -152,6 +154,14 @@ public class XN630426Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getQueryName() {
+        return queryName;
+    }
+
+    public void setQueryName(String queryName) {
+        this.queryName = queryName;
     }
 
 }

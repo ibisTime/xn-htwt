@@ -16,7 +16,7 @@
 		<result column="structure" property="structure" />
 		<result column="displacement" property="displacement" />
 		<result column="from_place" property="fromPlace" />
-		<result column="procedure" property="procedure" />
+		<result column="car_procedure" property="procedure" />
 		<result column="original_price" property="originalPrice" />
 		<result column="sale_price" property="salePrice" />
 		<result column="sf_amount" property="sfAmount" />
@@ -101,6 +101,9 @@
 			<if test="remark != null and remark != '' ">
 				AND t.remark = #{remark}
 			</if>
+			<if test="queryName != null and queryName != '' ">
+				AND t.series_name like "%"#{queryName}"%" OR t.brand_name like "%"#{queryName}"%"
+			</if>
 			<if test="displacementStart != null and displacementStart != '' ">
 				<![CDATA[AND t.displacement > #{displacementStart}]]>
 			</if>
@@ -113,19 +116,19 @@
 			<if test="priceEnd != null and priceEnd != '' ">
 				<![CDATA[AND t.sale_price < #{priceEnd}]]>
 			</if>
-			<if test="levelList != null and levelList != '' ">
+			<if test="levelList != null and levelList.size()>0  ">
 				AND t.level in 
                 <foreach item="item" index="index" collection="levelList" open="(" separator="," close=")">
 	            	#{item}
                 </foreach> 
 			</if>
-			<if test="versionList != null and versionList != '' ">
+			<if test="versionList != null and versionList.size()>0">
 				AND t.version in 
                 <foreach item="item" index="index" collection="versionList" open="(" separator="," close=")">
 	            	#{item}
                 </foreach> 
 			</if>
-			<if test="structureList != null and structureList != '' ">
+			<if test="structureList != null and structureList.size()>0 ">
 				AND t.structure in 
                 <foreach item="item" index="index" collection="structureList" open="(" separator="," close=")">
 	            	#{item}
@@ -149,7 +152,7 @@
 		,t.structure
 		,t.displacement
 		,t.from_place
-		,t.procedure
+		,t.car_procedure
 		,t.original_price
 		,t.sale_price
 		,t.sf_amount
@@ -183,32 +186,38 @@
 	</select>
 	
 	<insert id="insert_car" parameterType="car">
-		INSERT INTO tht_car(
+		INSERT INTO 
+		tht_car(
 		code
 		,is_referee
 		,name
 		,series_code
 		,series_name
+		
 		,brand_code
 		,brand_name
 		,bank_code
 		,level
 		,version
+		
 		,structure
 		,displacement
 		,from_place
-		,procedure
+		,car_procedure
 		,original_price
+		
 		,sale_price
 		,sf_amount
 		,fw_amount
 		,jsq_byhf
 		,jsq_sybx
+		
 		,location
 		,order_no
 		,slogan
 		,adv_pic
 		,pic_number
+		
 		,pic
 		,description
 		,status
@@ -222,26 +231,31 @@
 		,#{name}
 		,#{seriesCode}
 		,#{seriesName}
+		
 		,#{brandCode}
 		,#{brandName}
 		,#{bankCode}
 		,#{level}
 		,#{version}
+		
 		,#{structure}
 		,#{displacement}
 		,#{fromPlace}
 		,#{procedure}
 		,#{originalPrice}
+		
 		,#{salePrice}
 		,#{sfAmount}
 		,#{fwAmount}
 		,#{jsqByhf}
 		,#{jsqSybx}
+		
 		,#{location}
 		,#{orderNo}
 		,#{slogan}
 		,#{advPic}
 		,#{picNumber}
+		
 		,#{pic}
 		,#{description}
 		,#{status}
@@ -265,7 +279,7 @@
 		,structure=#{structure}
 		,displacement=#{displacement}
 		,from_place=#{fromPlace}
-		,procedure=#{procedure}  
+		,car_procedure=#{procedure}  
 		,original_price = #{originalPrice}
 		,sale_price = #{salePrice}
 		,sf_amount = #{sfAmount} 

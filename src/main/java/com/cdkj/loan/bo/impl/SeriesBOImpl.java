@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ISeriesDAO;
 import com.cdkj.loan.domain.Series;
+import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -83,6 +84,13 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
     public void refreshLowest(Series data, Long lowest) {
         data.setLowest(lowest);
         seriesDAO.updateLowest(data);
+    }
+
+    @Override
+    public List<Series> queryUpSeries() {
+        Series condition = new Series();
+        condition.setStatus(EBrandStatus.UP.getCode());
+        return seriesDAO.selectList(condition);
     }
 
 }

@@ -56,7 +56,7 @@ ADD COLUMN `version` VARCHAR(4) NULL COMMENT '规格/版本（1 中东 2 美规 
 ADD COLUMN `structure` VARCHAR(4) NULL COMMENT '结构（1 两厢 2 三厢 3 掀背 4 旅行版 5 硬顶敞篷 6 软顶敞篷 7 硬顶跑车）' AFTER `version`,
 ADD COLUMN `displacement` DOUBLE NULL COMMENT '排量' AFTER `structure`,
 ADD COLUMN `from_place` VARCHAR(64) NULL COMMENT '车源地' AFTER `displacement`,
-ADD COLUMN `procedure` VARCHAR(64) NULL COMMENT '手续' AFTER `from_place`,
+ADD COLUMN `car_procedure` VARCHAR(64) NULL COMMENT '手续' AFTER `from_place`,
 ADD COLUMN `fw_amount` BIGINT(20) NULL COMMENT '服务费' AFTER `sf_amount`,
 ADD COLUMN `jsq_byhf` BIGINT(20) NULL COMMENT '必要花费' AFTER `fw_amount`,
 ADD COLUMN `jsq_sybx` BIGINT(20) NULL COMMENT '商业保险' AFTER `jsq_byhf`,
@@ -113,3 +113,7 @@ CREATE TABLE `tht_action` (
   `remark` text COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户行为';
+
+
+insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('hot_series','benz','奔驰','admin',now(),'热门车系','CD-CHTWT000020','CD-CHTWT000020');
+insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('hot_series','BMW','宝马','admin',now(),'热门车系','CD-CHTWT000020','CD-CHTWT000020');

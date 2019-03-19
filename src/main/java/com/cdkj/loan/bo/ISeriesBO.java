@@ -22,4 +22,6 @@ public interface ISeriesBO extends IPaginableBO<Series> {
     public void refreshLowest(Series data, Long lowest);
 
     public List<Series> querySeries(Series condition);
+
+    public List<Series> queryUpSeries();
 }

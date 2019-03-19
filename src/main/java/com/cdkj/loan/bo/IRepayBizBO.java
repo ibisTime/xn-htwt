@@ -6,8 +6,8 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
-import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.SpecsOrder;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
@@ -90,7 +90,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     // ******************************product********************************
 
-    public RepayBiz generateProductLoanRepayBiz(Order order);
+    public RepayBiz generateProductLoanRepayBiz(SpecsOrder order);
 
     // 产品提前还款
     public void refreshAdvanceRepayProduct(RepayBiz repayBiz,

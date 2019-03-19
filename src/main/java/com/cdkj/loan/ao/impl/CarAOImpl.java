@@ -178,26 +178,57 @@ public class CarAOImpl implements ICarAO {
 
     @Override
     public List<Series> queryCarList(Car condition) {
-        List<Series> seriesList = seriesBO.querySeries(null);
-        List<Car> queryCar = carBO.queryCar(condition);
 
-        for (Series series : seriesList) {
-            // 统计符合条件车型数
-            Long carNumber = Long.valueOf(0);
-            // 符合条件车型加入列表
-            List<Car> cars = new ArrayList<Car>();
-            for (Car car : queryCar) {
-                if (car.getSeriesCode().equals(series.getCode())
-                        && EBrandStatus.UP.getCode().equals(series.getStatus())) {
+        List<Car> queryCar = carBO.queryCar(condition);
+        List<Series> seriess = new ArrayList<Series>();
+
+        outer: for (Car car : queryCar) {
+            Series series = seriesBO.getSeries(car.getSeriesCode());
+            for (Series data : seriess) {
+                if (data.getCode().equals(series.getCode())) {
+                    data.setCarNumber(data.getCarNumber() + 1);
+                    List<Car> cars = data.getCars();
                     cars.add(car);
-                    carNumber++;
+                    data.setCars(cars);
+                    continue outer;
                 }
             }
-            series.setCarNumber(carNumber);
-            series.setCars(cars);
+            if (series.getStatus().equals(EBrandStatus.UP.getCode())) {
+                List<Car> cars = new ArrayList<Car>();
+                cars.add(car);
+                series.setCars(cars);
+                series.setCarNumber(Long.valueOf(1));
+                seriess.add(series);
+            }
         }
-
-        return seriesList;
+        // for (Series series : seriesList) {
+        // // 统计符合条件车型数
+        // Long carNumber = Long.valueOf(0);
+        // // 符合条件车型加入列表
+        // List<Car> cars = new ArrayList<Car>();
+        // for (Car car : queryCar) {
+        // if (car.getSeriesCode().equals(series.getCode())) {
+        // cars.add(car);
+        // carNumber++;
+        // }
+        // }
+        // series.setCarNumber(carNumber);
+        // series.setCars(cars);
+        // }
+        // // 删除空车系
+        // int flag = 0;// 车系列表是否还有空车型车系
+        // while (flag == 0) {
+        // for (int i = 0; i < seriesList.size(); i++) {
+        // if (seriesList.get(i).getCarNumber() == 0) {
+        // seriesList.remove(i);
+        // break;
+        // }
+        // if (i == seriesList.size()) {
+        // flag = 1;
+        // }
+        // }
+        // }
+        return seriess;
     }
 
     private void initCar(Car car) {

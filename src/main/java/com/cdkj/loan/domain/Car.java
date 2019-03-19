@@ -31,7 +31,7 @@ public class Car extends ABaseDO {
 
     private String structure;// 结构
 
-    private Double displacment;// 排量
+    private Double displacement;// 排量
 
     private String fromPlace;// 车源地
 
@@ -75,6 +75,9 @@ public class Car extends ABaseDO {
 
     // 最新修改人姓名
     private String updaterName;
+
+    // 搜索名称
+    private String queryName;
 
     // 排量起
     private Double displacementStart;
@@ -354,11 +357,11 @@ public class Car extends ABaseDO {
     }
 
     public Double getDisplacment() {
-        return displacment;
+        return displacement;
     }
 
     public void setDisplacment(Double displacment) {
-        this.displacment = displacment;
+        this.displacement = displacment;
     }
 
     public String getFromPlace() {
@@ -407,6 +410,22 @@ public class Car extends ABaseDO {
 
     public void setFwAmount(Long fwAmount) {
         this.fwAmount = fwAmount;
+    }
+
+    public Double getDisplacement() {
+        return displacement;
+    }
+
+    public void setDisplacement(Double displacement) {
+        this.displacement = displacement;
+    }
+
+    public String getQueryName() {
+        return queryName;
+    }
+
+    public void setQueryName(String queryName) {
+        this.queryName = queryName;
     }
 
 }

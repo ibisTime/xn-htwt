@@ -33,6 +33,7 @@ public class XN630426 extends AProcessor {
         condition.setBrandName(req.getBrandName());
         condition.setSeriesCode(req.getSeriesCode());
         condition.setSeriesName(req.getSeriesName());
+        condition.setQueryName(req.getQueryName());
         condition.setStatus(req.getStatus());
         condition.setIsReferee(req.getIsReferee());
         condition.setLocation(StringValidater.toInteger(req.getLocation()));
