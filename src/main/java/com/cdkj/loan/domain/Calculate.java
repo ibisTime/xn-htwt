@@ -19,26 +19,37 @@ import com.cdkj.loan.enums.EBoolean;
  * @history:
  */
 public class Calculate {
+    // 原价
     private Long saleAmount;
 
+    // 首付价
     private Long sfAmount;
 
+    // 预计首付价
     private Long yjsfAmount;
 
+    // 贷款金额
     private Long dkAmount;
 
+    // 总贷款金额
     private Long dkTotalAmount;
 
+    // 手续费
     private Long procedureAmount;
 
+    // 月供
     private Long monthReply;
 
+    // 额外费用
     private Long extraAmount;
 
+    // 总花费
     private Long totalAmount;
 
+    // 必要花费
     private Long byhf;
 
+    // 商业保险
     private Long sybx;
 
     public Calculate(Double rate, Car car, String period, String isTotal) {
