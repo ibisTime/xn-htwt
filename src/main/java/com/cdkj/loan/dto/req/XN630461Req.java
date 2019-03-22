@@ -1,6 +1,8 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
+import java.util.List;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 删除用户行为
@@ -10,15 +12,15 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN630461Req {
 
-    @NotBlank
-    private String code;
+    @NotEmpty
+    private List<String> codeList;
 
-    public String getCode() {
-        return code;
+    public List<String> getCodeList() {
+        return codeList;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
     }
 
 }

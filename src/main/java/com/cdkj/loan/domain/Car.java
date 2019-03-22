@@ -100,6 +100,27 @@ public class Car extends ABaseDO {
     // 规格版本列表
     private List<String> versionList;
 
+    // 收藏数
+    private Long collectNumber;
+
+    public Long getCollectNumber() {
+        return collectNumber;
+    }
+
+    public void setCollectNumber(Long collectNumber) {
+        this.collectNumber = collectNumber;
+    }
+
+    private String isCollect;// 是否收藏
+
+    public String getIsCollect() {
+        return isCollect;
+    }
+
+    public void setIsCollect(String isCollect) {
+        this.isCollect = isCollect;
+    }
+
     public Double getDisplacementStart() {
         return displacementStart;
     }

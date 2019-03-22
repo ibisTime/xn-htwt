@@ -57,5 +57,9 @@
 		WHERE code = #{code}
 	</update>
 
+	<delete id="delete_carCarconfig" parameterType="carCarconfig">
+		DELETE FROM tht_car_carconfig
+		WHERE code=#{code}
+	</delete>
 
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarAO;
+import com.cdkj.loan.bo.IActionBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ICarBO;
@@ -16,6 +17,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Action;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Calculate;
@@ -24,6 +26,8 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
+import com.cdkj.loan.enums.EActionType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -44,6 +48,9 @@ public class CarAOImpl implements ICarAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private IActionBO actionBO;
 
     @Override
     public String addCar(XN630420Req req) {
@@ -170,9 +177,19 @@ public class CarAOImpl implements ICarAO {
     }
 
     @Override
-    public Car getCar(String code) {
+    public Car getCar(String code, String userId) {
         Car car = carBO.getCar(code);
         initCar(car);
+        if (StringUtils.isNotBlank(userId)) {
+            Action condition = new Action();
+            condition.setCreater(userId);
+            condition.setToCode(code);
+            if (actionBO.getTotalCount(condition) > 0) {
+                car.setIsCollect(EBoolean.YES.getCode());
+            } else {
+                car.setIsCollect(EBoolean.NO.getCode());
+            }
+        }
         return car;
     }
 
@@ -183,6 +200,7 @@ public class CarAOImpl implements ICarAO {
         List<Series> seriess = new ArrayList<Series>();
 
         outer: for (Car car : queryCar) {
+            initCar(car);
             Series series = seriesBO.getSeries(car.getSeriesCode());
             for (Series data : seriess) {
                 if (data.getCode().equals(series.getCode())) {
@@ -193,6 +211,7 @@ public class CarAOImpl implements ICarAO {
                     continue outer;
                 }
             }
+            // 新增车系
             if (series.getStatus().equals(EBrandStatus.UP.getCode())) {
                 List<Car> cars = new ArrayList<Car>();
                 cars.add(car);
@@ -235,6 +254,11 @@ public class CarAOImpl implements ICarAO {
         if (StringUtils.isNotBlank(car.getUpdater())) {
             SYSUser user = sysUserBO.getUser(car.getUpdater());
             car.setUpdaterName(user.getRealName());
+            Action condition = new Action();
+            condition.setToCode(car.getCode());
+            condition.setType(EActionType.collect.getCode());
+            Long collectNumber = actionBO.getTotalCount(condition);
+            car.setCollectNumber(collectNumber);
         }
     }
 

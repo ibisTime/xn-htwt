@@ -88,6 +88,11 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_action" parameterType="action">
+		DELETE FROM tht_action
+		WHERE code=#{code}
+	</delete>
 
 
 </mapper>

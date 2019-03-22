@@ -29,7 +29,7 @@ public interface ICarAO {
     public Paginable<Car> queryCarPage(int start, int limit, Car condition);
 
     // 详情查询
-    public Car getCar(String code);
+    public Car getCar(String code, String userId);
 
     // 列表查询
     public List<Series> queryCarList(Car condition);

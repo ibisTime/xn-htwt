@@ -117,3 +117,5 @@ CREATE TABLE `tht_action` (
 
 insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('hot_series','benz','奔驰','admin',now(),'热门车系','CD-CHTWT000020','CD-CHTWT000020');
 insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('hot_series','BMW','宝马','admin',now(),'热门车系','CD-CHTWT000020','CD-CHTWT000020');
+
+insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('kf_phone','kf_phone','4008888666','admin',now(),'客服电话','CD-CHTWT000020','CD-CHTWT000020');
