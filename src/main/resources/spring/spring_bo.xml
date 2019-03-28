@@ -424,4 +424,9 @@
 		<property name="paginableDAO" ref="smsDAOImpl"/>
 	</bean>
 	
+	<!-- 全局表 -->
+	<bean id="bizOrderBO" class="com.cdkj.loan.bo.impl.BizOrderBOImpl">
+		<property name="paginableDAO" ref="bizOrderDAOImpl"/>
+	</bean>
+	
 </beans>

@@ -56,7 +56,7 @@ public class Calculate {
         this.saleAmount = car.getSalePrice();
         this.sybx = StringValidater.toLong(car.getJsqSybx());
         this.byhf = StringValidater.toLong(car.getJsqByhf());
-        if (EBoolean.NO.getCode().equals(isTotal)) {
+        if (EBoolean.YES.getCode().equals(isTotal)) {
             this.totalAmount = this.saleAmount + this.sybx + this.byhf;
         } else {
             this.byhf += car.getFwAmount();

@@ -26,6 +26,8 @@ public interface ICarconfigAO {
 
     public void setCarConfig(String carCode, List<String> configCodeList);
 
+    public void dropCarCarconfig(String carCode, List<String> configCodeList);
+
     public List<CarCarconfig> getCarCarconfigsByCar(String carCode);
 
 }

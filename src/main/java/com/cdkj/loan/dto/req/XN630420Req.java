@@ -67,10 +67,32 @@ public class XN630420Req {
     @NotBlank(message = "图文描述不能为空")
     private String description; // 图文描述
 
+    @NotBlank
+    private String outsideColor;// 外部颜色
+
+    @NotBlank
+    private String insideColor;// 内部颜色
+
     @NotBlank(message = "最新修改人不能为空")
     private String updater; // 最新修改人
 
     private String remark; // 备注
+
+    public String getOutsideColor() {
+        return outsideColor;
+    }
+
+    public void setOutsideColor(String outsideColor) {
+        this.outsideColor = outsideColor;
+    }
+
+    public String getInsideColor() {
+        return insideColor;
+    }
+
+    public void setInsideColor(String insideColor) {
+        this.insideColor = insideColor;
+    }
 
     public String getRemark() {
         return remark;

@@ -23,4 +23,6 @@ public interface IActionAO {
 
     public Action getAction(String code);
 
+    public void cancelCollect(String userId, String carCode);
+
 }

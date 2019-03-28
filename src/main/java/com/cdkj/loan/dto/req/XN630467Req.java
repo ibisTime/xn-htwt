@@ -14,6 +14,16 @@ public class XN630467Req {
 
     private String toCode;
 
+    private String creater;
+
+    public String getCreater() {
+        return creater;
+    }
+
+    public void setCreater(String creater) {
+        this.creater = creater;
+    }
+
     public String getType() {
         return type;
     }

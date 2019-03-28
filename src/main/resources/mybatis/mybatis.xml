@@ -64,6 +64,10 @@
 		<typeAlias alias="roleNode" type="com.cdkj.loan.domain.RoleNode" />
 		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
 
+
+		<!-- 全局  -->
+		<typeAlias alias="bizOrder" type="com.cdkj.loan.domain.BizOrder" />
+		<typeAlias alias="attachment" type="com.cdkj.loan.domain.Attachment" />
 		
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />

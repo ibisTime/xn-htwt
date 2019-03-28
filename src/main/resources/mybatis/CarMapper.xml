@@ -30,6 +30,8 @@
 		<result column="pic_number" property="picNumber" />
 		<result column="pic" property="pic" />
 		<result column="description" property="description" />
+		<result column="outside_color" property="outsideColor" />
+		<result column="inside_color" property="insideColor" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -166,6 +168,8 @@
 		,t.pic_number
 		,t.pic
 		,t.description
+		,t.outside_color
+		,t.inside_color
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -220,7 +224,10 @@
 		
 		,pic
 		,description
+		,outside_color
+		,inside_color
 		,status
+		
 		,updater
 		,update_datetime
 		,remark
@@ -258,7 +265,10 @@
 		
 		,#{pic}
 		,#{description}
+		,#{outsideColor}
+		,#{insideColor}
 		,#{status}
+		
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
@@ -293,6 +303,8 @@
 		,pic_number=#{picNumber}      
 		,pic = #{pic}          
 		,description = #{description}
+		,outside_color=#{outsideColor}
+		,inside_color=#{insideColor}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

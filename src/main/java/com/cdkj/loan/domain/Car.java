@@ -63,6 +63,10 @@ public class Car extends ABaseDO {
 
     private String description;// 图文描述
 
+    private String outsideColor;// 外部颜色
+
+    private String insideColor;// 内部颜色
+
     private String status;// 状态（待上架/已上架/已下架）
 
     private String updater;// 最新修改人
@@ -99,6 +103,9 @@ public class Car extends ABaseDO {
 
     // 规格版本列表
     private List<String> versionList;
+
+    // 车型配置列表
+    private List<CarCarconfig> caonfigList;
 
     // 收藏数
     private Long collectNumber;
@@ -447,6 +454,30 @@ public class Car extends ABaseDO {
 
     public void setQueryName(String queryName) {
         this.queryName = queryName;
+    }
+
+    public List<CarCarconfig> getCaonfigList() {
+        return caonfigList;
+    }
+
+    public void setCaonfigList(List<CarCarconfig> caonfigList) {
+        this.caonfigList = caonfigList;
+    }
+
+    public String getOutsideColor() {
+        return outsideColor;
+    }
+
+    public void setOutsideColor(String outsideColor) {
+        this.outsideColor = outsideColor;
+    }
+
+    public String getInsideColor() {
+        return insideColor;
+    }
+
+    public void setInsideColor(String insideColor) {
+        this.insideColor = insideColor;
     }
 
 }

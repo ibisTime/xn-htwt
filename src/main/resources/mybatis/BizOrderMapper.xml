@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBizOrderDAO">
+	<resultMap id="bizOrder_DB_Result" type="bizOrder">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="main_loaner" property="mainLoaner" />
+		<result column="bank_code" property="bankCode" />
+		<result column="biz_type" property="bizType" />
+		<result column="cur_node" property="curNode" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="bankCode != null and bankCode != '' ">
+				AND t.bank_code = #{bankCode}
+			</if>
+			<if test="bizType != null and bizType != '' ">
+				AND t.biz_type = #{bizType}
+			</if>
+			<if test="curNode != null and curNode != '' ">
+				AND t.cur_node = #{curNode}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_bizOrder" parameterType="bizOrder" resultMap="bizOrder_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.main_loaner
+		,t.bank_code
+		,t.biz_type
+		,t.cur_node
+		,t.remark
+		FROM
+		tqj_biz_order t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_bizOrder_count" parameterType="bizOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tqj_biz_order t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_bizOrder" parameterType="bizOrder">
+		INSERT INTO
+		tqj_biz_order(
+		code
+		,biz_code
+		,main_loaner
+		,bank_code
+		,biz_type
+		,cur_node
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{mainLoaner}
+		,#{bankCode}
+		,#{bizType}
+		,#{curNode}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_bizOrder" parameterType="bizOrder">
+		UPDATE tqj_biz_order
+		SET
+		biz_code = #{bizCode}
+		,main_loaner = #{mainLoaner}
+		,bank_code = #{bankCode}
+		,biz_type = #{bizType}
+		,cur_node = #{curNode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

@@ -61,6 +61,8 @@ ADD COLUMN `fw_amount` BIGINT(20) NULL COMMENT '服务费' AFTER `sf_amount`,
 ADD COLUMN `jsq_byhf` BIGINT(20) NULL COMMENT '必要花费' AFTER `fw_amount`,
 ADD COLUMN `jsq_sybx` BIGINT(20) NULL COMMENT '商业保险' AFTER `jsq_byhf`,
 ADD COLUMN `pic_number` INT NULL AFTER `adv_pic`;
+ADD COLUMN `outside_color` VARCHAR(32) NULL COMMENT '外部颜色' AFTER `description`,
+ADD COLUMN `inside_color` VARCHAR(32) NULL COMMENT '内部颜色' AFTER `outside_color`;
 
 DROP TABLE IF EXISTS `tht_carconfig`;
 CREATE TABLE `tht_carconfig` (
@@ -119,3 +121,27 @@ insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime
 insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('hot_series','BMW','宝马','admin',now(),'热门车系','CD-CHTWT000020','CD-CHTWT000020');
 
 insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('kf_phone','kf_phone','4008888666','admin',now(),'客服电话','CD-CHTWT000020','CD-CHTWT000020');
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'car_level','车型等级','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_level','0','SUV','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_level','1','轿车','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_level','2','MPV','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_level','3','跑车','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_level','4','皮卡','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_level','5','房车','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'car_structure','车型等级','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_structure','1','两厢','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_structure','2','三厢','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_structure','3','掀背','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_structure','4','旅行版','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_structure','5','硬顶敞篷','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_structure','6','软顶敞篷','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_structure','7','硬顶跑车','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'car_version','车型等级','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','1','中东','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','2','美规','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','3','加规','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','4','墨版','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','5','欧规','admin',now(),'','CD-HTWT000020','CD-HTWT000020');

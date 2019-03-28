@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IActionAO;
 import com.cdkj.loan.bo.IActionBO;
 import com.cdkj.loan.bo.ICarBO;
+import com.cdkj.loan.bo.ICarCarconfigBO;
 import com.cdkj.loan.bo.ICarNewsBO;
+import com.cdkj.loan.bo.ICarconfigBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Action;
+import com.cdkj.loan.domain.Car;
+import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.CarNews;
 import com.cdkj.loan.enums.EActionToType;
 import com.cdkj.loan.enums.EActionType;
@@ -28,6 +32,12 @@ public class ActionAOImpl implements IActionAO {
 
     @Autowired
     private ICarBO carBO;
+
+    @Autowired
+    private ICarconfigBO carconfigBO;
+
+    @Autowired
+    private ICarCarconfigBO carCarconfigBO;
 
     @Override
     public String addAction(String type, String toType, String toCode,
@@ -91,9 +101,29 @@ public class ActionAOImpl implements IActionAO {
 
     private void init(Action action) {
         if (EActionToType.car.getCode().equals(action.getToType())) {
-            action.setCar(carBO.getCar(action.getToCode()));
+            Car car = carBO.getCar(action.getToCode());
+            List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
+                .getCode());
+            for (CarCarconfig carCarconfig : configList) {
+                carCarconfig.setConfig(carconfigBO.getCarconfig(carCarconfig
+                    .getConfigCode()));
+            }
+            car.setCaonfigList(configList);
+            action.setCar(car);
         } else if (EActionToType.news.getCode().equals(action.getToType())) {
             action.setCarNews(carNewsBO.getCarNews(action.getToCode()));
         }
+    }
+
+    @Override
+    public void cancelCollect(String userId, String carCode) {
+        Action condition = new Action();
+        condition.setToCode(carCode);
+        condition.setType(EActionType.collect.getCode());
+        List<Action> actions = actionBO.queryActionList(condition);
+        if (actions.isEmpty()) {
+            throw new BizException("biz0000", "该收藏不存在");
+        }
+        actionBO.removeAction(actions.get(0).getCode());
     }
 }

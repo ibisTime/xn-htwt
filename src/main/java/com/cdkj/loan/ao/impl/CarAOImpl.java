@@ -13,6 +13,8 @@ import com.cdkj.loan.bo.IActionBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ICarBO;
+import com.cdkj.loan.bo.ICarCarconfigBO;
+import com.cdkj.loan.bo.ICarconfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -22,6 +24,7 @@ import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Calculate;
 import com.cdkj.loan.domain.Car;
+import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
@@ -51,6 +54,12 @@ public class CarAOImpl implements ICarAO {
 
     @Autowired
     private IActionBO actionBO;
+
+    @Autowired
+    private ICarconfigBO carconfigBO;
+
+    @Autowired
+    private ICarCarconfigBO carCarconfigBO;
 
     @Override
     public String addCar(XN630420Req req) {
@@ -184,7 +193,9 @@ public class CarAOImpl implements ICarAO {
             Action condition = new Action();
             condition.setCreater(userId);
             condition.setToCode(code);
-            if (actionBO.getTotalCount(condition) > 0) {
+            condition.setType(EActionType.collect.getCode());
+            Long count = actionBO.getTotalCount(condition);
+            if (count > 0) {
                 car.setIsCollect(EBoolean.YES.getCode());
             } else {
                 car.setIsCollect(EBoolean.NO.getCode());
@@ -254,12 +265,20 @@ public class CarAOImpl implements ICarAO {
         if (StringUtils.isNotBlank(car.getUpdater())) {
             SYSUser user = sysUserBO.getUser(car.getUpdater());
             car.setUpdaterName(user.getRealName());
-            Action condition = new Action();
-            condition.setToCode(car.getCode());
-            condition.setType(EActionType.collect.getCode());
-            Long collectNumber = actionBO.getTotalCount(condition);
-            car.setCollectNumber(collectNumber);
         }
+        Action condition = new Action();
+        condition.setToCode(car.getCode());
+        condition.setType(EActionType.collect.getCode());
+        Long collectNumber = actionBO.getTotalCount(condition);
+        car.setCollectNumber(collectNumber);
+        List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
+            .getCode());
+        for (CarCarconfig carCarconfig : configList) {
+            carCarconfig.setConfig(carconfigBO.getCarconfig(carCarconfig
+                .getConfigCode()));
+        }
+        car.setCaonfigList(configList);
+
     }
 
     @Override

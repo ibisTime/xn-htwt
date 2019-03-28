@@ -67,10 +67,14 @@ public class CarconfigAOImpl implements ICarconfigAO {
     public void setCarConfig(String carCode, List<String> configCodeList) {
         // 车型编号检查
         carBO.getCar(carCode);
-        // 删除该车型下原有配置
+        // 删除该车型已有的重复配置
         List<CarCarconfig> carconfigs = carCarconfigBO.getCarconfigs(carCode);
         for (CarCarconfig carCarconfig : carconfigs) {
-            carCarconfigBO.removeCarCarconfig(carCarconfig.getCode());
+            for (String configCode : configCodeList) {
+                if (configCode.equals(carCarconfig.getConfigCode())) {
+                    carCarconfigBO.removeCarCarconfig(carCode, configCode);
+                }
+            }
         }
         // 添加新配置
         for (String configCode : configCodeList) {
@@ -87,5 +91,12 @@ public class CarconfigAOImpl implements ICarconfigAO {
             carCarconfig.setConfig(config);
         }
         return carconfigs;
+    }
+
+    @Override
+    public void dropCarCarconfig(String carCode, List<String> configCodeList) {
+        for (String configCode : configCodeList) {
+            carCarconfigBO.removeCarCarconfig(carCode, configCode);
+        }
     }
 }

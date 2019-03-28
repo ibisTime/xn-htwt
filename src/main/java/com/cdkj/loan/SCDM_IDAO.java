@@ -9,22 +9,21 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "action";
+    private static String key = "attachment";
 
     // 实体名称
-    private static String keyName = "用户行为";
+    private static String keyName = "业务";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tht_action";
+    private static String dbname = "tqj_attachment";
 
-    private static String[] DBwords = { "code", "type", "to_type", "to_code",
-            "creater", "create_datetime", "remark" };
+    private static String[] DBwords = { "code", "biz_code", "attach_type",
+            "url" };
 
-    private static String[] DBwordsName = { "编号", "类型", "对象类型", "对象编号", "行为用户",
-            "行为时间", "备注" };
+    private static String[] DBwordsName = { "编号", "业务编号", "附件类型", "url地址" };
 
     public void testname() throws Exception {
     }
@@ -182,7 +181,7 @@ public class SCDM_IDAO {
         String str = "";
         String str1 = "package " + packge + "domain;\n\n" + "import " + packge
                 + "dao.base.ABaseDO;\n\n" + "/**" + "\n* " + keyName
-                + "\n* @author: jiafr " + "\n* @since: "
+                + "\n* @author: tao " + "\n* @since: "
                 + DateUtil.getToday(DateUtil.DATA_TIME_PATTERN_1) + ""
                 + "\n* @history:\n*/" + "\n" + "public class " + Key
                 + " extends ABaseDO {" + "\n\n\t"

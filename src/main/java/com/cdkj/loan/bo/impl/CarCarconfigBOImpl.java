@@ -55,6 +55,19 @@ public class CarCarconfigBOImpl extends PaginableBOImpl<CarCarconfig> implements
     }
 
     @Override
+    public int removeCarCarconfig(String carCode, String configCode) {
+        int count = 0;
+        CarCarconfig condition = new CarCarconfig();
+        condition.setCarCode(carCode);
+        condition.setConfigCode(configCode);
+        CarCarconfig data = carCarconfigDAO.select(condition);
+        if (null != data) {
+            count = carCarconfigDAO.delete(data);
+        }
+        return count;
+    }
+
+    @Override
     public List<CarCarconfig> queryCarCarconfigList(CarCarconfig condition) {
         return carCarconfigDAO.selectList(condition);
     }

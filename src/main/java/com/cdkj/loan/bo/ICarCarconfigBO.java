@@ -13,6 +13,8 @@ public interface ICarCarconfigBO extends IPaginableBO<CarCarconfig> {
 
     public int removeCarCarconfig(String code);
 
+    public int removeCarCarconfig(String carCode, String configCode);
+
     public List<CarCarconfig> queryCarCarconfigList(CarCarconfig condition);
 
     public CarCarconfig getCarCarconfig(String code);
