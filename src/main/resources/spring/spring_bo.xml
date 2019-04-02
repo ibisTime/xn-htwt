@@ -429,4 +429,12 @@
 		<property name="paginableDAO" ref="bizOrderDAOImpl"/>
 	</bean>
 	
+	<bean id="cdbizBO" class="com.cdkj.loan.bo.impl.CdbizBOImpl">
+		<property name="paginableDAO" ref="cdbizDAOImpl"/>
+	</bean>
+	
+	<bean id="attachmentBO" class="com.cdkj.loan.bo.impl.AttachmentBOImpl">
+		<property name="paginableDAO" ref="attachmentDAOImpl"/>
+	</bean>
+	
 </beans>

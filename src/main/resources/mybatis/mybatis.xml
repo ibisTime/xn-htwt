@@ -68,6 +68,7 @@
 		<!-- 全局  -->
 		<typeAlias alias="bizOrder" type="com.cdkj.loan.domain.BizOrder" />
 		<typeAlias alias="attachment" type="com.cdkj.loan.domain.Attachment" />
+		<typeAlias alias="cdbiz" type="com.cdkj.loan.domain.Cdbiz" />
 		
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
