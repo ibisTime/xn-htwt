@@ -12,6 +12,12 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="carCode != null and carCode != '' ">
+				AND t.car_code = #{carCode}
+			</if>
+			<if test="configCode != null and configCode != '' ">
+				AND t.config_code = #{configCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_carCarconfig" parameterType="carCarconfig" resultMap="carCarconfig_DB_Result">

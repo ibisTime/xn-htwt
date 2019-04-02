@@ -10,6 +10,7 @@ import com.cdkj.loan.ao.ICarOrderAO;
 import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarOrderBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -17,6 +18,7 @@ import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarOrder;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630430Req;
@@ -40,6 +42,9 @@ public class CarOrderAOImpl implements ICarOrderAO {
 
     @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addCarOrder(XN630430Req req) {
@@ -93,10 +98,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
             condition);
         List<CarOrder> list = results.getList();
         for (CarOrder carOrder : list) {
-            Car car = carBO.getCar(carOrder.getCarCode());
-            carOrder.setCar(car);
-            User user = userBO.getUser(carOrder.getUserId());
-            carOrder.setUser(user);
+            initOrder(carOrder);
         }
         return results;
     }
@@ -104,10 +106,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
     @Override
     public CarOrder getCarOrder(String code) {
         CarOrder carOrder = carOrderBO.getCarOrder(code);
-        Car car = carBO.getCar(carOrder.getCarCode());
-        carOrder.setCar(car);
-        User user = userBO.getUser(carOrder.getUserId());
-        carOrder.setUser(user);
+        initOrder(carOrder);
         return carOrder;
     }
 
@@ -115,12 +114,18 @@ public class CarOrderAOImpl implements ICarOrderAO {
     public List<CarOrder> queryCarOrderList(CarOrder condition) {
         List<CarOrder> carOrderList = carOrderBO.queryCarOrder(condition);
         for (CarOrder carOrder : carOrderList) {
-            Car car = carBO.getCar(carOrder.getCarCode());
-            carOrder.setCar(car);
-            User user = userBO.getUser(carOrder.getUserId());
-            carOrder.setUser(user);
+            initOrder(carOrder);
         }
         return carOrderList;
+    }
+
+    private void initOrder(CarOrder carOrder) {
+        Car car = carBO.getCar(carOrder.getCarCode());
+        carOrder.setCar(car);
+        User user = userBO.getUser(carOrder.getUserId());
+        carOrder.setUser(user);
+        SYSUser sysUser = sysUserBO.getUser(carOrder.getHandler());
+        carOrder.setSysUser(sysUser);
     }
 
 }

@@ -78,6 +78,7 @@ public class CarAOImpl implements ICarAO {
         }
 
         Brand brand = brandBO.getBrand(series.getBrandCode());
+        car.setIsReferee(req.getIsReferee());
         car.setName(req.getName());
         car.setSeriesCode(req.getSeriesCode());
         car.setSeriesName(series.getName());
@@ -104,6 +105,8 @@ public class CarAOImpl implements ICarAO {
         car.setPicNumber(StringValidater.toLong(req.getPicNumber()));
         car.setPic(req.getPic());
         car.setDescription(req.getDescription());
+        car.setInsideColor(req.getInsideColor());
+        car.setOutsideColor(req.getOutsideColor());
         car.setStatus(EBrandStatus.TO_UP.getCode());
         car.setUpdater(req.getUpdater());
         car.setUpdateDatetime(new Date());
@@ -126,6 +129,8 @@ public class CarAOImpl implements ICarAO {
         } else if (price > series.getHighest()) {
             seriesBO.refreshHighest(series, price);
         }
+        car.setIsReferee(req.getIsReferee());
+
         car.setName(req.getName());
         car.setLevel(req.getLevel());
         car.setVersion(req.getVersion());
@@ -145,6 +150,8 @@ public class CarAOImpl implements ICarAO {
         car.setPicNumber(StringValidater.toLong(req.getPicNumber()));
         car.setPic(req.getPic());
         car.setDescription(req.getDescription());
+        car.setInsideColor(req.getInsideColor());
+        car.setOutsideColor(req.getOutsideColor());
         car.setStatus(EBrandStatus.TO_UP.getCode());
         car.setUpdater(req.getUpdater());
         car.setUpdateDatetime(new Date());

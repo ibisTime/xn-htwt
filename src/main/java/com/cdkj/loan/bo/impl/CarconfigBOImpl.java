@@ -88,7 +88,7 @@ public class CarconfigBOImpl extends PaginableBOImpl<Carconfig> implements
             condition.setCode(code);
             data = carconfigDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "配置不存在");
+                throw new BizException("xn0000", "配置" + code + "不存在");
             }
         }
         return data;

@@ -16,6 +16,10 @@ public class XN630402Req {
     @NotBlank(message = "名称不能为空")
     private String name;
 
+    // 字母（必填）
+    @NotBlank(message = "字母不能为空")
+    private String letter;
+
     // logo（必填）
     @NotBlank(message = "logo不能为空")
     private String logo;
@@ -85,6 +89,14 @@ public class XN630402Req {
 
     public void setIsReferee(String isReferee) {
         this.isReferee = isReferee;
+    }
+
+    public String getLetter() {
+        return letter;
+    }
+
+    public void setLetter(String letter) {
+        this.letter = letter;
     }
 
 }

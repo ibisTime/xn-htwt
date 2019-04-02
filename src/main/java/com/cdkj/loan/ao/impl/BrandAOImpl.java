@@ -46,6 +46,7 @@ public class BrandAOImpl implements IBrandAO {
         brand.setIsReferee(req.getIsReferee());
         brand.setLogo(req.getLogo());
         brand.setName(req.getName());
+        brand.setLetter(req.getLetter());
         brand.setDescription(req.getDescription());
         brand.setUpdater(req.getUpdater());
         brand.setUpdateDatetime(new Date());

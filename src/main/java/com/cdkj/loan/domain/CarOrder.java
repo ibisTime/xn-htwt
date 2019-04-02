@@ -55,7 +55,17 @@ public class CarOrder extends ABaseDO {
     // 用户
     private User user;
 
+    private SYSUser sysUser;
+
     private List<String> statusList; // 状态List
+
+    public SYSUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SYSUser sysUser) {
+        this.sysUser = sysUser;
+    }
 
     public List<String> getStatusList() {
         return statusList;
