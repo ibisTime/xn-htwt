@@ -32,8 +32,7 @@ public class XN630405 extends AProcessor {
         condition.setName(req.getName());
         condition.setLetter(req.getLetter());
         condition.setStatus(req.getStatus());
-        condition.setIsReferee(req.getIsReferee());
-
+        condition.setLocation(req.getLocation());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBrandAO.DEFAULT_ORDER_COLUMN;

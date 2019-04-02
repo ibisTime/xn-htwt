@@ -142,6 +142,7 @@ public class CarAOImpl implements ICarAO {
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(price);
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        car.setFwAmount(StringValidater.toLong(req.getFwAmount()));
         car.setJsqByhf(req.getJsqByhf());
         car.setJsqSybx(req.getJsqSybx());
         car.setSlogan(req.getSlogan());

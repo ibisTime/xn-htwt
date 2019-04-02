@@ -71,7 +71,7 @@ public class CarNewsBOImpl extends PaginableBOImpl<CarNews> implements
     @Override
     public int refreshCarNews(CarNews data, String title, String advPic,
             Long picNumber, String pic, String context, String tag,
-            String updater, String remark) {
+            String updater, String remark, String author) {
         int count = 0;
         if (StringUtils.isNotBlank(data.getCode())) {
             data.setTitle(title);
@@ -81,6 +81,7 @@ public class CarNewsBOImpl extends PaginableBOImpl<CarNews> implements
             data.setReadCount(Long.valueOf(0));
             data.setContext(context);
             data.setTag(tag);
+            data.setAuthor(author);
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
             data.setRemark(remark);

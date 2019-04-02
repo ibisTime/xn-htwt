@@ -14,9 +14,6 @@ public class Brand extends ABaseDO {
     // 编号
     private String code;
 
-    // 是否推荐
-    private String isReferee;
-
     // 字母序号
     private String letter;
 
@@ -28,6 +25,12 @@ public class Brand extends ABaseDO {
 
     // 品牌介绍
     private String description;
+
+    // UI位置
+    private String location;
+
+    // UI次序
+    private Integer orderNo;
 
     // 状态
     private String status;
@@ -113,12 +116,20 @@ public class Brand extends ABaseDO {
         this.remark = remark;
     }
 
-    public String getIsReferee() {
-        return isReferee;
+    public String getLocation() {
+        return location;
     }
 
-    public void setIsReferee(String isReferee) {
-        this.isReferee = isReferee;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
 }
