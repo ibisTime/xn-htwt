@@ -11,7 +11,7 @@
 		
 		<result column="create_datetime" property="createDatetime" />
 		<result column="status" property="status" />
-		<result column="operator" property="operator" />
+		<result column="operater" property="operater" />
 		<result column="operate_role" property="operateRole" />
 		<result column="finish_datetime" property="finishDatetime" />
 	</resultMap>
@@ -46,7 +46,7 @@
 		
 		,t.create_datetime
 		,t.status
-		,t.operator
+		,t.operater
 		,t.operate_role
 		,t.finish_datetime
 		FROM
@@ -76,7 +76,7 @@
 		
 		,create_datetime
 		,status
-		,operator
+		,operater
 		,operate_role
 		,finish_datetime
 		)
@@ -89,7 +89,7 @@
 		
 		,#{createDatetime}
 		,#{status}
-		,#{operator}
+		,#{operater}
 		,#{operateRole}
 		,#{finishDatetime}
 		)
@@ -99,7 +99,7 @@
 		UPDATE tqj_biz_task
 		SET
 		status = #{status}
-		,operator = #{operator}
+		,operater = #{operater}
 		,operate_role = #{operateRole}
 		,finish_datetime = #{finishDatetime}
 		WHERE code = #{code}

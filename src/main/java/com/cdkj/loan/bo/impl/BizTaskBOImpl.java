@@ -49,7 +49,7 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask>
 
         data.setCode(code);
         data.setStatus(EBizTaskStatus.DONE.getCode());
-        data.setOperator(operator.getUserId());
+        data.setOperater(operator.getUserId());
         data.setOperateRole(operator.getRoleCode());
         data.setFinishDatetime(new Date());
 

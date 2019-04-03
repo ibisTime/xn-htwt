@@ -36,7 +36,7 @@ public class BizTask extends ABaseDO {
     private String status;
 
     // 操作人
-    private String operator;
+    private String operater;
 
     // 操作角色
     private String operateRole;
@@ -100,12 +100,12 @@ public class BizTask extends ABaseDO {
         this.status = status;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getOperater() {
+        return operater;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public void setOperater(String operater) {
+        this.operater = operater;
     }
 
     public String getOperateRole() {
