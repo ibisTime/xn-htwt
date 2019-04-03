@@ -15,6 +15,14 @@ public class XN630403Req {
     @NotBlank(message = "编号不能为空")
     private String code;
 
+    // 位置
+    @NotBlank
+    private String location;
+
+    // 次序
+    @NotBlank
+    private String orderNo;
+
     // 最新修改人（必填）
     @NotBlank(message = "最新修改人不能为空")
     private String updater;
@@ -44,6 +52,22 @@ public class XN630403Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
 }

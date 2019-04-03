@@ -1,6 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-
 public class XN630406Req extends APageReq {
 
     /** 
@@ -18,14 +17,14 @@ public class XN630406Req extends APageReq {
     private String status;
 
     // 是否推荐（选填）
-    private String isReferee;
+    private String location;
 
-    public String getIsReferee() {
-        return isReferee;
+    public String getLocation() {
+        return location;
     }
 
-    public void setIsReferee(String isReferee) {
-        this.isReferee = isReferee;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getName() {

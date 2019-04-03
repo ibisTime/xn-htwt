@@ -70,14 +70,14 @@
 		<typeAlias alias="attachment" type="com.cdkj.loan.domain.Attachment" />
 		<typeAlias alias="bizLog" type="com.cdkj.loan.domain.BizLog" />
 		<typeAlias alias="bizTask" type="com.cdkj.loan.domain.BizTask" />
+		<typeAlias alias="cdbiz" type="com.cdkj.loan.domain.Cdbiz" />
+		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
 		
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
 		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 
-		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
-		
 		<!-- 基础数据 -->
 		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
 		<typeAlias alias="collectBankcard" type="com.cdkj.loan.domain.CollectBankcard" />

@@ -37,7 +37,8 @@ ALTER TABLE `tstd_user`
 DROP COLUMN `kind`;
 
 ALTER TABLE `tht_brand` 
-ADD COLUMN `is_referee` VARCHAR(4) NULL COMMENT '是否推荐' AFTER `code`;
+ADD COLUMN `location` VARCHAR(32) NULL COMMENT 'UI位置' AFTER `description`,
+ADD COLUMN `order_no` INT NULL COMMENT 'UI次序' AFTER `location`;
 
 
 ALTER TABLE `tht_series` 
@@ -45,11 +46,9 @@ ADD COLUMN `pic_number` INT NULL COMMENT '照片数量' AFTER `adv_pic`,
 ADD COLUMN `highest` BIGINT(20) NULL COMMENT '最高价' AFTER `price`,
 ADD COLUMN `lowest` BIGINT(20) NULL COMMENT '最低价' AFTER `highest`,
 ADD COLUMN `level` VARCHAR(4) NULL COMMENT '级别（0 SUV，1 轿车，2 MPV，3 跑车，4 皮卡，5 房车）' AFTER `lowest`,
-ADD COLUMN `is_referee` VARCHAR(4) NULL COMMENT '是否推荐' AFTER `level`;
 
 
 ALTER TABLE `tht_car` 
-ADD COLUMN `is_referee` VARCHAR(4) NULL COMMENT '是否推荐' AFTER `code`,
 ADD COLUMN `bank_code` VARCHAR(32) NULL COMMENT '银行编号' AFTER `brand_name`,
 ADD COLUMN `level` VARCHAR(4) NULL COMMENT '级别（0 SUV，1 轿车，2 MPV，3 跑车，4 皮卡，5 房车）' AFTER `bank_code`,
 ADD COLUMN `version` VARCHAR(4) NULL COMMENT '规格/版本（1 中东 2 美规 3 加规 4 墨版 5 欧规）' AFTER `level`,
@@ -145,3 +144,15 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','3','加规','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','4','墨版','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','car_version','5','欧规','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
+
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0','NULL','action_type','用户行为类型','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','action_type','0','分享','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','action_type','1','足迹','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','action_type','2','关注','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','action_type','3','收藏','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','action_type','4','点赞','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0','NULL','action_to_type','用户行为对象类型','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','action_to_type','0','车型','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','action_to_type','1','咨询','admin','2018-05-31 22:49:28',NULL,'CD-HTWT000020','CD-HTWT000020');

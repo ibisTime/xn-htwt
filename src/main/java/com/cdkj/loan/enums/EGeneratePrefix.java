@@ -60,7 +60,7 @@ public enum EGeneratePrefix {
             "BB", "公车借用"), XX("XX", "信息"),
 
     BIZ_ORDER("BO", "业务"), attachment("AT", "附件"),BIZ_LOG("BL","操作日志"), 
-    BIZ_TASK("BT","待办事项");
+     Cdbiz("cb", "车贷业务"),BIZ_TASK("BT","待办事项");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

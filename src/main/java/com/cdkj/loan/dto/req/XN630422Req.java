@@ -72,6 +72,16 @@ public class XN630422Req {
 
     private String remark; // 备注
 
+    private String fwAmount;
+
+    public String getFwAmount() {
+        return fwAmount;
+    }
+
+    public void setFwAmount(String fwAmount) {
+        this.fwAmount = fwAmount;
+    }
+
     public String getOutsideColor() {
         return outsideColor;
     }
