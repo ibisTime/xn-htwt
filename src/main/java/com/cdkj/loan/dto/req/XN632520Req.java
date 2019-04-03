@@ -6,7 +6,7 @@ package com.cdkj.loan.dto.req;
  * @since: Apr 3, 2019 2:06:17 PM 
  * @history:
  */
-public class XN623520Req {
+public class XN632520Req {
 
     // 业务编号
     private String bizCode;

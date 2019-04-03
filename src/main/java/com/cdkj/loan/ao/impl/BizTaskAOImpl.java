@@ -11,7 +11,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.dto.req.XN623520Req;
+import com.cdkj.loan.dto.req.XN632520Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizTaskStatus;
 import com.cdkj.loan.exception.BizException;
@@ -26,7 +26,7 @@ public class BizTaskAOImpl implements IBizTaskAO {
     private ISYSUserBO sysUserBO;
 
     @Override
-    public String addBizTask(XN623520Req req) {
+    public String addBizTask(XN632520Req req) {
         return bizTaskBO.saveBizTask(req.getBizCode(), req.getRefType(),
             req.getRefOrder(), req.getContent());
     }
