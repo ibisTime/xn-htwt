@@ -436,4 +436,8 @@
 	<bean id="bizLogBO" class="com.cdkj.loan.bo.impl.BizLogBOImpl">
 		<property name="paginableDAO" ref="bizLogDAOImpl"/>
 	</bean>
+	
+	<bean id="bizTaskBO" class="com.cdkj.loan.bo.impl.BizTaskBOImpl">
+		<property name="paginableDAO" ref="bizTaskDAOImpl"/>
+	</bean>
 </beans>

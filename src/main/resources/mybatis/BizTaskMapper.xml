@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBizTaskDAO">
+	<resultMap id="bizTask_DB_Result" type="bizTask">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="ref_type" property="refType" />
+		<result column="ref_order" property="refOrder" />
+		<result column="content" property="content" />
+		
+		<result column="create_datetime" property="createDatetime" />
+		<result column="status" property="status" />
+		<result column="operator" property="operator" />
+		<result column="operate_role" property="operateRole" />
+		<result column="finish_datetime" property="finishDatetime" />
+	</resultMap>
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="refType != null and refType != '' ">
+				AND t.ref_type = #{refType}
+			</if>
+			<if test="refOrder != null and refOrder != '' ">
+				AND t.ref_order = #{refOrder}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_bizTask" parameterType="bizTask" resultMap="bizTask_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.ref_type
+		,t.ref_order
+		,t.content
+		
+		,t.create_datetime
+		,t.status
+		,t.operator
+		,t.operate_role
+		,t.finish_datetime
+		FROM
+		tqj_biz_task t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_bizTask_count" parameterType="bizTask"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tqj_biz_task t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_bizTask" parameterType="bizTask">
+		INSERT INTO
+		tqj_biz_task(
+		code
+		,biz_code
+		,ref_type
+		,ref_order
+		,content
+		
+		,create_datetime
+		,status
+		,operator
+		,operate_role
+		,finish_datetime
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{refType}
+		,#{refOrder}
+		,#{content}
+		
+		,#{createDatetime}
+		,#{status}
+		,#{operator}
+		,#{operateRole}
+		,#{finishDatetime}
+		)
+	</insert>
+
+	<update id="update_operateBizTask" parameterType="bizTask">
+		UPDATE tqj_biz_task
+		SET
+		status = #{status}
+		,operator = #{operator}
+		,operate_role = #{operateRole}
+		,finish_datetime = #{finishDatetime}
+		WHERE code = #{code}
+	</update>
+
+</mapper>

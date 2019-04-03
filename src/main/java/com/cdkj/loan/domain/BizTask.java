@@ -1,0 +1,127 @@
+package com.cdkj.loan.domain;
+
+import java.util.Date;
+
+import com.cdkj.loan.dao.base.ABaseDO;
+
+/**
+* 待办事项表
+* @author: silver 
+* @since: 2019-04-03 11:39:28
+* @history:
+*/
+public class BizTask extends ABaseDO {
+
+    private static final long serialVersionUID = 1L;
+
+    // 编号
+    private String code;
+
+    // 业务编号
+    private String bizCode;
+
+    // 关联订单类型
+    private String refType;
+
+    // 关联订单编号
+    private String refOrder;
+
+    // 任务内容
+    private String content;
+
+    // 创建时间
+    private Date createDatetime;
+
+    // 状态(0 待处理 1 已完成)
+    private String status;
+
+    // 操作人
+    private String operator;
+
+    // 操作角色
+    private String operateRole;
+
+    // 完成时间
+    private Date finishDatetime;
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefOrder(String refOrder) {
+        this.refOrder = refOrder;
+    }
+
+    public String getRefOrder() {
+        return refOrder;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public Date getCreateDatetime() {
+        return createDatetime;
+    }
+
+    public void setCreateDatetime(Date createDatetime) {
+        this.createDatetime = createDatetime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getOperateRole() {
+        return operateRole;
+    }
+
+    public void setOperateRole(String operateRole) {
+        this.operateRole = operateRole;
+    }
+
+    public Date getFinishDatetime() {
+        return finishDatetime;
+    }
+
+    public void setFinishDatetime(Date finishDatetime) {
+        this.finishDatetime = finishDatetime;
+    }
+
+}

@@ -657,6 +657,10 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','attachemnt_type','01','主贷人工行','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','attachemnt_type','02','主贷人同盾','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','attachemnt_type','03','主贷人立目','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'biz_task_status','待办事项状态','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','biz_task_status','0','待处理','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','biz_task_status','1','已完成','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config
 -- Date: 2018-06-12 11:55
