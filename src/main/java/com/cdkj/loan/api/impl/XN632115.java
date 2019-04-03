@@ -10,7 +10,7 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.dto.req.XN632115Req;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -44,10 +44,10 @@ public class XN632115 extends AProcessor {
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         if (StringUtils.isNotBlank(req.getIsPass())) {
             if (EBoolean.YES.getCode().equals(req.getIsPass())) {
-                condition.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
+                condition.setCurNodeCode(ENode.ACHIEVE.getCode());
             }
             if (EBoolean.NO.getCode().equals(req.getIsPass())) {
-                condition.setNoPass(ECreditNode.ACHIEVE.getCode());
+                condition.setNoPass(ENode.ACHIEVE.getCode());
             }
         }
         condition.setIsCancel(req.getIsCancel());

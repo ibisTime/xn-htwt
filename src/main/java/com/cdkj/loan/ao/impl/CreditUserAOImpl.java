@@ -17,7 +17,7 @@ import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -60,7 +60,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信单不存在");
         }
 
-        if (!ECreditNode.INPUT_CREDIT_RESULT.getCode()
+        if (!ENode.INPUT_CREDIT_RESULT.getCode()
             .equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是录入征信结果节点，不能操作");
@@ -84,7 +84,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap()
+        ENode currentNode = ENode.getMap()
             .get(credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,

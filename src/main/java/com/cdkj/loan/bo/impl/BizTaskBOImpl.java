@@ -13,32 +13,33 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBizTaskDAO;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBizTaskStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BizTaskBOImpl extends PaginableBOImpl<BizTask>
-        implements IBizTaskBO {
+public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
+        IBizTaskBO {
 
     @Autowired
     private IBizTaskDAO bizTaskDAO;
 
     @Override
-    public String saveBizTask(String bizCode, String refType, String refOrder,
-            String content) {
+    public String saveBizTask(String bizCode, EBizLogType bizLogType,
+            String refOrder, ENode curNode) {
         BizTask data = new BizTask();
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.BIZ_TASK.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.BIZ_TASK
+            .getCode());
         data.setCode(code);
         data.setBizCode(bizCode);
-        data.setRefType(refType);
+        data.setRefType(bizLogType.getCode());
         data.setRefOrder(refOrder);
-
+        String content = "你有新的待" + curNode.getValue() + bizLogType.getValue()
+                + "单";
         data.setContent(content);
-        data.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
-        data.setCreateDatetime(new Date());
         bizTaskDAO.insert(data);
         return code;
     }

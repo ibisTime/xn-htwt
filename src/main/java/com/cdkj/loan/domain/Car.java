@@ -110,6 +110,17 @@ public class Car extends ABaseDO {
     // 收藏数
     private Long collectNumber;
 
+    // 全部配置
+    private List<Carconfig> configs;
+
+    public List<Carconfig> getConfigs() {
+        return configs;
+    }
+
+    public void setConfigs(List<Carconfig> configs) {
+        this.configs = configs;
+    }
+
     public Long getCollectNumber() {
         return collectNumber;
     }

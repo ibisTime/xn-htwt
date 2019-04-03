@@ -10,8 +10,8 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     public boolean isCdbizExist(String code);
 
-    public String saveCdbiz(String bizCode, String mainLoaner, String bankCode,
-            String bizType, Long dkAmount, String ywyUser, String teamCode);
+    public String saveCdbiz(String bankCode, String bizType, Long dkAmount,
+            String ywyUser, String teamCode);
 
     public int removeCdbiz(String code);
 

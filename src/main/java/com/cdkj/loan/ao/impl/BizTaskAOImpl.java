@@ -27,8 +27,10 @@ public class BizTaskAOImpl implements IBizTaskAO {
 
     @Override
     public String addBizTask(XN632520Req req) {
-        return bizTaskBO.saveBizTask(req.getBizCode(), req.getRefType(),
-            req.getRefOrder(), req.getContent());
+        // return bizTaskBO.saveBizTask(req.getBizCode(), req.getRefType(),
+        // req.getRefOrder(), req.getContent());
+
+        return null;
     }
 
     @Override

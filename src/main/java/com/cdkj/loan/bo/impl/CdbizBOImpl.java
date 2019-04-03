@@ -63,14 +63,12 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public String saveCdbiz(String bizCode, String mainLoaner, String bankCode,
-            String bizType, Long dkAmount, String ywyUser, String teamCode) {
+    public String saveCdbiz(String bankCode, String bizType, Long dkAmount,
+            String ywyUser, String teamCode) {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.Cdbiz.getCode());
         Cdbiz cdbiz = new Cdbiz();
         cdbiz.setCode(code);
-        cdbiz.setBizCode(bizCode);
-        cdbiz.setMainLoaner(mainLoaner);
         cdbiz.setBankCode(bankCode);
         cdbiz.setBizType(bizType);
         cdbiz.setDkAmount(dkAmount);

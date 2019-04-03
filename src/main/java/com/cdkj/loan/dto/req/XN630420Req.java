@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630420Req {
@@ -77,6 +79,16 @@ public class XN630420Req {
     private String updater; // 最新修改人
 
     private String remark; // 备注
+
+    private List<String> configList;
+
+    public List<String> getConfigList() {
+        return configList;
+    }
+
+    public void setConfigList(List<String> configList) {
+        this.configList = configList;
+    }
 
     public String getOutsideColor() {
         return outsideColor;

@@ -3,6 +3,7 @@ package com.cdkj.loan.domain;
 import java.util.Date;
 
 import com.cdkj.loan.dao.base.ABaseDO;
+import com.cdkj.loan.enums.EBoolean;
 
 /**
 * 车辆配置
@@ -13,6 +14,10 @@ import com.cdkj.loan.dao.base.ABaseDO;
 public class Carconfig extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
+
+    public Carconfig() {
+        this.isConfig = EBoolean.NO.getCode();
+    }
 
     // 编号
     private String code;
@@ -31,6 +36,19 @@ public class Carconfig extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // ***************************
+
+    // 是否配置
+    private String isConfig;
+
+    public String getIsConfig() {
+        return isConfig;
+    }
+
+    public void setIsConfig(String isConfig) {
+        this.isConfig = isConfig;
+    }
 
     public void setCode(String code) {
         this.code = code;
