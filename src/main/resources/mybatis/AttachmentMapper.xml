@@ -8,6 +8,7 @@
 		<result column="attach_type" property="attachType" />
 		<result column="url" property="url" />
 	</resultMap>
+	
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
@@ -21,6 +22,7 @@
 			</if>
 		</trim>
 	</sql>
+	
 	<select id="select_attachment" parameterType="attachment" resultMap="attachment_DB_Result">
 		SELECT
 		t.code
@@ -59,14 +61,8 @@
 		)
 	</insert>
 
-	<update id="update_attachment" parameterType="attachment">
-		UPDATE tqj_attachment
-		SET
-		biz_code = #{bizCode}
-		,attach_type = #{attachType}
-		,url = #{url}
-		WHERE code = #{code}
-	</update>
-
+	<delete id="delete_attachmentByBiz">
+		DELETE FROM tqj_attachment WHERE biz_code = #{bizCode} AND attach_type = #{attachType}
+	</delete>
 
 </mapper>

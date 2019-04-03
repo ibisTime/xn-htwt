@@ -4,16 +4,12 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.dto.req.XN623540Req;
 
-//CHECK ��鲢��ע�� 
 public interface IAttachmentAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addAttachment(Attachment data);
-
-    public int dropAttachment(String code);
-
-    public int editAttachment(Attachment data);
+    public String addAttachment(XN623540Req req);
 
     public Paginable<Attachment> queryAttachmentPage(int start, int limit,
             Attachment condition);

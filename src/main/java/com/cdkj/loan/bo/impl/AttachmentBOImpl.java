@@ -14,54 +14,37 @@ import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
-//CHECK ��鲢��ע�� 
 @Component
-public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
-        IAttachmentBO {
+public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
+        implements IAttachmentBO {
 
     @Autowired
     private IAttachmentDAO attachmentDAO;
 
     @Override
-    public boolean isAttachmentExist(String code) {
-        Attachment condition = new Attachment();
-        condition.setCode(code);
-        if (attachmentDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
+    public String saveAttachment(String bizCode, String attachType,
+            String url) {
+        Attachment data = new Attachment();
 
-    @Override
-    public String saveAttachment(Attachment data) {
-        String code = null;
-        if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.attachment
-                .getCode());
-            data.setCode(code);
-            attachmentDAO.insert(data);
-        }
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.attachment.getCode());
+        data.setCode(code);
+        data.setBizCode(bizCode);
+        data.setAttachType(attachType);
+        data.setUrl(url);
+
+        attachmentDAO.insert(data);
         return code;
     }
 
     @Override
-    public int removeAttachment(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            Attachment data = new Attachment();
-            data.setCode(code);
-            count = attachmentDAO.delete(data);
-        }
-        return count;
-    }
+    public void removeAttachmentByBiz(String bizCode, String attachType) {
+        Attachment attachment = new Attachment();
 
-    @Override
-    public int refreshAttachment(Attachment data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            count = attachmentDAO.update(data);
-        }
-        return count;
+        attachment.setBizCode(bizCode);
+        attachment.setAttachType(attachType);
+
+        attachmentDAO.deleteByBiz(attachment);
     }
 
     @Override
@@ -77,9 +60,10 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
             condition.setCode(code);
             data = attachmentDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "附件不存在");
             }
         }
         return data;
     }
+
 }

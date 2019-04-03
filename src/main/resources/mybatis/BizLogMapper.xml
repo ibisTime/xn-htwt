@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBizLogDAO">
+	<resultMap id="bizLog_DB_Result" type="bizLog">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="ref_type" property="refType" />
+		<result column="ref_order" property="refOrder" />
+		<result column="deal_node" property="dealNode" />
+		
+		<result column="deal_note" property="dealNote" />
+		<result column="operate_role" property="operateRole" />
+		<result column="operator" property="operator" />
+		<result column="operator_name" property="operatorName" />
+		<result column="operator_mobile" property="operatorMobile" />
+		
+		<result column="start_datetime" property="startDatetime" />
+		<result column="end_datetime" property="endDatetime" />
+		<result column="speed_time" property="speedTime" />
+	</resultMap>
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="refType != null and refType != '' ">
+				AND t.ref_type = #{refType}
+			</if>
+			<if test="refOrder != null and refOrder != '' ">
+				AND t.ref_order = #{refOrder}
+			</if>
+			<if test="dealNode != null and dealNode != '' ">
+				AND t.deal_node = #{dealNode}
+			</if>
+			<if test="operateRole != null and operateRole != '' ">
+				AND t.operate_role = #{operateRole}
+			</if>
+			<if test="operator != null and operator != '' ">
+				AND t.operator = #{operator}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_bizLog" parameterType="bizLog" resultMap="bizLog_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.ref_type
+		,t.ref_order
+		,t.deal_node
+		
+		,t.deal_note
+		,t.operate_role
+		,t.operator
+		,t.operator_name
+		,t.operator_mobile
+		
+		,t.start_datetime
+		,t.end_datetime
+		,t.speed_time
+		FROM
+		tsys_biz_log t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_bizLog_count" parameterType="bizLog"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tsys_biz_log t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_bizLog" parameterType="bizLog">
+		INSERT INTO
+		tsys_biz_log(
+		code
+		,biz_code
+		,ref_type
+		,ref_order
+		,deal_node
+		
+		,deal_note
+		,operate_role
+		,operator
+		,operator_name
+		,operator_mobile
+		
+		,start_datetime
+		,end_datetime
+		,speed_time
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{refType}
+		,#{refOrder}
+		,#{dealNode}
+		
+		,#{dealNote}
+		,#{operateRole}
+		,#{operator}
+		,#{operatorName}
+		,#{operatorMobile}
+		
+		,#{startDatetime}
+		,#{endDatetime}
+		,#{speedTime}
+		)
+	</insert>
+
+</mapper>
