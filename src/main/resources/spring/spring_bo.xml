@@ -440,8 +440,13 @@
 	<bean id="bizTaskBO" class="com.cdkj.loan.bo.impl.BizTaskBOImpl">
 		<property name="paginableDAO" ref="bizTaskDAOImpl"/>
 	</bean>
+	
 	<bean id="cdbizBO" class="com.cdkj.loan.bo.impl.CdbizBOImpl">
 		<property name="paginableDAO" ref="cdbizDAOImpl"/>
+	</bean>
+	
+	<bean id="filePoolBO" class="com.cdkj.loan.bo.impl.FilePoolBOImpl">
+		<property name="paginableDAO" ref="filePoolDAOImpl"/>
 	</bean>
 	
 </beans>

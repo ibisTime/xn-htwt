@@ -64,7 +64,6 @@
 		<typeAlias alias="roleNode" type="com.cdkj.loan.domain.RoleNode" />
 		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
 
-
 		<!-- 全局  -->
 		<typeAlias alias="bizOrder" type="com.cdkj.loan.domain.BizOrder" />
 		<typeAlias alias="attachment" type="com.cdkj.loan.domain.Attachment" />
@@ -72,6 +71,8 @@
 		<typeAlias alias="bizTask" type="com.cdkj.loan.domain.BizTask" />
 		<typeAlias alias="cdbiz" type="com.cdkj.loan.domain.Cdbiz" />
 		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
+		
+		<typeAlias alias="filePool" type="com.cdkj.loan.domain.FilePool" />
 		
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />

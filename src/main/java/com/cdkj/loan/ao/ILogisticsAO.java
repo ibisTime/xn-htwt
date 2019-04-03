@@ -18,8 +18,8 @@ public interface ILogisticsAO {
 
     public void sendLogistics(XN632150Req req);
 
-    public BooleanRes receiveLogistics(String code, String operator,
-            String remark);
+    public BooleanRes receiveLogistics(String code, String approveResult,
+            String operator, String remark);
 
     public void sendAgainLogistics(String code, String operator, String remark);
 

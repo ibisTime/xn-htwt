@@ -1,38 +1,35 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ILogisticsAO;
+import com.cdkj.loan.ao.IFilePoolAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632152Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN623596Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 收件
+ * 分页查资源
  * @author: silver 
- * @since: 2018年5月30日 下午4:08:33 
+ * @since: Apr 2, 2019 5:44:17 PM 
  * @history:
  */
-public class XN632152 extends AProcessor {
-    private ILogisticsAO logisticsAO = SpringContextHolder
-        .getBean(ILogisticsAO.class);
+public class XN623596 extends AProcessor {
+    private IFilePoolAO filePoolAO = SpringContextHolder
+        .getBean(IFilePoolAO.class);
 
-    private XN632152Req req = null;
+    private XN623596Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        logisticsAO.sendAgainLogistics(req.getCode(), req.getOperator(),
-            req.getRemark());
-        return new BooleanRes(true);
+        return filePoolAO.getFilePool(req.getCode());
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632152Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN623596Req.class);
         ObjValidater.validateReq(req);
     }
 
