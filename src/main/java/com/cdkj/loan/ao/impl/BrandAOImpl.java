@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.bo.IBrandBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Brand;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630400Req;
 import com.cdkj.loan.dto.req.XN630402Req;
 import com.cdkj.loan.enums.EBrandStatus;
@@ -20,6 +22,9 @@ public class BrandAOImpl implements IBrandAO {
 
     @Autowired
     private IBrandBO brandBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addBrand(XN630400Req req) {
@@ -83,17 +88,34 @@ public class BrandAOImpl implements IBrandAO {
 
     @Override
     public Paginable<Brand> queryBrandPage(int start, int limit, Brand condition) {
-        return brandBO.getPaginable(start, limit, condition);
+        Paginable<Brand> page = brandBO.getPaginable(start, limit, condition);
+        for (Brand brand : page.getList()) {
+            initBrand(brand);
+        }
+        return page;
     }
 
     @Override
     public Brand getBrand(String code) {
-        return brandBO.getBrand(code);
+        Brand brand = brandBO.getBrand(code);
+        initBrand(brand);
+        return brand;
     }
 
     @Override
     public List<Brand> queryBrandList(Brand condition) {
-        return brandBO.queryBrand(condition);
+        List<Brand> brandList = brandBO.queryBrand(condition);
+        for (Brand brand : brandList) {
+            initBrand(brand);
+        }
+        return brandList;
+    }
+
+    private void initBrand(Brand brand) {
+        if (null != brand.getUpdater()) {
+            SYSUser sysUser = sysUserBO.getUser(brand.getUpdater());
+            brand.setSysUser(sysUser);
+        }
     }
 
 }
