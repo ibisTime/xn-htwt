@@ -53,11 +53,14 @@ public class BrandAOImpl implements IBrandAO {
     }
 
     @Override
-    public void upBrand(String code, String updater, String remark) {
+    public void upBrand(String code, String updater, String remark,
+            String location, int orderNo) {
         Brand brand = brandBO.getBrand(code);
         if (EBrandStatus.UP.getCode().equals(brand.getStatus())) {
             throw new BizException("xn0000", "品牌已上架,请勿重复上架");
         }
+        brand.setLocation(location);
+        brand.setOrderNo(orderNo);
         brand.setStatus(EBrandStatus.UP.getCode());
         brand.setUpdater(updater);
         brand.setUpdateDatetime(new Date());

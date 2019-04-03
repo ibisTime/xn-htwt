@@ -13,7 +13,6 @@
 		<result column="highest" property="highest" />
 		<result column="lowest" property="lowest" />
 		<result column="level" property="level" />
-		<result column="is_referee" property="isReferee" />
 		<result column="location" property="location" />
 		<result column="order_no" property="orderNo" />
 		<result column="status" property="status" />
@@ -29,9 +28,6 @@
 			</if>
 			<if test="level != null and level != '' ">
 				AND t.level = #{level}
-			</if>
-			<if test="isReferee != null and isReferee != '' ">
-				AND t.is_referee = #{isReferee}
 			</if>
 			<if test="brandCode != null and brandCode != '' ">
 				AND t.brand_code = #{brandCode}
@@ -81,7 +77,6 @@
 		,t.highest
 		,t.lowest
 		,t.level
-		,t.is_referee
 		,t.location
 		,t.order_no
 		,t.status
@@ -115,7 +110,6 @@
 		,highest
 		,lowest
 		,level
-		,is_referee
 		,location
 		,order_no
 		,status
@@ -134,7 +128,6 @@
 		,#{highest}
 		,#{lowest}
 		,#{level}
-		,#{isReferee}
 		,#{location}
 		,#{orderNo}
 		,#{status}
@@ -153,7 +146,6 @@
 		,pic_number=#{picNumber}      
 		,price = #{price}
 		,level=#{level}
-		,is_referee=#{isReferee}          
 		,updater = #{updater}        
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}         
@@ -167,7 +159,6 @@
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -176,7 +167,6 @@
 		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	

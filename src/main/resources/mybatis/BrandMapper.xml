@@ -107,7 +107,6 @@
 	<update id="update_brand" parameterType="brand">
 		UPDATE tht_brand SET
 		letter = #{letter}
-		,is_referee=#{isReferee}
 		,logo = #{logo}
 		,name = #{name}
 		,description = #{description}

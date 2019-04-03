@@ -4,6 +4,7 @@ import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN630403Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -25,7 +26,8 @@ public class XN630403 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        brandAO.upBrand(req.getCode(), req.getUpdater(), req.getRemark());
+        brandAO.upBrand(req.getCode(), req.getUpdater(), req.getRemark(),
+            req.getLocation(), StringValidater.toInteger(req.getOrderNo()));
         return new BooleanRes(true);
     }
 
