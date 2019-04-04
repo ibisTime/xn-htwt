@@ -4,28 +4,29 @@
 <mapper namespace="com.cdkj.loan.dao.ISYSBizLogDAO">
 	<resultMap id="sysBizLog_DB_Result" type="sysBizLog">
 		<result column="id" property="id" />
-		<result column="parent_order" property="parentOrder" />
+		<result column="biz_code" property="bizCode" />
 		<result column="ref_type" property="refType" />
 		<result column="ref_order" property="refOrder" />
 		<result column="deal_node" property="dealNode" />
+		
 		<result column="deal_note" property="dealNote" />
-		<result column="status" property="status" />
 		<result column="operate_role" property="operateRole" />
 		<result column="operator" property="operator" />
 		<result column="operator_name" property="operatorName" />
 		<result column="operator_mobile" property="operatorMobile" />
+		
 		<result column="start_datetime" property="startDatetime" />
 		<result column="end_datetime" property="endDatetime" />
 		<result column="speed_time" property="speedTime" />
-		<result column="team_code" property="teamCode" />
 	</resultMap>
+	
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="id != null and id != '' ">
+			<if test="id != null ">
 				AND t.id = #{id}
 			</if>
-			<if test="parentOrder != null and parentOrder != '' ">
-				AND t.parent_order = #{parentOrder}
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
 			</if>
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
@@ -35,9 +36,6 @@
 			</if>
 			<if test="dealNode != null and dealNode != '' ">
 				AND t.deal_node = #{dealNode}
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
 			</if>
 			<if test="operateRole != null and operateRole != '' ">
 				AND t.operate_role = #{operateRole}
@@ -63,9 +61,6 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
-			<if test="teamCode != null and teamCode != '' ">
-				AND t.team_code = #{teamCode}
-			</if>
 			<if test="isLogistics != null and isLogistics != ''">
 				AND b.is_logistics = #{isLogistics}
 			</if>
@@ -74,20 +69,20 @@
 	<select id="select_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		SELECT
 		t.id
-		,t.parent_order
+		,t.biz_code
 		,t.ref_type
 		,t.ref_order
 		,t.deal_node
+		
 		,t.deal_note
-		,t.status
 		,t.operate_role
 		,t.operator
 		,t.operator_name
 		,t.operator_mobile
+		
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
-		,t.team_code
 		FROM
 		tsys_biz_log t
 		<include refid="where_condition" />
@@ -98,7 +93,6 @@
 		</trim>
 	</select>
 	
-
 	<select id="select_sysBizLog_count" parameterType="sysBizLog"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tsys_biz_log t
@@ -108,143 +102,132 @@
 	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		(SELECT
 		t.id
-		,t.parent_order
+		,t.biz_code
 		,t.ref_type
 		,t.ref_order
 		,t.deal_node
+		
 		,t.deal_note
-		,t.status
 		,t.operate_role
 		,t.operator
 		,t.operator_name
 		,t.operator_mobile
+		
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
-		,t.team_code
-		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} and t.status = #{status}
+		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
+			left join tdq_budget_order b on b.code = t.parent_order 
+		where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} 
 		<if test="refType != null and refType != '' ">
     		AND t.ref_type = #{refType}
   		</if>
-		<if test="parentOrder != null and parentOrder != '' ">
-			AND t.parent_order = #{parentOrder}
-		</if>
-		<if test="teamCode != null and teamCode != '' ">
-			AND t.team_code = #{teamCode}
+		<if test="bizCode != null and bizCode != '' ">
+			AND t.biz_code = #{bizCode}
 		</if>
 		order by t.start_datetime desc)
 		union
 		(SELECT
 		t.id
-		,t.parent_order
+		,t.biz_code
 		,t.ref_type
 		,t.ref_order
 		,t.deal_node
+		
 		,t.deal_note
-		,t.status
 		,t.operate_role
 		,t.operator
 		,t.operator_name
 		,t.operator_mobile
+		
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
-		,t.team_code
-		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code where trn.role_code = #{roleCode} and t.ref_type = '012' and t.status = #{status}
+		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
+			where trn.role_code = #{roleCode} and t.ref_type = '012'
 		<if test="refType != null and refType != '' ">
     		AND t.ref_type = #{refType}
   		</if>
-		<if test="parentOrder != null and parentOrder != '' ">
-			AND t.parent_order = #{parentOrder}
-		</if>
-		<if test="teamCode != null and teamCode != '' ">
-			AND t.team_code = #{teamCode}
+		<if test="bizCode != null and bizCode != '' ">
+			AND t.biz_code = #{bizCode}
 		</if>
 		order by t.start_datetime desc)
 		union
 		(SELECT
 		t.id
-		,t.parent_order
+		,t.biz_code
 		,t.ref_type
 		,t.ref_order
 		,t.deal_node
+		
 		,t.deal_note
-		,t.status
 		,t.operate_role
 		,t.operator
 		,t.operator_name
 		,t.operator_mobile
+		
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
-		,t.team_code
-		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_credit c on t.parent_order = c.code where trn.role_code = #{roleCode} and t.ref_type = '001' and t.status = #{status} 
+		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
+			left join tdq_credit c on t.parent_order = c.code 
+			where trn.role_code = #{roleCode} and t.ref_type = '001'
 		<if test="refType != null and refType != '' ">
     		AND t.ref_type = #{refType}
   		</if>
-		<if test="parentOrder != null and parentOrder != '' ">
-			AND t.parent_order = #{parentOrder}
-		</if>
-		<if test="teamCode != null and teamCode != '' ">
-			AND t.team_code = #{teamCode}
+		<if test="bizCode != null and bizCode != '' ">
+			AND t.biz_code = #{bizCode}
 		</if>
 		order by t.start_datetime desc)
 	</select>
 	
-
 	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
 		resultType="java.lang.Long">
-         select count(*) from ((SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.parent_order where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} and t.status = #{status}
+         select count(*) from ((SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.ref_order where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} 
 		<if test="refType != null and refType != '' ">
     		AND t.ref_type = #{refType}
   		</if>
 		<if test="refOrder != null and refOrder != '' ">
 			AND t.ref_order = #{refOrder}
 		</if>
-		<if test="teamCode != null and teamCode != '' ">
-			AND t.team_code = #{teamCode}
-		</if>) 
+		) 
 		union
-		(SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code where trn.role_code = #{roleCode} and t.ref_type = '012' and t.status = #{status}
+		(SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code where trn.role_code = #{roleCode} and t.ref_type = '012'
 		<if test="refType != null and refType != '' ">
     		AND t.ref_type = #{refType}
   		</if>
 		<if test="refOrder != null and refOrder != '' ">
 			AND t.ref_order = #{refOrder}
 		</if>
-		<if test="teamCode != null and teamCode != '' ">
-			AND t.team_code = #{teamCode}
-		</if>) 
+		) 
 		union
-		(SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_credit c on t.parent_order = c.code where trn.role_code = #{roleCode} and t.ref_type = '001' and t.status = #{status} 
+		(SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_credit c on t.ref_order = c.code where trn.role_code = #{roleCode} and t.ref_type = '001'
 		<if test="refType != null and refType != '' ">
     		AND t.ref_type = #{refType}
   		</if>
 		<if test="refOrder != null and refOrder != '' ">
 			AND t.ref_order = #{refOrder}
 		</if>
-		<if test="teamCode != null and teamCode != '' ">
-			AND t.team_code = #{teamCode}
-		</if>)) a
+		)) a
 	</select>
 	
 	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		SELECT
 		t.id
-		,t.parent_order
+		,t.biz_code
 		,t.ref_type
 		,t.ref_order
 		,t.deal_node
+		
 		,t.deal_note
-		,t.status
 		,t.operate_role
 		,t.operator
 		,t.operator_name
 		,t.operator_mobile
+		
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
-		,t.team_code
 		FROM
 		tsys_biz_log t where t.id in (select max(id) FROM tsys_biz_log t
 		<include refid="where_condition" />)
@@ -254,57 +237,57 @@
 		INSERT INTO
 		tsys_biz_log(
 		id
-		,parent_order
+		,biz_code
 		,ref_type
 		,ref_order
 		,deal_node
+		
 		,deal_note
-		,status
 		,operate_role
 		,operator
 		,operator_name
 		,operator_mobile
+		
 		,start_datetime
 		,end_datetime
 		,speed_time
-		,team_code
 		)
 		VALUES(
 		#{id}
-		,#{parentOrder}
+		,#{bizCode}
 		,#{refType}
 		,#{refOrder}
 		,#{dealNode}
+		
 		,#{dealNote}
-		,#{status}
 		,#{operateRole}
 		,#{operator}
 		,#{operatorName}
 		,#{operatorMobile}
+		
 		,#{startDatetime}
 		,#{endDatetime}
 		,#{speedTime}
-		,#{teamCode}
 		)
 	</insert>
 
 	<update id="update_sysBizLog" parameterType="sysBizLog">
 		UPDATE tsys_biz_log
 		SET
-		parent_order = #{parentOrder}
+		biz_code = #{bizCode}
 		,ref_type = #{refType}
 		,ref_order = #{refOrder}
 		,deal_node = #{dealNode}
+		
 		,deal_note = #{dealNote}
-		,status = #{status}
 		,operate_role = #{operateRole}
 		,operator = #{operator}
 		,operator_name = #{operatorName}
 		,operator_mobile = #{operatorMobile}
+		
 		,start_datetime = #{startDatetime}
 		,end_datetime = #{endDatetime}
 		,speed_time = #{speedTime}
-		,team_code = #{teamCode}
 		WHERE id = #{id}
 	</update>
 	
@@ -323,7 +306,7 @@
 		WHERE 
 		ref_order=#{refOrder}) b 
 		WHERE  
-		a.ref_order=b.ref_order and a.end_datetime=b.end_datetime and a.status = '1'
+		a.ref_order=b.ref_order and a.end_datetime=b.end_datetime
 	</select>
 	
 	<select id="select_latest_operate_credit_by_bizCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
@@ -333,26 +316,26 @@
 		WHERE 
 		ref_order=#{refOrder}) b 
 		WHERE  
-		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime and a.status = '1' and a.deal_node = '001_02'
+		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime and a.deal_node = '001_02'
 	</select>
 	
 	<select id="select_sysBizLog_byBizOrderType" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		SELECT
 		t.id
-		,t.parent_order
+		,t.biz_code
 		,t.ref_type
 		,t.ref_order
 		,t.deal_node
+		
 		,t.deal_note
-		,t.status
 		,t.operate_role
 		,t.operator
 		,t.operator_name
 		,t.operator_mobile
+		
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
-		,t.team_code
 		FROM
 		tsys_biz_log t  
 		WHERE t.ref_order LIKE CONCAT(#{bizOrderType},'%') GROUP BY t.ref_order

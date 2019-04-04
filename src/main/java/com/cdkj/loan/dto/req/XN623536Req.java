@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 详细查操作日志
  * @author: silver 
@@ -7,14 +9,15 @@ package com.cdkj.loan.dto.req;
  * @history:
  */
 public class XN623536Req {
-    private String code;
+    @NotBlank
+    private int id;
 
-    public String getCode() {
-        return code;
+    public int getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

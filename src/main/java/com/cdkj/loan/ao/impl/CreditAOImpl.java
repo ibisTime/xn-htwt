@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IBankBO;
-import com.cdkj.loan.bo.IBizLogBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
@@ -61,6 +60,13 @@ import com.cdkj.loan.exception.BizException;
  * @since: 2018年5月25日 下午3:09:48 
  * @history:
  */
+
+/**
+ * 征信
+ * @author: jiafr 
+ * @since: 2018年5月25日 下午3:09:48 
+ * @history:
+ */
 @Service
 public class CreditAOImpl implements ICreditAO {
 
@@ -97,9 +103,6 @@ public class CreditAOImpl implements ICreditAO {
     @Autowired
     private IBizTaskBO bizTaskBO;
 
-    @Autowired
-    private IBizLogBO bizLogBO;
-
     @Override
     @Transactional
     public String addCredit(XN632110Req req) {
@@ -121,8 +124,8 @@ public class CreditAOImpl implements ICreditAO {
 
         // 新增征信单
         Credit credit = new Credit();
-        credit.setBizCode(bizCode);
         credit.setLoanBankCode(req.getLoanBankCode());
+        credit.setBizCode(bizCode);
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setBizType(req.getBizType());
         credit.setSecondCarReport(req.getSecondCarReport());
@@ -184,8 +187,8 @@ public class CreditAOImpl implements ICreditAO {
         creditBO.setApplyUserInfo(credit);
 
         // 操作日志
-        bizLogBO.saveBizLog(bizCode, EBizLogType.CREDIT.getCode(), creditCode,
-            ENode.new_credit.getCode(), req.getNote(), sysUser);
+        sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT, creditCode,
+            ENode.new_credit.getCode(), req.getNote(), sysUser.getUserId());
 
         // 待办事项
         bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, creditCode,
@@ -220,8 +223,7 @@ public class CreditAOImpl implements ICreditAO {
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), curNodeCode,
-            credit.getCurNodeCode(), null, req.getOperator(),
-            credit.getTeamCode());
+            credit.getCurNodeCode(), null, req.getOperator());
     }
 
     @Override
@@ -297,8 +299,7 @@ public class CreditAOImpl implements ICreditAO {
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
-            credit.getCurNodeCode(), null, req.getOperator(),
-            credit.getTeamCode());
+            credit.getCurNodeCode(), null, req.getOperator());
     }
 
     @Override
@@ -418,13 +419,11 @@ public class CreditAOImpl implements ICreditAO {
 
             // 准入单开始的日志记录
             sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
-                budgetCode, EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode(),
-                credit.getTeamCode());
+                budgetCode, EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
 
             // 面签开始的日志记录
             sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
-                budgetCode, EBudgetOrderNode.INTERVIEW.getCode(),
-                credit.getTeamCode());
+                budgetCode, EBudgetOrderNode.INTERVIEW.getCode());
 
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
@@ -434,7 +433,7 @@ public class CreditAOImpl implements ICreditAO {
             sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
                 EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
                 credit.getCurNodeCode(), req.getApproveNote(),
-                req.getOperator(), credit.getTeamCode());
+                req.getOperator());
         }
 
         creditBO.refreshCreditNode(credit);
@@ -488,8 +487,7 @@ public class CreditAOImpl implements ICreditAO {
         }
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
-            credit.getCurNodeCode(), null, req.getOperator(),
-            credit.getTeamCode());
+            credit.getCurNodeCode(), null, req.getOperator());
         creditBO.refreshInputBankCreditResult(credit);
 
     }
@@ -509,10 +507,9 @@ public class CreditAOImpl implements ICreditAO {
         creditBO.cancelCredit(credit);
 
         sysBizLogBO.recordCurOperate(credit.getCode(), EBizLogType.CREDIT,
-            credit.getCode(), preCurNodeCode, null, operator,
-            credit.getTeamCode());
+            credit.getCode(), preCurNodeCode, null, operator);
         sysBizLogBO.saveSYSBizLog(credit.getCode(), EBizLogType.CREDIT,
-            credit.getCode(), credit.getCurNodeCode(), credit.getTeamCode());
+            credit.getCode(), credit.getCurNodeCode());
     }
 
     @Override

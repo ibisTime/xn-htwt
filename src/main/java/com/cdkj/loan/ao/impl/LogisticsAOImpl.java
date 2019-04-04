@@ -133,7 +133,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     EBizLogType.GPS_LOGISTICS, logistics.getCode(),
                     ELogisticsStatus.SEND.getCode(),
                     ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
-                    req.getOperator(), null);
+                    req.getOperator());
             }
 
         } else {
@@ -435,8 +435,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.LOGISTICS, logisticsCode,
-                EBudgetOrderNode.DHAPPROVEDATA.getCode(),
-                budgetOrder.getTeamCode());
+                EBudgetOrderNode.DHAPPROVEDATA.getCode());
         }
     }
 }

@@ -28,10 +28,9 @@ public class XN630175 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSBizLog condition = new SYSBizLog();
-        condition.setParentOrder(req.getParentOrder());
+        condition.setBizCode(req.getParentOrder());
         condition.setRefType(req.getRefType());
         condition.setRefOrder(req.getRefOrder());
-        condition.setStatus(req.getStatus());
         condition.setOperateRole(req.getOperateRole());
         condition.setOperator(req.getOperator());
         condition.setOperatorName(req.getOperatorName());
