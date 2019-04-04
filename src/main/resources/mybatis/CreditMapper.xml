@@ -4,6 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.ICreditDAO">
 	<resultMap id="credit_DB_Result" type="credit">
 		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
 		<result column="loan_bank_code" property="loanBankCode" />
 		<result column="loan_amount" property="loanAmount" />
 		<result column="biz_type" property="bizType" />
@@ -28,6 +29,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
 			</if>
 			<if test="budgetCodeQuery != null and budgetCodeQuery != '' ">
 				AND t.budget_code like "%"#{budgetCodeQuery}"%"
@@ -96,6 +100,7 @@
 	<select id="select_credit" parameterType="credit" resultMap="credit_DB_Result">
 		select 
 		t.code
+		,t.biz_code
 		,t.loan_bank_code
 		,t.loan_amount
 		,t.biz_type
@@ -132,6 +137,7 @@
 		select 
 		distinct
 		t.code
+		,t.biz_code
 		,t.loan_bank_code
 		,t.loan_amount
 		,t.biz_type
@@ -174,6 +180,7 @@
 	<select id="select_credit_byIsCancel" parameterType="credit" resultMap="credit_DB_Result">
 		SELECT 
 		t.code
+		,t.biz_code
 		,t.loan_bank_code
 		,t.loan_amount
 		,t.biz_type
@@ -210,6 +217,7 @@
 	<select id="select_credit_byNotCancel" parameterType="credit" resultMap="credit_DB_Result">
 		SELECT 
 		t.code
+		,t.biz_code
 		,t.loan_bank_code
 		,t.loan_amount
 		,t.biz_type
@@ -241,6 +249,7 @@
 	<insert id="insert_credit" parameterType="credit">
 		INSERT INTO tdq_credit(
 		code
+		,biz_code
 		,loan_bank_code
 		,loan_amount
 		,biz_type
@@ -256,6 +265,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{bizCode}
 		,#{loanBankCode}
 		,#{loanAmount}
 		,#{bizType}

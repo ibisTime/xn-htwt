@@ -307,8 +307,7 @@ public class CarAOImpl implements ICarAO {
             for (Carconfig carconfig : configs) {
                 if (carconfig.getCode().equals(carCarconfig.getConfigCode())) {
                     carconfig.setIsConfig(EBoolean.YES.getCode());
-                } else if (!EBoolean.YES.getCode().equals(
-                    carconfig.getIsConfig())) {
+                } else if (null == carconfig.getIsConfig()) {
                     carconfig.setIsConfig(EBoolean.NO.getCode());
                 }
             }

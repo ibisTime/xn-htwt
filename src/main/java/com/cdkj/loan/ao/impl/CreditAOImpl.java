@@ -114,8 +114,14 @@ public class CreditAOImpl implements ICreditAO {
                 "您还未设置团队，暂无法申请!");
         }
 
+        // 新建业务单
+        String bizCode = cdbizBO.saveCdbiz(req.getLoanBankCode(),
+            req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
+            req.getOperator(), sysUser.getTeamCode());
+
         // 新增征信单
         Credit credit = new Credit();
+        credit.setBizCode(bizCode);
         credit.setLoanBankCode(req.getLoanBankCode());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setBizType(req.getBizType());
@@ -176,11 +182,6 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         creditBO.setApplyUserInfo(credit);
-
-        // 新建业务单
-        String bizCode = cdbizBO.saveCdbiz(req.getLoanBankCode(),
-            req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
-            req.getOperator(), sysUser.getTeamCode());
 
         // 操作日志
         bizLogBO.saveBizLog(bizCode, EBizLogType.CREDIT.getCode(), creditCode,

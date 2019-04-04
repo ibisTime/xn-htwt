@@ -18,6 +18,9 @@ public class Credit extends ABaseDO {
     // 编号
     private String code;
 
+    // 业务编号
+    private String bizCode;
+
     // 贷款银行编号
     private String loanBankCode;
 
@@ -410,6 +413,14 @@ public class Credit extends ABaseDO {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
 }
