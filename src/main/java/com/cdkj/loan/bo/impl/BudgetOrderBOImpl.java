@@ -322,8 +322,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         // 准入单日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
-            budgetOrder.getIntevCurNodeCode(), null, operator,
-            budgetOrder.getTeamCode());
+            budgetOrder.getIntevCurNodeCode(), null, operator);
         if (EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode()
             .equals(nodeFlow.getCurrentNode())
                 || EBudgetOrderNode.DHAPPROVEDATA.getCode()
@@ -340,8 +339,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
-                newLogisticsCode, budgetOrder.getIntevCurNodeCode(),
-                budgetOrder.getTeamCode());
+                newLogisticsCode, budgetOrder.getIntevCurNodeCode());
             result = EBoolean.YES.getCode();
 
         }
@@ -366,8 +364,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         // 日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
-            budgetOrder.getCurNodeCode(), null, operator,
-            budgetOrder.getTeamCode());
+            budgetOrder.getCurNodeCode(), null, operator);
 
         if (EBudgetOrderNode.YWDH_APPROVE.getCode()
             .equals(nodeFlow.getCurrentNode())) {
@@ -381,8 +378,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
-                newLogisticsCode, budgetOrder.getCurNodeCode(),
-                budgetOrder.getTeamCode());
+                newLogisticsCode, budgetOrder.getCurNodeCode());
             result = EBoolean.YES.getCode();
 
         }

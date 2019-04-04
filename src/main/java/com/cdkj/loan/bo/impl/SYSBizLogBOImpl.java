@@ -18,7 +18,6 @@ import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -32,16 +31,15 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
     private ISYSUserBO sysUserBO;
 
     @Override
-    public void recordCurOperate(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote, String operator,
-            String teamCode) {
+    public void recordCurOperate(String bizCode, EBizLogType refType,
+            String refOrder, String dealNode, String dealNote,
+            String operator) {
         SYSBizLog data = new SYSBizLog();
-        data.setParentOrder(parentOrder);
+        data.setBizCode(bizCode);
         data.setRefType(refType.getCode());
         data.setRefOrder(refOrder);
         data.setDealNode(dealNode);
         data.setDealNote(dealNote);
-        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
         SYSUser sysUser = sysUserBO.getUser(operator);
         data.setOperateRole(sysUser.getRoleCode());
         data.setOperator(sysUser.getUserId());
@@ -50,35 +48,31 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         data.setStartDatetime(new Date());
         data.setEndDatetime(new Date());
         data.setSpeedTime("0");
-        data.setTeamCode(teamCode);
         sysBizLogDAO.insert(data);
     }
 
     @Override
-    public void saveSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String teamCode) {
+    public void saveSYSBizLog(String bizCode, EBizLogType refType,
+            String refOrder, String dealNode) {
         SYSBizLog data = new SYSBizLog();
-        data.setParentOrder(parentOrder);
+        data.setBizCode(bizCode);
         data.setRefType(refType.getCode());
         data.setRefOrder(refOrder);
         data.setDealNode(dealNode);
-        data.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         data.setStartDatetime(new Date());
-        data.setTeamCode(teamCode);
         sysBizLogDAO.insert(data);
     }
 
     // 系统用户记录日志
     @Override
-    public void saveNewAndPreEndSYSBizLog(String parentOrder,
-            EBizLogType refType, String refOrder, String preDealNode,
-            String nowDealNode, String preDealNote, String operator,
-            String teamCode) {
+    public void saveNewAndPreEndSYSBizLog(String bizCode, EBizLogType refType,
+            String refOrder, String preDealNode, String nowDealNode,
+            String preDealNote, String operator) {
         // 处理之前节点
         refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode,
             preDealNote, operator);
         // 保存新节点
-        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode, teamCode);
+        saveSYSBizLog(bizCode, refType, refOrder, nowDealNode);
     }
 
     @Override
@@ -87,7 +81,6 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         SYSBizLog data = getSYSBizLoglatest(refType, refOrder, dealNode);
         if (null != data) {
             SYSUser sysUser = sysUserBO.getUser(operator);
-            data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
             data.setOperateRole(sysUser.getRoleCode());
             data.setOperator(sysUser.getUserId());
             data.setOperatorName(sysUser.getLoginName());
@@ -157,7 +150,6 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         if (StringUtils.isNotBlank(bizCode)) {
             SYSBizLog condition = new SYSBizLog();
             condition.setRefOrder(bizCode);
-            condition.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
             // sysBizLog =
             // sysBizLogDAO.getLatestOperateRecordByBizCode(condition);
             // 找最新一条，线上数据有时间重复的，会报错
@@ -175,7 +167,6 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         if (StringUtils.isNotBlank(bizCode)) {
             SYSBizLog condition = new SYSBizLog();
             condition.setRefOrder(bizCode);
-            condition.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
             sysBizLog = sysBizLogDAO.getLatestOperateCreditByBizCode(condition);
         }
         return sysBizLog;
@@ -198,7 +189,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
     @Override
     public SYSBizLog getApplyBudgetOrderOperator(String code, String node) {
         SYSBizLog condition = new SYSBizLog();
-        condition.setParentOrder(code);
+        condition.setBizCode(code);
         condition.setDealNode(node);
         List<SYSBizLog> selectList = sysBizLogDAO.selectList(condition);
         if (CollectionUtils.isEmpty(selectList)) {

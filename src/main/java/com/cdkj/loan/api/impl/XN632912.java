@@ -6,7 +6,6 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.dto.req.XN632912Req;
-import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -27,8 +26,6 @@ public class XN632912 extends AProcessor {
     public Object doBusiness() throws BizException {
         SYSBizLog condition = new SYSBizLog();
         condition.setRoleCode(req.getRoleCode());
-        condition.setTeamCode(req.getTeamCode());
-        condition.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());
         return sysBizLogAO.todoListAPP(condition);
     }
 

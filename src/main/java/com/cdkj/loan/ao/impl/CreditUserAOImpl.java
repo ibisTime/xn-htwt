@@ -84,12 +84,10 @@ public class CreditUserAOImpl implements ICreditUserAO {
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
-        ENode currentNode = ENode.getMap()
-            .get(credit.getCurNodeCode());
+        ENode currentNode = ENode.getMap().get(credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator(),
-            credit.getTeamCode());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
     }
 

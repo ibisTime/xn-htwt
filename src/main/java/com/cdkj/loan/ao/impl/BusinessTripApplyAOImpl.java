@@ -144,9 +144,9 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         // 日志记录
         sysBizLogBO.recordCurOperate(code, EBizLogType.BUSINESS_TRIP_APPLY,
             code, EBusinessTripApplyNode.APPLY.getCode(), req.getApplyNote(),
-            req.getUpdater(), null);
+            req.getUpdater());
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUSINESS_TRIP_APPLY, code,
-            EBusinessTripApplyNode.DEPARTMENT_AUDIT.getCode(), null);
+            EBusinessTripApplyNode.DEPARTMENT_AUDIT.getCode());
 
         return code;
     }
@@ -182,7 +182,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         }
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preCurNodeCode,
-            data.getCurNodeCode(), approveNote, operator, null);
+            data.getCurNodeCode(), approveNote, operator);
         businessTripApplyBO.departmentAudit(data);
     }
 
@@ -209,7 +209,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
         }
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preCurNodeCode,
-            data.getCurNodeCode(), approveNote, operator, null);
+            data.getCurNodeCode(), approveNote, operator);
         businessTripApplyBO.financeAudit(data);
     }
 
@@ -238,7 +238,7 @@ public class BusinessTripApplyAOImpl implements IBusinessTripApplyAO {
             data.setCurNodeCode(currentNode.getBackNode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
                 EBizLogType.BUSINESS_TRIP_APPLY, data.getCode(), preCurNodeCode,
-                data.getCurNodeCode(), approveNote, operator, null);
+                data.getCurNodeCode(), approveNote, operator);
         }
         businessTripApplyBO.generalAudit(data);
     }
