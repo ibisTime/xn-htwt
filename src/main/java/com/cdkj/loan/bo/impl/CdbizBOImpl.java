@@ -72,7 +72,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbiz.setBankCode(bankCode);
         cdbiz.setBizType(bizType);
         cdbiz.setDkAmount(dkAmount);
-        cdbiz.setStatus(ECdbizStatus.A1.getCode());
+        cdbiz.setStatus(ECdbizStatus.A0.getCode());
         cdbiz.setZfStatus("0");
         cdbiz.setYwyUser(ywyUser);
         cdbiz.setTeamCode(teamCode);
@@ -90,5 +90,35 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     public void refreshStatus(Cdbiz cdbiz, String status) {
         cdbiz.setStatus(status);
         cdbizDAO.updateStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshMqStatus(Cdbiz cdbiz, String status) {
+        cdbiz.setMqStatus(status);
+        cdbizDAO.updateMqStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshFbhgpsStatus(Cdbiz cdbiz, String status) {
+        cdbiz.setFbhgpsStatus(status);
+        cdbizDAO.updateFbhgpsStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshFircundangStatus(Cdbiz cdbiz, String status) {
+        cdbiz.setFircundangStatus(status);
+        cdbizDAO.updateFircundangStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshSeccundangStatus(Cdbiz cdbiz, String status) {
+        cdbiz.setSeccundangStatus(status);
+        cdbizDAO.updateSeccundangStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshZfStatus(Cdbiz cdbiz, String status) {
+        cdbiz.setZfStatus(status);
+        cdbizDAO.updateZfStatus(cdbiz);
     }
 }

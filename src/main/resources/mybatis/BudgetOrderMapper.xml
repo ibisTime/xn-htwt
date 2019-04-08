@@ -4,6 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IBudgetOrderDAO">
 	<resultMap id="budgetOrder_DB_Result" type="budgetOrder">
 		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
 		<result column="loan_product_code" property="loanProductCode" />
 		<result column="loan_product_name" property="loanProductName" />
@@ -346,6 +347,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
 			<if test="codeQuery != null and codeQuery != '' ">
 				AND t.code like "%"#{codeQuery}"%"
 			</if>
@@ -495,6 +499,7 @@
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
+		,t.biz_code
 		,t.repay_biz_code
 		,t.loan_product_code
 		,t.loan_product_name
@@ -840,6 +845,7 @@
 	<select id="select_budgetOrderList" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
+		,t.biz_code
 		,t.repay_biz_code
 		,t.loan_product_code
 		,t.loan_product_name
@@ -933,6 +939,7 @@
 	<select id="select_budgetOrder_byApplyUserName" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
+		,t.biz_code
 		,t.apply_user_name
 		,t.mobile
 		,t.car_frame_no
@@ -956,6 +963,7 @@
 		SELECT
 		distinct
 		t.code
+		,t.biz_code
 		,t.repay_biz_code
 		,t.loan_product_code
 		,t.loan_product_name
@@ -1359,6 +1367,7 @@
 		INSERT INTO
 		tdq_budget_order(
 		code
+		,biz_code
 		,loan_product_code
 		,loan_product_name
 		,region
@@ -1618,6 +1627,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{bizCode}
 		,#{loanProductCode}
 		,#{loanProductName}
 		,#{region}
@@ -1877,7 +1887,8 @@
 	<update id="update_budgetOrder" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		loan_product_code = #{loanProductCode}
+		biz_code=#{bizCode}
+		,loan_product_code = #{loanProductCode}
 		,loan_product_name = #{loanProductName}
 		,region = #{region}
 		,loan_bank = #{loanBank}

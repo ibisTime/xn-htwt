@@ -8,4 +8,14 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
     String NAMESPACE = ICdbizDAO.class.getName().concat(".");
 
     public int updateStatus(Cdbiz data);
+
+    public int updateMqStatus(Cdbiz data);
+
+    public int updateFbhgpsStatus(Cdbiz data);
+
+    public int updateFircundangStatus(Cdbiz data);
+
+    public int updateSeccundangStatus(Cdbiz data);
+
+    public int updateZfStatus(Cdbiz data);
 }

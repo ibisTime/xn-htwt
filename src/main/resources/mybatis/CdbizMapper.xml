@@ -151,6 +151,41 @@
 		status=#{status}
 		WHERE code=#{code}
 	</update>
+	
+	<update id="update_mqStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		mq_status=#{mqStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_fbhgpsStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		fbhgps_status=#{fbhgpsStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_fircundangStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		fircundang_status=#{fircundangStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_seccundangStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		seccundang_status=#{seccundangStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_zfStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		zf_status=#{zfStatus}
+		WHERE code=#{code}
+	</update>
 
 
 </mapper>

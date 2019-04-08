@@ -23,4 +23,14 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     public void refreshStatus(Cdbiz cdbiz, String status);
 
+    public void refreshMqStatus(Cdbiz cdbiz, String status);
+
+    public void refreshFbhgpsStatus(Cdbiz cdbiz, String status);
+
+    public void refreshFircundangStatus(Cdbiz cdbiz, String status);
+
+    public void refreshSeccundangStatus(Cdbiz cdbiz, String status);
+
+    public void refreshZfStatus(Cdbiz cdbiz, String status);
+
 }

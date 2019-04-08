@@ -15,6 +15,12 @@ public enum ENode {
     new_credit("a1", "新录征信资料"), input_credit("a2", "录入征信结果"), approve_credit(
             "a3", "审核征信"), renew_credit("ax1", "重录征信资料"),
 
+    // 200准入单节点
+    input_budget("b1", "录入准入单资料"),
+
+    // 200面签节点
+    input_interview("b01", "新录面签信息"),
+
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(
             "001_02", "录入征信结果"), AUDIT("001_03", "风控专员审核"), ACHIEVE("001_04",

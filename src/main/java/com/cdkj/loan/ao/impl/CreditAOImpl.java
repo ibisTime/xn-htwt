@@ -28,6 +28,7 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
@@ -48,6 +49,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ENode;
@@ -144,6 +146,9 @@ public class CreditAOImpl implements ICreditAO {
                 nodeFlowBO.getNodeFlowByCurrentNode(ENode.new_credit.getCode())
                     .getNextNode());
             credit.setCurNodeCode(currentNode.getCode());
+            // 修改业务主状态
+            cdbizBO.refreshStatus(cdbizBO.getCdbiz(bizCode),
+                ECdbizStatus.A1.getCode());
         }
 
         String creditCode = creditBO.saveCredit(credit);
@@ -185,21 +190,19 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         creditBO.setApplyUserInfo(credit);
-
-        // 操作日志
-        sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT, creditCode,
-            ENode.new_credit.getCode(), req.getNote(), sysUser.getUserId());
-
+        if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
+            // 操作日志
+            sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT,
+                creditCode, ENode.new_credit.getCode(), req.getNote(),
+                sysUser.getUserId());
+        } else {
+            currentNode = ENode.getMap().get(
+                nodeFlowBO.getNodeFlowByCurrentNode(ENode.new_credit.getCode())
+                    .getBackNode());
+        }
         // 待办事项
         bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, creditCode,
             currentNode);
-
-        // // 日志记录
-        // sysBizLogBO.recordCurOperate(creditCode, EBizLogType.CREDIT,
-        // creditCode, ECreditNode.FILLIN_CREDIT.getCode(), req.getNote(),
-        // req.getOperator(), credit.getTeamCode());
-        // sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,
-        // currentNode.getCode(), credit.getTeamCode());
 
         return creditCode;
     }
@@ -234,15 +237,11 @@ public class CreditAOImpl implements ICreditAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "根据征信单编号查询不到征信单");
         }
-
-        if (ENode.ACHIEVE.getCode().equals(credit.getCurNodeCode())) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
+        if (!ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())
+                || !ECdbizStatus.A0.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前征信申请已审核通过，不能操作");
-        }
-
-        if (ENode.INPUT_CREDIT_RESULT.getCode().equals(credit.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前征信节点处于征信结果录入，不能修改");
+                "该业务不处于征信审核不通过或新录状态状态，无法修改征信");
         }
 
         // 修改征信单
@@ -258,6 +257,9 @@ public class CreditAOImpl implements ICreditAO {
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getNextNode());
+
+            // 修改业务主状态
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A2.getCode());
         }
         creditBO.refreshCredit(credit);
 
@@ -297,9 +299,9 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
-            EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
-            credit.getCurNodeCode(), null, req.getOperator());
+        sysBizLogBO.recordCurOperate(credit.getBizCode(), EBizLogType.CREDIT,
+            credit.getCode(), ENode.renew_credit.getCode(),
+            ENode.renew_credit.getValue(), req.getOperator());
     }
 
     @Override
@@ -376,14 +378,15 @@ public class CreditAOImpl implements ICreditAO {
     @Transactional
     public void audit(XN632113Req req) {
         Credit credit = creditBO.getMoreCredit(req.getCode());
-        if (null == credit) {
+
+        Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
+        sysUserBO.getUser(req.getOperator());
+        // 业务状态判断
+        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "根据征信单编号查询不到征信单");
+                "该业务不处于待审核征信状态");
         }
-        if (!ENode.AUDIT.getCode().equals(credit.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是风控专员审核节点，不能操作");
-        }
+
         // 当前节点
         String preCurrentNode = credit.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
@@ -405,36 +408,34 @@ public class CreditAOImpl implements ICreditAO {
             // 审核通过，改变节点
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getNextNode());
+            // 修改业务状态
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode());
+            // 业务出现面签状态
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B1.getCode());
             // 保存准入单
             String budgetCode = budgetOrderBO.saveBudgetOrder(credit,
                 req.getCreditUserList());
 
-            // 准入单编号回写征信单
-            credit.setBudgetCode(budgetCode);
+            // 准入单开始的待办事项
+            bizTaskBO.saveBizTask(credit.getBizCode(),
+                EBizLogType.BUDGET_ORDER, budgetCode, ENode.input_budget);
 
-            // 征信结束的日志记录
-            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.CREDIT.getCode(),
-                credit.getCode(), preCurrentNode, req.getApproveNote(),
-                req.getOperator());
-
-            // 准入单开始的日志记录
-            sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
-                budgetCode, EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-
-            // 面签开始的日志记录
-            sysBizLogBO.saveSYSBizLog(budgetCode, EBizLogType.BUDGET_ORDER,
-                budgetCode, EBudgetOrderNode.INTERVIEW.getCode());
-
+            // 面签开始的待办事项
+            bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.INTERVIEW,
+                budgetCode, ENode.input_interview);
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getBackNode());
 
-            // 日志记录
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
-                EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-                credit.getCurNodeCode(), req.getApproveNote(),
-                req.getOperator());
+            // 业务状态修改
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1x.getCode());
+
         }
+
+        // 日志记录
+        sysBizLogBO.recordCurOperate(credit.getBizCode(), EBizLogType.CREDIT,
+            credit.getCode(), preCurrentNode, req.getApproveNote(),
+            req.getOperator());
 
         creditBO.refreshCreditNode(credit);
 

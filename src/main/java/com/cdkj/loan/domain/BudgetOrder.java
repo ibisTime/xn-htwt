@@ -18,6 +18,9 @@ public class BudgetOrder extends ABaseDO {
     // 编号
     private String code;
 
+    // 业务编号
+    private String bizCode;
+
     // 还款业务编号
     private String repayBizCode;
 
@@ -1375,6 +1378,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setIsLogistics(String isLogistics) {
         this.isLogistics = isLogistics;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
     public String getCompanyName() {
