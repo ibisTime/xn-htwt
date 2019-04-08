@@ -37,7 +37,7 @@ CREATE TABLE `tqj_file_pool` (
 
 DROP TABLE IF EXISTS `tsys_biz_log`;
 CREATE TABLE `tsys_biz_log` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `biz_code` varchar(32) NOT NULL COMMENT '业务编号',
   `ref_type` varchar(32) NOT NULL COMMENT '关联订单类型',
   `ref_order` varchar(32) NOT NULL COMMENT '关联订单编号',
@@ -50,5 +50,5 @@ CREATE TABLE `tsys_biz_log` (
   `start_datetime` datetime NOT NULL COMMENT '操作开始时间',
   `end_datetime` datetime DEFAULT NULL COMMENT '操作结束时间',
   `speed_time` varchar(255) DEFAULT NULL COMMENT '花费时间(单位：秒)',
-  PRIMARY KEY (`code`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '操作日志表';
