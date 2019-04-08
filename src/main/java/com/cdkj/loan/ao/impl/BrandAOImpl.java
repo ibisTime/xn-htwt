@@ -70,7 +70,7 @@ public class BrandAOImpl implements IBrandAO {
         brand.setUpdater(updater);
         brand.setUpdateDatetime(new Date());
         brand.setRemark(remark);
-        brandBO.editBrand(brand);
+        brandBO.upBrand(brand);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class BrandAOImpl implements IBrandAO {
         brand.setUpdater(updater);
         brand.setUpdateDatetime(new Date());
         brand.setRemark(remark);
-        brandBO.editBrand(brand);
+        brandBO.downBrand(brand);
     }
 
     @Override

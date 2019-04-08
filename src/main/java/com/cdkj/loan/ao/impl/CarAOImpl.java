@@ -300,15 +300,16 @@ public class CarAOImpl implements ICarAO {
         condition.setType(EActionType.collect.getCode());
         Long collectNumber = actionBO.getTotalCount(condition);
         car.setCollectNumber(collectNumber);
+        // 车型下配置列表
         List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
             .getCode());
+        // 所有配置
         List<Carconfig> configs = carconfigBO.queryCarconfigList(null);
         for (CarCarconfig carCarconfig : configList) {
             for (Carconfig carconfig : configs) {
                 if (carconfig.getCode().equals(carCarconfig.getConfigCode())) {
                     carconfig.setIsConfig(EBoolean.YES.getCode());
-                } else if (!EBoolean.YES.getCode().equals(
-                    carconfig.getIsConfig())) {
+                } else if (null == carconfig.getIsConfig()) {
                     carconfig.setIsConfig(EBoolean.NO.getCode());
                 }
             }
@@ -317,6 +318,7 @@ public class CarAOImpl implements ICarAO {
         }
 
         car.setCaonfigList(configList);
+        car.setConfigs(configs);
 
     }
 
