@@ -32,6 +32,7 @@ import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632099Req;
@@ -195,10 +196,6 @@ public class CreditAOImpl implements ICreditAO {
             sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT,
                 creditCode, ENode.new_credit.getCode(), req.getNote(),
                 sysUser.getUserId());
-        } else {
-            currentNode = ENode.getMap().get(
-                nodeFlowBO.getNodeFlowByCurrentNode(ENode.new_credit.getCode())
-                    .getBackNode());
         }
         // 待办事项
         bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, creditCode,
@@ -253,13 +250,22 @@ public class CreditAOImpl implements ICreditAO {
 
         // 之前节点
         String preCurNodeCode = credit.getCurNodeCode();
+        ENode node = ENode.getMap().get(preCurNodeCode);
         // 更新当前节点
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
-            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                credit.getCurNodeCode()).getNextNode());
+            NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(credit
+                .getCurNodeCode());
 
+            preCurNodeCode = nodeFlow.getNextNode();
+            credit.setCurNodeCode(preCurNodeCode);
             // 修改业务主状态
-            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A2.getCode());
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1.getCode());
+            // 确认节点
+            node = ENode.getMap().get(preCurNodeCode);
+            // 操作日志
+            sysBizLogBO.recordCurOperate(credit.getBizCode(),
+                EBizLogType.CREDIT, credit.getCode(), node.getCode(),
+                node.getValue(), req.getOperator());
         }
         creditBO.refreshCredit(credit);
 
@@ -298,10 +304,10 @@ public class CreditAOImpl implements ICreditAO {
             }
         }
 
-        // 日志记录
-        sysBizLogBO.recordCurOperate(credit.getBizCode(), EBizLogType.CREDIT,
-            credit.getCode(), ENode.renew_credit.getCode(),
-            ENode.renew_credit.getValue(), req.getOperator());
+        // 待办事项
+        bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.CREDIT,
+            credit.getCode(), node);
+
     }
 
     @Override
