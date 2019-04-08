@@ -53,6 +53,18 @@ public class CarNews extends ABaseDO {
     // 备注
     private String remark;
 
+    // ************************************
+
+    private SYSUser sysUser;
+
+    public SYSUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SYSUser sysUser) {
+        this.sysUser = sysUser;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

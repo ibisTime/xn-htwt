@@ -25,6 +25,7 @@ import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Calculate;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarCarconfig;
+import com.cdkj.loan.domain.Carconfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
@@ -112,7 +113,14 @@ public class CarAOImpl implements ICarAO {
         car.setUpdateDatetime(new Date());
 
         car.setRemark(req.getRemark());
-        return carBO.saveCar(car);
+
+        String code = carBO.saveCar(car);
+
+        // 车型配置
+        for (String configCode : req.getConfigList()) {
+            carCarconfigBO.saveCarCarconfig(code, configCode);
+        }
+        return code;
     }
 
     @Override
@@ -142,6 +150,7 @@ public class CarAOImpl implements ICarAO {
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(price);
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        car.setFwAmount(StringValidater.toLong(req.getFwAmount()));
         car.setJsqByhf(req.getJsqByhf());
         car.setJsqSybx(req.getJsqSybx());
         car.setSlogan(req.getSlogan());
@@ -157,6 +166,19 @@ public class CarAOImpl implements ICarAO {
         car.setUpdateDatetime(new Date());
 
         car.setRemark(req.getRemark());
+        // 删除原配置
+        List<CarCarconfig> carCarconfigs = carCarconfigBO.getCarconfigs(req
+            .getCode());
+        for (CarCarconfig carCarconfig : carCarconfigs) {
+            carCarconfigBO.removeCarCarconfig(req.getCode(),
+                carCarconfig.getCarCode());
+        }
+
+        // 增加新配置
+        for (String configCode : req.getConfigList()) {
+            carCarconfigBO.saveCarCarconfig(req.getCode(), configCode);
+        }
+
         carBO.editCar(car);
     }
 
@@ -278,13 +300,25 @@ public class CarAOImpl implements ICarAO {
         condition.setType(EActionType.collect.getCode());
         Long collectNumber = actionBO.getTotalCount(condition);
         car.setCollectNumber(collectNumber);
+        // 车型下配置列表
         List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
             .getCode());
+        // 所有配置
+        List<Carconfig> configs = carconfigBO.queryCarconfigList(null);
         for (CarCarconfig carCarconfig : configList) {
+            for (Carconfig carconfig : configs) {
+                if (carconfig.getCode().equals(carCarconfig.getConfigCode())) {
+                    carconfig.setIsConfig(EBoolean.YES.getCode());
+                } else if (null == carconfig.getIsConfig()) {
+                    carconfig.setIsConfig(EBoolean.NO.getCode());
+                }
+            }
             carCarconfig.setConfig(carconfigBO.getCarconfig(carCarconfig
                 .getConfigCode()));
         }
+
         car.setCaonfigList(configList);
+        car.setConfigs(configs);
 
     }
 

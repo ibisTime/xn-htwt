@@ -17,7 +17,7 @@ public interface ICarNewsAO {
 
     public int editCarNews(String code, String title, String advPic,
             Long picNumber, String pic, String context, String tag,
-            String updater, String remark);
+            String updater, String remark, String author);
 
     public void putOn(String code, String updater, String remark);
 

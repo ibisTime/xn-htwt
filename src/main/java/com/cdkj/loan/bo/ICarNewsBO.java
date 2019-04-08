@@ -18,7 +18,7 @@ public interface ICarNewsBO extends IPaginableBO<CarNews> {
 
     public int refreshCarNews(CarNews data, String title, String advPic,
             Long picNumber, String pic, String context, String tag,
-            String updater, String remark);
+            String updater, String remark, String author);
 
     public void refreshStatus(CarNews carNews, String status);
 

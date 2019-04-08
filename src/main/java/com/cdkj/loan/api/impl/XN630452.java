@@ -28,7 +28,8 @@ public class XN630452 extends AProcessor {
     public Object doBusiness() throws BizException {
         carNewsAO.editCarNews(req.getCode(), req.getTitle(), req.getAdvPic(),
             StringValidater.toLong(req.getPicNumber()), req.getPic(),
-            req.getContext(), req.getTag(), req.getUpdater(), req.getRemark());
+            req.getContext(), req.getTag(), req.getUpdater(), req.getRemark(),
+            req.getAuthor());
         return new BooleanRes(true);
     }
 
