@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
@@ -46,6 +47,7 @@ import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.res.XN632917Res;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -98,6 +100,9 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private IBizTaskBO bizTaskBO;
+
+    @Autowired
+    private IAttachmentBO attachmentBO;
 
     @Override
     @Transactional
@@ -457,32 +462,30 @@ public class CreditAOImpl implements ICreditAO {
 
         String preCurNodeCode = credit.getCurNodeCode();// 当前节点
         ENode node = ENode.getMap().get(preCurNodeCode);
-        if (EBoolean.YES.getCode().equals(req.getDealType())) {
-            String curNode = nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode();
-            // 确认 录入征信结果
-            node = ENode.getMap().get(curNode);
-            credit.setCurNodeCode(curNode);
-            credit.setOperator(req.getOperator());
-            List<XN632111ReqCreditUser> creditResult = req.getCreditResult();
-            for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
-                CreditUser creditUser = creditUserBO
-                    .getCreditUser(xn632111ReqCreditUser.getCreditUserCode());
-                creditUser.setCode(xn632111ReqCreditUser.getCreditUserCode());
-                creditUser.setCreditCardOccupation(StringValidater
-                    .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
-                creditUser.setBankCreditResultPdf(xn632111ReqCreditUser
-                    .getBankCreditResultPdf());
-                creditUser.setCreditCardOccupation(StringValidater
-                    .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
-                creditUser.setBankCreditResultRemark(xn632111ReqCreditUser
-                    .getBankCreditResultRemark());
-                creditUserBO.inputBankCreditResult(creditUser);
-            }
-        } else {
-            // // 退回
-            // credit.setCurNodeCode((nodeFlowBO
-            // .getNodeFlowByCurrentNode(preCurNodeCode)).getBackNode());
+        String curNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode)
+            .getNextNode();
+        // 确认 录入征信结果
+        node = ENode.getMap().get(curNode);
+        credit.setCurNodeCode(curNode);
+        credit.setOperator(req.getOperator());
+        List<XN632111ReqCreditUser> creditResult = req.getCreditResult();
+        for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
+            // CreditUser creditUser = creditUserBO
+            // .getCreditUser(xn632111ReqCreditUser.getCreditUserCode());
+            // creditUser.setCode(xn632111ReqCreditUser.getCreditUserCode());
+            // creditUser.setCreditCardOccupation(StringValidater
+            // .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
+            // creditUser.setBankCreditResultPdf(xn632111ReqCreditUser
+            // .getBankCreditResultPdf());
+            // creditUser.setCreditCardOccupation(StringValidater
+            // .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
+            // creditUser.setBankCreditResultRemark(xn632111ReqCreditUser
+            // .getBankCreditResultRemark());
+            // creditUserBO.inputBankCreditResult(creditUser);
+            EAttachName name = EAttachName.getMap().get(
+                xn632111ReqCreditUser.getName());
+            attachmentBO.saveAttachment(credit.getBizCode(), name.getCode(),
+                name.getValue(), xn632111ReqCreditUser.getUrl());
 
         }
 

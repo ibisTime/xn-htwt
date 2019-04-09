@@ -26,7 +26,7 @@ public class AttachmentAOImpl implements IAttachmentAO {
         attachmentBO.removeAttachmentByBiz(req.getBizCode(),
             req.getAttachType());
 
-        return attachmentBO.saveAttachment(req.getBizCode(),
+        return attachmentBO.saveAttachment(req.getBizCode(), null,
             req.getAttachType(), req.getUrl());
     }
 

@@ -72,15 +72,15 @@ public class CreditUserAOImpl implements ICreditUserAO {
             String code = Child.getCreditUserCode();
 
             CreditUser creditUser = creditUserBO.getCreditUser(code);
-            creditUser.setBankCreditResultPdf(Child.getBankCreditResultPdf());
+            // creditUser.setBankCreditResultPdf(Child.getBankCreditResultPdf());
 
             creditUserBO.inputBankCreditResult(creditUser);
         }
 
         // 之前节点
         String preCurrentNode = credit.getCurNodeCode();
-        credit.setCurNodeCode(
-            nodeFlowBO.getNodeFlow(credit.getCurNodeCode()).getNextNode());
+        credit.setCurNodeCode(nodeFlowBO.getNodeFlow(credit.getCurNodeCode())
+            .getNextNode());
         creditBO.refreshCreditNode(credit);
 
         // 日志记录

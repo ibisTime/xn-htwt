@@ -4,6 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IAttachmentDAO">
 	<resultMap id="attachment_DB_Result" type="attachment">
 		<result column="code" property="code" />
+		<result column="name" property="name" />
 		<result column="biz_code" property="bizCode" />
 		<result column="attach_type" property="attachType" />
 		<result column="url" property="url" />
@@ -13,6 +14,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="name != null and name != '' ">
+				AND t.name = #{name}
 			</if>
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
@@ -26,6 +30,7 @@
 	<select id="select_attachment" parameterType="attachment" resultMap="attachment_DB_Result">
 		SELECT
 		t.code
+		,t.name
 		,t.biz_code
 		,t.attach_type
 		,t.url
@@ -49,12 +54,14 @@
 		INSERT INTO
 		tqj_attachment(
 		code
+		,name
 		,biz_code
 		,attach_type
 		,url
 		)
 		VALUES(
 		#{code}
+		,#{name}
 		,#{bizCode}
 		,#{attachType}
 		,#{url}

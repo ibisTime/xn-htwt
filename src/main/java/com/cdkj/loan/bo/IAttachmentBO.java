@@ -7,7 +7,8 @@ import com.cdkj.loan.domain.Attachment;
 
 public interface IAttachmentBO extends IPaginableBO<Attachment> {
 
-    public String saveAttachment(String bizCode, String attachType, String url);
+    public String saveAttachment(String bizCode, String name,
+            String attachType, String url);
 
     public void removeAttachmentByBiz(String bizCode, String attachType);
 

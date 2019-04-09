@@ -16,14 +16,10 @@ public class XN632111ReqCreditUser {
 
     // 银行征信结果
     @NotBlank
-    private String bankCreditResultPdf;
+    private String url;
 
     // 信用卡占比
-    private String creditCardOccupation;
-
-    // 银行征信结果说明
-    @NotBlank
-    private String bankCreditResultRemark;
+    private String name;
 
     public String getCreditUserCode() {
         return creditUserCode;
@@ -33,28 +29,20 @@ public class XN632111ReqCreditUser {
         this.creditUserCode = creditUserCode;
     }
 
-    public String getCreditCardOccupation() {
-        return creditCardOccupation;
+    public String getUrl() {
+        return url;
     }
 
-    public void setCreditCardOccupation(String creditCardOccupation) {
-        this.creditCardOccupation = creditCardOccupation;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getBankCreditResultPdf() {
-        return bankCreditResultPdf;
+    public String getName() {
+        return name;
     }
 
-    public void setBankCreditResultPdf(String bankCreditResultPdf) {
-        this.bankCreditResultPdf = bankCreditResultPdf;
-    }
-
-    public String getBankCreditResultRemark() {
-        return bankCreditResultRemark;
-    }
-
-    public void setBankCreditResultRemark(String bankCreditResultRemark) {
-        this.bankCreditResultRemark = bankCreditResultRemark;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

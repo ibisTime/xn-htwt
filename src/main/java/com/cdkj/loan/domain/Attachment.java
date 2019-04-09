@@ -10,50 +10,61 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class Attachment extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 业务编号
-	private String bizCode;
+    // 名称
+    private String name;
 
-	// 附件类型
-	private String attachType;
+    // 业务编号
+    private String bizCode;
 
-	// url地址
-	private String url;
+    // 附件类型
+    private String attachType;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    // url地址
+    private String url;
 
-	public String getCode() {
-		return code;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setBizCode(String bizCode) {
-		this.bizCode = bizCode;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getBizCode() {
-		return bizCode;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setAttachType(String attachType) {
-		this.attachType = attachType;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getAttachType() {
-		return attachType;
-	}
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getBizCode() {
+        return bizCode;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public void setAttachType(String attachType) {
+        this.attachType = attachType;
+    }
+
+    public String getAttachType() {
+        return attachType;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 
 }
