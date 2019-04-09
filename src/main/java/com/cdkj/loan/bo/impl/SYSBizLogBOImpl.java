@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IBizTaskBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Page;
@@ -30,6 +32,12 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private IBizTaskBO bizTaskBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
+
     @Override
     public void recordCurOperate(String bizCode, EBizLogType refType,
             String refOrder, String dealNode, String dealNote, String operator) {
@@ -48,6 +56,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         data.setEndDatetime(new Date());
         data.setSpeedTime("0");
         sysBizLogDAO.insert(data);
+
     }
 
     @Override
@@ -207,6 +216,14 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             String refOrder, String preDealNode, String nowDealNode,
             String nowDealNote, String operator) {
 
+    }
+
+    @Override
+    public SYSBizLog getLogByNode(String node, String bizCode) {
+        SYSBizLog condition = new SYSBizLog();
+        condition.setDealNode(node);
+        condition.setBizCode(bizCode);
+        return sysBizLogDAO.select(condition);
     }
 
 }

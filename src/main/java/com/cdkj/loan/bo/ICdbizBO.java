@@ -19,6 +19,10 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     public List<Cdbiz> queryCdbizList(Cdbiz condition);
 
+    public List<Cdbiz> queryListByTeamCode(String teamCode);
+
+    public List<Cdbiz> queryListByYwyUser(String ywyUser);
+
     public Cdbiz getCdbiz(String code);
 
     public void refreshStatus(Cdbiz cdbiz, String status);

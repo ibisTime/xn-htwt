@@ -56,7 +56,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             condition.setCode(code);
             data = cdbizDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "业务不存在");
             }
         }
         return data;
@@ -120,5 +120,21 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     public void refreshZfStatus(Cdbiz cdbiz, String status) {
         cdbiz.setZfStatus(status);
         cdbizDAO.updateZfStatus(cdbiz);
+    }
+
+    @Override
+    public List<Cdbiz> queryListByTeamCode(String teamCode) {
+        Cdbiz condition = new Cdbiz();
+        condition.setTeamCode(teamCode);
+        List<Cdbiz> dataList = cdbizDAO.selectList(condition);
+        return dataList;
+    }
+
+    @Override
+    public List<Cdbiz> queryListByYwyUser(String ywyUser) {
+        Cdbiz condition = new Cdbiz();
+        condition.setYwyUser(ywyUser);
+        List<Cdbiz> dataList = cdbizDAO.selectList(condition);
+        return dataList;
     }
 }

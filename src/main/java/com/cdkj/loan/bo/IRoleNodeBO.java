@@ -17,4 +17,7 @@ public interface IRoleNodeBO extends IPaginableBO<RoleNode> {
     // 根据角色批量删除节点
     public void deleteNodeByRole(String roleCode);
 
+    // 根据节点查角色
+    public List<RoleNode> queryListByNode(String nodeCode);
+
 }

@@ -63,13 +63,6 @@ import com.cdkj.loan.exception.BizException;
  * @since: 2018年5月25日 下午3:09:48 
  * @history:
  */
-
-/**
- * 征信
- * @author: jiafr 
- * @since: 2018年5月25日 下午3:09:48 
- * @history:
- */
 @Service
 public class CreditAOImpl implements ICreditAO {
 
@@ -194,7 +187,7 @@ public class CreditAOImpl implements ICreditAO {
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             // 操作日志
             sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT,
-                creditCode, ENode.new_credit.getCode(), req.getNote(),
+                creditCode, currentNode.getCode(), req.getNote(),
                 sysUser.getUserId());
         }
         // 待办事项
@@ -456,20 +449,20 @@ public class CreditAOImpl implements ICreditAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "根据征信单编号查询不到征信单");
         }
-
-        if (!ENode.INPUT_CREDIT_RESULT.getCode()
-            .equals(credit.getCurNodeCode())
-                && !ENode.AUDIT_NO_PASS.getCode().equals(
-                    credit.getCurNodeCode())) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
+        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是录入银行征信结果节点，不能操作");
         }
 
         String preCurNodeCode = credit.getCurNodeCode();// 当前节点
+        ENode node = ENode.getMap().get(preCurNodeCode);
         if (EBoolean.YES.getCode().equals(req.getDealType())) {
+            String curNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode();
             // 确认 录入征信结果
-            credit.setCurNodeCode((nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurNodeCode)).getNextNode());
+            node = ENode.getMap().get(curNode);
+            credit.setCurNodeCode(curNode);
             credit.setOperator(req.getOperator());
             List<XN632111ReqCreditUser> creditResult = req.getCreditResult();
             for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
@@ -487,14 +480,19 @@ public class CreditAOImpl implements ICreditAO {
                 creditUserBO.inputBankCreditResult(creditUser);
             }
         } else {
-            // 退回
-            credit.setCurNodeCode((nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurNodeCode)).getBackNode());
+            // // 退回
+            // credit.setCurNodeCode((nodeFlowBO
+            // .getNodeFlowByCurrentNode(preCurNodeCode)).getBackNode());
 
         }
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
-            EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
-            credit.getCurNodeCode(), null, req.getOperator());
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(credit.getBizCode(), EBizLogType.CREDIT,
+            credit.getCode(), node.getCode(), node.getValue(),
+            req.getOperator());
+        // 待办事项
+        bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.CREDIT,
+            credit.getCode(), node);
         creditBO.refreshInputBankCreditResult(credit);
 
     }

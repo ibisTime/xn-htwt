@@ -28,6 +28,10 @@
 			<if test="backNode != null and backNode != '' ">
 				AND t.back_node = #{backNode}
 			</if>
+			<if test="lastNode != null and lastNode != '' ">
+				AND (t.back_node = #{lastNode} OR t.next_node=#{lastNode})
+			</if>
+			
 		</trim>
 	</sql>
 	<select id="select_nodeFlow" parameterType="nodeFlow" resultMap="nodeFlow_DB_Result">

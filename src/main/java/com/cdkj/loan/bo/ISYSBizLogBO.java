@@ -51,4 +51,6 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
     public void logAndTask(String bizCode, EBizLogType refType,
             String refOrder, String preDealNode, String nowDealNode,
             String nowDealNote, String operator);
+
+    public SYSBizLog getLogByNode(String node, String bizCode);
 }

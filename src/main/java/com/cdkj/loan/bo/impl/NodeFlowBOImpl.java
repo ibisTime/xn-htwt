@@ -83,4 +83,12 @@ public class NodeFlowBOImpl extends PaginableBOImpl<NodeFlow> implements
             nodeFlowDAO.updateFileList(data);
         }
     }
+
+    @Override
+    public NodeFlow getLastNodeFlow(String nodeCode) {
+        NodeFlow condition = new NodeFlow();
+        condition.setLastNode(nodeCode);
+        NodeFlow nodeFlow = nodeFlowDAO.select(condition);
+        return nodeFlow;
+    }
 }

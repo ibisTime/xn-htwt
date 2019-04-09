@@ -49,4 +49,11 @@ public class RoleNodeBOImpl extends PaginableBOImpl<RoleNode> implements
         return roleNodeDAO.selectNodeListByRole(condition);
     }
 
+    @Override
+    public List<RoleNode> queryListByNode(String nodeCode) {
+        RoleNode condition = new RoleNode();
+        condition.setNodeCode(nodeCode);
+        return roleNodeDAO.selectList(condition);
+    }
+
 }

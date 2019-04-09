@@ -64,6 +64,9 @@
 			<if test="isLogistics != null and isLogistics != ''">
 				AND b.is_logistics = #{isLogistics}
 			</if>
+			<if test="endDatetime != null and endDatetime!=''">
+				<![CDATA[AND t.end_datetime <= #{endDatetime}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
@@ -91,6 +94,29 @@
 				t.${order}
 			</if>
 		</trim>
+	</select>
+	
+	<select id="select_last_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+		SELECT
+		t.id
+		,t.biz_code
+		,t.ref_type
+		,t.ref_order
+		,t.deal_node
+		
+		,t.deal_note
+		,t.operate_role
+		,t.operator
+		,t.operator_name
+		,t.operator_mobile
+		
+		,t.start_datetime
+		,t.end_datetime
+		,t.speed_time
+		,max(t.end_datetime)
+		FROM
+		tsys_biz_log t
+		<include refid="where_condition" />
 	</select>
 	
 	<select id="select_sysBizLog_count" parameterType="sysBizLog"

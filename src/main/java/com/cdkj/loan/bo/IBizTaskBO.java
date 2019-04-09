@@ -19,4 +19,6 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
     public BizTask getBizTask(String code);
 
+    public BizTask getLastBizTask(String lastNode, String bizCode);
+
 }
