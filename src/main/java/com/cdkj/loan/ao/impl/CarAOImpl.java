@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.ICarconfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Action;
 import com.cdkj.loan.domain.Bank;
@@ -328,13 +329,17 @@ public class CarAOImpl implements ICarAO {
         Bank bank = bankBO.getBank(car.getBankCode());
         Calculate calculate = null;
         if ("12".equals(period)) {
-            calculate = new Calculate(bank.getRate12(), car, period, isTotal);
+            calculate = new Calculate(AmountUtil.div(bank.getRate12(),
+                Long.valueOf(1000)), car, period, isTotal);
         } else if ("18".equals(period)) {
-            calculate = new Calculate(bank.getRate18(), car, period, isTotal);
+            calculate = new Calculate(AmountUtil.div(bank.getRate18(),
+                Long.valueOf(1000)), car, period, isTotal);
         } else if ("24".equals(period)) {
-            calculate = new Calculate(bank.getRate24(), car, period, isTotal);
+            calculate = new Calculate(AmountUtil.div(bank.getRate24(),
+                Long.valueOf(1000)), car, period, isTotal);
         } else if ("36".equals(period)) {
-            calculate = new Calculate(bank.getRate36(), car, period, isTotal);
+            calculate = new Calculate(AmountUtil.div(bank.getRate36(),
+                Long.valueOf(1000)), car, period, isTotal);
         }
         return calculate;
     }

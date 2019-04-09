@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdkj.loan.ao.IActionAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -33,6 +35,11 @@ public class XN630465 extends AProcessor {
 
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
+        String orderColumn = req.getOrderColumn();
+        if (StringUtils.isBlank(orderColumn)) {
+            orderColumn = IActionAO.DEFAULT_ORDER_COLUMN;
+        }
+        condition.setOrder(orderColumn, req.getOrderDir());
         return actionAO.queryActionPage(start, limit, condition);
     }
 

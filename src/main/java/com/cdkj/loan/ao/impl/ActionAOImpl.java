@@ -11,11 +11,13 @@ import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarCarconfigBO;
 import com.cdkj.loan.bo.ICarNewsBO;
 import com.cdkj.loan.bo.ICarconfigBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Action;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.CarNews;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EActionToType;
 import com.cdkj.loan.enums.EActionType;
 import com.cdkj.loan.exception.BizException;
@@ -38,6 +40,9 @@ public class ActionAOImpl implements IActionAO {
 
     @Autowired
     private ICarCarconfigBO carCarconfigBO;
+
+    @Autowired
+    private IUserBO userBO;
 
     @Override
     public String addAction(String type, String toType, String toCode,
@@ -100,6 +105,7 @@ public class ActionAOImpl implements IActionAO {
     }
 
     private void init(Action action) {
+        User user = userBO.getUser(action.getCreater());
         if (EActionToType.car.getCode().equals(action.getToType())) {
             Car car = carBO.getCar(action.getToCode());
             List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
@@ -113,6 +119,7 @@ public class ActionAOImpl implements IActionAO {
         } else if (EActionToType.news.getCode().equals(action.getToType())) {
             action.setCarNews(carNewsBO.getCarNews(action.getToCode()));
         }
+        action.setUser(user);
     }
 
     @Override
