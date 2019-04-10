@@ -19,7 +19,14 @@ public class XN632110Req {
     // 业务种类（0新车1二手车）
     private String bizType;
 
+    // 二手车报告
     private String secondCarReport;
+
+    // 行驶证正面
+    private String xszFront;
+
+    // 行驶证反面
+    private String xszReverse;
 
     @NotBlank
     private String operator;
@@ -95,6 +102,22 @@ public class XN632110Req {
 
     public void setBizType(String bizType) {
         this.bizType = bizType;
+    }
+
+    public String getXszFront() {
+        return xszFront;
+    }
+
+    public void setXszFront(String xszFront) {
+        this.xszFront = xszFront;
+    }
+
+    public String getXszReverse() {
+        return xszReverse;
+    }
+
+    public void setXszReverse(String xszReverse) {
+        this.xszReverse = xszReverse;
     }
 
 }
