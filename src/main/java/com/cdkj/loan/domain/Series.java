@@ -31,7 +31,7 @@ public class Series extends ABaseDO {
 
     private String isReferee;// 是否推荐
 
-    private Integer location;// UI位置
+    private String location;// UI位置
 
     private Integer orderNo;// UI次序
 
@@ -124,11 +124,11 @@ public class Series extends ABaseDO {
         this.price = price;
     }
 
-    public Integer getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Integer location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

@@ -113,6 +113,16 @@ public class Car extends ABaseDO {
     // 全部配置
     private List<Carconfig> configs;
 
+    private String isMore;
+
+    public String getIsMore() {
+        return isMore;
+    }
+
+    public void setIsMore(String isMore) {
+        this.isMore = isMore;
+    }
+
     public List<Carconfig> getConfigs() {
         return configs;
     }

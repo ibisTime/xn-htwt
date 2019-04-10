@@ -69,7 +69,7 @@ public class SeriesAOImpl implements ISeriesAO {
     public void upSeries(String code, String location, String orderNo,
             String updater, String remark) {
         Series series = seriesBO.getSeries(code);
-        series.setLocation(StringValidater.toInteger(location));
+        series.setLocation(location);
         series.setOrderNo(StringValidater.toInteger(orderNo));
         series.setStatus(EBrandStatus.UP.getCode());
         series.setUpdater(updater);

@@ -107,13 +107,13 @@
 				AND t.series_name like "%"#{queryName}"%" OR t.name like "%"#{queryName}"%"
 			</if>
 			<if test="displacementStart != null and displacementStart != '' ">
-				<![CDATA[AND t.displacement >= #{displacementStart}]]>
+				<![CDATA[AND t.displacement > #{displacementStart}]]>
 			</if>
 			<if test="displacementEnd != null and displacementEnd != '' ">
 				<![CDATA[AND t.displacement <= #{displacementEnd}]]>
 			</if>
 			<if test="priceStart != null and priceStart != '' ">
-				<![CDATA[AND t.sale_price >= #{priceStart}]]>
+				<![CDATA[AND t.sale_price > #{priceStart}]]>
 			</if>
 			<if test="priceEnd != null and priceEnd != '' ">
 				<![CDATA[AND t.sale_price <= #{priceEnd}]]>

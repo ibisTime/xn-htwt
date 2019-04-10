@@ -46,6 +46,7 @@ public class XN630426 extends AProcessor {
         condition.setLevelList(req.getLevelList());
         condition.setStructureList(req.getStructureList());
         condition.setVersionList(req.getVersionList());
+        condition.setIsMore(req.getIsMore());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

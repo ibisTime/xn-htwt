@@ -98,6 +98,11 @@
 		FROM
 		tstd_sms t 
 		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
 	</select>
 
 	<select id="select_sms_count" parameterType="sms"

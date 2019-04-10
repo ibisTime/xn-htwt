@@ -21,7 +21,6 @@ public class XN630440Req {
     @NotBlank
     private String name;// 名称
 
-    @NotBlank
     private String pic;// 图片
 
     @NotBlank

@@ -36,6 +36,16 @@ public class XN630426Req extends APageReq {
 
     private List<String> versionList;
 
+    private String isMore;
+
+    public String getIsMore() {
+        return isMore;
+    }
+
+    public void setIsMore(String isMore) {
+        this.isMore = isMore;
+    }
+
     public String getIsReferee() {
         return isReferee;
     }
