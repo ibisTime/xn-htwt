@@ -24,7 +24,7 @@ public class Cdbiz extends ABaseDO {
     // 经办银行
     private String bankCode;
 
-    // 业务类型
+    // 业务类型（0新车1二手车）
     private String bizType;
 
     // 贷款金额

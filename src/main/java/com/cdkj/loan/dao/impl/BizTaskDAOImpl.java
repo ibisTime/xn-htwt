@@ -28,6 +28,12 @@ public class BizTaskDAOImpl extends AMybatisTemplate implements IBizTaskDAO {
     }
 
     @Override
+    public BizTask selectLastBizTask(BizTask bizTask) {
+        return super.select(NAMESPACE.concat("select_lastBizTask"), bizTask,
+            BizTask.class);
+    }
+
+    @Override
     public long selectTotalCount(BizTask condition) {
         return super.selectTotalCount(NAMESPACE.concat("select_bizTask_count"),
             condition);

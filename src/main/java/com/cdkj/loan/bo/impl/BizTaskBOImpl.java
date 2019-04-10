@@ -9,13 +9,11 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ICdbizBO;
-import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.IRoleNodeBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBizTaskDAO;
 import com.cdkj.loan.domain.BizTask;
-import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.RoleNode;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizLogType;
@@ -25,8 +23,8 @@ import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
-        IBizTaskBO {
+public class BizTaskBOImpl extends PaginableBOImpl<BizTask>
+        implements IBizTaskBO {
 
     @Autowired
     private IBizTaskDAO bizTaskDAO;
@@ -36,9 +34,6 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
 
     @Autowired
     private ICdbizBO cdbizBO;
-
-    @Autowired
-    private INodeBO nodeBO;
 
     @Override
     public String saveBizTask(String bizCode, EBizLogType bizLogType,
@@ -57,6 +52,8 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
             data.setBizCode(bizCode);
             data.setRefType(bizLogType.getCode());
             data.setRefOrder(refOrder);
+            data.setRefNode(curNode.getCode());
+
             String content = "你有新的待" + curNode.getValue()
                     + bizLogType.getValue() + "单";
             data.setContent(content);
@@ -67,7 +64,15 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
-    public void operateBizTask(String code, SYSUser operator) {
+    public void handlePreBizTask(String refType, String refOrder, ENode preNode,
+            SYSUser operator) {
+        BizTask lastBizTask = getLastBizTask(refType, refOrder, preNode);
+
+        handleBizTask(lastBizTask.getCode(), operator);
+    }
+
+    @Override
+    public void handleBizTask(String code, SYSUser operator) {
         BizTask data = new BizTask();
 
         data.setCode(code);
@@ -97,12 +102,16 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
-    public BizTask getLastBizTask(String lastNode, String bizCode) {
-        Node node = nodeBO.getNode(lastNode);
-        BizTask condition = new BizTask();
-        condition.setRefType(node.getType());
-        condition.setBizCode(bizCode);
-        condition.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
-        return bizTaskDAO.select(condition);
+    public BizTask getLastBizTask(String refType, String refOrder,
+            ENode curNode) {
+        BizTask bizTask = new BizTask();
+
+        bizTask.setRefType(refType);
+        bizTask.setRefOrder(refOrder);
+        bizTask.setRefNode(curNode.getCode());
+        bizTask.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
+
+        return bizTaskDAO.selectLastBizTask(bizTask);
     }
+
 }

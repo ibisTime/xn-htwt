@@ -26,6 +26,9 @@ public class BizTask extends ABaseDO {
     // 关联订单编号
     private String refOrder;
 
+    // 关联节点编号（ENode）
+    private String refNode;
+
     // 任务内容
     private String content;
 
@@ -122,6 +125,14 @@ public class BizTask extends ABaseDO {
 
     public void setFinishDatetime(Date finishDatetime) {
         this.finishDatetime = finishDatetime;
+    }
+
+    public String getRefNode() {
+        return refNode;
+    }
+
+    public void setRefNode(String refNode) {
+        this.refNode = refNode;
     }
 
 }

@@ -7,8 +7,9 @@
 		<result column="biz_code" property="bizCode" />
 		<result column="ref_type" property="refType" />
 		<result column="ref_order" property="refOrder" />
-		<result column="content" property="content" />
+		<result column="ref_node" property="refNode" />
 		
+		<result column="content" property="content" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="status" property="status" />
 		<result column="operater" property="operater" />
@@ -30,6 +31,9 @@
 			<if test="refOrder != null and refOrder != '' ">
 				AND t.ref_order = #{refOrder}
 			</if>
+			<if test="refNode != null and refNode != '' ">
+				AND t.ref_node = #{refNode}
+			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -42,8 +46,9 @@
 		,t.biz_code
 		,t.ref_type
 		,t.ref_order
-		,t.content
+		,t.ref_node
 		
+		,t.content
 		,t.create_datetime
 		,t.status
 		,t.operater
@@ -57,6 +62,26 @@
 				t.${order}
 			</if>
 		</trim>
+	</select>
+	
+	<select id="select_lastBizTask" parameterType="bizTask" resultMap="bizTask_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.ref_type
+		,t.ref_order
+		,t.ref_node
+		
+		,t.content
+		,t.create_datetime
+		,t.status
+		,t.operater
+		,t.operate_role
+		,t.finish_datetime
+		FROM
+		tqj_biz_task t
+		<include refid="where_condition" />
+		order by t.create_datetime desc limit 0,1
 	</select>
 
 	<select id="select_bizTask_count" parameterType="bizTask"
@@ -72,8 +97,9 @@
 		,biz_code
 		,ref_type
 		,ref_order
-		,content
+		,ref_node
 		
+		,content
 		,create_datetime
 		,status
 		,operater
@@ -85,8 +111,9 @@
 		,#{bizCode}
 		,#{refType}
 		,#{refOrder}
-		,#{content}
+		,#{refNode}
 		
+		,#{content}
 		,#{createDatetime}
 		,#{status}
 		,#{operater}

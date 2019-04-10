@@ -43,7 +43,7 @@ public class BizTaskAOImpl implements IBizTaskAO {
         }
 
         SYSUser operatorInfo = sysUserBO.getUser(operator);
-        bizTaskBO.operateBizTask(code, operatorInfo);
+        bizTaskBO.handleBizTask(code, operatorInfo);
     }
 
     @Override

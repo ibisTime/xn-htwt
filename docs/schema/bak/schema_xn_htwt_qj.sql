@@ -15,6 +15,7 @@ CREATE TABLE `tqj_biz_task` (
   `biz_code` varchar(32) NOT NULL COMMENT '业务编号',
   `ref_type` varchar(32) NOT NULL COMMENT '关联订单类型',
   `ref_order` varchar(32) NOT NULL COMMENT '关联订单编号',
+  `ref_node` varchar(32) NOT NULL COMMENT '关联节点编号',
   `content` varchar(32) DEFAULT NULL COMMENT '任务内容',
   `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   `status` varchar(32) NOT NULL COMMENT '状态(0 待处理 1 已完成)',

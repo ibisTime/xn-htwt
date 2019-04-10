@@ -8,4 +8,5 @@ public interface IBizTaskDAO extends IBaseDAO<BizTask> {
 
     int updateOperate(BizTask bizTask);
 
+    BizTask selectLastBizTask(BizTask bizTask);
 }
