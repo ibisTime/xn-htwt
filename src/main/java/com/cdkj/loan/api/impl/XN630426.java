@@ -36,7 +36,7 @@ public class XN630426 extends AProcessor {
         condition.setQueryName(req.getQueryName());
         condition.setStatus(req.getStatus());
         condition.setIsReferee(req.getIsReferee());
-        condition.setLocation(StringValidater.toInteger(req.getLocation()));
+        condition.setLocation(req.getLocation());
         condition.setDisplacementStart(StringValidater.toDouble(req
             .getDisplacementStart()));
         condition.setDisplacementEnd(StringValidater.toDouble(req
@@ -46,6 +46,7 @@ public class XN630426 extends AProcessor {
         condition.setLevelList(req.getLevelList());
         condition.setStructureList(req.getStructureList());
         condition.setVersionList(req.getVersionList());
+        condition.setIsMore(req.getIsMore());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

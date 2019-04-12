@@ -9,7 +9,7 @@ import com.cdkj.loan.dto.req.XN630412Req;
 
 public interface ISeriesAO {
 
-    String DEFAULT_ORDER_COLUMN = "code";
+    String DEFAULT_ORDER_COLUMN = "order_no";
 
     // 新增品牌
     public String addSeries(XN630410Req req);

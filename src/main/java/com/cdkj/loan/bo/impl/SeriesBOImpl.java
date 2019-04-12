@@ -90,7 +90,11 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
     public List<Series> queryUpSeries() {
         Series condition = new Series();
         condition.setStatus(EBrandStatus.UP.getCode());
-        return seriesDAO.selectList(condition);
+        List<Series> dataList = seriesDAO.selectList(condition);
+        for (Series series : dataList) {
+            series.setCarNumber(Long.valueOf(0));
+        }
+        return dataList;
     }
 
 }

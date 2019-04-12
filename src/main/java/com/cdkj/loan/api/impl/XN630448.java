@@ -23,7 +23,8 @@ public class XN630448 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return carconfigAO.getCarCarconfigsByCar(req.getCarCode());
+        return carconfigAO.getCarCarconfigsByCar(req.getCarCode(),
+            req.getIsPic());
     }
 
     @Override

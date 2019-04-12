@@ -171,7 +171,7 @@ public class CarAOImpl implements ICarAO {
             .getCode());
         for (CarCarconfig carCarconfig : carCarconfigs) {
             carCarconfigBO.removeCarCarconfig(req.getCode(),
-                carCarconfig.getCarCode());
+                carCarconfig.getConfigCode());
         }
 
         // 增加新配置
@@ -187,7 +187,7 @@ public class CarAOImpl implements ICarAO {
             String updater, String remark) {
         Car car = carBO.getCar(code);
         car.setStatus(EBrandStatus.UP.getCode());
-        car.setLocation(StringValidater.toInteger(location));
+        car.setLocation(location);
         car.setOrderNo(StringValidater.toInteger(orderNo));
         car.setUpdater(updater);
         car.setUpdateDatetime(new Date());
@@ -238,55 +238,49 @@ public class CarAOImpl implements ICarAO {
 
         List<Car> queryCar = carBO.queryCar(condition);
         List<Series> seriess = new ArrayList<Series>();
-
-        outer: for (Car car : queryCar) {
-            initCar(car);
-            Series series = seriesBO.getSeries(car.getSeriesCode());
-            for (Series data : seriess) {
-                if (data.getCode().equals(series.getCode())) {
-                    data.setCarNumber(data.getCarNumber() + 1);
-                    List<Car> cars = data.getCars();
+        if (null == condition.getIsMore()) {
+            outer: for (Car car : queryCar) {
+                initCar(car);
+                Series series = seriesBO.getSeries(car.getSeriesCode());
+                for (Series data : seriess) {
+                    if (data.getCode().equals(series.getCode())) {
+                        data.setCarNumber(data.getCarNumber() + 1);
+                        List<Car> cars = data.getCars();
+                        cars.add(car);
+                        data.setCars(cars);
+                        continue outer;
+                    }
+                }
+                // 新增车系
+                if (series.getStatus().equals(EBrandStatus.UP.getCode())) {
+                    List<Car> cars = new ArrayList<Car>();
                     cars.add(car);
-                    data.setCars(cars);
-                    continue outer;
+                    series.setCars(cars);
+                    series.setCarNumber(Long.valueOf(1));
+                    seriess.add(series);
                 }
             }
-            // 新增车系
-            if (series.getStatus().equals(EBrandStatus.UP.getCode())) {
+        } else {
+
+            seriess = seriesBO.queryUpSeries();
+            for (Series series : seriess) {
                 List<Car> cars = new ArrayList<Car>();
-                cars.add(car);
                 series.setCars(cars);
                 series.setCarNumber(Long.valueOf(1));
-                seriess.add(series);
+            }
+            for (Car car : queryCar) {
+                initCar(car);
+                Series series = seriesBO.getSeries(car.getSeriesCode());
+                for (Series data : seriess) {
+                    if (data.getCode().equals(series.getCode())) {
+                        data.setCarNumber(data.getCarNumber() + 1);
+                        List<Car> cars = data.getCars();
+                        cars.add(car);
+                        data.setCars(cars);
+                    }
+                }
             }
         }
-        // for (Series series : seriesList) {
-        // // 统计符合条件车型数
-        // Long carNumber = Long.valueOf(0);
-        // // 符合条件车型加入列表
-        // List<Car> cars = new ArrayList<Car>();
-        // for (Car car : queryCar) {
-        // if (car.getSeriesCode().equals(series.getCode())) {
-        // cars.add(car);
-        // carNumber++;
-        // }
-        // }
-        // series.setCarNumber(carNumber);
-        // series.setCars(cars);
-        // }
-        // // 删除空车系
-        // int flag = 0;// 车系列表是否还有空车型车系
-        // while (flag == 0) {
-        // for (int i = 0; i < seriesList.size(); i++) {
-        // if (seriesList.get(i).getCarNumber() == 0) {
-        // seriesList.remove(i);
-        // break;
-        // }
-        // if (i == seriesList.size()) {
-        // flag = 1;
-        // }
-        // }
-        // }
         return seriess;
     }
 

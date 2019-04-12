@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
-public class XN630426Req extends APageReq {
+public class XN630426Req extends AListReq {
 
     private String name; // 名称
 
@@ -35,6 +35,16 @@ public class XN630426Req extends APageReq {
     private List<String> structureList;
 
     private List<String> versionList;
+
+    private String isMore;
+
+    public String getIsMore() {
+        return isMore;
+    }
+
+    public void setIsMore(String isMore) {
+        this.isMore = isMore;
+    }
 
     public String getIsReferee() {
         return isReferee;

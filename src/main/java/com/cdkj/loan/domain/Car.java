@@ -49,7 +49,7 @@ public class Car extends ABaseDO {
 
     private String jsqSybx;// 商业保险
 
-    private Integer location;// UI位置
+    private String location;// UI位置
 
     private Integer orderNo;// UI次序
 
@@ -109,6 +109,27 @@ public class Car extends ABaseDO {
 
     // 收藏数
     private Long collectNumber;
+
+    // 全部配置
+    private List<Carconfig> configs;
+
+    private String isMore;
+
+    public String getIsMore() {
+        return isMore;
+    }
+
+    public void setIsMore(String isMore) {
+        this.isMore = isMore;
+    }
+
+    public List<Carconfig> getConfigs() {
+        return configs;
+    }
+
+    public void setConfigs(List<Carconfig> configs) {
+        this.configs = configs;
+    }
 
     // 全部配置
     private List<Carconfig> configs;
@@ -283,11 +304,11 @@ public class Car extends ABaseDO {
         this.sfAmount = sfAmount;
     }
 
-    public Integer getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Integer location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

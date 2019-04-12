@@ -42,6 +42,16 @@ public class Carconfig extends ABaseDO {
     // 是否配置
     private String isConfig;
 
+    private SYSUser sysUser;
+
+    public SYSUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SYSUser sysUser) {
+        this.sysUser = sysUser;
+    }
+
     public String getIsConfig() {
         return isConfig;
     }

@@ -21,6 +21,16 @@ public class XN630448Req {
     @NotBlank
     private String carCode;// 车型编号
 
+    private String isPic;// 是否有图
+
+    public String getIsPic() {
+        return isPic;
+    }
+
+    public void setIsPic(String isPic) {
+        this.isPic = isPic;
+    }
+
     public String getCarCode() {
         return carCode;
     }
