@@ -33,6 +33,11 @@ public class XN630416 extends AProcessor {
             condition.setLocation(req.getLocation());
         }
         condition.setStatus(req.getStatus());
+        String orderColumn = req.getOrderColumn();
+        if (StringUtils.isBlank(orderColumn)) {
+            orderColumn = ISeriesAO.DEFAULT_ORDER_COLUMN;
+        }
+        condition.setOrder(orderColumn, req.getOrderDir());
         return seriesAO.querySeriesList(condition);
     }
 

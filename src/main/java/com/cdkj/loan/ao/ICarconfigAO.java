@@ -28,6 +28,6 @@ public interface ICarconfigAO {
 
     public void dropCarCarconfig(String carCode, List<String> configCodeList);
 
-    public List<CarCarconfig> getCarCarconfigsByCar(String carCode);
+    public List<CarCarconfig> getCarCarconfigsByCar(String carCode, String isPic);
 
 }

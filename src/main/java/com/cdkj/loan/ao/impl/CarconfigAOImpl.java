@@ -1,7 +1,9 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.Carconfig;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -99,14 +102,39 @@ public class CarconfigAOImpl implements ICarconfigAO {
     }
 
     @Override
-    public List<CarCarconfig> getCarCarconfigsByCar(String carCode) {
+    public List<CarCarconfig> getCarCarconfigsByCar(String carCode, String isPic) {
         List<CarCarconfig> carconfigs = carCarconfigBO.getCarconfigs(carCode);
-        for (CarCarconfig carCarconfig : carconfigs) {
-            Carconfig config = carconfigBO.getCarconfig(carCarconfig
-                .getConfigCode());
-            carCarconfig.setConfig(config);
+        if (StringUtils.isBlank(isPic)) {
+            for (CarCarconfig carCarconfig : carconfigs) {
+                Carconfig config = carconfigBO.getCarconfig(carCarconfig
+                    .getConfigCode());
+                carCarconfig.setConfig(config);
+
+            }
+            return carconfigs;
+        } else if (EBoolean.NO.getCode().equals(isPic)) {
+            List<CarCarconfig> noPicCarconfigs = new ArrayList<CarCarconfig>();
+            for (CarCarconfig carCarconfig : carconfigs) {
+                Carconfig config = carconfigBO.getCarconfig(carCarconfig
+                    .getConfigCode());
+                carCarconfig.setConfig(config);
+                if (StringUtils.isBlank(config.getPic())) {
+                    noPicCarconfigs.add(carCarconfig);
+                }
+            }
+            return noPicCarconfigs;
+        } else {
+            List<CarCarconfig> picCarconfigs = new ArrayList<CarCarconfig>();
+            for (CarCarconfig carCarconfig : carconfigs) {
+                Carconfig config = carconfigBO.getCarconfig(carCarconfig
+                    .getConfigCode());
+                carCarconfig.setConfig(config);
+                if (StringUtils.isNotBlank(config.getPic())) {
+                    picCarconfigs.add(carCarconfig);
+                }
+            }
+            return picCarconfigs;
         }
-        return carconfigs;
     }
 
     @Override

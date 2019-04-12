@@ -104,7 +104,7 @@
 				AND t.remark = #{remark}
 			</if>
 			<if test="queryName != null and queryName != '' ">
-				AND t.series_name like "%"#{queryName}"%" OR t.name like "%"#{queryName}"%"
+				AND t.series_name like "%"#{queryName}"%" OR t.brand_name like "%"#{queryName}"%" OR t.name like "%"#{queryName}"%"
 			</if>
 			<if test="displacementStart != null and displacementStart != '' ">
 				<![CDATA[AND t.displacement > #{displacementStart}]]>

@@ -49,7 +49,7 @@ public class Car extends ABaseDO {
 
     private String jsqSybx;// 商业保险
 
-    private Integer location;// UI位置
+    private String location;// UI位置
 
     private Integer orderNo;// UI次序
 
@@ -293,11 +293,11 @@ public class Car extends ABaseDO {
         this.sfAmount = sfAmount;
     }
 
-    public Integer getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Integer location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

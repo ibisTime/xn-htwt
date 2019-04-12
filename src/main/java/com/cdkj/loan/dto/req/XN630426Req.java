@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
-public class XN630426Req extends APageReq {
+public class XN630426Req extends AListReq {
 
     private String name; // 名称
 

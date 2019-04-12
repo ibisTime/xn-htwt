@@ -171,7 +171,7 @@ public class CarAOImpl implements ICarAO {
             .getCode());
         for (CarCarconfig carCarconfig : carCarconfigs) {
             carCarconfigBO.removeCarCarconfig(req.getCode(),
-                carCarconfig.getCarCode());
+                carCarconfig.getConfigCode());
         }
 
         // 增加新配置
@@ -187,7 +187,7 @@ public class CarAOImpl implements ICarAO {
             String updater, String remark) {
         Car car = carBO.getCar(code);
         car.setStatus(EBrandStatus.UP.getCode());
-        car.setLocation(StringValidater.toInteger(location));
+        car.setLocation(location);
         car.setOrderNo(StringValidater.toInteger(orderNo));
         car.setUpdater(updater);
         car.setUpdateDatetime(new Date());

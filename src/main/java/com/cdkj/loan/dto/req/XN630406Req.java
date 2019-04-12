@@ -1,6 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-public class XN630406Req extends APageReq {
+public class XN630406Req extends AListReq {
 
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
