@@ -18,4 +18,6 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
     public int updateSeccundangStatus(Cdbiz data);
 
     public int updateZfStatus(Cdbiz data);
+
+    public int updateYwy(Cdbiz data);
 }

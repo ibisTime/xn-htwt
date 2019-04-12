@@ -37,4 +37,6 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     public void refreshZfStatus(Cdbiz cdbiz, String status);
 
+    public void refreshYwy(Cdbiz cdbiz, String ywyUser);
+
 }

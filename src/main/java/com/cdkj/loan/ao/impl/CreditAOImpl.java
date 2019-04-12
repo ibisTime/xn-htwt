@@ -184,23 +184,16 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     @Transactional
     public void distributeLeaflets(XN632119Req req) {
+
         Credit credit = creditBO.getCredit(req.getCreditCode());
+        Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
         if (!ENode.DISTRIBUTE_LEAFLETS.getCode()
             .equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前征信不是派单节点，不能操作！");
         }
-        String curNodeCode = credit.getCurNodeCode();
-        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode)
-            .getNextNode();
-        credit.setInsideJob(req.getInsideJob());
-        credit.setCurNodeCode(nextNode);
-        creditBO.distributeLeaflets(credit);
+        cdbizBO.refreshYwy(cdbiz, req.getInsideJob());
 
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
-            EBizLogType.CREDIT, credit.getCode(), curNodeCode,
-            credit.getCurNodeCode(), null, req.getOperator());
     }
 
     @Override
@@ -213,7 +206,7 @@ public class CreditAOImpl implements ICreditAO {
         }
         Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
         if (!ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())
-                || !ECdbizStatus.A0.getCode().equals(cdbiz.getStatus())) {
+                && !ECdbizStatus.A0.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "该业务不处于征信审核不通过或新录状态状态，无法修改征信");
         }
