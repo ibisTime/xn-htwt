@@ -4,12 +4,19 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.enums.ELoanRole;
 
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     // 新增征信人员
-    public void saveCreditUser(CreditUser creditUser);
+    public void saveCreditUser(XN632110ReqCreditUser child, String creditCode,
+            String bizCode);
+
+    // 修改征信人员
+    public void saveCreditUser(XN632112ReqCreditUser child, String creditCode,
+            String bizCode);
 
     // 删除征信人员
     public void removeCreditUserByCreditCode(String creditCode);

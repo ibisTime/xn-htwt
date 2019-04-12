@@ -7,11 +7,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELoanRole;
@@ -24,21 +28,186 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
-        implements ICreditUserBO {
+public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
+        ICreditUserBO {
 
     @Autowired
     private ICreditUserDAO creditUserDAO;
 
+    @Autowired
+    private IAttachmentBO attachmentBO;
+
     @Override
-    public void saveCreditUser(CreditUser creditUser) {
+    public void saveCreditUser(XN632110ReqCreditUser child, String creditCode,
+            String bizCode) {
         String code = null;
-        if (creditUser != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.CREDITUSER.getCode());
-            creditUser.setCode(code);
-            creditUserDAO.insert(creditUser);
+        CreditUser creditUser = new CreditUser();
+        code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER.getCode());
+        creditUser.setCode(code);
+
+        creditUser.setCreditCode(creditCode);
+        creditUser.setRelation(child.getRelation());
+        creditUser.setUserName(child.getUserName());
+        creditUser.setLoanRole(child.getLoanRole());
+        creditUser.setMobile(child.getMobile());
+
+        creditUser.setIdNo(child.getIdNo());
+        // 主贷人
+        if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+            // 身份证正面
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.mainLoaner_id_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoFront());
+            // 身份证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.mainLoaner_id_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoReverse());
+            // 征信查询授权
+            attachName = EAttachName.getMap().get(
+                EAttachName.mainLoaner_auth_pdf.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getAuthPdf());
+            // 面签照片
+            attachName = EAttachName.getMap().get(
+                EAttachName.mainloaner_interview_pic.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getInterviewPic());
+            // 共还人信息
+        } else if (ELoanRole.GHR.getCode().equals(child.getLoanRole())) {
+            // 身份证正面
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.replier_id_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoFront());
+            // 身份证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.replier_id_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoReverse());
+            // 征信查询授权
+            attachName = EAttachName.getMap().get(
+                EAttachName.replier_auth_pdf.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getAuthPdf());
+            // 面签照片
+            attachName = EAttachName.getMap().get(
+                EAttachName.replier_interview_pic.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getInterviewPic());
+
+            // 担保人
+        } else if (ELoanRole.GUARANTOR.getCode().equals(child.getLoanRole())) {
+            // 身份证正面
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.assurance_id_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoFront());
+            // 身份证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.assurance_id_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoReverse());
+            // 征信查询授权
+            attachName = EAttachName.getMap().get(
+                EAttachName.assurance_auth_pdf.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getAuthPdf());
+            // 面签照片
+            attachName = EAttachName.getMap().get(
+                EAttachName.assurance_interview_pic.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getInterviewPic());
         }
+        creditUserDAO.insert(creditUser);
+
+    }
+
+    @Override
+    public void saveCreditUser(XN632112ReqCreditUser child, String creditCode,
+            String bizCode) {
+        String code = null;
+        CreditUser creditUser = new CreditUser();
+        code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER.getCode());
+        creditUser.setCode(code);
+
+        creditUser.setCreditCode(creditCode);
+        creditUser.setRelation(child.getRelation());
+        creditUser.setUserName(child.getUserName());
+        creditUser.setLoanRole(child.getLoanRole());
+        creditUser.setMobile(child.getMobile());
+
+        creditUser.setIdNo(child.getIdNo());
+        // 主贷人
+        if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+            // 身份证正面
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.mainLoaner_id_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoFront());
+            // 身份证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.mainLoaner_id_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoReverse());
+            // 征信查询授权
+            attachName = EAttachName.getMap().get(
+                EAttachName.mainLoaner_auth_pdf.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getAuthPdf());
+            // 面签照片
+            attachName = EAttachName.getMap().get(
+                EAttachName.mainloaner_interview_pic.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getInterviewPic());
+            // 共还人信息
+        } else if (ELoanRole.GHR.getCode().equals(child.getLoanRole())) {
+            // 身份证正面
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.replier_id_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoFront());
+            // 身份证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.replier_id_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoReverse());
+            // 征信查询授权
+            attachName = EAttachName.getMap().get(
+                EAttachName.replier_auth_pdf.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getAuthPdf());
+            // 面签照片
+            attachName = EAttachName.getMap().get(
+                EAttachName.replier_interview_pic.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getInterviewPic());
+
+            // 担保人
+        } else if (ELoanRole.GUARANTOR.getCode().equals(child.getLoanRole())) {
+            // 身份证正面
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.assurance_id_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoFront());
+            // 身份证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.assurance_id_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getIdNoReverse());
+            // 征信查询授权
+            attachName = EAttachName.getMap().get(
+                EAttachName.assurance_auth_pdf.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getAuthPdf());
+            // 面签照片
+            attachName = EAttachName.getMap().get(
+                EAttachName.assurance_interview_pic.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), child.getInterviewPic());
+        }
+        creditUserDAO.insert(creditUser);
 
     }
 

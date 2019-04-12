@@ -8,7 +8,6 @@
 package com.cdkj.loan.ao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -131,51 +130,19 @@ public class CreditAOImpl implements ICreditAO {
             req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
             req.getOperator(), sysUser.getTeamCode());
 
-        // 新增征信单
-        Credit credit = new Credit();
-        credit.setLoanBankCode(req.getLoanBankCode());
-        credit.setBizCode(bizCode);
-        credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
-        credit.setBizType(req.getBizType());
-        if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
-            // 二手车报告
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.second_car_report.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getSecondCarReport());
-            // 行驶证正面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_front.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getXszFront());
-            // 行驶证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_reverse.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getXszReverse());
-        }
-        credit.setCompanyCode(sysUser.getCompanyCode());
-        credit.setSaleUserId(sysUser.getUserId());
-        credit.setTeamCode(sysUser.getTeamCode());
-        credit.setApplyDatetime(new Date());
-
-        credit.setNote(req.getNote());
-        credit.setSaleUserName(sysUser.getRealName());
         ENode currentNode = ENode.new_credit;
-        credit.setCurNodeCode(currentNode.getCode());
         // 设置节点
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             currentNode = ENode.getMap().get(
                 nodeFlowBO.getNodeFlowByCurrentNode(ENode.new_credit.getCode())
                     .getNextNode());
-            credit.setCurNodeCode(currentNode.getCode());
             // 修改业务主状态
             cdbizBO.refreshStatus(cdbizBO.getCdbiz(bizCode),
                 ECdbizStatus.A1.getCode());
         }
-
-        String creditCode = creditBO.saveCredit(credit);
-
+        // 新增征信单
+        String creditCode = creditBO.saveCredit(req, sysUser, bizCode,
+            currentNode.getCode());
         // 新增征信人员
         List<XN632110ReqCreditUser> childList = req.getCreditUserList();
         int applyUserCount = 0;// 申请人角色条数
@@ -183,97 +150,16 @@ public class CreditAOImpl implements ICreditAO {
             for (XN632110ReqCreditUser child : childList) {
                 if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
                     applyUserCount++;
-                    credit.setUserName(child.getUserName());// 征信单设置客户姓名（征信人员的申请人）
-                    credit.setMobile(child.getMobile());
-                    credit.setIdNo(child.getIdNo());
+
+                    creditBO.setApplyUserInfo(creditCode, child.getUserName(),
+                        child.getMobile(), child.getIdNo());// 征信单设置客户姓名（征信人员的申请人）
                 }
                 if (applyUserCount > 1) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "征信申请人只能填写一条数据");
                 }
-                CreditUser creditUser = new CreditUser();
-                creditUser.setCreditCode(creditCode);
-                creditUser.setRelation(child.getRelation());
-                creditUser.setUserName(child.getUserName());
-                creditUser.setLoanRole(child.getLoanRole());
-                creditUser.setMobile(child.getMobile());
 
-                creditUser.setIdNo(child.getIdNo());
-                // creditUser.setIdNoFront(child.getIdNoFront());
-                // creditUser.setIdNoReverse(child.getIdNoReverse());
-                // creditUser.setAuthPdf(child.getAuthPdf());
-                // creditUser.setInterviewPic(child.getInterviewPic());
-                // 主贷人
-                if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
-                    // 身份证正面
-                    EAttachName attachName = EAttachName.getMap().get(
-                        EAttachName.mainLoaner_id_front.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoFront());
-                    // 身份证反面
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.mainLoaner_id_reverse.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoReverse());
-                    // 征信查询授权
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.mainLoaner_auth_pdf.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getAuthPdf());
-                    // 面签照片
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.mainloaner_interview_pic.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getInterviewPic());
-                    // 共还人信息
-                } else if (ELoanRole.GHR.getCode().equals(child.getLoanRole())) {
-                    // 身份证正面
-                    EAttachName attachName = EAttachName.getMap().get(
-                        EAttachName.replier_id_front.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoFront());
-                    // 身份证反面
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.replier_id_reverse.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoReverse());
-                    // 征信查询授权
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.replier_auth_pdf.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getAuthPdf());
-                    // 面签照片
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.replier_interview_pic.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getInterviewPic());
-
-                    // 担保人
-                } else if (ELoanRole.GUARANTOR.getCode().equals(
-                    child.getLoanRole())) {
-                    // 身份证正面
-                    EAttachName attachName = EAttachName.getMap().get(
-                        EAttachName.assurance_id_front.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoFront());
-                    // 身份证反面
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.assurance_id_reverse.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoReverse());
-                    // 征信查询授权
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.assurance_auth_pdf.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getAuthPdf());
-                    // 面签照片
-                    attachName = EAttachName.getMap().get(
-                        EAttachName.assurance_interview_pic.getCode());
-                    attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getInterviewPic());
-                }
-
-                creditUserBO.saveCreditUser(creditUser);
+                creditUserBO.saveCreditUser(child, creditCode, bizCode);
             }
 
             if (applyUserCount <= 0) {
@@ -282,7 +168,6 @@ public class CreditAOImpl implements ICreditAO {
             }
         }
 
-        creditBO.setApplyUserInfo(credit);
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             // 操作日志
             sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT,
@@ -391,19 +276,9 @@ public class CreditAOImpl implements ICreditAO {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "征信申请人只能填写一条数据");
                 }
-                CreditUser creditUser = new CreditUser();
-                creditUser.setCreditCode(credit.getCode());
-                creditUser.setRelation(child.getRelation());
-                creditUser.setUserName(child.getUserName());
-                creditUser.setLoanRole(child.getLoanRole());
-                creditUser.setMobile(child.getMobile());
 
-                creditUser.setIdNo(child.getIdNo());
-                creditUser.setIdNoFront(child.getIdNoFront());
-                creditUser.setIdNoReverse(child.getIdNoReverse());
-                creditUser.setAuthPdf(child.getAuthPdf());
-                creditUser.setInterviewPic(child.getInterviewPic());
-                creditUserBO.saveCreditUser(creditUser);
+                creditUserBO.saveCreditUser(child, credit.getCode(),
+                    credit.getBizCode());
             }
 
             if (applyUserCount <= 0) {
@@ -512,10 +387,10 @@ public class CreditAOImpl implements ICreditAO {
                 creditUserBO.refreshCreditUserLoanRole(user);
                 if (ELoanRole.APPLY_USER.getCode().equals(
                     creditUser.getLoanRole())) {
-                    credit.setUserName(creditUser.getUserName());
-                    credit.setIdNo(creditUser.getIdNo());
-                    credit.setMobile(creditUser.getMobile());
-                    creditBO.setApplyUserInfo(credit);
+                    // 主贷人=业务人
+                    creditBO.setApplyUserInfo(req.getCode(),
+                        creditUser.getUserName(), creditUser.getMobile(),
+                        creditUser.getIdNo());
                 }
             }
 
@@ -583,24 +458,12 @@ public class CreditAOImpl implements ICreditAO {
         node = ENode.getMap().get(curNode);
         credit.setCurNodeCode(curNode);
         credit.setOperator(req.getOperator());
-        List<XN632111ReqCreditUser> creditResult = req.getCreditResult();
+        List<XN632111ReqCreditUser> creditResult = req.getCreditList();
         for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
-            // CreditUser creditUser = creditUserBO
-            // .getCreditUser(xn632111ReqCreditUser.getCreditUserCode());
-            // creditUser.setCode(xn632111ReqCreditUser.getCreditUserCode());
-            // creditUser.setCreditCardOccupation(StringValidater
-            // .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
-            // creditUser.setBankCreditResultPdf(xn632111ReqCreditUser
-            // .getBankCreditResultPdf());
-            // creditUser.setCreditCardOccupation(StringValidater
-            // .toDouble(xn632111ReqCreditUser.getCreditCardOccupation()));
-            // creditUser.setBankCreditResultRemark(xn632111ReqCreditUser
-            // .getBankCreditResultRemark());
-            // creditUserBO.inputBankCreditResult(creditUser);
-            EAttachName name = EAttachName.getMap().get(
-                xn632111ReqCreditUser.getName());
-            attachmentBO.saveAttachment(credit.getBizCode(), name.getCode(),
-                name.getValue(), xn632111ReqCreditUser.getUrl());
+            // EAttachName name = EAttachName.getMap().get(
+            // xn632111ReqCreditUser.getName());
+            // attachmentBO.saveAttachment(credit.getBizCode(), name.getCode(),
+            // name.getValue(), xn632111ReqCreditUser.getUrl());
 
         }
 
@@ -719,11 +582,9 @@ public class CreditAOImpl implements ICreditAO {
             } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
                 creditUser.setLoanRole(ELoanRole.APPLY_USER.getCode());
                 creditUserBO.refreshCreditUserLoanRole(creditUser);
-                Credit credit = creditBO.getCredit(creditUser.getCreditCode());
-                credit.setUserName(creditUser.getUserName());
-                credit.setIdNo(creditUser.getIdNo());
-                credit.setMobile(creditUser.getMobile());
-                creditBO.setApplyUserInfo(credit);
+                creditBO.setApplyUserInfo(creditUser.getCreditCode(),
+                    creditUser.getUserName(), creditUser.getMobile(),
+                    creditUser.getIdNo());
             } else {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "担保人不能置换！");
