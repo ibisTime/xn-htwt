@@ -31,7 +31,8 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     public CreditUser getCreditUser(String code);
 
     // 录入银行征信结果
-    public void inputBankCreditResult(CreditUser creditUser);
+    public void inputBankCreditResult(CreditUser creditUser, String result,
+            String note);
 
     // 批量查询征信人员
     public List<CreditUser> queryCreditUserList(CreditUser condition);

@@ -18,11 +18,23 @@ public class XN632111ReqCreditUser {
     @NotBlank
     private String bankCreditReport;
 
+    // 银行征信结果
+    @NotBlank
+    private String bankResult;
+
     // 大数据征信结果
     private String dataCreditReport;
 
     // 征信说明
     private String creditNote;
+
+    public String getBankResult() {
+        return bankResult;
+    }
+
+    public void setBankResult(String bankResult) {
+        this.bankResult = bankResult;
+    }
 
     public String getCreditUserCode() {
         return creditUserCode;

@@ -32,6 +32,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
@@ -176,7 +177,7 @@ public class CreditAOImpl implements ICreditAO {
         }
         // 待办事项
         bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, creditCode,
-            currentNode);
+            currentNode, req.getOperator());
 
         return creditCode;
     }
@@ -187,12 +188,18 @@ public class CreditAOImpl implements ICreditAO {
 
         Credit credit = creditBO.getCredit(req.getCreditCode());
         Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
-        if (!ENode.DISTRIBUTE_LEAFLETS.getCode()
-            .equals(credit.getCurNodeCode())) {
+        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前征信不是派单节点，不能操作！");
+                "当前征信不是待派单状态，不能操作！");
         }
-        cdbizBO.refreshYwy(cdbiz, req.getInsideJob());
+        // 修改内勤
+        creditBO.distributeLeaflets(credit, req.getInsideJob());
+        // 处理前待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(),
+            credit.getCode(), ENode.input_credit);
+        // 新增该内勤的待办事项
+        bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.CREDIT,
+            credit.getCode(), ENode.input_credit, req.getInsideJob());
 
     }
 
@@ -212,12 +219,11 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         String bizCode = credit.getBizCode();
-        // 修改征信单
-        credit.setLoanBankCode(req.getLoanBankCode());
-        credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
-        credit.setBizType(req.getBizType());
-        credit.setSaleUserId(req.getOperator());
+        // 删除之前的附件
+        attachmentBO.removeBizAttachments(bizCode);
+
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
+
             // 二手车报告
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.second_car_report.getCode());
@@ -253,6 +259,11 @@ public class CreditAOImpl implements ICreditAO {
                 EBizLogType.CREDIT, credit.getCode(), node.getCode(),
                 node.getValue(), req.getOperator());
         }
+        // 修改征信单
+        credit.setLoanBankCode(req.getLoanBankCode());
+        credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
+        credit.setBizType(req.getBizType());
+        credit.setSaleUserId(req.getOperator());
         creditBO.refreshCredit(credit);
 
         // 删除
@@ -282,39 +293,22 @@ public class CreditAOImpl implements ICreditAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.CREDIT,
-            credit.getCode(), node);
+            credit.getCode(), node, req.getOperator());
 
     }
 
     @Override
     public Credit getCredit(String creditCode) {
-        return creditBO.getCredit(creditCode);
+        Credit credit = creditBO.getCredit(creditCode);
+        initCredit(credit);
+        return credit;
     }
 
     @Override
     public Credit getCreditAndCreditUser(String code) {
         Credit credit = creditBO.getCredit(code);
 
-        Department department = departmentBO.getDepartment(credit
-            .getCompanyCode());
-        if (department == null) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "征信单无岗位，请先设置岗位！");
-        }
-        credit.setCompanyName(department.getName());
-
-        CreditUser condition = new CreditUser();
-        condition.setCreditCode(credit.getCode());
-        List<CreditUser> creditUserList = creditUserBO
-            .queryCreditUserList(condition);
-
-        credit.setCreditUserList(creditUserList);
-
-        // 业务团队名称
-        if (StringUtils.isNotBlank(credit.getTeamCode())) {
-            BizTeam team = bizTeamBO.getBizTeam(credit.getTeamCode());
-            credit.setTeamName(team.getName());
-        }
+        initCredit(credit);
 
         return credit;
     }
@@ -362,15 +356,17 @@ public class CreditAOImpl implements ICreditAO {
         Credit credit = creditBO.getMoreCredit(req.getCode());
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
-        SYSUser operator = sysUserBO.getUser(req.getOperator());
+        sysUserBO.getUser(req.getOperator());
         // 业务状态判断
-        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
+        if (!ECdbizStatus.A2.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "该业务不处于待审核征信状态");
         }
 
         // 当前节点
         String preCurrentNode = credit.getCurNodeCode();
+
+        // 审核通过
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             for (CreditUser creditUser : req.getCreditUserList()) {
                 CreditUser user = creditUserBO.getCreditUser(creditUser
@@ -400,15 +396,12 @@ public class CreditAOImpl implements ICreditAO {
 
             // 准入单开始的待办事项
             bizTaskBO.saveBizTask(credit.getBizCode(),
-                EBizLogType.BUDGET_ORDER, budgetCode, ENode.input_budget);
+                EBizLogType.BUDGET_ORDER, budgetCode, ENode.input_budget,
+                req.getOperator());
 
             // 面签开始的待办事项
             bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.INTERVIEW,
-                budgetCode, ENode.input_interview);
-
-            // 处理待审核待办事项
-            bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(),
-                req.getCode(), ENode.approve_credit, operator);
+                budgetCode, ENode.input_interview, req.getOperator());
 
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
@@ -418,13 +411,16 @@ public class CreditAOImpl implements ICreditAO {
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1x.getCode());
 
         }
+        creditBO.refreshCreditNode(credit);
 
         // 日志记录
         sysBizLogBO.recordCurOperate(credit.getBizCode(), EBizLogType.CREDIT,
             credit.getCode(), preCurrentNode, req.getApproveNote(),
             req.getOperator());
 
-        creditBO.refreshCreditNode(credit);
+        // 处理待审核待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(), req.getCode(),
+            ENode.approve_credit);
 
     }
 
@@ -451,13 +447,27 @@ public class CreditAOImpl implements ICreditAO {
         node = ENode.getMap().get(curNode);
         credit.setCurNodeCode(curNode);
         credit.setOperator(req.getOperator());
-        List<XN632111ReqCreditUser> creditResult = req.getCreditList();
-        for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
-            // EAttachName name = EAttachName.getMap().get(
-            // xn632111ReqCreditUser.getName());
-            // attachmentBO.saveAttachment(credit.getBizCode(), name.getCode(),
-            // name.getValue(), xn632111ReqCreditUser.getUrl());
+        creditBO.refreshInputBankCreditResult(credit);
 
+        List<XN632111ReqCreditUser> creditResult = req.getCreditList();
+        for (XN632111ReqCreditUser reqCreditUser : creditResult) {
+            // 录入结果与说明
+            CreditUser creditUser = creditUserBO.getCreditUser(reqCreditUser
+                .getCreditUserCode());
+            creditUserBO.inputBankCreditResult(creditUser,
+                reqCreditUser.getBankResult(), reqCreditUser.getCreditNote());
+            // 银行征信报告
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.bank_credit_report.getCode());
+            attachmentBO.saveAttachment(credit.getBizCode(),
+                attachName.getCode(), attachName.getValue(),
+                reqCreditUser.getBankCreditReport());
+            // 大数据征信报告
+            attachName = EAttachName.getMap().get(
+                EAttachName.data_credit_report.getCode());
+            attachmentBO.saveAttachment(credit.getBizCode(),
+                attachName.getCode(), attachName.getValue(),
+                reqCreditUser.getDataCreditReport());
         }
 
         // 操作日志
@@ -466,14 +476,12 @@ public class CreditAOImpl implements ICreditAO {
             req.getOperator());
         // 待办事项
         bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.CREDIT,
-            credit.getCode(), node);
+            credit.getCode(), node, null);
 
         // 处理待录入征信结果待办事项
-        SYSUser operator = sysUserBO.getUser(req.getOperator());
+        sysUserBO.getUser(req.getOperator());
         bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(),
-            req.getCreditCode(), ENode.input_credit, operator);
-
-        creditBO.refreshInputBankCreditResult(credit);
+            req.getCreditCode(), ENode.input_credit);
 
     }
 
@@ -499,11 +507,20 @@ public class CreditAOImpl implements ICreditAO {
 
     @Override
     public void initCredit(Credit credit) {
+
+        // 业务
+        Cdbiz cdbiz = cdbizBO.getCdbiz(credit.getBizCode());
+        credit.setCdbiz(cdbiz);
+
+        // 征信人员
+        List<CreditUser> creditUserList = creditUserBO
+            .queryCreditUserList(credit.getCode());
+        credit.setCreditUserList(creditUserList);
         // 从征信人员表查申请人的客户姓名 手机号 身份证号
         credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
             credit.getCode(), ELoanRole.APPLY_USER));
         // 从用户表查业务员姓名
-        SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
+        SYSUser user = sysUserBO.getUser(cdbiz.getYwyUser());
         credit.setSaleUserName(user.getRealName());
         // 从部门表查业务公司名
         Department department = departmentBO.getDepartment(credit
@@ -521,6 +538,8 @@ public class CreditAOImpl implements ICreditAO {
             BizTeam team = bizTeamBO.getBizTeam(credit.getTeamCode());
             credit.setTeamName(team.getName());
         }
+
+        // 内勤
         if (StringUtils.isNotBlank(credit.getInsideJob())) {
             SYSUser insideJob = sysUserBO.getUser(credit.getInsideJob());
             credit.setInsideJobName(insideJob.getRealName());
@@ -552,6 +571,11 @@ public class CreditAOImpl implements ICreditAO {
             }
             credit.setIsCancel(EBoolean.NO.getCode());
         }
+        // 附件表
+        List<Attachment> attachments = attachmentBO.queryBizAttachments(credit
+            .getBizCode());
+        credit.setAttachments(attachments);
+
         // // 征信的内勤取录入征信结果的操作人
         // SYSBizLog bizLog = sysBizLogBO
         // .getLatestOperateCreditByBizCode(credit.getCode());
@@ -588,6 +612,7 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     public Object queryCreditListByJob(Credit condition) {
         ArrayList<Object> list = new ArrayList<>();
+
         SYSUser sysUser = new SYSUser();
         sysUser.setRoleCode("SR20180000000000000NQZY");
         List<SYSUser> userList = sysUserBO.queryUserList(sysUser);

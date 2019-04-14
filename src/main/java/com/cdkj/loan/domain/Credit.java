@@ -127,6 +127,28 @@ public class Credit extends ABaseDO {
     // 是否作废
     private String isCancel;
 
+    // 附件表
+    private List<Attachment> attachments;
+
+    // 业务
+    private Cdbiz cdbiz;
+
+    public Cdbiz getCdbiz() {
+        return cdbiz;
+    }
+
+    public void setCdbiz(Cdbiz cdbiz) {
+        this.cdbiz = cdbiz;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
     public String getInsideJob() {
         return insideJob;
     }

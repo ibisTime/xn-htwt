@@ -9,25 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "cdbiz";
+    private static String key = "mission";
 
     // 实体名称
-    private static String keyName = "车贷业务";
+    private static String keyName = "任务";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tqj_cdbiz";
+    private static String dbname = "tqj_mission";
 
-    private static String[] DBwords = { "code", "biz_code", "main_loaner",
-            "bank_code", "biz_type", "dk_amount", "status", "mq_status",
-            "fbhgps_status", "fircundang_status", "seccundang_status",
-            "zf_status", "ywy_user", "team_code" };
+    private static String[] DBwords = { "code", "biz_code", "name", "time",
+            "creater", "get_user", "status", "create_datetime", "deadline",
+            "finish_datetime" };
 
-    private static String[] DBwordsName = { "编号", "业务编号", "主贷人", "经办银行",
-            "业务类型", "贷款金额", "主线状态", "面签状态", "发保合GPS状态", "第一次存档状态", "第二次存档状态",
-            "作废状态", "业务员", "团队编号" };
+    private static String[] DBwordsName = { "编号", "业务编号", "任务名字", "限时（h）",
+            "发布人", "认领人", "状态", "创建时间", "截止时间", "完成时间" };
 
     public void testname() throws Exception {
     }

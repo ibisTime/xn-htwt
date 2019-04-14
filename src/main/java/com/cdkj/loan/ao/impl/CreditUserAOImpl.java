@@ -74,7 +74,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
             CreditUser creditUser = creditUserBO.getCreditUser(code);
             // creditUser.setBankCreditResultPdf(Child.getBankCreditResultPdf());
 
-            creditUserBO.inputBankCreditResult(creditUser);
+            creditUserBO.inputBankCreditResult(creditUser,
+                Child.getBankResult(), Child.getCreditNote());
         }
 
         // 之前节点

@@ -24,8 +24,8 @@ import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
-        implements ISYSUserBO {
+public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
+        ISYSUserBO {
 
     @Autowired
     private ISYSUserDAO sysUserDAO;
@@ -234,13 +234,13 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
             data.setPostName(post.getName());
 
             // 获取部门
-            Department department = departmentBO
-                .getDepartment(data.getDepartmentCode());
+            Department department = departmentBO.getDepartment(data
+                .getDepartmentCode());
             data.setDepartmentName(department.getName());
 
             // 获取分公司
-            Department company = departmentBO
-                .getDepartment(data.getCompanyCode());
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
             data.setCompanyName(company.getName());
         }
         return data;
@@ -248,8 +248,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
 
     @Override
     public void checkLoginPwd(String userId, String loginPwd) {
-        if (StringUtils.isNotBlank(userId)
-                && StringUtils.isNotBlank(loginPwd)) {
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(loginPwd)) {
             SYSUser condition = new SYSUser();
             condition.setUserId(userId);
             condition.setLoginPwd(MD5Util.md5(loginPwd));

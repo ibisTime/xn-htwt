@@ -54,6 +54,16 @@ public class Cdbiz extends ABaseDO {
     // 团队编号
     private String teamCode;
 
+    private SYSUser sysUser;
+
+    public SYSUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SYSUser sysUser) {
+        this.sysUser = sysUser;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

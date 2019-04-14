@@ -249,8 +249,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public void inputBankCreditResult(CreditUser creditUser) {
+    public void inputBankCreditResult(CreditUser creditUser, String result,
+            String note) {
         if (StringUtils.isNotBlank(creditUser.getCode())) {
+            creditUser.setBankCreditResultPdf(result);
+            creditUser.setBankCreditResultRemark(note);
+
             creditUserDAO.inputBankCreditResult(creditUser);
         }
 

@@ -117,7 +117,8 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     }
 
     @Override
-    public void distributeLeaflets(Credit credit) {
+    public void distributeLeaflets(Credit credit, String insideJob) {
+        credit.setInsideJob(insideJob);
         creditDAO.distributeLeaflets(credit);
     }
 

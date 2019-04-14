@@ -67,6 +67,11 @@
 		,#{url}
 		)
 	</insert>
+	
+	<delete id="delete_attachment" parameterType="attachment">
+		DELETE FROM tqj_attachment 
+		WHERE code = #{code} 
+	</delete>
 
 	<delete id="delete_attachmentByBiz">
 		DELETE FROM tqj_attachment WHERE biz_code = #{bizCode} AND attach_type = #{attachType}

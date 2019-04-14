@@ -30,6 +30,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
             .getCode());
         data.setCode(code);
         data.setBizCode(bizCode);
+        data.setName(name);
         data.setAttachType(attachType);
         data.setUrl(url);
 
@@ -64,6 +65,36 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
             }
         }
         return data;
+    }
+
+    @Override
+    public List<Attachment> queryBizAttachments(String bizCode) {
+        Attachment condition = new Attachment();
+        condition.setBizCode(bizCode);
+        List<Attachment> attachments = attachmentDAO.selectList(condition);
+        return attachments;
+    }
+
+    @Override
+    public void removeByName(String bizCode, String name) {
+        Attachment condition = new Attachment();
+
+        condition.setBizCode(bizCode);
+        condition.setName(name);
+        Attachment attachment = attachmentDAO.select(condition);
+        attachmentDAO.deleteAttachment(attachment);
+
+    }
+
+    @Override
+    public void removeBizAttachments(String bizCode) {
+        Attachment condition = new Attachment();
+        condition.setBizCode(bizCode);
+
+        List<Attachment> attachments = attachmentDAO.selectList(condition);
+        for (Attachment attachment : attachments) {
+            attachmentDAO.deleteAttachment(attachment);
+        }
     }
 
 }

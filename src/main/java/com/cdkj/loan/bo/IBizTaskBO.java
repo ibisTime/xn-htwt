@@ -4,25 +4,23 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.BizTask;
-import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ENode;
 
 public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
     public String saveBizTask(String bizCode, EBizLogType bizLogType,
-            String refOrder, ENode curNode);
+            String refOrder, ENode curNode, String userId);
 
-    public void handlePreBizTask(String refType, String refOrder, ENode preNode,
-            SYSUser operator);
+    public void handlePreBizTask(String refType, String refOrder, ENode preNode);
 
-    public void handleBizTask(String code, SYSUser operator);
+    public void handleBizTask(String code);
 
     public List<BizTask> queryBizTaskList(BizTask condition);
 
     public BizTask getBizTask(String code);
 
-    public BizTask getLastBizTask(String refType, String refOrder,
+    public List<BizTask> queryLastBizTask(String refType, String refOrder,
             ENode curNode);
 
 }
