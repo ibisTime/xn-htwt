@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IAccountBO;
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBizTaskBO;
@@ -85,6 +86,7 @@ import com.cdkj.loan.dto.req.XN632913Req;
 import com.cdkj.loan.dto.req.XN632914Req;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBackAdvanceNode;
 import com.cdkj.loan.enums.EBackAdvanceStatus;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -101,6 +103,7 @@ import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.enums.ESysRole;
@@ -185,6 +188,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Autowired
     private IBizTaskBO bizTaskBO;
 
+    @Autowired
+    private IAttachmentBO attachmentBO;
+
     @Override
     @Transactional
     public void editBudgetOrder(XN632120Req req) {
@@ -197,13 +203,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshBudgetOrder(data, req);
         Credit credit = creditBO.getCreditByBizCode(data.getBizCode());
         if (credit != null) {
-            if (!"0".equals(req.getBizType())) {
+            if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
                 if (req.getSecondCarReport() == null) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "征信二手车评估报告未上传");
                 } else {
-                    credit.setSecondCarReport(req.getSecondCarReport());
-                    creditBO.refreshSecondCarReport(credit);
+                    // 修改附件
+                    EAttachName attachName = EAttachName.second_car_report;
+                    attachmentBO.refreshAttachment(data.getBizCode(),
+                        attachName.getCode(), req.getSecondCarReport());
+
                 }
             }
         }
@@ -211,21 +220,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String preNodeCode = data.getCurNodeCode(); // 当前节点
 
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
+            // 日志记录
+            sysBizLogBO.recordCurOperate(data.getBizCode(),
+                EBizLogType.BUDGET_ORDER, data.getCode(), preNodeCode, null,
+                req.getOperator());
             // 下一个节点
             preNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
                 .getNextNode();
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
+            // 处理待办事项
+            bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                data.getCode(), ENode.getMap().get(preNodeCode));
         }
         ENode node = ENode.getMap().get(preNodeCode);
-        // 日志记录
-        sysBizLogBO.recordCurOperate(data.getBizCode(),
-            EBizLogType.BUDGET_ORDER, data.getCode(), data.getCurNodeCode(),
-            null, req.getOperator());
 
         // 待办事项
         bizTaskBO.saveBizTask(data.getBizCode(), EBizLogType.BUDGET_ORDER,
-            data.getCode(), node, req.getOperator());
+            data.getCode(), node, null);
+
     }
 
     @Override
@@ -233,27 +246,39 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void areaApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        if (!EBudgetOrderNode.AREA_APPROVE.getCode().equals(
-            budgetOrder.getCurNodeCode())) {
+
+        Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
+
+        if (!ECdbizStatus.A4.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是区域经理审核节点，不能操作");
         }
 
         String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点
+        // 日志记录
+        sysBizLogBO.recordCurOperate(budgetOrder.getBizCode(),
+            EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
+            operator);
+        //
+        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+            budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getNextNode());
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
+
         } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getBackNode());
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
         }
+        ENode node = ENode.getMap().get(preCurrentNode);
+
+        budgetOrder.setCurNodeCode(preCurrentNode);
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshAreaApprove(budgetOrder);
 
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getCurNodeCode(), approveNote, operator);
+        // 待办事项
+        bizTaskBO.saveBizTask(budgetOrder.getBizCode(),
+            EBizLogType.BUDGET_ORDER, code, node, null);
     }
 
     @Override
@@ -291,28 +316,39 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.RISK_ONE_APPROVE.getCode().equals(
-            budgetOrder.getCurNodeCode())) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
+
+        if (!ECdbizStatus.A5.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是风控一审节点，不能操作");
+                "该业务当前状态不是风控一审状态，不能操作");
         }
 
-        // 之前节点
-        String preCurrentNode = budgetOrder.getCurNodeCode();
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getNextNode());
-        } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getBackNode());
-        }
-        budgetOrder.setRemark(approveNote);
-        budgetOrderBO.refreshriskApprove(budgetOrder);
-
+        String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点
         // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getCurNodeCode(), approveNote, operator);
+        sysBizLogBO.recordCurOperate(budgetOrder.getBizCode(),
+            EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
+            operator);
+        // 完成待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+            budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
+
+        } else {
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
+        }
+        ENode node = ENode.getMap().get(preCurrentNode);
+
+        budgetOrder.setCurNodeCode(preCurrentNode);
+        budgetOrder.setRemark(approveNote);
+        budgetOrderBO.refreshAreaApprove(budgetOrder);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(budgetOrder.getBizCode(),
+            EBizLogType.BUDGET_ORDER, code, node, null);
+
     }
 
     @Override

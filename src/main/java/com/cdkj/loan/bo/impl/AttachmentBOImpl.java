@@ -11,23 +11,24 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IAttachmentDAO;
 import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
-        implements IAttachmentBO {
+public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
+        IAttachmentBO {
 
     @Autowired
     private IAttachmentDAO attachmentDAO;
 
     @Override
-    public String saveAttachment(String bizCode, String name, String attachType,
-            String url) {
+    public String saveAttachment(String bizCode, String name,
+            String attachType, String url) {
         Attachment data = new Attachment();
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.attachment.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.attachment
+            .getCode());
         data.setCode(code);
         data.setName(name);
         data.setBizCode(bizCode);
@@ -73,6 +74,11 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
         Attachment condition = new Attachment();
         condition.setBizCode(bizCode);
         List<Attachment> attachments = attachmentDAO.selectList(condition);
+        for (Attachment attachment : attachments) {
+            EAttachName attachName = EAttachName.getMap().get(
+                attachment.getName());
+            attachment.setNameString(attachName.getValue());
+        }
         return attachments;
     }
 
@@ -96,6 +102,16 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
         for (Attachment attachment : attachments) {
             attachmentDAO.deleteAttachment(attachment);
         }
+    }
+
+    @Override
+    public void refreshAttachment(String bizCode, String name, String url) {
+        Attachment condition = new Attachment();
+        condition.setBizCode(bizCode);
+        condition.setName(name);
+        Attachment attachment = attachmentDAO.select(condition);
+        attachment.setUrl(url);
+        attachmentDAO.updateAttachment(attachment);
     }
 
 }

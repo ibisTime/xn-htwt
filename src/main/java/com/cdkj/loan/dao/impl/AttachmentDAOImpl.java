@@ -59,4 +59,10 @@ public class AttachmentDAOImpl extends AMybatisTemplate implements
         return super.delete(NAMESPACE.concat("delete_attachment"), data);
     }
 
+    @Override
+    public int updateAttachment(Attachment data) {
+        // TODO Auto-generated method stub
+        return super.update(NAMESPACE.concat("update_attachment"), data);
+    }
+
 }

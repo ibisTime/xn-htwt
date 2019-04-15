@@ -47,6 +47,23 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','001x','风控专员审核征信单不通过','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','003','待录入准入单','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
 
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'mq_status','面签状态','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','mq_status','000','待录入面签信息','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
 
+
+
+
+CREATE TABLE `dev_xn_htwt`.`tqj_mission` (
+  `code` VARCHAR(32) NOT NULL,
+  `biz_code` VARCHAR(32) NULL,
+  `name` VARCHAR(255) NULL,
+  `time` INT NULL,
+  `creater` VARCHAR(32) NULL,
+  `get_user` VARCHAR(32) NULL,
+  `status` VARCHAR(4) NULL,
+  `create_datetime` DATETIME NULL,
+  `deadline` DATETIME NULL,
+  `finish_datetime` DATETIME NULL,
+  PRIMARY KEY (`code`));
 
 

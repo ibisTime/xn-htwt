@@ -27,6 +27,17 @@ public class Attachment extends ABaseDO {
     // url地址
     private String url;
 
+    // 文件名称
+    private String nameString;
+
+    public String getNameString() {
+        return nameString;
+    }
+
+    public void setNameString(String nameString) {
+        this.nameString = nameString;
+    }
+
     public String getName() {
         return name;
     }

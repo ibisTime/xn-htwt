@@ -131,5 +131,10 @@
 		,finish_datetime = #{finishDatetime}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_bizTask" parameterType="bizTask">
+		DELETE FROM tqj_biz_task
+		WHERE code=#{code}
+	</delete>
 
 </mapper>

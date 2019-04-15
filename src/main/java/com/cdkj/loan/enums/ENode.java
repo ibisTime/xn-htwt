@@ -16,11 +16,11 @@ public enum ENode {
             "a3", "审核征信"), renew_credit("ax1", "重录征信资料"),
 
     // 200准入单节点
-    input_budget("b1", "录入准入单资料"),
+    input_budget("b1", "录入准入单资料"), area_approve_budget("b2", "区域总审核准入单"),
 
     // 200面签节点
     input_interview("b01", "新录面签信息"), approve_interview("b02", "主管审核面签信息"),
-    
+
     reinput_interview("b01x", "重录面签信息"),
 
     // 旧版本征信节点

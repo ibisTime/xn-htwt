@@ -9,6 +9,7 @@ import com.cdkj.loan.enums.ENode;
 
 public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
+    // 审核的待办事项不传userId
     public String saveBizTask(String bizCode, EBizLogType bizLogType,
             String refOrder, ENode curNode, String userId);
 
@@ -22,5 +23,7 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
     public List<BizTask> queryLastBizTask(String refType, String refOrder,
             ENode curNode);
+
+    public void removeUnhandleBizTask(String bizCode, String node);
 
 }

@@ -22,4 +22,6 @@ public interface IAttachmentBO extends IPaginableBO<Attachment> {
 
     public void removeBizAttachments(String bizCode);
 
+    public void refreshAttachment(String bizCode, String name, String url);
+
 }

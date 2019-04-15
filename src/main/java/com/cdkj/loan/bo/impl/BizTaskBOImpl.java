@@ -134,4 +134,14 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         return bizTasks;
     }
 
+    @Override
+    public void removeUnhandleBizTask(String bizCode, String node) {
+        BizTask condition = new BizTask();
+        condition.setBizCode(bizCode);
+        condition.setRefNode(node);
+        condition.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
+        BizTask bizTask = bizTaskDAO.select(condition);
+        bizTaskDAO.delete(bizTask);
+    }
+
 }

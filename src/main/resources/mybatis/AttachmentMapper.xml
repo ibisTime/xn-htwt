@@ -68,6 +68,13 @@
 		)
 	</insert>
 	
+	<update id="update_attachment" parameterType="attachment">
+		UPDATE tqj_attachment
+		SET
+		url=#{url}
+		WHERE code=#{code}
+	</update>
+	
 	<delete id="delete_attachment" parameterType="attachment">
 		DELETE FROM tqj_attachment 
 		WHERE code = #{code} 

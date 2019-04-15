@@ -894,6 +894,9 @@ public class BudgetOrder extends ABaseDO {
     // 当前节点编号
     private String curNodeCode;
 
+    // 准入单审核次数
+    private Long approveCount;
+
     // 面签节点编号
     private String intevCurNodeCode;
 
@@ -1027,6 +1030,14 @@ public class BudgetOrder extends ABaseDO {
 
     // 征信二手车评估报告
     private String secondCarReport;
+
+    public Long getApproveCount() {
+        return approveCount;
+    }
+
+    public void setApproveCount(Long approveCount) {
+        this.approveCount = approveCount;
+    }
 
     public String getSecondCarReport() {
         return secondCarReport;
