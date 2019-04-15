@@ -49,6 +49,7 @@ import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
+import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
@@ -91,6 +92,7 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
@@ -988,7 +990,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (!ENode.input_interview.getCode().equals(preCurrentNode)
                 && !ENode.reinput_interview.getCode().equals(preCurrentNode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是面签节点，不能操作");
+                "当前不是新录/重录面签节点，不能操作");
         }
 
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
@@ -999,10 +1001,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         budgetOrderBO.interview(budgetOrder, req);
 
-        // 添加日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getIntevCurNodeCode(), null, req.getOperator());
+        // 更新业务面签状态
+        Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
+        cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B01.getCode());
+
+        // 操作日志
+        ENode node = ENode.getMap().get(preCurrentNode);
+        sysBizLogBO.recordCurOperate(budgetOrder.getBizCode(),
+            EBizLogType.INTERVIEW, budgetOrder.getCode(), node.getCode(),
+            node.getValue(), req.getOperator());
 
         // 添加待办事项
         bizTaskBO.saveBizTask(budgetOrder.getBizCode(), EBizLogType.INTERVIEW,
@@ -1136,27 +1143,42 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 logisticsCode, budgetOrder.getIntevCurNodeCode());
             budgetOrder.setIsInterview(EBoolean.YES.getCode());
 
-            // 如果主流程节点在中间节点，往后走一步
-            if (EBudgetOrderNode.BUDFINSH_INTEVUNDONE.getCode()
-                .equals(budgetOrder.getCurNodeCode())) {
-                budgetOrder
-                    .setCurNodeCode(EBudgetOrderNode.FINANCEAUDIT.getCode());
-                budgetOrderBO.refreshBudgetOrderCurNode(budgetOrder);
+            // 更新面签业务状态
+            Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B03.getCode());
 
-                // 生成下一步日志
-                sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-                    EBudgetOrderNode.FINANCEAUDIT.getCode());
-            }
+            // 如果主流程节点在中间节点，往后走一步
+            // if (EBudgetOrderNode.BUDFINSH_INTEVUNDONE.getCode()
+            // .equals(budgetOrder.getCurNodeCode())) {
+            // budgetOrder
+            // .setCurNodeCode(EBudgetOrderNode.FINANCEAUDIT.getCode());
+            // budgetOrderBO.refreshBudgetOrderCurNode(budgetOrder);
+            //
+            // // 生成下一步日志
+            // sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
+            // EBudgetOrderNode.FINANCEAUDIT.getCode());
+            // }
         } else {
             budgetOrder.setIntevCurNodeCode(nodeFlow.getBackNode());
+
+            // 更新面签业务状态
+            Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B02.getCode());
+
+            // 添加待办事项
+            bizTaskBO.saveBizTask(budgetOrder.getBizCode(),
+                EBizLogType.INTERVIEW, budgetOrder.getCode(),
+                ENode.reinput_interview, operator);
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshInterviewInternal(budgetOrder);
 
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getIntevCurNodeCode(), approveNote, operator);
+        // 操作日志
+        ENode node = ENode.getMap().get(preCurrentNode);
+        sysBizLogBO.recordCurOperate(budgetOrder.getBizCode(),
+            EBizLogType.INTERVIEW, budgetOrder.getCode(), node.getCode(),
+            node.getValue(), operator);
+
     }
 
     @Override

@@ -386,7 +386,7 @@ public class CreditAOImpl implements ICreditAO {
             // 修改业务状态
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode());
             // 业务出现面签状态
-            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B1.getCode());
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B00.getCode());
             // 保存准入单
             String budgetCode = budgetOrderBO.saveBudgetOrder(credit,
                 req.getCreditUserList());
