@@ -61,4 +61,6 @@ public interface ICreditBO extends IPaginableBO<Credit> {
     // 修改主贷人
     public void refreshCreditUser(Credit credit);
 
+    public Credit getCreditByBizCode(String bizCode);
+
 }
