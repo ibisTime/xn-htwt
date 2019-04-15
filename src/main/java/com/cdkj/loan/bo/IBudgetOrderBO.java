@@ -7,6 +7,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.dto.req.XN632123Req;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
@@ -20,7 +21,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void refreshriskApprove(BudgetOrder budgetOrder);
 
-    public void interview(BudgetOrder budgetOrder);
+    public void interview(BudgetOrder budgetOrder, XN632123Req req);
 
     public void refreshInterviewInternal(BudgetOrder budgetOrder);
 

@@ -15,20 +15,21 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
-        IAttachmentBO {
+public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
+        implements IAttachmentBO {
 
     @Autowired
     private IAttachmentDAO attachmentDAO;
 
     @Override
-    public String saveAttachment(String bizCode, String name,
-            String attachType, String url) {
+    public String saveAttachment(String bizCode, String name, String attachType,
+            String url) {
         Attachment data = new Attachment();
 
-        String code = OrderNoGenerater.generate(EGeneratePrefix.attachment
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.attachment.getCode());
         data.setCode(code);
+        data.setName(name);
         data.setBizCode(bizCode);
         data.setAttachType(attachType);
         data.setUrl(url);

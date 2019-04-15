@@ -24,6 +24,7 @@ import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -33,11 +34,12 @@ import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -58,23 +60,22 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     private IBankBO bankBO;
 
     @Override
-    public String saveBudgetOrder(Credit credit, List<CreditUser> creditUserList) {
+    public String saveBudgetOrder(Credit credit,
+            List<CreditUser> creditUserList) {
         CreditUser applyCreditUser = null;
         CreditUser ghrCreditUser = null;
         CreditUser guaCreditUser = null;
         for (CreditUser creditUser : creditUserList) {
-            if (applyCreditUser == null
-                    && ELoanRole.APPLY_USER.getCode().equals(
-                        creditUser.getLoanRole())) {
+            if (applyCreditUser == null && ELoanRole.APPLY_USER.getCode()
+                .equals(creditUser.getLoanRole())) {
                 applyCreditUser = creditUser;
             }
-            if (ghrCreditUser == null
-                    && ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+            if (ghrCreditUser == null && ELoanRole.GHR.getCode()
+                .equals(creditUser.getLoanRole())) {
                 ghrCreditUser = creditUser;
             }
-            if (guaCreditUser == null
-                    && ELoanRole.GUARANTOR.getCode().equals(
-                        creditUser.getLoanRole())) {
+            if (guaCreditUser == null && ELoanRole.GUARANTOR.getCode()
+                .equals(creditUser.getLoanRole())) {
                 guaCreditUser = creditUser;
             }
         }
@@ -82,8 +83,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         String code = null;
         if (credit != null) {
             BudgetOrder data = new BudgetOrder();
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGETORDER
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.BUDGETORDER.getCode());
             data.setBizCode(credit.getBizCode());
             data.setCode(code);
             data.setCreditCode(credit.getCode());
@@ -121,7 +122,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setIsInterview(EBoolean.NO.getCode());
             data.setIsEntryMortgage(EBoolean.NO.getCode());
             data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-            data.setIntevCurNodeCode(EBudgetOrderNode.INTERVIEW.getCode());
+            data.setIntevCurNodeCode(ENode.input_interview.getCode());
             // 准入单插入团队编号 来自业务员的所属团队
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             data.setTeamCode(user.getTeamCode());
@@ -163,10 +164,18 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
-    public void interview(BudgetOrder data) {
-        if (StringUtils.isNotBlank(data.getCode())) {
-            budgetOrderDAO.updaterInterview(data);
-        }
+    public void interview(BudgetOrder budgetOrder, XN632123Req req) {
+
+        budgetOrder.setBankVideo(req.getBankVideo());
+        budgetOrder.setBankPhoto(req.getBankPhoto());
+        budgetOrder.setCompanyVideo(req.getCompanyVideo());
+        budgetOrder.setCompanyContract(req.getCompanyContract());
+        budgetOrder.setBankContract(req.getBankContract());
+        budgetOrder.setAdvanceFundAmountPdf(req.getAdvanceFundAmountPdf());
+        budgetOrder.setOtherVideo(req.getOtherVideo());
+        budgetOrder.setInterviewOtherPdf(req.getInterviewOtherPdf());
+
+        budgetOrderDAO.updaterInterview(budgetOrder);
     }
 
     @Override
@@ -325,12 +334,12 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getIntevCurNodeCode(), null, operator);
-        if (EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode().equals(
-            nodeFlow.getCurrentNode())
-                || EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
-                    nodeFlow.getCurrentNode())
-                || EBudgetOrderNode.RISK_CONTROLLER_APPROVE.getCode().equals(
-                    nodeFlow.getCurrentNode())) {
+        if (EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode()
+            .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.DHAPPROVEDATA.getCode()
+                    .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.RISK_CONTROLLER_APPROVE.getCode()
+                    .equals(nodeFlow.getCurrentNode())) {
             String newLogisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.BANK_LOAN.getCode(),
@@ -368,8 +377,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getCurNodeCode(), null, operator);
 
-        if (EBudgetOrderNode.YWDH_APPROVE.getCode().equals(
-            nodeFlow.getCurrentNode())) {
+        if (EBudgetOrderNode.YWDH_APPROVE.getCode()
+            .equals(nodeFlow.getCurrentNode())) {
             String newLogisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),

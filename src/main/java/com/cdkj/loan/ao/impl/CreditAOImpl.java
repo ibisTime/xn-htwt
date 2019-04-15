@@ -1,11 +1,3 @@
-
-/**
- * 征信
- * @author: jiafr 
- * @since: 2018年5月25日 下午3:09:48 
- * @history:
- */
-
 package com.cdkj.loan.ao.impl;
 
 import java.util.ArrayList;
