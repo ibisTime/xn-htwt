@@ -219,4 +219,12 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         creditDAO.updateCreditUser(credit);
     }
 
+    @Override
+    public Credit getCreditByBizCode(String bizCode) {
+        Credit condition = new Credit();
+        condition.setBizCode(bizCode);
+
+        return creditDAO.select(condition);
+    }
+
 }

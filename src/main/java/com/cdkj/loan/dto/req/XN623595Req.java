@@ -13,11 +13,11 @@ public class XN623595Req extends APageReq {
     // 业务编号
     private String bizCode;
 
-    // 资源名称
-    private String fileName;
+    private String creater;
 
-    // 文件类型（图，网页，视频）
-    private String fileType;
+    private String getUser;
+
+    private String status;
 
     public String getBizCode() {
         return bizCode;
@@ -27,20 +27,28 @@ public class XN623595Req extends APageReq {
         this.bizCode = bizCode;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getCreater() {
+        return creater;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setCreater(String creater) {
+        this.creater = creater;
     }
 
-    public String getFileType() {
-        return fileType;
+    public String getGetUser() {
+        return getUser;
     }
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
+    public void setGetUser(String getUser) {
+        this.getUser = getUser;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

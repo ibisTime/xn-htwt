@@ -7,13 +7,13 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.dto.req.XN632120Req;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
-    public String saveBudgetOrder(Credit credit,
-            List<CreditUser> creditUserList);
+    public String saveBudgetOrder(Credit credit, List<CreditUser> creditUserList);
 
-    public void refreshBudgetOrder(BudgetOrder data);
+    public void refreshBudgetOrder(BudgetOrder order, XN632120Req req);
 
     // 准入单区域经理审核
     public void refreshAreaApprove(BudgetOrder data);
