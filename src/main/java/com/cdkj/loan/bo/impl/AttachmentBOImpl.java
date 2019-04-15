@@ -32,7 +32,6 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
         data.setCode(code);
         data.setName(name);
         data.setBizCode(bizCode);
-        data.setName(name);
         data.setAttachType(attachType);
         data.setUrl(url);
 

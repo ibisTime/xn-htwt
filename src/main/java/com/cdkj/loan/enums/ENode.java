@@ -21,7 +21,7 @@ public enum ENode {
     // 200面签节点
     input_interview("b01", "新录面签信息"), approve_interview("b02", "主管审核面签信息"),
 
-    reinput_interview("b01x", "重录面签信息"),
+    reinput_interview("b01x", "重录面签信息"), achieve_interview("b03", "面签完成"),
 
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(

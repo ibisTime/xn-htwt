@@ -14,7 +14,9 @@ public enum ECdbizStatus {
             "005", "待风控一审准入单"),
 
     // 面签状态
-    B1("000", "待录入面签信息");
+    B00("000", "待录入面签信息"), B01("001", "待主管审核面签"),
+
+    B02("002", "主管审核面签不通过"), B03("003", "面签完成");
 
     ECdbizStatus(String code, String value) {
         this.code = code;
