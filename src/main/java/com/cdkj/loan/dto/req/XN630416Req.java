@@ -1,6 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-public class XN630416Req {
+public class XN630416Req extends AListReq {
 
     private String name; // 名称（选填）
 

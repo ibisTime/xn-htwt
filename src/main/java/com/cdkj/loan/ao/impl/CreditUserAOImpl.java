@@ -66,7 +66,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
                 "当前节点不是录入征信结果节点，不能操作");
         }
 
-        List<XN632111ReqCreditUser> list = req.getCreditResult();
+        List<XN632111ReqCreditUser> list = req.getCreditList();
 
         for (XN632111ReqCreditUser Child : list) {
             String code = Child.getCreditUserCode();
@@ -74,7 +74,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
             CreditUser creditUser = creditUserBO.getCreditUser(code);
             // creditUser.setBankCreditResultPdf(Child.getBankCreditResultPdf());
 
-            creditUserBO.inputBankCreditResult(creditUser);
+            creditUserBO.inputBankCreditResult(creditUser,
+                Child.getBankResult(), Child.getCreditNote());
         }
 
         // 之前节点

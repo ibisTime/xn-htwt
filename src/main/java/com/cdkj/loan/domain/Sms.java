@@ -49,7 +49,18 @@ public class Sms extends ABaseDO {
 
     // 备注
     private String remark;
+
     // ***********db properties***********
+
+    private SYSUser sysUser;
+
+    public SYSUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SYSUser sysUser) {
+        this.sysUser = sysUser;
+    }
 
     public String getCode() {
         return code;

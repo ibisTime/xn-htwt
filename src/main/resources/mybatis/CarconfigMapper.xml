@@ -74,6 +74,12 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_carconfig" parameterType="carconfig">
+		DELETE FROM tht_carconfig
+		WHERE code=#{code}
+		
+	</delete>
 
 
 </mapper>

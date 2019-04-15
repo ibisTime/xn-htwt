@@ -753,10 +753,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 budgetOrderFeeBO.saveBudgetOrderFee(data);
             }
             /**************生成 手续费************/
-            // 征信单回写准入单编号
-            Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
-            credit.setBudgetCode(budgetOrder.getCode());
-            creditBO.refreshCredit(credit);
+            // // 征信单回写准入单编号
+            // Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+            // credit.setBudgetCode(budgetOrder.getCode());
+            // creditBO.refreshCredit(credit);
 
             LoanProduct loanProduct = loanProductBO
                 .getLoanProduct(budgetOrder.getLoanProductCode());
@@ -1006,7 +1006,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 添加待办事项
         bizTaskBO.saveBizTask(budgetOrder.getBizCode(), EBizLogType.INTERVIEW,
-            budgetOrder.getCode(), ENode.approve_interview);
+            budgetOrder.getCode(), ENode.approve_interview, req.getOperator());
     }
 
     @Override

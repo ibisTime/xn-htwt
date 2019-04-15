@@ -23,7 +23,7 @@ public class XN632111Req {
 
     // 征信结果
     @NotEmpty
-    private List<XN632111ReqCreditUser> creditResult;
+    private List<XN632111ReqCreditUser> creditList;
 
     public String getCreditCode() {
         return creditCode;
@@ -33,12 +33,12 @@ public class XN632111Req {
         this.creditCode = creditCode;
     }
 
-    public List<XN632111ReqCreditUser> getCreditResult() {
-        return creditResult;
+    public List<XN632111ReqCreditUser> getCreditList() {
+        return creditList;
     }
 
-    public void setCreditResult(List<XN632111ReqCreditUser> creditResult) {
-        this.creditResult = creditResult;
+    public void setCreditList(List<XN632111ReqCreditUser> creditList) {
+        this.creditList = creditList;
     }
 
     public String getOperator() {

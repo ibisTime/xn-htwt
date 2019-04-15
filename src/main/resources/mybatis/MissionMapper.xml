@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IMissionDAO">
+	<resultMap id="mission_DB_Result" type="mission">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="name" property="name" />
+		<result column="time" property="time" />
+		<result column="creater" property="creater" />
+		<result column="get_user" property="getUser" />
+		<result column="status" property="status" />
+		<result column="create_datetime" property="createDatetime" />
+		<result column="deadline" property="deadline" />
+		<result column="finish_datetime" property="finishDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="creater != null and creater != '' ">
+				AND t.creater = #{creater}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="getUser != null and getUser != '' ">
+				AND t.get_user = #{getUser}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_mission" parameterType="mission" resultMap="mission_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.name
+		,t.time
+		,t.creater
+		,t.get_user
+		,t.status
+		,t.create_datetime
+		,t.deadline
+		,t.finish_datetime
+		FROM
+		tqj_mission t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_mission_count" parameterType="mission"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tqj_mission t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_mission" parameterType="mission">
+		INSERT INTO
+		tqj_mission(
+		code
+		,biz_code
+		,name
+		,time
+		,creater
+		,get_user
+		,status
+		,create_datetime
+		,deadline
+		,finish_datetime
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{name}
+		,#{time}
+		,#{creater}
+		,#{getUser}
+		,#{status}
+		,#{createDatetime}
+		,#{deadline}
+		,#{finishDatetime}
+		)
+	</insert>
+
+	<update id="update_mission" parameterType="mission">
+		UPDATE tqj_mission
+		SET
+		biz_code = #{bizCode}
+		,name = #{name}
+		,time = #{time}
+		,creater = #{creater}
+		,get_user = #{getUser}
+		,status = #{status}
+		,create_datetime = #{createDatetime}
+		,deadline = #{deadline}
+		,finish_datetime = #{finishDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_status" parameterType="mission">
+		UPDATE tqj_mission
+		SET
+		status = #{status}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_finish" parameterType="mission">
+		UPDATE tqj_mission
+		SET
+		status = #{status}
+		,finish_datetime = #{finishDatetime}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

@@ -64,7 +64,8 @@ public class Calculate {
             this.yjsfAmount = this.byhf + this.sybx + this.sfAmount;
             this.dkAmount = car.getSalePrice() - car.getSfAmount();
             this.dkTotalAmount = this.dkAmount;
-            this.procedureAmount = AmountUtil.mul(this.dkTotalAmount, rate);
+            this.procedureAmount = AmountUtil.mul(this.dkTotalAmount,
+                AmountUtil.div(rate, Long.valueOf(1000)));
             this.monthReply = AmountUtil.divLL(this.dkTotalAmount
                     + this.procedureAmount, Long.valueOf(period));
             this.extraAmount = this.dkTotalAmount + this.procedureAmount

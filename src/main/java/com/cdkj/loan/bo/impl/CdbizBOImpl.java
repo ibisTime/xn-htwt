@@ -137,4 +137,10 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         List<Cdbiz> dataList = cdbizDAO.selectList(condition);
         return dataList;
     }
+
+    @Override
+    public void refreshYwy(Cdbiz cdbiz, String ywyUser) {
+        cdbiz.setYwyUser(ywyUser);
+        cdbizDAO.updateStatus(cdbiz);
+    }
 }

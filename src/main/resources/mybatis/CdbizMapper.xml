@@ -186,6 +186,13 @@
 		zf_status=#{zfStatus}
 		WHERE code=#{code}
 	</update>
+	
+	<update id="update_ywy" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		ywy_user=#{ywyUser}
+		WHERE code=#{code}
+	</update>
 
 
 </mapper>

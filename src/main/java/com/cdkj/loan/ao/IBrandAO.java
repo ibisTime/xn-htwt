@@ -8,7 +8,7 @@ import com.cdkj.loan.dto.req.XN630400Req;
 import com.cdkj.loan.dto.req.XN630402Req;
 
 public interface IBrandAO {
-    String DEFAULT_ORDER_COLUMN = "code";
+    String DEFAULT_ORDER_COLUMN = "order_no";
 
     // 新增品牌
     public String addBrand(XN630400Req req);

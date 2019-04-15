@@ -445,4 +445,8 @@
 		<property name="paginableDAO" ref="filePoolDAOImpl"/>
 	</bean>
 	
+	<bean id="missionBO" class="com.cdkj.loan.bo.impl.MissionBOImpl">
+		<property name="paginableDAO" ref="missionDAOImpl"/>
+	</bean>
+	
 </beans>

@@ -28,7 +28,15 @@ public enum EAttachName {
     // 担保人资源
     assurance_bank("d1", "图片"), assurance_id_front("d2", "图片"), assurance_id_reverse(
             "d3", "图片"), assurance_auth_pdf("d4", "图片"), assurance_interview_pic(
-            "d5", "图片");
+            "d5", "图片"),
+
+    // 银行征信报告
+    bank_credit_report("b1", "图片"),
+
+    // 大数据征信报告
+    data_credit_report("d1", "图片")
+
+    ;
 
     public static Map<String, EAttachName> getMap() {
         Map<String, EAttachName> map = new HashMap<String, EAttachName>();

@@ -1,22 +1,29 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditDAO;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632110Req;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -34,14 +41,46 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     @Autowired
     private ICreditUserBO creditUserBO;
 
+    @Autowired
+    private IAttachmentBO attachmentBO;
+
     @Override
-    public String saveCredit(Credit data) {
+    public String saveCredit(XN632110Req req, SYSUser sysUser, String bizCode,
+            String nodeCode) {
         String code = null;
-        if (null != data) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT.getCode());
-            data.setCode(code);
-            creditDAO.insert(data);
+        Credit credit = new Credit();
+        code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT.getCode());
+        credit.setCode(code);
+        credit.setLoanBankCode(req.getLoanBankCode());
+        credit.setBizCode(bizCode);
+        credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
+        credit.setBizType(req.getBizType());
+        if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
+            // 二手车报告
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.second_car_report.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getSecondCarReport());
+            // 行驶证正面
+            attachName = EAttachName.getMap().get(
+                EAttachName.xsz_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getXszFront());
+            // 行驶证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.xsz_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getXszReverse());
         }
+        credit.setCompanyCode(sysUser.getCompanyCode());
+        credit.setSaleUserId(sysUser.getUserId());
+        credit.setTeamCode(sysUser.getTeamCode());
+        credit.setApplyDatetime(new Date());
+
+        credit.setNote(req.getNote());
+        credit.setSaleUserName(sysUser.getRealName());
+        credit.setCurNodeCode(nodeCode);
+        creditDAO.insert(credit);
 
         return code;
     }
@@ -78,7 +117,8 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     }
 
     @Override
-    public void distributeLeaflets(Credit credit) {
+    public void distributeLeaflets(Credit credit, String insideJob) {
+        credit.setInsideJob(insideJob);
         creditDAO.distributeLeaflets(credit);
     }
 
@@ -145,10 +185,14 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     }
 
     @Override
-    public void setApplyUserInfo(Credit credit) {
-        if (null != credit) {
-            creditDAO.setApplyUserInfo(credit);
-        }
+    public void setApplyUserInfo(String code, String userName, String mobile,
+            String idNo) {
+        Credit credit = new Credit();
+        credit.setCode(code);
+        credit.setUserName(userName);
+        credit.setMobile(mobile);
+        credit.setIdNo(idNo);
+        creditDAO.setApplyUserInfo(credit);
     }
 
     @Override

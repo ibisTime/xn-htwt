@@ -16,4 +16,10 @@ public interface IAttachmentBO extends IPaginableBO<Attachment> {
 
     public Attachment getAttachment(String code);
 
+    public List<Attachment> queryBizAttachments(String bizCode);
+
+    public void removeByName(String bizCode, String name);
+
+    public void removeBizAttachments(String bizCode);
+
 }

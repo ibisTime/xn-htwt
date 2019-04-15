@@ -59,8 +59,9 @@ public enum EGeneratePrefix {
     "RE", "返点"), BUSINESS_TRIP_APPLY("BTA", "出差申请"), BUS("BUS", "公车"), BUSBORROW(
             "BB", "公车借用"), XX("XX", "信息"),
 
-    BIZ_ORDER("BO", "业务"), attachment("AT", "附件"),BIZ_LOG("BL","操作日志"), 
-     Cdbiz("cb", "车贷业务"),BIZ_TASK("BT","待办事项"),FILE_POOL("FP","资源池");
+    BIZ_ORDER("BO", "业务"), attachment("AT", "附件"), BIZ_LOG("BL", "操作日志"), Cdbiz(
+            "cb", "车贷业务"), BIZ_TASK("BT", "待办事项"), FILE_POOL("FP", "资源池"), mission(
+            "M", "任务");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

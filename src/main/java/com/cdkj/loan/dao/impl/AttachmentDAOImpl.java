@@ -9,8 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Attachment;
 
 @Repository("attachmentDAOImpl")
-public class AttachmentDAOImpl extends AMybatisTemplate
-        implements IAttachmentDAO {
+public class AttachmentDAOImpl extends AMybatisTemplate implements
+        IAttachmentDAO {
 
     @Override
     public int insert(Attachment data) {
@@ -51,6 +51,12 @@ public class AttachmentDAOImpl extends AMybatisTemplate
     public int deleteByBiz(Attachment attachment) {
         return super.delete(NAMESPACE.concat("delete_attachmentByBiz"),
             attachment);
+    }
+
+    @Override
+    public int deleteAttachment(Attachment data) {
+        // TODO Auto-generated method stub
+        return super.delete(NAMESPACE.concat("delete_attachment"), data);
     }
 
 }

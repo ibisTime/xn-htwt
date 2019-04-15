@@ -10,7 +10,6 @@ import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTask;
-import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632520Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizTaskStatus;
@@ -42,8 +41,8 @@ public class BizTaskAOImpl implements IBizTaskAO {
                 "待办事项未处于可处理状态");
         }
 
-        SYSUser operatorInfo = sysUserBO.getUser(operator);
-        bizTaskBO.handleBizTask(code, operatorInfo);
+        sysUserBO.getUser(operator);
+        bizTaskBO.handleBizTask(code);
     }
 
     @Override

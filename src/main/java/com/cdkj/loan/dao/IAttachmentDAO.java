@@ -8,4 +8,5 @@ public interface IAttachmentDAO extends IBaseDAO<Attachment> {
 
     int deleteByBiz(Attachment attachment);
 
+    public int deleteAttachment(Attachment data);
 }

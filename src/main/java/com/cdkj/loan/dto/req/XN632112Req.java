@@ -28,6 +28,10 @@ public class XN632112Req {
     // 二手车评估报告
     private String secondCarReport;
 
+    private String xszFront;
+
+    private String xszReverse;
+
     private List<XN632112ReqCreditUser> creditUserList;
 
     // 操作按钮
@@ -37,6 +41,22 @@ public class XN632112Req {
     // 操作人
     @NotBlank
     private String operator;
+
+    public String getXszFront() {
+        return xszFront;
+    }
+
+    public void setXszFront(String xszFront) {
+        this.xszFront = xszFront;
+    }
+
+    public String getXszReverse() {
+        return xszReverse;
+    }
+
+    public void setXszReverse(String xszReverse) {
+        this.xszReverse = xszReverse;
+    }
 
     public String getButtonCode() {
         return buttonCode;

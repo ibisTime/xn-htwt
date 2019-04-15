@@ -10,7 +10,7 @@ import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
 
 public interface ICarAO {
-    String DEFAULT_ORDER_COLUMN = "code";
+    String DEFAULT_ORDER_COLUMN = "order_no";
 
     // 新增品牌
     public String addCar(XN630420Req req);
