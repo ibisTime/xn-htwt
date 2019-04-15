@@ -20,7 +20,7 @@ public class BizTask extends ABaseDO {
     // 业务编号
     private String bizCode;
 
-    // 关联订单类型
+    // 关联订单类型（EBizLogType）
     private String refType;
 
     // 关联订单编号

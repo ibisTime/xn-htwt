@@ -30,6 +30,7 @@ import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -41,6 +42,7 @@ import com.cdkj.loan.enums.ELoanProductStatus;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -132,7 +134,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setIsInterview(EBoolean.NO.getCode());
             data.setIsEntryMortgage(EBoolean.NO.getCode());
             data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
-            data.setIntevCurNodeCode(EBudgetOrderNode.INTERVIEW.getCode());
+            data.setIntevCurNodeCode(ENode.input_interview.getCode());
             // 准入单插入团队编号 来自业务员的所属团队
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             data.setTeamCode(user.getTeamCode());
@@ -538,10 +540,18 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
-    public void interview(BudgetOrder data) {
-        if (StringUtils.isNotBlank(data.getCode())) {
-            budgetOrderDAO.updaterInterview(data);
-        }
+    public void interview(BudgetOrder budgetOrder, XN632123Req req) {
+
+        budgetOrder.setBankVideo(req.getBankVideo());
+        budgetOrder.setBankPhoto(req.getBankPhoto());
+        budgetOrder.setCompanyVideo(req.getCompanyVideo());
+        budgetOrder.setCompanyContract(req.getCompanyContract());
+        budgetOrder.setBankContract(req.getBankContract());
+        budgetOrder.setAdvanceFundAmountPdf(req.getAdvanceFundAmountPdf());
+        budgetOrder.setOtherVideo(req.getOtherVideo());
+        budgetOrder.setInterviewOtherPdf(req.getInterviewOtherPdf());
+
+        budgetOrderDAO.updaterInterview(budgetOrder);
     }
 
     @Override
