@@ -118,4 +118,6 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 改节点
     public void refreshBudgetOrderCurNode(BudgetOrder budgetOrder);
 
+    public BudgetOrder getBudgetOrderByBizCode(String bizCode);
+
 }

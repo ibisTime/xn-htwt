@@ -18,7 +18,7 @@ public class BizTaskDAOImpl extends AMybatisTemplate implements IBizTaskDAO {
 
     @Override
     public int delete(BizTask data) {
-        return super.delete(NAMESPACE.concat(""), data);
+        return super.delete(NAMESPACE.concat("delete_bizTask"), data);
     }
 
     @Override

@@ -37,20 +37,20 @@ public class DispatcherImpl implements IDispatcher {
             if (e instanceof BizException) {
                 rm.setErrorCode(EErrorCode.BIZ_ERR.getCode());
                 rm.setErrorInfo(((BizException) e).getErrorMessage());
-                rm.setData("");
+                rm.setData(e.getMessage());
             } else if (e instanceof ParaException) {
                 rm.setErrorCode(EErrorCode.PARA_ERR.getCode());
                 rm.setErrorInfo(((ParaException) e).getErrorMessage());
-                rm.setData("");
+                rm.setData(e.getMessage());
             } else if (e instanceof NullPointerException) {
                 rm.setErrorCode(EErrorCode.OTHER_ERR.getCode());
                 rm.setErrorInfo(((NullPointerException) e).getMessage());
-                rm.setData("");
+                rm.setData(e.getMessage());
             } else {
                 rm.setErrorCode(EErrorCode.OTHER_ERR.getCode());
                 rm.setErrorInfo(e.getMessage());
                 // rm.setErrorInfo("系统错误，请联系客服");
-                rm.setData("");
+                rm.setData(e.getMessage());
             }
         } finally {
             result = JsonUtil.Object2Json(rm);

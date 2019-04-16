@@ -56,6 +56,26 @@ public class Cdbiz extends ABaseDO {
 
     private SYSUser sysUser;
 
+    private Credit credit;
+
+    private BudgetOrder budgetOrder;
+
+    public Credit getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Credit credit) {
+        this.credit = credit;
+    }
+
+    public BudgetOrder getBudgetOrder() {
+        return budgetOrder;
+    }
+
+    public void setBudgetOrder(BudgetOrder budgetOrder) {
+        this.budgetOrder = budgetOrder;
+    }
+
     public SYSUser getSysUser() {
         return sysUser;
     }

@@ -52,8 +52,8 @@ public class XN632148 extends AProcessor {
             condition.setCurNodeCodeList(req.getCurNodeCodeList());
         }
         if (StringUtils.isNotBlank(req.getIntevCurNodeCode())) {
-            boolean b = req.getIntevCurNodeCodeList()
-                .contains(req.getIntevCurNodeCode());
+            boolean b = req.getIntevCurNodeCodeList().contains(
+                req.getIntevCurNodeCode());
             if (b == false) {
                 condition.setIntevCurNodeCode("000_00");// 意为空
             } else {
@@ -63,8 +63,8 @@ public class XN632148 extends AProcessor {
             condition.setIntevCurNodeCodeList(req.getIntevCurNodeCodeList());
         }
         if (StringUtils.isNotBlank(req.getAdvanfCurNodeCode())) {
-            boolean b = req.getAdvanfCurNodeCodeList()
-                .contains(req.getAdvanfCurNodeCode());
+            boolean b = req.getAdvanfCurNodeCodeList().contains(
+                req.getAdvanfCurNodeCode());
             if (b == false) {
                 condition.setAdvanfCurNodeCode("000_00");// 意为空
             } else {

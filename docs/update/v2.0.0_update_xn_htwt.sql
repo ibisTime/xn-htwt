@@ -10,7 +10,14 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('a1','新录�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('a2','录入征信结果','a',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('a3','审核征信','a',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('a1x','重录征信资料','a',NULL);
-
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b1','录入准入单资料','b',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b2','区域总审核准入单','b',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b3','风控一审准入单','b',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b4','风控二审准入单','b',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b5','风控终审准入单','b',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b6','业务总监审核准入单','b',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b7','财务总监审核准入单','b',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('b1x','重录准入单','b',NULL);
 
 
 
@@ -19,6 +26,22 @@ insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, 
 insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('a','a2','a3',NULL,NULL,NULL);
 insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('a','a3','b1','a1x',NULL,NULL);
 insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('a','a1x','a2',NULL,NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b1','b2',NULL,NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b2','b3','b1x',NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b3','b4','b1x',NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b4','b5','b1x',NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b5','b6','b1x',NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b6','b7','b1x',NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b7','0','b1x',NULL,NULL);
+insert into `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`, `file_list`, `remark`) values('b','b1x','a2',NULL,NULL,NULL);
+
+
+
+
+
+
+
+
 
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'attachment_name','附件名字','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','attachment_name','a1','二手车报告','admin','2018-06-23 09:19:19','网页','CD-HTWT000020','CD-HTWT000020');

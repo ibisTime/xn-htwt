@@ -1031,6 +1031,26 @@ public class BudgetOrder extends ABaseDO {
     // 征信二手车评估报告
     private String secondCarReport;
 
+    private List<Attachment> attachments;
+
+    private Cdbiz cdbiz;
+
+    public Cdbiz getCdbiz() {
+        return cdbiz;
+    }
+
+    public void setCdbiz(Cdbiz cdbiz) {
+        this.cdbiz = cdbiz;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
     public Long getApproveCount() {
         return approveCount;
     }

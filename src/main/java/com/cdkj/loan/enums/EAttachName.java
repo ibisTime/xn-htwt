@@ -13,7 +13,7 @@ public enum EAttachName {
 
     // 二手车资源
     second_car_report("a1", "网页"), xsz_front("a2", "图片"), xsz_reverse("a3",
-            "图片"),
+            "图片"), car_check_reprot("a4", "图片"), // 车辆价格核实报告
 
     // 主贷人资源
     mainLoaner_bank("z1", "图片"), mainLoaner_id_front("z2", "图片"), mainLoaner_id_reverse(
@@ -34,7 +34,10 @@ public enum EAttachName {
     bank_credit_report("b1", "图片"),
 
     // 大数据征信报告
-    data_credit_report("d1", "图片")
+    data_credit_report("dcr1", "图片"),
+
+    // 房屋信息
+    house_pic("h1", "图片")
 
     ;
 

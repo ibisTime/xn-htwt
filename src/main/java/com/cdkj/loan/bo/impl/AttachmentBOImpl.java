@@ -11,7 +11,6 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IAttachmentDAO;
 import com.cdkj.loan.domain.Attachment;
-import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -73,11 +72,11 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
         Attachment condition = new Attachment();
         condition.setBizCode(bizCode);
         List<Attachment> attachments = attachmentDAO.selectList(condition);
-        for (Attachment attachment : attachments) {
-            EAttachName attachName = EAttachName.getMap().get(
-                attachment.getName());
-            attachment.setNameString(attachName.getValue());
-        }
+        // for (Attachment attachment : attachments) {
+        // EAttachName attachName = EAttachName.getMap().get(
+        // attachment.getName());
+        // attachment.setNameString(attachName.getValue());
+        // }
         return attachments;
     }
 

@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +11,9 @@ import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderFeeDAO;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -22,20 +25,31 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     private IBudgetOrderFeeDAO budgetOrderFeeDAO;
 
     @Override
-    public String saveBudgetOrderFee(BudgetOrderFee data) {
+    public String saveBudgetOrderFee(BudgetOrder budgetOrder, String operator) {
         String code = null;
-        if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.BUDGET_ORDER_FEE.getCode());
-            data.setCode(code);
-            budgetOrderFeeDAO.insert(data);
-        }
+        BudgetOrderFee data = new BudgetOrderFee();
+        code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
+            .getCode());
+        data.setCode(code);
+        data.setCompanyCode(budgetOrder.getCompanyCode());
+        data.setUserId(budgetOrder.getSaleUserId());
+        data.setCustomerName(budgetOrder.getApplyUserName());
+        // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+服务费
+        data.setShouldAmount(budgetOrder.getBankFee()
+                + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
+                + budgetOrder.getMonthDeposit() + budgetOrder.getCompanyFee()
+                + budgetOrder.getTeamFee());
+        data.setRealAmount(0L);
+        data.setIsSettled(EBoolean.NO.getCode());
+        data.setUpdater(operator);
+        data.setUpdateDatetime(new Date());
+        data.setBudgetOrder(budgetOrder.getCode());
+        budgetOrderFeeDAO.insert(data);
         return code;
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(
-            BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
         return budgetOrderFeeDAO.selectList(condition);
     }
 

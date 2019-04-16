@@ -471,7 +471,7 @@ public class CreditAOImpl implements ICreditAO {
                 attachName.getCode(), attachName.getValue(),
                 reqCreditUser.getDataCreditReport());
         }
-
+        cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A2.getCode());
         // 操作日志
         sysBizLogBO.recordCurOperate(credit.getBizCode(), EBizLogType.CREDIT,
             credit.getCode(), node.getCode(), node.getValue(),
