@@ -171,14 +171,13 @@ public class UserAOImpl implements IUserAO {
     @Override
     @Transactional
     public void doChangeMoblie(String userId, String newMobile,
-            String smsCaptcha) {
+            String newCaptcha, String oldMobile, String oldCaptcha) {
 
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "用户不存在");
         }
 
-        String oldMobile = user.getMobile();
         if (newMobile.equals(oldMobile)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "新手机与原手机一致");
         }
@@ -186,8 +185,11 @@ public class UserAOImpl implements IUserAO {
         // 验证手机号
         userBO.isMobileExist(newMobile);
 
-        // 短信验证码是否正确（往新手机号发送）
-        smsOutBO.checkCaptcha(newMobile, smsCaptcha,
+        // 短信验证码是否正确
+        smsOutBO.checkCaptcha(newMobile, newCaptcha,
+            ECaptchaType.CHANGE_MOBILE.getCode());
+
+        smsOutBO.checkCaptcha(oldMobile, oldCaptcha,
             ECaptchaType.CHANGE_MOBILE.getCode());
 
         userBO.refreshMobile(userId, newMobile);

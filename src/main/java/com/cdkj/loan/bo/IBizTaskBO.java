@@ -26,4 +26,6 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
     public void removeUnhandleBizTask(String bizCode, String node);
 
+    public List<BizTask> queryBizTaskByBizCode(String bizCode);
+
 }

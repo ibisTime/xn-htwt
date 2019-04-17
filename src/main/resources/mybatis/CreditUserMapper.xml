@@ -19,6 +19,8 @@
 		<result column="credit_card_occupation" property="creditCardOccupation" />
         <result column="bank_credit_result_pdf" property="bankCreditResultPdf" />
         <result column="bank_credit_result_remark" property="bankCreditResultRemark" />
+        <result column="bank_report" property="bankReport" />
+        <result column="data_report" property="dataReport" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
@@ -57,6 +59,8 @@
 		,t.credit_card_occupation
 		,t.bank_credit_result_pdf
 		,t.bank_credit_result_remark
+		,t.bank_report
+		,t.data_report
 		from tdq_credit_user t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -148,6 +152,8 @@
 		credit_card_occupation = #{creditCardOccupation}
 		,bank_credit_result_pdf = #{bankCreditResultPdf}
 		,bank_credit_result_remark = #{bankCreditResultRemark}
+		,bank_report=#{bankReport}
+		,data_report=#{dataReport}
 		WHERE 
 		code = #{code}
 	</update>

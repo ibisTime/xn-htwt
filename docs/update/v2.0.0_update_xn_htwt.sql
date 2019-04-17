@@ -1,5 +1,7 @@
 ALTER TABLE `tdq_credit` 
 ADD COLUMN `biz_code` VARCHAR(32) NULL COMMENT '业务编号' AFTER `code`;
+ADD COLUMN `xsz_front` VARCHAR(255) NULL COMMENT '行驶证正面' AFTER `second_car_report`;
+ADD COLUMN `xsz_reverse` VARCHAR(255) NULL COMMENT '行驶证背面' AFTER `xsz_front`;
 
 
 ALTER TABLE `tdq_budget_order` 
@@ -70,13 +72,22 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','001x','风控专员审核征信单不通过','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','003','待录入准入单','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
 
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','004','待区域总审核准入单','admin','2018-06-23 09:19:19','网页','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','005','待风控一审准入单','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','006','待风控二审准入单','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','007','待风控终审准入单','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','008','待业务总监审核准入单','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','009','待财务总监审核准入单','admin','2018-06-23 09:19:19','网页','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','003x','准入单审核不通过','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','cdbiz_status','010','待业务员寄送银行放款材料','admin','2018-06-23 09:19:19','图片','CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'mq_status','面签状态','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','mq_status','000','待录入面签信息','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
 
 
 
 
-CREATE TABLE `dev_xn_htwt`.`tqj_mission` (
+CREATE TABLE `tqj_mission` (
   `code` VARCHAR(32) NOT NULL,
   `biz_code` VARCHAR(32) NULL,
   `name` VARCHAR(255) NULL,
@@ -89,4 +100,7 @@ CREATE TABLE `dev_xn_htwt`.`tqj_mission` (
   `finish_datetime` DATETIME NULL,
   PRIMARY KEY (`code`));
 
+ALTER TABLE `tdq_credit_user` 
+ADD COLUMN `bank_report` VARCHAR(255) NULL AFTER `bank_credit_result_remark`,
+ADD COLUMN `data_report` VARCHAR(255) NULL AFTER `bank_report`;
 

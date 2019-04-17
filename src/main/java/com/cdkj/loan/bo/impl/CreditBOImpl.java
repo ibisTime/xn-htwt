@@ -56,6 +56,9 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setBizType(req.getBizType());
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
+            credit.setSecondCarReport(req.getSecondCarReport());
+            credit.setXszFront(req.getXszFront());
+            credit.setXszReverse(req.getXszReverse());
             // 二手车报告
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.second_car_report.getCode());

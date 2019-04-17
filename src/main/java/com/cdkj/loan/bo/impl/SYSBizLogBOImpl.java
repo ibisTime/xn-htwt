@@ -226,4 +226,12 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         return sysBizLogDAO.select(condition);
     }
 
+    @Override
+    public List<SYSBizLog> queryBizLogByBizCode(String bizCode) {
+        SYSBizLog condition = new SYSBizLog();
+        condition.setBizCode(bizCode);
+        List<SYSBizLog> bizLogs = sysBizLogDAO.selectList(condition);
+        return bizLogs;
+    }
+
 }

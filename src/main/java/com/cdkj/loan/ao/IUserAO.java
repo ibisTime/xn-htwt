@@ -23,7 +23,7 @@ public interface IUserAO {
 
     // 更换手机号
     public void doChangeMoblie(String userId, String newMobile,
-            String smsCaptcha);
+            String newCaptcha, String oldMobile, String oldCaptcha);
 
     // 管理员重置登录密码
     public void changeLoginPwdOSS(String userId, String newLoginPwd);
@@ -37,8 +37,7 @@ public interface IUserAO {
             String newLoginPwd);
 
     // 设置支付密码
-    public void doSetTradePwd(String userId, String tradePwd,
-            String smsCaptcha);
+    public void doSetTradePwd(String userId, String tradePwd, String smsCaptcha);
 
     // 重置支付密码
     public void doResetTradePwd(String userId, String newTradePwd,

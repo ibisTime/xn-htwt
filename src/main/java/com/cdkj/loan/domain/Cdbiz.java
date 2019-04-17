@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -59,6 +61,36 @@ public class Cdbiz extends ABaseDO {
     private Credit credit;
 
     private BudgetOrder budgetOrder;
+
+    private List<Attachment> attachments;
+
+    private List<BizTask> bizTasks;
+
+    private List<SYSBizLog> bizLogs;
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    public List<BizTask> getBizTasks() {
+        return bizTasks;
+    }
+
+    public void setBizTasks(List<BizTask> bizTasks) {
+        this.bizTasks = bizTasks;
+    }
+
+    public List<SYSBizLog> getBizLogs() {
+        return bizLogs;
+    }
+
+    public void setBizLogs(List<SYSBizLog> bizLogs) {
+        this.bizLogs = bizLogs;
+    }
 
     public Credit getCredit() {
         return credit;

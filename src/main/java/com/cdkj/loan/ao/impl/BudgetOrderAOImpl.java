@@ -547,6 +547,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 添加待办事项
         bizTaskBO.saveBizTask(budgetOrder.getBizCode(), EBizLogType.INTERVIEW,
             budgetOrder.getCode(), ENode.approve_interview, req.getOperator());
+        // 处理之前的待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
+            budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
     }
 
     @Override
@@ -711,10 +714,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.recordCurOperate(budgetOrder.getBizCode(),
             EBizLogType.INTERVIEW, budgetOrder.getCode(), node.getCode(),
             node.getValue(), operator);
+        // 处理前待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
+            budgetOrder.getCode(), node);
 
     }
 
     @Override
+    @Transactional
     public void financeAudit(XN632143Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
@@ -739,31 +746,40 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-            preCurrentNode = nodeFlow.getNextNode();
             // 主状态
             status = ECdbizStatus.A10.getCode();
             // 发保合gps状态
             String fbhgpsStatus = ECdbizStatus.C00.getCode();
+            // 发保合节点
+            ENode node = ENode.sure_dz;
             // 是否垫资
             if (EBoolean.NO.getCode().equals(budgetOrder.getIsAdvanceFund())) {
                 fbhgpsStatus = ECdbizStatus.C01.getCode();
+                node = ENode.input_fbh;
             }
+            // 待办事项
+            bizTaskBO.saveBizTask(budgetOrder.getBizCode(), EBizLogType.fbh,
+                budgetOrder.getCode(), node, null);
+            // 发保合状态更新
             cdbizBO.refreshFbhgpsStatus(cdbiz, fbhgpsStatus);
+
+            // 主节点
+            preCurrentNode = ENode.submit_1.getCode();
             // 生成报告、返点、费用
             lastApprove(budgetOrder, req.getOperator());
         } else {
             preCurrentNode = nodeFlow.getBackNode();
             status = ECdbizStatus.A3x.getCode();
+            // 待办事项
+            bizTaskBO.saveBizTask(budgetOrder.getBizCode(),
+                EBizLogType.BUDGET_ORDER, req.getCode(),
+                ENode.getMap().get(preCurrentNode), null);
         }
         budgetOrder.setCurNodeCode(preCurrentNode);
         budgetOrder.setRemark(req.getApproveNote());
         budgetOrderBO.refreshAreaApprove(budgetOrder);
 
         cdbizBO.refreshStatus(cdbiz, status);
-
-        // 待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-            req.getCode(), ENode.getMap().get(preCurrentNode));
 
     }
 

@@ -1,7 +1,6 @@
 package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 
 import com.cdkj.loan.ao.ISYSBizLogAO;
 import com.cdkj.loan.api.AProcessor;
@@ -28,7 +27,10 @@ public class XN623537 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSBizLog condition = new SYSBizLog();
-        BeanUtils.copyProperties(req, condition);
+        condition.setBizCode(req.getBizCode());
+        condition.setRefType(req.getRefType());
+        condition.setRefOrder(req.getRefOrder());
+        condition.setDealNode(req.getDealNode());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

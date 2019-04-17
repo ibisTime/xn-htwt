@@ -33,6 +33,12 @@ public class Credit extends ABaseDO {
     // 二手车评估报告
     private String secondCarReport;
 
+    // 行驶证正面
+    private String xszFront;
+
+    // 行驶证翻面
+    private String xszReverse;
+
     // 预算单编号
     private String budgetCode;
 
@@ -132,6 +138,22 @@ public class Credit extends ABaseDO {
 
     // 业务
     private Cdbiz cdbiz;
+
+    public String getXszFront() {
+        return xszFront;
+    }
+
+    public void setXszFront(String xszFront) {
+        this.xszFront = xszFront;
+    }
+
+    public String getXszReverse() {
+        return xszReverse;
+    }
+
+    public void setXszReverse(String xszReverse) {
+        this.xszReverse = xszReverse;
+    }
 
     public Cdbiz getCdbiz() {
         return cdbiz;

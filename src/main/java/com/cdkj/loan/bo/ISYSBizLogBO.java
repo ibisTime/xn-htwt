@@ -53,4 +53,6 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
             String nowDealNote, String operator);
 
     public SYSBizLog getLogByNode(String node, String bizCode);
+
+    public List<SYSBizLog> queryBizLogByBizCode(String bizCode);
 }

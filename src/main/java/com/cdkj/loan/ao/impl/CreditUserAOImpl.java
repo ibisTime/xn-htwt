@@ -75,6 +75,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
             // creditUser.setBankCreditResultPdf(Child.getBankCreditResultPdf());
 
             creditUserBO.inputBankCreditResult(creditUser,
+                Child.getBankCreditReport(), Child.getDataCreditReport(),
                 Child.getBankResult(), Child.getCreditNote());
         }
 

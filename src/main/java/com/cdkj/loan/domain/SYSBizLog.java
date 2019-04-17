@@ -8,7 +8,7 @@ public class SYSBizLog extends ABaseDO {
 
     private static final long serialVersionUID = 2099380862896285572L;
 
-    private int id;// 序号
+    private Integer id;// 序号
 
     private String bizCode;// 业务编号编号
 
@@ -118,11 +118,11 @@ public class SYSBizLog extends ABaseDO {
         this.roleCode = roleCode;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

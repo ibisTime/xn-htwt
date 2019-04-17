@@ -19,7 +19,11 @@ public class XN630052Req {
 
     // 验证码
     @NotBlank(message = "验证码不能为空")
-    private String smsCaptcha;
+    private String newCaptcha;
+
+    private String oldMobile;
+
+    private String oldCaptcha;
 
     // 备注（选填）
     private String remark;
@@ -40,12 +44,28 @@ public class XN630052Req {
         this.newMobile = newMobile;
     }
 
-    public String getSmsCaptcha() {
-        return smsCaptcha;
+    public String getNewCaptcha() {
+        return newCaptcha;
     }
 
-    public void setSmsCaptcha(String smsCaptcha) {
-        this.smsCaptcha = smsCaptcha;
+    public void setNewCaptcha(String newCaptcha) {
+        this.newCaptcha = newCaptcha;
+    }
+
+    public String getOldMobile() {
+        return oldMobile;
+    }
+
+    public void setOldMobile(String oldMobile) {
+        this.oldMobile = oldMobile;
+    }
+
+    public String getOldCaptcha() {
+        return oldCaptcha;
+    }
+
+    public void setOldCaptcha(String oldCaptcha) {
+        this.oldCaptcha = oldCaptcha;
     }
 
     public String getRemark() {

@@ -260,6 +260,9 @@ public class CreditAOImpl implements ICreditAO {
         // 修改征信单
         credit.setLoanBankCode(req.getLoanBankCode());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
+        credit.setSecondCarReport(req.getSecondCarReport());
+        credit.setXszFront(req.getXszFront());
+        credit.setXszReverse(req.getXszReverse());
         credit.setBizType(req.getBizType());
         credit.setSaleUserId(req.getOperator());
         creditBO.refreshCredit(credit);
@@ -457,6 +460,8 @@ public class CreditAOImpl implements ICreditAO {
             CreditUser creditUser = creditUserBO.getCreditUser(reqCreditUser
                 .getCreditUserCode());
             creditUserBO.inputBankCreditResult(creditUser,
+                reqCreditUser.getBankCreditReport(),
+                reqCreditUser.getDataCreditReport(),
                 reqCreditUser.getBankResult(), reqCreditUser.getCreditNote());
             // 银行征信报告
             EAttachName attachName = EAttachName.getMap().get(

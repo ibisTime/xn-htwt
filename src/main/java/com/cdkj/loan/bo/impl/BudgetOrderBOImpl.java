@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILoanProductBO;
@@ -31,6 +32,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -69,6 +71,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
 
     @Autowired
     private ILoanProductBO loanProductBO;
+
+    @Autowired
+    private IAttachmentBO attachmentBO;
 
     @Override
     public String saveBudgetOrder(Credit credit, List<CreditUser> creditUserList) {
@@ -550,6 +555,35 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrder.setAdvanceFundAmountPdf(req.getAdvanceFundAmountPdf());
         budgetOrder.setOtherVideo(req.getOtherVideo());
         budgetOrder.setInterviewOtherPdf(req.getInterviewOtherPdf());
+
+        // 加入附件
+        EAttachName attachName = EAttachName.bank_vedio;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(), req.getBankVideo());
+        attachName = EAttachName.bank_photo;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(), req.getBankPhoto());
+        attachName = EAttachName.company_vedio;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(), req.getCompanyVideo());
+        attachName = EAttachName.company_contract;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(),
+            req.getCompanyContract());
+        attachName = EAttachName.bank_contract;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(), req.getBankContract());
+        attachName = EAttachName.advance_fund_pdf;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(),
+            req.getAdvanceFundAmountPdf());
+        attachName = EAttachName.other_vedio;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(), req.getOtherVideo());
+        attachName = EAttachName.interview_other_pdf;
+        attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+            attachName.getCode(), attachName.getValue(),
+            req.getInterviewOtherPdf());
 
         budgetOrderDAO.updaterInterview(budgetOrder);
     }

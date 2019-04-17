@@ -50,6 +50,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());
         creditUser.setMobile(child.getMobile());
+        creditUser.setIdNoFront(child.getIdNoFront());
+        creditUser.setIdNoReverse(child.getIdNoReverse());
+        creditUser.setAuthPdf(child.getAuthPdf());
+        creditUser.setInterviewPic(child.getInterviewPic());
 
         creditUser.setIdNo(child.getIdNo());
         // 主贷人
@@ -249,11 +253,13 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public void inputBankCreditResult(CreditUser creditUser, String result,
-            String note) {
+    public void inputBankCreditResult(CreditUser creditUser, String bankReport,
+            String dataReport, String result, String note) {
         if (StringUtils.isNotBlank(creditUser.getCode())) {
             creditUser.setBankCreditResultPdf(result);
             creditUser.setBankCreditResultRemark(note);
+            creditUser.setBankReport(bankReport);
+            creditUser.setDataReport(dataReport);
 
             creditUserDAO.inputBankCreditResult(creditUser);
         }

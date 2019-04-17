@@ -144,4 +144,12 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         bizTaskDAO.delete(bizTask);
     }
 
+    @Override
+    public List<BizTask> queryBizTaskByBizCode(String bizCode) {
+        BizTask condition = new BizTask();
+        condition.setBizCode(bizCode);
+        List<BizTask> bizTasks = bizTaskDAO.selectList(condition);
+        return bizTasks;
+    }
+
 }

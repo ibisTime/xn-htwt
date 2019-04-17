@@ -26,6 +26,18 @@ public enum ENode {
 
     reinput_interview("b01x", "重录面签信息"), achieve_interview("b03", "面签完成"),
 
+    // 垫资
+    sure_dz("O", "确认垫资"),
+
+    // 发保合节点
+    input_fbh("c1", "新录入发保合"),
+
+    // gps
+    set_gps("d1", "安装gps"),
+
+    // 银行放款节点
+    submit_1("e1", "业务员寄送银行放款材料"),
+
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(
             "001_02", "录入征信结果"), AUDIT("001_03", "风控专员审核"), ACHIEVE("001_04",

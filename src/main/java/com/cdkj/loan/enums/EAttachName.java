@@ -37,7 +37,12 @@ public enum EAttachName {
     data_credit_report("dcr1", "图片"),
 
     // 房屋信息
-    house_pic("h1", "图片")
+    house_pic("h1", "图片"),
+
+    // 面签资源
+    bank_vedio("g1", "视频"), bank_photo("g2", "图片"), company_vedio("g3", "视频"), company_contract(
+            "g4", "图片"), bank_contract("g5", "图片"), advance_fund_pdf("g6", "图片"), other_vedio(
+            "g7", "视频"), interview_other_pdf("g8", "其他")
 
     ;
 
