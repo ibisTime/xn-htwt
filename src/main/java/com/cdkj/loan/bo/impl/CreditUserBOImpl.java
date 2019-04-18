@@ -141,6 +141,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());
         creditUser.setMobile(child.getMobile());
+        creditUser.setIdNoFront(child.getIdNoFront());
+        creditUser.setIdNoReverse(child.getIdNoReverse());
+        creditUser.setAuthPdf(child.getAuthPdf());
+        creditUser.setInterviewPic(child.getInterviewPic());
 
         creditUser.setIdNo(child.getIdNo());
         // 主贷人

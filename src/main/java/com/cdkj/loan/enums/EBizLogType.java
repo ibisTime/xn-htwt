@@ -8,7 +8,7 @@ public enum EBizLogType {
             "010", "调查报告"), GPS_LOGISTICS("011", "GPS收发件"), YWDH_LOGISTICS(
             "012", "业务贷后资料传递"), ZHFK_LOGISTICS("013", "驻行放款资料传递"), ZHDY_LOGISTICS(
             "014", "驻行抵押资料传递"), LOGISTICS("012", "资料传递"), fbh("c", "发保合"), gps(
-            "d", "gps"), bank_push("e", "银行放款");
+            "d", "gps"), bank_push("e", "银行放款"), fund("O", "垫资");
 
     EBizLogType(String code, String value) {
         this.code = code;

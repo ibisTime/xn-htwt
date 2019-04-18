@@ -601,9 +601,21 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
-    public void advancefund(BudgetOrder data) {
-        if (StringUtils.isNotBlank(data.getCode())) {
-            budgetOrderDAO.updaterAdvancefund(data);
+    public void advancefund(BudgetOrder budgetOrder, Date advanceFundDatetime,
+            Long advanceFundAmount, String billPdf, String advanceNote) {
+        if (StringUtils.isNotBlank(budgetOrder.getCode())) {
+            budgetOrder.setAdvanceFundDatetime(advanceFundDatetime);
+            budgetOrder.setAdvanceFundAmount(advanceFundAmount);
+            budgetOrder.setBillPdf(billPdf);
+            budgetOrder.setAdvanceNote(advanceNote);
+
+            // 下个节点设置
+            budgetOrder.setAdvanfCurNodeCode(ENode.input_fbh.getCode());
+            budgetOrderDAO.updaterAdvancefund(budgetOrder);
+
+            EAttachName attachName = EAttachName.water_bill;
+            attachmentBO.saveAttachment(budgetOrder.getBizCode(),
+                attachName.getCode(), attachName.getValue(), billPdf);
         }
     }
 

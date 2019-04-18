@@ -24,17 +24,23 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
     @Override
     public String saveAttachment(String bizCode, String name,
             String attachType, String url) {
-        Attachment data = new Attachment();
+        String code = null;
+        if (isAttachmentExist(bizCode, name)) {
+            refreshAttachment(bizCode, name, url);
+            return code;
+        } else {
+            Attachment data = new Attachment();
 
-        String code = OrderNoGenerater.generate(EGeneratePrefix.attachment
-            .getCode());
-        data.setCode(code);
-        data.setName(name);
-        data.setBizCode(bizCode);
-        data.setAttachType(attachType);
-        data.setUrl(url);
+            code = OrderNoGenerater.generate(EGeneratePrefix.attachment
+                .getCode());
+            data.setCode(code);
+            data.setName(name);
+            data.setBizCode(bizCode);
+            data.setAttachType(attachType);
+            data.setUrl(url);
 
-        attachmentDAO.insert(data);
+            attachmentDAO.insert(data);
+        }
         return code;
     }
 
@@ -110,6 +116,17 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
         Attachment attachment = attachmentDAO.select(condition);
         attachment.setUrl(url);
         attachmentDAO.updateAttachment(attachment);
+    }
+
+    @Override
+    public boolean isAttachmentExist(String bizCode, String attachName) {
+        Attachment condition = new Attachment();
+        condition.setBizCode(bizCode);
+        condition.setName(attachName);
+        if (attachmentDAO.selectTotalCount(condition) > 0) {
+            return true;
+        }
+        return false;
     }
 
 }

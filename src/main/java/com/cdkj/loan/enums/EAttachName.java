@@ -42,7 +42,9 @@ public enum EAttachName {
     // 面签资源
     bank_vedio("g1", "视频"), bank_photo("g2", "图片"), company_vedio("g3", "视频"), company_contract(
             "g4", "图片"), bank_contract("g5", "图片"), advance_fund_pdf("g6", "图片"), other_vedio(
-            "g7", "视频"), interview_other_pdf("g8", "其他")
+            "g7", "视频"), interview_other_pdf("g8", "其他"),
+
+    water_bill("h1", "图片")
 
     ;
 
