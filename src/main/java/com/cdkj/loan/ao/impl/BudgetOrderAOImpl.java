@@ -215,8 +215,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 } else {
                     // 修改附件
                     EAttachName attachName = EAttachName.second_car_report;
-                    attachmentBO.refreshAttachment(data.getBizCode(),
-                        attachName.getCode(), req.getSecondCarReport());
+                    attachmentBO.saveAttachment(data.getBizCode(),
+                        attachName.getCode(), attachName.getValue(),
+                        req.getSecondCarReport());
 
                 }
             }

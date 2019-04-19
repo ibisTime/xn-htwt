@@ -23,6 +23,8 @@ public class XN632115Req extends APageReq {
     // 征信单编号
     private String code;
 
+    private String bizCode;
+
     // 客户姓名
     private String userName;
 
@@ -134,6 +136,14 @@ public class XN632115Req extends APageReq {
 
     public void setBudgetOrderCode(String budgetOrderCode) {
         this.budgetOrderCode = budgetOrderCode;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
     public String getApplyDatetimeStart() {

@@ -31,6 +31,7 @@ public class XN632115 extends AProcessor {
     public Object doBusiness() throws BizException {
         Credit condition = new Credit();
         condition.setCode(req.getCode());
+        condition.setBizCode(req.getBizCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setUserNameQuery(req.getUserName());
         condition.setBudgetCodeQuery(req.getBudgetOrderCode());

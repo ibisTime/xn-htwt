@@ -13,6 +13,8 @@ public class XN632148Req extends APageReq {
 
     private String code;// 业务编号
 
+    private String bizCode;// 业务编号
+
     // 还款业务编号
     private String repayBizCode;
 
@@ -60,6 +62,14 @@ public class XN632148Req extends APageReq {
     private String keyword; // 关键字
 
     private String userId; // 操作人
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
 
     public String getCurNodeCode() {
         return curNodeCode;

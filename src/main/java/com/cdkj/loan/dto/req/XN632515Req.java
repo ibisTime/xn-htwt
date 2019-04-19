@@ -16,6 +16,8 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632515Req extends APageReq {
 
+    private String code;
+
     private String bizCode;
 
     private String bankCode;
@@ -124,6 +126,14 @@ public class XN632515Req extends APageReq {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
 }
