@@ -36,7 +36,7 @@ public enum ENode {
     set_gps("d1", "安装gps"),
 
     // 银行放款节点
-    submit_1("e1", "业务员寄送银行放款材料"),
+    submit_1("e1", "业务员寄送银行放款材料"), receive_approve_1("e2","风控审核收件（银行放款）"),
 
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(
@@ -52,6 +52,16 @@ public enum ENode {
         return map;
     }
 
+
+    public static ENode matchCode(String code) {
+        for (ENode eNode : ENode.values()) {
+            if (eNode.code.equalsIgnoreCase(code)) {
+                return eNode;
+            }
+        }
+        return null;
+    }
+    
     private ENode(String code, String value) {
         this.code = code;
         this.value = value;

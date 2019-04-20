@@ -48,8 +48,8 @@ import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -76,23 +76,22 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     private IAttachmentBO attachmentBO;
 
     @Override
-    public String saveBudgetOrder(Credit credit, List<CreditUser> creditUserList) {
+    public String saveBudgetOrder(Credit credit,
+            List<CreditUser> creditUserList) {
         CreditUser applyCreditUser = null;
         CreditUser ghrCreditUser = null;
         CreditUser guaCreditUser = null;
         for (CreditUser creditUser : creditUserList) {
-            if (applyCreditUser == null
-                    && ELoanRole.APPLY_USER.getCode().equals(
-                        creditUser.getLoanRole())) {
+            if (applyCreditUser == null && ELoanRole.APPLY_USER.getCode()
+                .equals(creditUser.getLoanRole())) {
                 applyCreditUser = creditUser;
             }
-            if (ghrCreditUser == null
-                    && ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+            if (ghrCreditUser == null && ELoanRole.GHR.getCode()
+                .equals(creditUser.getLoanRole())) {
                 ghrCreditUser = creditUser;
             }
-            if (guaCreditUser == null
-                    && ELoanRole.GUARANTOR.getCode().equals(
-                        creditUser.getLoanRole())) {
+            if (guaCreditUser == null && ELoanRole.GUARANTOR.getCode()
+                .equals(creditUser.getLoanRole())) {
                 guaCreditUser = creditUser;
             }
         }
@@ -100,8 +99,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         String code = null;
         if (credit != null) {
             BudgetOrder data = new BudgetOrder();
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGETORDER
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.BUDGETORDER.getCode());
             data.setBizCode(credit.getBizCode());
             data.setCode(code);
             data.setCreditCode(credit.getCode());
@@ -159,10 +158,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setLoanAmount(loanAmount);
             // 上架贷款产品信息
             if (StringUtils.isNotBlank(req.getLoanProductCode())) {
-                LoanProduct loanProduct = loanProductBO.getLoanProduct(req
-                    .getLoanProductCode());
-                if (!ELoanProductStatus.PUBLISH_YES.getCode().equals(
-                    loanProduct.getStatus())) {
+                LoanProduct loanProduct = loanProductBO
+                    .getLoanProduct(req.getLoanProductCode());
+                if (!ELoanProductStatus.PUBLISH_YES.getCode()
+                    .equals(loanProduct.getStatus())) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "贷款商品未上架");
                 }
@@ -213,7 +212,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setEvaluateColumn(req.getEvaluateColumn());
             data.setCarFrameNo(req.getCarFrameNo());
             data.setCarEngineNo(req.getCarEngineNo());
-            data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+            data.setOriginalPrice(
+                StringValidater.toLong(req.getOriginalPrice()));
             data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
 
             data.setCarColor(req.getCarColor());
@@ -232,8 +232,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setEducation(req.getEducation());
             data.setIdKind(EIDKind.IDCard.getCode());
             data.setIdNo(req.getIdNo());
-            data.setFamilyNumber(StringValidater.toInteger(req
-                .getFamilyNumber()));
+            data.setFamilyNumber(
+                StringValidater.toInteger(req.getFamilyNumber()));
             data.setMobile(req.getMobile());
 
             data.setNowAddress(req.getNowAddress());
@@ -255,8 +255,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setSelfCompanyArea(req.getSelfCompanyArea());
             data.setOtherWorkNote(req.getOtherWorkNote());
             data.setWorkAssetPdf(req.getWorkAssetPdf());
-            data.setEmployeeQuantity(StringValidater.toInteger(req
-                .getEmployeeQuantity()));
+            data.setEmployeeQuantity(
+                StringValidater.toInteger(req.getEmployeeQuantity()));
 
             data.setEnterpriseMonthOutput(req.getEnterpriseMonthOutput());
             data.setPosition(req.getPosition());
@@ -271,79 +271,82 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setMateCompanyAddress(req.getMateCompanyAddress());
             data.setMateCompanyContactNo(req.getMateCompanyContactNo());
 
-            data.setMateZfbJourDatetimeStart(DateUtil.strToDate(
-                req.getMateZfbJourDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setMateZfbJourDatetimeEnd(DateUtil.strToDate(
-                req.getMateZfbJourDatetimeEnd(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setMateZfbJourDatetimeStart(
+                DateUtil.strToDate(req.getMateZfbJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setMateZfbJourDatetimeEnd(
+                DateUtil.strToDate(req.getMateZfbJourDatetimeEnd(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setMateZfbJourInterest1(req.getMateZfbJourInterest1());
             data.setMateZfbJourInterest2(req.getMateZfbJourInterest2());
-            data.setMateZfbInterest1(StringValidater.toLong(req
-                .getMateZfbInterest1()));
-            data.setMateZfbInterest2(StringValidater.toLong(req
-                .getMateZfbInterest2()));
+            data.setMateZfbInterest1(
+                StringValidater.toLong(req.getMateZfbInterest1()));
+            data.setMateZfbInterest2(
+                StringValidater.toLong(req.getMateZfbInterest2()));
 
-            data.setMateZfbJourIncome(StringValidater.toLong(req
-                .getMateZfbJourIncome()));
-            data.setMateZfbJourExpend(StringValidater.toLong(req
-                .getMateZfbJourExpend()));
-            data.setMateZfbJourBalance(StringValidater.toLong(req
-                .getMateZfbJourBalance()));
-            data.setMateZfbJourMonthIncome(StringValidater.toLong(req
-                .getMateZfbJourMonthIncome()));
-            data.setMateZfbJourMonthExpend(StringValidater.toLong(req
-                .getMateZfbJourMonthExpend()));
+            data.setMateZfbJourIncome(
+                StringValidater.toLong(req.getMateZfbJourIncome()));
+            data.setMateZfbJourExpend(
+                StringValidater.toLong(req.getMateZfbJourExpend()));
+            data.setMateZfbJourBalance(
+                StringValidater.toLong(req.getMateZfbJourBalance()));
+            data.setMateZfbJourMonthIncome(
+                StringValidater.toLong(req.getMateZfbJourMonthIncome()));
+            data.setMateZfbJourMonthExpend(
+                StringValidater.toLong(req.getMateZfbJourMonthExpend()));
 
             data.setMateZfbJourPic(req.getMateZfbJourPic());
             data.setMateZfbJourRemark(req.getMateZfbJourRemark());
 
-            data.setMateWxJourDatetimeStart(DateUtil.strToDate(
-                req.getMateWxJourDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setMateWxJourDatetimeEnd(DateUtil.strToDate(
-                req.getMateWxJourDatetimeEnd(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setMateWxJourDatetimeStart(
+                DateUtil.strToDate(req.getMateWxJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setMateWxJourDatetimeEnd(
+                DateUtil.strToDate(req.getMateWxJourDatetimeEnd(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setMateWxJourInterest1(req.getMateWxJourInterest1());
             data.setMateWxJourInterest2(req.getMateWxJourInterest2());
-            data.setMateWxInterest1(StringValidater.toLong(req
-                .getMateWxInterest1()));
-            data.setMateWxInterest2(StringValidater.toLong(req
-                .getMateWxInterest2()));
+            data.setMateWxInterest1(
+                StringValidater.toLong(req.getMateWxInterest1()));
+            data.setMateWxInterest2(
+                StringValidater.toLong(req.getMateWxInterest2()));
 
-            data.setMateWxJourIncome(StringValidater.toLong(req
-                .getMateWxJourIncome()));
-            data.setMateWxJourExpend(StringValidater.toLong(req
-                .getMateWxJourExpend()));
-            data.setMateWxJourBalance(StringValidater.toLong(req
-                .getMateWxJourBalance()));
-            data.setMateWxJourMonthIncome(StringValidater.toLong(req
-                .getMateWxJourMonthIncome()));
-            data.setMateWxJourMonthExpend(StringValidater.toLong(req
-                .getMateWxJourMonthExpend()));
+            data.setMateWxJourIncome(
+                StringValidater.toLong(req.getMateWxJourIncome()));
+            data.setMateWxJourExpend(
+                StringValidater.toLong(req.getMateWxJourExpend()));
+            data.setMateWxJourBalance(
+                StringValidater.toLong(req.getMateWxJourBalance()));
+            data.setMateWxJourMonthIncome(
+                StringValidater.toLong(req.getMateWxJourMonthIncome()));
+            data.setMateWxJourMonthExpend(
+                StringValidater.toLong(req.getMateWxJourMonthExpend()));
             data.setMateWxJourPic(req.getMateWxJourPic());
             data.setMateWxJourRemark(req.getMateWxJourRemark());
 
-            data.setMateJourDatetimeStart(DateUtil.strToDate(
-                req.getMateJourDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setMateJourDatetimeEnd(DateUtil.strToDate(
-                req.getMateJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setMateJourDatetimeStart(
+                DateUtil.strToDate(req.getMateJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setMateJourDatetimeEnd(
+                DateUtil.strToDate(req.getMateJourDatetimeEnd(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setMateJourInterest1(req.getMateJourInterest1());
             data.setMateJourInterest2(req.getMateJourInterest2());
-            data.setMateInterest1(StringValidater.toLong(req.getMateInterest1()));
-            data.setMateInterest2(StringValidater.toLong(req.getMateInterest2()));
+            data.setMateInterest1(
+                StringValidater.toLong(req.getMateInterest1()));
+            data.setMateInterest2(
+                StringValidater.toLong(req.getMateInterest2()));
 
-            data.setMateJourIncome(StringValidater.toLong(req
-                .getMateJourIncome()));
-            data.setMateJourExpend(StringValidater.toLong(req
-                .getMateJourExpend()));
-            data.setMateJourBalance(StringValidater.toLong(req
-                .getMateJourBalance()));
-            data.setMateJourMonthIncome(StringValidater.toLong(req
-                .getMateJourMonthIncome()));
-            data.setMateJourMonthExpend(StringValidater.toLong(req
-                .getMateJourMonthExpend()));
+            data.setMateJourIncome(
+                StringValidater.toLong(req.getMateJourIncome()));
+            data.setMateJourExpend(
+                StringValidater.toLong(req.getMateJourExpend()));
+            data.setMateJourBalance(
+                StringValidater.toLong(req.getMateJourBalance()));
+            data.setMateJourMonthIncome(
+                StringValidater.toLong(req.getMateJourMonthIncome()));
+            data.setMateJourMonthExpend(
+                StringValidater.toLong(req.getMateJourMonthExpend()));
 
             data.setMateJourPic(req.getMateJourPic());
             data.setMateJourRemark(req.getMateJourRemark());
@@ -358,78 +361,81 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setGuaCompanyAddress(req.getGuaCompanyAddress());
             data.setGuaHouseAssetAddress(req.getGuaHouseAssetAddress());
 
-            data.setGuaZfbJourDatetimeStart(DateUtil.strToDate(
-                req.getGuaZfbJourDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setGuaZfbJourDatetimeEnd(DateUtil.strToDate(
-                req.getGuaZfbJourDatetimeEnd(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setGuaZfbJourDatetimeStart(
+                DateUtil.strToDate(req.getGuaZfbJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setGuaZfbJourDatetimeEnd(
+                DateUtil.strToDate(req.getGuaZfbJourDatetimeEnd(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setGuaZfbJourInterest1(req.getGuaZfbJourInterest1());
             data.setGuaZfbJourInterest2(req.getGuaZfbJourInterest2());
-            data.setGuaZfbInterest1(StringValidater.toLong(req
-                .getGuaZfbInterest1()));
-            data.setGuaZfbInterest2(StringValidater.toLong(req
-                .getGuaZfbInterest2()));
+            data.setGuaZfbInterest1(
+                StringValidater.toLong(req.getGuaZfbInterest1()));
+            data.setGuaZfbInterest2(
+                StringValidater.toLong(req.getGuaZfbInterest2()));
 
-            data.setGuaZfbJourIncome(StringValidater.toLong(req
-                .getGuaZfbJourIncome()));
-            data.setGuaZfbJourExpend(StringValidater.toLong(req
-                .getGuaZfbJourExpend()));
-            data.setGuaZfbJourBalance(StringValidater.toLong(req
-                .getGuaZfbJourBalance()));
-            data.setGuaZfbJourMonthIncome(StringValidater.toLong(req
-                .getGuaZfbJourMonthIncome()));
-            data.setGuaZfbJourMonthExpend(StringValidater.toLong(req
-                .getGuaZfbJourMonthExpend()));
+            data.setGuaZfbJourIncome(
+                StringValidater.toLong(req.getGuaZfbJourIncome()));
+            data.setGuaZfbJourExpend(
+                StringValidater.toLong(req.getGuaZfbJourExpend()));
+            data.setGuaZfbJourBalance(
+                StringValidater.toLong(req.getGuaZfbJourBalance()));
+            data.setGuaZfbJourMonthIncome(
+                StringValidater.toLong(req.getGuaZfbJourMonthIncome()));
+            data.setGuaZfbJourMonthExpend(
+                StringValidater.toLong(req.getGuaZfbJourMonthExpend()));
 
             data.setGuaZfbJourPic(req.getGuaZfbJourPic());
             data.setGuaZfbJourRemark(req.getGuaZfbJourRemark());
 
-            data.setGuaWxJourDatetimeStart(DateUtil.strToDate(
-                req.getGuaWxJourDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setGuaWxJourDatetimeEnd(DateUtil.strToDate(
-                req.getGuaWxJourDatetimeEnd(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setGuaWxJourDatetimeStart(
+                DateUtil.strToDate(req.getGuaWxJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setGuaWxJourDatetimeEnd(
+                DateUtil.strToDate(req.getGuaWxJourDatetimeEnd(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setGuaWxJourInterest1(req.getGuaWxJourInterest1());
             data.setGuaWxJourInterest2(req.getGuaWxJourInterest2());
-            data.setGuaWxInterest1(StringValidater.toLong(req
-                .getGuaWxInterest1()));
-            data.setGuaWxInterest2(StringValidater.toLong(req
-                .getGuaWxInterest2()));
+            data.setGuaWxInterest1(
+                StringValidater.toLong(req.getGuaWxInterest1()));
+            data.setGuaWxInterest2(
+                StringValidater.toLong(req.getGuaWxInterest2()));
 
-            data.setGuaWxJourIncome(StringValidater.toLong(req
-                .getGuaWxJourIncome()));
-            data.setGuaWxJourExpend(StringValidater.toLong(req
-                .getGuaWxJourExpend()));
-            data.setGuaWxJourBalance(StringValidater.toLong(req
-                .getGuaWxJourBalance()));
-            data.setGuaWxJourMonthIncome(StringValidater.toLong(req
-                .getGuaWxJourMonthIncome()));
-            data.setGuaWxJourMonthExpend(StringValidater.toLong(req
-                .getGuaWxJourMonthExpend()));
+            data.setGuaWxJourIncome(
+                StringValidater.toLong(req.getGuaWxJourIncome()));
+            data.setGuaWxJourExpend(
+                StringValidater.toLong(req.getGuaWxJourExpend()));
+            data.setGuaWxJourBalance(
+                StringValidater.toLong(req.getGuaWxJourBalance()));
+            data.setGuaWxJourMonthIncome(
+                StringValidater.toLong(req.getGuaWxJourMonthIncome()));
+            data.setGuaWxJourMonthExpend(
+                StringValidater.toLong(req.getGuaWxJourMonthExpend()));
 
             data.setGuaWxJourPic(req.getGuaWxJourPic());
             data.setGuaWxJourRemark(req.getGuaWxJourRemark());
 
-            data.setGuaJourDatetimeStart(DateUtil.strToDate(
-                req.getGuaJourDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setGuaJourDatetimeEnd(DateUtil.strToDate(
-                req.getGuaJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setGuaJourDatetimeStart(
+                DateUtil.strToDate(req.getGuaJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setGuaJourDatetimeEnd(
+                DateUtil.strToDate(req.getGuaJourDatetimeEnd(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setGuaJourInterest1(req.getGuaJourInterest1());
             data.setGuaJourInterest2(req.getGuaJourInterest2());
             data.setGuaInterest1(StringValidater.toLong(req.getGuaInterest1()));
             data.setGuaInterest2(StringValidater.toLong(req.getGuaInterest2()));
 
-            data.setGuaJourIncome(StringValidater.toLong(req.getGuaJourIncome()));
-            data.setGuaJourExpend(StringValidater.toLong(req.getGuaJourExpend()));
-            data.setGuaJourBalance(StringValidater.toLong(req
-                .getGuaJourBalance()));
-            data.setGuaJourMonthIncome(StringValidater.toLong(req
-                .getGuaJourMonthIncome()));
-            data.setGuaJourMonthExpend(StringValidater.toLong(req
-                .getGuaJourMonthExpend()));
+            data.setGuaJourIncome(
+                StringValidater.toLong(req.getGuaJourIncome()));
+            data.setGuaJourExpend(
+                StringValidater.toLong(req.getGuaJourExpend()));
+            data.setGuaJourBalance(
+                StringValidater.toLong(req.getGuaJourBalance()));
+            data.setGuaJourMonthIncome(
+                StringValidater.toLong(req.getGuaJourMonthIncome()));
+            data.setGuaJourMonthExpend(
+                StringValidater.toLong(req.getGuaJourMonthExpend()));
 
             data.setGuaJourPic(req.getGuaJourPic());
             data.setGuaJourRemark(req.getGuaJourRemark());
@@ -442,29 +448,33 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setEmergencyName2(req.getEmergencyName2());
             data.setEmergencyRelation2(req.getEmergencyRelation2());
             data.setEmergencyMobile2(req.getEmergencyMobile2());
-            data.setZfbJourDatetimeStart(DateUtil.strToDate(
-                req.getZfbJourDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setZfbJourDatetimeEnd(DateUtil.strToDate(
-                req.getZfbJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setZfbJourDatetimeStart(
+                DateUtil.strToDate(req.getZfbJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setZfbJourDatetimeEnd(
+                DateUtil.strToDate(req.getZfbJourDatetimeEnd(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setZfbJourInterest1(req.getZfbJourInterest1());
             data.setZfbJourInterest2(req.getZfbJourInterest2());
             data.setZfbInterest1(StringValidater.toLong(req.getZfbInterest1()));
             data.setZfbInterest2(StringValidater.toLong(req.getZfbInterest2()));
 
-            data.setZfbJourIncome(StringValidater.toLong(req.getZfbJourIncome()));
-            data.setZfbJourExpend(StringValidater.toLong(req.getZfbJourExpend()));
-            data.setZfbJourBalance(StringValidater.toLong(req
-                .getZfbJourBalance()));
-            data.setZfbJourMonthIncome(StringValidater.toLong(req
-                .getZfbJourMonthIncome()));
-            data.setZfbJourMonthExpend(StringValidater.toLong(req
-                .getZfbJourMonthExpend()));
+            data.setZfbJourIncome(
+                StringValidater.toLong(req.getZfbJourIncome()));
+            data.setZfbJourExpend(
+                StringValidater.toLong(req.getZfbJourExpend()));
+            data.setZfbJourBalance(
+                StringValidater.toLong(req.getZfbJourBalance()));
+            data.setZfbJourMonthIncome(
+                StringValidater.toLong(req.getZfbJourMonthIncome()));
+            data.setZfbJourMonthExpend(
+                StringValidater.toLong(req.getZfbJourMonthExpend()));
 
             data.setZfbJourPic(req.getZfbJourPic());
             data.setZfbJourRemark(req.getZfbJourRemark());
-            data.setWxJourDatetimeStart(DateUtil.strToDate(
-                req.getWxJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setWxJourDatetimeStart(
+                DateUtil.strToDate(req.getWxJourDatetimeStart(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setWxJourDatetimeEnd(DateUtil.strToDate(
                 req.getWxJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setWxJourInterest1(req.getWxJourInterest1());
@@ -474,18 +484,19 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
 
             data.setWxJourIncome(StringValidater.toLong(req.getWxJourIncome()));
             data.setWxJourExpend(StringValidater.toLong(req.getWxJourExpend()));
-            data.setWxJourBalance(StringValidater.toLong(req.getWxJourBalance()));
-            data.setWxJourMonthIncome(StringValidater.toLong(req
-                .getWxJourMonthIncome()));
-            data.setWxJourMonthExpend(StringValidater.toLong(req
-                .getWxJourMonthExpend()));
+            data.setWxJourBalance(
+                StringValidater.toLong(req.getWxJourBalance()));
+            data.setWxJourMonthIncome(
+                StringValidater.toLong(req.getWxJourMonthIncome()));
+            data.setWxJourMonthExpend(
+                StringValidater.toLong(req.getWxJourMonthExpend()));
 
             data.setWxJourPic(req.getWxJourPic());
             data.setWxJourRemark(req.getWxJourRemark());
             data.setJourDatetimeStart(DateUtil.strToDate(
                 req.getJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setJourDatetimeEnd(DateUtil.strToDate(
-                req.getJourDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setJourDatetimeEnd(DateUtil.strToDate(req.getJourDatetimeEnd(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setJourInterest1(req.getJourInterest1());
             data.setJourInterest2(req.getJourInterest2());
             data.setInterest1(StringValidater.toLong(req.getInterest1()));
@@ -494,10 +505,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setJourIncome(StringValidater.toLong(req.getJourIncome()));
             data.setJourExpend(StringValidater.toLong(req.getJourExpend()));
             data.setJourBalance(StringValidater.toLong(req.getJourBalance()));
-            data.setJourMonthIncome(StringValidater.toLong(req
-                .getJourMonthIncome()));
-            data.setJourMonthExpend(StringValidater.toLong(req
-                .getJourMonthExpend()));
+            data.setJourMonthIncome(
+                StringValidater.toLong(req.getJourMonthIncome()));
+            data.setJourMonthExpend(
+                StringValidater.toLong(req.getJourMonthExpend()));
 
             data.setJourPic(req.getJourPic());
             data.setJourRemark(req.getJourRemark());
@@ -516,8 +527,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             String preNodeCode = data.getCurNodeCode(); // 当前节点
             if (EDealType.SEND.getCode().equals(req.getDealType())) {
                 // 下一个节点
-                data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                    preNodeCode).getNextNode());
+                data.setCurNodeCode(nodeFlowBO
+                    .getNodeFlowByCurrentNode(preNodeCode).getNextNode());
             }
             budgetOrderDAO.update(data);
         }
@@ -727,36 +738,49 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         return count;
     }
 
-    /** 
-     * @see com.cdkj.loan.bo.IBudgetOrderBO#logicOrder(com.cdkj.loan.domain.BudgetOrder)
-     */
     @Override
-    public String logicOrderLoan(String code, String operator) {
+    public String logicOrderLoan(String code, String operator,
+            String approveResult) {
         String result = EBoolean.NO.getCode();
 
         BudgetOrder budgetOrder = getBudgetOrder(code);
-        String preCurNodeCode = budgetOrder.getIntevCurNodeCode();
+        String preCurNodeCode = budgetOrder.getCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
-        budgetOrder.setIntevCurNodeCode(nodeFlow.getNextNode());
         // 状态为不在物流传递中
         budgetOrder.setIsLogistics(EBoolean.NO.getCode());
+
         // 准入单日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getIntevCurNodeCode(), null, operator);
-        if (EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode().equals(
-            nodeFlow.getCurrentNode())
-                || EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
-                    nodeFlow.getCurrentNode())
-                || EBudgetOrderNode.RISK_CONTROLLER_APPROVE.getCode().equals(
-                    nodeFlow.getCurrentNode())) {
+
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+
+        } else {
+
+            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+
             String newLogisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.BANK_LOAN.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
-            // // 产生物流单后改变状态为物流传递中
-            // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+
+            sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
+                newLogisticsCode, budgetOrder.getIntevCurNodeCode());
+        }
+
+        if (EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode()
+            .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.DHAPPROVEDATA.getCode()
+                    .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.RISK_CONTROLLER_APPROVE.getCode()
+                    .equals(nodeFlow.getCurrentNode())) {
+            String newLogisticsCode = logisticsBO.saveLogistics(
+                ELogisticsType.BUDGET.getCode(),
+                ELogisticsCurNodeType.BANK_LOAN.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlow.getCurrentNode(), nodeFlow.getNextNode(), null);
 
             // 资料传递日志
             sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
@@ -787,8 +811,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
             budgetOrder.getCurNodeCode(), null, operator);
 
-        if (EBudgetOrderNode.YWDH_APPROVE.getCode().equals(
-            nodeFlow.getCurrentNode())) {
+        if (EBudgetOrderNode.YWDH_APPROVE.getCode()
+            .equals(nodeFlow.getCurrentNode())) {
             String newLogisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),

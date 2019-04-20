@@ -12,7 +12,8 @@ import com.cdkj.loan.dto.req.XN632123Req;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
-    public String saveBudgetOrder(Credit credit, List<CreditUser> creditUserList);
+    public String saveBudgetOrder(Credit credit,
+            List<CreditUser> creditUserList);
 
     public void refreshBudgetOrder(BudgetOrder order, XN632120Req req);
 
@@ -72,7 +73,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
             String userId);
 
     // 物流流转
-    public String logicOrderLoan(String code, String operator);
+    public String logicOrderLoan(String code, String operator,
+            String approveResult);
 
     // 物流流转
     public String logicOrderMortgage(String code, String operator);
