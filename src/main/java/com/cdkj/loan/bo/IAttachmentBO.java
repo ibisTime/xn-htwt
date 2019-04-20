@@ -24,4 +24,6 @@ public interface IAttachmentBO extends IPaginableBO<Attachment> {
 
     public void refreshAttachment(String bizCode, String name, String url);
 
+    public boolean isAttachmentExist(String bizCode, String attachName);
+
 }

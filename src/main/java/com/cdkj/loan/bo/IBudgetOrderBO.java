@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
@@ -36,7 +37,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void refreshbizChargeApprove(BudgetOrder budgetOrder);
 
-    public void advancefund(BudgetOrder budgetOrder);
+    public void advancefund(BudgetOrder budgetOrder, Date advanceFundDatetime,
+            Long advanceFundAmount, String billPdf, String advanceNote);
 
     // 驻行抵押申请
     public void residentMortgageApply(BudgetOrder budgetOrder);

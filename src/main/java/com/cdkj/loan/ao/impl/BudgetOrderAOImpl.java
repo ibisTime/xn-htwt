@@ -215,8 +215,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 } else {
                     // 修改附件
                     EAttachName attachName = EAttachName.second_car_report;
-                    attachmentBO.refreshAttachment(data.getBizCode(),
-                        attachName.getCode(), req.getSecondCarReport());
+                    attachmentBO.saveAttachment(data.getBizCode(),
+                        attachName.getCode(), attachName.getValue(),
+                        req.getSecondCarReport());
 
                 }
             }
@@ -787,36 +788,34 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void advanceFund(XN632125Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
-        if (!EBudgetOrderNode.ADVANCEFUND.getCode().equals(preCurrentNode)) {
+        if (ECdbizStatus.C00.getCode().equals(cdbiz.getFbhgpsStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是财务垫资，不能操作");
         }
+        // 更新发保合gps状态
+        String fbhgpsStatus = cdbiz.getFbhgpsStatus();
+        cdbizBO.refreshFbhgpsStatus(cdbiz, fbhgpsStatus);
+        // 更新垫资信息
+        budgetOrderBO.advancefund(budgetOrder, DateUtil.strToDate(
+            req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING),
+            StringValidater.toLong(req.getAdvanceFundAmount()), req
+                .getBillPdf(), req.getAdvanceNote());
 
-        budgetOrder.setAdvanceFundDatetime(DateUtil.strToDate(
-            req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setAdvanceFundAmount(StringValidater.toLong(req
-            .getAdvanceFundAmount()));
-        budgetOrder.setBillPdf(req.getBillPdf());
-        budgetOrder.setAdvanceNote(req.getAdvanceNote());
-
-        // 下个节点设置
-        budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            preCurrentNode).getNextNode());
-        budgetOrder.setAdvanfCurNodeCode(EBudgetOrderNode.ENTRYMORTGAGE
-            .getCode());
-        budgetOrderBO.advancefund(budgetOrder);
-
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
         // 主流程日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getCurNodeCode(), null, req.getOperator());
-
-        // gps管理日志
-        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
-            EBudgetOrderNode.ENTRYMORTGAGE.getCode());
+        sysBizLogBO.recordCurOperate(budgetOrder.getBizCode(),
+            EBizLogType.fund, budgetOrder.getCode(), nodeFlow.getNextNode(),
+            req.getAdvanceNote(), req.getOperator());
+        ENode node = ENode.getMap().get(nodeFlow.getNextNode());
+        // 发保合待办事项
+        bizTaskBO.saveBizTask(budgetOrder.getBizCode(), EBizLogType.fbh,
+            budgetOrder.getCode(), node, req.getOperator());
+        // 处理前待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.fund.getCode(),
+            budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
     }
 
     @Override
