@@ -449,4 +449,8 @@
 		<property name="paginableDAO" ref="missionDAOImpl"/>
 	</bean>
 	
+	<bean id="creditJourBO" class="com.cdkj.loan.bo.impl.CreditJourBOImpl">
+		<property name="paginableDAO" ref="creditJourDAOImpl"/>
+	</bean>
+	
 </beans>
