@@ -77,6 +77,7 @@
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
+		<typeAlias alias="creditUserExt" type="com.cdkj.loan.domain.CreditUserExt" />
 		<typeAlias alias="creditJour" type="com.cdkj.loan.domain.CreditJour" />
 		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 

@@ -453,4 +453,8 @@
 		<property name="paginableDAO" ref="creditJourDAOImpl"/>
 	</bean>
 	
+	<bean id="creditUserExtBO" class="com.cdkj.loan.bo.impl.CreditUserExtBOImpl">
+		<property name="paginableDAO" ref="creditUserExtDAOImpl"/>
+	</bean>
+	
 </beans>
