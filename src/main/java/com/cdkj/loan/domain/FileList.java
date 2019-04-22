@@ -15,16 +15,21 @@ public class FileList extends ABaseDO {
     private static final long serialVersionUID = 1L;
 
     // 编号
-    private int id;
+    private Long id;
 
     // 序号
-    private String no;
+    private String category;
 
     // 名称
-    private String name;
+    private String kname;
+
+    private String vname;
 
     // 份数
-    private String number;
+    private String attachType;
+
+    // 数量
+    private Long number;
 
     // 更新人
     private String updater;
@@ -37,52 +42,60 @@ public class FileList extends ABaseDO {
     // 更新人名称
     private String updaterName;
 
-    public String getUpdaterName() {
-        return updaterName;
-    }
-
-    public void setUpdaterName(String updaterName) {
-        this.updaterName = updaterName;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public String getCategory() {
+        return category;
     }
 
-    public String getNumber() {
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getKname() {
+        return kname;
+    }
+
+    public void setKname(String kname) {
+        this.kname = kname;
+    }
+
+    public String getVname() {
+        return vname;
+    }
+
+    public void setVname(String vname) {
+        this.vname = vname;
+    }
+
+    public String getAttachType() {
+        return attachType;
+    }
+
+    public void setAttachType(String attachType) {
+        this.attachType = attachType;
+    }
+
+    public Long getNumber() {
         return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
+    public void setNumber(Long number) {
+        this.number = number;
     }
 
     public String getUpdater() {
         return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
     public Date getUpdateDatetime() {
@@ -91,6 +104,14 @@ public class FileList extends ABaseDO {
 
     public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
     }
 
 }

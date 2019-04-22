@@ -8,33 +8,27 @@ public class XN632212Req {
     @NotBlank
     private String id;
 
-    // 序号
+    // 文件分类
     @NotBlank
-    private String no;
+    private String category;
+
+    @NotBlank
+    private String kname;
 
     // 份数
     @NotBlank
     private String number;
 
+    @NotBlank
+    private String attachType;
+
     // 名称
     @NotBlank
-    private String name;
+    private String vname;
 
     // 更新人
     @NotBlank
     private String updater;
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
 
     public String getId() {
         return id;
@@ -44,16 +38,44 @@ public class XN632212Req {
         this.id = id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getKname() {
+        return kname;
+    }
+
+    public void setKname(String kname) {
+        this.kname = kname;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
     public void setNumber(String number) {
         this.number = number;
     }
 
-    public String getName() {
-        return name;
+    public String getAttachType() {
+        return attachType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAttachType(String attachType) {
+        this.attachType = attachType;
+    }
+
+    public String getVname() {
+        return vname;
+    }
+
+    public void setVname(String vname) {
+        this.vname = vname;
     }
 
     public String getUpdater() {

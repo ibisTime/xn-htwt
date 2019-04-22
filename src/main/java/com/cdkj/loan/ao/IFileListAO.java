@@ -6,18 +6,18 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.FileList;
-import com.cdkj.loan.dto.req.XN632210Req;
-import com.cdkj.loan.dto.req.XN632212Req;
 
 @Component
 public interface IFileListAO {
     static final String DEFAULT_ORDER_COLUMN = "id";
 
-    public void addFileList(XN632210Req req);
+    public void addFileList(String category, String kname, String vname,
+            String attachType, Long number, String updater);
 
     public int dropFileList(int id);
 
-    public void editFileList(XN632212Req req);
+    public void editFileList(Long id, String category, String kname,
+            String vname, String attachType, Long number, String updater);
 
     public Paginable<FileList> queryFileListPage(int start, int limit,
             FileList condition);

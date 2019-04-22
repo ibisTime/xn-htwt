@@ -4,6 +4,7 @@ import com.cdkj.loan.ao.IFileListAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN632212Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -24,7 +25,10 @@ public class XN632212 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        fileListAO.editFileList(req);
+        fileListAO.editFileList(StringValidater.toLong(req.getId()),
+            req.getCategory(), req.getKname(), req.getVname(),
+            req.getAttachType(), StringValidater.toLong(req.getNumber()),
+            req.getUpdater());
         return new BooleanRes(true);
     }
 

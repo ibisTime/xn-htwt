@@ -1,30 +1,50 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632217Req {
+public class XN632217Req extends AListReq {
 
     // 序号
-    private String number;
+    private String id;
 
     // 名称
-    private String name;
+    private String kname;
+
+    private String category;
+
+    private String attachType;
 
     // 更新人
     private String updater;
 
-    public String getNumber() {
-        return number;
+    public String getId() {
+        return id;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getKname() {
+        return kname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKname(String kname) {
+        this.kname = kname;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getAttachType() {
+        return attachType;
+    }
+
+    public void setAttachType(String attachType) {
+        this.attachType = attachType;
     }
 
     public String getUpdater() {
