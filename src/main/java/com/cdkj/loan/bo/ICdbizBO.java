@@ -44,4 +44,6 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     public void refershCurNodeCode(Cdbiz cdbiz, String node);
 
+    public void refreshInsideJob(Cdbiz cdbiz, String insideJob);
+
 }

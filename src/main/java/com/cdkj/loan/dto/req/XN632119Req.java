@@ -12,7 +12,7 @@ public class XN632119Req {
 
     // 征信单编号
     @NotBlank
-    private String creditCode;
+    private String bizCode;
 
     // 内勤
     @NotBlank
@@ -22,12 +22,12 @@ public class XN632119Req {
     @NotBlank
     private String operator;
 
-    public String getCreditCode() {
-        return creditCode;
+    public String getBizCode() {
+        return bizCode;
     }
 
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
     public String getInsideJob() {

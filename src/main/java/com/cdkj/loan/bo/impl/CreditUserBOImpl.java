@@ -38,22 +38,16 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     private IAttachmentBO attachmentBO;
 
     @Override
-    public void saveCreditUser(XN632110ReqCreditUser child, String creditCode,
-            String bizCode) {
+    public void saveCreditUser(XN632110ReqCreditUser child, String bizCode) {
         String code = null;
         CreditUser creditUser = new CreditUser();
         code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER.getCode());
         creditUser.setCode(code);
 
-        creditUser.setCreditCode(creditCode);
         creditUser.setRelation(child.getRelation());
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());
         creditUser.setMobile(child.getMobile());
-        creditUser.setIdNoFront(child.getIdNoFront());
-        creditUser.setIdNoReverse(child.getIdNoReverse());
-        creditUser.setAuthPdf(child.getAuthPdf());
-        creditUser.setInterviewPic(child.getInterviewPic());
 
         creditUser.setIdNo(child.getIdNo());
         // 主贷人
@@ -129,22 +123,16 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public void saveCreditUser(XN632112ReqCreditUser child, String creditCode,
-            String bizCode) {
+    public void saveCreditUser(XN632112ReqCreditUser child, String bizCode) {
         String code = null;
         CreditUser creditUser = new CreditUser();
         code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER.getCode());
         creditUser.setCode(code);
 
-        creditUser.setCreditCode(creditCode);
         creditUser.setRelation(child.getRelation());
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());
         creditUser.setMobile(child.getMobile());
-        creditUser.setIdNoFront(child.getIdNoFront());
-        creditUser.setIdNoReverse(child.getIdNoReverse());
-        creditUser.setAuthPdf(child.getAuthPdf());
-        creditUser.setInterviewPic(child.getInterviewPic());
 
         creditUser.setIdNo(child.getIdNo());
         // 主贷人
@@ -226,9 +214,9 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public void removeCreditUserByCreditCode(String creditCode) {
+    public void removeCreditUserByBizCode(String bizCode) {
         CreditUser creditUser = new CreditUser();
-        creditUser.setCreditCode(creditCode);
+        creditUser.setBizCode(bizCode);
         List<CreditUser> list = creditUserDAO.selectList(creditUser);
         for (CreditUser data : list) {
             creditUserDAO.delete(data);
@@ -260,10 +248,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     public void inputBankCreditResult(CreditUser creditUser, String bankReport,
             String dataReport, String result, String note) {
         if (StringUtils.isNotBlank(creditUser.getCode())) {
-            creditUser.setBankCreditResultPdf(result);
+            creditUser.setBankCreditResult(result);
             creditUser.setBankCreditResultRemark(note);
-            creditUser.setBankReport(bankReport);
-            creditUser.setDataReport(dataReport);
 
             creditUserDAO.inputBankCreditResult(creditUser);
         }
@@ -277,18 +263,18 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public List<CreditUser> queryCreditUserList(String creditCode) {
+    public List<CreditUser> queryCreditUserList(String bizCode) {
         CreditUser condition = new CreditUser();
-        condition.setCreditCode(creditCode);
+        condition.setBizCode(bizCode);
         return creditUserDAO.selectList(condition);
     }
 
     @Override
-    public CreditUser getCreditUserByCreditCode(String creditCode,
+    public CreditUser getCreditUserByBizCode(String bizCode,
             ELoanRole creditUserLoanRole) {
         CreditUser creditUser = null;
         CreditUser condition = new CreditUser();
-        condition.setCreditCode(creditCode);
+        condition.setBizCode(bizCode);
         condition.setLoanRole(creditUserLoanRole.getCode());
 
         List<CreditUser> list = creditUserDAO.selectList(condition);

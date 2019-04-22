@@ -176,20 +176,23 @@ public class CdbizAOImpl implements ICdbizAO {
                         "征信申请人只能填写一条数据");
                 }
 
-                creditUserBO.saveCreditUser(child, creditCode, bizCode);
+                creditUserBO.saveCreditUser(child, bizCode);
             }
 
             if (applyUserCount <= 0) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "请填写征信申请人贷款角色数据");
             }
+
         }
-        return null;
+        // 待办事项
+        bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, bizCode,
+            currentNode, req.getOperator());
+        return bizCode;
     }
 
     @Override
     public void editCredit(XN632112Req req) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -219,7 +222,19 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     public void distributeLeaflets(XN632119Req req) {
-        // TODO Auto-generated method stub
-
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
+        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())
+                && !ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前征信单不能派单！");
+        }
+        // 修改内勤
+        cdbizBO.refreshInsideJob(cdbiz, req.getInsideJob());
+        // 删除前待办事项
+        bizTaskBO.removeUnhandleBizTask(cdbiz.getCode(),
+            ENode.input_credit.getCode());
+        // 新增该内勤的待办事项
+        bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.CREDIT,
+            cdbiz.getCode(), ENode.input_credit, req.getInsideJob());
     }
 }

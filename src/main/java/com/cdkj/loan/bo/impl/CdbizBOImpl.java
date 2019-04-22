@@ -164,4 +164,10 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbiz.setCurNodeCode(node);
         cdbizDAO.updateCurNodeCode(cdbiz);
     }
+
+    @Override
+    public void refreshInsideJob(Cdbiz cdbiz, String insideJob) {
+        cdbiz.setInsideJob(insideJob);
+        cdbizDAO.updateInsideJob(cdbiz);
+    }
 }

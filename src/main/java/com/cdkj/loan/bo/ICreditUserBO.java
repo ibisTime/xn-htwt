@@ -11,15 +11,13 @@ import com.cdkj.loan.enums.ELoanRole;
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     // 新增征信人员
-    public void saveCreditUser(XN632110ReqCreditUser child, String creditCode,
-            String bizCode);
+    public void saveCreditUser(XN632110ReqCreditUser child, String bizCode);
 
     // 修改征信人员
-    public void saveCreditUser(XN632112ReqCreditUser child, String creditCode,
-            String bizCode);
+    public void saveCreditUser(XN632112ReqCreditUser child, String bizCode);
 
     // 删除征信人员
-    public void removeCreditUserByCreditCode(String creditCode);
+    public void removeCreditUserByBizCode(String bizCode);
 
     // 删除征信人员
     public void removeCreditUser(String code);
@@ -38,10 +36,10 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     public List<CreditUser> queryCreditUserList(CreditUser condition);
 
     // 查询对应的征信人员信息
-    public List<CreditUser> queryCreditUserList(String creditCode);
+    public List<CreditUser> queryCreditUserList(String bizCode);
 
     // 查询征信单共还人，担保人，本人
-    public CreditUser getCreditUserByCreditCode(String creditCode,
+    public CreditUser getCreditUserByBizCode(String bizCode,
             ELoanRole creditUserRelation);
 
 }

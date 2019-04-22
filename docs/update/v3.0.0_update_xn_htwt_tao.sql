@@ -1,0 +1,3 @@
+
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('budget_order','budget_gps_deduct_rate','0.006','U201807081543249555383','2018-08-25 11:32:47','GPS提成比例','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('budget_order','budget_oil_subsidy_rate','0.006','U201807081543249555383','2018-08-25 11:32:47','油补提成比例','CD-CHTWT000020','CD-CHTWT000020');

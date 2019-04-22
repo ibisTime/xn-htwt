@@ -364,6 +364,13 @@
 		WHERE code=#{code}
 	</update>
 	
+	<update id="update_insideJob" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		inside_job=#{insideJob}
+		WHERE code=#{code}
+	</update>
+	
 	
 
 
