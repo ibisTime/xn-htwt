@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICarPledgeDAO">
+	<resultMap id="carPledge_DB_Result" type="carPledge">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="status" property="status" />
+		<result column="cur_node_code" property="curNodeCode" />
+		<result column="pledge_user" property="pledgeUser" />
+		
+		<result column="pledge_user_id_card_copy" property="pledgeUserIdCardCopy" />
+		<result column="pledge_address" property="pledgeAddress" />
+		<result column="pledge_datetime" property="pledgeDatetime" />
+		<result column="pledge_bank_commit_datetime" property="pledgeBankCommitDatetime" />
+		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
+		
+		<result column="pledge_supplement_note" property="pledgeSupplementNote" />
+		<result column="pledge_contract_code" property="pledgeContractCode" />
+		<result column="pledge_print_template_id" property="pledgePrintTemplateId" />
+		<result column="pledge_print_user" property="pledgePrintUser" />
+		<result column="pledge_print_datetime" property="pledgePrintDatetime" />
+	</resultMap>
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_carPledge" parameterType="carPledge" resultMap="carPledge_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.status
+		,t.cur_node_code
+		,t.pledge_user
+		
+		,t.pledge_user_id_card_copy
+		,t.pledge_address
+		,t.pledge_datetime
+		,t.pledge_bank_commit_datetime
+		,t.pledge_bank_commit_note
+		
+		,t.pledge_supplement_note
+		,t.pledge_contract_code
+		,t.pledge_print_template_id
+		,t.pledge_print_user
+		,t.pledge_print_datetime
+		FROM
+		tdq_car_pledge t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_carPledge_count" parameterType="carPledge"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_car_pledge t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_carPledge" parameterType="carPledge">
+		INSERT INTO
+		tdq_car_pledge(
+		code
+		,biz_code
+		,status
+		,cur_node_code
+		,pledge_user
+		
+		,pledge_user_id_card_copy
+		,pledge_address
+		,pledge_datetime
+		,pledge_bank_commit_datetime
+		,pledge_bank_commit_note
+		
+		,pledge_supplement_note
+		,pledge_contract_code
+		,pledge_print_template_id
+		,pledge_print_user
+		,pledge_print_datetime
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{status}
+		,#{curNodeCode}
+		,#{pledgeUser}
+		
+		,#{pledgeUserIdCardCopy}
+		,#{pledgeAddress}
+		,#{pledgeDatetime}
+		,#{pledgeBankCommitDatetime}
+		,#{pledgeBankCommitNote}
+		
+		,#{pledgeSupplementNote}
+		,#{pledgeContractCode}
+		,#{pledgePrintTemplateId}
+		,#{pledgePrintUser}
+		,#{pledgePrintDatetime}
+		)
+	</insert>
+
+	<update id="update_carPledgeStatus" parameterType="carPledge">
+		UPDATE tdq_car_pledge
+		SET
+		status = #{status}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_carPledge" parameterType="carPledge">
+		UPDATE tdq_car_pledge
+		SET
+		pledge_user = #{pledgeUser}
+		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
+		,pledge_address = #{pledgeAddress}
+		,pledge_datetime = #{pledgeDatetime}
+		,pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
+		,pledge_bank_commit_note = #{pledgeBankCommitNote}
+		,pledge_supplement_note = #{pledgeSupplementNote}
+		,pledge_contract_code = #{pledgeContractCode}
+		,pledge_print_template_id = #{pledgePrintTemplateId}
+		,pledge_print_user = #{pledgePrintUser}
+		,pledge_print_datetime = #{pledgePrintDatetime}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

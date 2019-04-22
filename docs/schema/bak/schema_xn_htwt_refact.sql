@@ -110,3 +110,64 @@ ADD COLUMN `birth_address_city` VARCHAR(32) NULL COMMENT '户籍地市' AFTER `b
 ADD COLUMN `birth_address_area` VARCHAR(32) NULL COMMENT '户籍地区' AFTER `birth_address_city`,
 ADD COLUMN `birth_address` VARCHAR(255) NULL COMMENT '户籍地详细地址' AFTER `birth_address_area`,
 ADD COLUMN `post_code` VARCHAR(32) NULL COMMENT '户口所在地邮编' AFTER `birth_address`;
+
+ALTER TABLE `tqj_attachment` 
+CHANGE COLUMN `name` `kname` VARCHAR(45) NULL DEFAULT NULL COMMENT '附件key' ,
+CHANGE COLUMN `attach_type` `attach_type` VARCHAR(64) NULL DEFAULT NULL COMMENT '附件类型（图片/视频/网页）' ,
+ADD COLUMN `category` VARCHAR(32) NULL COMMENT '附件分类' AFTER `biz_code`,
+ADD COLUMN `vname` VARCHAR(45) NULL COMMENT '附件value' AFTER `kname`;
+
+DROP TABLE IF EXISTS `tdq_bank_loan`;
+CREATE TABLE `tdq_bank_loan` (
+	`code` varchar(32) NOT NULL COMMENT '编号',
+  	`biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
+  	`status` varchar(32) DEFAULT NULL COMMENT '状态',
+  	`cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点',
+	`repay_bank_code` varchar(32) DEFAULT NULL COMMENT '还款卡银行编号',
+  	`repay_bank_name` varchar(255) DEFAULT NULL COMMENT '还款卡银行名称',
+  	`repay_subbranch` varchar(255) DEFAULT NULL COMMENT '还款卡开户支行',
+  
+  	`repay_bankcard_number` varchar(255) DEFAULT NULL COMMENT '还款卡银行卡号',
+   	`receipt_bank_code` varchar(255) DEFAULT NULL COMMENT '收款银行编号',
+  	`receipt_bank_name` varchar(255) DEFAULT NULL COMMENT '收款银行名称',
+  	`receipt_subbranch` varchar(255) DEFAULT NULL COMMENT '收款银行支行',
+	`receipt_bankcard_number` varchar(255) DEFAULT NULL COMMENT '收款银行卡号',
+	
+	`bank_commit_datetime` datetime DEFAULT NULL COMMENT '银行提交时间',
+  	`bank_commit_note` varchar(255) DEFAULT NULL COMMENT '银行提交说明',
+  	`bank_fk_datetime` datetime DEFAULT NULL COMMENT '银行放款时间',
+	`repay_bill_date` int(11) DEFAULT NULL COMMENT '银行账单日',
+  	`repay_bank_date` int(11) DEFAULT NULL COMMENT '银行还款日',
+  	
+  	`repay_company_date` int(11) DEFAULT NULL COMMENT '公司还款日',
+  	`receipt_pdf` varchar(255) DEFAULT NULL COMMENT '收款凭证',
+  	`receipt_remark` varchar(255) DEFAULT NULL COMMENT '收款备注',
+  	`bank_fk_send_datetime` datetime DEFAULT NULL COMMENT '银行放款进件时间',
+  	`has_loan_list_pic` varchar(255) DEFAULT NULL COMMENT '已放款名单',
+  	
+  	`bank_fk_amount` bigint(20) DEFAULT NULL COMMENT '银行放款金额',
+  	`month_amount` bigint(20) DEFAULT NULL COMMENT '月还款额',
+  	PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行放款';
+
+DROP TABLE IF EXISTS `tdq_car_pledge`;
+CREATE TABLE `tdq_car_pledge` (
+	`code` varchar(32) NOT NULL COMMENT '编号',
+  	`biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
+  	`status` varchar(32) DEFAULT NULL COMMENT '状态',
+  	`cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点',
+	`pledge_user` varchar(32) DEFAULT NULL COMMENT '代理人',
+	
+  	`pledge_user_id_card_copy` tinytext DEFAULT NULL COMMENT '代理人身份证复印件',
+  	`pledge_address` varchar(255) DEFAULT NULL COMMENT '抵押地点',
+  	`pledge_datetime` datetime DEFAULT NULL COMMENT '抵押日期',
+   	`pledge_bank_commit_datetime` datetime DEFAULT NULL COMMENT '抵押提交银行时间',
+  	`pledge_bank_commit_note` varchar(255) DEFAULT NULL COMMENT '抵押提交说明',
+  	
+  	`pledge_supplement_note` varchar(255) DEFAULT NULL COMMENT '车辆抵押补充说明',
+	`pledge_contract_code` varchar(255) DEFAULT NULL COMMENT '抵押合同编号',
+	`pledge_print_template_id` varchar(255) DEFAULT NULL COMMENT '抵押套打模板',
+  	`pledge_print_user` varchar(255) DEFAULT NULL COMMENT '抵押打印人',
+  	`pledge_print_datetime` datetime DEFAULT NULL COMMENT '抵押打印日期',
+  	PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='车辆抵押';

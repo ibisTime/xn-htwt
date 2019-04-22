@@ -457,4 +457,12 @@
 		<property name="paginableDAO" ref="creditUserExtDAOImpl"/>
 	</bean>
 	
+	<bean id="bankLoanBO" class="com.cdkj.loan.bo.impl.BankLoanBOImpl">
+		<property name="paginableDAO" ref="bankLoanDAOImpl"/>
+	</bean>
+	
+	<bean id="carPledgeBO" class="com.cdkj.loan.bo.impl.CarPledgeBOImpl">
+		<property name="paginableDAO" ref="carPledgeDAOImpl"/>
+	</bean>
+	
 </beans>
