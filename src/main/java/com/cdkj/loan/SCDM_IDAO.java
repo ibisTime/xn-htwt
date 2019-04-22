@@ -20,12 +20,40 @@ public class SCDM_IDAO {
     // 表名
     private static String dbname = "tqj_mission";
 
-    private static String[] DBwords = { "code", "biz_code", "name", "time",
-            "creater", "get_user", "status", "create_datetime", "deadline",
-            "finish_datetime" };
+    private static String[] DBwords = { "code", "type", "biz_type",
+            "repay_biz_code", "company_code",
 
-    private static String[] DBwordsName = { "编号", "业务编号", "任务名字", "限时（h）",
-            "发布人", "认领人", "状态", "创建时间", "截止时间", "完成时间" };
+            "team_code", "captain_code", "sale_user_id", "inside_job",
+            "loan_bank",
+
+            "loan_amount", "enter_location", "enter_datetime",
+            "enter_filelist", "status",
+
+            "mq_status", "make_card_status", "fbhgps_status",
+            "fircundang_status", "seccundang_status",
+
+            "zf_status", "cur_node_code", "intev_cur_node_code",
+            "make_card_node", "fbhgps_node",
+
+            "cancel_node", "is_gps_az", "is_financing", "is_advance_fund",
+            "is_plat_insure",
+
+            "credit_note", "apply_datetime", "remark" };
+
+    private static String[] DBwordsName = { "编号", "预算单类型", "业务类型", "还款业务编号",
+            "公司编号",
+
+            "业务团队编号", "团队长编号", "业务员编号", "内勤编号", "放款银行"
+
+            , "放款金额", "入档位置", "入档时间", "档案目录", "主状态"
+
+            , "面签状态", "制卡状态", "发保合状态", "首次存档状态", "第二次存档状态"
+
+            , "作废状态", "当前节点", "面签节点", "制卡节点", "发保合节点"
+
+            , "业务作废节点", "是否需要安装gps", "是否融资", "是否垫资", "是否我司续保"
+
+            , "征信节点", "申请时间", "备注" };
 
     public void testname() throws Exception {
     }

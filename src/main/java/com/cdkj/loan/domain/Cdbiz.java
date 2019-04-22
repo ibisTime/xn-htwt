@@ -1,5 +1,6 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
@@ -20,17 +21,33 @@ public class Cdbiz extends ABaseDO {
     // 业务编号
     private String bizCode;
 
-    // 主贷人
-    private String mainLoaner;
-
-    // 经办银行
-    private String bankCode;
-
     // 业务类型（0新车1二手车）
+    private String type;
+
     private String bizType;
 
-    // 贷款金额
-    private Long dkAmount;
+    private String repayBizType;
+
+    private String companyCode;
+
+    // 团队编号
+    private String teamCode;
+
+    private String captainCode;
+
+    private String saleUserId;
+
+    private String insideJob;
+
+    private String loanBank;
+
+    private Long loanAmount;
+
+    private String enterLocation;
+
+    private Date enterDatetime;
+
+    private String enterFilelist;
 
     // 主线状态
     private String status;
@@ -50,11 +67,35 @@ public class Cdbiz extends ABaseDO {
     // 作废状态
     private String zfStatus;
 
-    // 业务员
-    private String ywyUser;
+    private String curNodeCode;
 
-    // 团队编号
-    private String teamCode;
+    private String intevCurNodeCode;
+
+    private String makeCardNode;
+
+    private String fbhgpsNode;
+
+    private String cancelNodeCode;
+
+    private String isGpsAz;
+
+    private String isFinacing;
+
+    private String isAdvanceFund;
+
+    private String isPlatInsure;
+
+    private Long shouldFeeAmount;
+
+    private Long realFeeAmount;
+
+    private String guaMode;
+
+    private String creditNote;
+
+    private Date applyDatetime;
+
+    private String remark;
 
     private SYSUser sysUser;
 
@@ -132,38 +173,6 @@ public class Cdbiz extends ABaseDO {
         return bizCode;
     }
 
-    public void setMainLoaner(String mainLoaner) {
-        this.mainLoaner = mainLoaner;
-    }
-
-    public String getMainLoaner() {
-        return mainLoaner;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBizType(String bizType) {
-        this.bizType = bizType;
-    }
-
-    public String getBizType() {
-        return bizType;
-    }
-
-    public void setDkAmount(Long dkAmount) {
-        this.dkAmount = dkAmount;
-    }
-
-    public Long getDkAmount() {
-        return dkAmount;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -212,12 +221,220 @@ public class Cdbiz extends ABaseDO {
         return zfStatus;
     }
 
-    public void setYwyUser(String ywyUser) {
-        this.ywyUser = ywyUser;
+    public String getType() {
+        return type;
     }
 
-    public String getYwyUser() {
-        return ywyUser;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getBizType() {
+        return bizType;
+    }
+
+    public void setBizType(String bizType) {
+        this.bizType = bizType;
+    }
+
+    public String getRepayBizType() {
+        return repayBizType;
+    }
+
+    public void setRepayBizType(String repayBizType) {
+        this.repayBizType = repayBizType;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getCaptainCode() {
+        return captainCode;
+    }
+
+    public void setCaptainCode(String captainCode) {
+        this.captainCode = captainCode;
+    }
+
+    public String getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
+    }
+
+    public String getInsideJob() {
+        return insideJob;
+    }
+
+    public void setInsideJob(String insideJob) {
+        this.insideJob = insideJob;
+    }
+
+    public String getLoanBank() {
+        return loanBank;
+    }
+
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
+    }
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public String getEnterLocation() {
+        return enterLocation;
+    }
+
+    public void setEnterLocation(String enterLocation) {
+        this.enterLocation = enterLocation;
+    }
+
+    public Date getEnterDatetime() {
+        return enterDatetime;
+    }
+
+    public void setEnterDatetime(Date enterDatetime) {
+        this.enterDatetime = enterDatetime;
+    }
+
+    public String getEnterFilelist() {
+        return enterFilelist;
+    }
+
+    public void setEnterFilelist(String enterFilelist) {
+        this.enterFilelist = enterFilelist;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getIntevCurNodeCode() {
+        return intevCurNodeCode;
+    }
+
+    public void setIntevCurNodeCode(String intevCurNodeCode) {
+        this.intevCurNodeCode = intevCurNodeCode;
+    }
+
+    public String getMakeCardNode() {
+        return makeCardNode;
+    }
+
+    public void setMakeCardNode(String makeCardNode) {
+        this.makeCardNode = makeCardNode;
+    }
+
+    public String getFbhgpsNode() {
+        return fbhgpsNode;
+    }
+
+    public void setFbhgpsNode(String fbhgpsNode) {
+        this.fbhgpsNode = fbhgpsNode;
+    }
+
+    public String getCancelNodeCode() {
+        return cancelNodeCode;
+    }
+
+    public void setCancelNodeCode(String cancelNodeCode) {
+        this.cancelNodeCode = cancelNodeCode;
+    }
+
+    public String getIsGpsAz() {
+        return isGpsAz;
+    }
+
+    public void setIsGpsAz(String isGpsAz) {
+        this.isGpsAz = isGpsAz;
+    }
+
+    public String getIsFinacing() {
+        return isFinacing;
+    }
+
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
+    }
+
+    public String getIsAdvanceFund() {
+        return isAdvanceFund;
+    }
+
+    public void setIsAdvanceFund(String isAdvanceFund) {
+        this.isAdvanceFund = isAdvanceFund;
+    }
+
+    public String getIsPlatInsure() {
+        return isPlatInsure;
+    }
+
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
+    }
+
+    public Long getShouldFeeAmount() {
+        return shouldFeeAmount;
+    }
+
+    public void setShouldFeeAmount(Long shouldFeeAmount) {
+        this.shouldFeeAmount = shouldFeeAmount;
+    }
+
+    public Long getRealFeeAmount() {
+        return realFeeAmount;
+    }
+
+    public void setRealFeeAmount(Long realFeeAmount) {
+        this.realFeeAmount = realFeeAmount;
+    }
+
+    public String getGuaMode() {
+        return guaMode;
+    }
+
+    public void setGuaMode(String guaMode) {
+        this.guaMode = guaMode;
+    }
+
+    public String getCreditNote() {
+        return creditNote;
+    }
+
+    public void setCreditNote(String creditNote) {
+        this.creditNote = creditNote;
+    }
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public void setTeamCode(String teamCode) {
