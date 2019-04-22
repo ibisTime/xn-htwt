@@ -5,18 +5,40 @@
 	<resultMap id="cdbiz_DB_Result" type="cdbiz">
 		<result column="code" property="code" />
 		<result column="biz_code" property="bizCode" />
-		<result column="main_loaner" property="mainLoaner" />
-		<result column="bank_code" property="bankCode" />
+		<result column="type" property="type" />
 		<result column="biz_type" property="bizType" />
-		<result column="dk_amount" property="dkAmount" />
+		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="company_code" property="companyCode" />
+		<result column="team_code" property="teamCode" />
+		<result column="captain_code" property="captainCode" />
+		<result column="sale_user_id" property="saleUserId" />
+		<result column="inside_job" property="insideJob" />
+		<result column="loan_bank" property="loanBank" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="enter_location" property="enterLocation" />
+		<result column="enter_datetime" property="enterDatetime" />
+		<result column="enter_fileList" property="enterFilelist" />
 		<result column="status" property="status" />
 		<result column="mq_status" property="mqStatus" />
 		<result column="fbhgps_status" property="fbhgpsStatus" />
 		<result column="fircundang_status" property="fircundangStatus" />
 		<result column="seccundang_status" property="seccundangStatus" />
 		<result column="zf_status" property="zfStatus" />
-		<result column="ywy_user" property="ywyUser" />
-		<result column="team_code" property="teamCode" />
+		<result column="cur_node_code" property="curNodeCode" />
+		<result column="intev_cur_node_code" property="intevCurNodeCode" />
+		<result column="make_card_node" property="makeCardNode" />
+		<result column="fbhgps_node" property="fbhgpsNode" />
+		<result column="cancel_node_code" property="cancelNodeCode" />
+		<result column="is_gps_az" property="isGpsAz" />
+		<result column="is_finacing" property="isFinacing" />
+		<result column="is_advance_fund" property="isAdvanceFund" />
+		<result column="is_plat_insure" property="isPlatInsure" />
+		<result column="should_fee_amount" property="shouldFeeAmount" />
+		<result column="real_fee_amount" property="realFeeAmount" />
+		<result column="gua_mode" property="guaMode" />
+		<result column="credit_note" property="creditNote" />
+		<result column="apply_datetime" property="applyDatetime" />
+		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -26,11 +48,26 @@
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
-			<if test="bankCode != null and bankCode != '' ">
-				AND t.bank_code = #{bankCode}
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
 			</if>
 			<if test="bizType != null and bizType != '' ">
 				AND t.biz_type = #{bizType}
+			</if>
+			<if test="repayBizCode != null and repayBizCode != '' ">
+				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
+			</if>
+			<if test="teamCode != null and teamCode != '' ">
+				AND t.teamCode = #{teamCode}
+			</if>
+			<if test="captainCode != null and captainCode != '' ">
+				AND t.captain_code = #{captainCode}
+			</if>
+			<if test="saleUserId != null and saleUserId != '' ">
+				AND t.sale_user_id = #{saleUserId}
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
@@ -50,11 +87,29 @@
 			<if test="zfStatus != null and zfStatus != '' ">
 				AND t.zf_status = #{zfStatus}
 			</if>
-			<if test="ywyUser != null and ywyUser != '' ">
-				AND t.ywy_user = #{ywyUser}
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
 			</if>
-			<if test="teamCode != null and teamCode != '' ">
-				AND t.team_code = #{teamCode}
+			<if test="intevCurNodeCode != null and intevCurNodeCode != '' ">
+				AND t.intev_cur_node_code = #{intevCurNodeCode}
+			</if>
+			<if test="makeCardNode != null and makeCardNode != '' ">
+				AND t.make_card_node = #{makeCardNode}
+			</if>
+			<if test="fbhgpsNode != null and fbhgpsNode != '' ">
+				AND t.fbhgps_node = #{fbhgpsNode}
+			</if>
+			<if test="cancelNodeCode != null and cancelNodeCode != '' ">
+				AND t.cancel_node_code = #{cancelNodeCode}
+			</if>
+			<if test="isGpsAz != null and isGpsAz != '' ">
+				AND t.is_gps_az = #{isGpsAz}
+			</if>
+			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
+				AND t.is_advance_fund = #{isAdvanceFund}
+			</if>
+			<if test="guaMode != null and guaMode != '' ">
+				AND t.gua_mode = #{guaMode}
 			</if>
 		</trim>
 	</sql>
