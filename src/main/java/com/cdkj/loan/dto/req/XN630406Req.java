@@ -16,6 +16,17 @@ public class XN630406Req extends APageReq {
     // 状态（选填）
     private String status;
 
+    // 是否推荐（选填）
+    private String location;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getName() {
         return name;
     }

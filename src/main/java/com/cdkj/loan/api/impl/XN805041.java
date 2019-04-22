@@ -26,9 +26,9 @@ public class XN805041 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         synchronized (XN805041.class) {
-            String userId = userAO.doRegister(req.getMobile(),
-                req.getNickname(), req.getLoginPwd(), req.getSmsCaptcha(),
-                req.getKind());
+            String userId = userAO
+                .doRegister(req.getMobile(), req.getNickname(),
+                    req.getLoginPwd(), req.getSmsCaptcha(), null);
 
             return new PKCodeRes(userId);
         }

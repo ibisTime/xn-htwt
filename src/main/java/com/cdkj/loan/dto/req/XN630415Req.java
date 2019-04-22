@@ -2,11 +2,26 @@ package com.cdkj.loan.dto.req;
 
 public class XN630415Req extends APageReq {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = -4364808253131135007L;
+
     private String name; // 名称（选填）
 
     private String brandCode; // 品牌编号（选填）
 
     private String status; // 状态（选填）
+
+    private String isReferee;// 是否推荐
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
+    }
 
     public String getName() {
         return name;

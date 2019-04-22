@@ -28,13 +28,19 @@ public class AmountUtil {
     public static double div(Double amount, Long number) {
         BigDecimal a = new BigDecimal(Double.toString(amount));
         BigDecimal b = new BigDecimal(Double.toString(number));
-        return a.divide(b).doubleValue();
+        return a.divide(b, 10, BigDecimal.ROUND_HALF_DOWN).doubleValue();
     }
 
     public static long div(Long amount, double rate) {
         BigDecimal a = new BigDecimal(amount);
         BigDecimal b = new BigDecimal(rate);
         return a.divide(b, 2, RoundingMode.DOWN).longValue();
+    }
+
+    public static long divLL(Long amount, Long period) {
+        BigDecimal a = new BigDecimal(amount);
+        BigDecimal b = new BigDecimal(period);
+        return a.divide(b, 0, RoundingMode.DOWN).longValue();
     }
 
     // 保留两位小数，末尾数不管是几，前一位都加1

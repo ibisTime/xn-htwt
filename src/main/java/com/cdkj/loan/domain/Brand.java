@@ -26,6 +26,12 @@ public class Brand extends ABaseDO {
     // 品牌介绍
     private String description;
 
+    // UI位置
+    private String location;
+
+    // UI次序
+    private Integer orderNo;
+
     // 状态
     private String status;
 
@@ -37,6 +43,18 @@ public class Brand extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // *****************************
+
+    private SYSUser sysUser;
+
+    public SYSUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SYSUser sysUser) {
+        this.sysUser = sysUser;
+    }
 
     public String getCode() {
         return code;
@@ -108,6 +126,22 @@ public class Brand extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
 }

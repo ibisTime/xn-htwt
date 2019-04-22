@@ -8,9 +8,9 @@ public class SYSBizLog extends ABaseDO {
 
     private static final long serialVersionUID = 2099380862896285572L;
 
-    private int id;// 序号
+    private Integer id;// 序号
 
-    private String parentOrder;// 上级订单编号
+    private String bizCode;// 业务编号编号
 
     private String refType;// 关联订单类型
 
@@ -19,8 +19,6 @@ public class SYSBizLog extends ABaseDO {
     private String dealNode;// 处理节点
 
     private String dealNote;// 处理说明
-
-    private String status;// 状态(0 待处理 1 已处理)
 
     private String operateRole;// 操作角色
 
@@ -35,8 +33,6 @@ public class SYSBizLog extends ABaseDO {
     private Date endDatetime;// 操作结束时间
 
     private String speedTime;// 花费时间
-
-    private String teamCode;// 团队编号
 
     /***********************db properties**********************/
 
@@ -114,14 +110,6 @@ public class SYSBizLog extends ABaseDO {
         this.userName = userName;
     }
 
-    public String getTeamCode() {
-        return teamCode;
-    }
-
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
-    }
-
     public String getRoleCode() {
         return roleCode;
     }
@@ -130,20 +118,12 @@ public class SYSBizLog extends ABaseDO {
         this.roleCode = roleCode;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getParentOrder() {
-        return parentOrder;
-    }
-
-    public void setParentOrder(String parentOrder) {
-        this.parentOrder = parentOrder;
     }
 
     public String getRefType() {
@@ -176,14 +156,6 @@ public class SYSBizLog extends ABaseDO {
 
     public void setDealNote(String dealNote) {
         this.dealNote = dealNote;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getOperateRole() {
@@ -280,6 +252,14 @@ public class SYSBizLog extends ABaseDO {
 
     public void setRefOrderForQuery(String refOrderForQuery) {
         this.refOrderForQuery = refOrderForQuery;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
 }

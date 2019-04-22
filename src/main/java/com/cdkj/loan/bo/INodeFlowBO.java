@@ -21,4 +21,7 @@ public interface INodeFlowBO extends IPaginableBO<NodeFlow> {
 
     // 更新参考清单
     public void refreshNodeFlow(String id, String fileList);
+
+    // 获取上个节点
+    public NodeFlow getLastNodeFlow(String nodeCode);
 }

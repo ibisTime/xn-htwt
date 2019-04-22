@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
@@ -7,20 +8,22 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632123Req;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public String saveBudgetOrder(Credit credit,
             List<CreditUser> creditUserList);
 
-    public void refreshBudgetOrder(BudgetOrder data);
+    public void refreshBudgetOrder(BudgetOrder order, XN632120Req req);
 
     // 准入单区域经理审核
     public void refreshAreaApprove(BudgetOrder data);
 
     public void refreshriskApprove(BudgetOrder budgetOrder);
 
-    public void interview(BudgetOrder budgetOrder);
+    public void interview(BudgetOrder budgetOrder, XN632123Req req);
 
     public void refreshInterviewInternal(BudgetOrder budgetOrder);
 
@@ -34,7 +37,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void refreshbizChargeApprove(BudgetOrder budgetOrder);
 
-    public void advancefund(BudgetOrder budgetOrder);
+    public void advancefund(BudgetOrder budgetOrder, Date advanceFundDatetime,
+            Long advanceFundAmount, String billPdf, String advanceNote);
 
     // 驻行抵押申请
     public void residentMortgageApply(BudgetOrder budgetOrder);
@@ -71,7 +75,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
             String userId);
 
     // 物流流转
-    public String logicOrderLoan(String code, String operator);
+    public String logicOrderLoan(String code, String operator,
+            String approveResult);
 
     // 物流流转
     public String logicOrderMortgage(String code, String operator);
@@ -116,5 +121,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     // 改节点
     public void refreshBudgetOrderCurNode(BudgetOrder budgetOrder);
+
+    public BudgetOrder getBudgetOrderByBizCode(String bizCode);
 
 }

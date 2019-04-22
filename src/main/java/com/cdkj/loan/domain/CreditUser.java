@@ -56,8 +56,30 @@ public class CreditUser extends ABaseDO {
     // 银行征信结果说明
     private String bankCreditResultRemark;
 
+    // 银行征信报告
+    private String bankReport;
+
+    // 大数据报告
+    private String dataReport;
+
     // 征信人员列表
     private List<CreditUser> creditUserList;
+
+    public String getBankReport() {
+        return bankReport;
+    }
+
+    public void setBankReport(String bankReport) {
+        this.bankReport = bankReport;
+    }
+
+    public String getDataReport() {
+        return dataReport;
+    }
+
+    public void setDataReport(String dataReport) {
+        this.dataReport = dataReport;
+    }
 
     public String getBankCreditResultRemark() {
         return bankCreditResultRemark;

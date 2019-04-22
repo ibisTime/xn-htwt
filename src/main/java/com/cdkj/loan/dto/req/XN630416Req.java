@@ -1,6 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-public class XN630416Req {
+public class XN630416Req extends AListReq {
 
     private String name; // 名称（选填）
 
@@ -9,6 +9,16 @@ public class XN630416Req {
     private String location;// UI位置
 
     private String status; // 状态（选填）
+
+    private String isReferee;// 是否推荐
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
+    }
 
     public String getName() {
         return name;

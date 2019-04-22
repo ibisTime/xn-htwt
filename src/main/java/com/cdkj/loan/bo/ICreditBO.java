@@ -3,6 +3,8 @@ package com.cdkj.loan.bo;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632110Req;
 
 /**
  * 
@@ -13,7 +15,8 @@ import com.cdkj.loan.domain.Credit;
 public interface ICreditBO extends IPaginableBO<Credit> {
 
     // 新增征信单
-    public String saveCredit(Credit data);
+    public String saveCredit(XN632110Req req, SYSUser sysUser, String bizCode,
+            String nodeCode);
 
     // 修改征信单
     public void refreshCredit(Credit data);
@@ -42,12 +45,13 @@ public interface ICreditBO extends IPaginableBO<Credit> {
     // 征信撤回
     public void cancelCredit(Credit credit);
 
-    public void setApplyUserInfo(Credit credit);
+    public void setApplyUserInfo(String code, String userName, String mobile,
+            String idNo);
 
     public void refreshInputBankCreditResult(Credit credit);
 
     // 派单
-    public void distributeLeaflets(Credit credit);
+    public void distributeLeaflets(Credit credit, String insideJob);
 
     public Credit getCreditBybudgetorder(String code);
 
@@ -56,5 +60,7 @@ public interface ICreditBO extends IPaginableBO<Credit> {
 
     // 修改主贷人
     public void refreshCreditUser(Credit credit);
+
+    public Credit getCreditByBizCode(String bizCode);
 
 }

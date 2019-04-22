@@ -36,12 +36,17 @@
 		<typeAlias alias="series" type="com.cdkj.loan.domain.Series" />
 		<typeAlias alias="car" type="com.cdkj.loan.domain.Car" />
 		<typeAlias alias="carorder" type="com.cdkj.loan.domain.CarOrder" />
+		<typeAlias alias="carconfig" type="com.cdkj.loan.domain.Carconfig" />
+		<typeAlias alias="carCarconfig" type="com.cdkj.loan.domain.CarCarconfig" />
+		<typeAlias alias="carNews" type="com.cdkj.loan.domain.CarNews" />
+		<typeAlias alias="action" type="com.cdkj.loan.domain.Action" />
+		
 		
 		<!-- 商城业务  -->
 		<typeAlias alias="category" type="com.cdkj.loan.domain.Category" />
 		<typeAlias alias="product" type="com.cdkj.loan.domain.Product" />
 		<typeAlias alias="order" type="com.cdkj.loan.domain.Order" />
-		<typeAlias alias="productOrder" type="com.cdkj.loan.domain.ProductOrder" />
+		<typeAlias alias="specsOrder" type="com.cdkj.loan.domain.SpecsOrder" />
 		<typeAlias alias="productSpecs" type="com.cdkj.loan.domain.ProductSpecs" />
 		
 		<!-- 车贷业务+分期业务  -->
@@ -59,14 +64,21 @@
 		<typeAlias alias="roleNode" type="com.cdkj.loan.domain.RoleNode" />
 		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
 
+		<!-- 全局  -->
+		<typeAlias alias="bizOrder" type="com.cdkj.loan.domain.BizOrder" />
+		<typeAlias alias="attachment" type="com.cdkj.loan.domain.Attachment" />
+		<typeAlias alias="bizTask" type="com.cdkj.loan.domain.BizTask" />
+		<typeAlias alias="cdbiz" type="com.cdkj.loan.domain.Cdbiz" />
+		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
+		<typeAlias alias="mission" type="com.cdkj.loan.domain.Mission" />
+		
+		<typeAlias alias="filePool" type="com.cdkj.loan.domain.FilePool" />
 		
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
 		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 
-		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
-		
 		<!-- 基础数据 -->
 		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
 		<typeAlias alias="collectBankcard" type="com.cdkj.loan.domain.CollectBankcard" />

@@ -13,6 +13,10 @@ public class XN632151Req {
     @NotBlank
     private String code;
 
+    // 审核结果
+    @NotBlank
+    private String approveResult;
+
     // 备注
     private String remark;
 
@@ -42,6 +46,14 @@ public class XN632151Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getApproveResult() {
+        return approveResult;
+    }
+
+    public void setApproveResult(String approveResult) {
+        this.approveResult = approveResult;
     }
 
 }

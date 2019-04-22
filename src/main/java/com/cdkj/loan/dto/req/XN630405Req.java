@@ -7,6 +7,9 @@ public class XN630405Req extends APageReq {
      */
     private static final long serialVersionUID = 5066181160930283667L;
 
+    // 是否推荐（选填）
+    private String isReferee;
+
     // 名称（选填）
     private String name;
 
@@ -15,6 +18,17 @@ public class XN630405Req extends APageReq {
 
     // 状态（选填）
     private String status;
+
+    // 位置
+    private String location;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getName() {
         return name;
@@ -38,6 +52,14 @@ public class XN630405Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
     }
 
 }

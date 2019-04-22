@@ -25,12 +25,6 @@ public class Order extends ABaseDO {
     // 编号
     private String code;
 
-    // 还款业务编号
-    private String repayBizCode;
-
-    // 还款卡编号
-    private String bankcardCode;
-
     // 收件人姓名
     private String receiver;
 
@@ -49,26 +43,11 @@ public class Order extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
-    // 订单金额(人民币)
+    // 订单总金额(人民币)
     private Long amount;
 
-    // 运费
+    // 总运费
     private Long yunfei;
-
-    // 首付比例
-    private double sfRate;
-
-    // 首付金额
-    private Long sfAmount;
-
-    // 贷款金额
-    private Long loanAmount;
-
-    // 总期数
-    private int periods;
-
-    // 银行利率
-    private double bankRate;
 
     // 抵扣人民币
     private Long dkAmount;
@@ -93,27 +72,6 @@ public class Order extends ABaseDO {
 
     // 实际支付金额
     private Long payAmount;
-
-    // 发货人
-    private String deliverer;
-
-    // 发货时间
-    private Date deliveryDatetime;
-
-    // 物流单号
-    private String logisticsCode;
-
-    // 物流公司
-    private String logisticsCompany;
-
-    // 物流单
-    private String pdf;
-
-    // 签收人
-    private String signer;
-
-    // 签收时间
-    private Date signDatetime;
 
     // 更新人
     private String updater;
@@ -142,7 +100,7 @@ public class Order extends ABaseDO {
     private Date payDatetimeEnd;
 
     // 订单产品详情列表
-    List<ProductOrder> productOrderList;
+    List<SpecsOrder> productOrderList;
 
     // 还款业务列表
     List<RepayBiz> repayBizList;
@@ -174,44 +132,12 @@ public class Order extends ABaseDO {
     // 还款卡号
     private String bankcardNumber;
 
-    public String getBankcardNumber() {
-        return bankcardNumber;
-    }
-
-    public void setBankcardNumber(String bankcardNumber) {
-        this.bankcardNumber = bankcardNumber;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getRepayBizCode() {
-        return repayBizCode;
-    }
-
-    public void setRepayBizCode(String repayBizCode) {
-        this.repayBizCode = repayBizCode;
-    }
-
-    public String getBankcardCode() {
-        return bankcardCode;
-    }
-
-    public void setBankcardCode(String bankcardCode) {
-        this.bankcardCode = bankcardCode;
     }
 
     public String getReceiver() {
@@ -342,62 +268,6 @@ public class Order extends ABaseDO {
         this.payAmount = payAmount;
     }
 
-    public String getDeliverer() {
-        return deliverer;
-    }
-
-    public void setDeliverer(String deliverer) {
-        this.deliverer = deliverer;
-    }
-
-    public Date getDeliveryDatetime() {
-        return deliveryDatetime;
-    }
-
-    public void setDeliveryDatetime(Date deliveryDatetime) {
-        this.deliveryDatetime = deliveryDatetime;
-    }
-
-    public String getLogisticsCode() {
-        return logisticsCode;
-    }
-
-    public void setLogisticsCode(String logisticsCode) {
-        this.logisticsCode = logisticsCode;
-    }
-
-    public String getLogisticsCompany() {
-        return logisticsCompany;
-    }
-
-    public void setLogisticsCompany(String logisticsCompany) {
-        this.logisticsCompany = logisticsCompany;
-    }
-
-    public String getPdf() {
-        return pdf;
-    }
-
-    public void setPdf(String pdf) {
-        this.pdf = pdf;
-    }
-
-    public String getSigner() {
-        return signer;
-    }
-
-    public void setSigner(String signer) {
-        this.signer = signer;
-    }
-
-    public Date getSignDatetime() {
-        return signDatetime;
-    }
-
-    public void setSignDatetime(Date signDatetime) {
-        this.signDatetime = signDatetime;
-    }
-
     public String getUpdater() {
         return updater;
     }
@@ -462,12 +332,20 @@ public class Order extends ABaseDO {
         this.payDatetimeEnd = payDatetimeEnd;
     }
 
-    public List<ProductOrder> getProductOrderList() {
+    public List<SpecsOrder> getProductOrderList() {
         return productOrderList;
     }
 
-    public void setProductOrderList(List<ProductOrder> productOrderList) {
+    public void setProductOrderList(List<SpecsOrder> productOrderList) {
         this.productOrderList = productOrderList;
+    }
+
+    public List<RepayBiz> getRepayBizList() {
+        return repayBizList;
+    }
+
+    public void setRepayBizList(List<RepayBiz> repayBizList) {
+        this.repayBizList = repayBizList;
     }
 
     public User getUser() {
@@ -476,6 +354,14 @@ public class Order extends ABaseDO {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public List<String> getStatusList() {
@@ -526,52 +412,12 @@ public class Order extends ABaseDO {
         this.deliveryDatetimeEnd = deliveryDatetimeEnd;
     }
 
-    public double getSfRate() {
-        return sfRate;
+    public String getBankcardNumber() {
+        return bankcardNumber;
     }
 
-    public void setSfRate(double sfRate) {
-        this.sfRate = sfRate;
-    }
-
-    public Long getSfAmount() {
-        return sfAmount;
-    }
-
-    public void setSfAmount(Long sfAmount) {
-        this.sfAmount = sfAmount;
-    }
-
-    public Long getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(Long loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public int getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(int periods) {
-        this.periods = periods;
-    }
-
-    public double getBankRate() {
-        return bankRate;
-    }
-
-    public void setBankRate(double bankRate) {
-        this.bankRate = bankRate;
-    }
-
-    public List<RepayBiz> getRepayBizList() {
-        return repayBizList;
-    }
-
-    public void setRepayBizList(List<RepayBiz> repayBizList) {
-        this.repayBizList = repayBizList;
+    public void setBankcardNumber(String bankcardNumber) {
+        this.bankcardNumber = bankcardNumber;
     }
 
 }

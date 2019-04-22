@@ -64,8 +64,8 @@ public class ProductAOImpl implements IProductAO {
             data.setCategory(category.getParentCode());
             data.setType(req.getType());
         }
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.PRODUCT.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.PRODUCT
+            .getCode());
         data.setCode(code);
         data.setName(req.getName());
         data.setSlogan(req.getSlogan());
@@ -95,8 +95,7 @@ public class ProductAOImpl implements IProductAO {
     public void dropProduct(String code) {
         if (StringUtils.isNotBlank(code)) {
             Product product = productBO.getProduct(code);
-            if (EProductStatus.TO_PUBLISH.getCode()
-                .equals(product.getStatus())) {
+            if (EProductStatus.TO_PUBLISH.getCode().equals(product.getStatus())) {
                 productBO.removeProduct(code);
                 productSpecsBO.removeProductSpecsByProductCode(code);
             } else {
@@ -118,7 +117,6 @@ public class ProductAOImpl implements IProductAO {
             data.setCategory(category.getParentCode());
             data.setType(req.getType());
         }
-        data.setCode(req.getCode());
         data.setName(req.getName());
         data.setSlogan(req.getSlogan());
         data.setAdvPic(req.getAdvPic());
@@ -150,8 +148,8 @@ public class ProductAOImpl implements IProductAO {
         Product dbProduct = productBO.getProduct(code);
         // 已提交，审核通过，已下架状态可上架；
         if (EProductStatus.TO_PUBLISH.getCode().equals(dbProduct.getStatus())
-                || EProductStatus.PUBLISH_NO.getCode()
-                    .equals(dbProduct.getStatus())) {
+                || EProductStatus.PUBLISH_NO.getCode().equals(
+                    dbProduct.getStatus())) {
             List<ProductSpecs> productSpecsList = productSpecsBO
                 .queryProductSpecsList(code);
             if (CollectionUtils.isEmpty(productSpecsList)) {
@@ -175,8 +173,7 @@ public class ProductAOImpl implements IProductAO {
     @Override
     public void putOff(String code, String updater, String remark) {
         Product dbProduct = productBO.getProduct(code);
-        if (EProductStatus.PUBLISH_YES.getCode()
-            .equals(dbProduct.getStatus())) {
+        if (EProductStatus.PUBLISH_YES.getCode().equals(dbProduct.getStatus())) {
             productBO.putOff(code, updater, remark);
         } else {
             throw new BizException("xn000000", "该产品不是上架状态，无法下架");
@@ -187,8 +184,8 @@ public class ProductAOImpl implements IProductAO {
     public void inRecyle(String code, String updater, String remark) {
         Product dbProduct = productBO.getProduct(code);
         if (EProductStatus.TO_PUBLISH.getCode().equals(dbProduct.getStatus())
-                || EProductStatus.PUBLISH_NO.getCode()
-                    .equals(dbProduct.getStatus())) {
+                || EProductStatus.PUBLISH_NO.getCode().equals(
+                    dbProduct.getStatus())) {
             Product product = new Product();
             product.setCode(code);
             product.setStatus(EProductStatus.RECYCLE.getCode());
@@ -283,14 +280,14 @@ public class ProductAOImpl implements IProductAO {
 
                 Double sfAmount = productSpecs.getPrice()
                         * productSpecs.getSfRate();
-                BigDecimal loanmount = new BigDecimal(
-                    productSpecs.getPrice() - sfAmount);
-                BigDecimal sxfAmount = loanmount
-                    .multiply(new BigDecimal(productSpecs.getBankRate()));
+                BigDecimal loanmount = new BigDecimal(productSpecs.getPrice()
+                        - sfAmount);
+                BigDecimal sxfAmount = loanmount.multiply(new BigDecimal(
+                    productSpecs.getBankRate()));
                 // 月供=（贷款总额+手续费）/期数 （像下取整）
                 BigDecimal periods = new BigDecimal(productSpecs.getPeriods());
-                BigDecimal monthAmount = (loanmount.add(sxfAmount))
-                    .divide(periods, 0, 1);
+                BigDecimal monthAmount = (loanmount.add(sxfAmount)).divide(
+                    periods, 0, 1);
                 productSpecs.setMonthAmount(monthAmount.longValue());
             }
             product.setProductSpecsList(productSpecsList);

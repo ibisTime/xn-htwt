@@ -12,10 +12,6 @@ public class XN805050Req {
     @NotBlank
     private String loginPwd;
 
-    // 用户类型（必填）
-    @NotBlank
-    private String kind;
-
     public String getLoginName() {
         return loginName;
     }
@@ -30,14 +26,6 @@ public class XN805050Req {
 
     public void setLoginPwd(String loginPwd) {
         this.loginPwd = loginPwd;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
     }
 
 }

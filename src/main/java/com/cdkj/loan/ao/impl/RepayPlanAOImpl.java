@@ -327,7 +327,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             // 日志
             sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(),
                 EBizLogType.REPAY_BIZ, repayBiz.getCode(),
-                repayBiz.getCurNodeCode(), repayBiz.getTeamCode());
+                repayBiz.getCurNodeCode());
         } else if (EDealResult.YELLOW.getCode().equals(req.getDealResult())) {
             repayPlan
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());

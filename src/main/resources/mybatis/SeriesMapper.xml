@@ -8,7 +8,11 @@
 		<result column="name" property="name" />
 		<result column="slogan" property="slogan" />
 		<result column="adv_pic" property="advPic" />
+		<result column="pic_number" property="picNumber" />
 		<result column="price" property="price" />
+		<result column="highest" property="highest" />
+		<result column="lowest" property="lowest" />
+		<result column="level" property="level" />
 		<result column="location" property="location" />
 		<result column="order_no" property="orderNo" />
 		<result column="status" property="status" />
@@ -21,6 +25,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="level != null and level != '' ">
+				AND t.level = #{level}
 			</if>
 			<if test="brandCode != null and brandCode != '' ">
 				AND t.brand_code = #{brandCode}
@@ -60,18 +67,22 @@
 	
 	<select id="select_series" parameterType="series" resultMap="series_DB_Result">
 		SELECT
-		code
-		,brand_code
-		,name
-		,slogan
-		,adv_pic
-		,price
-		,location
-		,order_no
-		,status
-		,updater
-		,update_datetime
-		,remark
+		t.code
+		,t.brand_code
+		,t.name
+		,t.slogan
+		,t.adv_pic
+		,t.pic_number
+		,t.price
+		,t.highest
+		,t.lowest
+		,t.level
+		,t.location
+		,t.order_no
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
 		FROM
 		tht_series t
 		<include refid="where_condition" />
@@ -94,7 +105,11 @@
 		,name
 		,slogan
 		,adv_pic
+		,pic_number
 		,price
+		,highest
+		,lowest
+		,level
 		,location
 		,order_no
 		,status
@@ -108,7 +123,11 @@
 		,#{name}
 		,#{slogan}
 		,#{advPic}
+		,#{picNumber}
 		,#{price}
+		,#{highest}
+		,#{lowest}
+		,#{level}
 		,#{location}
 		,#{orderNo}
 		,#{status}
@@ -123,8 +142,10 @@
 		brand_code = #{brandCode}     
 		,name  = #{name}           
 		,slogan = #{slogan}         
-		,adv_pic  = #{advPic}        
-		,price = #{price}          
+		,adv_pic  = #{advPic}  
+		,pic_number=#{picNumber}      
+		,price = #{price}
+		,level=#{level}
 		,updater = #{updater}        
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}         
@@ -138,7 +159,6 @@
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -147,7 +167,20 @@
 		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_series_highest" parameterType="series">
+		UPDATE tht_series SET
+		highest = #{highest}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_series_lowest" parameterType="series">
+		UPDATE tht_series SET
+		lowest = #{lowest}
+		WHERE code = #{code}
+	</update>
+	
+	
 </mapper>

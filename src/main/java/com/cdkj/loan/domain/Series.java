@@ -1,10 +1,13 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
 public class Series extends ABaseDO {
+
+    private static final long serialVersionUID = -6146787706371232676L;
 
     private String code;// 编号
 
@@ -16,9 +19,19 @@ public class Series extends ABaseDO {
 
     private String advPic;// 广告图
 
+    private Long picNumber;// 图片数量
+
     private Long price;// 价格区间
 
-    private Integer location;// UI位置
+    private Long highest;// 最高价
+
+    private Long lowest;// 最低价
+
+    private String level;// 级别
+
+    private String isReferee;// 是否推荐
+
+    private String location;// UI位置
 
     private Integer orderNo;// UI次序
 
@@ -34,6 +47,26 @@ public class Series extends ABaseDO {
 
     // 最新修改人姓名
     private String updaterName;
+
+    private List<Car> cars;
+
+    private Long carNumber;
+
+    public Long getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(Long carNumber) {
+        this.carNumber = carNumber;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 
     public String getUpdaterName() {
         return updaterName;
@@ -91,11 +124,11 @@ public class Series extends ABaseDO {
         this.price = price;
     }
 
-    public Integer getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Integer location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -137,6 +170,46 @@ public class Series extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Long getPicNumber() {
+        return picNumber;
+    }
+
+    public void setPicNumber(Long picNumber) {
+        this.picNumber = picNumber;
+    }
+
+    public Long getHighest() {
+        return highest;
+    }
+
+    public void setHighest(Long highest) {
+        this.highest = highest;
+    }
+
+    public Long getLowest() {
+        return lowest;
+    }
+
+    public void setLowest(Long lowest) {
+        this.lowest = lowest;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
     }
 
 }

@@ -1,13 +1,10 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.Order;
+import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.dto.req.XN808068Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -31,22 +28,14 @@ public class XN808068 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        Order condition = new Order();
-        condition.setApplyUser(req.getApplyUser());
-        condition.setFrontStatus("1");// 前端过滤已删除订单
-        condition.setApplyDatetimeStart(DateUtil.strToDate(
-            req.getCreateDatetimeStart(), DateUtil.DATA_TIME_PATTERN_1));
-        condition.setApplyDatetimeEnd(DateUtil.strToDate(
-            req.getCreateDatetimeEnd(), DateUtil.DATA_TIME_PATTERN_1));
+        SpecsOrder condition = new SpecsOrder();
+        condition.setUserId(req.getApplyUser());
+        condition.setStatus(req.getStatus());
         condition.setStatusList(req.getStatusList());
-        String orderColumn = req.getOrderColumn();
-        if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IOrderAO.DEFAULT_ORDER_COLUMN;
-        }
-        condition.setOrder(orderColumn, req.getOrderDir());
-        int start = StringValidater.toInteger(req.getStart());
-        int limit = StringValidater.toInteger(req.getLimit());
-        return orderAO.queryMyOrderPage(start, limit, condition);
+        condition.setLogisticsCode(req.getLogisticsCode());
+        condition.setLogisticsCompany(req.getLogisticsCompany());
+        condition.setDeliverer(req.getDeiverer());
+        return orderAO.querySpecsOrders(condition);
     }
 
     /** 
@@ -56,7 +45,6 @@ public class XN808068 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN808068Req.class);
-        StringValidater.validateBlank(req.getApplyUser());
         StringValidater.validateNumber(req.getStart(), req.getLimit());
     }
 }

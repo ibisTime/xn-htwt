@@ -17,7 +17,8 @@ public enum EGeneratePrefix {
             "BFDF", "宝付代付订单"),
 
     Brand("B", "品牌"), Series("S", "车系"), Car("C", "车型"), Car_Order("COD",
-            "购买意向"),
+            "购买意向"), Carconfig("CC", "车辆配置"), CarCarconfig("CCC", "车型配置"), CarNews(
+            "CN", "车辆资讯"), Action("A", "用户行为"),
 
     CATEGORY("FL", "分类"), PRODUCT("CP", "产品"), PRODUCT_SPECS("PS", "产品"), ORDER(
             "DD", "订单"), PRODUCT_ORDER("CD", "产品订单"), PAY_GROUP("PG", "支付组号"), BANKCARD(
@@ -26,9 +27,10 @@ public enum EGeneratePrefix {
     DEPARTMENT("DP", "部门"), REQBUDGET("RB", "请款预算单表"), CREDIT("C", "征信单"), CREDITUSER(
             "CU", "征信列表"), INSURANCECOMPANY("IC", "保险公司信息"), COLLECTBANKCARD(
             "CB", "收款账号"), CARDEALER("CD", "经销商信息表"), CARDEALERPROTOCOL("CDT",
-            "经销商协议表"),INTERVIEWVIDEOROOM("IVR","面签视频房间"),
+            "经销商协议表"), INTERVIEWVIDEOROOM("IVR", "面签视频房间"),
 
-    BUDGET("BG", "预订单"),INVESTIGATEREPORT("IR","调查报告"), GPS("G", "GPS"), BANK("BA", "银行"), LOGISTICS("L",
+    BUDGET("BG", "预订单"), INVESTIGATEREPORT("IR", "调查报告"), GPS("G", "GPS"), BANK(
+            "BA", "银行"), LOGISTICS("L",
 
     "资料传递"), BUDGETORDER("BO", "预算单"), LOAN_PRODUCT("LP", "贷款产品"), GPSAZ(
             "GPSAZ", "gps安装"), GPS_APPLY("GA", "GPS申领"), BUDGET_ORDER_FEE(
@@ -55,7 +57,11 @@ public enum EGeneratePrefix {
             "WA", "福利发放"), WELFARE_USER("WU", "福利发放人员"), BIZ_TEAM("BT", "业务团队"), REPOINT(
 
     "RE", "返点"), BUSINESS_TRIP_APPLY("BTA", "出差申请"), BUS("BUS", "公车"), BUSBORROW(
-            "BB", "公车借用"),  XX("XX", "信息");
+            "BB", "公车借用"), XX("XX", "信息"),
+
+    BIZ_ORDER("BO", "业务"), attachment("AT", "附件"), BIZ_LOG("BL", "操作日志"), Cdbiz(
+            "CB", "车贷业务"), BIZ_TASK("BT", "待办事项"), FILE_POOL("FP", "资源池"), mission(
+            "M", "任务");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

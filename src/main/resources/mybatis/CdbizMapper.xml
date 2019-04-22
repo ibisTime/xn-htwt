@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICdbizDAO">
+	<resultMap id="cdbiz_DB_Result" type="cdbiz">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="main_loaner" property="mainLoaner" />
+		<result column="bank_code" property="bankCode" />
+		<result column="biz_type" property="bizType" />
+		<result column="dk_amount" property="dkAmount" />
+		<result column="status" property="status" />
+		<result column="mq_status" property="mqStatus" />
+		<result column="fbhgps_status" property="fbhgpsStatus" />
+		<result column="fircundang_status" property="fircundangStatus" />
+		<result column="seccundang_status" property="seccundangStatus" />
+		<result column="zf_status" property="zfStatus" />
+		<result column="ywy_user" property="ywyUser" />
+		<result column="team_code" property="teamCode" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="bankCode != null and bankCode != '' ">
+				AND t.bank_code = #{bankCode}
+			</if>
+			<if test="bizType != null and bizType != '' ">
+				AND t.biz_type = #{bizType}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="mqStatus != null and mqStatus != '' ">
+				AND t.mq_status = #{mqStatus}
+			</if>
+			<if test="fbhgpsStatus != null and fbhgpsStatus != '' ">
+				AND t.fbhgps_status = #{fbhgpsStatus}
+			</if>
+			<if test="fircundangStatus != null and fircundangStatus != '' ">
+				AND t.fircundang_status = #{fircundangStatus}
+			</if>
+			<if test="seccundangStatus != null and seccundangStatus != '' ">
+				AND t.seccundang_status = #{seccundangStatus}
+			</if>
+			<if test="zfStatus != null and zfStatus != '' ">
+				AND t.zf_status = #{zfStatus}
+			</if>
+			<if test="ywyUser != null and ywyUser != '' ">
+				AND t.ywy_user = #{ywyUser}
+			</if>
+			<if test="teamCode != null and teamCode != '' ">
+				AND t.team_code = #{teamCode}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.main_loaner
+		,t.bank_code
+		,t.biz_type
+		,t.dk_amount
+		,t.status
+		,t.mq_status
+		,t.fbhgps_status
+		,t.fircundang_status
+		,t.seccundang_status
+		,t.zf_status
+		,t.ywy_user
+		,t.team_code
+		FROM
+		tqj_cdbiz t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_cdbiz_count" parameterType="cdbiz"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tqj_cdbiz t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_cdbiz" parameterType="cdbiz">
+		INSERT INTO
+		tqj_cdbiz(
+		code
+		,biz_code
+		,main_loaner
+		,bank_code
+		,biz_type
+		,dk_amount
+		,status
+		,mq_status
+		,fbhgps_status
+		,fircundang_status
+		,seccundang_status
+		,zf_status
+		,ywy_user
+		,team_code
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{mainLoaner}
+		,#{bankCode}
+		,#{bizType}
+		,#{dkAmount}
+		,#{status}
+		,#{mqStatus}
+		,#{fbhgpsStatus}
+		,#{fircundangStatus}
+		,#{seccundangStatus}
+		,#{zfStatus}
+		,#{ywyUser}
+		,#{teamCode}
+		)
+	</insert>
+
+	<update id="update_cdbiz" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		biz_code = #{bizCode}
+		,main_loaner = #{mainLoaner}
+		,bank_code = #{bankCode}
+		,biz_type = #{bizType}
+		,dk_amount = #{dkAmount}
+		,status = #{status}
+		,mq_status = #{mqStatus}
+		,fbhgps_status = #{fbhgpsStatus}
+		,fircundang_status = #{fircundangStatus}
+		,seccundang_status = #{seccundangStatus}
+		,zf_status = #{zfStatus}
+		,ywy_user = #{ywyUser}
+		,team_code = #{teamCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_status" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		status=#{status}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_mqStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		mq_status=#{mqStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_fbhgpsStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		fbhgps_status=#{fbhgpsStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_fircundangStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		fircundang_status=#{fircundangStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_seccundangStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		seccundang_status=#{seccundangStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_zfStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		zf_status=#{zfStatus}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_ywy" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		ywy_user=#{ywyUser}
+		WHERE code=#{code}
+	</update>
+
+
+</mapper>

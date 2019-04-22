@@ -62,10 +62,10 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     @Override
     @Transactional
     public void approveInvestigateReport(XN632200Req req) {
-        InvestigateReport data = investigateReportBO.getInvestigateReport(req
-            .getCode());
-        if (!EInvestigateReportNode.COMMIT_APPLY.getCode().equals(
-            data.getCurNodeCode())) {
+        InvestigateReport data = investigateReportBO
+            .getInvestigateReport(req.getCode());
+        if (!EInvestigateReportNode.COMMIT_APPLY.getCode()
+            .equals(data.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是提交调查申请节点，不能操作！");
         }
@@ -109,15 +109,15 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
         }
         investigateReportBO.refreshInvestigateReport(data);
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetOrderCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            data.getCurNodeCode(), null, req.getUpdater(), data.getTeamCode());
+            data.getCurNodeCode(), null, req.getUpdater());
     }
 
     @Override
@@ -125,19 +125,19 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     public void riskApprove(String code, String approveResult,
             String approveNote, String updater) {
         InvestigateReport data = investigateReportBO.getInvestigateReport(code);
-        if (!EInvestigateReportNode.RISK_APPROVE.getCode().equals(
-            data.getCurNodeCode())) {
+        if (!EInvestigateReportNode.RISK_APPROVE.getCode()
+            .equals(data.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是风控专员审核节点，不能操作！");
         }
         // 之前节点
         String curNodeCode = data.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
         } else {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode).getBackNode());
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getBackNode());
         }
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
@@ -147,7 +147,7 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetOrderCode(),
             EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-            data.getCurNodeCode(), approveNote, updater, data.getTeamCode());
+            data.getCurNodeCode(), approveNote, updater);
     }
 
     @Override
@@ -155,8 +155,8 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
     public void approveByBankCheck(String code, String approveResult,
             String approveNote, String updater) {
         InvestigateReport data = investigateReportBO.getInvestigateReport(code);
-        if (!EInvestigateReportNode.MORTGAGE_APPROVE.getCode().equals(
-            data.getCurNodeCode())) {
+        if (!EInvestigateReportNode.MORTGAGE_APPROVE.getCode()
+            .equals(data.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是驻行人员审核节点，不能操作！");
         }
@@ -164,20 +164,18 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         // 之前节点
         String curNodeCode = data.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
             // 日志记录
             sysBizLogBO.refreshPreSYSBizLog(
                 EBizLogType.INVESTIGATEREPORT.getCode(), data.getCode(),
                 curNodeCode, approveNote, updater);
         } else {
-            data.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode).getBackNode());
-            sysBizLogBO
-                .saveNewAndPreEndSYSBizLog(data.getBudgetOrderCode(),
-                    EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
-                    data.getCurNodeCode(), approveNote, updater,
-                    data.getTeamCode());
+            data.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getBackNode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetOrderCode(),
+                EBizLogType.INVESTIGATEREPORT, data.getCode(), curNodeCode,
+                data.getCurNodeCode(), approveNote, updater);
         }
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
@@ -225,8 +223,8 @@ public class InvestigateReportAOImpl implements IInvestigateReportAO {
         }
         // 业务团队
         if (StringUtils.isNotBlank(investigateReport.getTeamCode())) {
-            BizTeam bizTeam = bizTeamBO.getBizTeam(investigateReport
-                .getTeamCode());
+            BizTeam bizTeam = bizTeamBO
+                .getBizTeam(investigateReport.getTeamCode());
             investigateReport.setTeamName(bizTeam.getName());
         }
         // 业务员姓名

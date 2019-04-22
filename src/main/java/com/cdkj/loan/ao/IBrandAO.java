@@ -8,7 +8,7 @@ import com.cdkj.loan.dto.req.XN630400Req;
 import com.cdkj.loan.dto.req.XN630402Req;
 
 public interface IBrandAO {
-    String DEFAULT_ORDER_COLUMN = "code";
+    String DEFAULT_ORDER_COLUMN = "order_no";
 
     // 新增品牌
     public String addBrand(XN630400Req req);
@@ -17,14 +17,14 @@ public interface IBrandAO {
     public void editBrand(XN630402Req req);
 
     // 上架品牌
-    public void upBrand(String code, String updater, String remark);
+    public void upBrand(String code, String updater, String remark,
+            String location, int orderNo);
 
     // 下架品牌
     public void downBrand(String code, String updater, String remark);
 
     // 分页查询
-    public Paginable<Brand> queryBrandPage(int start, int limit,
-            Brand condition);
+    public Paginable<Brand> queryBrandPage(int start, int limit, Brand condition);
 
     // 详情查询
     public Brand getBrand(String code);

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.dto.req.XN630426Req;
 import com.cdkj.loan.exception.BizException;
@@ -32,7 +33,20 @@ public class XN630426 extends AProcessor {
         condition.setBrandName(req.getBrandName());
         condition.setSeriesCode(req.getSeriesCode());
         condition.setSeriesName(req.getSeriesName());
+        condition.setQueryName(req.getQueryName());
         condition.setStatus(req.getStatus());
+        condition.setIsReferee(req.getIsReferee());
+        condition.setLocation(req.getLocation());
+        condition.setDisplacementStart(StringValidater.toDouble(req
+            .getDisplacementStart()));
+        condition.setDisplacementEnd(StringValidater.toDouble(req
+            .getDisplacementEnd()));
+        condition.setPriceEnd(StringValidater.toLong(req.getPriceEnd()));
+        condition.setPriceStart(StringValidater.toLong(req.getPriceStart()));
+        condition.setLevelList(req.getLevelList());
+        condition.setStructureList(req.getStructureList());
+        condition.setVersionList(req.getVersionList());
+        condition.setIsMore(req.getIsMore());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

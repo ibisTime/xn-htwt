@@ -2047,7 +2047,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ----------------------------
 --  Table structure for `tsys_user`
 -- ----------------------------
-CREATE TABLE `dev_xn_htwt`.`tp_business_trip_apply` (
+DROP TABLE IF EXISTS `tp_business_trip_apply`;
+CREATE TABLE `tp_business_trip_apply` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `apply_user_code` VARCHAR(32) NULL COMMENT '申请人编号',
   `job_no` VARCHAR(32) NULL COMMENT '工号',
@@ -2087,3 +2088,52 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '出差申请';
 
+
+DROP TABLE IF EXISTS `tht_carconfig`;
+CREATE TABLE `tht_carconfig` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `name` VARCHAR(64) NULL COMMENT '名称',
+  `pic` VARCHAR(255) NULL COMMENT '图片',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+COMMENT = '车辆配置';
+
+DROP TABLE IF EXISTS `tht_car_carconfig`;
+CREATE TABLE `tht_car_carconfig` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `car_code` VARCHAR(32) NULL COMMENT '车型编号',
+  `config_code` VARCHAR(32) NULL COMMENT '配置编号',
+  PRIMARY KEY (`code`))
+COMMENT = '车型配置';
+
+DROP TABLE IF EXISTS `tht_car_news`;
+CREATE TABLE `tht_car_news` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `title` VARCHAR(255) NULL COMMENT '标题',
+  `author` VARCHAR(64) NULL COMMENT '作者',
+  `adv_pic` VARCHAR(255) NULL COMMENT '广告图',
+  `pic_number` INT NULL COMMENT '图片数量',
+  `pic` VARCHAR(255) NULL COMMENT '图片',
+  `read_count` BIGINT(20) NULL COMMENT '阅读量',
+  `context` TEXT NULL COMMENT '内容',
+  `tag` VARCHAR(255) NULL COMMENT '标签',
+  `status` VARCHAR(4) NULL COMMENT '状态（0 待上架，1 上架，2 下架）',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+COMMENT = '车辆资讯';
+
+DROP TABLE IF EXISTS `tht_action`;
+CREATE TABLE `tht_action` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `type` varchar(4) NOT NULL COMMENT '类型（0 分享，1 足迹，2 关注，3 收藏，4 点赞）',
+  `to_type` varchar(4) NOT NULL COMMENT '操作对象类型（0 车，1 资讯）',
+  `to_code` varchar(32) NOT NULL COMMENT '操作对象编号',
+  `creater` varchar(32) NOT NULL COMMENT '操作人',
+  `create_datetime` datetime NOT NULL COMMENT '操作时间',
+  `remark` text COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户行为';

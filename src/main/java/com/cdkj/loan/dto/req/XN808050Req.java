@@ -1,6 +1,9 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 立即下单
@@ -10,17 +13,9 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN808050Req {
 
-    // 商品规格编号（必填）
-    @NotBlank
-    private String productSpecsCode;
-
     // 还款卡编号
     @NotBlank
     private String bankcardCode;
-
-    // 数量（必填）
-    @NotBlank
-    private String quantity;
 
     // 收件人姓名（必填）
     @NotBlank
@@ -39,15 +34,12 @@ public class XN808050Req {
     private String applyUser;
 
     // 申请备注（选填）
+
     private String applyNote;
 
-    public String getProductSpecsCode() {
-        return productSpecsCode;
-    }
-
-    public void setProductSpecsCode(String productSpecsCode) {
-        this.productSpecsCode = productSpecsCode;
-    }
+    // 规格列表
+    @NotEmpty
+    private List<XN808058Req> specsList;
 
     public String getBankcardCode() {
         return bankcardCode;
@@ -55,14 +47,6 @@ public class XN808050Req {
 
     public void setBankcardCode(String bankcardCode) {
         this.bankcardCode = bankcardCode;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
     }
 
     public String getReceiver() {
@@ -103,6 +87,14 @@ public class XN808050Req {
 
     public void setApplyNote(String applyNote) {
         this.applyNote = applyNote;
+    }
+
+    public List<XN808058Req> getSpecsList() {
+        return specsList;
+    }
+
+    public void setSpecsList(List<XN808058Req> specsList) {
+        this.specsList = specsList;
     }
 
 }

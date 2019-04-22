@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ISeriesAO;
+import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630410Req;
 import com.cdkj.loan.dto.req.XN630412Req;
@@ -26,6 +28,9 @@ public class SeriesAOImpl implements ISeriesAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private ICarBO carBO;
+
     @Override
     public String addSeries(XN630410Req req) {
         Series series = new Series();
@@ -33,7 +38,12 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(StringValidater.toLong(req.getPrice()));
+        series.setPicNumber(StringValidater.toLong(req.getPicNumber()));
+        series.setPrice(Long.valueOf(0));
+        series.setHighest(Long.valueOf(0));
+        series.setLowest(Long.valueOf(0));
+        series.setLevel(req.getLevel());
+        series.setIsReferee(req.getIsReferee());
         series.setStatus(EBrandStatus.TO_UP.getCode());
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
@@ -51,7 +61,9 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(StringValidater.toLong(req.getPrice()));
+        series.setPicNumber(StringValidater.toLong(req.getPicNumber()));
+        series.setLevel(req.getLevel());
+        series.setIsReferee(req.getIsReferee());
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
         series.setRemark(req.getRemark());
@@ -62,7 +74,7 @@ public class SeriesAOImpl implements ISeriesAO {
     public void upSeries(String code, String location, String orderNo,
             String updater, String remark) {
         Series series = seriesBO.getSeries(code);
-        series.setLocation(StringValidater.toInteger(location));
+        series.setLocation(location);
         series.setOrderNo(StringValidater.toInteger(orderNo));
         series.setStatus(EBrandStatus.UP.getCode());
         series.setUpdater(updater);
@@ -87,9 +99,7 @@ public class SeriesAOImpl implements ISeriesAO {
         Paginable<Series> paginable = seriesBO.getPaginable(start, limit,
             condition);
         for (Series series : paginable.getList()) {
-            String realName = sysUserBO.getUser(series.getUpdater())
-                .getRealName();
-            series.setUpdaterName(realName);
+            init(series);
         }
         return paginable;
     }
@@ -97,8 +107,7 @@ public class SeriesAOImpl implements ISeriesAO {
     @Override
     public Series getSeries(String code) {
         Series series = seriesBO.getSeries(code);
-        String realName = sysUserBO.getUser(series.getUpdater()).getRealName();
-        series.setUpdaterName(realName);
+        init(series);
         return series;
     }
 
@@ -106,11 +115,20 @@ public class SeriesAOImpl implements ISeriesAO {
     public List<Series> querySeriesList(Series condition) {
         List<Series> querySeries = seriesBO.querySeries(condition);
         for (Series series : querySeries) {
-            String realName = sysUserBO.getUser(series.getUpdater())
-                .getRealName();
-            series.setUpdaterName(realName);
+
+            init(series);
         }
         return querySeries;
     }
 
+    private void init(Series series) {
+        String realName = sysUserBO.getUser(series.getUpdater()).getRealName();
+        series.setUpdaterName(realName);
+        Car condition = new Car();
+        condition.setSeriesCode(series.getCode());
+        condition.setStatus(EBrandStatus.UP.getCode());
+        List<Car> cars = carBO.queryCar(condition);
+        series.setCars(cars);
+        series.setCarNumber(Long.valueOf(cars.size()));
+    }
 }

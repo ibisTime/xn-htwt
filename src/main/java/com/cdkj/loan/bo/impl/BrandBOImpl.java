@@ -30,8 +30,8 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
         String code = null;
         if (data != null) {
             if (data.getCode() == null) {
-                code = OrderNoGenerater
-                    .generate(EGeneratePrefix.Brand.getCode());
+                code = OrderNoGenerater.generate(EGeneratePrefix.Brand
+                    .getCode());
                 data.setCode(code);
             }
             brandDAO.insert(data);
@@ -62,6 +62,16 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
     @Override
     public List<Brand> queryBrand(Brand condition) {
         return brandDAO.selectList(condition);
+    }
+
+    @Override
+    public void upBrand(Brand data) {
+        brandDAO.updateUp(data);
+    }
+
+    @Override
+    public void downBrand(Brand data) {
+        brandDAO.updateDown(data);
     }
 
 }

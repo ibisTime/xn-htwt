@@ -12,9 +12,14 @@ public class XN805061Req {
     @NotBlank
     private String newMobile;
 
-    // 验证码
     @NotBlank
-    private String smsCaptcha;
+    private String newCaptcha;
+
+    @NotBlank
+    private String oldMobile;
+
+    @NotBlank
+    private String oldCaptcha;
 
     public String getUserId() {
         return userId;
@@ -32,12 +37,28 @@ public class XN805061Req {
         this.newMobile = newMobile;
     }
 
-    public String getSmsCaptcha() {
-        return smsCaptcha;
+    public String getNewCaptcha() {
+        return newCaptcha;
     }
 
-    public void setSmsCaptcha(String smsCaptcha) {
-        this.smsCaptcha = smsCaptcha;
+    public void setNewCaptcha(String newCaptcha) {
+        this.newCaptcha = newCaptcha;
+    }
+
+    public String getOldMobile() {
+        return oldMobile;
+    }
+
+    public void setOldMobile(String oldMobile) {
+        this.oldMobile = oldMobile;
+    }
+
+    public String getOldCaptcha() {
+        return oldCaptcha;
+    }
+
+    public void setOldCaptcha(String oldCaptcha) {
+        this.oldCaptcha = oldCaptcha;
     }
 
 }

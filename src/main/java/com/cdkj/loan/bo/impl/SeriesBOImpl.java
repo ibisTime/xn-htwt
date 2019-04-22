@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ISeriesDAO;
 import com.cdkj.loan.domain.Series;
+import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -30,8 +31,8 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
         String code = null;
         if (data != null) {
             if (data.getCode() == null) {
-                code = OrderNoGenerater
-                    .generate(EGeneratePrefix.Series.getCode());
+                code = OrderNoGenerater.generate(EGeneratePrefix.Series
+                    .getCode());
                 data.setCode(code);
             }
             seriesDAO.insert(data);
@@ -71,6 +72,29 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
     @Override
     public int downSeries(Series data) {
         return seriesDAO.updateDown(data);
+    }
+
+    @Override
+    public void refreshHighest(Series data, Long highest) {
+        data.setHighest(highest);
+        seriesDAO.updateHighest(data);
+    }
+
+    @Override
+    public void refreshLowest(Series data, Long lowest) {
+        data.setLowest(lowest);
+        seriesDAO.updateLowest(data);
+    }
+
+    @Override
+    public List<Series> queryUpSeries() {
+        Series condition = new Series();
+        condition.setStatus(EBrandStatus.UP.getCode());
+        List<Series> dataList = seriesDAO.selectList(condition);
+        for (Series series : dataList) {
+            series.setCarNumber(Long.valueOf(0));
+        }
+        return dataList;
     }
 
 }

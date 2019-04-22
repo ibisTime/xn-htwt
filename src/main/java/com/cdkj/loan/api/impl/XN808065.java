@@ -40,17 +40,14 @@ public class XN808065 extends AProcessor {
         condition.setPayType(req.getPayType());
         condition.setPayGroup(req.getPayGroup());
         condition.setPayCode(req.getPayCode());
-        condition.setDeliverer(req.getDeliverer());
-        condition.setLogisticsCode(req.getLogisticsCode());
-        condition.setLogisticsCompany(req.getLogisticsCompany());
-        condition.setApplyDatetimeStart(
-            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
-        condition.setApplyDatetimeEnd(
-            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
-        condition.setPayDatetimeStart(
-            DateUtil.getFrontDate(req.getPayDatetimeStart(), false));
-        condition.setPayDatetimeEnd(
-            DateUtil.getFrontDate(req.getPayDatetimeEnd(), true));
+        condition.setApplyDatetimeStart(DateUtil.getFrontDate(
+            req.getCreateDatetimeStart(), false));
+        condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
+            req.getCreateDatetimeEnd(), true));
+        condition.setPayDatetimeStart(DateUtil.getFrontDate(
+            req.getPayDatetimeStart(), false));
+        condition.setPayDatetimeEnd(DateUtil.getFrontDate(
+            req.getPayDatetimeEnd(), true));
         condition.setStatusList(req.getStatusList());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

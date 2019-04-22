@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630422Req {
@@ -7,20 +9,29 @@ public class XN630422Req {
     @NotBlank(message = "编号不能为空")
     private String code; // 编号
 
+    @NotBlank
+    private String isReferee;// 是否推荐
+
     @NotBlank(message = "名称不能为空")
     private String name; // 名称
 
-    @NotBlank(message = "车系名称不能为空")
-    private String seriesCode; // 车系名称
+    @NotBlank
+    private String level;// 级别
 
-    @NotBlank(message = "车系名称不能为空")
-    private String seriesName; // 车系名称
+    @NotBlank
+    private String version;
 
-    @NotBlank(message = "品牌编号不能为空")
-    private String brandCode; // 品牌编号
+    @NotBlank
+    private String structure;
 
-    @NotBlank(message = "品牌名称不能为空")
-    private String brandName; // 品牌名称
+    @NotBlank
+    private String displacement;
+
+    @NotBlank
+    private String fromPlace;
+
+    @NotBlank
+    private String procedure;
 
     @NotBlank(message = "原价不能为空")
     private String originalPrice; // 原价
@@ -31,11 +42,20 @@ public class XN630422Req {
     @NotBlank(message = "首付金额不能为空")
     private String sfAmount; // 首付金额
 
+    @NotBlank
+    private String jsqByhf;
+
+    @NotBlank
+    private String jsqSybx;
+
     @NotBlank(message = "广告语不能为空")
     private String slogan; // 广告语
 
     @NotBlank(message = "广告图不能为空")
     private String advPic; // 广告图
+
+    @NotBlank
+    private String picNumber;
 
     @NotBlank(message = "缩略图不能为空")
     private String pic; // 缩略图
@@ -43,10 +63,52 @@ public class XN630422Req {
     @NotBlank(message = "图文描述不能为空")
     private String description; // 图文描述
 
+    @NotBlank
+    private String outsideColor;// 外部颜色
+
+    @NotBlank
+    private String insideColor;// 内部颜色
+
     @NotBlank(message = "最新修改人不能为空")
     private String updater; // 最新修改人
 
-    private String remark;// 备注
+    private String remark; // 备注
+
+    private String fwAmount;
+
+    private List<String> configList;
+
+    public List<String> getConfigList() {
+        return configList;
+    }
+
+    public void setConfigList(List<String> configList) {
+        this.configList = configList;
+    }
+
+    public String getFwAmount() {
+        return fwAmount;
+    }
+
+    public void setFwAmount(String fwAmount) {
+        this.fwAmount = fwAmount;
+    }
+
+    public String getOutsideColor() {
+        return outsideColor;
+    }
+
+    public void setOutsideColor(String outsideColor) {
+        this.outsideColor = outsideColor;
+    }
+
+    public String getInsideColor() {
+        return insideColor;
+    }
+
+    public void setInsideColor(String insideColor) {
+        this.insideColor = insideColor;
+    }
 
     public String getCode() {
         return code;
@@ -62,38 +124,6 @@ public class XN630422Req {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSeriesCode() {
-        return seriesCode;
-    }
-
-    public void setSeriesCode(String seriesCode) {
-        this.seriesCode = seriesCode;
-    }
-
-    public String getSeriesName() {
-        return seriesName;
-    }
-
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
-    }
-
-    public String getBrandCode() {
-        return brandCode;
-    }
-
-    public void setBrandCode(String brandCode) {
-        this.brandCode = brandCode;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
     }
 
     public String getOriginalPrice() {
@@ -166,6 +196,86 @@ public class XN630422Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getIsReferee() {
+        return isReferee;
+    }
+
+    public void setIsReferee(String isReferee) {
+        this.isReferee = isReferee;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getStructure() {
+        return structure;
+    }
+
+    public void setStructure(String structure) {
+        this.structure = structure;
+    }
+
+    public String getDisplacement() {
+        return displacement;
+    }
+
+    public void setDisplacement(String displacement) {
+        this.displacement = displacement;
+    }
+
+    public String getFromPlace() {
+        return fromPlace;
+    }
+
+    public void setFromPlace(String fromPlace) {
+        this.fromPlace = fromPlace;
+    }
+
+    public String getProcedure() {
+        return procedure;
+    }
+
+    public void setProcedure(String procedure) {
+        this.procedure = procedure;
+    }
+
+    public String getJsqByhf() {
+        return jsqByhf;
+    }
+
+    public void setJsqByhf(String jsqByhf) {
+        this.jsqByhf = jsqByhf;
+    }
+
+    public String getJsqSybx() {
+        return jsqSybx;
+    }
+
+    public void setJsqSybx(String jsqSybx) {
+        this.jsqSybx = jsqSybx;
+    }
+
+    public String getPicNumber() {
+        return picNumber;
+    }
+
+    public void setPicNumber(String picNumber) {
+        this.picNumber = picNumber;
     }
 
 }

@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 资料传递收件并补发
+ * 资料传递收件
  * @author: silver 
  * @since: 2018年5月29日 下午11:02:18 
  * @history:

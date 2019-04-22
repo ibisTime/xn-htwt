@@ -30,6 +30,17 @@ public class NodeFlow extends ABaseDO {
     // ****************db properties****************
     private List<FileList> fileStrs;// 材料清单
 
+    // 上个节点（包括last和next）
+    private String lastNode;
+
+    public String getLastNode() {
+        return lastNode;
+    }
+
+    public void setLastNode(String lastNode) {
+        this.lastNode = lastNode;
+    }
+
     public List<FileList> getFileStrs() {
         return fileStrs;
     }

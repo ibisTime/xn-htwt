@@ -3,6 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 录入征信结果
@@ -21,18 +22,8 @@ public class XN632111Req {
     private String operator;
 
     // 征信结果
-    private List<XN632111ReqCreditUser> creditResult;
-
-    // 1确认 0退回
-    private String dealType;
-
-    public String getDealType() {
-        return dealType;
-    }
-
-    public void setDealType(String dealType) {
-        this.dealType = dealType;
-    }
+    @NotEmpty
+    private List<XN632111ReqCreditUser> creditList;
 
     public String getCreditCode() {
         return creditCode;
@@ -42,12 +33,12 @@ public class XN632111Req {
         this.creditCode = creditCode;
     }
 
-    public List<XN632111ReqCreditUser> getCreditResult() {
-        return creditResult;
+    public List<XN632111ReqCreditUser> getCreditList() {
+        return creditList;
     }
 
-    public void setCreditResult(List<XN632111ReqCreditUser> creditResult) {
-        this.creditResult = creditResult;
+    public void setCreditList(List<XN632111ReqCreditUser> creditList) {
+        this.creditList = creditList;
     }
 
     public String getOperator() {

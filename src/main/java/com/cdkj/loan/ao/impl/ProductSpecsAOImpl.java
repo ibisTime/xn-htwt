@@ -35,14 +35,14 @@ public class ProductSpecsAOImpl implements IProductSpecsAO {
             throw new BizException("xn000000", "库存数量必须大于0");
         }
         Product product = productBO.getProduct(req.getProductCode());
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.PRODUCT_SPECS.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.PRODUCT_SPECS
+            .getCode());
         ProductSpecs productSpecs = new ProductSpecs();
         productSpecs.setCode(code);
         productSpecs.setName(req.getName());
         productSpecs.setProductCode(product.getCode());
-        productSpecs
-            .setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+        productSpecs.setOriginalPrice(StringValidater.toLong(req
+            .getOriginalPrice()));
         productSpecs.setPrice(StringValidater.toLong(req.getPrice()));
         productSpecs.setQuantity(StringValidater.toInteger(req.getQuantity()));
         productSpecs.setOrderNo(StringValidater.toInteger(req.getOrderNo()));
@@ -60,6 +60,9 @@ public class ProductSpecsAOImpl implements IProductSpecsAO {
         ProductSpecs data = new ProductSpecs();
         data.setCode(req.getCode());
         data.setName(req.getName());
+        data.setPic(req.getPic());
+        data.setProvince(req.getProvince());
+        data.setWeight(StringValidater.toDouble(req.getWeight()));
         data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         data.setPrice(StringValidater.toLong(req.getPrice()));
         data.setQuantity(StringValidater.toInteger(req.getQuantity()));

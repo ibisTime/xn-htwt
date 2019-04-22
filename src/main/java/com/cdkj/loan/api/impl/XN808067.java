@@ -31,9 +31,6 @@ public class XN808067 extends AProcessor {
         condition.setStatus(req.getStatus());
         condition.setPayGroup(req.getPayGroup());
         condition.setPayCode(req.getPayCode());
-        condition.setDeliverer(req.getDeliverer());
-        condition.setLogisticsCode(req.getLogisticsCode());
-        condition.setLogisticsCompany(req.getLogisticsCompany());
         return orderAO.queryOrderList(condition);
     }
 

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICarNewsDAO">
+	<resultMap id="carNews_DB_Result" type="carNews">
+		<result column="code" property="code" />
+		<result column="title" property="title" />
+		<result column="author" property="author" />
+		<result column="adv_pic" property="advPic" />
+		<result column="pic_number" property="picNumber" />
+		<result column="pic" property="pic" />
+		<result column="read_count" property="readCount" />
+		<result column="context" property="context" />
+		<result column="tag" property="tag" />
+		<result column="status" property="status" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="title != null and title != '' ">
+				AND t.title = #{title}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="author != null and author != '' ">
+				AND t.author = #{author}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_carNews" parameterType="carNews" resultMap="carNews_DB_Result">
+		SELECT
+		t.code
+		,t.title
+		,t.author
+		,t.adv_pic
+		,t.pic_number
+		,t.pic
+		,t.read_count
+		,t.context
+		,t.tag
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		FROM
+		tht_car_news t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_carNews_count" parameterType="carNews"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tht_car_news t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_carNews" parameterType="carNews">
+		INSERT INTO
+		tht_car_news(
+		code
+		,title
+		,author
+		,adv_pic
+		,pic_number
+		,pic
+		,read_count
+		,context
+		,tag
+		,status
+		,updater
+		,update_datetime
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{title}
+		,#{author}
+		,#{advPic}
+		,#{picNumber}
+		,#{pic}
+		,#{readCount}
+		,#{context}
+		,#{tag}
+		,#{status}
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_carNews" parameterType="carNews">
+		UPDATE tht_car_news
+		SET
+		title = #{title}
+		,author=#{author}
+		,adv_pic = #{advPic}
+		,pic_number = #{picNumber}
+		,pic = #{pic}
+		,read_count = #{readCount}
+		,context = #{context}
+		,tag = #{tag}
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_status" parameterType="carNews">
+		UPDATE tht_car_news
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_read_count" parameterType="carNews">
+		UPDATE tht_car_news
+		SET
+		read_count = #{readCount}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

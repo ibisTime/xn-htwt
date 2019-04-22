@@ -26,11 +26,11 @@ import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IExpressRuleBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IProductBO;
-import com.cdkj.loan.bo.IProductOrderBO;
 import com.cdkj.loan.bo.IProductSpecsBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISmsOutBO;
+import com.cdkj.loan.bo.ISpecsOrderBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
@@ -39,15 +39,15 @@ import com.cdkj.loan.core.CalculationUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Account;
-import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.Product;
-import com.cdkj.loan.domain.ProductOrder;
 import com.cdkj.loan.domain.ProductSpecs;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN808050Req;
 import com.cdkj.loan.dto.req.XN808054Req;
+import com.cdkj.loan.dto.req.XN808058Req;
 import com.cdkj.loan.dto.req.XN808070CReq;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.dto.res.XN003020Res;
@@ -78,7 +78,7 @@ public class OrderAOImpl implements IOrderAO {
     private IOrderBO orderBO;
 
     @Autowired
-    private IProductOrderBO productOrderBO;
+    private ISpecsOrderBO specsOrderBO;
 
     @Autowired
     private IProductSpecsBO productSpecsBO;
@@ -111,26 +111,73 @@ public class OrderAOImpl implements IOrderAO {
     @Transactional
     public String commitOrder(XN808050Req req) {
 
-        ProductSpecs productSpecs = productSpecsBO
-            .getProductSpecs(req.getProductSpecsCode());
+        // 生成订单基本信息
+        Order order = new Order();
 
-        // 检查产品状态
-        Product product = productBO.getProduct(productSpecs.getProductCode());
-        if (!EProductStatus.PUBLISH_YES.getCode().equals(product.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该产品未上架，不能下单");
-        }
-        // 判断库存是否充足（暂时不考虑库存）
-        // Integer quantity = StringValidater.toInteger(req.getQuantity());
-        // if (productSpecs.getQuantity() - quantity < 0) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "库存不够，不能下单");
-        // }
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.ORDER.getCode());
+
+        // 总信用分
+        BigDecimal creditScore = BigDecimal.ZERO;
+
+        // 订单金额
+        Long amount = 0L;
+
+        // 计算订单运费，暂时不考虑运费
+        Long yunfei = 0L;
 
         // 判断是否有真实姓名
         User user = userBO.getUser(req.getApplyUser());
         if (StringUtils.isBlank(user.getRealName())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "你还没有填写真实姓名，请实名认证后下单！");
+        }
+        for (XN808058Req req2 : req.getSpecsList()) {
+
+            ProductSpecs productSpecs = productSpecsBO.getProductSpecs(req2
+                .getSpecsCode());
+            // 检查产品状态
+            Product product = productBO.getProduct(productSpecs
+                .getProductCode());
+            if (!EProductStatus.PUBLISH_YES.getCode().equals(
+                product.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "该产品未上架，不能下单");
+            }
+
+            // 判断库存是否充足（暂时不考虑库存）
+            // Integer quantity = StringValidater.toInteger(req.getQuantity());
+            // if (productSpecs.getQuantity() - quantity < 0) {
+            // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+            // "库存不够，不能下单");
+            // }
+            // 计算重量
+            Double weight = AmountUtil.mulAB(productSpecs.getWeight(),
+                StringValidater.toInteger(req2.getQuantity()));
+            // 计算总价格
+            if (null != productSpecs.getPrice()) {
+                amount = amount
+                        + (StringValidater.toInteger(req2.getQuantity()) * productSpecs
+                            .getPrice());
+            }
+
+            // if (!EBoolean.NO.getCode().equals(req.getIsNeedYunfei())) {
+            // // 运费设置
+            // String addRessProvince = ProvinceUtil
+            // .getProvince(req.getReAddress());
+            // XN003020Res expressRule = expressRuleBO.getPrice("浙江省",
+            // addRessProvince, weight, ESystemCode.HTWT.getCode(),
+            // ESystemCode.HTWT.getCode());// 运费人民币
+            // yunfei = expressRule.getExpressFee();
+            // }
+            // 计算信用分
+            creditScore = creditScore.add(new BigDecimal(product
+                .getCreditScore()));
+
+            // 落地订单产品关联信息
+            specsOrderBO.saveProductOrder(code, req.getBankcardCode(), product,
+                productSpecs, req.getApplyUser(),
+                StringValidater.toInteger(req2.getQuantity()));
         }
 
         // 判断信用分是否足够
@@ -140,47 +187,13 @@ public class OrderAOImpl implements IOrderAO {
         account.setStatus(EAccountStatus.NORMAL.getCode());
         account.setCurrency(ECurrency.XYF.getCode());
         Account domain = accountBO.queryAccountListByCurrency(account);
-        BigDecimal decimal = new BigDecimal(product.getCreditScore());
-        int compareTo = decimal.compareTo(domain.getAmount());
+        int compareTo = creditScore.compareTo(domain.getAmount());
         if (compareTo == 1) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "信用分低于该商品的最低信用分，不能下单！");
+                "信用分低于商品的最低信用分，不能下单！");
         }
-
-        // 生成订单基本信息
-        Order order = new Order();
-
-        // 计算订单金额
-        Long amount = 0L;
-        Double weight = 0.0;
-        int quantity = StringValidater.toInteger(req.getQuantity());
-
-        if (null != productSpecs.getPrice()) {
-            amount = amount + (quantity * productSpecs.getPrice());
-        }
-
-        weight = weight + AmountUtil.mulAB(productSpecs.getWeight(), quantity);
-
-        // 计算订单运费，暂时不考虑运费
-        Long yunfei = 0L;
-        // if (!EBoolean.NO.getCode().equals(req.getIsNeedYunfei())) {
-        // // 运费设置
-        // String addRessProvince = ProvinceUtil
-        // .getProvince(req.getReAddress());
-        // XN003020Res expressRule = expressRuleBO.getPrice("浙江省",
-        // addRessProvince, weight, ESystemCode.HTWT.getCode(),
-        // ESystemCode.HTWT.getCode());// 运费人民币
-        // yunfei = expressRule.getExpressFee();
-        // }
-
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.ORDER.getCode());
-
-        // 落地订单产品关联信息
-        productOrderBO.saveProductOrder(code, product, productSpecs, quantity);
 
         order.setCode(code);
-        order.setBankcardCode(req.getBankcardCode());
         order.setReceiver(req.getReceiver());
         order.setReMobile(req.getReMobile());
         order.setReAddress(req.getReAddress());
@@ -190,13 +203,7 @@ public class OrderAOImpl implements IOrderAO {
         order.setApplyDatetime(new Date());
         order.setAmount(amount);
         order.setYunfei(yunfei);
-        order.setSfRate(productSpecs.getSfRate());
 
-        Long sfAmount = AmountUtil.mul(amount, productSpecs.getSfRate());
-        order.setSfAmount(sfAmount);
-        order.setLoanAmount(amount - sfAmount);
-        order.setPeriods(productSpecs.getPeriods());
-        order.setBankRate(productSpecs.getBankRate());
         order.setStatus(EOrderStatus.TO_PAY.getCode());
 
         order.setPayAmount(0L);
@@ -220,8 +227,10 @@ public class OrderAOImpl implements IOrderAO {
         orderBO.refreshYunfei(order, yunfei);
         User user = userBO.getUser(order.getApplyUser());
         // 发短信
-        smsOutBO.sendSmsOut(user.getMobile(), "尊敬的用户，您的待支付订单[" + order.getCode()
-                + "]运费已成功修改为" + CalculationUtil.diviDown(yunfei) + "元，请及时支付订单");
+        smsOutBO.sendSmsOut(
+            user.getMobile(),
+            "尊敬的用户，您的待支付订单[" + order.getCode() + "]运费已成功修改为"
+                    + CalculationUtil.diviDown(yunfei) + "元，请及时支付订单");
     }
 
     @Override
@@ -237,16 +246,25 @@ public class OrderAOImpl implements IOrderAO {
         }
 
         // 判断支付密码
-        String bankcardCode = orderBO.getOrder(code).getBankcardCode();
-        String userId = bankcardBO.getBankcard(bankcardCode).getUserId();
-        userBO.checkTradePwd(userId, tradePwd);
+        userBO.checkTradePwd(order.getApplyUser(), tradePwd);
 
         // 验证产品是否有未上架的
         doCheckProductOnline(order);
 
-        RepayBiz repayBiz = repayBizBO.generateProductLoanRepayBiz(order);
+        List<SpecsOrder> specsOrders = specsOrderBO.queryListByOrderCode(order
+            .getCode());
+        for (SpecsOrder specsOrder : specsOrders) {
+            RepayBiz repayBiz = repayBizBO
+                .generateProductLoanRepayBiz(specsOrder);
+            repayPlanBO.genereateNewRepayPlan(repayBiz);
+        }
 
-        repayPlanBO.genereateNewRepayPlan(repayBiz);
+        List<SpecsOrder> orderList = specsOrderBO.queryListByOrderCode(code);
+        for (SpecsOrder specsOrder : orderList) {
+
+            specsOrderBO.refereshStatus(specsOrder,
+                EOrderStatus.PAY_YES.getCode());
+        }
 
         return toPayOrder(order, payType, isDk);
     }
@@ -255,8 +273,8 @@ public class OrderAOImpl implements IOrderAO {
         User user = userBO.getUser(order.getApplyUser());
         if (EPayType.YE.getCode().equals(payType)) {
             return toPayOrderYE(order, user, isDk);
-        } else if (EPayType.WITHHOLD.getCode().equals(payType)) {
-            return toPayOrderWithhold(order, user, isDk);
+            // } else if (EPayType.WITHHOLD.getCode().equals(payType)) {
+            // return toPayOrderWithhold(order, user, isDk);
         } else {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "支付类型不支持");
         }
@@ -352,14 +370,14 @@ public class OrderAOImpl implements IOrderAO {
      * @history: 
      */
     private void doCheckProductOnline(Order order) {
-        List<ProductOrder> prodList = productOrderBO
-            .queryProductOrderList(order.getCode());
+        List<SpecsOrder> prodList = specsOrderBO.queryProductOrderList(order
+            .getCode());
         if (CollectionUtils.isNotEmpty(prodList)) {
-            for (ProductOrder productOrder : prodList) {
-                Product product = productBO
-                    .getProduct(productOrder.getProductCode());
-                if (!EProductStatus.PUBLISH_YES.getCode()
-                    .equals(product.getStatus())) {
+            for (SpecsOrder productOrder : prodList) {
+                Product product = productBO.getProduct(productOrder
+                    .getProductCode());
+                if (!EProductStatus.PUBLISH_YES.getCode().equals(
+                    product.getStatus())) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "订单中有未上架产品，不能支付");
                 }
@@ -375,12 +393,18 @@ public class OrderAOImpl implements IOrderAO {
                 "订单状态不是待支付状态，不能进行取消操作");
         }
         orderBO.userCancel(code, userId, remark);
+
+        List<SpecsOrder> orderList = specsOrderBO.queryListByOrderCode(code);
+        for (SpecsOrder specsOrder : orderList) {
+
+            specsOrderBO
+                .refereshStatus(specsOrder, EOrderStatus.YHYC.getCode());
+        }
     }
 
     @Override
     @Transactional
-    public void platCancel(List<String> codeList, String updater,
-            String remark) {
+    public void platCancel(List<String> codeList, String updater, String remark) {
         for (String code : codeList) {
             platCancelSingle(code, updater, remark);
         }
@@ -408,9 +432,9 @@ public class OrderAOImpl implements IOrderAO {
         // eBizType, eBizType.getValue(), eBizType.getValue(),
         // order.getCode());
 
-        List<ProductOrder> productOrders = productOrderBO
+        List<SpecsOrder> productOrders = specsOrderBO
             .queryProductOrderList(order.getCode());
-        for (ProductOrder productOrder : productOrders) {
+        for (SpecsOrder productOrder : productOrders) {
             // 更新库存
             Integer quantity = -productOrder.getQuantity();
             productSpecsBO.refreshQuantity(productOrder.getProductSpecsCode(),
@@ -427,20 +451,19 @@ public class OrderAOImpl implements IOrderAO {
         } else {
             remark = "";
         }
-        smsOutBO.sendSmsOut(user.getMobile(),
-            "尊敬的用户，您的订单[" + order.getCode() + "]已取消" + remark + ",请及时查看退款。");
+        smsOutBO.sendSmsOut(user.getMobile(), "尊敬的用户，您的订单[" + order.getCode()
+                + "]已取消" + remark + ",请及时查看退款。");
     }
 
     @Override
-    public Paginable<Order> queryOrderPage(int start, int limit,
-            Order condition) {
+    public Paginable<Order> queryOrderPage(int start, int limit, Order condition) {
         Paginable<Order> page = orderBO.getPaginable(start, limit, condition);
         if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
             for (Order order : page.getList()) {
                 order.setUser(userBO.getUser(order.getApplyUser()));
-                ProductOrder imCondition = new ProductOrder();
+                SpecsOrder imCondition = new SpecsOrder();
                 imCondition.setOrderCode(order.getCode());
-                List<ProductOrder> productOrderList = productOrderBO
+                List<SpecsOrder> productOrderList = specsOrderBO
                     .queryProductOrderList(imCondition);
                 order.setProductOrderList(productOrderList);
             }
@@ -455,9 +478,9 @@ public class OrderAOImpl implements IOrderAO {
         Paginable<Order> page = orderBO.getPaginable(start, limit, condition);
         if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
             for (Order order : page.getList()) {
-                ProductOrder imCondition = new ProductOrder();
+                SpecsOrder imCondition = new SpecsOrder();
                 imCondition.setOrderCode(order.getCode());
-                List<ProductOrder> productOrderList = productOrderBO
+                List<SpecsOrder> productOrderList = specsOrderBO
                     .queryProductOrderList(imCondition);
                 order.setProductOrderList(productOrderList);
             }
@@ -473,9 +496,9 @@ public class OrderAOImpl implements IOrderAO {
         List<Order> list = orderBO.queryOrderList(condition);
         if (CollectionUtils.isNotEmpty(list)) {
             for (Order order : list) {
-                ProductOrder imCondition = new ProductOrder();
+                SpecsOrder imCondition = new SpecsOrder();
                 imCondition.setOrderCode(order.getCode());
-                List<ProductOrder> productOrderList = productOrderBO
+                List<SpecsOrder> productOrderList = specsOrderBO
                     .queryProductOrderList(imCondition);
                 order.setProductOrderList(productOrderList);
                 order.setUser(userBO.getUser(order.getApplyUser()));
@@ -491,69 +514,59 @@ public class OrderAOImpl implements IOrderAO {
     public Order getOrder(String code) {
         Order order = orderBO.getOrder(code);
         order.setUser(userBO.getUser(order.getApplyUser()));
-        ProductOrder imCondition = new ProductOrder();
+        SpecsOrder imCondition = new SpecsOrder();
         imCondition.setOrderCode(order.getCode());
-        List<ProductOrder> productOrderList = productOrderBO
+        List<SpecsOrder> productOrderList = specsOrderBO
             .queryProductOrderList(imCondition);
         order.setProductOrderList(productOrderList);
         order.setUser(userBO.getUser(order.getApplyUser()));
-        Bankcard bankcard = bankcardBO.getBankcard(order.getBankcardCode());
-        order.setBankcardNumber(bankcard.getBankcardNumber());
         return order;
     }
 
     @Override
     @Transactional
     public void deliverLogistics(XN808054Req req) {
-        Order order = orderBO.getOrder(req.getCode());
-        if (!EOrderStatus.PAY_YES.getCode()
-            .equalsIgnoreCase(order.getStatus())) {
+        SpecsOrder specsOrder = specsOrderBO.getProductOrder(req.getCode());
+        if (!EOrderStatus.PAY_YES.getCode().equalsIgnoreCase(
+            specsOrder.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "订单不是已支付状态，无法操作");
         }
-        orderBO.deliverLogistics(req.getCode(), req.getLogisticsCompany(),
+        specsOrderBO.deliverLogistics(specsOrder, req.getLogisticsCompany(),
             req.getLogisticsCode(), req.getDeliverer(),
             req.getDeliveryDatetime(), req.getPdf(), req.getUpdater(),
             req.getRemark());
 
+        Order order = orderBO.getOrder(specsOrder.getOrderCode());
+
         // 发送短信
         User user = userBO.getUser(order.getApplyUser());
         String notice = "";
-        if (CollectionUtils.isNotEmpty(order.getProductOrderList())) {
-            if (order.getProductOrderList().size() > 1) {
-                notice = "尊敬的用户，您的订单["
-                        + order.getCode() + "]中的商品[" + order
-                            .getProductOrderList().get(0).getProduct().getName()
-                        + "等]已发货，请注意查收。";
-            } else {
-                notice = "尊敬的用户，您的订单["
-                        + order.getCode() + "]中的商品[" + order
-                            .getProductOrderList().get(0).getProduct().getName()
-                        + "]已发货，请注意查收。";
-            }
-            smsOutBO.sendSmsOut(user.getMobile(), notice);
-        }
+        notice = "尊敬的用户，您的订单[" + order.getCode() + "]中的商品["
+                + specsOrder.getProductName() + "]已发货，请注意查收。";
+        smsOutBO.sendSmsOut(user.getMobile(), notice);
+
     }
 
     @Override
     @Transactional
     public void confirm(String code, String updater, String remark) {
-        Order order = orderBO.getOrder(code);
-        if (!EOrderStatus.SEND.getCode().equalsIgnoreCase(order.getStatus())) {
+        SpecsOrder specsOrder = specsOrderBO.getProductOrder(code);
+        if (!EOrderStatus.SEND.getCode().equalsIgnoreCase(
+            specsOrder.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "订单不是已发货状态，无法操作");
         }
-        doConfirm(order, updater, remark);
+        doConfirm(specsOrder, updater, remark);
     }
 
-    private void doConfirm(Order order, String updater, String remark) {
-        orderBO.confirm(order, updater, remark);
+    private void doConfirm(SpecsOrder specsOrder, String updater, String remark) {
+
+        specsOrderBO.refereshStatus(specsOrder, EOrderStatus.RECEIVE.getCode());
         // 更新产品的已购买人数
-        List<ProductOrder> productOrders = order.getProductOrderList();
-        for (ProductOrder productOrder : productOrders) {
-            productBO.updateBoughtCount(productOrder.getProductCode(),
-                productOrder.getQuantity());
-        }
+        productBO.updateBoughtCount(specsOrder.getProductCode(),
+            specsOrder.getQuantity());
+
     }
 
     @Override
@@ -650,10 +663,11 @@ public class OrderAOImpl implements IOrderAO {
         String systemCode = ESystemCode.HTWT.getCode();
         // 统计重量地址
         for (XN808070CReq cReq : list) {
-            ProductSpecs ps = productSpecsBO
-                .getProductSpecs(cReq.getProductSpecsCode());
-            weight = weight + AmountUtil.mulAB(Long.valueOf(cReq.getQuantity()),
-                ps.getWeight());
+            ProductSpecs ps = productSpecsBO.getProductSpecs(cReq
+                .getProductSpecsCode());
+            weight = weight
+                    + AmountUtil.mulAB(Long.valueOf(cReq.getQuantity()),
+                        ps.getWeight());
         }
 
         // 运费设置
@@ -670,6 +684,23 @@ public class OrderAOImpl implements IOrderAO {
                 "订单不是已取消状态，不能删除");
         }
         orderBO.removeOrder(code);
+    }
+
+    @Override
+    public List<SpecsOrder> querySpecsOrders(SpecsOrder condition) {
+
+        return specsOrderBO.queryProductOrderList(condition);
+    }
+
+    @Override
+    public Paginable<SpecsOrder> querySpecsOrderPage(int start, int limit,
+            SpecsOrder condition) {
+        return specsOrderBO.getPaginable(start, limit, condition);
+    }
+
+    @Override
+    public SpecsOrder getSpecsOrder(String code) {
+        return specsOrderBO.getProductOrder(code);
     }
 
 }

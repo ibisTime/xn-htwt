@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Order;
+import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.dto.req.XN808050Req;
 import com.cdkj.loan.dto.req.XN808054Req;
 import com.cdkj.loan.dto.req.XN808070CReq;
@@ -26,15 +27,13 @@ public interface IOrderAO {
 
     public void userCancel(String code, String userId, String remark);
 
-    public void platCancel(List<String> codeList, String updater,
-            String remark);
+    public void platCancel(List<String> codeList, String updater, String remark);
 
     public void deliverLogistics(XN808054Req req);
 
     public void confirm(String code, String updater, String remark);
 
-    public Paginable<Order> queryOrderPage(int start, int limit,
-            Order condition);
+    public Paginable<Order> queryOrderPage(int start, int limit, Order condition);
 
     public Paginable<Order> queryMyOrderPage(int start, int limit,
             Order condition);
@@ -50,5 +49,12 @@ public interface IOrderAO {
     public XN003020Res getExpressFee(List<XN808070CReq> list, String address);
 
     public void dropOrderCancelByUser(String code);
+
+    public List<SpecsOrder> querySpecsOrders(SpecsOrder condition);
+
+    public Paginable<SpecsOrder> querySpecsOrderPage(int start, int limit,
+            SpecsOrder condition);
+
+    public SpecsOrder getSpecsOrder(String code);
 
 }

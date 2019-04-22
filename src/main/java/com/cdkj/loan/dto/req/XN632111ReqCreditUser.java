@@ -16,14 +16,25 @@ public class XN632111ReqCreditUser {
 
     // 银行征信结果
     @NotBlank
-    private String bankCreditResultPdf;
+    private String bankCreditReport;
 
-    // 信用卡占比
-    private String creditCardOccupation;
-
-    // 银行征信结果说明
+    // 银行征信结果
     @NotBlank
-    private String bankCreditResultRemark;
+    private String bankResult;
+
+    // 大数据征信结果
+    private String dataCreditReport;
+
+    // 征信说明
+    private String creditNote;
+
+    public String getBankResult() {
+        return bankResult;
+    }
+
+    public void setBankResult(String bankResult) {
+        this.bankResult = bankResult;
+    }
 
     public String getCreditUserCode() {
         return creditUserCode;
@@ -33,28 +44,28 @@ public class XN632111ReqCreditUser {
         this.creditUserCode = creditUserCode;
     }
 
-    public String getCreditCardOccupation() {
-        return creditCardOccupation;
+    public String getBankCreditReport() {
+        return bankCreditReport;
     }
 
-    public void setCreditCardOccupation(String creditCardOccupation) {
-        this.creditCardOccupation = creditCardOccupation;
+    public void setBankCreditReport(String bankCreditReport) {
+        this.bankCreditReport = bankCreditReport;
     }
 
-    public String getBankCreditResultPdf() {
-        return bankCreditResultPdf;
+    public String getDataCreditReport() {
+        return dataCreditReport;
     }
 
-    public void setBankCreditResultPdf(String bankCreditResultPdf) {
-        this.bankCreditResultPdf = bankCreditResultPdf;
+    public void setDataCreditReport(String dataCreditReport) {
+        this.dataCreditReport = dataCreditReport;
     }
 
-    public String getBankCreditResultRemark() {
-        return bankCreditResultRemark;
+    public String getCreditNote() {
+        return creditNote;
     }
 
-    public void setBankCreditResultRemark(String bankCreditResultRemark) {
-        this.bankCreditResultRemark = bankCreditResultRemark;
+    public void setCreditNote(String creditNote) {
+        this.creditNote = creditNote;
     }
 
 }

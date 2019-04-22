@@ -4,20 +4,34 @@
 <mapper namespace="com.cdkj.loan.dao.ICarDAO">
 	<resultMap id="car_DB_Result" type="car">
 		<result column="code" property="code" />
+		<result column="is_referee" property="isReferee" />
 		<result column="name" property="name" />
 		<result column="series_code" property="seriesCode" />
 		<result column="series_name" property="seriesName" />
 		<result column="brand_code" property="brandCode" />
 		<result column="brand_name" property="brandName" />
+		<result column="bank_code" property="bankCode" />
+		<result column="level" property="level" />
+		<result column="version" property="version" />
+		<result column="structure" property="structure" />
+		<result column="displacement" property="displacement" />
+		<result column="from_place" property="fromPlace" />
+		<result column="car_procedure" property="procedure" />
 		<result column="original_price" property="originalPrice" />
 		<result column="sale_price" property="salePrice" />
 		<result column="sf_amount" property="sfAmount" />
+		<result column="fw_amount" property="fwAmount" />
+		<result column="jsq_byhf" property="jsqByhf" />
+		<result column="jsq_sybx" property="jsqSybx" />
 		<result column="location" property="location" />
 		<result column="order_no" property="orderNo" />
 		<result column="slogan" property="slogan" />
 		<result column="adv_pic" property="advPic" />
+		<result column="pic_number" property="picNumber" />
 		<result column="pic" property="pic" />
 		<result column="description" property="description" />
+		<result column="outside_color" property="outsideColor" />
+		<result column="inside_color" property="insideColor" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -28,6 +42,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="isReferee != null and isReferee != '' ">
+				AND t.is_referee = #{isReferee}
+			</if>
+			<if test="name != null and name != '' ">
+				AND t.name like "%"#{name}"%"
 			</if>
 			<if test="name != null and name != '' ">
 				AND t.name like "%"#{name}"%"
@@ -83,30 +103,78 @@
 			<if test="remark != null and remark != '' ">
 				AND t.remark = #{remark}
 			</if>
+			<if test="queryName != null and queryName != '' ">
+				AND t.series_name like "%"#{queryName}"%" OR t.brand_name like "%"#{queryName}"%" 
+				OR t.name like "%"#{queryName}"%"
+			</if>
+			<if test="displacementStart != null and displacementStart != '' ">
+				<![CDATA[AND t.displacement > #{displacementStart}]]>
+			</if>
+			<if test="displacementEnd != null and displacementEnd != '' ">
+				<![CDATA[AND t.displacement <= #{displacementEnd}]]>
+			</if>
+			<if test="priceStart != null and priceStart != '' ">
+				<![CDATA[AND t.sale_price > #{priceStart}]]>
+			</if>
+			<if test="priceEnd != null and priceEnd != '' ">
+				<![CDATA[AND t.sale_price <= #{priceEnd}]]>
+			</if>
+			<if test="levelList != null and levelList.size()>0  ">
+				AND t.level in 
+                <foreach item="item" index="index" collection="levelList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
+			<if test="versionList != null and versionList.size()>0">
+				AND t.version in 
+                <foreach item="item" index="index" collection="versionList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
+			<if test="structureList != null and structureList.size()>0 ">
+				AND t.structure in 
+                <foreach item="item" index="index" collection="structureList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
 		</trim>
 	</sql>
 	
 	<select id="select_car" parameterType="car" resultMap="car_DB_Result">
 		SELECT
-		code
-		,name
-		,series_code
-		,series_name
-		,brand_code
-		,brand_name
-		,original_price
-		,sale_price
-		,sf_amount
-		,location
-		,order_no
-		,slogan
-		,adv_pic
-		,pic
-		,description
-		,status
-		,updater
-		,update_datetime
-		,remark
+		t.code
+		,t.is_referee
+		,t.name
+		,t.series_code
+		,t.series_name
+		,t.brand_code
+		,t.brand_name
+		,t.bank_code
+		,t.level
+		,t.version
+		,t.structure
+		,t.displacement
+		,t.from_place
+		,t.car_procedure
+		,t.original_price
+		,t.sale_price
+		,t.sf_amount
+		,t.fw_amount
+		,t.jsq_byhf
+		,t.jsq_sybx
+		,t.location
+		,t.order_no
+		,t.slogan
+		,t.adv_pic
+		,t.pic_number
+		,t.pic
+		,t.description
+		,t.outside_color
+		,t.inside_color
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
 		FROM
 		tht_car t
 		<include refid="where_condition" />
@@ -123,44 +191,85 @@
 	</select>
 	
 	<insert id="insert_car" parameterType="car">
-		INSERT INTO tht_car(
+		INSERT INTO 
+		tht_car(
 		code
+		,is_referee
 		,name
 		,series_code
 		,series_name
+		
 		,brand_code
 		,brand_name
+		,bank_code
+		,level
+		,version
+		
+		,structure
+		,displacement
+		,from_place
+		,car_procedure
 		,original_price
+		
 		,sale_price
 		,sf_amount
+		,fw_amount
+		,jsq_byhf
+		,jsq_sybx
+		
 		,location
 		,order_no
 		,slogan
 		,adv_pic
+		,pic_number
+		
 		,pic
 		,description
+		,outside_color
+		,inside_color
 		,status
+		
 		,updater
 		,update_datetime
 		,remark
 		)
 		VALUES(
 		#{code}
+		,#{isReferee}
 		,#{name}
 		,#{seriesCode}
 		,#{seriesName}
+		
 		,#{brandCode}
 		,#{brandName}
+		,#{bankCode}
+		,#{level}
+		,#{version}
+		
+		,#{structure}
+		,#{displacement}
+		,#{fromPlace}
+		,#{procedure}
 		,#{originalPrice}
+		
 		,#{salePrice}
 		,#{sfAmount}
+		,#{fwAmount}
+		,#{jsqByhf}
+		,#{jsqSybx}
+		
 		,#{location}
 		,#{orderNo}
 		,#{slogan}
 		,#{advPic}
+		,#{picNumber}
+		
 		,#{pic}
 		,#{description}
+		,#{outsideColor}
+		,#{insideColor}
 		,#{status}
+		
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
@@ -169,20 +278,34 @@
 	
 	<update id="update_car" parameterType="car">
 		UPDATE tht_car SET
-		name = #{name}
+		is_referee=#{isReferee}
+		,name = #{name}
 		,series_code = #{seriesCode}   
 		,series_name = #{seriesName}   
 		,brand_code = #{brandCode}    
-		,brand_name = #{brandName}    
+		,brand_name = #{brandName} 
+		,bank_code=#{bankCode} 
+		,level=#{level}
+		,version=#{version}
+		,structure=#{structure}
+		,displacement=#{displacement}
+		,from_place=#{fromPlace}
+		,car_procedure=#{procedure}  
 		,original_price = #{originalPrice}
 		,sale_price = #{salePrice}
-		,sf_amount = #{sfAmount}    
+		,sf_amount = #{sfAmount} 
+		,fw_amount=#{fwAmount}
+		,jsq_byhf=#{jsqByhf}
+		,jsq_sybx=#{jsqSybx}   
 		,location = #{location}     
 		,order_no = #{orderNo}      
 		,slogan = #{slogan}       
-		,adv_pic = #{advPic}       
+		,adv_pic = #{advPic} 
+		,pic_number=#{picNumber}      
 		,pic = #{pic}          
 		,description = #{description}
+		,outside_color=#{outsideColor}
+		,inside_color=#{insideColor}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

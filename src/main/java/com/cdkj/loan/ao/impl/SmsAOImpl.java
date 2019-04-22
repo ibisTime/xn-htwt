@@ -15,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ISmsAO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISmsBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Sms;
 import com.cdkj.loan.dto.req.XN805300Req;
 import com.cdkj.loan.dto.req.XN805301Req;
@@ -40,6 +42,9 @@ public class SmsAOImpl implements ISmsAO {
 
     @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addSms(XN805300Req req) {
@@ -74,8 +79,7 @@ public class SmsAOImpl implements ISmsAO {
             data.setCode(req.getCode());
             smsBO.refreshSms(data);
         } else {
-            data.setCode(
-                OrderNoGenerater.generate(EGeneratePrefix.XX.getCode()));
+            data.setCode(OrderNoGenerater.generate(EGeneratePrefix.XX.getCode()));
             smsBO.saveSms(data);
         }
 
@@ -88,12 +92,20 @@ public class SmsAOImpl implements ISmsAO {
 
     @Override
     public Paginable<Sms> querySmsPage(int start, int limit, Sms condition) {
-        return smsBO.getPaginable(start, limit, condition);
+        Paginable<Sms> page = smsBO.getPaginable(start, limit, condition);
+        for (Sms sms : page.getList()) {
+            init(sms);
+        }
+        return page;
     }
 
     @Override
     public List<Sms> querySmsList(Sms condition) {
-        return smsBO.querySmsList(condition);
+        List<Sms> dataList = smsBO.querySmsList(condition);
+        for (Sms sms : dataList) {
+            init(sms);
+        }
+        return dataList;
     }
 
     @Override
@@ -101,7 +113,14 @@ public class SmsAOImpl implements ISmsAO {
         if (!smsBO.isSmsExit(code)) {
             throw new BizException(EErrorCode_main.sms_NOTEXIST.getCode());
         }
-        return smsBO.getSms(code);
+        Sms sms = smsBO.getSms(code);
+        init(sms);
+        return sms;
+    }
+
+    private void init(Sms sms) {
+        SYSUser sysUser = sysUserBO.getUser(sms.getUpdater());
+        sms.setSysUser(sysUser);
     }
 
 }

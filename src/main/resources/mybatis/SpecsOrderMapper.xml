@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ISpecsOrderDAO">
+	<resultMap id="specsOrder_DB_Result" type="specsOrder">
+		<result column="code" property="code" />
+		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="order_code" property="orderCode" />
+		<result column="product_code" property="productCode" />
+		<result column="product_name" property="productName" />
+		<result column="product_adv_pic" property="product.advPic" />
+		<result column="product_specs_code" property="productSpecsCode" />
+		<result column="product_specs_name" property="productSpecsName" />
+		<result column="bankcard_code" property="bankcardCode" />
+		<result column="user_id" property="userId" />
+		<result column="quantity" property="quantity" />
+		<result column="price" property="price" />
+		<result column="sf_rate" property="sfRate" />
+		<result column="sf_amount" property="sfAmount" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="bank_rate" property="bankRate" />
+		<result column="periods" property="periods" />
+		<result column="status" property="status" />
+		<result column="yunfei" property="yunfei" />
+		<result column="deliverer" property="deliverer" />
+		<result column="delivery_datetime" property="deliveryDatetime" />
+		<result column="logistics_company" property="logisticsCompany" />
+		<result column="logistics_code" property="logisticsCode" />
+		
+		<result column="pdf" property="pdf" />
+		<result column="signer" property="signer" />
+		<result column="sign_datetime" property="signDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="orderCode != null and orderCode != '' ">
+				AND t.order_code = #{orderCode}
+			</if>
+			<if test="productCode != null and productCode != '' ">
+				AND t.product_code = #{productCode}
+			</if>
+			<if test="productSpecsCode != null and productSpecsCode != '' ">
+				AND t.product_specs_code = #{productSpecsCode}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+			<if test="deliverer != null and deliverer != '' ">
+				AND t.deliverer = #{deliverer}
+			</if>
+			<if test="logisticsCompany != null and logisticsCompany != '' ">
+				AND t.logistics_company = #{logisticsCompany}
+			</if>
+			<if test="logisticsCode != null and logisticsCode != '' ">
+				AND t.logistics_code = #{logisticsCode}
+			</if>
+			<if test="status != null and status != '' ">
+				<choose>
+					<when test='status == "payed"'>
+						AND t.status not in(1)
+					</when>
+					<when test='status == "effect"'>
+						AND t.status not in(1,91)
+					</when>
+				    <otherwise>
+						AND t.status = #{status}
+					</otherwise>
+				</choose>
+			</if>
+			<if test="statusList != null and statusList.size() != 0 ">
+				AND t.status in 
+                <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
+			<if test="frontStatus != null and frontStatus != '' ">
+				AND t.status not in (94)
+			</if>
+		</trim>
+	</sql>
+	<select id="select_specsOrder" parameterType="specsOrder" resultMap="specsOrder_DB_Result">
+		SELECT
+		t.code
+		,t.repay_biz_code
+		,t.order_code
+		,t.product_code
+		,t.product_name
+		,t.product_specs_code
+		,t.product_specs_name
+		,t.bankcard_code
+		,t.user_id
+		,t.quantity
+		,t.price
+		,t.sf_rate
+		,t.sf_amount
+		,t.loan_amount
+		,t.bank_rate
+		,t.periods
+		,t.status
+		,t.yunfei
+		,t.deliverer
+		,t.delivery_datetime
+		,t.logistics_company
+		,t.logistics_code
+		,t.pdf
+		,t.signer
+		,t.sign_datetime
+		,tp.name product_name
+		,tp.adv_pic product_adv_pic
+		FROM
+		tmall_specs_order t INNER JOIN tmall_product tp ON t.product_code = tp.code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_specsOrder_count" parameterType="specsOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tmall_specs_order t INNER JOIN tmall_product tp ON t.product_code = tp.code
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_specsOrder" parameterType="specsOrder">
+		INSERT INTO tmall_specs_order(
+		code
+		,order_code
+		,product_code
+		,product_name
+		,product_specs_code
+		,product_specs_name
+		,bankcard_code
+		,user_id
+		,quantity
+		,price
+		,sf_rate
+		,sf_amount
+		,loan_amount
+		,periods
+		,status
+		,bank_rate
+		)
+		VALUES(
+		#{code}
+		,#{orderCode}
+		,#{productCode}
+		,#{productName}
+		,#{productSpecsCode}
+		,#{productSpecsName}
+		,#{bankcardCode}
+		,#{userId}
+		,#{quantity}
+		,#{price}
+		,#{sfRate}
+		,#{sfAmount}
+		
+		,#{loanAmount}
+		,#{periods}
+		,#{status}
+		,#{bankRate}
+		)
+	</insert>
+	
+	<update id="update_specsOrder_status" parameterType="specsOrder">
+		UPDATE tmall_specs_order
+		SET
+		status = #{status}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_specsOrder_deliver" parameterType="specsOrder">
+		UPDATE tmall_specs_order
+		SET
+		status = #{status}
+		,deliverer=#{deliverer}
+		,delivery_datetime=#{deliveryDatetime}
+		,logistics_company=#{logisticsCompany}
+		,logistics_code=#{logisticsCode}
+
+		WHERE code = #{code}
+	</update>
+</mapper>

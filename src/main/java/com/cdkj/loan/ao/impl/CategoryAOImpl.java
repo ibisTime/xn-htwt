@@ -24,8 +24,8 @@ public class CategoryAOImpl implements ICategoryAO {
     @Override
     public String addCategory(XN808000Req req) {
         Category data = new Category();
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.CATEGORY.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.CATEGORY
+            .getCode());
         data.setCode(code);
         data.setParentCode(req.getParentCode());
         data.setName(req.getName());
@@ -38,8 +38,10 @@ public class CategoryAOImpl implements ICategoryAO {
 
     @Override
     public void editCategory(XN808002Req req) {
-        Category data = new Category();
-        data.setCode(req.getCode());
+        Category data = categoryBO.getCategory(req.getCode());
+        if (ECategoryStatus.ON.getCode().equals(data.getStatus())) {
+            throw new BizException("xn000000", "已上架的类别，不能修改");
+        }
         data.setParentCode(req.getParentCode());
         data.setName(req.getName());
         data.setPic(req.getPic());

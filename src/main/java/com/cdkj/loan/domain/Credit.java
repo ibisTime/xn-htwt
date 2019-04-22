@@ -18,6 +18,9 @@ public class Credit extends ABaseDO {
     // 编号
     private String code;
 
+    // 业务编号
+    private String bizCode;
+
     // 贷款银行编号
     private String loanBankCode;
 
@@ -29,6 +32,12 @@ public class Credit extends ABaseDO {
 
     // 二手车评估报告
     private String secondCarReport;
+
+    // 行驶证正面
+    private String xszFront;
+
+    // 行驶证翻面
+    private String xszReverse;
 
     // 预算单编号
     private String budgetCode;
@@ -123,6 +132,44 @@ public class Credit extends ABaseDO {
 
     // 是否作废
     private String isCancel;
+
+    // 附件表
+    private List<Attachment> attachments;
+
+    // 业务
+    private Cdbiz cdbiz;
+
+    public String getXszFront() {
+        return xszFront;
+    }
+
+    public void setXszFront(String xszFront) {
+        this.xszFront = xszFront;
+    }
+
+    public String getXszReverse() {
+        return xszReverse;
+    }
+
+    public void setXszReverse(String xszReverse) {
+        this.xszReverse = xszReverse;
+    }
+
+    public Cdbiz getCdbiz() {
+        return cdbiz;
+    }
+
+    public void setCdbiz(Cdbiz cdbiz) {
+        this.cdbiz = cdbiz;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 
     public String getInsideJob() {
         return insideJob;
@@ -410,6 +457,14 @@ public class Credit extends ABaseDO {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
 }

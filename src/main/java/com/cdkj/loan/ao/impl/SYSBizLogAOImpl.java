@@ -247,7 +247,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
         } else if ("L".equals(data.getRefOrder().substring(0, 1))) {
             Logistics logistics = logisticsAO.getLogistics(data.getRefOrder());
             BudgetOrder budgetOrder = budgetOrderAO
-                .getBudgetOrder(data.getParentOrder());
+                .getBudgetOrder(data.getBizCode());
             userName = budgetOrder.getApplyUserName();
             loanBank = budgetOrder.getLoanBankName();
             departmentName = budgetOrder.getCompanyName();

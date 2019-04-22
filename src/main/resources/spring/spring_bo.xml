@@ -99,6 +99,22 @@
 		<property name="paginableDAO" ref="carOrderDAOImpl"/>
 	</bean>	
 	
+	<bean id="carconfigBO" class="com.cdkj.loan.bo.impl.CarconfigBOImpl">
+		<property name="paginableDAO" ref="carconfigDAOImpl"/>
+	</bean>
+	
+	<bean id="carCarconfigBO" class="com.cdkj.loan.bo.impl.CarCarconfigBOImpl">
+		<property name="paginableDAO" ref="carCarconfigDAOImpl"/>
+	</bean>
+	
+	<bean id="carNewsBO" class="com.cdkj.loan.bo.impl.CarNewsBOImpl">
+		<property name="paginableDAO" ref="carNewsDAOImpl"/>
+	</bean>
+	
+	<bean id="actionBO" class="com.cdkj.loan.bo.impl.ActionBOImpl">
+		<property name="paginableDAO" ref="actionDAOImpl"/>
+	</bean> 
+	
 	<bean id="categoryBO" class="com.cdkj.loan.bo.impl.CategoryBOImpl">
 		<property name="paginableDAO" ref="categoryDAOImpl" />
 	</bean>
@@ -111,8 +127,8 @@
 		<property name="paginableDAO" ref="orderDAOImpl"/>
 	</bean>	
 	
-	<bean id="productOrderBO" class="com.cdkj.loan.bo.impl.ProductOrderBOImpl">
-		<property name="paginableDAO" ref="productOrderDAOImpl"/>
+	<bean id="specsOrderBO" class="com.cdkj.loan.bo.impl.SpecsOrderBOImpl">
+		<property name="paginableDAO" ref="specsOrderDAOImpl"/>
 	</bean>
 	
 	<bean id="repayBizBO" class="com.cdkj.loan.bo.impl.RepayBizBOImpl">
@@ -406,6 +422,31 @@
 	
 	<bean id="smsBO" class="com.cdkj.loan.bo.impl.SmsBOImpl">
 		<property name="paginableDAO" ref="smsDAOImpl"/>
+	</bean>
+	
+	<!-- 全局表 -->
+	<bean id="bizOrderBO" class="com.cdkj.loan.bo.impl.BizOrderBOImpl">
+		<property name="paginableDAO" ref="bizOrderDAOImpl"/>
+	</bean>
+	
+	<bean id="attachmentBO" class="com.cdkj.loan.bo.impl.AttachmentBOImpl">
+		<property name="paginableDAO" ref="attachmentDAOImpl"/>
+	</bean>
+	
+	<bean id="bizTaskBO" class="com.cdkj.loan.bo.impl.BizTaskBOImpl">
+		<property name="paginableDAO" ref="bizTaskDAOImpl"/>
+	</bean>
+	
+	<bean id="cdbizBO" class="com.cdkj.loan.bo.impl.CdbizBOImpl">
+		<property name="paginableDAO" ref="cdbizDAOImpl"/>
+	</bean>
+	
+	<bean id="filePoolBO" class="com.cdkj.loan.bo.impl.FilePoolBOImpl">
+		<property name="paginableDAO" ref="filePoolDAOImpl"/>
+	</bean>
+	
+	<bean id="missionBO" class="com.cdkj.loan.bo.impl.MissionBOImpl">
+		<property name="paginableDAO" ref="missionDAOImpl"/>
 	</bean>
 	
 </beans>

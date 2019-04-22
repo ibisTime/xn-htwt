@@ -31,7 +31,6 @@ import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.EUser;
-import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -83,8 +82,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setRoleCode(roleCode);
         data.setPostCode(postCode);
         data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
-        data.setCompanyCode(
-            departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
+        data.setCompanyCode(departmentBO.getCompanyByDepartment(data
+            .getDepartmentCode()));
 
         data.setStatus(ESYSUserStatus.BLOCK.getCode());
         sysUserBO.saveUser(data);
@@ -114,8 +113,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         }
         SYSUser user = userList2.get(0);
         if (!ESYSUserStatus.NORMAL.getCode().equals(user.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该用户操作存在异常");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该用户操作存在异常");
         }
         return user.getUserId();
     }
@@ -123,19 +121,21 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     @Transactional
     public void doChangeMoblie(String userId, String newMobile,
-            String smsCaptcha) {
+            String newCaptcha, String oldMobile, String oldCaptcha) {
         SYSUser user = sysUserBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn000000", "用户不存在");
         }
-        String oldMobile = user.getMobile();
         if (newMobile.equals(oldMobile)) {
             throw new BizException("xn000000", "新手机与原手机一致");
         }
         // 验证手机号
         sysUserBO.isMobileExist(newMobile);
-        // 短信验证码是否正确（往新手机号发送）
-        // smsOutBO.checkCaptcha(newMobile, smsCaptcha, "805061");
+        // 短信验证码是否正确
+        smsOutBO.checkCaptcha(newMobile, newCaptcha, "630052");
+
+        // 短信验证码是否正确
+        smsOutBO.checkCaptcha(oldMobile, oldCaptcha, "630052");
         sysUserBO.refreshMobile(userId, newMobile);
         // 发送短信
         // smsOutBO.sendSmsOut(oldMobile,
@@ -194,8 +194,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         String mobile = user.getMobile();
         // String smsContent = "";
         ESYSUserStatus userStatus = null;
-        if (ESYSUserStatus.NORMAL.getCode()
-            .equalsIgnoreCase(user.getStatus())) {
+        if (ESYSUserStatus.NORMAL.getCode().equalsIgnoreCase(user.getStatus())) {
             // smsContent = "您的账号已被管理员封禁";
             userStatus = ESYSUserStatus.BLOCK;
         } else {
@@ -234,8 +233,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         String departmentCode = post.getParentCode();
         while (true) {
             Department department = departmentBO.getDepartment(departmentCode);
-            if (EDepartmentType.DEPARTMENT.getCode()
-                .equals(department.getType())) {
+            if (EDepartmentType.DEPARTMENT.getCode().equals(
+                department.getType())) {
                 departmentCode = department.getCode();
                 break;
             } else {
@@ -247,8 +246,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         String companyCode = departmentCode;
         while (true) {
             Department company = departmentBO.getDepartment(companyCode);
-            if (EDepartmentType.SUBBRANCH_COMPANY.getCode()
-                .equals(company.getType())) {
+            if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(
+                company.getType())) {
                 companyCode = company.getCode();
                 break;
             } else {
@@ -274,16 +273,12 @@ public class SYSUserAOImpl implements ISYSUserAO {
         if (StringUtils.isBlank(user.getUserId())) {
             throw new BizException("li01004", "用户不存在,请先注册");
         }
-        if (EUserStatus.Li_Locked.getCode().equals(user.getStatus())
-                || EUserStatus.Ren_Locked.getCode().equals(user.getStatus())
-                || EUserStatus.TO_APPROVE.getCode().equals(user.getStatus())
-                || EUserStatus.APPROVE_NO.getCode().equals(user.getStatus())) {
-            throw new BizException("xn805050",
-                "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
-                        + "，请联系工作人员");
+        if (ESYSUserStatus.BLOCK.getCode().equals(user.getStatus())) {
+            throw new BizException("xn805050", "该账号"
+                    + ESYSUserStatus.BLOCK.getValue() + "，请联系工作人员");
         }
         // 短信验证码是否正确
-        smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063");
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, "630053");
         sysUserBO.refreshLoginPwd(user, newLoginPwd, user.getUserId(), "修改密码");
         // // 发送短信
         // smsOutBO.sendSmsOut(mobile,
@@ -302,8 +297,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
             SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
-                && condition.getCreateDatetimeEnd()
-                    .before(condition.getCreateDatetimeStart())) {
+                && condition.getCreateDatetimeEnd().before(
+                    condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         Paginable<SYSUser> page = sysUserBO.getPaginable(start, limit,
@@ -311,20 +306,20 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
         for (SYSUser sysUser : page.getList()) {
             if (StringUtils.isNotBlank(sysUser.getPostCode())) {
-                sysUser.setPostName(departmentBO
-                    .getDepartment(sysUser.getPostCode()).getName());
+                sysUser.setPostName(departmentBO.getDepartment(
+                    sysUser.getPostCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
-                sysUser.setDepartmentName(departmentBO
-                    .getDepartment(sysUser.getDepartmentCode()).getName());
+                sysUser.setDepartmentName(departmentBO.getDepartment(
+                    sysUser.getDepartmentCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
-                sysUser.setCompanyName(departmentBO
-                    .getDepartment(sysUser.getCompanyCode()).getName());
+                sysUser.setCompanyName(departmentBO.getDepartment(
+                    sysUser.getCompanyCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
-                sysUser.setTeamName(
-                    bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
+                sysUser.setTeamName(bizTeamBO.getBizTeam(sysUser.getTeamCode())
+                    .getName());
             }
             if (StringUtils.isNotBlank(sysUser.getRoleCode())) {
                 SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
@@ -338,8 +333,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
     public List<SYSUser> queryUserList(SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
-                && condition.getCreateDatetimeEnd()
-                    .before(condition.getCreateDatetimeStart())) {
+                && condition.getCreateDatetimeEnd().before(
+                    condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         return sysUserBO.queryUserList(condition);
@@ -349,16 +344,16 @@ public class SYSUserAOImpl implements ISYSUserAO {
     public SYSUser getUser(String userId) {
         SYSUser sysUser = sysUserBO.getUser(userId);
         if (StringUtils.isNotBlank(sysUser.getPostCode())) {
-            sysUser.setPostName(
-                departmentBO.getDepartment(sysUser.getPostCode()).getName());
+            sysUser.setPostName(departmentBO.getDepartment(
+                sysUser.getPostCode()).getName());
         }
         if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
-            sysUser.setDepartmentName(departmentBO
-                .getDepartment(sysUser.getDepartmentCode()).getName());
+            sysUser.setDepartmentName(departmentBO.getDepartment(
+                sysUser.getDepartmentCode()).getName());
         }
         if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
-            sysUser.setCompanyName(
-                departmentBO.getDepartment(sysUser.getCompanyCode()).getName());
+            sysUser.setCompanyName(departmentBO.getDepartment(
+                sysUser.getCompanyCode()).getName());
         }
         return sysUser;
     }
@@ -386,8 +381,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
         user.setRealName(req.getRealName());
         user.setRoleCode(req.getRoleCode());
         user.setPostCode(req.getPostCode());
-        String departmentCode = departmentBO
-            .getDepartmentByPost(req.getPostCode());
+        String departmentCode = departmentBO.getDepartmentByPost(req
+            .getPostCode());
         user.setDepartmentCode(departmentCode);
         String companyCode = departmentBO
             .getCompanyByDepartment(departmentCode);

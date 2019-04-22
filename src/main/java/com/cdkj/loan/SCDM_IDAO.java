@@ -9,34 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "businessTripApply";
+    private static String key = "mission";
 
     // 实体名称
-    private static String keyName = "出差申请";
+    private static String keyName = "任务";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_business_trip_apply";
+    private static String dbname = "tqj_mission";
 
-    private static String[] DBwords = { "code", "apply_user_code", "job_no",
-            "department_code", "post_code", "apply_datetime",
-            "trip_datetime_start", "trip_datetime_end", "trip_reason",
-            "trip_line", "aircraft_fee_standard", "aircraft_days",
-            "aircraft_budget", "train_fee_standard", "train_days",
-            "train_budget", "urban_fee_standart", "urban_days", "urban_budget",
-            "hotel_cost", "food_subsidy", "entertainment_cost", "other",
-            "subtotal", "spare_cash", "cost_total", "department_manager_code",
-            "finance_manager_code", "general_manager_code", "cur_node_code",
-            "updater", "update_datetime", "apply_note", "remark" };
+    private static String[] DBwords = { "code", "biz_code", "name", "time",
+            "creater", "get_user", "status", "create_datetime", "deadline",
+            "finish_datetime" };
 
-    private static String[] DBwordsName = { "编号", "申请人编号", "工号", "部门编号",
-            "职位编号", "申请时间", "出差时间起", "出差时间止", "出差事由", "出差线路", "飞机票费用标准",
-            "飞机票天数", "飞机票预算金额", "火车票费用标准", "火车票天数", "火车票预算金额", "市内交通费用标准",
-            "市内交通天数", "市内交通预算金额", "住宿费", "伙食补助", "招待费", "其他", "小计", "备用金",
-            "费用合计", "部门主管编号", "财务主管编号", "总经理编号", "节点", "更新人", "更新时间", "申请说明",
-            "备注" };
+    private static String[] DBwordsName = { "编号", "业务编号", "任务名字", "限时（h）",
+            "发布人", "认领人", "状态", "创建时间", "截止时间", "完成时间" };
 
     public void testname() throws Exception {
     }
@@ -49,7 +38,7 @@ public class SCDM_IDAO {
     public static void main(String[] args) {
 
         System.out.println("*********开始打印*********");
-        String path = "/Users/hp/Desktop/temp";
+        String path = "/Users/taojian/Desktop/java/carconfig";
 
         File DOMAINfile = new File(path, Key + ".java");
 
@@ -194,7 +183,7 @@ public class SCDM_IDAO {
         String str = "";
         String str1 = "package " + packge + "domain;\n\n" + "import " + packge
                 + "dao.base.ABaseDO;\n\n" + "/**" + "\n* " + keyName
-                + "\n* @author: jiafr " + "\n* @since: "
+                + "\n* @author: tao " + "\n* @since: "
                 + DateUtil.getToday(DateUtil.DATA_TIME_PATTERN_1) + ""
                 + "\n* @history:\n*/" + "\n" + "public class " + Key
                 + " extends ABaseDO {" + "\n\n\t"
