@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBankLoanDAO">
+	<resultMap id="bankLoan_DB_Result" type="bankLoan">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="status" property="status" />
+		<result column="cur_node_code" property="curNodeCode" />
+		<result column="repay_bank_code" property="repayBankCode" />
+		
+		<result column="repay_bank_name" property="repayBankName" />
+		<result column="repay_subbranch" property="repaySubbranch" />
+		<result column="repay_bankcard_number" property="repayBankcardNumber" />
+		<result column="receipt_bank_code" property="receiptBankCode" />
+		<result column="receipt_bank_name" property="receiptBankName" />
+		
+		<result column="receipt_subbranch" property="receiptSubbranch" />
+		<result column="receipt_bankcard_number" property="receiptBankcardNumber" />
+		<result column="bank_commit_datetime" property="bankCommitDatetime" />
+		<result column="bank_commit_note" property="bankCommitNote" />
+		<result column="bank_fk_datetime" property="bankFkDatetime" />
+		
+		<result column="repay_bill_date" property="repayBillDate" />
+		<result column="repay_bank_date" property="repayBankDate" />
+		<result column="repay_company_date" property="repayCompanyDate" />
+		<result column="receipt_pdf" property="receiptPdf" />
+		<result column="receipt_remark" property="receiptRemark" />
+		
+		<result column="bank_fk_send_datetime" property="bankFkSendDatetime" />
+		<result column="has_loan_list_pic" property="hasLoanListPic" />
+		<result column="bank_fk_amount" property="bankFkAmount" />
+		<result column="month_amount" property="monthAmount" />
+	</resultMap>
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="repayBankCode != null and repayBankCode != '' ">
+				AND t.repay_bank_code = #{repayBankCode}
+			</if>
+			<if test="receiptBankCode != null and receiptBankCode != '' ">
+				AND t.receipt_bank_code = #{receiptBankCode}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_bankLoan" parameterType="bankLoan" resultMap="bankLoan_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.status
+		,t.cur_node_code
+		,t.repay_bank_code
+		
+		,t.repay_bank_name
+		,t.repay_subbranch
+		,t.repay_bankcard_number
+		,t.receipt_bank_code
+		,t.receipt_bank_name
+		
+		,t.receipt_subbranch
+		,t.receipt_bankcard_number
+		,t.bank_commit_datetime
+		,t.bank_commit_note
+		,t.bank_fk_datetime
+		
+		,t.repay_bill_date
+		,t.repay_bank_date
+		,t.repay_company_date
+		,t.receipt_pdf
+		,t.receipt_remark
+		
+		,t.bank_fk_send_datetime
+		,t.has_loan_list_pic
+		,t.bank_fk_amount
+		,t.month_amount
+		FROM
+		tdq_bank_loan t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_bankLoan_count" parameterType="bankLoan"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_bank_loan t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_bankLoan" parameterType="bankLoan">
+		INSERT INTO
+		tdq_bank_loan(
+		code
+		,biz_code
+		,status
+		,cur_node_code
+		,repay_bank_code
+		
+		,repay_bank_name
+		,repay_subbranch
+		,repay_bankcard_number
+		,receipt_bank_code
+		,receipt_bank_name
+		
+		,receipt_subbranch
+		,receipt_bankcard_number
+		,bank_commit_datetime
+		,bank_commit_note
+		,bank_fk_datetime
+		
+		,repay_bill_date
+		,repay_bank_date
+		,repay_company_date
+		,receipt_pdf
+		,receipt_remark
+		
+		,bank_fk_send_datetime
+		,has_loan_list_pic
+		,bank_fk_amount
+		,month_amount
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{status}
+		,#{curNodeCode}
+		,#{repayBankCode}
+		
+		,#{repayBankName}
+		,#{repaySubbranch}
+		,#{repayBankcardNumber}
+		,#{receiptBankCode}
+		,#{receiptBankName}
+		
+		,#{receiptSubbranch}
+		,#{receiptBankcardNumber}
+		,#{bankCommitDatetime}
+		,#{bankCommitNote}
+		,#{bankFkDatetime}
+		
+		,#{repayBillDate}
+		,#{repayBankDate}
+		,#{repayCompanyDate}
+		,#{receiptPdf}
+		,#{receiptRemark}
+		
+		,#{bankFkSendDatetime}
+		,#{hasLoanListPic}
+		,#{bankFkAmount}
+		,#{monthAmount}
+		)
+	</insert>
+
+	<update id="update_bankLoanStatus" parameterType="bankLoan">
+		UPDATE tdq_bank_loan
+		SET
+		status = #{status}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_bankLoan" parameterType="bankLoan">
+		UPDATE tdq_bank_loan
+		SET
+		biz_code = #{bizCode}
+		,repay_bank_code = #{repayBankCode}
+		,repay_bank_name = #{repayBankName}
+		,repay_subbranch = #{repaySubbranch}
+		,repay_bankcard_number = #{repayBankcardNumber}
+		,receipt_bank_code = #{receiptBankCode}
+		,receipt_bank_name = #{receiptBankName}
+		,receipt_subbranch = #{receiptSubbranch}
+		,receipt_bankcard_number = #{receiptBankcardNumber}
+		,bank_commit_datetime = #{bankCommitDatetime}
+		,bank_commit_note = #{bankCommitNote}
+		,bank_fk_datetime = #{bankFkDatetime}
+		,repay_bill_date = #{repayBillDate}
+		,repay_bank_date = #{repayBankDate}
+		,repay_company_date = #{repayCompanyDate}
+		,receipt_pdf = #{receiptPdf}
+		,receipt_remark = #{receiptRemark}
+		,bank_fk_send_datetime = #{bankFkSendDatetime}
+		,has_loan_list_pic = #{hasLoanListPic}
+		,bank_fk_amount = #{bankFkAmount}
+		,month_amount = #{monthAmount}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
