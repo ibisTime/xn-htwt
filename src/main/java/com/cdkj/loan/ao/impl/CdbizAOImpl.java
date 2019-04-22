@@ -2,6 +2,8 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,18 +11,38 @@ import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTaskBO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditBO;
+import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IMissionBO;
+import com.cdkj.loan.bo.INodeBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.SYSBizLog;
+import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632110Req;
+import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632111Req;
+import com.cdkj.loan.dto.req.XN632112Req;
+import com.cdkj.loan.dto.req.XN632113Req;
+import com.cdkj.loan.dto.req.XN632119Req;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.EDealType;
+import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.exception.BizException;
 
 //CHECK ��鲢��ע�� 
 @Service
@@ -49,6 +71,21 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private IMissionBO missionBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private INodeBO nodeBO;
+
+    @Autowired
+    private ICreditUserBO creditUserBO;
 
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
@@ -91,5 +128,98 @@ public class CdbizAOImpl implements ICdbizAO {
         List<Attachment> attachments = attachmentBO.queryBizAttachments(cdbiz
             .getCode());
         cdbiz.setAttachments(attachments);
+    }
+
+    @Override
+    public String addCredit(XN632110Req req) {
+        SYSUser sysUser = sysUserBO.getUser(req.getOperator());
+
+        if (StringUtils.isBlank(sysUser.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "您还未设置职位，暂无法使用征信申请");
+        }
+
+        if (StringUtils.isBlank(sysUser.getTeamCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "您还未设置团队，暂无法申请!");
+        }
+
+        // 初始节点
+        ENode currentNode = ENode.new_credit;
+        // 生成业务编号
+        String bizCode = cdbizBO.saveCdbiz(req.getLoanBankCode(),
+            req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
+            sysUser, currentNode.getCode());
+        if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
+            currentNode = ENode.getMap().get(
+                nodeFlowBO.getNodeFlowByCurrentNode(ENode.new_credit.getCode())
+                    .getNextNode());
+            // 修改业务主状态
+            cdbizBO.refreshStatus(cdbizBO.getCdbiz(bizCode),
+                ECdbizStatus.A1.getCode());
+            // 操作日志
+            sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT, bizCode,
+                currentNode.getCode(), req.getNote(), sysUser.getUserId());
+        }
+        // 新增征信人员
+        List<XN632110ReqCreditUser> childList = req.getCreditUserList();
+        int applyUserCount = 0;// 申请人角色条数
+        if (CollectionUtils.isNotEmpty(childList)) {
+            for (XN632110ReqCreditUser child : childList) {
+                if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+                    applyUserCount++;
+                    // 征信单设置客户姓名（征信人员的申请人）
+
+                }
+                if (applyUserCount > 1) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "征信申请人只能填写一条数据");
+                }
+
+                creditUserBO.saveCreditUser(child, creditCode, bizCode);
+            }
+
+            if (applyUserCount <= 0) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "请填写征信申请人贷款角色数据");
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void editCredit(XN632112Req req) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void audit(XN632113Req req) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void inputBankCreditResult(XN632111Req req) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void cancelCredit(String code, String operator) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void initCredit(Credit credit) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void distributeLeaflets(XN632119Req req) {
+        // TODO Auto-generated method stub
+
     }
 }

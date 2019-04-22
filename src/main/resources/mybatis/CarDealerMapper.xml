@@ -13,8 +13,8 @@
 		<result column="contact_phone" property="contactPhone" />
 		<result column="main_brand" property="mainBrand" />
 		<result column="parent_group" property="parentGroup" />
-		<result column="agreement" property="agreement" />
-		<result column="agreement_valid_date" property="agreementValidDate" />
+		<result column="agreement_valid_date_start" property="agreementValidDateStart" />
+		<result column="agreement_valid_date_end" property="agreementValidDateEnd" />
 		<result column="agreement_status" property="agreementStatus" />
 		<result column="agreement_pic" property="agreementPic" />
 		<result column="settle_way" property="settleWay" />
@@ -38,6 +38,15 @@
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
+			<if test="warnDatetimeStart != null and warnDatetimeStart != '' ">
+				AND t.agreement_valid_date_end &gt;= #{warnDatetimeStart}
+			</if>
+			<if test="warnDatetimeEnd != null and warnDatetimeEnd != '' ">
+				AND t.agreement_valid_date_end &lt;= #{warnDatetimeEnd}
+			</if>
+			<if test="agreementStatus != null and agreementStatus != '' ">
+				AND t.agreement_status = #{agreementStatus}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_carDealer" parameterType="carDealer" resultMap="carDealer_DB_Result">
@@ -52,8 +61,8 @@
 		,t.contact_phone
 		,t.main_brand
 		,t.parent_group
-		,t.agreement
-		,t.agreement_valid_date
+		,t.agreement_valid_date_start
+		,t.agreement_valid_date_end
 		,t.agreement_status
 		,t.agreement_pic
 		,t.settle_way
@@ -91,8 +100,8 @@
 		,contact_phone
 		,main_brand
 		,parent_group
-		,agreement
-		,agreement_valid_date
+		,agreement_valid_date_start
+		,agreement_valid_date_end
 		,agreement_status
 		,agreement_pic
 		,settle_way
@@ -113,8 +122,8 @@
 		,#{contactPhone}
 		,#{mainBrand}
 		,#{parentGroup}
-		,#{agreement}
-		,#{agreementValidDate}
+		,#{agreementValidDateStart}
+		,#{agreementValidDateEnd}
 		,#{agreementStatus}
 		,#{agreementPic}
 		,#{settleWay}
@@ -138,8 +147,8 @@
 		,contact_phone = #{contactPhone}
 		,main_brand = #{mainBrand}
 		,parent_group = #{parentGroup}
-		,agreement = #{agreement}
-		,agreement_valid_date = #{agreementValidDate}
+		,agreement_valid_date_start = #{agreementValidDateStart}
+		,agreement_valid_date_end = #{agreementValidDateEnd}
 		,agreement_status = #{agreementStatus}
 		,agreement_pic = #{agreementPic}
 		,settle_way = #{settleWay}

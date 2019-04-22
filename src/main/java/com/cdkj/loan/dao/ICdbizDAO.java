@@ -9,6 +9,8 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
 
     public int updateStatus(Cdbiz data);
 
+    public int updateMakeCardStatus(Cdbiz data);
+
     public int updateMqStatus(Cdbiz data);
 
     public int updateFbhgpsStatus(Cdbiz data);
@@ -18,6 +20,8 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
     public int updateSeccundangStatus(Cdbiz data);
 
     public int updateZfStatus(Cdbiz data);
+
+    public int updateCurNodeCode(Cdbiz data);
 
     public int updateYwy(Cdbiz data);
 }

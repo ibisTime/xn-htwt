@@ -17,11 +17,7 @@ public class CreditUser extends ABaseDO {
     // 编号
     private String code;
 
-    // 征信单编号
-    private String creditCode;
-
-    // 姓名
-    private String userName;
+    private String bizCode;
 
     // 与借款人关系
     private String relation;
@@ -29,89 +25,49 @@ public class CreditUser extends ABaseDO {
     // 贷款角色
     private String loanRole;
 
+    // 姓名
+    private String userName;
+
     // 手机号
     private String mobile;
 
-    // 身份证号
+    // 身份证类型
+    private String idKind;
+
+    // 证件号码
     private String idNo;
-
-    // 身份证正面
-    private String idNoFront;
-
-    // 身份证反面
-    private String idNoReverse;
-
-    // 征信查询授权书
-    private String authPdf;
-
-    // 面签照片
-    private String interviewPic;
 
     // 信用卡占比
     private Double creditCardOccupation;
 
     // 银行征信结果
-    private String bankCreditResultPdf;
+    private String bankCreditResult;
 
     // 银行征信结果说明
     private String bankCreditResultRemark;
 
-    // 银行征信报告
-    private String bankReport;
+    private String birthAddressProvince;
 
-    // 大数据报告
-    private String dataReport;
+    private String birthAddressCity;
+
+    private String birthAddressArea;
+
+    private String birthAddress;
+
+    private String postCode;
+
+    private String education;
+
+    private String companyName;
+
+    private String companyAddress;
+
+    private String companyContactTo;
+
+    private String houseAssetAddress;
 
     // 征信人员列表
     private List<CreditUser> creditUserList;
-
-    public String getBankReport() {
-        return bankReport;
-    }
-
-    public void setBankReport(String bankReport) {
-        this.bankReport = bankReport;
-    }
-
-    public String getDataReport() {
-        return dataReport;
-    }
-
-    public void setDataReport(String dataReport) {
-        this.dataReport = dataReport;
-    }
-
-    public String getBankCreditResultRemark() {
-        return bankCreditResultRemark;
-    }
-
-    public void setBankCreditResultRemark(String bankCreditResultRemark) {
-        this.bankCreditResultRemark = bankCreditResultRemark;
-    }
-
-    public Double getCreditCardOccupation() {
-        return creditCardOccupation;
-    }
-
-    public void setCreditCardOccupation(Double creditCardOccupation) {
-        this.creditCardOccupation = creditCardOccupation;
-    }
-
-    public List<CreditUser> getCreditUserList() {
-        return creditUserList;
-    }
-
-    public void setCreditUserList(List<CreditUser> creditUserList) {
-        this.creditUserList = creditUserList;
-    }
-
-    public String getBankCreditResultPdf() {
-        return bankCreditResultPdf;
-    }
-
-    public void setBankCreditResultPdf(String bankCreditResultPdf) {
-        this.bankCreditResultPdf = bankCreditResultPdf;
-    }
 
     public String getCode() {
         return code;
@@ -121,12 +77,12 @@ public class CreditUser extends ABaseDO {
         this.code = code;
     }
 
-    public String getCreditCode() {
-        return creditCode;
+    public String getBizCode() {
+        return bizCode;
     }
 
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
     public String getUserName() {
@@ -161,6 +117,46 @@ public class CreditUser extends ABaseDO {
         this.mobile = mobile;
     }
 
+    public String getIdKind() {
+        return idKind;
+    }
+
+    public void setIdKind(String idKind) {
+        this.idKind = idKind;
+    }
+
+    public Double getCreditCardOccupation() {
+        return creditCardOccupation;
+    }
+
+    public void setCreditCardOccupation(Double creditCardOccupation) {
+        this.creditCardOccupation = creditCardOccupation;
+    }
+
+    public String getBankCreditResult() {
+        return bankCreditResult;
+    }
+
+    public void setBankCreditResult(String bankCreditResult) {
+        this.bankCreditResult = bankCreditResult;
+    }
+
+    public String getBankCreditResultRemark() {
+        return bankCreditResultRemark;
+    }
+
+    public void setBankCreditResultRemark(String bankCreditResultRemark) {
+        this.bankCreditResultRemark = bankCreditResultRemark;
+    }
+
+    public List<CreditUser> getCreditUserList() {
+        return creditUserList;
+    }
+
+    public void setCreditUserList(List<CreditUser> creditUserList) {
+        this.creditUserList = creditUserList;
+    }
+
     public String getIdNo() {
         return idNo;
     }
@@ -169,42 +165,84 @@ public class CreditUser extends ABaseDO {
         this.idNo = idNo;
     }
 
-    public String getIdNoFront() {
-        return idNoFront;
+    public String getBirthAddressProvince() {
+        return birthAddressProvince;
     }
 
-    public void setIdNoFront(String idNoFront) {
-        this.idNoFront = idNoFront;
+    public void setBirthAddressProvince(String birthAddressProvince) {
+        this.birthAddressProvince = birthAddressProvince;
     }
 
-    public String getIdNoReverse() {
-        return idNoReverse;
+    public String getBirthAddressCity() {
+        return birthAddressCity;
     }
 
-    public void setIdNoReverse(String idNoReverse) {
-        this.idNoReverse = idNoReverse;
+    public void setBirthAddressCity(String birthAddressCity) {
+        this.birthAddressCity = birthAddressCity;
     }
 
-    public String getAuthPdf() {
-        return authPdf;
+    public String getBirthAddressArea() {
+        return birthAddressArea;
     }
 
-    public void setAuthPdf(String authPdf) {
-        this.authPdf = authPdf;
+    public void setBirthAddressArea(String birthAddressArea) {
+        this.birthAddressArea = birthAddressArea;
     }
 
-    public String getInterviewPic() {
-        return interviewPic;
+    public String getBirthAddress() {
+        return birthAddress;
     }
 
-    public void setInterviewPic(String interviewPic) {
-        this.interviewPic = interviewPic;
+    public void setBirthAddress(String birthAddress) {
+        this.birthAddress = birthAddress;
     }
 
-    /*
-     * // 月收入 private Long monthIncome; // 结息 private Double settleInterest; //
-     * 余额 private Long balance; // 流水是否体现月收入 private String jourShowIncome; //
-     * 是否打件 private String isPrint;
-     */
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getCompanyContactTo() {
+        return companyContactTo;
+    }
+
+    public void setCompanyContactTo(String companyContactTo) {
+        this.companyContactTo = companyContactTo;
+    }
+
+    public String getHouseAssetAddress() {
+        return houseAssetAddress;
+    }
+
+    public void setHouseAssetAddress(String houseAssetAddress) {
+        this.houseAssetAddress = houseAssetAddress;
+    }
 
 }

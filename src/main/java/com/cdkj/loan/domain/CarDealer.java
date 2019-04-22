@@ -26,21 +26,21 @@ public class CarDealer extends ABaseDO {
 
     private String mainContact;// 主要联系人
 
-    private Long contactPhone;// 联系人电话
+    private String contactPhone;// 联系人电话
 
     private String mainBrand;// 主营品牌
 
     private String parentGroup;// 所属集团
 
-    private String agreement;// 协议
+    private Date agreementValidDateStart;// 合作协议有效期起
 
-    private Date agreementValidDate;// 合作协议有效期
+    private Date agreementValidDateEnd;// 合作协议有效期止
 
-    private String agreementStatus;// 协议状态
+    private String agreementStatus;// 协议状态(0下架1上架)
 
     private String agreementPic;// 车商合作协议
 
-    private String settleWay;// 结算方式
+    private String settleWay;// 结算方式(1现结2月结3季结)
 
     private String businessArea;// 业务区域
 
@@ -60,7 +60,7 @@ public class CarDealer extends ABaseDO {
 
     private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
 
-    private List<CarDealerProtocol> CarDealerProtocolList;// 经销商协议表
+    private List<CarDealerProtocol> carDealerProtocolList;// 经销商协议表
 
     private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
@@ -68,22 +68,27 @@ public class CarDealer extends ABaseDO {
 
     private List<CollectBankcard> jhCollectBankcardList;// 建行银行返点账号列表
 
+    // 到期预警查询开始时间
+    private Date warnDatetimeStart;
+
+    // 到期预警查询结束时间
+    private Date warnDatetimeEnd;
+
     public List<CollectBankcard> getCollectBankcardList() {
         return collectBankcardList;
     }
 
-    public void setCollectBankcardList(
-            List<CollectBankcard> collectBankcardList) {
+    public void setCollectBankcardList(List<CollectBankcard> collectBankcardList) {
         this.collectBankcardList = collectBankcardList;
     }
 
     public List<CarDealerProtocol> getCarDealerProtocolList() {
-        return CarDealerProtocolList;
+        return carDealerProtocolList;
     }
 
     public void setCarDealerProtocolList(
             List<CarDealerProtocol> carDealerProtocolList) {
-        CarDealerProtocolList = carDealerProtocolList;
+        this.carDealerProtocolList = carDealerProtocolList;
     }
 
     public List<CollectBankcard> getJxsCollectBankcardList() {
@@ -178,11 +183,11 @@ public class CarDealer extends ABaseDO {
         this.mainContact = mainContact;
     }
 
-    public Long getContactPhone() {
+    public String getContactPhone() {
         return contactPhone;
     }
 
-    public void setContactPhone(Long contactPhone) {
+    public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
     }
 
@@ -202,20 +207,20 @@ public class CarDealer extends ABaseDO {
         this.parentGroup = parentGroup;
     }
 
-    public String getAgreement() {
-        return agreement;
+    public Date getAgreementValidDateStart() {
+        return agreementValidDateStart;
     }
 
-    public void setAgreement(String agreement) {
-        this.agreement = agreement;
+    public void setAgreementValidDateStart(Date agreementValidDateStart) {
+        this.agreementValidDateStart = agreementValidDateStart;
     }
 
-    public Date getAgreementValidDate() {
-        return agreementValidDate;
+    public Date getAgreementValidDateEnd() {
+        return agreementValidDateEnd;
     }
 
-    public void setAgreementValidDate(Date agreementValidDate) {
-        this.agreementValidDate = agreementValidDate;
+    public void setAgreementValidDateEnd(Date agreementValidDateEnd) {
+        this.agreementValidDateEnd = agreementValidDateEnd;
     }
 
     public String getAgreementStatus() {
@@ -288,6 +293,22 @@ public class CarDealer extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getWarnDatetimeStart() {
+        return warnDatetimeStart;
+    }
+
+    public void setWarnDatetimeStart(Date warnDatetimeStart) {
+        this.warnDatetimeStart = warnDatetimeStart;
+    }
+
+    public Date getWarnDatetimeEnd() {
+        return warnDatetimeEnd;
+    }
+
+    public void setWarnDatetimeEnd(Date warnDatetimeEnd) {
+        this.warnDatetimeEnd = warnDatetimeEnd;
     }
 
 }

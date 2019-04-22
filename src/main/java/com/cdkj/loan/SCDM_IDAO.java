@@ -9,10 +9,10 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "mission";
+    private static String key = "cdbiz";
 
     // 实体名称
-    private static String keyName = "任务";
+    private static String keyName = "车贷业务";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
@@ -20,7 +20,7 @@ public class SCDM_IDAO {
     // 表名
     private static String dbname = "tqj_mission";
 
-    private static String[] DBwords = { "code", "type", "biz_type",
+    private static String[] DBwords = { "code", "biz_code", "type", "biz_type",
             "repay_biz_code", "company_code",
 
             "team_code", "captain_code", "sale_user_id", "inside_job",
@@ -38,10 +38,11 @@ public class SCDM_IDAO {
             "cancel_node", "is_gps_az", "is_financing", "is_advance_fund",
             "is_plat_insure",
 
-            "credit_note", "apply_datetime", "remark" };
+            "should_fee_amount", "real_fee_amount", "gua_mode", "credit_note",
+            "apply_datetime", "remark" };
 
-    private static String[] DBwordsName = { "编号", "预算单类型", "业务类型", "还款业务编号",
-            "公司编号",
+    private static String[] DBwordsName = { "编号", "业务编号", "预算单类型", "业务类型",
+            "还款业务编号", "公司编号",
 
             "业务团队编号", "团队长编号", "业务员编号", "内勤编号", "放款银行"
 
@@ -53,7 +54,7 @@ public class SCDM_IDAO {
 
             , "业务作废节点", "是否需要安装gps", "是否融资", "是否垫资", "是否我司续保"
 
-            , "征信节点", "申请时间", "备注" };
+            , "应收手续费总额", "实收手续费总额", "担保方式", "征信节点", "申请时间", "备注" };
 
     public void testname() throws Exception {
     }

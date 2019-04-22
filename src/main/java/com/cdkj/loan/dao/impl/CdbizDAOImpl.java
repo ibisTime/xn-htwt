@@ -81,4 +81,14 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
         return super.update(NAMESPACE.concat("update_ywy"), data);
     }
 
+    @Override
+    public int updateMakeCardStatus(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_makeCardStatus"), data);
+    }
+
+    @Override
+    public int updateCurNodeCode(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_curNodeCode"), data);
+    }
+
 }

@@ -24,33 +24,47 @@ public class Cdbiz extends ABaseDO {
     // 业务类型（0新车1二手车）
     private String type;
 
+    // 预算单类型 (1正常单2外单)
     private String bizType;
 
-    private String repayBizType;
+    // 还款业务编号
+    private String repayBizCode;
 
+    // 业务公司编号
     private String companyCode;
 
     // 团队编号
     private String teamCode;
 
+    // 团队队长
     private String captainCode;
 
+    // 业务员编号
     private String saleUserId;
 
+    // 内勤编号
     private String insideJob;
 
+    // 贷款银行
     private String loanBank;
 
+    // 贷款额
     private Long loanAmount;
 
+    // 入档位置
     private String enterLocation;
 
+    // 入档时间
     private Date enterDatetime;
 
+    // 档案目录
     private String enterFilelist;
 
     // 主线状态
     private String status;
+
+    // 制卡状态
+    private String makeCardStatus;
 
     // 面签状态
     private String mqStatus;
@@ -67,34 +81,49 @@ public class Cdbiz extends ABaseDO {
     // 作废状态
     private String zfStatus;
 
+    // 当前节点编号
     private String curNodeCode;
 
+    // 面签节点编号
     private String intevCurNodeCode;
 
+    // 制卡节点
     private String makeCardNode;
 
+    // 发保合gps节点
     private String fbhgpsNode;
 
+    // 客户申请作废时的节点编号
     private String cancelNodeCode;
 
+    // 是否需要安装GPS
     private String isGpsAz;
 
+    // 是否融资
     private String isFinacing;
 
+    // 是否垫资
     private String isAdvanceFund;
 
+    // 是否我司续保
     private String isPlatInsure;
 
+    // 应收手续费总额
     private Long shouldFeeAmount;
 
+    // 实收手续费总额
     private Long realFeeAmount;
 
+    // 担保方式
     private String guaMode;
 
+    // 征信说明
     private String creditNote;
 
+    // 申请时间
     private Date applyDatetime;
 
+    // 备注
     private String remark;
 
     private SYSUser sysUser;
@@ -237,12 +266,12 @@ public class Cdbiz extends ABaseDO {
         this.bizType = bizType;
     }
 
-    public String getRepayBizType() {
-        return repayBizType;
+    public String getRepayBizCode() {
+        return repayBizCode;
     }
 
-    public void setRepayBizType(String repayBizType) {
-        this.repayBizType = repayBizType;
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getCompanyCode() {
@@ -443,6 +472,14 @@ public class Cdbiz extends ABaseDO {
 
     public String getTeamCode() {
         return teamCode;
+    }
+
+    public String getMakeCardStatus() {
+        return makeCardStatus;
+    }
+
+    public void setMakeCardStatus(String makeCardStatus) {
+        this.makeCardStatus = makeCardStatus;
     }
 
 }

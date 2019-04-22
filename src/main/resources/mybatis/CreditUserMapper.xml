@@ -4,23 +4,26 @@
 <mapper namespace="com.cdkj.loan.dao.ICreditUserDAO">
 	<resultMap id="creditUser_DB_Result" type="creditUser">
 		<result column="code" property="code" />
-		<result column="credit_code" property="creditCode" />
-		<result column="user_name" property="userName" />
+		<result column="biz_code" property="bizCode" />
 		<result column="relation" property="relation" />
 		<result column="loan_role" property="loanRole" />
+		<result column="user_name" property="userName" />
 		
-		<result column="id_no" property="idNo" />
 		<result column="mobile" property="mobile" />
-		<result column="id_no_front" property="idNoFront" />
-		<result column="id_no_reverse" property="idNoReverse" />
-		<result column="auth_pdf" property="authPdf" />
-		
-		<result column="interview_pic" property="interviewPic" />
+		<result column="idKind" property="id_kind" />
+		<result column="id_no" property="idNo" />
 		<result column="credit_card_occupation" property="creditCardOccupation" />
-        <result column="bank_credit_result_pdf" property="bankCreditResultPdf" />
+        <result column="bank_credit_result" property="bankCreditResult" />
         <result column="bank_credit_result_remark" property="bankCreditResultRemark" />
-        <result column="bank_report" property="bankReport" />
-        <result column="data_report" property="dataReport" />
+        <result column="birth_address_province" property="birthAddressProvince" />
+        <result column="birth_address_city" property="birthAddressCity" />
+        <result column="birth_address_area" property="birthAddressArea" />
+        <result column="birth_address" property="birthAddress" />
+        <result column="education" property="education" />
+        <result column="company_name" property="companyName" />
+        <result column="company_address" property="companyAddress" />
+        <result column="company_contact_to" property="companyContactTo" />
+        <result column="house_asset_address" property="houseAssetAddress" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
@@ -30,8 +33,8 @@
 			<if test="loanRole != null and loanRole != '' ">
 				AND t.loan_role = #{loanRole}
 			</if>
-			<if test="creditCode != null and creditCode != '' ">
-				AND t.credit_code = #{creditCode}
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
 			</if>
 			<if test="relation != null and relation != '' ">
 				AND t.relation = #{relation}

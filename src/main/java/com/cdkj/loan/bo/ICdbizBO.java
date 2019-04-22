@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.SYSUser;
 
 //CHECK ��鲢��ע�� 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
@@ -11,7 +12,7 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public boolean isCdbizExist(String code);
 
     public String saveCdbiz(String bankCode, String bizType, Long dkAmount,
-            String ywyUser, String teamCode);
+            SYSUser sysUser, String node);
 
     public int removeCdbiz(String code);
 
@@ -38,5 +39,9 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public void refreshZfStatus(Cdbiz cdbiz, String status);
 
     public void refreshYwy(Cdbiz cdbiz, String ywyUser);
+
+    public void refreshMakeCardStatus(Cdbiz cdbiz, String status);
+
+    public void refershCurNodeCode(Cdbiz cdbiz, String node);
 
 }

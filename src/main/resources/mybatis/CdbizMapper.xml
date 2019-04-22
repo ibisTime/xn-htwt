@@ -17,9 +17,10 @@
 		<result column="loan_amount" property="loanAmount" />
 		<result column="enter_location" property="enterLocation" />
 		<result column="enter_datetime" property="enterDatetime" />
-		<result column="enter_fileList" property="enterFilelist" />
+		<result column="enter_filelist" property="enterFilelist" />
 		<result column="status" property="status" />
 		<result column="mq_status" property="mqStatus" />
+		<result column="make_card_status" property="makeCardStatus" />
 		<result column="fbhgps_status" property="fbhgpsStatus" />
 		<result column="fircundang_status" property="fircundangStatus" />
 		<result column="seccundang_status" property="seccundangStatus" />
@@ -28,9 +29,9 @@
 		<result column="intev_cur_node_code" property="intevCurNodeCode" />
 		<result column="make_card_node" property="makeCardNode" />
 		<result column="fbhgps_node" property="fbhgpsNode" />
-		<result column="cancel_node_code" property="cancelNodeCode" />
+		<result column="cancel_node" property="cancelNode" />
 		<result column="is_gps_az" property="isGpsAz" />
-		<result column="is_finacing" property="isFinacing" />
+		<result column="is_financing" property="isFinancing" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="is_plat_insure" property="isPlatInsure" />
 		<result column="should_fee_amount" property="shouldFeeAmount" />
@@ -117,20 +118,44 @@
 		SELECT
 		t.code
 		,t.biz_code
-		,t.main_loaner
-		,t.bank_code
+		,t.type
 		,t.biz_type
-		,t.dk_amount
+		,t.repay_biz_code
+		,t.company_code
+		,t.team_code
+		,t.captain_code
+		,t.sale_user_id
+		,t.inside_job
+		,t.loan_bank
+		,t.loan_amount
+		,t.enter_location
+		,t.enter_datetime
+		,t.enter_filelist
 		,t.status
 		,t.mq_status
+		,t.make_card_status
 		,t.fbhgps_status
 		,t.fircundang_status
 		,t.seccundang_status
 		,t.zf_status
-		,t.ywy_user
-		,t.team_code
+		,t.cur_node_code
+		,t.intev_cur_node_code
+		,t.make_card_node
+		,t.fbhgps_node
+		,t.cancel_node
+		,t.is_gps_az
+		,t.is_financing
+		,t.is_advance_fund
+		,t.is_plat_insure
+		,t.should_fee_amount
+		,t.real_fee_amount
+		,t.gua_mode
+		,t.credit_note
+		,t.apply_datetime
+		,t.remark
 		FROM
 		tqj_cdbiz t
+
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -150,34 +175,80 @@
 		tqj_cdbiz(
 		code
 		,biz_code
-		,main_loaner
-		,bank_code
+		,type
 		,biz_type
-		,dk_amount
+		,repay_biz_code
+		,company_code
+		,team_code
+		,captain_code
+		,sale_user_id
+		,inside_job
+		,loan_bank
+		,loan_amount
+		,enter_location
+		,enter_datetime
+		,enter_filelist
 		,status
 		,mq_status
+		,make_card_status
 		,fbhgps_status
 		,fircundang_status
 		,seccundang_status
 		,zf_status
-		,ywy_user
-		,team_code
+		,cur_node_code
+		,intev_cur_node_code
+		,make_card_node
+		,fbhgps_node
+		,cancel_node
+		,is_gps_az
+		,is_financing
+		,is_advance_fund
+		,is_plat_insure
+		,should_fee_amount
+		,real_fee_amount
+		,gua_mode
+		,credit_note
+		,apply_datetime
+		,remark
 		)
 		VALUES(
 		#{code}
 		,#{bizCode}
-		,#{mainLoaner}
-		,#{bankCode}
+		,#{type}
 		,#{bizType}
-		,#{dkAmount}
+		,#{repayBizCode}
+		,#{companyCode}
+		,#{teamCode}
+		,#{captainCode}
+		,#{saleUserId}
+		,#{insideJob}
+		,#{loanBank}
+		,#{loanAmount}
+		,#{enterLocation}
+		,#{enterDatetime}
+		,#{enterFilelist}
 		,#{status}
 		,#{mqStatus}
+		,#{makeCardStatus}
 		,#{fbhgpsStatus}
 		,#{fircundangStatus}
 		,#{seccundangStatus}
 		,#{zfStatus}
-		,#{ywyUser}
-		,#{teamCode}
+		,#{curNodeCode}
+		,#{intevCurNodeCode}
+		,#{makeCardNode}
+		,#{fbhgpsNode}
+		,#{cancelNode}
+		,#{isGpsAz}
+		,#{isFinancing}
+		,#{isAdvanceFund}
+		,#{isPlatInsure}
+		,#{shouldFeeAmount}
+		,#{realFeeAmount}
+		,#{guaMode}
+		,#{creditNote}
+		,#{applyDatetime}
+		,#{remark}
 		)
 	</insert>
 
@@ -185,18 +256,41 @@
 		UPDATE tqj_cdbiz
 		SET
 		biz_code = #{bizCode}
-		,main_loaner = #{mainLoaner}
-		,bank_code = #{bankCode}
+		,type = #{type}
 		,biz_type = #{bizType}
-		,dk_amount = #{dkAmount}
+		,repay_biz_code = #{repayBizCode}
+		,company_code = #{companyCode}
+		,team_code = #{teamCode}
+		,captain_code = #{captainCode}
+		,sale_user_id = #{saleUserId}
+		,inside_job = #{insideJob}
+		,loan_bank = #{loanBank}
+		,loan_amount = #{loanAmount}
+		,enter_location = #{enterLocation}
+		,enter_datetime = #{enterDatetime}
+		,enter_filelist = #{enterFilelist}
 		,status = #{status}
 		,mq_status = #{mqStatus}
+		,make_card_status = #{makeCardStatus}
 		,fbhgps_status = #{fbhgpsStatus}
 		,fircundang_status = #{fircundangStatus}
 		,seccundang_status = #{seccundangStatus}
 		,zf_status = #{zfStatus}
-		,ywy_user = #{ywyUser}
-		,team_code = #{teamCode}
+		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
+		,make_card_node = #{makeCardNode}
+		,fbhgps_node = #{fbhgpsNode}
+		,cancel_node = #{cancelNode}
+		,is_gps_az = #{isGpsAz}
+		,is_financing = #{isFinancing}
+		,is_advance_fund = #{isAdvanceFund}
+		,is_plat_insure = #{isPlatInsure}
+		,should_fee_amount = #{shouldFeeAmount}
+		,real_fee_amount = #{realFeeAmount}
+		,gua_mode = #{guaMode}
+		,credit_note = #{creditNote}
+		,apply_datetime = #{applyDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -204,6 +298,13 @@
 		UPDATE tqj_cdbiz
 		SET
 		status=#{status}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_makeCardStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		make_card_status=#{makCardStatus}
 		WHERE code=#{code}
 	</update>
 	
@@ -242,12 +343,28 @@
 		WHERE code=#{code}
 	</update>
 	
-	<update id="update_ywy" parameterType="cdbiz">
+	<update id="update_node" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
-		ywy_user=#{ywyUser}
+		cur_node_code=#{curNodeCode}
 		WHERE code=#{code}
 	</update>
+	
+	<update id="update_intevNode" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		intev_cur_node_code=#{intevCurNodeCode}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_makeCardNode" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		make_card_node=#{makeCardNode}
+		WHERE code=#{code}
+	</update>
+	
+	
 
 
 </mapper>

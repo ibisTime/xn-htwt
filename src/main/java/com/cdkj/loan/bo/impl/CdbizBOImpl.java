@@ -6,11 +6,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICdbizDAO;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
@@ -21,6 +24,9 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
 
     @Autowired
     private ICdbizDAO cdbizDAO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
 
     @Override
     public boolean isCdbizExist(String code) {
@@ -64,18 +70,23 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
 
     @Override
     public String saveCdbiz(String bankCode, String bizType, Long dkAmount,
-            String ywyUser, String teamCode) {
+            SYSUser sysUser, String node) {
+        BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.Cdbiz.getCode());
         Cdbiz cdbiz = new Cdbiz();
         cdbiz.setCode(code);
-        cdbiz.setBankCode(bankCode);
         cdbiz.setBizType(bizType);
-        cdbiz.setDkAmount(dkAmount);
+        cdbiz.setCompanyCode(sysUser.getCompanyCode());
+        cdbiz.setTeamCode(sysUser.getTeamCode());
+        cdbiz.setCaptainCode(bizTeam.getCaptain());
+        cdbiz.setSaleUserId(sysUser.getUserId());
+        cdbiz.setInsideJob(sysUser.getUserId());
+        cdbiz.setLoanBank(bankCode);
+        cdbiz.setLoanAmount(dkAmount);
         cdbiz.setStatus(ECdbizStatus.A0.getCode());
+        cdbiz.setCurNodeCode(node);
         cdbiz.setZfStatus("0");
-        cdbiz.setYwyUser(ywyUser);
-        cdbiz.setTeamCode(teamCode);
         cdbizDAO.insert(cdbiz);
         return code;
     }
@@ -133,14 +144,24 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     @Override
     public List<Cdbiz> queryListByYwyUser(String ywyUser) {
         Cdbiz condition = new Cdbiz();
-        condition.setYwyUser(ywyUser);
         List<Cdbiz> dataList = cdbizDAO.selectList(condition);
         return dataList;
     }
 
     @Override
     public void refreshYwy(Cdbiz cdbiz, String ywyUser) {
-        cdbiz.setYwyUser(ywyUser);
         cdbizDAO.updateStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshMakeCardStatus(Cdbiz cdbiz, String status) {
+        cdbiz.setMakeCardStatus(status);
+        cdbizDAO.updateMakeCardStatus(cdbiz);
+    }
+
+    @Override
+    public void refershCurNodeCode(Cdbiz cdbiz, String node) {
+        cdbiz.setCurNodeCode(node);
+        cdbizDAO.updateCurNodeCode(cdbiz);
     }
 }
