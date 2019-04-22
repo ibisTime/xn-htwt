@@ -93,3 +93,20 @@ CREATE TABLE `tdq_credit_user_ext` (
 	`build_prove_pdf` tinytext DEFAULT NULL COMMENT '自建房证明',
   	PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='征信人辅助资料';
+
+ALTER TABLE `tdq_credit_user` 
+ADD COLUMN `biz_code` VARCHAR(32) NULL COMMENT '业务编号' AFTER `code`,
+ADD COLUMN `id_kind` VARCHAR(4) NULL COMMENT '证件类型' AFTER `mobile`,
+ADD COLUMN `house_picture` VARCHAR(32) NULL COMMENT '家访照片' AFTER `interview_pic`,
+ADD COLUMN `education` VARCHAR(32) NULL COMMENT '学历' AFTER `id_no_reverse`,
+ADD COLUMN `company_name` VARCHAR(255) NULL COMMENT '工作单位名称' AFTER `education`,
+ADD COLUMN `company_address` VARCHAR(255) NULL COMMENT '工作单位地址' AFTER `company_name`,
+ADD COLUMN `company_contact_no` VARCHAR(32) NULL COMMENT '工作单位联系电话' AFTER `company_address`,
+ADD COLUMN `asset_pdf` tinytext NULL COMMENT '资产资料pdf' AFTER `company_contact_no`,
+ADD COLUMN `house_asset_address` VARCHAR(255) NULL COMMENT '房产地址' AFTER `asset_pdf`,
+ADD COLUMN `hkb` tinytext NULL COMMENT '户口本' AFTER `house_asset_address`,
+ADD COLUMN `birth_address_province` VARCHAR(32) NULL COMMENT '户籍地省' AFTER `hkb`,
+ADD COLUMN `birth_address_city` VARCHAR(32) NULL COMMENT '户籍地市' AFTER `birth_address_province`,
+ADD COLUMN `birth_address_area` VARCHAR(32) NULL COMMENT '户籍地区' AFTER `birth_address_city`,
+ADD COLUMN `birth_address` VARCHAR(255) NULL COMMENT '户籍地详细地址' AFTER `birth_address_area`,
+ADD COLUMN `post_code` VARCHAR(32) NULL COMMENT '户口所在地邮编' AFTER `birth_address`;
