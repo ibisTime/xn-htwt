@@ -108,6 +108,7 @@
 		
 		<typeAlias alias="budgetOrderGps" type="com.cdkj.loan.domain.BudgetOrderGps" />
 		<typeAlias alias="bankLoan" type="com.cdkj.loan.domain.BankLoan" />
+		<typeAlias alias="carPledge" type="com.cdkj.loan.domain.CarPledge" />
 		
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
