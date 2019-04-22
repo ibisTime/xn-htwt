@@ -114,11 +114,6 @@ public class CreditAOImpl implements ICreditAO {
                 "您还未设置职位，暂无法使用征信申请");
         }
 
-        if (StringUtils.isBlank(sysUser.getTeamCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "您还未设置团队，暂无法申请!");
-        }
-
         // 新建业务单
         String bizCode = cdbizBO.saveCdbiz(req.getLoanBankCode(),
             req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
