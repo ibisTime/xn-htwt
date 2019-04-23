@@ -34,7 +34,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
             code = OrderNoGenerater.generate(EGeneratePrefix.attachment
                 .getCode());
             data.setCode(code);
-            data.setName(name);
+            data.setKname(name);
             data.setBizCode(bizCode);
             data.setAttachType(attachType);
             data.setUrl(url);
@@ -87,11 +87,11 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
     }
 
     @Override
-    public void removeByName(String bizCode, String name) {
+    public void removeByKname(String bizCode, String name) {
         Attachment condition = new Attachment();
 
         condition.setBizCode(bizCode);
-        condition.setName(name);
+        condition.setKname(name);
         Attachment attachment = attachmentDAO.select(condition);
         attachmentDAO.deleteAttachment(attachment);
 
@@ -112,7 +112,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
     public void refreshAttachment(String bizCode, String name, String url) {
         Attachment condition = new Attachment();
         condition.setBizCode(bizCode);
-        condition.setName(name);
+        condition.setKname(name);
         Attachment attachment = attachmentDAO.select(condition);
         attachment.setUrl(url);
         attachmentDAO.updateAttachment(attachment);
@@ -122,7 +122,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
     public boolean isAttachmentExist(String bizCode, String attachName) {
         Attachment condition = new Attachment();
         condition.setBizCode(bizCode);
-        condition.setName(attachName);
+        condition.setKname(attachName);
         if (attachmentDAO.selectTotalCount(condition) > 0) {
             return true;
         }

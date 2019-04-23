@@ -28,14 +28,17 @@ import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
+import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ECdbizStatus;
@@ -90,6 +93,13 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
         Paginable<Cdbiz> page = cdbizBO.getPaginable(start, limit, condition);
+        if (StringUtils.isNotBlank(condition.getUserId())) {
+            SYSUser sysUser = sysUserBO.getUser(condition.getUserId());
+            condition.setRoleCode(sysUser.getRoleCode());
+            condition.setTeamCode(sysUser.getTeamCode());
+            page = cdbizBO.getPaginableByRoleCode(condition, start, limit);
+        }
+
         for (Cdbiz cdbiz : page.getList()) {
             init(cdbiz);
         }
@@ -204,7 +214,37 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     public void inputBankCreditResult(XN632111Req req) {
-        // TODO Auto-generated method stub
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
+        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是录入银行征信结果节点，不能操作");
+        }
+        String preCurNodeCode = cdbiz.getCurNodeCode();// 当前节点
+        ENode node = ENode.getMap().get(preCurNodeCode);
+        String curNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode)
+            .getNextNode();
+        cdbizBO.refershCurNodeCode(cdbiz, curNode);
+
+        List<XN632111ReqCreditUser> creditResult = req.getCreditList();
+        for (XN632111ReqCreditUser reqCreditUser : creditResult) {
+            // 录入结果与说明
+            CreditUser creditUser = creditUserBO.getCreditUser(reqCreditUser
+                .getCreditUserCode());
+            creditUserBO.inputBankCreditResult(creditUser,
+                reqCreditUser.getBankCreditReport(),
+                reqCreditUser.getDataCreditReport(),
+                reqCreditUser.getBankResult(), reqCreditUser.getCreditNote());
+            // 银行征信报告
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.bank_credit_report.getCode());
+            attachmentBO.saveAttachment(req.getBizCode(), attachName.getCode(),
+                attachName.getValue(), reqCreditUser.getBankCreditReport());
+            // 大数据征信报告
+            attachName = EAttachName.getMap().get(
+                EAttachName.data_credit_report.getCode());
+            attachmentBO.saveAttachment(req.getBizCode(), attachName.getCode(),
+                attachName.getValue(), reqCreditUser.getDataCreditReport());
+        }
 
     }
 

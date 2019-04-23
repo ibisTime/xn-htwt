@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.SYSUser;
 
@@ -23,6 +24,9 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public List<Cdbiz> queryListByTeamCode(String teamCode);
 
     public List<Cdbiz> queryListByYwyUser(String ywyUser);
+
+    public Paginable<Cdbiz> getPaginableByRoleCode(Cdbiz condition, int start,
+            int limit);
 
     public Cdbiz getCdbiz(String code);
 

@@ -18,10 +18,13 @@ public class BankSubbranch extends ABaseDO {
     private static final long serialVersionUID = 3792099812449388157L;
 
     // 序号
-    private int id;
+    private String code;
 
     // 银行编号
     private String bankCode;
+
+    // 银行行别=银行里的bankCode
+    private String bankType;
 
     // 简称
     private String abbrName;
@@ -45,7 +48,7 @@ public class BankSubbranch extends ABaseDO {
     private String bankClient;
 
     // 委托有效期
-    private Date clientValidDate;
+    private Integer clientValidDate;
 
     // 授权人姓名
     private String autherName;
@@ -77,12 +80,55 @@ public class BankSubbranch extends ABaseDO {
     // 备注
     private String remark;
 
-    public int getId() {
-        return id;
+    /*-------辅助字段---------*/
+
+    // 银行名称
+    private String bankName;
+
+    // 银行
+    private Bank bank;
+
+    // 更新人姓名
+    private String updaterName;
+
+    public String getBankType() {
+        return bankType;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBankType(String bankType) {
+        this.bankType = bankType;
+    }
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getBankCode() {
@@ -149,11 +195,11 @@ public class BankSubbranch extends ABaseDO {
         this.bankClient = bankClient;
     }
 
-    public Date getClientValidDate() {
+    public Integer getClientValidDate() {
         return clientValidDate;
     }
 
-    public void setClientValidDate(Date clientValidDate) {
+    public void setClientValidDate(Integer clientValidDate) {
         this.clientValidDate = clientValidDate;
     }
 

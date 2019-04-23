@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IGpsAO;
+import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
-import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.SYSRole;
@@ -44,6 +44,9 @@ public class GpsAOImpl implements IGpsAO {
 
     @Autowired
     private ISYSRoleBO sysRoleBO;
+
+    @Autowired
+    private ICdbizBO cdbizBO;
 
     @Override
     @Transactional
@@ -84,8 +87,8 @@ public class GpsAOImpl implements IGpsAO {
             gpsBO.checkGpsDevNo(res.getGpsDevNo());
 
             Gps data = new Gps();
-            String code = OrderNoGenerater
-                .generate(EGeneratePrefix.GPS.getCode());
+            String code = OrderNoGenerater.generate(EGeneratePrefix.GPS
+                .getCode());
             data.setCode(code);
             data.setGpsDevNo(res.getGpsDevNo());
             data.setGpsType(res.getGpsType());
@@ -131,8 +134,8 @@ public class GpsAOImpl implements IGpsAO {
     private void initGps(Gps gps) {
         // 业务公司名称
         if (StringUtils.isNotBlank(gps.getCompanyCode())) {
-            Department department = departmentBO
-                .getDepartment(gps.getCompanyCode());
+            Department department = departmentBO.getDepartment(gps
+                .getCompanyCode());
             gps.setCompanyName(department.getName());
         }
 
@@ -144,12 +147,11 @@ public class GpsAOImpl implements IGpsAO {
             gps.setApplyUserRole(sysRole.getName());
         }
 
-        // 预算单（要展示客户姓名专员等一系列字段）
-        if (StringUtils.isNotBlank(gps.getBizCode())) {
-            BudgetOrder budgetOrder = budgetOrderAO
-                .getBudgetOrder(gps.getBizCode());
-            gps.setBudgetOrder(budgetOrder);
-        }
+        // // 业务
+        // if (StringUtils.isNotBlank(gps.getBizCode())) {
+        // Cdbiz cdbiz = cdbizBO.getCdbiz(gps.getBizCode());
+        // gps.setCdbiz(cdbiz);
+        // }
     }
 
 }

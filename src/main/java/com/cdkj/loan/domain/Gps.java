@@ -70,6 +70,17 @@ public class Gps extends ABaseDO {
     // 预算单
     private BudgetOrder budgetOrder;
 
+    // 业务
+    private Cdbiz cdbiz;
+
+    public Cdbiz getCdbiz() {
+        return cdbiz;
+    }
+
+    public void setCdbiz(Cdbiz cdbiz) {
+        this.cdbiz = cdbiz;
+    }
+
     public String getApplyUserRole() {
         return applyUserRole;
     }

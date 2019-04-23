@@ -29,9 +29,9 @@
 		<result column="intev_cur_node_code" property="intevCurNodeCode" />
 		<result column="make_card_node" property="makeCardNode" />
 		<result column="fbhgps_node" property="fbhgpsNode" />
-		<result column="cancel_node" property="cancelNode" />
+		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="is_gps_az" property="isGpsAz" />
-		<result column="is_financing" property="isFinancing" />
+		<result column="is_finacing" property="isFinacing" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="is_plat_insure" property="isPlatInsure" />
 		<result column="should_fee_amount" property="shouldFeeAmount" />
@@ -62,7 +62,7 @@
 				AND t.company_code = #{companyCode}
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
-				AND t.teamCode = #{teamCode}
+				AND t.team_code = #{teamCode}
 			</if>
 			<if test="captainCode != null and captainCode != '' ">
 				AND t.captain_code = #{captainCode}
@@ -112,6 +112,30 @@
 			<if test="guaMode != null and guaMode != '' ">
 				AND t.gua_mode = #{guaMode}
 			</if>
+			<if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
+				AND t.cur_node_code in 
+				<foreach collection="curNodeCodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
+			<if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0 ">
+				AND t.intev_cur_node_code in 
+				<foreach collection="intevCurNodeCodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
+			<if test="makeCardNodeList != null and makeCardNodeList.size() > 0 ">
+				AND t.make_card_node in 
+				<foreach collection="makeCardNodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
+			<if test="fbhgpsNodeList != null and fbhgpsNodeList.size() > 0 ">
+				AND t.fbhgps_node in 
+				<foreach collection="fbhgpsNodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
@@ -142,9 +166,9 @@
 		,t.intev_cur_node_code
 		,t.make_card_node
 		,t.fbhgps_node
-		,t.cancel_node
+		,t.cancel_node_code
 		,t.is_gps_az
-		,t.is_financing
+		,t.is_finacing
 		,t.is_advance_fund
 		,t.is_plat_insure
 		,t.should_fee_amount
@@ -162,6 +186,61 @@
 				t.${order}
 			</if>
 		</trim>
+	</select>
+	
+	<select id="select_cdbizByRoleCode" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.type
+		,t.biz_type
+		,t.repay_biz_code
+		,t.company_code
+		,t.team_code
+		,t.captain_code
+		,t.sale_user_id
+		,t.inside_job
+		,t.loan_bank
+		,t.loan_amount
+		,t.enter_location
+		,t.enter_datetime
+		,t.enter_filelist
+		,t.status
+		,t.mq_status
+		,t.make_card_status
+		,t.fbhgps_status
+		,t.fircundang_status
+		,t.seccundang_status
+		,t.zf_status
+		,t.cur_node_code
+		,t.intev_cur_node_code
+		,t.make_card_node
+		,t.fbhgps_node
+		,t.cancel_node_code
+		,t.is_gps_az
+		,t.is_finacing
+		,t.is_advance_fund
+		,t.is_plat_insure
+		,t.should_fee_amount
+		,t.real_fee_amount
+		,t.gua_mode
+		,t.credit_note
+		,t.apply_datetime
+		,t.remark
+		FROM
+		tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code or t.advanf_cur_node_code = trn.node_code)
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_cdbiz_count_byRoleCode" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code FROM tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code or t.advanf_cur_node_code = trn.node_code)
+		<include refid="where_condition" />) tb
 	</select>
 
 	<select id="select_cdbiz_count" parameterType="cdbiz"
@@ -199,9 +278,9 @@
 		,intev_cur_node_code
 		,make_card_node
 		,fbhgps_node
-		,cancel_node
+		,cancel_node_code
 		,is_gps_az
-		,is_financing
+		,is_finacing
 		,is_advance_fund
 		,is_plat_insure
 		,should_fee_amount
@@ -238,9 +317,9 @@
 		,#{intevCurNodeCode}
 		,#{makeCardNode}
 		,#{fbhgpsNode}
-		,#{cancelNode}
+		,#{cancelNodeCode}
 		,#{isGpsAz}
-		,#{isFinancing}
+		,#{isFinacing}
 		,#{isAdvanceFund}
 		,#{isPlatInsure}
 		,#{shouldFeeAmount}
@@ -280,9 +359,9 @@
 		,intev_cur_node_code = #{intevCurNodeCode}
 		,make_card_node = #{makeCardNode}
 		,fbhgps_node = #{fbhgpsNode}
-		,cancel_node = #{cancelNode}
+		,cancel_node_code = #{cancelNodeCode}
 		,is_gps_az = #{isGpsAz}
-		,is_financing = #{isFinancing}
+		,is_finacing = #{isFinacing}
 		,is_advance_fund = #{isAdvanceFund}
 		,is_plat_insure = #{isPlatInsure}
 		,should_fee_amount = #{shouldFeeAmount}

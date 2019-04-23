@@ -88,9 +88,10 @@ public class CarDealerAOImpl implements ICarDealerAO {
         carDealerBO.saveCarDealer(data);
         // 日志记录
         // 记录本次新增操作日志
-        sysBizLogBO.recordCurrentSYSBizLog(code, EBizLogType.CAR_DEALER_AUDIT,
-            code, ECarDealerNode.NEW_ADD.getCode(), req.getRemark(),
-            req.getOperator());
+        // sysBizLogBO.recordCurrentSYSBizLog(code,
+        // EBizLogType.CAR_DEALER_AUDIT,
+        // code, ECarDealerNode.NEW_ADD.getCode(), req.getRemark(),
+        // req.getOperator());
         // 下个节点审核的操作日志
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.CAR_DEALER_AUDIT, code,
             ECarDealerNode.TODO_AUDIT.getCode());

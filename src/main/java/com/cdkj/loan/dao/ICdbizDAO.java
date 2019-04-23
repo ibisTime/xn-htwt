@@ -1,5 +1,7 @@
 package com.cdkj.loan.dao;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.Cdbiz;
 
@@ -26,4 +28,8 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
     public int updateYwy(Cdbiz data);
 
     public int updateInsideJob(Cdbiz data);
+
+    List<Cdbiz> selectListByRoleCode(Cdbiz condition, int start, int count);
+
+    long selectTotalCountByRoleCode(Cdbiz condition);
 }

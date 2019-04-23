@@ -3,12 +3,12 @@ package com.cdkj.loan.api.impl;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632148Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -21,26 +21,26 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @history:
  */
 public class XN632148 extends AProcessor {
-    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
-        .getBean(IBudgetOrderAO.class);
+    private ICdbizAO cdbizAO = SpringContextHolder.getBean(ICdbizAO.class);
 
     private XN632148Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        BudgetOrder condition = new BudgetOrder();
+        Cdbiz condition = new Cdbiz();
         condition.setCode(req.getCode());
+        condition.setUserId(req.getUserId());
         condition.setBizCode(req.getBizCode());
-        condition.setRepayBizCodeForQuery(req.getRepayBizCode());
+        // condition.setRepayBizCodeForQuery(req.getRepayBizCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setCompanyCode(req.getCompanyCode());
-        condition.setApplyUserNameForQuery(req.getApplyUserName());
+        // condition.setApplyUserNameForQuery(req.getApplyUserName());
         condition.setEnterLocation(req.getEnterLocation());
-        condition.setKeyword(req.getKeyword());
-        condition.setApplyDatetimeStart(DateUtil.strToDate(
-            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setApplyDatetimeEnd(DateUtil.strToDate(
-            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        // condition.setKeyword(req.getKeyword());
+        // condition.setApplyDatetimeStart(DateUtil.strToDate(
+        // req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        // condition.setApplyDatetimeEnd(DateUtil.strToDate(
+        // req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         if (StringUtils.isNotBlank(req.getCurNodeCode())) {
             boolean b = req.getCurNodeCodeList().contains(req.getCurNodeCode());
@@ -63,22 +63,22 @@ public class XN632148 extends AProcessor {
         } else {
             condition.setIntevCurNodeCodeList(req.getIntevCurNodeCodeList());
         }
-        if (StringUtils.isNotBlank(req.getAdvanfCurNodeCode())) {
-            boolean b = req.getAdvanfCurNodeCodeList().contains(
-                req.getAdvanfCurNodeCode());
-            if (b == false) {
-                condition.setAdvanfCurNodeCode("000_00");// 意为空
-            } else {
-                condition.setAdvanfCurNodeCode(req.getAdvanfCurNodeCode());
-            }
-        } else {
-            condition.setAdvanfCurNodeCodeList(req.getAdvanfCurNodeCodeList());
-        }
+        // if (StringUtils.isNotBlank(req.getAdvanfCurNodeCode())) {
+        // boolean b = req.getAdvanfCurNodeCodeList().contains(
+        // req.getAdvanfCurNodeCode());
+        // if (b == false) {
+        // condition.setAdvanfCurNodeCode("000_00");// 意为空
+        // } else {
+        // condition.setAdvanfCurNodeCode(req.getAdvanfCurNodeCode());
+        // }
+        // } else {
+        // condition.setAdvanfCurNodeCodeList(req.getAdvanfCurNodeCodeList());
+        // }
         condition.setRoleCode(req.getRoleCode());
-        condition.setIsInterview(req.getIsInterview());
-        condition.setIsEntryMortgage(req.getIsEntryMortgage());
+        // condition.setIsInterview(req.getIsInterview());
+        // condition.setIsEntryMortgage(req.getIsEntryMortgage());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
-        condition.setIsMortgage(req.getIsMortgage());
+        // condition.setIsMortgage(req.getIsMortgage());
         condition.setIsGpsAz(req.getIsGpsAz());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
@@ -87,8 +87,7 @@ public class XN632148 extends AProcessor {
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return budgetOrderAO.queryBudgetOrderPageByRoleCode(start, limit,
-            condition, req.getUserId());
+        return cdbizAO.queryCdbizPage(start, limit, condition);
     }
 
     @Override

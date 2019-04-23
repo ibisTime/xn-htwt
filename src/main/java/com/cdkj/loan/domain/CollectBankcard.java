@@ -13,6 +13,8 @@ public class CollectBankcard extends ABaseDO {
 
     private String type;// 类型
 
+    private String belongBank;// 三种银行
+
     private String companyCode;// 公司编号
 
     private String realName;// 户名
@@ -21,11 +23,11 @@ public class CollectBankcard extends ABaseDO {
 
     private String bankName;// 银行名称
 
-    private String subbranch;// 开户支行
+    private String subbranch;// 支行名称
 
     private String bankcardNumber;// 账号
 
-    private String pointRate;// 返点比例
+    private Double pointRate;// 返点比例
 
     private String remark;// 备注
 
@@ -35,6 +37,30 @@ public class CollectBankcard extends ABaseDO {
 
     private String companyName;// 公司名称
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
+
+    public String getBelongBank() {
+        return belongBank;
+    }
+
+    public void setBelongBank(String belongBank) {
+        this.belongBank = belongBank;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -43,11 +69,11 @@ public class CollectBankcard extends ABaseDO {
         this.companyName = companyName;
     }
 
-    public String getPointRate() {
+    public Double getPointRate() {
         return pointRate;
     }
 
-    public void setPointRate(String pointRate) {
+    public void setPointRate(Double pointRate) {
         this.pointRate = pointRate;
     }
 
@@ -97,22 +123,6 @@ public class CollectBankcard extends ABaseDO {
 
     public void setBankCode(String bankCode) {
         this.bankCode = bankCode;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
     }
 
     public String getBankcardNumber() {

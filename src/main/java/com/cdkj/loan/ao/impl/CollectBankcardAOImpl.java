@@ -2,16 +2,15 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICollectBankcardAO;
+import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
-import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.ChannelBank;
 import com.cdkj.loan.domain.CollectBankcard;
-import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.dto.req.XN632000Req;
 import com.cdkj.loan.dto.req.XN632002Req;
 
@@ -22,7 +21,7 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
     private ICollectBankcardBO collectBankcardBO;
 
     @Autowired
-    private IDepartmentBO departmentBO;
+    private IChannelBankBO channelBankBO;
 
     @Override
     public String addCollectBankcard(XN632000Req req) {
@@ -31,8 +30,10 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setCompanyCode(req.getCompanyCode());
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
-        data.setSubbranch(req.getSubbranch());
+        // 获取银行名称
+        ChannelBank bank = channelBankBO.getChannelBank(req.getBankCode());
+        data.setBankName(bank.getBankName());
+
         data.setBankcardNumber(req.getBankcardNumber());
         data.setRemark(req.getRemark());
         return collectBankcardBO.saveCollectBankcard(data);
@@ -46,8 +47,10 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setCompanyCode(req.getCompanyCode());
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
-        data.setSubbranch(req.getSubbranch());
+        // 获取银行名称
+        ChannelBank bank = channelBankBO.getChannelBank(req.getBankCode());
+        data.setBankName(bank.getBankName());
+
         data.setBankcardNumber(req.getBankcardNumber());
         data.setRemark(req.getRemark());
         return collectBankcardBO.refreshCollectBankcard(data);
@@ -61,12 +64,7 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
     @Override
     public Paginable<CollectBankcard> queryCollectBankcardPage(int start,
             int limit, CollectBankcard condition) {
-        Paginable<CollectBankcard> paginable = collectBankcardBO
-            .getPaginable(start, limit, condition);
-        for (CollectBankcard collectBankcard : paginable.getList()) {
-            initCollectBankcard(collectBankcard);
-        }
-        return paginable;
+        return collectBankcardBO.getPaginable(start, limit, condition);
     }
 
     @Override
@@ -77,17 +75,6 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
 
     @Override
     public CollectBankcard getCollectBankcard(String code) {
-        CollectBankcard collectBankcard = collectBankcardBO
-            .getCollectBankcard(code);
-        initCollectBankcard(collectBankcard);
-        return collectBankcard;
-    }
-
-    private void initCollectBankcard(CollectBankcard collectBankcard) {
-        if (StringUtils.isNotBlank(collectBankcard.getCompanyCode())) {
-            Department department = departmentBO
-                .getDepartment(collectBankcard.getCompanyCode());
-            collectBankcard.setCompanyName(department.getName());
-        }
+        return collectBankcardBO.getCollectBankcard(code);
     }
 }

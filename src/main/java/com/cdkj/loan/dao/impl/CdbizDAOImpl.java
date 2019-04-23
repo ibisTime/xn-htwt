@@ -47,6 +47,13 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     }
 
     @Override
+    public List<Cdbiz> selectListByRoleCode(Cdbiz condition, int start,
+            int count) {
+        return super.selectList(NAMESPACE.concat("select_cdbizByRoleCode"),
+            start, count, condition, Cdbiz.class);
+    }
+
+    @Override
     public int updateStatus(Cdbiz data) {
         return super.update(NAMESPACE.concat("update_status"), data);
     }
@@ -94,6 +101,12 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     @Override
     public int updateInsideJob(Cdbiz data) {
         return super.update(NAMESPACE.concat("update_insideJob"), data);
+    }
+
+    @Override
+    public long selectTotalCountByRoleCode(Cdbiz condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_cdbiz_count_byRoleCode"), condition);
     }
 
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICdbizDAO;
@@ -170,4 +172,16 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbiz.setInsideJob(insideJob);
         cdbizDAO.updateInsideJob(cdbiz);
     }
+
+    @Override
+    public Paginable<Cdbiz> getPaginableByRoleCode(Cdbiz condition, int start,
+            int limit) {
+        Long count = cdbizDAO.selectTotalCountByRoleCode(condition);
+        Paginable<Cdbiz> page = new Page<Cdbiz>(start, limit, count);
+        List<Cdbiz> dataList = cdbizDAO.selectListByRoleCode(condition, start,
+            limit);
+        page.setList(dataList);
+        return page;
+    }
+
 }

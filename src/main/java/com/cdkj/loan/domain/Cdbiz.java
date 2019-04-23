@@ -126,6 +126,8 @@ public class Cdbiz extends ABaseDO {
     // 备注
     private String remark;
 
+    // *********************************
+
     private SYSUser sysUser;
 
     private Credit credit;
@@ -137,6 +139,66 @@ public class Cdbiz extends ABaseDO {
     private List<BizTask> bizTasks;
 
     private List<SYSBizLog> bizLogs;
+
+    private List<String> curNodeCodeList;
+
+    private List<String> intevCurNodeCodeList;
+
+    private List<String> makeCardNodeList;
+
+    private List<String> fbhgpsNodeList;
+
+    private String roleCode;
+
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public List<String> getIntevCurNodeCodeList() {
+        return intevCurNodeCodeList;
+    }
+
+    public void setIntevCurNodeCodeList(List<String> intevCurNodeCodeList) {
+        this.intevCurNodeCodeList = intevCurNodeCodeList;
+    }
+
+    public List<String> getMakeCardNodeList() {
+        return makeCardNodeList;
+    }
+
+    public void setMakeCardNodeList(List<String> makeCardNodeList) {
+        this.makeCardNodeList = makeCardNodeList;
+    }
+
+    public List<String> getFbhgpsNodeList() {
+        return fbhgpsNodeList;
+    }
+
+    public void setFbhgpsNodeList(List<String> fbhgpsNodeList) {
+        this.fbhgpsNodeList = fbhgpsNodeList;
+    }
 
     public List<Attachment> getAttachments() {
         return attachments;
