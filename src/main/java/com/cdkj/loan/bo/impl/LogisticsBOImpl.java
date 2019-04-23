@@ -12,11 +12,13 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -93,8 +95,24 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public void sendLogistics(Logistics data) {
-        logisticsDAO.updateLogisticsSend(data);
+    public Logistics sendLogistics(XN632150Req req) {
+        Logistics logistics = new Logistics();
+
+        logistics.setCode(req.getCode());
+        logistics.setFilelist(req.getFilelist());
+        logistics.setSendType(req.getSendType());
+        logistics.setLogisticsCompany(req.getLogisticsCompany());
+        logistics.setLogisticsCode(req.getLogisticsCode());
+
+        logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
+            DateUtil.DATA_TIME_PATTERN_1));
+        logistics.setSendNote(req.getSendNote());
+        logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
+        logistics.setSender(req.getOperator());
+
+        logisticsDAO.updateLogisticsSend(logistics);
+
+        return logistics;
     }
 
     @Override

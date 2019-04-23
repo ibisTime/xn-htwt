@@ -48,14 +48,24 @@ public class CarPledgeDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public int update(CarPledge carPledge) {
-        return super.update(NAMESPACE.concat("update_carPledge"), carPledge);
-    }
-
-    @Override
-    public int updateStatus(CarPledge carPledge) {
-        return super.update(NAMESPACE.concat("update_carPledgeStatus"),
+    public int updateSaleManConfirm(CarPledge carPledge) {
+        return super.update(NAMESPACE.concat("update_saleManConfirm"),
             carPledge);
     }
 
+    @Override
+    public int updateEntryPledgeInfo(CarPledge carPledge) {
+        return super.update(NAMESPACE.concat("update_entryPledgeInfo"),
+            carPledge);
+    }
+
+    @Override
+    public int updateCommitBank(CarPledge carPledge) {
+        return super.update(NAMESPACE.concat("update_commitBank"), carPledge);
+    }
+
+    @Override
+    public int updateConfirmDone(CarPledge carPledge) {
+        return super.update(NAMESPACE.concat("update_confirmDone"), carPledge);
+    }
 }

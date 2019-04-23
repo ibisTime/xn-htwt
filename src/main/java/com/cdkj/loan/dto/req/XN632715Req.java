@@ -22,6 +22,14 @@ public class XN632715Req extends APageReq {
     // 状态
     private String status;
 
+    private String applyCount;
+
+    // 申请开始时间
+    private String applyDatetimeStart;
+
+    // 申请结束时间
+    private String applyDatetimeEnd;
+
     public String getApplyUser() {
         return applyUser;
     }
@@ -44,6 +52,30 @@ public class XN632715Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getApplyCount() {
+        return applyCount;
+    }
+
+    public void setApplyCount(String applyCount) {
+        this.applyCount = applyCount;
+    }
+
+    public String getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(String applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public String getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
 }

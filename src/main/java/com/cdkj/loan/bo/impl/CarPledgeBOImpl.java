@@ -8,11 +8,13 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICarPledgeDAO;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.dto.req.XN632124Req;
+import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
@@ -44,6 +46,40 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge>
         CarPledge carPledge = EntityUtils.copyData(req, CarPledge.class);
         carPledge.setCurNodeCode(nextNodeCode);
 
+        carPledgeDAO.updateSaleManConfirm(carPledge);
+    }
+
+    @Override
+    public void entryPledgeInfo(String nextNodeCode, XN632133Req req) {
+        CarPledge carPledge = EntityUtils.copyData(req, CarPledge.class);
+        carPledge.setCurNodeCode(nextNodeCode);
+
+        carPledgeDAO.updateEntryPledgeInfo(carPledge);
+    }
+
+    @Override
+    public void pledgeCommitBank(String code, String nextNodeCode,
+            String operator, String pledgeBankCommitDatetime,
+            String pledgeBankCommitNote) {
+        CarPledge carPledge = new CarPledge();
+
+        carPledge.setCode(code);
+        carPledge.setCurNodeCode(nextNodeCode);
+        carPledge.setPledgeBankCommitDatetime(DateUtil
+            .strToDate(pledgeBankCommitDatetime, DateUtil.DATA_TIME_PATTERN_1));
+        carPledge.setPledgeBankCommitNote(pledgeBankCommitNote);
+
+        carPledgeDAO.updateCommitBank(carPledge);
+    }
+
+    @Override
+    public void confirmDone(String code, String nextNodeCode, String operator) {
+        CarPledge carPledge = new CarPledge();
+
+        carPledge.setCode(code);
+        carPledge.setCurNodeCode(nextNodeCode);
+
+        carPledgeDAO.updateConfirmDone(carPledge);
     }
 
     @Override

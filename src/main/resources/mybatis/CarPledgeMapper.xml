@@ -92,7 +92,36 @@
 		)
 	</insert>
 
-	<update id="update_carPledgeStatus" parameterType="carPledge">
+	<update id="update_saleManConfirm" parameterType="carPledge">
+		UPDATE tdq_car_pledge
+		SET
+		pledge_user = #{pledgeUser}
+		,pledge_user_id_card_copy = #{pledgeUserIdCardCopy}
+		,status = #{status}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_entryPledgeInfo" parameterType="carPledge">
+		UPDATE tdq_car_pledge
+		SET
+		pledge_datetime = #{pledgeDatetime}
+		,status = #{status}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_commitBank" parameterType="carPledge">
+		UPDATE tdq_car_pledge
+		SET
+		pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
+		,pledge_bank_commit_note = #{pledgeBankCommitNote}
+		,status = #{status}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_confirmDone" parameterType="carPledge">
 		UPDATE tdq_car_pledge
 		SET
 		status = #{status}

@@ -10,15 +10,19 @@ import com.cdkj.loan.ao.ICarPledgeAO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632124Req;
+import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632144Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.ELogisticsCurNodeType;
+import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
@@ -39,6 +43,9 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private ILogisticsBO logisticsBO;
 
     @Override
     @Transactional
@@ -72,6 +79,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
     }
 
     @Override
+    @Transactional
     public void saleManConfirm(XN632124Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
 
@@ -81,7 +89,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
                 "当前不是业务员确认抵押申请节点，不能操作");
         }
 
-        CarPledge carPledge = carPledgeBO.getCarPledge(req.getCode());
+        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
         String nextNodeCode = nodeFlowBO
             .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
 
@@ -100,6 +108,146 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
             carPledge.getCode(), nextNodeCode, req.getApproveNote(),
             req.getOperator());
+
+        // TODO 生成资料传递
+        String logisticsCode = logisticsBO.saveLogistics(
+            ELogisticsType.BUDGET.getCode(),
+            ELogisticsCurNodeType.CAR_MORTGAGE.getCode(), cdbiz.getCode(),
+            cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(), nextNodeCode, null);
+
+        // 资料传递待办事项
+        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.ZHDY_LOGISTICS,
+            logisticsCode, ENode.matchCode(nextNodeCode), req.getOperator());
+
+        // 资料传递操作日志
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.ZHDY_LOGISTICS,
+            logisticsCode, nextNodeCode, req.getApproveNote(),
+            req.getOperator());
+
+    }
+
+    @Override
+    @Transactional
+    public void entryPledgeInfo(XN632133Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+
+        if (!ENode.input_dy_info.getCode().equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是业务员确认抵押申请节点，不能操作");
+        }
+
+        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
+        String nextNodeCode = nodeFlowBO
+            .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+
+        // 录入抵押信息
+        carPledgeBO.entryPledgeInfo(nextNodeCode, req);
+
+        // TODO 车辆信息录入
+
+        // 更新业务状态
+        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge,
+            carPledge.getCode(), ENode.matchCode(nextNodeCode),
+            req.getOperator());
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
+            carPledge.getCode(), nextNodeCode, null, req.getOperator());
+
+        // TODO 生成资料传递
+        String logisticsCode = logisticsBO.saveLogistics(
+            ELogisticsType.BUDGET.getCode(),
+            ELogisticsCurNodeType.CAR_MORTGAGE.getCode(), cdbiz.getCode(),
+            cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(), nextNodeCode, null);
+
+        // 资料传递待办事项
+        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.ZHDY_LOGISTICS,
+            logisticsCode, ENode.matchCode(nextNodeCode), req.getOperator());
+
+        // 资料传递操作日志
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.ZHDY_LOGISTICS,
+            logisticsCode, nextNodeCode, null, req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void pledgeCommitBank(String code, String operator,
+            String pledgeBankCommitDatetime, String pledgeBankCommitNote) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+
+        // TODO
+        if (!ENode.to_commit_bank.getCode().equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是抵押提交节点，不能操作");
+        }
+
+        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
+        String nextNodeCode = nodeFlowBO
+            .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+
+        // 抵押提交银行
+        carPledgeBO.pledgeCommitBank(code, nextNodeCode, operator,
+            pledgeBankCommitDatetime, pledgeBankCommitNote);
+
+        // 更新业务状态
+        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(code, EBizLogType.Pledge, carPledge.getCode(),
+            ENode.matchCode(nextNodeCode), operator);
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.bank_push,
+            carPledge.getCode(), nextNodeCode, null, operator);
+
+        // TODO 生成资料传递
+        String logisticsCode = logisticsBO.saveLogistics(
+            ELogisticsType.BUDGET.getCode(),
+            ELogisticsCurNodeType.CAR_MORTGAGE.getCode(), cdbiz.getCode(),
+            cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(), nextNodeCode, null);
+
+        // 资料传递待办事项
+        bizTaskBO.saveBizTask(code, EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+            ENode.matchCode(nextNodeCode), operator);
+
+        // 资料传递操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.ZHDY_LOGISTICS,
+            logisticsCode, nextNodeCode, null, operator);
+
+    }
+
+    @Override
+    @Transactional
+    public void confirmDone(String code, String operator) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+
+        if (!ENode.dy_info_confirm_submit.getCode()
+            .equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是抵押提交节点，不能操作");
+        }
+
+        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
+        String nextNodeCode = nodeFlowBO
+            .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+
+        // 抵押确认完成
+        carPledgeBO.confirmDone(code, nextNodeCode, operator);
+
+        // 更新业务状态
+        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(code, EBizLogType.Pledge, carPledge.getCode(),
+            ENode.matchCode(nextNodeCode), operator);
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.bank_push,
+            carPledge.getCode(), nextNodeCode, null, operator);
+
     }
 
     @Override

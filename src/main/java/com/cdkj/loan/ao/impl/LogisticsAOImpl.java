@@ -14,16 +14,12 @@ import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
-import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
-import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
-import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Cdbiz;
@@ -56,12 +52,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
     private ILogisticsBO logisticsBO;
 
     @Autowired
-    private INodeBO nodeBO;
-
-    @Autowired
-    private IUserBO userBO;
-
-    @Autowired
     private INodeFlowBO nodeFlowBO;
 
     @Autowired
@@ -69,9 +59,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private IGpsApplyBO gpsApplyBO;
-
-    @Autowired
-    private IGpsBO gpsBO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -94,270 +81,327 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Override
     @Transactional
     public void sendLogistics(XN632150Req req) {
+
         Logistics logistics = logisticsBO.getLogistics(req.getCode());
+
         if (!ELogisticsStatus.TO_SEND.getCode().equals(logistics.getStatus())
                 && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
                     .equals(logistics.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待发货状态!");
         }
-        // 操作人
+
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             if (logistics.getReceiver().equals(req.getOperator())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "gps申领人不能发件！");
             }
         }
+
         if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())
                 && StringUtils.isBlank(req.getFilelist())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "材料清单不能为空！");
         }
-        // String fileList = "";
-        // for (String file : req.getFilelist()) {
-        // fileList += file + ",";
-        // }
-        // if (StringUtils.isNotBlank(fileList)) {
-        // fileList = fileList.substring(0, fileList.length() - 1);
-        // }
-        logistics.setFilelist(req.getFilelist());
 
         // 发件
-        logistics.setSendType(req.getSendType());
-        logistics.setLogisticsCompany(req.getLogisticsCompany());
-        logistics.setLogisticsCode(req.getLogisticsCode());
+        logistics = logisticsBO.sendLogistics(req);
 
-        logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
-        logistics.setSendNote(req.getSendNote());
-        logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
-        logistics.setSender(req.getOperator());
-        logisticsBO.sendLogistics(logistics);
-        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
-            gpsApplyBO.sendGps(logistics.getBizCode(),
-                logistics.getSendDatetime());
+        switch (ELogisticsType.matchCode(logistics.getType())) {
+            case GPS:
+                gpsApplyBO.sendGps(logistics.getBizCode(),
+                    logistics.getSendDatetime());
+                break;
 
-            // 日志
-            if (ELogisticsStatus.TO_SEND.getCode()
-                .equals(logistics.getStatus())) {
-                sysBizLogBO.saveNewAndPreEndSYSBizLog(logistics.getCode(),
-                    EBizLogType.GPS_LOGISTICS, logistics.getCode(),
-                    ELogisticsStatus.SEND.getCode(),
-                    ELogisticsStatus.RECEIVE.getCode(), req.getSendNote(),
+            case BUDGET:
+
+                Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
+
+                String nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
+                    .getNextNode();
+
+                switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
+                    // 1、业务员寄送银行放款材料
+                    // 2、业务员重寄材料（银行放款）
+                    case submit_1:
+                    case re_submit_1:
+                        cdbizBO.refreshStatus(cdbiz,
+                            ECdbizStatus.A11.getCode());
+                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        break;
+
+                    // TODO 第一次存档节点
+                    // 风控寄送银行放款材料
+                    case submit_2:
+                        cdbizBO.refreshFircundangStatus(cdbiz,
+                            ECdbizStatus.D1.getCode());
+                        break;
+
+                    // 1、风控寄抵押合同
+                    // 2、风控重寄抵押合同
+                    case submit_3:
+                    case re_submit_3:
+                        cdbizBO.refreshStatus(cdbiz,
+                            ECdbizStatus.A19.getCode());
+                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        break;
+
+                    // 1、业务员寄送材料（车辆抵押）
+                    // 2、业务员重寄送材料（车辆抵押）
+                    case submit_4:
+                    case re_submit_4:
+                        cdbizBO.refreshStatus(cdbiz,
+                            ECdbizStatus.A23.getCode());
+                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        break;
+
+                    // 风控审核通过（车辆抵押）
+                    case submit_5:
+                        cdbizBO.refreshStatus(cdbiz,
+                            ECdbizStatus.A26.getCode());
+                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        break;
+
+                    // TODO 第二次存档节点
+                    // 待风控寄件（车辆抵押）
+                    case submit_6:
+                        if (!ECdbizStatus.D3.getCode()
+                            .equals(cdbiz.getFircundangStatus())) {
+                            throw new BizException(
+                                EBizErrorCode.DEFAULT.getCode(),
+                                "第一次存档未完成，无法发件");
+                        }
+                        cdbizBO.refreshSeccundangStatus(cdbiz,
+                            ECdbizStatus.E1.getCode());
+                        break;
+
+                    default:
+                        break;
+                }
+
+                // 完成待办事项
+                bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                    cdbiz.getCode(),
+                    ENode.getMap().get(cdbiz.getCurNodeCode()));
+
+                // 添加待办事项
+                bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
+                    req.getCode(), ENode.getMap().get(cdbiz.getCurNodeCode()),
+                    null);
+
+                // 日志记录
+                sysBizLogBO.recordCurOperate(cdbiz.getCode(),
+                    EBizLogType.BUDGET_ORDER, req.getCode(),
+                    cdbiz.getCurNodeCode(), req.getSendNote(),
                     req.getOperator());
-            }
 
-        } else {
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(logistics.getBizCode());
-            String budgetCurNodeCode = null;
-            String cdbizStatus = null;
+                break;
 
-            switch (ENode.matchCode(budgetOrder.getCurNodeCode())) {
-                // 业务员寄送银行放款材料
-                case submit_1:
-                    budgetCurNodeCode = ENode.receive_approve_1.getCode();
-                    cdbizStatus = ECdbizStatus.A12.getCode();
-                default:
-                    break;
-            }
+            default:
+                break;
 
-            // 完成待办事项
-            bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                budgetOrder.getCode(),
-                ENode.getMap().get(budgetOrder.getCurNodeCode()));
-
-            // 添加待办事项
-            bizTaskBO.saveBizTask(budgetOrder.getBizCode(),
-                EBizLogType.BUDGET_ORDER, req.getCode(),
-                ENode.getMap().get(budgetOrder.getCurNodeCode()), null);
-
-            // 日志记录
-            sysBizLogBO.recordCurOperate(budgetOrder.getBizCode(),
-                EBizLogType.BUDGET_ORDER, req.getCode(),
-                budgetOrder.getCurNodeCode(), req.getSendNote(),
-                req.getOperator());
-
-            // 更新业务状态
-            Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrder.getBizCode());
-            cdbizBO.refreshStatus(cdbiz, cdbizStatus);
-
-            // 更新预算单状态
-            budgetOrder.setCurNodeCode(budgetCurNodeCode);
-            budgetOrderBO.refreshBudgetOrderCurNode(budgetOrder);
-
-            // BudgetOrder budgetOrder = budgetOrderBO
-            // .getBudgetOrder(logistics.getBizCode());
-            // ELogisticsStatus pre = null;
-            // ELogisticsStatus now = null;
-            // EBizLogType bizLogType = null;
-            // if (budgetOrder.getCurNodeCode()
-            // .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
-            // pre = ELogisticsStatus.YWDH_SEND;
-            // now = ELogisticsStatus.YWDH_RECEIVE;
-            // bizLogType = EBizLogType.YWDH_LOGISTICS;
-            // }
-            // if (budgetOrder.getCurNodeCode()
-            // .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
-            // pre = ELogisticsStatus.ZHFK_SEND;
-            // now = ELogisticsStatus.ZHFK_RECEIVE;
-            // bizLogType = EBizLogType.ZHFK_LOGISTICS;
-            // }
-            // if (budgetOrder.getCurNodeCode()
-            // .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
-            // pre = ELogisticsStatus.ZHDY_SEND;
-            // now = ELogisticsStatus.ZHDY_RECEIVE;
-            // bizLogType = EBizLogType.ZHDY_LOGISTICS;
-            // }
-            /*
-             * sysBizLogBO .saveNewAndPreEndSYSBizLog(logistics.getBizCode(),
-             * bizLogType, logistics.getCode(), pre.getCode(), now.getCode(),
-             * req.getSendNote(), req.getOperator(), budgetOrder.getTeamCode());
-             */
         }
     }
 
     @Override
     @Transactional
-    public BooleanRes receiveLogistics(String code, String approveResult,
+    public BooleanRes receiveApprove(String code, String approveResult,
             String operator, String remark) {
-        Logistics data = logisticsBO.getLogistics(code);
-        if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
+        Logistics logistics = logisticsBO.getLogistics(code);
+        if (!ELogisticsStatus.TO_RECEIVE.getCode()
+            .equals(logistics.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待收件状态!");
         }
 
-        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
-            // 收件人必须是申领人
-            if (!operator.equals(data.getReceiver())) {
+        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
+            if (!operator.equals(logistics.getReceiver())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "必须由GPS申领人收件！");
             }
         } else {
-            if (operator.equals(data.getSender())) {
+            if (operator.equals(logistics.getSender())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "收件人不能和发件人同一人！");
             }
         }
 
         String result = EBoolean.NO.getCode();
+        Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
+        String nextNodeCode = null;
 
+        // 更新资料传递状态
         if (EBoolean.YES.getCode().equals(approveResult)) {
             logisticsBO.receiveLogistics(code, operator, remark);
+            nextNodeCode = nodeFlowBO
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
         } else {
             logisticsBO.sendAgainLogistics(code, remark);
+            nextNodeCode = nodeFlowBO
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getBackNode();
         }
 
-        if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
+        switch (ELogisticsType.matchCode(logistics.getType())) {
+            case GPS:
+                gpsApplyBO.receiveGps(logistics.getBizCode());
+                break;
+
+            case BUDGET:
+
+                String bizStatus = null;
+
+                switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
+                    // 风控审核收件（银行放款）
+                    case receive_approve_1:
+                        if (EBoolean.YES.getCode().equals(approveResult)) {
+
+                            cdbizBO.refreshStatus(cdbiz,
+                                ECdbizStatus.A13.getCode());
+                            cdbizBO.refreshFircundangStatus(cdbiz,
+                                ECdbizStatus.D0.getCode());
+
+                            // TODO 生成资料传递
+                            String logisticsCode = logisticsBO.saveLogistics(
+                                ELogisticsType.BUDGET.getCode(),
+                                ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),
+                                cdbiz.getCode(), cdbiz.getSaleUserId(),
+                                cdbiz.getCurNodeCode(), nextNodeCode, null);
+
+                            // 资料传递待办事项
+                            bizTaskBO.saveBizTask(code,
+                                EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                ENode.matchCode(nextNodeCode), operator);
+
+                            // 资料传递操作日志
+                            sysBizLogBO.recordCurOperate(code,
+                                EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                nextNodeCode, null, operator);
+                        } else {
+
+                            cdbizBO.refreshStatus(cdbiz,
+                                ECdbizStatus.A12.getCode());
+
+                        }
+                        break;
+
+                    // 业务员审核抵押合同
+                    case receive_approve_3:
+                        bizStatus = EBoolean.YES.getCode().equals(approveResult)
+                                ? ECdbizStatus.A20.getCode()
+                                : ECdbizStatus.A21.getCode();
+
+                        cdbizBO.refreshStatus(cdbiz, bizStatus);
+                        break;
+
+                    // 风控审核收件（车辆抵押）
+                    case receive_approve_4:
+                        if (EBoolean.YES.getCode().equals(approveResult)) {
+
+                            cdbizBO.refreshStatus(cdbiz,
+                                ECdbizStatus.A24.getCode());
+                            cdbizBO.refreshSeccundangStatus(cdbiz,
+                                ECdbizStatus.E0.getCode());
+
+                            // TODO 生成资料传递
+                            String logisticsCode = logisticsBO.saveLogistics(
+                                ELogisticsType.BUDGET.getCode(),
+                                ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),
+                                cdbiz.getCode(), cdbiz.getSaleUserId(),
+                                cdbiz.getCurNodeCode(), nextNodeCode, null);
+
+                            // 资料传递待办事项
+                            bizTaskBO.saveBizTask(code,
+                                EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                ENode.matchCode(nextNodeCode), operator);
+
+                            // 资料传递操作日志
+                            sysBizLogBO.recordCurOperate(code,
+                                EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                nextNodeCode, null, operator);
+
+                        } else {
+
+                            cdbizBO.refreshStatus(cdbiz,
+                                ECdbizStatus.A25.getCode());
+
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+
+            default:
+                break;
+        }
+
+        if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
             if (ELogisticsCurNodeType.BANK_LOAN.getCode()
-                .equals(data.getCurNodeType())) {
-                result = budgetOrderBO.logicOrderLoan(data.getBizCode(),
+                .equals(logistics.getCurNodeType())) {
+                result = budgetOrderBO.logicOrderLoan(logistics.getBizCode(),
                     operator, approveResult);
             } else {
-                result = budgetOrderBO.logicOrderMortgage(data.getBizCode(),
-                    operator);
+                result = budgetOrderBO
+                    .logicOrderMortgage(logistics.getBizCode(), operator);
             }
-            // BudgetOrder budgetOrder = budgetOrderBO
-            // .getBudgetOrder(data.getBizCode());
-            // ELogisticsStatus pre = null;
-            // EBizLogType bizLogType = null;
-            // if (budgetOrder.getCurNodeCode()
-            // .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
-            // pre = ELogisticsStatus.YWDH_SEND;
-            // bizLogType = EBizLogType.YWDH_LOGISTICS;
-            // }
-            // if (budgetOrder.getCurNodeCode()
-            // .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
-            // pre = ELogisticsStatus.ZHFK_SEND;
-            // bizLogType = EBizLogType.ZHFK_LOGISTICS;
-            // }
-            // if (budgetOrder.getCurNodeCode()
-            // .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
-            // pre = ELogisticsStatus.ZHDY_SEND;
-            // bizLogType = EBizLogType.ZHDY_LOGISTICS;
-            // }
-            /*
-             * sysBizLogBO.refreshPreSYSBizLog(bizLogType.getCode(),
-             * data.getCode(), pre.getCode(), remark, operator);
-             */
-
-        } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
-            gpsApplyBO.receiveGps(data.getBizCode());
-            /*
-             * // 日志 sysBizLogBO.refreshPreSYSBizLog(
-             * EBizLogType.GPS_LOGISTICS.getCode(), data.getCode(),
-             * ELogisticsStatus.RECEIVE.getCode(), remark, operator);
-             */
         }
+
         // 资料传递日志
         sysBizLogBO.refreshPreSYSBizLog(EBizLogType.LOGISTICS.getCode(), code,
-            data.getToNodeCode(), remark, operator);
+            logistics.getToNodeCode(), remark, operator);
         return new BooleanRes(true, result);
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator,
-            String remark) {
-        Logistics data = logisticsBO.getLogistics(code);
-        if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
+    public void receive(String code, String operator, String remark) {
+        Logistics logistics = logisticsBO.getLogistics(code);
+        if (!ELogisticsStatus.TO_RECEIVE.getCode()
+            .equals(logistics.getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态!");
         }
 
-        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
+        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             // 收件人必须是申领人
-            if (!operator.equals(data.getReceiver())) {
+            if (!operator.equals(logistics.getReceiver())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "必须由GPS申领人收件！");
             }
         }
 
-        // 操作人入参验证 CX
-        // SYSUser condition = new SYSUser();
-        // condition.setUserId(operator);
-        // condition.setTeamCode(data.getTeamCode());
-        // long count = sysUserBO.getTotalCount(condition);
-        // if (count <= 0) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "发件人团队人员不能收件！");
-        // }
+        Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
+        String nextNodeCode = nodeFlowBO
+            .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
+
+        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+
+        switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
+
+            // 贷后收件（银行放款）
+            case receive_2:
+                cdbizBO.refreshFircundangStatus(cdbiz,
+                    ECdbizStatus.D2.getCode());
+                break;
+
+            // 银行收件（车辆抵押）
+            case receive_5:
+                cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A27.getCode());
+                break;
+
+            // 待担保公司收件（车辆抵押）
+            case receive_6:
+                cdbizBO.refreshSeccundangStatus(cdbiz,
+                    ECdbizStatus.E2.getCode());
+                break;
+
+            default:
+                break;
+
+        }
+
         logisticsBO.receiveLogistics(code, operator, remark);
-        // if (data.getType().equals(ELogisticsType.GPS.getCode())) {
-        /*
-         * // 日志 sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-         * EBizLogType.GPS_LOGISTICS, data.getCode(),
-         * ELogisticsStatus.RECEIVE.getCode(), ELogisticsStatus.SEND.getCode(),
-         * remark, operator, null);
-         */
-        // } else {
-        // BudgetOrder budgetOrder = budgetOrderBO
-        // .getBudgetOrder(data.getBizCode());
-        // ELogisticsStatus pre = null;
-        // ELogisticsStatus now = null;
-        // EBizLogType bizLogType = null;
-        // if (budgetOrder.getCurNodeCode()
-        // .equals(EBudgetOrderNode.DHAPPROVEDATA.getCode())) {
-        // pre = ELogisticsStatus.YWDH_SEND;
-        // now = ELogisticsStatus.YWDH_RECEIVE;
-        // bizLogType = EBizLogType.YWDH_LOGISTICS;
-        // }
-        // if (budgetOrder.getCurNodeCode()
-        // .equals(EBudgetOrderNode.COMMITBANK3.getCode())) {
-        // pre = ELogisticsStatus.ZHFK_SEND;
-        // now = ELogisticsStatus.ZHFK_RECEIVE;
-        // bizLogType = EBizLogType.ZHFK_LOGISTICS;
-        // }
-        // if (budgetOrder.getCurNodeCode()
-        // .equals(EBudgetOrderNode.MORTGAGECOMMITBANK.getCode())) {
-        // pre = ELogisticsStatus.ZHDY_SEND;
-        // now = ELogisticsStatus.ZHDY_RECEIVE;
-        // bizLogType = EBizLogType.ZHDY_LOGISTICS;
-        // }
-        /*
-         * sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBizCode(), bizLogType,
-         * data.getCode(), pre.getCode(), now.getCode(), remark, operator,
-         * budgetOrder.getTeamCode());
-         */
-        // }
     }
 
     @Override

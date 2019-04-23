@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IGpsApplyAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.GpsApply;
@@ -30,6 +31,15 @@ public class XN632715 extends AProcessor {
         condition.setCompanyCode(req.getCompany());
         condition.setApplyUser(req.getApplyUser());
         condition.setStatus(req.getStatus());
+
+        if (StringUtils.isNotBlank(req.getApplyCount())) {
+            condition.setApplyCount(Integer.parseInt(req.getApplyCount()));
+        }
+
+        condition.setApplyDatetimeStart(DateUtil.strToDate(
+            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setApplyDatetimeEnd(DateUtil.strToDate(
+            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

@@ -20,6 +20,15 @@ public enum ELogisticsType {
         return map;
     }
 
+    public static ELogisticsType matchCode(String code) {
+        for (ELogisticsType eLogisticsType : ELogisticsType.values()) {
+            if (eLogisticsType.code.equalsIgnoreCase(code)) {
+                return eLogisticsType;
+            }
+        }
+        return null;
+    }
+
     ELogisticsType(String code, String value) {
         this.code = code;
         this.value = value;

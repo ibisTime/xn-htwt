@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * 分页查询支行
  * @author: silver 
@@ -16,7 +14,6 @@ public class XN632055Req extends APageReq {
     private static final long serialVersionUID = -3646680350039454519L;
 
     // 银行编号
-    @NotBlank
     private String bankCode;
 
     // 简称

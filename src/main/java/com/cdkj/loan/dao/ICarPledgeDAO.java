@@ -6,8 +6,12 @@ import com.cdkj.loan.domain.CarPledge;
 public interface ICarPledgeDAO extends IBaseDAO<CarPledge> {
     String NAMESPACE = ICarPledgeDAO.class.getName().concat(".");
 
-    int update(CarPledge carPledge);
+    int updateSaleManConfirm(CarPledge carPledge);
 
-    int updateStatus(CarPledge carPledge);
+    int updateEntryPledgeInfo(CarPledge carPledge);
+
+    int updateCommitBank(CarPledge carPledge);
+
+    int updateConfirmDone(CarPledge carPledge);
 
 }

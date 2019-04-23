@@ -40,12 +40,30 @@ public enum ENode {
 
     re_submit_1("e1x", "业务员重寄材料（银行放款）"), fk_submit("e3", "风控提交银行"),
     
-    fk_input("e4", "风控录入银行放款信息"), cw_confirm_receipt("e5","待财务确认银行收款"),
+    fk_input("e4", "风控录入银行放款信息"), cw_confirm_receipt("e5","财务确认银行收款"),
     
-    bank_receipt("e6","银行收款"),
+    bank_receipt("e6","银行收款"), submit_2("e7","风控寄送银行放款材料"),
+    
+    receive_2("e8","贷后收件（银行放款）"),first_receive_archive("e9","第一次已收件待存档"),
+    
+    first_archive("e10","第一次已存档"),
     
     // 车辆抵押
-    confirm_pledge_apply("f1","待业务员确认抵押申请"),
+    confirm_pledge_apply("f1","待业务员确认抵押申请"), submit_3("f2","风控寄抵押合同"),
+    
+    receive_approve_3("f3","业务员审核抵押合同"), re_submit_3("f2x","风控重寄抵押合同"),
+    
+    input_dy_info("f4","业务员录入抵押信息"), submit_4("f5","业务员寄送材料（车辆抵押）"), 
+    
+    receive_approve_4("f6","风控审核收件（车辆抵押）"), re_submit_4("f5x","业务员重寄送材料（车辆抵押）"), 
+    
+    submit_5("f7","风控审核通过（车辆抵押）"), receive_5("f8","银行收件（车辆抵押）"),
+    
+    to_commit_bank("f9", "提交银行"), dy_info_confirm_submit("f10","抵押材料已确认提交"),
+    
+    submit_6("f11", "待风控寄件（车辆抵押）"), receive_6("f12","待担保公司收件（车辆抵押）"),
+    
+    second_received_archive("f13","第二次已收件待存档"), second_archive("f14","第二次已存档"),
     
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(

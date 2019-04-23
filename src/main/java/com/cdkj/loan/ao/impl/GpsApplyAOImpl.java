@@ -87,13 +87,19 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
         data.setApplyReason(req.getApplyReason());
-        data.setApplyWiredCount(
-            StringValidater.toInteger(req.getApplyWiredCount()));
-        data.setApplyWirelessCount(
-            StringValidater.toInteger(req.getApplyWirelessCount()));
-        data.setApplyCount(
-            data.getApplyWiredCount() + data.getApplyWirelessCount());
+
+        Integer wiredCount = StringValidater
+            .toInteger(req.getApplyWiredCount());
+        wiredCount = wiredCount == null ? 0 : wiredCount;
+        Integer wirelessCount = StringValidater
+            .toInteger(req.getApplyWirelessCount());
+        wirelessCount = wirelessCount == null ? 0 : wirelessCount;
+
+        data.setApplyWiredCount(wiredCount);
+        data.setApplyWirelessCount(wirelessCount);
+        data.setApplyCount(wiredCount + wirelessCount);
         data.setTeamCode(req.getTeamCode());
+
         if (StringUtils.isNotBlank(req.getBudgetOrderCode())) {
             // 验证预算单编号存不存在
             BudgetOrder budgetOrder = new BudgetOrder();
