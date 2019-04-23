@@ -14,7 +14,7 @@ public class XN632112Req {
 
     // 征信单编号
     @NotBlank
-    private String creditCode;
+    private String bizCode;
 
     // 贷款银行
     private String loanBankCode;
@@ -114,12 +114,12 @@ public class XN632112Req {
         this.operator = operator;
     }
 
-    public String getCreditCode() {
-        return creditCode;
+    public String getBizCode() {
+        return bizCode;
     }
 
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
 }

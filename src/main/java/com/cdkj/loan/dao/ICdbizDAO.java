@@ -29,6 +29,8 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
 
     public int updateInsideJob(Cdbiz data);
 
+    public int updateCdbiz(Cdbiz data);
+
     List<Cdbiz> selectListByRoleCode(Cdbiz condition, int start, int count);
 
     long selectTotalCountByRoleCode(Cdbiz condition);

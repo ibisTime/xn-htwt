@@ -134,7 +134,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
 
     @Override
     public int refreshCdbiz(Cdbiz data) {
-        // TODO Auto-generated method stub
+        cdbizDAO.updateCdbiz(data);
         return 0;
     }
 

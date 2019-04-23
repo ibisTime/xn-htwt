@@ -2,6 +2,7 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
@@ -25,18 +26,7 @@ public class XN632515 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Cdbiz condition = new Cdbiz();
-        condition.setCode(req.getCode());
-        condition.setBizType(req.getBizType());
-        condition.setBizCode(req.getBizCode());
-        condition.setBankCode(req.getBankCode());
-        condition.setStatus(req.getStatus());
-        condition.setMqStatus(req.getMqStatus());
-        condition.setFbhgpsStatus(req.getFbhgpsStatus());
-        condition.setFircundangStatus(req.getFircundangStatus());
-        condition.setSeccundangStatus(req.getSeccundangStatus());
-        condition.setZfStatus(req.getZfStatus());
-        condition.setYwyUser(req.getYwyUser());
-        condition.setTeamCode(req.getTeamCode());
+        EntityUtils.copyData(req, condition);
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return cdbizAO.queryCdbizPage(start, limit, condition);

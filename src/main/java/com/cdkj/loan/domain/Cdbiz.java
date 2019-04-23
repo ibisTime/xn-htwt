@@ -158,6 +158,28 @@ public class Cdbiz extends ABaseDO {
     // 贷款银行
     private String loanBankName;
 
+    // 申请时间起
+    private Date applyDatetimeStart;
+
+    // 申请时间止
+    private Date applyDatetimeEnd;
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
     public String getLoanBankName() {
         return loanBankName;
     }

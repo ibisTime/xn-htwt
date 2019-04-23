@@ -24,6 +24,7 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
@@ -39,6 +40,7 @@ import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112Req;
+import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
@@ -52,6 +54,7 @@ import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
@@ -174,6 +177,23 @@ public class CdbizAOImpl implements ICdbizAO {
         String bizCode = cdbizBO.saveCdbiz(req.getLoanBankCode(),
             req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
             sysUser, currentNode.getCode());
+        if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
+            // 二手车报告
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.second_car_report.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getSecondCarReport());
+            // 行驶证正面
+            attachName = EAttachName.getMap().get(
+                EAttachName.xsz_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getXszFront());
+            // 行驶证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.xsz_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getXszReverse());
+        }
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             Cdbiz cdbiz = cdbizBO.getCdbiz(bizCode);
             currentNode = ENode.getMap().get(
@@ -220,6 +240,85 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     public void editCredit(XN632112Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
+        if (!ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())
+                && !ECdbizStatus.A0.getCode().equals(cdbiz.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该业务不处于征信审核不通过或新录状态状态，无法修改征信");
+        }
+
+        String bizCode = req.getBizCode();
+        if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
+
+            // 二手车报告
+            EAttachName attachName = EAttachName.getMap().get(
+                EAttachName.second_car_report.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getSecondCarReport());
+            // 行驶证正面
+            attachName = EAttachName.getMap().get(
+                EAttachName.xsz_front.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getXszFront());
+            // 行驶证反面
+            attachName = EAttachName.getMap().get(
+                EAttachName.xsz_reverse.getCode());
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getXszReverse());
+        }
+        // 之前节点
+        String preCurNodeCode = cdbiz.getCurNodeCode();
+        ENode node = ENode.getMap().get(preCurNodeCode);
+        // 更新当前节点
+        if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
+            // 操作日志
+            sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT, bizCode,
+                node.getCode(), node.getValue(), req.getOperator());
+            // 处理之前的待办事项
+            bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(), bizCode,
+                node);
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode);
+
+            preCurNodeCode = nodeFlow.getNextNode();
+            cdbizBO.refershCurNodeCode(cdbiz, preCurNodeCode);
+            // 修改业务主状态
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1.getCode());
+            // 确认节点
+            node = ENode.getMap().get(preCurNodeCode);
+
+        }
+        // 修改业务
+        EntityUtils.copyData(req, cdbiz);
+        cdbizBO.refreshCdbiz(cdbiz);
+
+        // 删除
+        creditUserBO.removeCreditUserByBizCode(bizCode);
+
+        List<XN632112ReqCreditUser> childList = req.getCreditUserList();
+        int applyUserCount = 0;
+        if (CollectionUtils.isNotEmpty(childList)) {
+            for (XN632112ReqCreditUser child : childList) {
+                if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+                    applyUserCount++;
+                }
+                if (applyUserCount > 1) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "征信申请人只能填写一条数据");
+                }
+
+                creditUserBO.saveCreditUser(child, bizCode);
+            }
+
+            if (applyUserCount <= 0) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "请填写征信申请人贷款角色数据");
+            }
+        }
+
+        // 待办事项
+        bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, bizCode, node,
+            req.getOperator());
 
     }
 
@@ -251,16 +350,41 @@ public class CdbizAOImpl implements ICdbizAO {
                 reqCreditUser.getBankCreditReport(),
                 reqCreditUser.getDataCreditReport(),
                 reqCreditUser.getBankResult(), reqCreditUser.getCreditNote());
-            // 银行征信报告
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.bank_credit_report.getCode());
-            attachmentBO.saveAttachment(req.getBizCode(), attachName.getCode(),
-                attachName.getValue(), reqCreditUser.getBankCreditReport());
-            // 大数据征信报告
-            attachName = EAttachName.getMap().get(
-                EAttachName.data_credit_report.getCode());
-            attachmentBO.saveAttachment(req.getBizCode(), attachName.getCode(),
-                attachName.getValue(), reqCreditUser.getDataCreditReport());
+            if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+                // 银行征信报告
+                EAttachName attachName = EAttachName.mainLoaner_bank;
+                attachmentBO.saveAttachment(req.getBizCode(),
+                    attachName.getCode(), attachName.getValue(),
+                    reqCreditUser.getBankCreditReport());
+                // 大数据征信报告
+                attachName = EAttachName.mainLoaner_data;
+                attachmentBO.saveAttachment(req.getBizCode(),
+                    attachName.getCode(), attachName.getValue(),
+                    reqCreditUser.getDataCreditReport());
+            } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+                // 银行征信报告
+                EAttachName attachName = EAttachName.replier_bank;
+                attachmentBO.saveAttachment(req.getBizCode(),
+                    attachName.getCode(), attachName.getValue(),
+                    reqCreditUser.getBankCreditReport());
+                // 大数据征信报告
+                attachName = EAttachName.replier_data;
+                attachmentBO.saveAttachment(req.getBizCode(),
+                    attachName.getCode(), attachName.getValue(),
+                    reqCreditUser.getDataCreditReport());
+            } else {
+                // 银行征信报告
+                EAttachName attachName = EAttachName.assurance_bank;
+                attachmentBO.saveAttachment(req.getBizCode(),
+                    attachName.getCode(), attachName.getValue(),
+                    reqCreditUser.getBankCreditReport());
+                // 大数据征信报告
+                attachName = EAttachName.assurance_data;
+                attachmentBO.saveAttachment(req.getBizCode(),
+                    attachName.getCode(), attachName.getValue(),
+                    reqCreditUser.getDataCreditReport());
+            }
+
         }
 
     }
