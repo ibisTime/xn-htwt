@@ -38,12 +38,22 @@ public enum ENode {
     // 银行放款节点
     submit_1("e1", "业务员寄送银行放款材料"), receive_approve_1("e2","风控审核收件（银行放款）"),
 
+    re_submit_1("e1x", "业务员重寄材料（银行放款）"), fk_submit("e3", "风控提交银行"),
+    
+    fk_input("e4", "风控录入银行放款信息"), cw_confirm_receipt("e5","待财务确认银行收款"),
+    
+    bank_receipt("e6","银行收款"),
+    
+    // 车辆抵押
+    confirm_pledge_apply("f1","待业务员确认抵押申请"),
+    
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(
             "001_02", "录入征信结果"), AUDIT("001_03", "风控专员审核"), ACHIEVE("001_04",
             "征信完成"), BACK("001_05", "征信退回，重新发起征信"), AUDIT_NO_PASS("001_06",
             "风控专员审核不通过，重新录入征信结果"), CANCEL("001_07", "征信撤回，重新发起征信");
 
+    
     public static Map<String, ENode> getMap() {
         Map<String, ENode> map = new HashMap<String, ENode>();
         for (ENode node : ENode.values()) {

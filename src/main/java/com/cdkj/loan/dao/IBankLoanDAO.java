@@ -6,8 +6,10 @@ import com.cdkj.loan.domain.BankLoan;
 public interface IBankLoanDAO extends IBaseDAO<BankLoan> {
     String NAMESPACE = IBankLoanDAO.class.getName().concat(".");
 
-    int update(BankLoan bankLoan);
+    int updateCommitBank(BankLoan bankLoan);
 
-    int updateStatus(BankLoan bankLoan);
+    int updateEntryFkInfo(BankLoan bankLoan);
+
+    int confirmSk(BankLoan bankLoan);
 
 }

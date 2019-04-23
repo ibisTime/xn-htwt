@@ -8,9 +8,13 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBankLoanBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankLoanDAO;
 import com.cdkj.loan.domain.BankLoan;
+import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -34,12 +38,33 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
     }
 
     @Override
-    public int refreshBankLoan(BankLoan data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            count = bankLoanDAO.update(data);
-        }
-        return count;
+    public void commitBank(String code, String nextNodeCode, String operator,
+            String bankCommitDatetime, String bankCommitNote) {
+        BankLoan bankLoan = new BankLoan();
+
+        bankLoan.setCode(code);
+        bankLoan.setCurNodeCode(nextNodeCode);
+        bankLoan.setBankCommitDatetime(DateUtil.strToDate(bankCommitDatetime,
+            DateUtil.DATA_TIME_PATTERN_1));
+        bankLoan.setBankCommitNote(bankCommitNote);
+
+        bankLoanDAO.updateCommitBank(bankLoan);
+    }
+
+    @Override
+    public void entryFkInfo(String nextNodeCode, XN632135Req req) {
+        BankLoan bankLoan = EntityUtils.copyData(req, BankLoan.class);
+        bankLoan.setCurNodeCode(nextNodeCode);
+
+        bankLoanDAO.updateEntryFkInfo(bankLoan);
+    }
+
+    @Override
+    public void confirmSk(String nextNodeCode, XN632130Req req) {
+        BankLoan bankLoan = EntityUtils.copyData(req, BankLoan.class);
+        bankLoan.setCurNodeCode(nextNodeCode);
+
+        bankLoanDAO.confirmSk(bankLoan);
     }
 
     @Override
@@ -60,4 +85,19 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
         }
         return data;
     }
+
+    @Override
+    public BankLoan getBankLoanByBiz(String bizCode) {
+        BankLoan data = null;
+        if (StringUtils.isNotBlank(bizCode)) {
+            BankLoan condition = new BankLoan();
+            condition.setBizCode(bizCode);
+            data = bankLoanDAO.select(condition);
+            if (data == null) {
+                throw new BizException("xn0000", "银行放款不存在");
+            }
+        }
+        return data;
+    }
+
 }

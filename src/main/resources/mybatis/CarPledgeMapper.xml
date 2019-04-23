@@ -81,38 +81,14 @@
 		,biz_code
 		,status
 		,cur_node_code
-		,pledge_user
-		
-		,pledge_user_id_card_copy
-		,pledge_address
-		,pledge_datetime
-		,pledge_bank_commit_datetime
-		,pledge_bank_commit_note
-		
 		,pledge_supplement_note
-		,pledge_contract_code
-		,pledge_print_template_id
-		,pledge_print_user
-		,pledge_print_datetime
 		)
 		VALUES(
 		#{code}
 		,#{bizCode}
 		,#{status}
 		,#{curNodeCode}
-		,#{pledgeUser}
-		
-		,#{pledgeUserIdCardCopy}
-		,#{pledgeAddress}
-		,#{pledgeDatetime}
-		,#{pledgeBankCommitDatetime}
-		,#{pledgeBankCommitNote}
-		
 		,#{pledgeSupplementNote}
-		,#{pledgeContractCode}
-		,#{pledgePrintTemplateId}
-		,#{pledgePrintUser}
-		,#{pledgePrintDatetime}
 		)
 	</insert>
 

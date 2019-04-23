@@ -46,14 +46,19 @@ public class BankLoanDAOImpl extends AMybatisTemplate implements IBankLoanDAO {
     }
 
     @Override
-    public int update(BankLoan bankLoan) {
-        return super.update(NAMESPACE.concat("update_bankLoan"), bankLoan);
+    public int updateCommitBank(BankLoan bankLoan) {
+        return super.update(NAMESPACE.concat("update_commitBankLoan"),
+            bankLoan);
     }
 
     @Override
-    public int updateStatus(BankLoan bankLoan) {
-        return super.update(NAMESPACE.concat("update_bankLoanStatus"),
-            bankLoan);
+    public int updateEntryFkInfo(BankLoan bankLoan) {
+        return super.update(NAMESPACE.concat("update_entryFkInfo"), bankLoan);
+    }
+
+    @Override
+    public int confirmSk(BankLoan bankLoan) {
+        return super.update(NAMESPACE.concat("update_confirmSk"), bankLoan);
     }
 
 }

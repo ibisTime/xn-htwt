@@ -15,35 +15,46 @@ public class Attachment extends ABaseDO {
     // 编号
     private String code;
 
-    // 名称
-    private String name;
-
     // 业务编号
     private String bizCode;
 
-    // 附件类型
+    // 附件分类
+    private String category;
+
+    // 附件key
+    private String kname;
+
+    // 附件value
+    private String vname;
+
+    // 附件类型（图片/视频/网页）
     private String attachType;
 
     // url地址
     private String url;
 
-    // 文件名称
-    private String nameString;
-
-    public String getNameString() {
-        return nameString;
+    public String getCategory() {
+        return category;
     }
 
-    public void setNameString(String nameString) {
-        this.nameString = nameString;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getName() {
-        return name;
+    public String getKname() {
+        return kname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKname(String kname) {
+        this.kname = kname;
+    }
+
+    public String getVname() {
+        return vname;
+    }
+
+    public void setVname(String vname) {
+        this.vname = vname;
     }
 
     public void setCode(String code) {

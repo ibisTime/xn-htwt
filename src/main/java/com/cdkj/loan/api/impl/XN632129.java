@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.IBankLoanAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -17,14 +17,14 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @history:
  */
 public class XN632129 extends AProcessor {
-    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
-        .getBean(IBudgetOrderAO.class);
+    private IBankLoanAO bankLoanAO = SpringContextHolder
+        .getBean(IBankLoanAO.class);
 
     private XN632129Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.commitBank(req.getCode(), req.getOperator(),
+        bankLoanAO.commitBank(req.getCode(), req.getOperator(),
             req.getBankCommitDatetime(), req.getBankCommitNote());
         return new BooleanRes(true);
     }
