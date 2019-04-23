@@ -12,49 +12,57 @@ public class SCDM_IDAO {
     private static String key = "cdbiz";
 
     // 实体名称
-    private static String keyName = "车贷业务";
+    private static String keyName = "车辆信息";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tqj_mission";
+    private static String dbname = "tdq_car_info";
 
-    private static String[] DBwords = { "code", "biz_code", "type", "biz_type",
-            "repay_biz_code", "company_code",
+    private static String[] DBwords = { "code", "biz_code", "car_brand",
+            "car_series", "car_model",
 
-            "team_code", "captain_code", "sale_user_id", "inside_job",
-            "loan_bank",
+            "car_model_name", "car_type", "car_color", "car_frame_no",
+            "car_engine_no",
 
-            "loan_amount", "enter_location", "enter_datetime",
-            "enter_filelist", "status",
+            "original_price", "invoice_price", "vehicle_company_name",
+            "invoice_company", "region",
 
-            "mq_status", "make_card_status", "fbhgps_status",
-            "fircundang_status", "seccundang_status",
+            "evaluate_column", "settle_address", "policy_datetime",
+            "policy_due_date", "car_dealer_code",
 
-            "zf_status", "cur_node_code", "intev_cur_node_code",
-            "make_card_node", "fbhgps_node",
+            "out_car_dealer_name", "shop_way", "commerce_insurance",
+            "guarantee_contract_code", "bank_contract_code",
 
-            "cancel_node", "is_gps_az", "is_financing", "is_advance_fund",
-            "is_plat_insure",
+            "contract_sign_date", "reg_certificate_code", "second_odometer",
+            "check_approve_link", "check_approve_software",
 
-            "should_fee_amount", "real_fee_amount", "gua_mode", "credit_note",
-            "apply_datetime", "remark" };
+            "information_source", "valuation", "car_168_price",
+            "second_number", "is_right_invoice",
 
-    private static String[] DBwordsName = { "编号", "业务编号", "预算单类型", "业务类型",
-            "还款业务编号", "公司编号",
+            "current_invoice_price", "green_big_code", "car_number",
+            "car_settle_datetime", "car_dealer_subsidy",
 
-            "业务团队编号", "团队长编号", "业务员编号", "内勤编号", "放款银行"
+            "oil_subsidy", "oil_subsidy_kil", "gps_deduct", "gps_fee_way" };
 
-            , "放款金额", "入档位置", "入档时间", "档案目录", "主状态"
+    private static String[] DBwordsName = { "编号", "业务编号", "品牌", "车系", "车型",
 
-            , "面签状态", "制卡状态", "发保合状态", "首次存档状态", "第二次存档状态"
+    "车型名称", "车辆类型", "颜色", "车架号", "发动机号",
 
-            , "作废状态", "当前节点", "面签节点", "制卡节点", "发保合节点"
+    "市场指导价", "开票价", "机动车销售公司", "开票单位", "所属区域",
 
-            , "业务作废节点", "是否需要安装gps", "是否融资", "是否垫资", "是否我司续保"
+    "评估栏", "所属区域", "保单日期", "保单到期日", "汽车经销商编号",
 
-            , "应收手续费总额", "实收手续费总额", "担保方式", "征信节点", "申请时间", "备注" };
+    "汽车经销商名称（外单）", "购车途径", "商业险合计", "担保合同编号", "银行合同编号",
+
+    "合同签订日", "登记证书号", "里程表", "核准链接", "核准软件",
+
+    "信息源", "评估价", "车行168车价", "铭牌", "发票是否正确",
+
+    "现发票价", "绿大本编号", "车牌号", "车辆落户日期", "汽车经销商厂家贴息",
+
+    "油补", "油补公里数", "GPS提成", "GPS收费方式（1转账2按揭款3返点4不收费）" };
 
     public void testname() throws Exception {
     }

@@ -324,7 +324,66 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     public void audit(XN632113Req req) {
-        // TODO Auto-generated method stub
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        sysUserBO.getUser(req.getOperator());
+        // 业务状态判断
+        if (!ECdbizStatus.A2.getCode().equals(cdbiz.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该业务不处于待审核征信状态");
+        }
+
+        // 当前节点
+        String preCurrentNode = cdbiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
+
+        // 审核通过
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            for (CreditUser creditUser : req.getCreditUserList()) {
+                CreditUser user = creditUserBO.getCreditUser(creditUser
+                    .getCode());
+                user.setRelation(creditUser.getRelation());
+                user.setLoanRole(creditUser.getLoanRole());
+                creditUserBO.refreshCreditUserLoanRole(user);
+            }
+            // 审核通过，改变节点
+            cdbizBO.refershCurNodeCode(cdbiz, nodeFlow.getNextNode());
+            // 修改业务状态
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode());
+            // 业务出现面签状态
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B00.getCode());
+            // 保存准入单
+            String budgetCode = budgetOrderBO.saveBudgetOrder(credit,
+                req.getCreditUserList());
+
+            // 准入单开始的待办事项
+            bizTaskBO.saveBizTask(credit.getBizCode(),
+                EBizLogType.BUDGET_ORDER, budgetCode, ENode.input_budget,
+                req.getOperator());
+
+            // 面签开始的待办事项
+            bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.INTERVIEW,
+                budgetCode, ENode.input_interview, req.getOperator());
+
+        } else {
+
+            cdbizBO.refershCurNodeCode(cdbiz, nodeFlow.getBackNode());
+            // 重录征信单待办事项
+            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.CREDIT,
+                req.getCode(), ENode.renew_credit, cdbiz.getSaleUserId());
+
+            // 业务状态修改
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1x.getCode());
+
+        }
+
+        // 日志记录
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.CREDIT,
+            req.getCode(), preCurrentNode, req.getApproveNote(),
+            req.getOperator());
+
+        // 处理待审核待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(), req.getCode(),
+            ENode.approve_credit);
 
     }
 
