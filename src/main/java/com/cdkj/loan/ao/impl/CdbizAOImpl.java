@@ -25,7 +25,6 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.BizTask;
-import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
@@ -123,12 +122,9 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     private void init(Cdbiz cdbiz) {
-        Credit credit = creditBO.getCreditByBizCode(cdbiz.getCode());
-        creditAO.initCredit(credit);
-        cdbiz.setCredit(credit);
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrderByBizCode(cdbiz
-            .getCode());
-        cdbiz.setBudgetOrder(budgetOrder);
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
+            cdbiz.getCode(), ELoanRole.APPLY_USER);
+        cdbiz.setCreditUser(creditUser);
         List<BizTask> bizTasks = bizTaskBO.queryBizTaskByBizCode(cdbiz
             .getCode());
         cdbiz.setBizTasks(bizTasks);
@@ -161,12 +157,15 @@ public class CdbizAOImpl implements ICdbizAO {
             req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
             sysUser, currentNode.getCode());
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
+            Cdbiz cdbiz = cdbizBO.getCdbiz(bizCode);
             currentNode = ENode.getMap().get(
                 nodeFlowBO.getNodeFlowByCurrentNode(ENode.new_credit.getCode())
                     .getNextNode());
+            // 面签节点
+            cdbizBO.refreshIntevCurNodeCode(cdbiz,
+                ENode.input_interview.getCode());
             // 修改业务主状态
-            cdbizBO.refreshStatus(cdbizBO.getCdbiz(bizCode),
-                ECdbizStatus.A1.getCode());
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1.getCode());
             // 操作日志
             sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT, bizCode,
                 currentNode.getCode(), req.getNote(), sysUser.getUserId());

@@ -524,7 +524,7 @@ public class CreditAOImpl implements ICreditAO {
             .queryCreditUserList(credit.getCode());
         credit.setCreditUserList(creditUserList);
         // 从征信人员表查申请人的客户姓名 手机号 身份证号
-        credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
+        credit.setCreditUser(creditUserBO.getCreditUserByBizCode(
             credit.getCode(), ELoanRole.APPLY_USER));
         // 从用户表查业务员姓名
         SYSUser user = sysUserBO.getUser(cdbiz.getYwyUser());

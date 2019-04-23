@@ -152,6 +152,17 @@ public class Cdbiz extends ABaseDO {
 
     private String userId;
 
+    // 主贷人
+    private CreditUser creditUser;
+
+    public CreditUser getCreditUser() {
+        return creditUser;
+    }
+
+    public void setCreditUser(CreditUser creditUser) {
+        this.creditUser = creditUser;
+    }
+
     public String getUserId() {
         return userId;
     }

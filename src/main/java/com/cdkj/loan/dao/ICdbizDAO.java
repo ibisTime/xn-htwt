@@ -32,4 +32,6 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
     List<Cdbiz> selectListByRoleCode(Cdbiz condition, int start, int count);
 
     long selectTotalCountByRoleCode(Cdbiz condition);
+
+    public int updateIntevNode(Cdbiz data);
 }

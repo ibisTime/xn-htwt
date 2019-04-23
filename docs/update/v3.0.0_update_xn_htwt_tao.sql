@@ -32,6 +32,7 @@ CHANGE COLUMN `team_code` `team_code` VARCHAR(32) NULL AFTER `company_code`,
 CHANGE COLUMN `main_loaner` `type` VARCHAR(4) NULL DEFAULT NULL ,
 CHANGE COLUMN `bank_code` `biz_type` VARCHAR(4) NULL DEFAULT NULL ,
 CHANGE COLUMN `biz_type` `repay_biz_code` VARCHAR(32) NULL DEFAULT NULL ,
+CHANGE COLUMN `bank_credit_result_pdf` `bank_credit_result` VARCHAR(4) NULL DEFAULT NULL ,
 CHANGE COLUMN `dk_amount` `company_code` VARCHAR(32) NULL DEFAULT NULL ;
 
 

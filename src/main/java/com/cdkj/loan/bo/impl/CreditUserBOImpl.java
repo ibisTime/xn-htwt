@@ -43,7 +43,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         CreditUser creditUser = new CreditUser();
         code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER.getCode());
         creditUser.setCode(code);
-
+        creditUser.setBizCode(bizCode);
         creditUser.setRelation(child.getRelation());
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());

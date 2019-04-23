@@ -228,7 +228,7 @@
 		,t.apply_datetime
 		,t.remark
 		FROM
-		tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code or t.advanf_cur_node_code = trn.node_code)
+		tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code  )
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -239,7 +239,7 @@
 	
 	<select id="select_cdbiz_count_byRoleCode" parameterType="budgetOrder"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code or t.advanf_cur_node_code = trn.node_code)
+		SELECT count(1) FROM (SELECT distinct code FROM tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code  )
 		<include refid="where_condition" />) tb
 	</select>
 

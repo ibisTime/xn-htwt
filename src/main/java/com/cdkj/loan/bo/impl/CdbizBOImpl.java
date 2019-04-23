@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -86,6 +87,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbiz.setInsideJob(sysUser.getUserId());
         cdbiz.setLoanBank(bankCode);
         cdbiz.setLoanAmount(dkAmount);
+        cdbiz.setApplyDatetime(new Date());
         cdbiz.setStatus(ECdbizStatus.A0.getCode());
         cdbiz.setCurNodeCode(node);
         cdbiz.setZfStatus("0");
@@ -182,6 +184,12 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             limit);
         page.setList(dataList);
         return page;
+    }
+
+    @Override
+    public void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode) {
+        cdbiz.setIntevCurNodeCode(intevCurNodeCode);
+        cdbizDAO.updateIntevNode(cdbiz);
     }
 
 }

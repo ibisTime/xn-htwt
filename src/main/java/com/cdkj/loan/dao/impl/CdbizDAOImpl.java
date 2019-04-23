@@ -109,4 +109,9 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
             NAMESPACE.concat("select_cdbiz_count_byRoleCode"), condition);
     }
 
+    @Override
+    public int updateIntevNode(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_intevNode"), data);
+    }
+
 }
