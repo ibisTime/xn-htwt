@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632123Req;
 
 //CHECK ��鲢��ע�� 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
@@ -51,4 +52,6 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public void refreshInsideJob(Cdbiz cdbiz, String insideJob);
 
     public void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
+
+    public void interview(Cdbiz cdbiz, XN632123Req req);
 }

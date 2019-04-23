@@ -17,6 +17,7 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.IMissionBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -30,6 +31,7 @@ import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
@@ -39,12 +41,17 @@ import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
+import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ELogisticsCurNodeType;
+import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
@@ -93,6 +100,9 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private ILogisticsBO logisticsBO;
 
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
@@ -283,5 +293,101 @@ public class CdbizAOImpl implements ICdbizAO {
         // 新增该内勤的待办事项
         bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.CREDIT,
             cdbiz.getCode(), ENode.input_credit, req.getInsideJob());
+    }
+
+    @Override
+    public void interview(XN632123Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        String preCurrentNode = cdbiz.getIntevCurNodeCode();
+        if (!ENode.input_interview.getCode().equals(preCurrentNode)
+                && !ENode.reinput_interview.getCode().equals(preCurrentNode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是新录/重录面签节点，不能操作");
+        }
+
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
+
+        if (EBoolean.YES.getCode().equals(req.getIsSend())) {
+            cdbizBO.refreshIntevCurNodeCode(cdbiz, nodeFlow.getNextNode());
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B01.getCode());
+        }
+        cdbizBO.interview(cdbiz, req);
+
+        // 操作日志
+        ENode node = ENode.getMap().get(preCurrentNode);
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.INTERVIEW,
+            req.getCode(), node.getCode(), node.getValue(), req.getOperator());
+
+        // 添加待办事项
+        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.INTERVIEW,
+            req.getCode(), ENode.approve_interview, req.getOperator());
+        // 处理之前的待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
+            req.getCode(), ENode.getMap().get(preCurrentNode));
+
+    }
+
+    @Override
+    public void interviewInternalApprove(String code, String operator,
+            String approveResult, String approveNote) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ENode.approve_interview.getCode().equals(
+            cdbiz.getIntevCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是内勤主管审核节点，不能操作");
+        }
+
+        String preCurrentNode = cdbiz.getIntevCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
+        String intevCurNodeCode = cdbiz.getIntevCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            intevCurNodeCode = nodeFlow.getNextNode();
+            // 生成资料传递
+            String logisticsCode = logisticsBO.saveLogistics(
+                ELogisticsType.BUDGET.getCode(),
+                ELogisticsCurNodeType.BANK_LOAN.getCode(), cdbiz.getCode(),
+                cdbiz.getSaleUserId(), preCurrentNode, nodeFlow.getNextNode(),
+                null);
+            // 产生物流单后改变状态为物流传递中
+            // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+            // budgetOrderBO.updateIsLogistics(budgetOrder);
+
+            // 资料传递日志
+            sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
+                logisticsCode, cdbiz.getIntevCurNodeCode());
+
+            // 更新面签业务状态
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B03.getCode());
+
+            // 如果主流程节点在中间节点，往后走一步
+            // if (EBudgetOrderNode.BUDFINSH_INTEVUNDONE.getCode()
+            // .equals(budgetOrder.getCurNodeCode())) {
+            // budgetOrder
+            // .setCurNodeCode(EBudgetOrderNode.FINANCEAUDIT.getCode());
+            // budgetOrderBO.refreshBudgetOrderCurNode(budgetOrder);
+            //
+            // // 生成下一步日志
+            // sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
+            // EBudgetOrderNode.FINANCEAUDIT.getCode());
+            // }
+        } else {
+
+            intevCurNodeCode = nodeFlow.getBackNode();
+            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B02.getCode());
+
+            // 添加待办事项
+            bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
+                cdbiz.getCode(), ENode.reinput_interview, operator);
+        }
+        cdbiz.setRemark(approveNote);
+        cdbizBO.refreshIntevCurNodeCode(cdbiz, intevCurNodeCode);
+        // 操作日志
+        ENode node = ENode.getMap().get(preCurrentNode);
+        sysBizLogBO.recordCurOperate(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
+            cdbiz.getCode(), node.getCode(), approveNote, operator);
+        // 处理前待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
+            cdbiz.getCode(), node);
+
     }
 }

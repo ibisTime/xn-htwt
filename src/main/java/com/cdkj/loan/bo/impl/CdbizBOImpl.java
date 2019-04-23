@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.base.Page;
@@ -17,6 +18,8 @@ import com.cdkj.loan.dao.ICdbizDAO;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
@@ -30,6 +33,9 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
 
     @Autowired
     private IBizTeamBO bizTeamBO;
+
+    @Autowired
+    private IAttachmentBO attachmentBO;
 
     @Override
     public boolean isCdbizExist(String code) {
@@ -55,6 +61,37 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     @Override
     public List<Cdbiz> queryCdbizList(Cdbiz condition) {
         return cdbizDAO.selectList(condition);
+    }
+
+    @Override
+    public void interview(Cdbiz cdbiz, XN632123Req req) {
+
+        // 加入附件
+        EAttachName attachName = EAttachName.bank_vedio;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getBankVideo());
+        attachName = EAttachName.bank_photo;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getBankPhoto());
+        attachName = EAttachName.company_vedio;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getCompanyVideo());
+        attachName = EAttachName.company_contract;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getCompanyContract());
+        attachName = EAttachName.bank_contract;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getBankContract());
+        attachName = EAttachName.advance_fund_pdf;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getAdvanceFundAmountPdf());
+        attachName = EAttachName.other_vedio;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getOtherVideo());
+        attachName = EAttachName.interview_other_pdf;
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getInterviewOtherPdf());
+
     }
 
     @Override

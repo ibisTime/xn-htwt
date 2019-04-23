@@ -40,9 +40,11 @@ public enum EAttachName {
     house_pic("h1", "图片"),
 
     // 面签资源
-    bank_vedio("g1", "视频"), bank_photo("g2", "图片"), company_vedio("g3", "视频"), company_contract(
-            "g4", "图片"), bank_contract("g5", "图片"), advance_fund_pdf("g6", "图片"), other_vedio(
-            "g7", "视频"), interview_other_pdf("g8", "其他"),
+    bank_vedio("bank_video", "视频"), bank_photo("bank_photo", "图片"), company_vedio(
+            "company_video", "视频"), company_contract("company_contract", "图片"), bank_contract(
+            "bank_contract", "图片"), advance_fund_pdf("advance_fund_amount_pdf",
+            "图片"), other_vedio("other_video", "视频"), interview_other_pdf(
+            "interview_other_pdf", "其他"),
 
     water_bill("h1", "图片")
 

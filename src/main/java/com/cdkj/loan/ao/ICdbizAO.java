@@ -10,6 +10,7 @@ import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
+import com.cdkj.loan.dto.req.XN632123Req;
 
 //CHECK ��鲢��ע�� 
 public interface ICdbizAO {
@@ -41,4 +42,10 @@ public interface ICdbizAO {
     // 派单
     public void distributeLeaflets(XN632119Req req);
 
+    // 面签
+    public void interview(XN632123Req req);
+
+    // 面签内勤主管审核
+    public void interviewInternalApprove(String code, String operator,
+            String approveResult, String approveNote);
 }
