@@ -155,6 +155,17 @@ public class Cdbiz extends ABaseDO {
     // 主贷人
     private CreditUser creditUser;
 
+    // 贷款银行
+    private String loanBankName;
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
     public CreditUser getCreditUser() {
         return creditUser;
     }

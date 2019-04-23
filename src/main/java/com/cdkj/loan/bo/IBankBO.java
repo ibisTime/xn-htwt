@@ -21,4 +21,6 @@ public interface IBankBO extends IPaginableBO<Bank> {
     public int editBank(Bank data);
 
     public List<Bank> queryBankList(Bank condition);
+
+    public Bank getBankBySubbranch(String code);
 }

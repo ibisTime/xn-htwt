@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IAttachmentBO;
+import com.cdkj.loan.bo.IFileListBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IAttachmentDAO;
 import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.domain.FileList;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -21,6 +24,9 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
     @Autowired
     private IAttachmentDAO attachmentDAO;
 
+    @Autowired
+    private IFileListBO fileListBO;
+
     @Override
     public String saveAttachment(String bizCode, String name,
             String attachType, String url) {
@@ -30,13 +36,12 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
             return code;
         } else {
             Attachment data = new Attachment();
-
+            FileList fileList = fileListBO.getFileListByKname(name);
             code = OrderNoGenerater.generate(EGeneratePrefix.attachment
                 .getCode());
             data.setCode(code);
-            data.setKname(name);
-            data.setBizCode(bizCode);
-            data.setAttachType(attachType);
+
+            EntityUtils.copyData(fileList, data);
             data.setUrl(url);
 
             attachmentDAO.insert(data);

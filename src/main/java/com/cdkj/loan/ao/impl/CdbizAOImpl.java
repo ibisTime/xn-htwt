@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IAttachmentBO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
@@ -24,6 +25,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Credit;
@@ -89,6 +91,9 @@ public class CdbizAOImpl implements ICdbizAO {
     @Autowired
     private ICreditUserBO creditUserBO;
 
+    @Autowired
+    private IBankBO bankBO;
+
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
         Paginable<Cdbiz> page = cdbizBO.getPaginable(start, limit, condition);
@@ -122,6 +127,9 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     private void init(Cdbiz cdbiz) {
+        // 贷款银行
+        Bank bank = bankBO.getBank(cdbiz.getLoanBank());
+        cdbiz.setLoanBankName(bank.getBankName());
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
             cdbiz.getCode(), ELoanRole.APPLY_USER);
         cdbiz.setCreditUser(creditUser);

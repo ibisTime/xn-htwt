@@ -35,4 +35,10 @@ CHANGE COLUMN `biz_type` `repay_biz_code` VARCHAR(32) NULL DEFAULT NULL ,
 CHANGE COLUMN `bank_credit_result_pdf` `bank_credit_result` VARCHAR(4) NULL DEFAULT NULL ,
 CHANGE COLUMN `dk_amount` `company_code` VARCHAR(32) NULL DEFAULT NULL ;
 
+ALTER TABLE `tdq_file_list` 
+ADD COLUMN `vname` VARCHAR(32) NULL AFTER `kname`,
+ADD COLUMN `attach_type` VARCHAR(32) NULL AFTER `vname`,
+CHANGE COLUMN `no` `category` VARCHAR(32) NULL DEFAULT NULL COMMENT '序号' ,
+CHANGE COLUMN `name` `kname` VARCHAR(32) NULL DEFAULT NULL COMMENT '名称' ;
+
 

@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankDAO;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -18,6 +20,9 @@ import com.cdkj.loan.exception.BizException;
 public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
     @Autowired
     private IBankDAO bankDAO;
+
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
 
     @Override
     public String saveBank(Bank data) {
@@ -62,5 +67,12 @@ public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
     @Override
     public List<Bank> queryBankList(Bank condition) {
         return bankDAO.selectList(condition);
+    }
+
+    @Override
+    public Bank getBankBySubbranch(String subbranchCode) {
+        BankSubbranch bankSubbranch = bankSubbranchBO
+            .getBankSubbranch(subbranchCode);
+        return getBank(bankSubbranch.getBankCode());
     }
 }

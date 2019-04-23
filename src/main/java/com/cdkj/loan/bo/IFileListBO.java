@@ -19,4 +19,6 @@ public interface IFileListBO extends IPaginableBO<FileList> {
 
     public FileList getFileList(Long id);
 
+    public FileList getFileListByKname(String kname);
+
 }
