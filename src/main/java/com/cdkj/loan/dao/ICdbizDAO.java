@@ -24,4 +24,6 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
     public int updateCurNodeCode(Cdbiz data);
 
     public int updateYwy(Cdbiz data);
+
+    public int updateInsideJob(Cdbiz data);
 }

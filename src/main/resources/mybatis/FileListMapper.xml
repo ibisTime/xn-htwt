@@ -4,8 +4,10 @@
 <mapper namespace="com.cdkj.loan.dao.IFileListDAO">
 	<resultMap id="fileList_DB_Result" type="fileList">
 		<result column="id" property="id" />
-		<result column="no" property="no" />
-		<result column="name" property="name" />
+		<result column="category" property="category" />
+		<result column="kname" property="kname" />
+		<result column="vname" property="vname" />
+		<result column="attach_type" property="attachType" />
 		<result column="number" property="number" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -15,11 +17,14 @@
 			<if test="id != null and id != '' ">
 				AND t.id = #{id}
 			</if>
-			<if test="no != null and no != '' ">
-				AND t.no = #{no}
+			<if test="category != null and category != '' ">
+				AND t.category = #{category}
 			</if>
-			<if test="name != null and name != '' ">
-				AND t.name = #{name}
+			<if test="attach_type != null and attachType != '' ">
+				AND t.attachType = #{attachType}
+			</if>
+			<if test="kname != null and kname != '' ">
+				AND t.kname = #{kname}
 			</if>
 			<if test="updater != null and updater != '' ">
 				AND t.updater = #{updater}
@@ -29,8 +34,10 @@
 	<select id="select_fileList" parameterType="fileList" resultMap="fileList_DB_Result">
 		SELECT
 		t.id
-		,t.no
-		,t.name
+		,t.category
+		,t.kname
+		,t.vname
+		,t.attach_type
 		,t.number
 		,t.updater
 		,t.update_datetime
@@ -53,17 +60,19 @@
 	<insert id="insert_fileList" parameterType="fileList">
 		INSERT INTO
 		tdq_file_list(
-		id
-		,no
-		,name
+		category
+		,kname
+		,vname
+		,attach_type
 		,number
 		,updater
 		,update_datetime
 		)
 		VALUES(
-		#{id}
-		,#{no}
-		,#{name}
+		#{category}
+		,#{kname}
+		,#{vname}
+		,#{attachType}
 		,#{number}
 		,#{updater}
 		,#{updateDatetime}
@@ -73,8 +82,10 @@
 	<update id="update_fileList" parameterType="fileList">
 		UPDATE tdq_file_list
 		SET
-		no = #{no}
-		,name = #{name}
+		category = #{category}
+		,kname = #{kname}
+		,vname = #{vname}
+		,attach_type = #{attachType}
 		,number = #{number}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

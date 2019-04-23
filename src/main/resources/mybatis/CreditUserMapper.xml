@@ -47,23 +47,30 @@
 	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
 		select 
 		t.code
-		,t.credit_code
-		,t.user_name
+		,t.biz_code
 		,t.relation
 		,t.loan_role
+		,t.user_name
 		
 		,t.mobile
+		,t.id_kind
 		,t.id_no
-		,t.id_no_front
-		,t.id_no_reverse
-		,t.auth_pdf
-		
-		,t.interview_pic
 		,t.credit_card_occupation
-		,t.bank_credit_result_pdf
+		,t.bank_credit_result
+		
 		,t.bank_credit_result_remark
-		,t.bank_report
-		,t.data_report
+		,t.birth_address_province
+		,t.birth_address_city
+		,t.birth_address_area
+		,t.birth_address
+		
+		,t.post_code
+		,t.education
+		,t.company_name
+		,t.company_address
+		,t.company_contact_no
+		
+		,t.house_asset_address
 		from tdq_credit_user t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -83,33 +90,29 @@
 		INSERT INTO 
 		tdq_credit_user(
 		code
-		,credit_code
+		,biz_code
 		,relation
-		,user_name		
 		,loan_role
+		,user_name	
 		
 		,mobile
+		,id_kind
 		,id_no
-		,id_no_front
-		,id_no_reverse
-		,auth_pdf
-		
-		,interview_pic		
+		,bank_credit_result
+		,bank_credit_result_remark
 		)
 		VALUES(
 		#{code}
-		,#{creditCode}
+		,#{bizCode}
 		,#{relation}
-		,#{userName}
 		,#{loanRole}
+		,#{userName}
 		
 		,#{mobile}
-		,#{idNo}
-		,#{idNoFront}	
-		,#{idNoReverse}
-		,#{authPdf}
-		
-		,#{interviewPic}
+		,#{idKind}
+		,#{idNo}	
+		,#{bankCreditResult}
+		,#{bankCreditResultRemark}
 		)
 	</insert>
 	
@@ -117,34 +120,30 @@
 		INSERT INTO 
 		tdq_credit_user(
 		code
-		,credit_code
+		,biz_code
 		,relation
-		,user_name		
 		,loan_role
+		,user_name	
 		
 		,mobile
+		,id_kind
 		,id_no
-		,id_no_front
-		,id_no_reverse
-		,auth_pdf
-		
-		,interview_pic			
+		,bank_credit_result
+		,bank_credit_result_remark		
 		)
 		VALUES(
 		<foreach collection="list" item="creditUser" separator=",">
 			#{code}
-			,#{creditCode}
-			,#{relation}
-			,#{userName}
-			,#{loanRole}
-			
-			,#{mobile}
-			,#{idNo}
-			,#{idNoFront}	
-			,#{idNoReverse}
-			,#{authPdf}
-			
-			,#{interviewPic}
+		,#{bizCode}
+		,#{relation}
+		,#{loanRole}
+		,#{userName}
+		
+		,#{mobile}
+		,#{idKind}
+		,#{idNo}	
+		,#{bankCreditResult}
+		,#{bankCreditResultRemark}
 		</foreach>
 		)
 	</insert>
@@ -153,10 +152,8 @@
 		UPDATE tdq_credit_user
 		SET
 		credit_card_occupation = #{creditCardOccupation}
-		,bank_credit_result_pdf = #{bankCreditResultPdf}
+		,bank_credit_result = #{bankCreditResult}
 		,bank_credit_result_remark = #{bankCreditResultRemark}
-		,bank_report=#{bankReport}
-		,data_report=#{dataReport}
 		WHERE 
 		code = #{code}
 	</update>

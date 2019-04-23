@@ -1,6 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,11 +10,8 @@ import com.cdkj.loan.ao.IFileListAO;
 import com.cdkj.loan.bo.IFileListBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.FileList;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.dto.req.XN632210Req;
-import com.cdkj.loan.dto.req.XN632212Req;
 
 //CHECK ��鲢��ע�� 
 @Service
@@ -28,30 +24,22 @@ public class FileListAOImpl implements IFileListAO {
     private ISYSUserBO sysUserBO;
 
     @Override
-    public void addFileList(XN632210Req req) {
-        FileList data = new FileList();
-        data.setNo(req.getNo());
-        data.setNumber(req.getNumber());
-        data.setName(req.getName());
-        data.setUpdater(req.getUpdater());
-        data.setUpdateDatetime(new Date());
-        fileListBO.saveFileList(data);
+    public void addFileList(String category, String kname, String vname,
+            String attachType, Long number, String updater) {
+        fileListBO.saveFileList(category, kname, vname, attachType, number,
+            updater);
     }
 
     @Override
-    public void editFileList(XN632212Req req) {
-        FileList data = getFileList(StringValidater.toInteger(req.getId()));
-        data.setNo(req.getNo());
-        data.setNumber(req.getNumber());
-        data.setName(req.getName());
-        data.setUpdater(req.getUpdater());
-        data.setUpdateDatetime(new Date());
-        fileListBO.refreshFileList(data);
+    public void editFileList(Long id, String category, String kname,
+            String vname, String attachType, Long number, String updater) {
+        fileListBO.refreshFileList(id, category, kname, vname, attachType,
+            number, updater);
     }
 
     @Override
     public int dropFileList(int id) {
-        return fileListBO.removeFileList(id);
+        return fileListBO.removeFileList(Long.valueOf(id));
     }
 
     @Override
@@ -77,7 +65,7 @@ public class FileListAOImpl implements IFileListAO {
 
     @Override
     public FileList getFileList(int id) {
-        FileList fileList = fileListBO.getFileList(id);
+        FileList fileList = fileListBO.getFileList(Long.valueOf(id));
         initFileList(fileList);
         return fileList;
     }
