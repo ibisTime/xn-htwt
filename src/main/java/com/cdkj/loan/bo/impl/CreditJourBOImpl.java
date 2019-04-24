@@ -8,31 +8,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ICreditJourBO;
+import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.NumberUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditJourDAO;
 import com.cdkj.loan.domain.CreditJour;
+import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632490Req;
 import com.cdkj.loan.dto.req.XN632492Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class CreditJourBOImpl extends PaginableBOImpl<CreditJour>
-        implements ICreditJourBO {
+public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
+        ICreditJourBO {
 
     @Autowired
     private ICreditJourDAO creditJourDAO;
+
+    @Autowired
+    private ICreditUserBO creditUserBO;
 
     @Override
     public String saveCreditJour(XN632490Req req) {
         CreditJour data = new CreditJour();
         BeanUtils.copyProperties(req, data);
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
+            .getCode());
         data.setCode(code);
 
         data.setDatetimeStart(DateUtil.strToDate(req.getDatetimeStart(),
@@ -105,5 +112,34 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour>
             }
         }
         return data;
+    }
+
+    @Override
+    public void saveCreditJour(XN632120Req req) {
+        List<CreditUser> creditUsers = creditUserBO.queryCreditUserList(req
+            .getCode());
+        for (CreditUser creditUser : creditUsers) {
+            // 主贷人
+            if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+                CreditJour applyJour = new CreditJour();
+                String applyCode = OrderNoGenerater
+                    .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
+                applyJour.setCode(applyCode);
+                applyJour.setBizCode(req.getCode());
+                applyJour.setCreditUserCode(creditUser.getCode());
+                applyJour.setType();
+                // 共还人=配偶
+            } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+
+                // 担保人
+            } else {
+
+            }
+        }
+        // 主贷人流水
+
+        // 担保人流水
+
+        // 配偶流水
     }
 }

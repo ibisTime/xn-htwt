@@ -40,9 +40,6 @@ public class XN632120Req {
     // 是否垫资
     private String isAdvanceFund;
 
-    // 征信单编号
-    private String creditCode;
-
     // 业务种类
     private String bizType;
 
@@ -214,6 +211,7 @@ public class XN632120Req {
     // 月收入
     private String monthIncome;
 
+    /*********配偶信息start************/
     // 配偶姓名
     private String mateName;
 
@@ -235,6 +233,9 @@ public class XN632120Req {
     // 配偶工作单位联系电话
     private String mateCompanyContactNo;
 
+    /*********配偶信息end************/
+
+    /*********配偶流水start************/
     // 配偶支付宝流水时间起
     private String mateZfbJourDatetimeStart;
 
@@ -354,6 +355,8 @@ public class XN632120Req {
 
     // 配偶资产资料pdf
     private String mateAssetPdf;
+
+    /*********配偶流水end************/
 
     // 担保人姓名
     private String guaName;
@@ -777,14 +780,6 @@ public class XN632120Req {
 
     public void setLoanProductCode(String loanProductCode) {
         this.loanProductCode = loanProductCode;
-    }
-
-    public String getCreditCode() {
-        return creditCode;
-    }
-
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
     }
 
     public String getBizType() {

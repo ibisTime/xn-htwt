@@ -1,59 +1,60 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarInfoAO;
 import com.cdkj.loan.bo.ICarInfoBO;
-import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.ICreditJourBO;
+import com.cdkj.loan.bo.ICreditUserExtBO;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.domain.CarInfo;
+import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CreditUserExt;
+import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.exception.BizException;
-
-
 
 //CHECK ��鲢��ע�� 
 @Service
 public class CarInfoAOImpl implements ICarInfoAO {
 
-	@Autowired
-	private ICarInfoBO carInfoBO;
+    @Autowired
+    private ICarInfoBO carInfoBO;
 
-	@Override
-	public String addCarInfo(CarInfo data) {
-		return carInfoBO.saveCarInfo(data);
-	}
+    @Autowired
+    private ICdbizBO cdbizBO;
 
-	@Override
-	public int editCarInfo(CarInfo data) {
-		if (!carInfoBO.isCarInfoExist(data.getCode())) {
-			throw new BizException("xn0000", "记录编号不存在");
-		}
-		return carInfoBO.refreshCarInfo(data);
-	}
+    @Autowired
+    private ICreditJourBO creditJourBO;
 
-	@Override
-	public int dropCarInfo(String code) {
-		if (!carInfoBO.isCarInfoExist(code)) {
-			throw new BizException("xn0000", "记录编号不存在");
-		}
-		return carInfoBO.removeCarInfo(code);
-	}
+    @Autowired
+    private ICreditUserExtBO creditUserExtBO;
 
-	@Override
-	public Paginable<CarInfo> queryCarInfoPage(int start, int limit,
-			CarInfo condition) {
-		return carInfoBO.getPaginable(start, limit, condition);
-	}
+    @Override
+    public int editCarInfo(XN632120Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        if (!ECdbizStatus.A3.getCode().equals(cdbiz.getStatus())
+                && !ECdbizStatus.A3x.getCode().equals(cdbiz.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该业务不处于录入准入单状态，无法录入");
+        }
+        // 车辆信息录入
+        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
+        String carInfoCode = carInfo.getCode();
+        EntityUtils.copyData(req, carInfo);
+        carInfo.setCode(carInfoCode);
+        carInfoBO.refreshCarInfo(carInfo);
+        // 征信人信息录入
+        CreditUserExt creditUserExt = EntityUtils.copyData(req,
+            CreditUserExt.class);
 
-	@Override
-	public List<CarInfo> queryCarInfoList(CarInfo condition) {
-		return carInfoBO.queryCarInfoList(condition);
-	}
+        creditUserExtBO.saveCreditUserExt(creditUserExt, cdbiz.getCode());
+        // 流水录入
 
-	@Override
-	public CarInfo getCarInfo(String code) {
-		return carInfoBO.getCarInfo(code);
-	}
+        return 0;
+    }
+
 }

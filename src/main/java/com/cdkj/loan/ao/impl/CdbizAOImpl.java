@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.ao.ICreditAO;
@@ -18,6 +19,7 @@ import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.IMissionBO;
 import com.cdkj.loan.bo.INodeBO;
@@ -30,8 +32,11 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BizTask;
+import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
@@ -110,6 +115,9 @@ public class CdbizAOImpl implements ICdbizAO {
     @Autowired
     private ICarInfoBO carInfoBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
         Paginable<Cdbiz> page = cdbizBO.getPaginable(start, limit, condition);
@@ -146,9 +154,33 @@ public class CdbizAOImpl implements ICdbizAO {
         // 贷款银行
         Bank bank = bankBO.getBank(cdbiz.getLoanBank());
         cdbiz.setLoanBankName(bank.getBankName());
+
+        // 主贷人信息
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
             cdbiz.getCode(), ELoanRole.APPLY_USER);
         cdbiz.setCreditUser(creditUser);
+
+        // 公司名称
+        Department company = departmentBO.getDepartment(cdbiz.getCompanyCode());
+        cdbiz.setCompanyName(company.getName());
+
+        // 业务员名称
+        SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
+        cdbiz.setSaleUserName(saleUser.getRealName());
+
+        // 团队名称
+        BizTeam team = bizTeamBO.getBizTeam(cdbiz.getTeamCode());
+        cdbiz.setTeamName(team.getName());
+
+        // 征信人列表
+        List<CreditUser> creditUserList = creditUserBO
+            .queryCreditUserList(cdbiz.getCode());
+        cdbiz.setCreditUserList(creditUserList);
+
+        // 车辆信息
+        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
+        cdbiz.setCarInfo(carInfo);
+
         List<BizTask> bizTasks = bizTaskBO.queryBizTaskByBizCode(cdbiz
             .getCode());
         cdbiz.setBizTasks(bizTasks);
@@ -160,6 +192,7 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbiz.setAttachments(attachments);
     }
 
+    @Transactional
     @Override
     public String addCredit(XN632110Req req) {
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
@@ -246,6 +279,7 @@ public class CdbizAOImpl implements ICdbizAO {
         return bizCode;
     }
 
+    @Transactional
     @Override
     public void editCredit(XN632112Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
@@ -330,6 +364,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
     }
 
+    @Transactional
     @Override
     public void audit(XN632113Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
@@ -389,6 +424,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
     }
 
+    @Transactional
     @Override
     public void inputBankCreditResult(XN632111Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());

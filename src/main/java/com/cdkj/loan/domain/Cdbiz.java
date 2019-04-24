@@ -152,6 +152,17 @@ public class Cdbiz extends ABaseDO {
 
     private String userId;
 
+    private CarInfo carInfo;
+
+    // 公司名称
+    private String companyName;
+
+    // 团队名称
+    private String teamName;
+
+    // 业务员名称
+    private String saleUserName;
+
     // 主贷人
     private CreditUser creditUser;
 
@@ -163,6 +174,49 @@ public class Cdbiz extends ABaseDO {
 
     // 申请时间止
     private Date applyDatetimeEnd;
+
+    // 征信人列表
+    private List<CreditUser> creditUserList;
+
+    public CarInfo getCarInfo() {
+        return carInfo;
+    }
+
+    public void setCarInfo(CarInfo carInfo) {
+        this.carInfo = carInfo;
+    }
+
+    public List<CreditUser> getCreditUserList() {
+        return creditUserList;
+    }
+
+    public void setCreditUserList(List<CreditUser> creditUserList) {
+        this.creditUserList = creditUserList;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
+    }
 
     public Date getApplyDatetimeStart() {
         return applyDatetimeStart;

@@ -81,4 +81,12 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         }
         return data;
     }
+
+    @Override
+    public CarInfo getCarInfoByBizCode(String bizCode) {
+        CarInfo condition = new CarInfo();
+        condition.setBizCode(bizCode);
+
+        return carInfoDAO.select(condition);
+    }
 }

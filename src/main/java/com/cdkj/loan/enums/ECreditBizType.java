@@ -7,7 +7,7 @@ package com.cdkj.loan.enums;
  */
 public enum ECreditBizType {
 
-    NEW_CAR("1", "新车"), SECOND_CAR("2", "二手车");
+    wx("1", "微信"), zfb("2", "支付宝"), bank("3", "银行");
 
     ECreditBizType(String code, String value) {
         this.code = code;

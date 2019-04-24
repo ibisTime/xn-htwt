@@ -162,30 +162,6 @@ public class CreditUserExt extends ABaseDO {
     // 有无驾照
     private String isDriceLicense;
 
-    // 驾照
-    private String driceLicense;
-
-    // 结婚证资料
-    private String marryPdf;
-
-    // 其他资料
-    private String otherPdf;
-
-    // 工作资料
-    private String workAssetPdf;
-
-    // 单身证明
-    private String singleProvePdf;
-
-    // 收入证明
-    private String incomeProvePdf;
-
-    // 居住证明
-    private String liveProvePdf;
-
-    // 自建房证明
-    private String buildProvePdf;
-
     public String getCode() {
         return code;
     }
@@ -584,70 +560,6 @@ public class CreditUserExt extends ABaseDO {
 
     public void setIsDriceLicense(String isDriceLicense) {
         this.isDriceLicense = isDriceLicense;
-    }
-
-    public String getDriceLicense() {
-        return driceLicense;
-    }
-
-    public void setDriceLicense(String driceLicense) {
-        this.driceLicense = driceLicense;
-    }
-
-    public String getMarryPdf() {
-        return marryPdf;
-    }
-
-    public void setMarryPdf(String marryPdf) {
-        this.marryPdf = marryPdf;
-    }
-
-    public String getOtherPdf() {
-        return otherPdf;
-    }
-
-    public void setOtherPdf(String otherPdf) {
-        this.otherPdf = otherPdf;
-    }
-
-    public String getWorkAssetPdf() {
-        return workAssetPdf;
-    }
-
-    public void setWorkAssetPdf(String workAssetPdf) {
-        this.workAssetPdf = workAssetPdf;
-    }
-
-    public String getSingleProvePdf() {
-        return singleProvePdf;
-    }
-
-    public void setSingleProvePdf(String singleProvePdf) {
-        this.singleProvePdf = singleProvePdf;
-    }
-
-    public String getIncomeProvePdf() {
-        return incomeProvePdf;
-    }
-
-    public void setIncomeProvePdf(String incomeProvePdf) {
-        this.incomeProvePdf = incomeProvePdf;
-    }
-
-    public String getLiveProvePdf() {
-        return liveProvePdf;
-    }
-
-    public void setLiveProvePdf(String liveProvePdf) {
-        this.liveProvePdf = liveProvePdf;
-    }
-
-    public String getBuildProvePdf() {
-        return buildProvePdf;
-    }
-
-    public void setBuildProvePdf(String buildProvePdf) {
-        this.buildProvePdf = buildProvePdf;
     }
 
 }

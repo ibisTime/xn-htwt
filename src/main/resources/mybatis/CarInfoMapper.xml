@@ -53,6 +53,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_carInfo" parameterType="carInfo" resultMap="carInfo_DB_Result">
@@ -216,8 +219,7 @@
 	<update id="update_carInfo" parameterType="carInfo">
 		UPDATE tdq_car_info
 		SET
-		biz_code = #{bizCode}
-		,car_brand = #{carBrand}
+		car_brand = #{carBrand}
 		,car_series = #{carSeries}
 		,car_model = #{carModel}
 		,car_model_name = #{carModelName}

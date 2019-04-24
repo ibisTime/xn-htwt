@@ -11,6 +11,8 @@ public interface ICreditUserExtBO extends IPaginableBO<CreditUserExt> {
 
     public String saveCreditUserExt(XN632480Req req);
 
+    public String saveCreditUserExt(CreditUserExt data, String bizCode);
+
     public void removeCreditUserExt(String code);
 
     public void refreshCreditUserExt(XN632482Req req);

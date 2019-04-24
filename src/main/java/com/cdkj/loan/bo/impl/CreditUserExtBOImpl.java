@@ -6,15 +6,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.ICreditUserExtBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditUserExtDAO;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.CreditUserExt;
 import com.cdkj.loan.dto.req.XN632480Req;
 import com.cdkj.loan.dto.req.XN632482Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -24,13 +27,16 @@ public class CreditUserExtBOImpl extends PaginableBOImpl<CreditUserExt>
     @Autowired
     private ICreditUserExtDAO creditUserExtDAO;
 
+    @Autowired
+    private ICreditUserBO creditUserBO;
+
     @Override
     public String saveCreditUserExt(XN632480Req req) {
 
         CreditUserExt data = EntityUtils.copyData(req, CreditUserExt.class);
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.CREDIT_USER_EXT.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_USER_EXT
+            .getCode());
         data.setCode(code);
         creditUserExtDAO.insert(data);
 
@@ -71,5 +77,17 @@ public class CreditUserExtBOImpl extends PaginableBOImpl<CreditUserExt>
             }
         }
         return data;
+    }
+
+    @Override
+    public String saveCreditUserExt(CreditUserExt data, String bizCode) {
+        String code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_USER_EXT
+            .getCode());
+        data.setCode(code);
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(bizCode,
+            ELoanRole.APPLY_USER);
+        data.setCreditUserCode(creditUser.getCode());
+        creditUserExtDAO.insert(data);
+        return code;
     }
 }

@@ -26,14 +26,14 @@ public class XN632517 extends AProcessor {
         Cdbiz condition = new Cdbiz();
         condition.setBizType(req.getBizType());
         condition.setBizCode(req.getBizCode());
-        condition.setBankCode(req.getBankCode());
+        condition.setLoanBank(req.getBankCode());
         condition.setStatus(req.getStatus());
         condition.setMqStatus(req.getMqStatus());
         condition.setFbhgpsStatus(req.getFbhgpsStatus());
         condition.setFircundangStatus(req.getFircundangStatus());
         condition.setSeccundangStatus(req.getSeccundangStatus());
         condition.setZfStatus(req.getZfStatus());
-        condition.setYwyUser(req.getYwyUser());
+        condition.setSaleUserId(req.getYwyUser());
         condition.setTeamCode(req.getTeamCode());
         return cdbizAO.queryCdbizList(condition);
     }

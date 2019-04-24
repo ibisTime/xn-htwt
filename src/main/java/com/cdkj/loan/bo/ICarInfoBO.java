@@ -20,4 +20,6 @@ public interface ICarInfoBO extends IPaginableBO<CarInfo> {
 
     public CarInfo getCarInfo(String code);
 
+    public CarInfo getCarInfoByBizCode(String bizCode);
+
 }
