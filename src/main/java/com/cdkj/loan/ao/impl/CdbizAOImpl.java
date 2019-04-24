@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -30,7 +31,6 @@ import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.Cdbiz;
-import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSBizLog;
@@ -106,6 +106,9 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private ILogisticsBO logisticsBO;
+
+    @Autowired
+    private ICarInfoBO carInfoBO;
 
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
@@ -207,6 +210,11 @@ public class CdbizAOImpl implements ICdbizAO {
             // 操作日志
             sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT, bizCode,
                 currentNode.getCode(), req.getNote(), sysUser.getUserId());
+
+            // 面签开始的待办事项
+            bizTaskBO.saveBizTask(bizCode, EBizLogType.INTERVIEW, bizCode,
+                ENode.input_interview, req.getOperator());
+
         }
         // 新增征信人员
         List<XN632110ReqCreditUser> childList = req.getCreditUserList();
@@ -351,18 +359,12 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode());
             // 业务出现面签状态
             cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B00.getCode());
-            // 保存准入单
-            String budgetCode = budgetOrderBO.saveBudgetOrder(credit,
-                req.getCreditUserList());
+            // 新增车辆信息
+            String carInfoCode = carInfoBO.saveCarInfo(cdbiz.getCode());
 
             // 准入单开始的待办事项
-            bizTaskBO.saveBizTask(credit.getBizCode(),
-                EBizLogType.BUDGET_ORDER, budgetCode, ENode.input_budget,
-                req.getOperator());
-
-            // 面签开始的待办事项
-            bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.INTERVIEW,
-                budgetCode, ENode.input_interview, req.getOperator());
+            bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
+                carInfoCode, ENode.input_budget, req.getOperator());
 
         } else {
 
@@ -450,12 +452,6 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     public void cancelCredit(String code, String operator) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void initCredit(Credit credit) {
         // TODO Auto-generated method stub
 
     }

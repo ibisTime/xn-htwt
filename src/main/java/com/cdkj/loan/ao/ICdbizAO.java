@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
-import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632112Req;
@@ -36,8 +35,6 @@ public interface ICdbizAO {
 
     // 征信撤回
     public void cancelCredit(String code, String operator);
-
-    public void initCredit(Credit credit);
 
     // 派单
     public void distributeLeaflets(XN632119Req req);

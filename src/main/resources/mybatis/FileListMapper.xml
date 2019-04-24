@@ -20,8 +20,8 @@
 			<if test="category != null and category != '' ">
 				AND t.category = #{category}
 			</if>
-			<if test="attach_type != null and attachType != '' ">
-				AND t.attachType = #{attachType}
+			<if test="attachType != null and attachType != '' ">
+				AND t.attach_type = #{attachType}
 			</if>
 			<if test="kname != null and kname != '' ">
 				AND t.kname = #{kname}

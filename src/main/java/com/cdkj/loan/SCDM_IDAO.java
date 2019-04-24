@@ -9,7 +9,7 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "cdbiz";
+    private static String key = "carInfo";
 
     // 实体名称
     private static String keyName = "车辆信息";

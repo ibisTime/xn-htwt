@@ -465,4 +465,8 @@
 		<property name="paginableDAO" ref="carPledgeDAOImpl"/>
 	</bean>
 	
+	<bean id="carInfoBO" class="com.cdkj.loan.bo.impl.CarInfoBOImpl">
+		<property name="paginableDAO" ref="carInfoDAOImpl"/>
+	</bean>
+	
 </beans>

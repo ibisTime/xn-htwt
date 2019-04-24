@@ -177,6 +177,8 @@
 		<typeAlias alias="interviewVideo" type="com.cdkj.loan.domain.InterviewVideo" />
 
 		<typeAlias alias="sms" type="com.cdkj.loan.domain.Sms" />
+		
+		<typeAlias alias="carInfo" type="com.cdkj.loan.domain.CarInfo" />
 
 	</typeAliases>
 </configuration>
