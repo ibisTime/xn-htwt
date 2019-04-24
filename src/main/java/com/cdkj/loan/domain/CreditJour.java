@@ -33,10 +33,10 @@ public class CreditJour extends ABaseDO {
     private Date datetimeEnd;
 
     // 流水结息1
-    private String jourInterest1;
+    private Integer jourInterest1;
 
     // 流水结息2
-    private String jourInterest2;
+    private Integer jourInterest2;
 
     // 结息1
     private Integer interest1;
@@ -113,19 +113,19 @@ public class CreditJour extends ABaseDO {
         this.datetimeEnd = datetimeEnd;
     }
 
-    public String getJourInterest1() {
+    public Integer getJourInterest1() {
         return jourInterest1;
     }
 
-    public void setJourInterest1(String jourInterest1) {
+    public void setJourInterest1(Integer jourInterest1) {
         this.jourInterest1 = jourInterest1;
     }
 
-    public String getJourInterest2() {
+    public Integer getJourInterest2() {
         return jourInterest2;
     }
 
-    public void setJourInterest2(String jourInterest2) {
+    public void setJourInterest2(Integer jourInterest2) {
         this.jourInterest2 = jourInterest2;
     }
 

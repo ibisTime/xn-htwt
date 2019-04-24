@@ -42,4 +42,6 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     public CreditUser getCreditUserByBizCode(String bizCode,
             ELoanRole creditUserRelation);
 
+    public void refreshCreditUser(CreditUser data);
+
 }

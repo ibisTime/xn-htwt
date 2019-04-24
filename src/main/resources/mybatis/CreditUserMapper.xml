@@ -24,6 +24,12 @@
         <result column="company_address" property="companyAddress" />
         <result column="company_contact_to" property="companyContactTo" />
         <result column="house_asset_address" property="houseAssetAddress" />
+        <result column="id_no_front" property="idFront" />
+        <result column="id_no_reverse" property="idReverse" />
+        <result column="auth_pdf" property="authPdf" />
+        <result column="interview_pic" property="interviewPic" />
+        <result column="data_report" property="dataCreditReport" />
+        <result column="bank_report" property="BankCreditReport" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
@@ -71,6 +77,12 @@
 		,t.company_contact_no
 		
 		,t.house_asset_address
+		,t.id_no_front
+		,t.id_no_reverse
+		,t.auth_pdf
+		,t.interview_pic
+		,t.data_report
+		,t.bank_report
 		from tdq_credit_user t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -100,6 +112,12 @@
 		,id_no
 		,bank_credit_result
 		,bank_credit_result_remark
+		,id_no_front
+		,id_no_reverse
+		,auth_pdf
+		,interview_pic
+		,data_report
+		,bank_report
 		)
 		VALUES(
 		#{code}
@@ -113,6 +131,12 @@
 		,#{idNo}	
 		,#{bankCreditResult}
 		,#{bankCreditResultRemark}
+		,#{idFront}
+		,#{idReverse}
+		,#{authPdf}
+		,#{interviewPic}
+		,#{dataCreditReport}
+		,#{bankCreditReport}
 		)
 	</insert>
 	
@@ -163,6 +187,19 @@
 		SET
 		loan_role = #{loanRole}
 		,relation = #{relation}
+		,credit_card_occupation = #{creditCardOccupation}
+		,bank_credit_result = #{bankCreditResult}
+		,bank_credit_result_remark = #{bankCreditResultRemark}
+		,birth_address_province=#{birthAddressProvince}
+		,birth_address_city=#{birthAddressCity}
+		,birth_address_area=#{birthAddressArea}
+		,birth_address=#{birthAddress}
+		,company_name=#{companyName}
+		,company_address=#{companyAddress}
+		,company_contact_to=#{companyContactTo}
+		,house_asset_address=#{houseAssetAddress}
+		,data_report=#{dataCreditReport}
+		,bank_report=#{bankCreditReport}
 		WHERE 
 		code = #{code}
 	</update>

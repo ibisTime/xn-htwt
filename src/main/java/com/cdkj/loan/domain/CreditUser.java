@@ -69,6 +69,67 @@ public class CreditUser extends ABaseDO {
     // 征信人员列表
     private List<CreditUser> creditUserList;
 
+    // **************图片*************
+    private String idFront;
+
+    private String idReverse;
+
+    private String authPdf;
+
+    private String interviewPic;
+
+    private String dataCreditReport;
+
+    private String BankCreditReport;
+
+    public String getIdFront() {
+        return idFront;
+    }
+
+    public void setIdFront(String idFront) {
+        this.idFront = idFront;
+    }
+
+    public String getIdReverse() {
+        return idReverse;
+    }
+
+    public void setIdReverse(String idReverse) {
+        this.idReverse = idReverse;
+    }
+
+    public String getAuthPdf() {
+        return authPdf;
+    }
+
+    public void setAuthPdf(String authPdf) {
+        this.authPdf = authPdf;
+    }
+
+    public String getInterviewPic() {
+        return interviewPic;
+    }
+
+    public void setInterviewPic(String interviewPic) {
+        this.interviewPic = interviewPic;
+    }
+
+    public String getDataCreditReport() {
+        return dataCreditReport;
+    }
+
+    public void setDataCreditReport(String dataCreditReport) {
+        this.dataCreditReport = dataCreditReport;
+    }
+
+    public String getBankCreditReport() {
+        return BankCreditReport;
+    }
+
+    public void setBankCreditReport(String bankCreditReport) {
+        BankCreditReport = bankCreditReport;
+    }
+
     public String getCode() {
         return code;
     }

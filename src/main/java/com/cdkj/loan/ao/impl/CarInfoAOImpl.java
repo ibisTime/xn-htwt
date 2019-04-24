@@ -7,6 +7,7 @@ import com.cdkj.loan.ao.ICarInfoAO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditJourBO;
+import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.ICreditUserExtBO;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.domain.CarInfo;
@@ -33,6 +34,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
     @Autowired
     private ICreditUserExtBO creditUserExtBO;
 
+    @Autowired
+    private ICreditUserBO creditUserBO;
+
     @Override
     public int editCarInfo(XN632120Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
@@ -53,6 +57,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         creditUserExtBO.saveCreditUserExt(creditUserExt, cdbiz.getCode());
         // 流水录入
+        creditJourBO.saveCreditJour(req);
 
         return 0;
     }

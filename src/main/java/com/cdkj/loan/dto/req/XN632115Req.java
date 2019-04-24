@@ -2,8 +2,6 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * 征信分页查询 （按角色权限）
  * @author: jiafr 
@@ -44,7 +42,6 @@ public class XN632115Req extends APageReq {
     private String curNodeCode;
 
     // 角色编号
-    @NotBlank
     private String roleCode;
 
     // 征信是否通过 0未通过1已通过

@@ -136,10 +136,14 @@
 		            #{item}
 		        </foreach>
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
 		SELECT
+		distinct
 		t.code
 		,t.biz_code
 		,t.type
@@ -190,6 +194,7 @@
 	
 	<select id="select_cdbizByRoleCode" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
 		SELECT
+		distinct
 		t.code
 		,t.biz_code
 		,t.type
@@ -447,6 +452,13 @@
 		UPDATE tqj_cdbiz
 		SET
 		inside_job=#{insideJob}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_curNodeCode" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cur_node_code=#{curNodeCode}
 		WHERE code=#{code}
 	</update>
 	

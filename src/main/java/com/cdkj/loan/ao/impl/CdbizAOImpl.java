@@ -120,12 +120,14 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
-        Paginable<Cdbiz> page = cdbizBO.getPaginable(start, limit, condition);
+        Paginable<Cdbiz> page = null;
         if (StringUtils.isNotBlank(condition.getUserId())) {
             SYSUser sysUser = sysUserBO.getUser(condition.getUserId());
             condition.setRoleCode(sysUser.getRoleCode());
             condition.setTeamCode(sysUser.getTeamCode());
             page = cdbizBO.getPaginableByRoleCode(condition, start, limit);
+        } else {
+            page = cdbizBO.getPaginable(start, limit, condition);
         }
 
         for (Cdbiz cdbiz : page.getList()) {
@@ -152,8 +154,10 @@ public class CdbizAOImpl implements ICdbizAO {
 
     private void init(Cdbiz cdbiz) {
         // 贷款银行
-        Bank bank = bankBO.getBank(cdbiz.getLoanBank());
-        cdbiz.setLoanBankName(bank.getBankName());
+        if (StringUtils.isNotBlank(cdbiz.getLoanBank())) {
+            Bank bank = bankBO.getBank(cdbiz.getLoanBank());
+            cdbiz.setLoanBankName(bank.getBankName());
+        }
 
         // 主贷人信息
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
@@ -161,16 +165,24 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbiz.setCreditUser(creditUser);
 
         // 公司名称
-        Department company = departmentBO.getDepartment(cdbiz.getCompanyCode());
-        cdbiz.setCompanyName(company.getName());
+        if (StringUtils.isNotBlank(cdbiz.getCompanyCode())) {
+            Department company = departmentBO.getDepartment(cdbiz
+                .getCompanyCode());
+            cdbiz.setCompanyName(company.getName());
+        }
 
         // 业务员名称
-        SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
-        cdbiz.setSaleUserName(saleUser.getRealName());
+        if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
+
+            SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
+            cdbiz.setSaleUserName(saleUser.getRealName());
+        }
 
         // 团队名称
-        BizTeam team = bizTeamBO.getBizTeam(cdbiz.getTeamCode());
-        cdbiz.setTeamName(team.getName());
+        if (StringUtils.isNotBlank(cdbiz.getTeamCode())) {
+            BizTeam team = bizTeamBO.getBizTeam(cdbiz.getTeamCode());
+            cdbiz.setTeamName(team.getName());
+        }
 
         // 征信人列表
         List<CreditUser> creditUserList = creditUserBO

@@ -217,8 +217,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             int limit) {
         Long count = cdbizDAO.selectTotalCountByRoleCode(condition);
         Paginable<Cdbiz> page = new Page<Cdbiz>(start, limit, count);
-        List<Cdbiz> dataList = cdbizDAO.selectListByRoleCode(condition, start,
-            limit);
+        List<Cdbiz> dataList = cdbizDAO.selectListByRoleCode(condition,
+            page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
     }
