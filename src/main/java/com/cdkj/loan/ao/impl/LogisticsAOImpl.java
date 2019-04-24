@@ -20,6 +20,7 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Cdbiz;
@@ -105,12 +106,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
 
         // 发件
-        logistics = logisticsBO.sendLogistics(req);
+        logisticsBO.sendLogistics(req);
 
         switch (ELogisticsType.matchCode(logistics.getType())) {
             case GPS:
-                gpsApplyBO.sendGps(logistics.getBizCode(),
-                    logistics.getSendDatetime());
+                gpsApplyBO.sendGps(logistics.getBizCode(), DateUtil.strToDate(
+                    req.getSendDatetime(), DateUtil.DATA_TIME_PATTERN_1));
                 break;
 
             case BUDGET:
@@ -228,18 +229,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
 
         String result = EBoolean.NO.getCode();
-        Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
-        String nextNodeCode = null;
 
         // 更新资料传递状态
         if (EBoolean.YES.getCode().equals(approveResult)) {
             logisticsBO.receiveLogistics(code, operator, remark);
-            nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
         } else {
             logisticsBO.sendAgainLogistics(code, remark);
-            nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getBackNode();
         }
 
         switch (ELogisticsType.matchCode(logistics.getType())) {
@@ -249,7 +244,19 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
             case BUDGET:
 
+                Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
+                String nextNodeCode = null;
                 String bizStatus = null;
+
+                if (EBoolean.YES.getCode().equals(approveResult)) {
+                    nextNodeCode = nodeFlowBO
+                        .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
+                        .getNextNode();
+                } else {
+                    nextNodeCode = nodeFlowBO
+                        .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
+                        .getBackNode();
+                }
 
                 switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
                     // 风控审核收件（银行放款）
