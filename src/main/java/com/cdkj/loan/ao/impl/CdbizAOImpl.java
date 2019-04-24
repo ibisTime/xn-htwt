@@ -244,9 +244,9 @@ public class CdbizAOImpl implements ICdbizAO {
         }
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             Cdbiz cdbiz = cdbizBO.getCdbiz(bizCode);
-            currentNode = ENode.getMap().get(
-                nodeFlowBO.getNodeFlowByCurrentNode(ENode.new_credit.getCode())
-                    .getNextNode());
+            // 主节点更新
+            cdbizBO.refershCurNodeCode(cdbiz, nodeFlowBO
+                .getNodeFlowByCurrentNode(currentNode.getCode()).getNextNode());
             // 面签节点
             cdbizBO.refreshIntevCurNodeCode(cdbiz,
                 ENode.input_interview.getCode());
