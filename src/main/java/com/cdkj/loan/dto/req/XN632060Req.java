@@ -40,6 +40,8 @@ public class XN632060Req {
     @NotBlank
     private String agreementValidDateEnd;// 合作协议有效期止
 
+    private String agreementStatus;// 协议状态(0下架1上架)
+
     @NotBlank
     private String agreementPic;// 车商合作协议
 
@@ -260,6 +262,14 @@ public class XN632060Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getAgreementStatus() {
+        return agreementStatus;
+    }
+
+    public void setAgreementStatus(String agreementStatus) {
+        this.agreementStatus = agreementStatus;
     }
 
 }

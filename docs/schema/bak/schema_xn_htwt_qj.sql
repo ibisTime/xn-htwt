@@ -28,9 +28,9 @@ CREATE TABLE `tqj_biz_task` (
 CREATE TABLE `tqj_file_pool` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
-  `file_name ` varchar(32) DEFAULT NULL COMMENT '资源名称',
+  `file_name` varchar(32) DEFAULT NULL COMMENT '资源名称',
   `file_type` varchar(4) DEFAULT NULL COMMENT '文件类型（图，网页，视频）',
-  `number ` INT DEFAULT NULL COMMENT '数量',
+  `number` INT DEFAULT NULL COMMENT '数量',
   `url` varchar(255) DEFAULT NULL COMMENT 'url地址',
   `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`code`)

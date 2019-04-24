@@ -61,31 +61,32 @@ COLLATE = utf8_estonian_ci
 COMMENT = '身份证区域表';
 
 /*经销商信息表*/
+DROP TABLE IF EXISTS `tb_car_dealer`;
 CREATE TABLE `tb_car_dealer` (
-  `code` VARCHAR(32) NOT NULL COMMENT '编号',
-  `full_name` VARCHAR(255) NULL COMMENT '全称',
-  `abbr_name` VARCHAR(255) NULL COMMENT '简称',
-  `is_self_develop` VARCHAR(1) NULL COMMENT '是否自主开发',
-  `address` VARCHAR(255) NULL COMMENT '地址',
-  `car_dealer_type` VARCHAR(4) NULL COMMENT '车行经营性质',
-  `main_contact` VARCHAR(255) NULL COMMENT '主要联系人',
-  `contact_phone` INT(11) NULL COMMENT '联系人电话',
-  `main_brand` VARCHAR(255) NULL COMMENT '主营品牌',
-  `parent_group` VARCHAR(255) NULL COMMENT '所属集团',
-  `agreement` VARCHAR(255) NULL COMMENT '协议',
-  `agreement_valid_date` DATETIME NULL COMMENT '合作协议有效期',
-  `agreement_status` VARCHAR(4) NULL COMMENT '协议状态',
-  `agreement_pic` VARCHAR(255) NULL COMMENT '车商合作协议',
-  `settle_way` VARCHAR(255) NULL COMMENT '结算方式',
-  `business_area` VARCHAR(255) NULL COMMENT '业务区域',
-  `belong_branch_company` VARCHAR(255) NULL COMMENT '归属分公司',
-  `approve_note` VARCHAR(255) NULL COMMENT '审核说明',
-  `status` VARCHAR(4) NULL COMMENT '办理状态',
-  `remark` VARCHAR(255) NULL COMMENT '备注',
-  PRIMARY KEY (`code`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COMMENT = '经销商信息表';
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `full_name` varchar(255) DEFAULT NULL COMMENT '全称',
+  `abbr_name` varchar(255) DEFAULT NULL COMMENT '简称',
+  `is_self_develop` varchar(1) DEFAULT NULL COMMENT '是否自主开发',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `car_dealer_type` varchar(4) DEFAULT NULL COMMENT '车行经营性质',
+  `main_contact` varchar(255) DEFAULT NULL COMMENT '主要联系人',
+  `contact_phone` varchar(32) DEFAULT NULL COMMENT '联系人电话',
+  `main_brand` varchar(255) DEFAULT NULL COMMENT '主营品牌',
+  `parent_group` varchar(255) DEFAULT NULL COMMENT '所属集团',
+  `agreement_valid_date_start` datetime DEFAULT NULL COMMENT '合作协议有效期起',
+  `agreement_valid_date_end` datetime DEFAULT NULL COMMENT '合作协议有效期止',
+  `agreement_status` varchar(4) DEFAULT NULL COMMENT '协议状态',
+  `agreement_pic` varchar(255) DEFAULT NULL COMMENT '车商合作协议',
+  `settle_way` varchar(255) DEFAULT NULL COMMENT '结算方式(1现结2月结3季结)',
+  `business_area` varchar(255) DEFAULT NULL COMMENT '业务区域',
+  `belong_branch_company` varchar(255) DEFAULT NULL COMMENT '归属分公司',
+  `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点编号',
+  `approve_note` varchar(255) DEFAULT NULL COMMENT '审核说明',
+  `policy_note` varchar(255) DEFAULT NULL COMMENT '政策说明',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='经销商信息表';
+
 
 /*银行信息表*/
 CREATE TABLE `tb_bank` (

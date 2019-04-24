@@ -178,6 +178,18 @@ public class Cdbiz extends ABaseDO {
     // 征信人列表
     private List<CreditUser> creditUserList;
 
+    // 二手车评估报告
+    private String secondCarReport;
+
+    // 行驶证正面
+    private String xszFront;
+
+    // 行驶证翻面
+    private String xszReverse;
+
+    // 主贷人名称
+    private String userName;
+
     public CarInfo getCarInfo() {
         return carInfo;
     }
@@ -640,6 +652,38 @@ public class Cdbiz extends ABaseDO {
 
     public void setMakeCardStatus(String makeCardStatus) {
         this.makeCardStatus = makeCardStatus;
+    }
+
+    public String getSecondCarReport() {
+        return secondCarReport;
+    }
+
+    public void setSecondCarReport(String secondCarReport) {
+        this.secondCarReport = secondCarReport;
+    }
+
+    public String getXszFront() {
+        return xszFront;
+    }
+
+    public void setXszFront(String xszFront) {
+        this.xszFront = xszFront;
+    }
+
+    public String getXszReverse() {
+        return xszReverse;
+    }
+
+    public void setXszReverse(String xszReverse) {
+        this.xszReverse = xszReverse;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 }

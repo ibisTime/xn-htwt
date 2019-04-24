@@ -18,8 +18,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
-        IAttachmentBO {
+public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
+        implements IAttachmentBO {
 
     @Autowired
     private IAttachmentDAO attachmentDAO;
@@ -28,8 +28,8 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
     private IFileListBO fileListBO;
 
     @Override
-    public String saveAttachment(String bizCode, String name,
-            String attachType, String url) {
+    public String saveAttachment(String bizCode, String name, String attachType,
+            String url) {
         String code = null;
         if (isAttachmentExist(bizCode, name)) {
             refreshAttachment(bizCode, name, url);
@@ -37,9 +37,10 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment> implements
         } else {
             Attachment data = new Attachment();
             FileList fileList = fileListBO.getFileListByKname(name);
-            code = OrderNoGenerater.generate(EGeneratePrefix.attachment
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.attachment.getCode());
             data.setCode(code);
+            data.setBizCode(bizCode);
 
             EntityUtils.copyData(fileList, data);
             data.setUrl(url);

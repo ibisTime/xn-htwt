@@ -178,7 +178,6 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             String pledgeBankCommitDatetime, String pledgeBankCommitNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        // TODO
         if (!ENode.to_commit_bank.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是抵押提交节点，不能操作");

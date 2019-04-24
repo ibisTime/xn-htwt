@@ -41,6 +41,13 @@
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="remark" property="remark" />
 	</resultMap>
+	
+	<sql id="join_condition">
+		<if test="userName != null and userName != '' ">
+			join tdq_credit_user tcu on tcu.biz_code = t.code and tcu.loan_code = '1'
+		</if>
+	</sql>
+	
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
@@ -139,8 +146,13 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
+			
+			<if test="userName != null and userName != '' ">
+				AND tcu.user_name = #{userName}
+			</if>
 		</trim>
 	</sql>
+	
 	<select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
 		SELECT
 		distinct
@@ -183,7 +195,7 @@
 		,t.remark
 		FROM
 		tqj_cdbiz t
-
+		<include refid="join_condition" />
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -251,6 +263,7 @@
 	<select id="select_cdbiz_count" parameterType="cdbiz"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tqj_cdbiz t
+		<include refid="join_condition" />
 		<include refid="where_condition" />
 	</select>
 

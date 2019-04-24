@@ -27,7 +27,11 @@ public enum ENode {
     reinput_interview("b01x", "重录面签信息"), achieve_interview("b03", "面签完成"),
 
     // 垫资
-    sure_dz("O", "确认垫资"),
+    sure_dz("g1", "确认用款单"),qy_manager_approve("g2", "区域总经理审批"),
+    
+    sfgs_manage_approve("g3", "省分公司总经理审批"), confirm_make_bill("g4", "确认制单"),
+    
+    upload_approve_back_bill("g5", "上传复核回单"),
 
     // 发保合节点
     input_fbh("c1", "新录入发保合"),

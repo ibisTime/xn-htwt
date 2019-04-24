@@ -8,7 +8,6 @@ public class XN632210Req {
     @NotBlank
     private String category;
 
-    @NotBlank
     private String kname;
 
     // 份数

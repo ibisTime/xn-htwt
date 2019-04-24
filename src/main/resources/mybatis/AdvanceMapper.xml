@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IAdvanceDAO">
+	<resultMap id="advance_DB_Result" type="advance">
+		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="status" property="status" />
+		<result column="cur_node_code" property="curNodeCode" />
+		<result column="type" property="type" />
+		
+		<result column="back_advance_status" property="backAdvanceStatus" />
+		<result column="back_advance_fund_type" property="backAdvanceFundType" />
+		<result column="advance_fund_datetime" property="advanceFundDatetime" />
+		<result column="advance_fund_amount" property="advanceFundAmount" />
+		<result column="total_advance_fund_code" property="totalAdvanceFundCode" />
+		
+		<result column="bill_pdf" property="billPdf" />
+		<result column="advance_note" property="advanceNote" />
+		<result column="back_advance_amount" property="backAdvanceAmount" />
+		<result column="back_advance_account" property="backAdvanceAccount" />
+		<result column="back_advance_open_bank" property="backAdvanceOpenBank" />
+		
+		<result column="back_advance_subbranch" property="backAdvanceSubbranch" />
+		<result column="back_advance_water_bill" property="backAdvanceWaterBill" />
+		<result column="use_amount" property="useAmount" />
+		<result column="fund_source" property="fundSource" />
+		<result column="make_bill_note" property="makeBillNote" />
+		
+		<result column="cancel_reason" property="cancelReason" />
+		<result column="pay_back_datetime" property="payBackDatetime" />
+		<result column="pay_back_bankcard_code" property="payBackBankcardCode" />
+		<result column="pay_back_bill_pdf" property="payBackBillPdf" />
+	</resultMap>
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
+			<if test="backAdvanceStatus != null and backAdvanceStatus != '' ">
+				AND t.back_advance_status = #{backAdvanceStatus}
+			</if>
+			<if test="backAdvanceFundType != null and backAdvanceFundType != '' ">
+				AND t.back_advance_fund_type = #{backAdvanceFundType}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_advance" parameterType="advance" resultMap="advance_DB_Result">
+		SELECT
+		t.code
+		,t.biz_code
+		,t.status
+		,t.cur_node_code
+		,t.type
+		
+		,t.back_advance_status
+		,t.back_advance_fund_type
+		,t.advance_fund_datetime
+		,t.advance_fund_amount
+		,t.total_advance_fund_code
+		
+		,t.bill_pdf
+		,t.advance_note
+		,t.back_advance_amount
+		,t.back_advance_account
+		,t.back_advance_open_bank
+		
+		,t.back_advance_subbranch
+		,t.back_advance_water_bill
+		,t.use_amount
+		,t.fund_source
+		,t.make_bill_note
+		
+		,t.cancel_reason
+		,t.pay_back_datetime
+		,t.pay_back_bankcard_code
+		,t.pay_back_bill_pdf
+		FROM
+		tdq_advance t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_advance_count" parameterType="advance"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_advance t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_advance" parameterType="advance">
+		INSERT INTO
+		tdq_advance(
+		code
+		,biz_code
+		,status
+		,cur_node_code
+		,type
+		
+		,back_advance_status
+		,back_advance_fund_type
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{status}
+		,#{curNodeCode}
+		,#{type}
+		
+		,#{backAdvanceStatus}
+		,#{backAdvanceFundType}
+		)
+	</insert>
+
+	<update id="update_advance" parameterType="advance">
+		UPDATE tdq_advance
+		SET
+		biz_code = #{bizCode}
+		,status = #{status}
+		,cur_node_code = #{curNodeCode}
+		,type = #{type}
+		,back_advance_status = #{backAdvanceStatus}
+		,back_advance_fund_type = #{backAdvanceFundType}
+		,advance_fund_datetime = #{advanceFundDatetime}
+		,advance_fund_amount = #{advanceFundAmount}
+		,total_advance_fund_code = #{totalAdvanceFundCode}
+		,bill_pdf = #{billPdf}
+		,advance_note = #{advanceNote}
+		,back_advance_amount = #{backAdvanceAmount}
+		,back_advance_account = #{backAdvanceAccount}
+		,back_advance_open_bank = #{backAdvanceOpenBank}
+		,back_advance_subbranch = #{backAdvanceSubbranch}
+		,back_advance_water_bill = #{backAdvanceWaterBill}
+		,use_amount = #{useAmount}
+		,fund_source = #{fundSource}
+		,make_bill_note = #{makeBillNote}
+		,cancel_reason = #{cancelReason}
+		,pay_back_datetime = #{payBackDatetime}
+		,pay_back_bankcard_code = #{payBackBankcardCode}
+		,pay_back_bill_pdf = #{payBackBillPdf}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

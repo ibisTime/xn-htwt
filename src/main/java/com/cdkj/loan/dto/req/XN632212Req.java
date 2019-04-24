@@ -12,7 +12,6 @@ public class XN632212Req {
     @NotBlank
     private String category;
 
-    @NotBlank
     private String kname;
 
     // 份数

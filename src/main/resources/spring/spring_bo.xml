@@ -469,4 +469,7 @@
 		<property name="paginableDAO" ref="carInfoDAOImpl"/>
 	</bean>
 	
+	<bean id="advanceBO" class="com.cdkj.loan.bo.impl.AdvanceBOImpl">
+		<property name="paginableDAO" ref="advanceDAOImpl"/>
+	</bean>
 </beans>

@@ -378,34 +378,47 @@ public class LogisticsAOImpl implements ILogisticsAO {
             }
         }
 
-        Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
-        String nextNodeCode = nodeFlowBO
-            .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
-
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
-
-        switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
-
-            // 贷后收件（银行放款）
-            case receive_2:
-                cdbizBO.refreshFircundangStatus(cdbiz,
-                    ECdbizStatus.D2.getCode());
+        switch (ELogisticsType.matchCode(logistics.getType())) {
+            case GPS:
+                gpsApplyBO.receiveGps(logistics.getBizCode());
                 break;
 
-            // 银行收件（车辆抵押）
-            case receive_5:
-                cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A27.getCode());
-                break;
+            case BUDGET:
 
-            // 待担保公司收件（车辆抵押）
-            case receive_6:
-                cdbizBO.refreshSeccundangStatus(cdbiz,
-                    ECdbizStatus.E2.getCode());
+                Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
+                String nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
+                    .getNextNode();
+
+                cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+
+                switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
+
+                    // 贷后收件（银行放款）
+                    case receive_2:
+                        cdbizBO.refreshFircundangStatus(cdbiz,
+                            ECdbizStatus.D2.getCode());
+                        break;
+
+                    // 银行收件（车辆抵押）
+                    case receive_5:
+                        cdbizBO.refreshStatus(cdbiz,
+                            ECdbizStatus.A27.getCode());
+                        break;
+
+                    // 待担保公司收件（车辆抵押）
+                    case receive_6:
+                        cdbizBO.refreshSeccundangStatus(cdbiz,
+                            ECdbizStatus.E2.getCode());
+                        break;
+
+                    default:
+                        break;
+                }
                 break;
 
             default:
                 break;
-
         }
 
         logisticsBO.receiveLogistics(code, operator, remark);
