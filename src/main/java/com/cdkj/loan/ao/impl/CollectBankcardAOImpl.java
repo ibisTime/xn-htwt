@@ -35,6 +35,7 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setBankName(bank.getBankName());
 
         data.setBankcardNumber(req.getBankcardNumber());
+        data.setSubbranch(req.getSubbranch());
         data.setRemark(req.getRemark());
         return collectBankcardBO.saveCollectBankcard(data);
     }
@@ -52,6 +53,7 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setBankName(bank.getBankName());
 
         data.setBankcardNumber(req.getBankcardNumber());
+        data.setSubbranch(req.getSubbranch());
         data.setRemark(req.getRemark());
         return collectBankcardBO.refreshCollectBankcard(data);
     }
