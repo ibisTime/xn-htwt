@@ -22,5 +22,8 @@ public interface ISYSMenuBO extends IPaginableBO<SYSMenu> {
 
     public SYSMenu getSYSMenu(String code);
 
+    // 通过url查菜单
+    public SYSMenu getSYSMenuByUrl(String url);
+
     public List<SYSMenu> querySYSMenuList(SYSMenu data);
 }

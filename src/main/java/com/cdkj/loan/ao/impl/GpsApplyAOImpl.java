@@ -98,7 +98,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         data.setApplyWiredCount(wiredCount);
         data.setApplyWirelessCount(wirelessCount);
         data.setApplyCount(wiredCount + wirelessCount);
-        data.setTeamCode(req.getTeamCode());
+        data.setTeamCode(sysUser.getTeamCode());
 
         if (StringUtils.isNotBlank(req.getBudgetOrderCode())) {
             // 验证预算单编号存不存在
