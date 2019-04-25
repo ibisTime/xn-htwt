@@ -22,6 +22,8 @@ public class XN632002Req {
     @NotBlank
     private String bankcardNumber;// 账号
 
+    private String subbranch;// 支行名称
+
     private String remark;// 备注
 
     public String getCode() {
@@ -78,6 +80,14 @@ public class XN632002Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
     }
 
 }

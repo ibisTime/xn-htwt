@@ -26,6 +26,9 @@
 			<if test="kname != null and kname != '' ">
 				AND t.kname = #{kname}
 			</if>
+			<if test="vname != null and vname != '' ">
+				AND t.vname like "%"#{vname}"%"
+			</if>
 			<if test="updater != null and updater != '' ">
 				AND t.updater = #{updater}
 			</if>

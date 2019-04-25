@@ -10,6 +10,8 @@ public class XN632215Req extends APageReq {
     // 名称
     private String kname;
 
+    private String vname;
+
     private String category;
 
     private String attachType;
@@ -55,6 +57,14 @@ public class XN632215Req extends APageReq {
 
     public void setAttachType(String attachType) {
         this.attachType = attachType;
+    }
+
+    public String getVname() {
+        return vname;
+    }
+
+    public void setVname(String vname) {
+        this.vname = vname;
     }
 
 }
