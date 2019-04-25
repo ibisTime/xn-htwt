@@ -63,15 +63,6 @@
 		<result column="car_type" property="carType" />
 		<result column="is_drice_license" property="isDriceLicense" />
 		
-		<result column="drice_license" property="driceLicense" />
-		<result column="marry_pdf" property="marryPdf" />
-		<result column="other_pdf" property="otherPdf" />
-		<result column="work_asset_pdf" property="workAssetPdf" />
-		<result column="single_prove_pdf" property="singleProvePdf" />
-		
-		<result column="income_prove_pdf" property="incomeProvePdf" />
-		<result column="live_prove_pdf" property="liveProvePdf" />
-		<result column="build_prove_pdf" property="buildProvePdf" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -147,15 +138,6 @@
 		,t.car_type
 		,t.is_drice_license
 		
-		,t.drice_license
-		,t.marry_pdf
-		,t.other_pdf
-		,t.work_asset_pdf
-		,t.single_prove_pdf
-		
-		,t.income_prove_pdf
-		,t.live_prove_pdf
-		,t.build_prove_pdf
 		FROM
 		tdq_credit_user_ext t
 		<include refid="where_condition" />
@@ -235,15 +217,6 @@
 		,car_type
 		,is_drice_license
 		
-		,drice_license
-		,marry_pdf
-		,other_pdf
-		,work_asset_pdf
-		,single_prove_pdf
-		
-		,income_prove_pdf
-		,live_prove_pdf
-		,build_prove_pdf
 		)
 		VALUES(
 		#{code}
@@ -306,15 +279,6 @@
 		,#{carType}
 		,#{isDriceLicense}
 		
-		,#{driceLicense}
-		,#{marryPdf}
-		,#{otherPdf}
-		,#{workAssetPdf}
-		,#{singleProvePdf}
-		
-		,#{incomeProvePdf}
-		,#{liveProvePdf}
-		,#{buildProvePdf}
 		)
 	</insert>
 
@@ -378,18 +342,13 @@
 		,emergency_mobile2 = #{emergencyMobile2}
 		,car_type = #{carType}
 		,is_drice_license = #{isDriceLicense}
-		,drice_license = #{driceLicense}
-		
-		,marry_pdf = #{marryPdf}
-		,other_pdf = #{otherPdf}
-		,work_asset_pdf = #{workAssetPdf}
-		,single_prove_pdf = #{singleProvePdf}
-		,income_prove_pdf = #{incomeProvePdf}
-		
-		,live_prove_pdf = #{liveProvePdf}
-		,build_prove_pdf = #{buildProvePdf}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_creditUserExt" parameterType="creditUserExt">
+		DELETE FROM tdq_credit_user_ext
+		WHERE code=#{code}
+	</delete>
 
 
 </mapper>

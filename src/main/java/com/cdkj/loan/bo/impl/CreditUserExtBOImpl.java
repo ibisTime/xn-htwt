@@ -102,4 +102,18 @@ public class CreditUserExtBOImpl extends PaginableBOImpl<CreditUserExt>
             creditUserExtDAO.delete(creditUserExt);
         }
     }
+
+    @Override
+    public CreditUserExt getCreditUserExtByBizCode(String bizCode) {
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(bizCode,
+            ELoanRole.APPLY_USER);
+        if (null != creditUser) {
+            CreditUserExt condition = new CreditUserExt();
+            condition.setCreditUserCode(creditUser.getCode());
+            CreditUserExt creditUserExt = creditUserExtDAO.select(condition);
+            return creditUserExt;
+        } else {
+            return null;
+        }
+    }
 }

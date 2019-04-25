@@ -24,4 +24,6 @@ public interface ICreditJourBO extends IPaginableBO<CreditJour> {
 
     public void removeBizJour(String bizCode);
 
+    public List<CreditJour> querCreditJoursByBizCode(String bizCode);
+
 }

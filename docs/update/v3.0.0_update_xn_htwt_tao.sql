@@ -178,6 +178,11 @@ CREATE TABLE `tdq_car_info` (
   `oil_subsidy_kil` DOUBLE NULL COMMENT '油补公里数',
   `gps_deduct` BIGINT(20) NULL COMMENT 'GPS提成',
   `gps_fee_way` VARCHAR(4) NULL COMMENT 'GPS收费方式（1转账2按揭款3返点4不收费）',
+  `gps_fee` BIGINT(20) NULL ,
+  `auth_fee` BIGINT(20) NULL ,
+  `other_fee` BIGINT(20) NULL ,
+  `company_fee` BIGINT(20) NULL , 
+  `team_fee` BIGINT(20) NULL ,
   PRIMARY KEY (`code`));
 
   

@@ -47,6 +47,12 @@
 		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
 		<result column="gps_deduct" property="gpsDeduct" />
 		<result column="gps_fee_way" property="gpsFeeWay" />
+		<result column="gps_fee" property="gpsFee" />
+		<result column="auth_fee" property="authFee" />
+		<result column="other_fee" property="otherFee" />
+		<result column="company_fee" property="companyFee" />
+		<result column="team_fee" property="teamFee" />
+		<result column="month_deposit" property="monthDeposit" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -104,6 +110,12 @@
 		,t.oil_subsidy_kil
 		,t.gps_deduct
 		,t.gps_fee_way
+		,t.gps_fee
+		,t.auth_fee
+		,t.other_fee
+		,t.company_fee
+		,t.team_fee
+		,t.month_deposit
 		FROM
 		tdq_car_info t
 		<include refid="where_condition" />
@@ -261,6 +273,12 @@
 		,oil_subsidy_kil = #{oilSubsidyKil}
 		,gps_deduct = #{gpsDeduct}
 		,gps_fee_way = #{gpsFeeWay}
+		,gps_fee=#{gpsFee}
+		,auth_fee=#{authFee}
+		,other_fee=#{otherFee}
+		,company_fee=#{companyFee}
+		,team_fee=#{teamFee}
+		,month_deposit=#{monthDeposit}
 		WHERE code = #{code}
 	</update>
 

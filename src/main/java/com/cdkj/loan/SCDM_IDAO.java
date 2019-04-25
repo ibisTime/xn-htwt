@@ -9,16 +9,16 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "advance";
+    private static String key = "makeCard";
 
     // 实体名称
-    private static String keyName = "财务垫资";
+    private static String keyName = "制卡";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_advance";
+    private static String dbname = "tdq_make_card";
 
     private static String[] DBwords = { "code", "biz_code", "status",
             "cur_node_code", "type", "back_advance_status",
@@ -31,10 +31,11 @@ public class SCDM_IDAO {
             "pay_back_bankcard_code", "pay_back_bill_pdf" };
 
     private static String[] DBwordsName = { "编号", "业务编号", "状态", "当前节点",
-            "1总公司业务 2分公司业务", "退客户垫资款状态", "收回垫资款类型（1客户作废2垫资款退回）", "垫资日期", "垫资金额",
-            "垫资汇总单编号(分公司业务才有)", "水单", "垫资说明", "退客户垫资款 退款金额", "退客户垫资款 收款账号",
-            "退客户垫资款 开户行", "退客户垫资款 开户支行", "退客户垫资款 水单", "用款金额(应退按揭款)",
-            "金额来源(1财务部2预支款)", "制单意见说明", "撤销理由", "付款时间", "付款银行", "付款凭证" };
+            "1总公司业务 2分公司业务", "退客户垫资款状态", "收回垫资款类型（1客户作废2垫资款退回）", "垫资日期",
+            "垫资金额", "垫资汇总单编号(分公司业务才有)", "水单", "垫资说明", "退客户垫资款 退款金额",
+            "退客户垫资款 收款账号", "退客户垫资款 开户行", "退客户垫资款 开户支行", "退客户垫资款 水单",
+            "用款金额(应退按揭款)", "金额来源(1财务部2预支款)", "制单意见说明", "撤销理由", "付款时间", "付款银行",
+            "付款凭证" };
 
     public void testname() throws Exception {
     }
@@ -47,7 +48,7 @@ public class SCDM_IDAO {
     public static void main(String[] args) {
 
         System.out.println("*********开始打印*********");
-        String path = "/Users/Silver/Desktop/tmp/tdq_advance";
+        String path = "/Users/taojian/Desktop/java/carconfig";
 
         File DOMAINfile = new File(path, Key + ".java");
 
@@ -222,9 +223,9 @@ public class SCDM_IDAO {
         String str1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"\n"
                 + "\"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n"
-                + "<mapper namespace=\"" + packge + "dao.I" + Key + "DAO\">\n\t"
-                + "<resultMap id=\"" + key + "_DB_Result\" type=\"" + key
-                + "\">\n\t\t";
+                + "<mapper namespace=\"" + packge + "dao.I" + Key
+                + "DAO\">\n\t" + "<resultMap id=\"" + key
+                + "_DB_Result\" type=\"" + key + "\">\n\t\t";
 
         String str2 = "";
         for (int i = 0; i < DBwords.length; i++) {
@@ -236,7 +237,8 @@ public class SCDM_IDAO {
                         + DOwords[i] + "\" />\n\t";
             }
         }
-        str2 += "</resultMap>\n\t" + "<sql id=\"where_condition\">\n\t\t"
+        str2 += "</resultMap>\n\t"
+                + "<sql id=\"where_condition\">\n\t\t"
                 + "<trim prefix=\"WHERE\" prefixOverrides=\"AND | OR\">\n\t\t\t"
                 + "<if test=\"code != null and code != '' \">\n\t\t\t\t"
                 + "AND t.code = #{code}\n\t\t\t"
@@ -287,8 +289,8 @@ public class SCDM_IDAO {
             }
         }
         str5 += ")\n\t</insert>\n\n\t" + "<update id=\"update_" + key
-                + "\" parameterType=\"" + key + "\">\n\t\t" + "UPDATE " + dbname
-                + "\n\t\tSET\n\t\t";
+                + "\" parameterType=\"" + key + "\">\n\t\t" + "UPDATE "
+                + dbname + "\n\t\tSET\n\t\t";
 
         String str6 = "";
         for (int i = 1; i < DBwords.length; i++) {
@@ -325,8 +327,8 @@ public class SCDM_IDAO {
                 + "DAO {\n\n\n\t" + "@Override\n\tpublic int insert(" + Key
                 + " data) {\n\t\t"
                 + "return super.insert(NAMESPACE.concat(\"insert_" + key
-                + "\"), data);\n\t}\n\n\n\t" + "@Override\n\tpublic int delete("
-                + Key + " data) {\n\t\t"
+                + "\"), data);\n\t}\n\n\n\t"
+                + "@Override\n\tpublic int delete(" + Key + " data) {\n\t\t"
                 + "return super.delete(NAMESPACE.concat(\"delete_" + key
                 + "\"), data);\n\t}\n\n\n\t" + "@Override\n\tpublic " + Key
                 + " select(" + Key + " condition) {\n\t\t"
@@ -359,56 +361,127 @@ public class SCDM_IDAO {
                 + "(" + Key + " data);\n\n\n\t" + "public int remove" + Key
                 + "(String code);\n\n\n\t" + "public int refresh" + Key + "("
                 + Key + " data);\n\n\n\t" + "public List<" + Key + "> query"
-                + Key + "List(" + Key + " condition);\n\n\n\t" + "public " + Key
-                + " get" + Key + "(String code);\n\n\n}";
+                + Key + "List(" + Key + " condition);\n\n\n\t" + "public "
+                + Key + " get" + Key + "(String code);\n\n\n}";
         return str;
     }
 
     public static String getBOImpl() {
-        String str = "package " + packge + "bo.impl;\n\n"
+        String str = "package "
+                + packge
+                + "bo.impl;\n\n"
                 + "import java.util.List;\n\n"
                 + "import org.apache.commons.collections.CollectionUtils;\n"
                 + "import org.apache.commons.lang3.StringUtils;\n"
                 + "import org.springframework.beans.factory.annotation.Autowired;\n"
                 + "import org.springframework.stereotype.Component;\n\n"
-                + "import " + packge + "bo.I" + Key + "BO;\n" + "import "
-                + packge + "bo.base.PaginableBOImpl;\n" + "import " + packge
-                + "core.EGeneratePrefix;\n" + "import " + packge
-                + "core.OrderNoGenerater;\n" + "import " + packge + "dao.I"
-                + Key + "DAO;\n" + "import " + packge + "domain." + Key + ";\n"
-                + "import " + packge + "exception.BizException;\n\n\n\n"
-                + "//CHECK ��鲢��ע�� \n@Component\n" + "public class " + Key
-                + "BOImpl extends PaginableBOImpl<" + Key + "> implements I"
-                + Key + "BO {\n\n\t" + "@Autowired\n\tprivate I" + Key + "DAO "
-                + key + "DAO;\n\n\t" + "@Override\n\tpublic boolean is" + Key
-                + "Exist(String code) {\n\t\t" + "" + Key + " condition = new "
-                + Key + "();\n\t\tcondition.setCode(code);\n\t\t" + "if (" + key
+                + "import "
+                + packge
+                + "bo.I"
+                + Key
+                + "BO;\n"
+                + "import "
+                + packge
+                + "bo.base.PaginableBOImpl;\n"
+                + "import "
+                + packge
+                + "core.EGeneratePrefix;\n"
+                + "import "
+                + packge
+                + "core.OrderNoGenerater;\n"
+                + "import "
+                + packge
+                + "dao.I"
+                + Key
+                + "DAO;\n"
+                + "import "
+                + packge
+                + "domain."
+                + Key
+                + ";\n"
+                + "import "
+                + packge
+                + "exception.BizException;\n\n\n\n"
+                + "//CHECK ��鲢��ע�� \n@Component\n"
+                + "public class "
+                + Key
+                + "BOImpl extends PaginableBOImpl<"
+                + Key
+                + "> implements I"
+                + Key
+                + "BO {\n\n\t"
+                + "@Autowired\n\tprivate I"
+                + Key
+                + "DAO "
+                + key
+                + "DAO;\n\n\t"
+                + "@Override\n\tpublic boolean is"
+                + Key
+                + "Exist(String code) {\n\t\t"
+                + ""
+                + Key
+                + " condition = new "
+                + Key
+                + "();\n\t\tcondition.setCode(code);\n\t\t"
+                + "if ("
+                + key
                 + "DAO.selectTotalCount(condition) > 0) {\n\t\t\treturn true;\n\t\t}\n\t\t"
-                + "return false;\n\t}\n\n\t@Override\n\t" + "public String save"
-                + Key + "(" + Key + " data) {\n\t\tString code = null;\n\t\t"
+                + "return false;\n\t}\n\n\t@Override\n\t"
+                + "public String save"
+                + Key
+                + "("
+                + Key
+                + " data) {\n\t\tString code = null;\n\t\t"
                 + "if (data != null) {\n\t\t\t"
                 + "code = OrderNoGenerater.generateM(EGeneratePrefix.CT.getCode());\n\t\t\t"
-                + "data.setCode(code);\n\t\t\t" + key
+                + "data.setCode(code);\n\t\t\t"
+                + key
                 + "DAO.insert(data);\n\t\t}\n\t\treturn code;\n\t}\n\n\t"
-                + "@Override\n\tpublic int remove" + Key
+                + "@Override\n\tpublic int remove"
+                + Key
                 + "(String code) {\n\t\t"
                 + "int count = 0;\n\t\tif (StringUtils.isNotBlank(code)) {\n\t\t\t"
-                + "" + Key + " data = new " + Key
-                + "();\n\t\t\tdata.setCode(code);\n\t\t\tcount = " + key
+                + ""
+                + Key
+                + " data = new "
+                + Key
+                + "();\n\t\t\tdata.setCode(code);\n\t\t\tcount = "
+                + key
                 + "DAO.delete(data);\n\t\t}"
                 + "\n\t\treturn count;\n\t}\n\n\t@Override\n\t"
-                + "public int refresh" + Key + "(" + Key + " data) {\n\t\t"
+                + "public int refresh"
+                + Key
+                + "("
+                + Key
+                + " data) {\n\t\t"
                 + "int count = 0;\n\t\tif (StringUtils.isNotBlank(data.getCode())) {\n\t\t\t"
-                + "count = " + key
+                + "count = "
+                + key
                 + "DAO.update(data);\n\t\t}\n\t\treturn count;\n\t}\n\n\t"
-                + "@Override\n\tpublic List<" + Key + "> query" + Key + "List("
-                + Key + " condition) {\n\t\t" + "return " + key
+                + "@Override\n\tpublic List<"
+                + Key
+                + "> query"
+                + Key
+                + "List("
+                + Key
+                + " condition) {\n\t\t"
+                + "return "
+                + key
                 + "DAO.selectList(condition);\n\t}\n\n\t"
-                + "@Override\n\tpublic " + Key + " get" + Key
-                + "(String code) {\n\t\t" + "" + Key
+                + "@Override\n\tpublic "
+                + Key
+                + " get"
+                + Key
+                + "(String code) {\n\t\t"
+                + ""
+                + Key
                 + " data = null;\n\t\tif (StringUtils.isNotBlank(code)) {\n\t\t\t"
-                + "" + Key + " condition = new " + Key
-                + "();\n\t\t\tcondition.setCode(code);\n\t\t\t" + "data = "
+                + ""
+                + Key
+                + " condition = new "
+                + Key
+                + "();\n\t\t\tcondition.setCode(code);\n\t\t\t"
+                + "data = "
                 + key
                 + "DAO.select(condition);\n\t\t\tif (data == null) {\n\t\t\t\t"
                 + "throw new BizException(\"xn0000\", \"�� ��Ų�����\");\n\t\t\t"
@@ -417,11 +490,22 @@ public class SCDM_IDAO {
     }
 
     private static String getIAO() {
-        String str = "package " + packge + "ao;\n\n"
-                + "import java.util.List;\n\n" + "import " + packge
-                + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
-                + ";\n\n\n\n" + "//CHECK ��鲢��ע�� \n@Component\n"
-                + "public interface I" + Key + "AO {\n\t"
+        String str = "package "
+                + packge
+                + "ao;\n\n"
+                + "import java.util.List;\n\n"
+                + "import "
+                + packge
+                + "bo.base.Paginable;\n"
+                + "import "
+                + packge
+                + "domain."
+                + Key
+                + ";\n\n\n\n"
+                + "//CHECK ��鲢��ע�� \n@Component\n"
+                + "public interface I"
+                + Key
+                + "AO {\n\t"
                 + "static final String DEFAULT_ORDER_COLUMN = \"code\";\n\n\n\t"
                 + "public String add" + Key + "(" + Key + " data);\n\n\t"
                 + "public int drop" + Key + "(String code);\n\n\t"
@@ -435,14 +519,17 @@ public class SCDM_IDAO {
     }
 
     private static String getAOImpl() {
-        String str = "package " + packge + "ao.impl;\n\n"
+        String str = "package "
+                + packge
+                + "ao.impl;\n\n"
                 + "import java.util.List;\n\n"
                 + "import org.springframework.beans.factory.annotation.Autowired;\n"
                 + "import org.springframework.stereotype.Service;\n\n"
                 + "import " + packge + "ao.I" + Key + "AO;\n" + "import "
                 + packge + "bo.I" + Key + "BO;\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
-                + ";\n" + "import " + packge + "exception.BizException;\n\n\n\n"
+                + ";\n" + "import " + packge
+                + "exception.BizException;\n\n\n\n"
                 + "//CHECK ��鲢��ע�� \n@Service\n" + "public class " + Key
                 + "AOImpl implements I" + Key + "AO {\n\n\t"
                 + "@Autowired\n\tprivate I" + Key + "BO " + key + "BO;\n\n\t"

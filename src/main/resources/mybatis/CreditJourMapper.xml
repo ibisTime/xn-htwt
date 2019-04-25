@@ -146,5 +146,10 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_creditJour" parameterType="creditJour">
+		DELETE FROM tdq_credit_jour
+		WHERE code=#{code}
+	</delete>
 
 </mapper>

@@ -285,23 +285,25 @@
 		,loan_product_code
 		,loan_product_name
 		,user_id
+		
 		,real_name
 		,id_kind
 		,id_no
 		,bankcard_code
 		,ref_type
-		,ref_code
 		
+		,ref_code
 		,biz_price
 		,sf_rate
 		,sf_amount
 		,loan_bank
-		,loan_amount
 		
+		,loan_amount
 		,periods
 		,rest_periods
 		,bank_rate
 		,bank_benchmark_rate
+		
 		,company_loan_cs
 		,global_rate
 		,loan_start_datetime
@@ -319,18 +321,19 @@
 		,cur_node_code
 		,fx_amount
 		,rest_amount
-		,rest_total_cost
 		
+		,rest_total_cost
 		,overdue_total_deposit
 		,overdue_total_deposit_income
 		,total_in_deposit
 		,overdue_amount
+		
 		,total_overdue_count
 		,cur_overdue_count
 		,black_handle_note
 		,is_advance_settled
-		
 		,updater
+		
 		,update_datetime
 		,remark
 		,team_code
@@ -341,53 +344,55 @@
 		,#{loanProductCode}
 		,#{loanProductName}
 		,#{userId}
+		
 		,#{realName}
 		,#{idKind}
 		,#{idNo}
-		
 		,#{bankcardCode}
 		,#{refType}
+		
 		,#{refCode}
 		,#{bizPrice}
 		,#{sfRate}
-		
 		,#{sfAmount}
 		,#{loanBank}
+		
 		,#{loanAmount}
 		,#{periods}
 		,#{restPeriods}
-		
 		,#{bankRate}
 		,#{bankBenchmarkRate}
+		
 		,#{companyLoanCs}
 		,#{globalRate}
 		,#{loanStartDatetime}
 		,#{loanEndDatetime}
 		,#{bankFkDatetime}
+		
 		,#{fxDeposit}
 		,#{firstRepayDatetime}
-		
 		,#{firstRepayAmount}
 		,#{monthDatetime}
 		,#{monthAmount}
+		
 		,#{lyDeposit}
 		,#{cutLyDeposit}
-		
 		,#{curNodeCode}
 		,#{fxAmount}
 		,#{restAmount}
+		
 		,#{restTotalCost}
 		,#{overdueTotalDeposit}
 		,#{overdueTotalDepositIncome}
-		
 		,#{totalInDeposit}
 		,#{overdueAmount}
+		
 		,#{totalOverdueCount}
 		,#{curOverdueCount}
 		,#{blackHandleNote}
-		
 		,#{isAdvanceSettled}
 		,#{updater}
+		
 		,#{updateDatetime}
 		,#{remark}
 		,#{teamCode}
@@ -655,4 +660,9 @@
 		,cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_repayBiz" parameterType="repayBiz">
+		DELETE FROM tdh_repay_biz
+		WHERE code=#{code}
+	</delete>
 </mapper>

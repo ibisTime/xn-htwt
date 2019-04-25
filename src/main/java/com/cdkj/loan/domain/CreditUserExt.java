@@ -88,7 +88,7 @@ public class CreditUserExt extends ABaseDO {
     private String houseProperty;
 
     // 月收入
-    private Integer monthIncome;
+    private Long monthIncome;
 
     // 单位性质
     private String workCompanyProperty;
@@ -161,6 +161,82 @@ public class CreditUserExt extends ABaseDO {
 
     // 有无驾照
     private String isDriceLicense;
+
+    private String driceLicense;
+
+    private String marryPdf;
+
+    private String otherPdf;
+
+    private String workAssetPdf;
+
+    private String singleProvePdf;
+
+    private String incomeProvePdf;
+
+    private String liveProvePdf;
+
+    private String buildProvePdf;
+
+    public void setSingleProvePdf(String singleProvePdf) {
+        this.singleProvePdf = singleProvePdf;
+    }
+
+    public String getMarryPdf() {
+        return marryPdf;
+    }
+
+    public void setMarryPdf(String marryPdf) {
+        this.marryPdf = marryPdf;
+    }
+
+    public String getOtherPdf() {
+        return otherPdf;
+    }
+
+    public void setOtherPdf(String otherPdf) {
+        this.otherPdf = otherPdf;
+    }
+
+    public String getWorkAssetPdf() {
+        return workAssetPdf;
+    }
+
+    public void setWorkAssetPdf(String workAssetPdf) {
+        this.workAssetPdf = workAssetPdf;
+    }
+
+    public String getIncomeProvePdf() {
+        return incomeProvePdf;
+    }
+
+    public void setIncomeProvePdf(String incomeProvePdf) {
+        this.incomeProvePdf = incomeProvePdf;
+    }
+
+    public String getLiveProvePdf() {
+        return liveProvePdf;
+    }
+
+    public void setLiveProvePdf(String liveProvePdf) {
+        this.liveProvePdf = liveProvePdf;
+    }
+
+    public String getBuildProvePdf() {
+        return buildProvePdf;
+    }
+
+    public void setBuildProvePdf(String buildProvePdf) {
+        this.buildProvePdf = buildProvePdf;
+    }
+
+    public String getDriceLicense() {
+        return driceLicense;
+    }
+
+    public void setDriceLicense(String driceLicense) {
+        this.driceLicense = driceLicense;
+    }
 
     public String getCode() {
         return code;
@@ -362,11 +438,11 @@ public class CreditUserExt extends ABaseDO {
         this.houseProperty = houseProperty;
     }
 
-    public Integer getMonthIncome() {
+    public Long getMonthIncome() {
         return monthIncome;
     }
 
-    public void setMonthIncome(Integer monthIncome) {
+    public void setMonthIncome(Long monthIncome) {
         this.monthIncome = monthIncome;
     }
 

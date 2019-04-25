@@ -10,490 +10,556 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class CarInfo extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 业务编号
-	private String bizCode;
+    // 业务编号
+    private String bizCode;
 
-	// 品牌
-	private String carBrand;
+    // 品牌
+    private String carBrand;
 
-	// 车系
-	private String carSeries;
+    // 车系
+    private String carSeries;
 
-	// 车型
-	private String carModel;
+    // 车型
+    private String carModel;
 
-	// 车型名称
-	private String carModelName;
+    // 车型名称
+    private String carModelName;
 
-	// 车辆类型
-	private String carType;
+    // 车辆类型
+    private String carType;
 
-	// 颜色
-	private String carColor;
+    // 颜色
+    private String carColor;
 
-	// 车架号
-	private String carFrameNo;
+    // 车架号
+    private String carFrameNo;
 
-	// 发动机号
-	private String carEngineNo;
+    // 发动机号
+    private String carEngineNo;
 
-	// 市场指导价
-	private String originalPrice;
+    // 市场指导价
+    private String originalPrice;
 
-	// 开票价
-	private String invoicePrice;
+    // 开票价
+    private String invoicePrice;
 
-	// 机动车销售公司
-	private String vehicleCompanyName;
+    // 机动车销售公司
+    private String vehicleCompanyName;
 
-	// 开票单位
-	private String invoiceCompany;
+    // 开票单位
+    private String invoiceCompany;
 
-	// 所属区域
-	private String region;
+    // 所属区域
+    private String region;
 
-	// 评估栏
-	private String evaluateColumn;
+    // 评估栏
+    private String evaluateColumn;
 
-	// 所属区域
-	private String settleAddress;
+    // 所属区域
+    private String settleAddress;
 
-	// 保单日期
-	private String policyDatetime;
+    // 保单日期
+    private String policyDatetime;
 
-	// 保单到期日
-	private String policyDueDate;
+    // 保单到期日
+    private String policyDueDate;
 
-	// 汽车经销商编号
-	private String carDealerCode;
+    // 汽车经销商编号
+    private String carDealerCode;
 
-	// 汽车经销商名称（外单）
-	private String outCarDealerName;
+    // 汽车经销商名称（外单）
+    private String outCarDealerName;
 
-	// 购车途径
-	private String shopWay;
+    // 购车途径
+    private String shopWay;
 
-	// 商业险合计
-	private String commerceInsurance;
+    // 商业险合计
+    private String commerceInsurance;
 
-	// 担保合同编号
-	private String guaranteeContractCode;
+    // 担保合同编号
+    private String guaranteeContractCode;
 
-	// 银行合同编号
-	private String bankContractCode;
+    // 银行合同编号
+    private String bankContractCode;
 
-	// 合同签订日
-	private String contractSignDate;
+    // 合同签订日
+    private String contractSignDate;
 
-	// 登记证书号
-	private String regCertificateCode;
+    // 登记证书号
+    private String regCertificateCode;
 
-	// 里程表
-	private String secondOdometer;
+    // 里程表
+    private String secondOdometer;
 
-	// 核准链接
-	private String checkApproveLink;
+    // 核准链接
+    private String checkApproveLink;
 
-	// 核准软件
-	private String checkApproveSoftware;
+    // 核准软件
+    private String checkApproveSoftware;
 
-	// 信息源
-	private String informationSource;
+    // 信息源
+    private String informationSource;
 
-	// 评估价
-	private String valuation;
+    // 评估价
+    private String valuation;
 
-	// 车行168车价
-	private String car168Price;
+    // 车行168车价
+    private String car168Price;
 
-	// 铭牌
-	private String secondNumber;
+    // 铭牌
+    private String secondNumber;
 
-	// 发票是否正确
-	private String isRightInvoice;
+    // 发票是否正确
+    private String isRightInvoice;
 
-	// 现发票价
-	private String currentInvoicePrice;
+    // 现发票价
+    private String currentInvoicePrice;
 
-	// 绿大本编号
-	private String greenBigCode;
+    // 绿大本编号
+    private String greenBigCode;
 
-	// 车牌号
-	private String carNumber;
+    // 车牌号
+    private String carNumber;
 
-	// 车辆落户日期
-	private String carSettleDatetime;
+    // 车辆落户日期
+    private String carSettleDatetime;
 
-	// 汽车经销商厂家贴息
-	private String carDealerSubsidy;
+    // 汽车经销商厂家贴息
+    private String carDealerSubsidy;
 
-	// 油补
-	private String oilSubsidy;
+    // 油补
+    private String oilSubsidy;
 
-	// 油补公里数
-	private String oilSubsidyKil;
+    // 油补公里数
+    private String oilSubsidyKil;
 
-	// GPS提成
-	private String gpsDeduct;
+    // GPS提成
+    private String gpsDeduct;
 
-	// GPS收费方式（1转账2按揭款3返点4不收费）
-	private String gpsFeeWay;
+    // GPS收费方式（1转账2按揭款3返点4不收费）
+    private String gpsFeeWay;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    // GPS费用
+    private Long gpsFee;
 
-	public String getCode() {
-		return code;
-	}
+    // 公证费
+    private Long authFee;
 
-	public void setBizCode(String bizCode) {
-		this.bizCode = bizCode;
-	}
+    // 其他费用
+    private Long otherFee;
 
-	public String getBizCode() {
-		return bizCode;
-	}
+    // 公司手续费
+    private Long companyFee;
 
-	public void setCarBrand(String carBrand) {
-		this.carBrand = carBrand;
-	}
+    // 团队服务费
+    private Long teamFee;
 
-	public String getCarBrand() {
-		return carBrand;
-	}
+    // 月供保证金
+    private Long monthDeposit;
 
-	public void setCarSeries(String carSeries) {
-		this.carSeries = carSeries;
-	}
+    public Long getMonthDeposit() {
+        return monthDeposit;
+    }
 
-	public String getCarSeries() {
-		return carSeries;
-	}
+    public void setMonthDeposit(Long monthDeposit) {
+        this.monthDeposit = monthDeposit;
+    }
 
-	public void setCarModel(String carModel) {
-		this.carModel = carModel;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getCarModel() {
-		return carModel;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setCarModelName(String carModelName) {
-		this.carModelName = carModelName;
-	}
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
 
-	public String getCarModelName() {
-		return carModelName;
-	}
+    public String getBizCode() {
+        return bizCode;
+    }
 
-	public void setCarType(String carType) {
-		this.carType = carType;
-	}
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
+    }
 
-	public String getCarType() {
-		return carType;
-	}
+    public String getCarBrand() {
+        return carBrand;
+    }
 
-	public void setCarColor(String carColor) {
-		this.carColor = carColor;
-	}
+    public void setCarSeries(String carSeries) {
+        this.carSeries = carSeries;
+    }
 
-	public String getCarColor() {
-		return carColor;
-	}
+    public String getCarSeries() {
+        return carSeries;
+    }
 
-	public void setCarFrameNo(String carFrameNo) {
-		this.carFrameNo = carFrameNo;
-	}
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
 
-	public String getCarFrameNo() {
-		return carFrameNo;
-	}
+    public String getCarModel() {
+        return carModel;
+    }
 
-	public void setCarEngineNo(String carEngineNo) {
-		this.carEngineNo = carEngineNo;
-	}
+    public void setCarModelName(String carModelName) {
+        this.carModelName = carModelName;
+    }
 
-	public String getCarEngineNo() {
-		return carEngineNo;
-	}
+    public String getCarModelName() {
+        return carModelName;
+    }
 
-	public void setOriginalPrice(String originalPrice) {
-		this.originalPrice = originalPrice;
-	}
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
 
-	public String getOriginalPrice() {
-		return originalPrice;
-	}
+    public String getCarType() {
+        return carType;
+    }
 
-	public void setInvoicePrice(String invoicePrice) {
-		this.invoicePrice = invoicePrice;
-	}
+    public void setCarColor(String carColor) {
+        this.carColor = carColor;
+    }
 
-	public String getInvoicePrice() {
-		return invoicePrice;
-	}
+    public String getCarColor() {
+        return carColor;
+    }
 
-	public void setVehicleCompanyName(String vehicleCompanyName) {
-		this.vehicleCompanyName = vehicleCompanyName;
-	}
+    public void setCarFrameNo(String carFrameNo) {
+        this.carFrameNo = carFrameNo;
+    }
 
-	public String getVehicleCompanyName() {
-		return vehicleCompanyName;
-	}
+    public String getCarFrameNo() {
+        return carFrameNo;
+    }
 
-	public void setInvoiceCompany(String invoiceCompany) {
-		this.invoiceCompany = invoiceCompany;
-	}
+    public void setCarEngineNo(String carEngineNo) {
+        this.carEngineNo = carEngineNo;
+    }
 
-	public String getInvoiceCompany() {
-		return invoiceCompany;
-	}
+    public String getCarEngineNo() {
+        return carEngineNo;
+    }
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
+    public void setOriginalPrice(String originalPrice) {
+        this.originalPrice = originalPrice;
+    }
 
-	public String getRegion() {
-		return region;
-	}
+    public String getOriginalPrice() {
+        return originalPrice;
+    }
 
-	public void setEvaluateColumn(String evaluateColumn) {
-		this.evaluateColumn = evaluateColumn;
-	}
+    public void setInvoicePrice(String invoicePrice) {
+        this.invoicePrice = invoicePrice;
+    }
 
-	public String getEvaluateColumn() {
-		return evaluateColumn;
-	}
+    public String getInvoicePrice() {
+        return invoicePrice;
+    }
 
-	public void setSettleAddress(String settleAddress) {
-		this.settleAddress = settleAddress;
-	}
+    public void setVehicleCompanyName(String vehicleCompanyName) {
+        this.vehicleCompanyName = vehicleCompanyName;
+    }
 
-	public String getSettleAddress() {
-		return settleAddress;
-	}
+    public String getVehicleCompanyName() {
+        return vehicleCompanyName;
+    }
 
-	public void setPolicyDatetime(String policyDatetime) {
-		this.policyDatetime = policyDatetime;
-	}
+    public void setInvoiceCompany(String invoiceCompany) {
+        this.invoiceCompany = invoiceCompany;
+    }
 
-	public String getPolicyDatetime() {
-		return policyDatetime;
-	}
+    public String getInvoiceCompany() {
+        return invoiceCompany;
+    }
 
-	public void setPolicyDueDate(String policyDueDate) {
-		this.policyDueDate = policyDueDate;
-	}
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
-	public String getPolicyDueDate() {
-		return policyDueDate;
-	}
+    public String getRegion() {
+        return region;
+    }
 
-	public void setCarDealerCode(String carDealerCode) {
-		this.carDealerCode = carDealerCode;
-	}
+    public void setEvaluateColumn(String evaluateColumn) {
+        this.evaluateColumn = evaluateColumn;
+    }
 
-	public String getCarDealerCode() {
-		return carDealerCode;
-	}
+    public String getEvaluateColumn() {
+        return evaluateColumn;
+    }
 
-	public void setOutCarDealerName(String outCarDealerName) {
-		this.outCarDealerName = outCarDealerName;
-	}
+    public void setSettleAddress(String settleAddress) {
+        this.settleAddress = settleAddress;
+    }
 
-	public String getOutCarDealerName() {
-		return outCarDealerName;
-	}
+    public String getSettleAddress() {
+        return settleAddress;
+    }
 
-	public void setShopWay(String shopWay) {
-		this.shopWay = shopWay;
-	}
+    public void setPolicyDatetime(String policyDatetime) {
+        this.policyDatetime = policyDatetime;
+    }
 
-	public String getShopWay() {
-		return shopWay;
-	}
+    public String getPolicyDatetime() {
+        return policyDatetime;
+    }
 
-	public void setCommerceInsurance(String commerceInsurance) {
-		this.commerceInsurance = commerceInsurance;
-	}
+    public void setPolicyDueDate(String policyDueDate) {
+        this.policyDueDate = policyDueDate;
+    }
 
-	public String getCommerceInsurance() {
-		return commerceInsurance;
-	}
+    public String getPolicyDueDate() {
+        return policyDueDate;
+    }
 
-	public void setGuaranteeContractCode(String guaranteeContractCode) {
-		this.guaranteeContractCode = guaranteeContractCode;
-	}
+    public void setCarDealerCode(String carDealerCode) {
+        this.carDealerCode = carDealerCode;
+    }
 
-	public String getGuaranteeContractCode() {
-		return guaranteeContractCode;
-	}
+    public String getCarDealerCode() {
+        return carDealerCode;
+    }
 
-	public void setBankContractCode(String bankContractCode) {
-		this.bankContractCode = bankContractCode;
-	}
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
+    }
 
-	public String getBankContractCode() {
-		return bankContractCode;
-	}
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
 
-	public void setContractSignDate(String contractSignDate) {
-		this.contractSignDate = contractSignDate;
-	}
+    public void setShopWay(String shopWay) {
+        this.shopWay = shopWay;
+    }
 
-	public String getContractSignDate() {
-		return contractSignDate;
-	}
+    public String getShopWay() {
+        return shopWay;
+    }
 
-	public void setRegCertificateCode(String regCertificateCode) {
-		this.regCertificateCode = regCertificateCode;
-	}
+    public void setCommerceInsurance(String commerceInsurance) {
+        this.commerceInsurance = commerceInsurance;
+    }
 
-	public String getRegCertificateCode() {
-		return regCertificateCode;
-	}
+    public String getCommerceInsurance() {
+        return commerceInsurance;
+    }
 
-	public void setSecondOdometer(String secondOdometer) {
-		this.secondOdometer = secondOdometer;
-	}
+    public void setGuaranteeContractCode(String guaranteeContractCode) {
+        this.guaranteeContractCode = guaranteeContractCode;
+    }
 
-	public String getSecondOdometer() {
-		return secondOdometer;
-	}
+    public String getGuaranteeContractCode() {
+        return guaranteeContractCode;
+    }
 
-	public void setCheckApproveLink(String checkApproveLink) {
-		this.checkApproveLink = checkApproveLink;
-	}
+    public void setBankContractCode(String bankContractCode) {
+        this.bankContractCode = bankContractCode;
+    }
 
-	public String getCheckApproveLink() {
-		return checkApproveLink;
-	}
+    public String getBankContractCode() {
+        return bankContractCode;
+    }
 
-	public void setCheckApproveSoftware(String checkApproveSoftware) {
-		this.checkApproveSoftware = checkApproveSoftware;
-	}
+    public void setContractSignDate(String contractSignDate) {
+        this.contractSignDate = contractSignDate;
+    }
 
-	public String getCheckApproveSoftware() {
-		return checkApproveSoftware;
-	}
+    public String getContractSignDate() {
+        return contractSignDate;
+    }
 
-	public void setInformationSource(String informationSource) {
-		this.informationSource = informationSource;
-	}
+    public void setRegCertificateCode(String regCertificateCode) {
+        this.regCertificateCode = regCertificateCode;
+    }
 
-	public String getInformationSource() {
-		return informationSource;
-	}
+    public String getRegCertificateCode() {
+        return regCertificateCode;
+    }
 
-	public void setValuation(String valuation) {
-		this.valuation = valuation;
-	}
+    public void setSecondOdometer(String secondOdometer) {
+        this.secondOdometer = secondOdometer;
+    }
 
-	public String getValuation() {
-		return valuation;
-	}
+    public String getSecondOdometer() {
+        return secondOdometer;
+    }
 
-	public void setCar168Price(String car168Price) {
-		this.car168Price = car168Price;
-	}
+    public void setCheckApproveLink(String checkApproveLink) {
+        this.checkApproveLink = checkApproveLink;
+    }
 
-	public String getCar168Price() {
-		return car168Price;
-	}
+    public String getCheckApproveLink() {
+        return checkApproveLink;
+    }
 
-	public void setSecondNumber(String secondNumber) {
-		this.secondNumber = secondNumber;
-	}
+    public void setCheckApproveSoftware(String checkApproveSoftware) {
+        this.checkApproveSoftware = checkApproveSoftware;
+    }
 
-	public String getSecondNumber() {
-		return secondNumber;
-	}
+    public String getCheckApproveSoftware() {
+        return checkApproveSoftware;
+    }
 
-	public void setIsRightInvoice(String isRightInvoice) {
-		this.isRightInvoice = isRightInvoice;
-	}
+    public void setInformationSource(String informationSource) {
+        this.informationSource = informationSource;
+    }
 
-	public String getIsRightInvoice() {
-		return isRightInvoice;
-	}
+    public String getInformationSource() {
+        return informationSource;
+    }
 
-	public void setCurrentInvoicePrice(String currentInvoicePrice) {
-		this.currentInvoicePrice = currentInvoicePrice;
-	}
+    public void setValuation(String valuation) {
+        this.valuation = valuation;
+    }
 
-	public String getCurrentInvoicePrice() {
-		return currentInvoicePrice;
-	}
+    public String getValuation() {
+        return valuation;
+    }
 
-	public void setGreenBigCode(String greenBigCode) {
-		this.greenBigCode = greenBigCode;
-	}
+    public void setCar168Price(String car168Price) {
+        this.car168Price = car168Price;
+    }
 
-	public String getGreenBigCode() {
-		return greenBigCode;
-	}
+    public String getCar168Price() {
+        return car168Price;
+    }
 
-	public void setCarNumber(String carNumber) {
-		this.carNumber = carNumber;
-	}
+    public void setSecondNumber(String secondNumber) {
+        this.secondNumber = secondNumber;
+    }
 
-	public String getCarNumber() {
-		return carNumber;
-	}
+    public String getSecondNumber() {
+        return secondNumber;
+    }
 
-	public void setCarSettleDatetime(String carSettleDatetime) {
-		this.carSettleDatetime = carSettleDatetime;
-	}
+    public void setIsRightInvoice(String isRightInvoice) {
+        this.isRightInvoice = isRightInvoice;
+    }
 
-	public String getCarSettleDatetime() {
-		return carSettleDatetime;
-	}
+    public String getIsRightInvoice() {
+        return isRightInvoice;
+    }
 
-	public void setCarDealerSubsidy(String carDealerSubsidy) {
-		this.carDealerSubsidy = carDealerSubsidy;
-	}
+    public void setCurrentInvoicePrice(String currentInvoicePrice) {
+        this.currentInvoicePrice = currentInvoicePrice;
+    }
 
-	public String getCarDealerSubsidy() {
-		return carDealerSubsidy;
-	}
+    public String getCurrentInvoicePrice() {
+        return currentInvoicePrice;
+    }
 
-	public void setOilSubsidy(String oilSubsidy) {
-		this.oilSubsidy = oilSubsidy;
-	}
+    public void setGreenBigCode(String greenBigCode) {
+        this.greenBigCode = greenBigCode;
+    }
 
-	public String getOilSubsidy() {
-		return oilSubsidy;
-	}
+    public String getGreenBigCode() {
+        return greenBigCode;
+    }
 
-	public void setOilSubsidyKil(String oilSubsidyKil) {
-		this.oilSubsidyKil = oilSubsidyKil;
-	}
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
+    }
 
-	public String getOilSubsidyKil() {
-		return oilSubsidyKil;
-	}
+    public String getCarNumber() {
+        return carNumber;
+    }
 
-	public void setGpsDeduct(String gpsDeduct) {
-		this.gpsDeduct = gpsDeduct;
-	}
+    public void setCarSettleDatetime(String carSettleDatetime) {
+        this.carSettleDatetime = carSettleDatetime;
+    }
 
-	public String getGpsDeduct() {
-		return gpsDeduct;
-	}
+    public String getCarSettleDatetime() {
+        return carSettleDatetime;
+    }
 
-	public void setGpsFeeWay(String gpsFeeWay) {
-		this.gpsFeeWay = gpsFeeWay;
-	}
+    public void setCarDealerSubsidy(String carDealerSubsidy) {
+        this.carDealerSubsidy = carDealerSubsidy;
+    }
 
-	public String getGpsFeeWay() {
-		return gpsFeeWay;
-	}
+    public String getCarDealerSubsidy() {
+        return carDealerSubsidy;
+    }
+
+    public void setOilSubsidy(String oilSubsidy) {
+        this.oilSubsidy = oilSubsidy;
+    }
+
+    public String getOilSubsidy() {
+        return oilSubsidy;
+    }
+
+    public void setOilSubsidyKil(String oilSubsidyKil) {
+        this.oilSubsidyKil = oilSubsidyKil;
+    }
+
+    public String getOilSubsidyKil() {
+        return oilSubsidyKil;
+    }
+
+    public void setGpsDeduct(String gpsDeduct) {
+        this.gpsDeduct = gpsDeduct;
+    }
+
+    public String getGpsDeduct() {
+        return gpsDeduct;
+    }
+
+    public void setGpsFeeWay(String gpsFeeWay) {
+        this.gpsFeeWay = gpsFeeWay;
+    }
+
+    public String getGpsFeeWay() {
+        return gpsFeeWay;
+    }
+
+    public Long getGpsFee() {
+        return gpsFee;
+    }
+
+    public void setGpsFee(Long gpsFee) {
+        this.gpsFee = gpsFee;
+    }
+
+    public Long getAuthFee() {
+        return authFee;
+    }
+
+    public void setAuthFee(Long authFee) {
+        this.authFee = authFee;
+    }
+
+    public Long getOtherFee() {
+        return otherFee;
+    }
+
+    public void setOtherFee(Long otherFee) {
+        this.otherFee = otherFee;
+    }
+
+    public Long getCompanyFee() {
+        return companyFee;
+    }
+
+    public void setCompanyFee(Long companyFee) {
+        this.companyFee = companyFee;
+    }
+
+    public Long getTeamFee() {
+        return teamFee;
+    }
+
+    public void setTeamFee(Long teamFee) {
+        this.teamFee = teamFee;
+    }
 
 }

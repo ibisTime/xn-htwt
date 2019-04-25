@@ -455,4 +455,12 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
             }
         }
     }
+
+    @Override
+    public List<CreditJour> querCreditJoursByBizCode(String bizCode) {
+        CreditJour condition = new CreditJour();
+        condition.setBizCode(bizCode);
+        List<CreditJour> jours = queryCreditJourList(condition);
+        return jours;
+    }
 }

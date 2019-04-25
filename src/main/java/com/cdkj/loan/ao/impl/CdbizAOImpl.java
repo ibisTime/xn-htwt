@@ -18,7 +18,9 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditBO;
+import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.bo.ICreditUserExtBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.IMissionBO;
@@ -36,9 +38,12 @@ import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.CreditUserExt;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
@@ -122,6 +127,12 @@ public class CdbizAOImpl implements ICdbizAO {
     @Autowired
     private IRepayBizBO repayBizBO;
 
+    @Autowired
+    private ICreditUserExtBO creditUserExtBO;
+
+    @Autowired
+    private ICreditJourBO creditJourBO;
+
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
         Paginable<Cdbiz> page = null;
@@ -196,6 +207,20 @@ public class CdbizAOImpl implements ICdbizAO {
         // 车辆信息
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
         cdbiz.setCarInfo(carInfo);
+
+        // 还款信息
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
+        cdbiz.setRepayBiz(repayBiz);
+
+        // 征信人信息
+        CreditUserExt creditUserExt = creditUserExtBO
+            .getCreditUserExtByBizCode(cdbiz.getCode());
+        cdbiz.setCreditUserExt(creditUserExt);
+
+        // 征信人流水
+        List<CreditJour> creditJours = creditJourBO
+            .querCreditJoursByBizCode(cdbiz.getCode());
+        cdbiz.setCreditJours(creditJours);
 
         List<BizTask> bizTasks = bizTaskBO.queryBizTaskByBizCode(cdbiz
             .getCode());
@@ -408,7 +433,7 @@ public class CdbizAOImpl implements ICdbizAO {
                 creditUserBO.refreshCreditUserLoanRole(user);
             }
             // 审核通过，改变节点
-            cdbizBO.refershCurNodeCode(cdbiz, nodeFlow.getNextNode());
+            cdbizBO.refershCurNodeCode(cdbiz, ENode.input_budget.getCode());
             // 修改业务状态
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode(),
                 req.getApproveNote());
@@ -610,7 +635,7 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B02.getCode());
 
             // 添加待办事项
-            bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
+            bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.INTERVIEW,
                 cdbiz.getCode(), ENode.reinput_interview, operator);
         }
         cdbiz.setRemark(approveNote);

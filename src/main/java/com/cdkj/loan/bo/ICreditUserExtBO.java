@@ -21,6 +21,8 @@ public interface ICreditUserExtBO extends IPaginableBO<CreditUserExt> {
 
     public CreditUserExt getCreditUserExt(String code);
 
+    public CreditUserExt getCreditUserExtByBizCode(String bizCode);
+
     public void removeBizUserExt(String bizCode);
 
 }

@@ -225,84 +225,44 @@ public class RepayBiz extends ABaseDO {
 
     private Long retreatDeposit;// 可退押金金额
 
-    public Long getRetreatDeposit() {
-        return retreatDeposit;
+    public String getCode() {
+        return code;
     }
 
-    public void setRetreatDeposit(Long retreatDeposit) {
-        this.retreatDeposit = retreatDeposit;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getRealNameQuery() {
-        return realNameQuery;
+    public String getBizCode() {
+        return bizCode;
     }
 
-    public void setRealNameQuery(String realNameQuery) {
-        this.realNameQuery = realNameQuery;
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
-    public SYSUser getLeadUser() {
-        return leadUser;
+    public String getLoanProductCode() {
+        return loanProductCode;
     }
 
-    public void setLeadUser(SYSUser leadUser) {
-        this.leadUser = leadUser;
+    public void setLoanProductCode(String loanProductCode) {
+        this.loanProductCode = loanProductCode;
     }
 
-    public String getTeamCode() {
-        return teamCode;
+    public String getLoanProductName() {
+        return loanProductName;
     }
 
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
+    public void setLoanProductName(String loanProductName) {
+        this.loanProductName = loanProductName;
     }
 
-    public BizTeam getBizTeam() {
-        return bizTeam;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setBizTeam(BizTeam bizTeam) {
-        this.bizTeam = bizTeam;
-    }
-
-    public RepayPlan getOverdueRepayPlan() {
-        return overdueRepayPlan;
-    }
-
-    public void setOverdueRepayPlan(RepayPlan overdueRepayPlan) {
-        this.overdueRepayPlan = overdueRepayPlan;
-    }
-
-    public List<String> getCurNodeCodeList() {
-        return curNodeCodeList;
-    }
-
-    public void setCurNodeCodeList(List<String> curNodeCodeList) {
-        this.curNodeCodeList = curNodeCodeList;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public Date getBankFkDatetimeStart() {
-        return bankFkDatetimeStart;
-    }
-
-    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
-        this.bankFkDatetimeStart = bankFkDatetimeStart;
-    }
-
-    public Date getBankFkDatetimeEnd() {
-        return bankFkDatetimeEnd;
-    }
-
-    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
-        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getRealName() {
@@ -329,140 +289,28 @@ public class RepayBiz extends ABaseDO {
         this.idNo = idNo;
     }
 
-    public Date getBankFkDatetime() {
-        return bankFkDatetime;
-    }
-
-    public void setBankFkDatetime(Date bankFkDatetime) {
-        this.bankFkDatetime = bankFkDatetime;
-    }
-
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
-    }
-
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
-    }
-
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public String getUnRepayTotalAmount() {
-        return unRepayTotalAmount;
-    }
-
-    public void setUnRepayTotalAmount(String unRepayTotalAmount) {
-        this.unRepayTotalAmount = unRepayTotalAmount;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
-    public Long getOverdueTotalDeposit() {
-        return overdueTotalDeposit;
-    }
-
-    public void setOverdueTotalDeposit(Long overdueTotalDeposit) {
-        this.overdueTotalDeposit = overdueTotalDeposit;
-    }
-
-    public Long getOverdueTotalDepositIncome() {
-        return overdueTotalDepositIncome;
-    }
-
-    public void setOverdueTotalDepositIncome(Long overdueTotalDepositIncome) {
-        this.overdueTotalDepositIncome = overdueTotalDepositIncome;
-    }
-
-    public String getIsAdvanceSettled() {
-        return isAdvanceSettled;
-    }
-
-    public void setIsAdvanceSettled(String isAdvanceSettled) {
-        this.isAdvanceSettled = isAdvanceSettled;
-    }
-
-    public String getPaperPhoto() {
-        return paperPhoto;
-    }
-
-    public void setPaperPhoto(String paperPhoto) {
-        this.paperPhoto = paperPhoto;
-    }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
-    }
-
-    public String getLoanBankName() {
-        return loanBankName;
-    }
-
-    public void setLoanBankName(String loanBankName) {
-        this.loanBankName = loanBankName;
-    }
-
-    public Long getLoanBalance() {
-        return loanBalance;
-    }
-
-    public void setLoanBalance(Long loanBalance) {
-        this.loanBalance = loanBalance;
-    }
-
-    public List<RepayPlan> getRepayPlanList() {
-        return repayPlanList;
-    }
-
-    public void setRepayPlanList(List<RepayPlan> repayPlanList) {
-        this.repayPlanList = repayPlanList;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserId() {
-        return userId;
+    public String getBankcardCode() {
+        return bankcardCode;
     }
 
     public void setBankcardCode(String bankcardCode) {
         this.bankcardCode = bankcardCode;
     }
 
-    public String getBankcardCode() {
-        return bankcardCode;
+    public String getRefType() {
+        return refType;
     }
 
     public void setRefType(String refType) {
         this.refType = refType;
     }
 
-    public String getRefType() {
-        return refType;
+    public String getRefCode() {
+        return refCode;
     }
 
     public void setRefCode(String refCode) {
         this.refCode = refCode;
-    }
-
-    public String getRefCode() {
-        return refCode;
     }
 
     public Long getBizPrice() {
@@ -521,12 +369,36 @@ public class RepayBiz extends ABaseDO {
         this.restPeriods = restPeriods;
     }
 
-    public double getBankRate() {
+    public Double getBankRate() {
         return bankRate;
     }
 
-    public void setBankRate(double bankRate) {
+    public void setBankRate(Double bankRate) {
         this.bankRate = bankRate;
+    }
+
+    public Double getBankBenchmarkRate() {
+        return bankBenchmarkRate;
+    }
+
+    public void setBankBenchmarkRate(Double bankBenchmarkRate) {
+        this.bankBenchmarkRate = bankBenchmarkRate;
+    }
+
+    public Double getCompanyLoanCs() {
+        return companyLoanCs;
+    }
+
+    public void setCompanyLoanCs(Double companyLoanCs) {
+        this.companyLoanCs = companyLoanCs;
+    }
+
+    public Double getGlobalRate() {
+        return globalRate;
+    }
+
+    public void setGlobalRate(Double globalRate) {
+        this.globalRate = globalRate;
     }
 
     public Date getLoanStartDatetime() {
@@ -543,6 +415,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setLoanEndDatetime(Date loanEndDatetime) {
         this.loanEndDatetime = loanEndDatetime;
+    }
+
+    public Date getBankFkDatetime() {
+        return bankFkDatetime;
+    }
+
+    public void setBankFkDatetime(Date bankFkDatetime) {
+        this.bankFkDatetime = bankFkDatetime;
     }
 
     public Long getFxDeposit() {
@@ -601,6 +481,22 @@ public class RepayBiz extends ABaseDO {
         this.cutLyDeposit = cutLyDeposit;
     }
 
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getFxAmount() {
+        return fxAmount;
+    }
+
+    public void setFxAmount(String fxAmount) {
+        this.fxAmount = fxAmount;
+    }
+
     public Long getRestAmount() {
         return restAmount;
     }
@@ -615,6 +511,22 @@ public class RepayBiz extends ABaseDO {
 
     public void setRestTotalCost(Long restTotalCost) {
         this.restTotalCost = restTotalCost;
+    }
+
+    public Long getOverdueTotalDeposit() {
+        return overdueTotalDeposit;
+    }
+
+    public void setOverdueTotalDeposit(Long overdueTotalDeposit) {
+        this.overdueTotalDeposit = overdueTotalDeposit;
+    }
+
+    public Long getOverdueTotalDepositIncome() {
+        return overdueTotalDepositIncome;
+    }
+
+    public void setOverdueTotalDepositIncome(Long overdueTotalDepositIncome) {
+        this.overdueTotalDepositIncome = overdueTotalDepositIncome;
     }
 
     public Long getTotalInDeposit() {
@@ -657,6 +569,22 @@ public class RepayBiz extends ABaseDO {
         this.blackHandleNote = blackHandleNote;
     }
 
+    public String getPaperPhoto() {
+        return paperPhoto;
+    }
+
+    public void setPaperPhoto(String paperPhoto) {
+        this.paperPhoto = paperPhoto;
+    }
+
+    public String getIsAdvanceSettled() {
+        return isAdvanceSettled;
+    }
+
+    public void setIsAdvanceSettled(String isAdvanceSettled) {
+        this.isAdvanceSettled = isAdvanceSettled;
+    }
+
     public String getSettleAttach() {
         return settleAttach;
     }
@@ -671,6 +599,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setSettleDatetime(Date settleDatetime) {
         this.settleDatetime = settleDatetime;
+    }
+
+    public Date getReleaseDatetime() {
+        return releaseDatetime;
+    }
+
+    public void setReleaseDatetime(Date releaseDatetime) {
+        this.releaseDatetime = releaseDatetime;
     }
 
     public String getUpdater() {
@@ -689,12 +625,44 @@ public class RepayBiz extends ABaseDO {
         this.updateDatetime = updateDatetime;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
+
+    public BizTeam getBizTeam() {
+        return bizTeam;
+    }
+
+    public void setBizTeam(BizTeam bizTeam) {
+        this.bizTeam = bizTeam;
+    }
+
+    public SYSUser getLeadUser() {
+        return leadUser;
+    }
+
+    public void setLeadUser(SYSUser leadUser) {
+        this.leadUser = leadUser;
+    }
+
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
     }
 
     public User getUser() {
@@ -705,12 +673,36 @@ public class RepayBiz extends ABaseDO {
         this.user = user;
     }
 
+    public String getUnRepayTotalAmount() {
+        return unRepayTotalAmount;
+    }
+
+    public void setUnRepayTotalAmount(String unRepayTotalAmount) {
+        this.unRepayTotalAmount = unRepayTotalAmount;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public BudgetOrder getBudgetOrder() {
         return budgetOrder;
     }
 
     public void setBudgetOrder(BudgetOrder budgetOrder) {
         this.budgetOrder = budgetOrder;
+    }
+
+    public List<RepayPlan> getRepayPlanList() {
+        return repayPlanList;
+    }
+
+    public void setRepayPlanList(List<RepayPlan> repayPlanList) {
+        this.repayPlanList = repayPlanList;
     }
 
     public Order getMallOrder() {
@@ -729,72 +721,76 @@ public class RepayBiz extends ABaseDO {
         this.actualRefunds = actualRefunds;
     }
 
-    public Date getReleaseDatetime() {
-        return releaseDatetime;
+    public Long getLoanBalance() {
+        return loanBalance;
     }
 
-    public void setReleaseDatetime(Date releaseDatetime) {
-        this.releaseDatetime = releaseDatetime;
+    public void setLoanBalance(Long loanBalance) {
+        this.loanBalance = loanBalance;
     }
 
-    public String getBizCode() {
-        return bizCode;
+    public String getLoanBankName() {
+        return loanBankName;
     }
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
     }
 
-    public String getLoanProductCode() {
-        return loanProductCode;
+    public Date getBankFkDatetimeStart() {
+        return bankFkDatetimeStart;
     }
 
-    public void setLoanProductCode(String loanProductCode) {
-        this.loanProductCode = loanProductCode;
+    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
+        this.bankFkDatetimeStart = bankFkDatetimeStart;
     }
 
-    public String getLoanProductName() {
-        return loanProductName;
+    public Date getBankFkDatetimeEnd() {
+        return bankFkDatetimeEnd;
     }
 
-    public void setLoanProductName(String loanProductName) {
-        this.loanProductName = loanProductName;
+    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
+        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
     }
 
-    public Double getBankBenchmarkRate() {
-        return bankBenchmarkRate;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setBankBenchmarkRate(Double bankBenchmarkRate) {
-        this.bankBenchmarkRate = bankBenchmarkRate;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
-    public Double getCompanyLoanCs() {
-        return companyLoanCs;
+    public RepayPlan getOverdueRepayPlan() {
+        return overdueRepayPlan;
     }
 
-    public void setCompanyLoanCs(Double companyLoanCs) {
-        this.companyLoanCs = companyLoanCs;
+    public void setOverdueRepayPlan(RepayPlan overdueRepayPlan) {
+        this.overdueRepayPlan = overdueRepayPlan;
     }
 
-    public Double getGlobalRate() {
-        return globalRate;
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
     }
 
-    public void setGlobalRate(Double globalRate) {
-        this.globalRate = globalRate;
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
-    public String getFxAmount() {
-        return fxAmount;
+    public String getRealNameQuery() {
+        return realNameQuery;
     }
 
-    public void setFxAmount(String fxAmount) {
-        this.fxAmount = fxAmount;
+    public void setRealNameQuery(String realNameQuery) {
+        this.realNameQuery = realNameQuery;
     }
 
-    public void setBankRate(Double bankRate) {
-        this.bankRate = bankRate;
+    public Long getRetreatDeposit() {
+        return retreatDeposit;
+    }
+
+    public void setRetreatDeposit(Long retreatDeposit) {
+        this.retreatDeposit = retreatDeposit;
     }
 
 }

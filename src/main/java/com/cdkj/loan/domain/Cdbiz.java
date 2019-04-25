@@ -190,6 +190,39 @@ public class Cdbiz extends ABaseDO {
     // 主贷人名称
     private String userName;
 
+    // 还款业务
+    private RepayBiz repayBiz;
+
+    // 征信人信息
+    private CreditUserExt creditUserExt;
+
+    // 征信人流水
+    private List<CreditJour> creditJours;
+
+    public RepayBiz getRepayBiz() {
+        return repayBiz;
+    }
+
+    public void setRepayBiz(RepayBiz repayBiz) {
+        this.repayBiz = repayBiz;
+    }
+
+    public CreditUserExt getCreditUserExt() {
+        return creditUserExt;
+    }
+
+    public void setCreditUserExt(CreditUserExt creditUserExt) {
+        this.creditUserExt = creditUserExt;
+    }
+
+    public List<CreditJour> getCreditJours() {
+        return creditJours;
+    }
+
+    public void setCreditJours(List<CreditJour> creditJours) {
+        this.creditJours = creditJours;
+    }
+
     public CarInfo getCarInfo() {
         return carInfo;
     }

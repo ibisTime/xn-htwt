@@ -100,6 +100,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         LoanProduct product = loanProductBO.getLoanProduct(req
             .getLoanProductCode());
         repayBiz.setLoanProductName(product.getName());
+        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
+        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
+        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(req.getCode());
         repayBizDAO.insert(repayBiz);

@@ -92,6 +92,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
     @Autowired
     private IRepointBO repointBO;
 
+    @Transactional
     @Override
     public int editCarInfo(XN632120Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
@@ -442,7 +443,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
             .getBudgetOrderFeeByBudget(cdbiz.getCode());
         if (budgetOrderFee == null) {
-            // budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
+            budgetOrderFeeBO.saveBudgetOrderFee(cdbiz, operator);
         }
         /**************生成 手续费************/
         // // 征信单回写准入单编号

@@ -5,6 +5,7 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
+import com.cdkj.loan.domain.Cdbiz;
 
 /**
  * 手续费
@@ -16,6 +17,9 @@ public interface IBudgetOrderFeeBO extends IPaginableBO<BudgetOrderFee> {
 
     // 手续费新增
     public String saveBudgetOrderFee(BudgetOrder data, String operator);
+
+    // 手续费新增
+    public String saveBudgetOrderFee(Cdbiz data, String operator);
 
     public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition);
 
