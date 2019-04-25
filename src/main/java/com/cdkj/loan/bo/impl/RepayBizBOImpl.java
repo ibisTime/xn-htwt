@@ -77,6 +77,19 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     private ICdbizBO cdbizBO;
 
     @Override
+    public String saveRepayBiz(String bizCode) {
+        RepayBiz repayBiz = new RepayBiz();
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+            .getCode());
+        repayBiz.setCode(code);
+        repayBiz.setBizCode(bizCode);
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
+        repayBiz.setRefCode(bizCode);
+        repayBizDAO.insert(repayBiz);
+        return code;
+    }
+
+    @Override
     public String saveRepayBiz(XN632120Req req) {
         RepayBiz repayBiz = new RepayBiz();
         String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
@@ -535,6 +548,15 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         condition.setBizCode(bizCode);
         RepayBiz repayBiz = repayBizDAO.select(condition);
         return repayBiz;
+    }
+
+    @Override
+    public String removeByBizCode(String bizCode) {
+        RepayBiz repayBiz = getRepayBizByBizCode(bizCode);
+        if (null != repayBiz) {
+            repayBizDAO.delete(repayBiz);
+        }
+        return null;
     }
 
 }

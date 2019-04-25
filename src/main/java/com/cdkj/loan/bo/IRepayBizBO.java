@@ -12,6 +12,10 @@ import com.cdkj.loan.dto.req.XN632120Req;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
+    public String removeByBizCode(String bizCode);
+
+    public String saveRepayBiz(String bizCode);
+
     public String saveRepayBiz(XN632120Req req);
 
     public void refreshBankcardNew(String code, String bankcardCode,

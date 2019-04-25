@@ -443,4 +443,16 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
         }
 
     }
+
+    @Override
+    public void removeBizJour(String bizCode) {
+        CreditJour condition = new CreditJour();
+        condition.setBizCode(bizCode);
+        List<CreditJour> jours = queryCreditJourList(condition);
+        if (!jours.isEmpty()) {
+            for (CreditJour creditJour : jours) {
+                creditJourDAO.delete(creditJour);
+            }
+        }
+    }
 }

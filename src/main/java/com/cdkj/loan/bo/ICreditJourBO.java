@@ -22,4 +22,6 @@ public interface ICreditJourBO extends IPaginableBO<CreditJour> {
 
     public void saveCreditJour(XN632120Req req);
 
+    public void removeBizJour(String bizCode);
+
 }

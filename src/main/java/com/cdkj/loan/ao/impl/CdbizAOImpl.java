@@ -24,6 +24,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.IMissionBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -117,6 +118,9 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
 
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
@@ -408,8 +412,6 @@ public class CdbizAOImpl implements ICdbizAO {
             // 修改业务状态
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode(),
                 req.getApproveNote());
-            // 业务出现面签状态
-            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B00.getCode());
             // 新增车辆信息
             String carInfoCode = carInfoBO.saveCarInfo(cdbiz.getCode());
 

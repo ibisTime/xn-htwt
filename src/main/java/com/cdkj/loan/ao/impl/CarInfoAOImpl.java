@@ -1,5 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,19 +10,29 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.ICarInfoAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTaskBO;
+import com.cdkj.loan.bo.IBizTeamBO;
+import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.ICreditUserExtBO;
+import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditUserExt;
+import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.enums.EApproveResult;
@@ -31,6 +43,7 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.exception.BizException;
 
 //CHECK ��鲢��ע�� 
@@ -67,6 +80,18 @@ public class CarInfoAOImpl implements ICarInfoAO {
     @Autowired
     private IRepayBizBO repayBizBO;
 
+    @Autowired
+    private IBudgetOrderFeeBO budgetOrderFeeBO;
+
+    @Autowired
+    private ILoanProductBO loanProductBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
+
+    @Autowired
+    private IRepointBO repointBO;
+
     @Override
     public int editCarInfo(XN632120Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
@@ -75,21 +100,29 @@ public class CarInfoAOImpl implements ICarInfoAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "该业务不处于录入准入单状态，无法录入");
         }
+        // 业务信息更新
+        cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
+        cdbiz.setIsFinacing(req.getIsFinancing());
+        cdbizBO.refreshCdbiz(cdbiz);
         // 车辆信息录入
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
         String carInfoCode = carInfo.getCode();
         EntityUtils.copyData(req, carInfo);
         carInfo.setCode(carInfoCode);
         carInfoBO.refreshCarInfo(carInfo);
+
         // 征信人信息录入
+        creditUserExtBO.removeBizUserExt(req.getCode());
         CreditUserExt creditUserExt = EntityUtils.copyData(req,
             CreditUserExt.class);
 
         creditUserExtBO.saveCreditUserExt(creditUserExt, cdbiz.getCode());
         // 流水录入
+        creditJourBO.removeBizJour(req.getCode());
         creditJourBO.saveCreditJour(req);
 
         // 贷款信息
+        repayBizBO.removeByBizCode(req.getCode());
         repayBizBO.saveRepayBiz(req);
 
         // 附件录入
@@ -390,7 +423,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // 主节点
             preCurrentNode = ENode.submit_1.getCode();
             // 生成报告、返点、费用
-            // lastApprove(budgetOrder, req.getOperator());
+            lastApprove(cdbiz, req.getOperator());
         } else {
             preCurrentNode = nodeFlow.getBackNode();
             status = ECdbizStatus.A3x.getCode();
@@ -402,6 +435,209 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         cdbizBO.refreshStatus(cdbiz, status, req.getApproveNote());
 
+    }
+
+    private void lastApprove(Cdbiz cdbiz, String operator) {
+        /**************生成 手续费************/
+        BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
+            .getBudgetOrderFeeByBudget(cdbiz.getCode());
+        if (budgetOrderFee == null) {
+            // budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
+        }
+        /**************生成 手续费************/
+        // // 征信单回写准入单编号
+        // Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+        // credit.setBudgetCode(budgetOrder.getCode());
+        // creditBO.refreshCredit(credit);
+
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
+        LoanProduct loanProduct = loanProductBO.getLoanProduct(repayBiz
+            .getLoanProductCode());
+        if (StringUtils.isNotBlank(cdbiz.getTeamCode())) {
+            /**************生成返点数据***************/
+            Repoint repoint = new Repoint();
+            // 应返金额=准入单的贷款金额*准入单的贷款产品的返点比例
+            Long loanAmount = cdbiz.getLoanAmount();
+            BizTeam bizTeam = bizTeamBO.getBizTeam(cdbiz.getTeamCode());
+            repoint.setTeamCode(cdbiz.getTeamCode());
+            repoint.setCaptain(bizTeam.getCaptain());
+            repoint.setBizCode(cdbiz.getCode());
+            repoint.setAccountNo(bizTeam.getAccountNo());
+
+            repoint.setBank(bizTeam.getBank());
+            repoint.setSubbranch(bizTeam.getSubbranch());
+            double backRate = loanProduct.getBackRate();
+            long shouldAmount = AmountUtil.mul(loanAmount, backRate);
+            repoint.setShouldAmount(shouldAmount);
+
+            repoint.setStatus(ERepointStatus.TODO.getCode());
+            repoint.setUpdater(operator);
+            repoint.setUpdateDatetime(new Date());
+            repointBO.saveRepoint(repoint);
+            /**************生成返点数据***************/
+
+            // /*************生成调查报告****************/
+            // InvestigateReport report = new InvestigateReport();
+            // report.setBudgetOrderCode(budgetOrder.getCode());
+            // List<InvestigateReport> reportList = investigateReportBO
+            // .queryInvestigateReportList(report);
+            // if (CollectionUtils.isEmpty(reportList)) {
+            // InvestigateReport investigateReport = new InvestigateReport();
+            // investigateReport.setBudgetOrderCode(budgetOrder.getCode());
+            // investigateReport
+            // .setRepayBizCode(budgetOrder.getRepayBizCode());
+            // investigateReport.setCompanyCode(budgetOrder.getCompanyCode());
+            // investigateReport.setBizType(budgetOrder.getBizType());
+            // investigateReport.setTeamCode(budgetOrder.getTeamCode());
+            // investigateReport.setApplyUserName(budgetOrder
+            // .getApplyUserName());
+            // investigateReport.setApplyDatetime(new Date());
+            // investigateReport.setLoanBank(budgetOrder.getLoanBank());
+            // investigateReport.setLoanAmount(budgetOrder.getLoanAmount());
+            // investigateReport.setLoanPeriod(budgetOrder.getLoanPeriod());
+            // investigateReport.setIsAdvanceFund(budgetOrder
+            // .getIsAdvanceFund());
+            // investigateReport.setSaleUserId(budgetOrder.getSaleUserId());
+            // String gender = budgetOrder.getGender();
+            // if (gender == "1") {
+            // gender = "男";
+            // } else {
+            // gender = "女";
+            // }
+            // String education = budgetOrder.getEducation();
+            // if (education == "1") {
+            // education = "博士及以上";
+            // } else if (education == "2") {
+            // education = "硕士";
+            // } else if (education == "3") {
+            // education = "大学本科";
+            // } else if (education == "4") {
+            // education = "大学专科";
+            // } else {
+            // education = "高中及以下";
+            // }
+            // String marryState = budgetOrder.getMarryState();
+            // if (marryState == "1") {
+            // marryState = "未婚";
+            // } else if (marryState == "2") {
+            // marryState = "已婚";
+            // } else if (marryState == "3") {
+            // marryState = "离异";
+            // } else {
+            // marryState = "丧偶";
+            // }
+            // String customerInformation = "借款人:"
+            // + budgetOrder.getApplyUserName() + ", "
+            // + budgetOrder.getAge() + "岁, " + marryState + ", "
+            // + "性别：" + gender + ", " + "学历：" + education + ", "
+            // + "民族：" + budgetOrder.getNation() + ", " + "身份证号："
+            // + budgetOrder.getIdNo() + ", " + "政治面貌："
+            // + budgetOrder.getPolitical() + ", " + "户口所在地："
+            // + budgetOrder.getResidenceAddress() + ", " + "现在家庭住址："
+            // + budgetOrder.getNowAddress() + ", " + "联系电话："
+            // + budgetOrder.getMobile() + ", " + "家有"
+            // + budgetOrder.getFamilyNumber() + "口人，" + "邮编："
+            // + budgetOrder.getPostCode1() + ",   " + "借款人无重大疾病，身体健康";
+            // investigateReport.setCustomerInformation(customerInformation);
+            // CreditUser domain = creditUserBO.getCreditUserByCreditCode(
+            // budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+            // investigateReport.setBankCreditResultRemark(domain
+            // .getBankCreditResultRemark());
+            // investigateReport.setJourDatetimeStart(budgetOrder
+            // .getJourDatetimeStart());
+            // investigateReport.setZfbJourDatetimeEnd(budgetOrder
+            // .getZfbJourDatetimeEnd());
+            //
+            // investigateReport.setZfbJourInterest1(budgetOrder
+            // .getZfbJourInterest1());
+            // investigateReport.setZfbJourInterest2(budgetOrder
+            // .getZfbJourInterest2());
+            // investigateReport
+            // .setZfbInterest1(budgetOrder.getZfbInterest1());
+            // investigateReport
+            // .setZfbInterest2(budgetOrder.getZfbInterest2());
+            //
+            // investigateReport.setZfbJourIncome(budgetOrder
+            // .getZfbJourIncome());
+            // investigateReport.setZfbJourExpend(budgetOrder
+            // .getZfbJourExpend());
+            // investigateReport.setZfbJourBalance(budgetOrder
+            // .getZfbJourBalance());
+            // investigateReport.setZfbJourMonthIncome(budgetOrder
+            // .getZfbJourMonthIncome());
+            // investigateReport.setZfbJourMonthExpend(budgetOrder
+            // .getZfbJourMonthExpend());
+            // investigateReport.setZfbJourPic(budgetOrder.getZfbJourPic());
+            // investigateReport.setZfbJourRemark(budgetOrder
+            // .getZfbJourRemark());
+            //
+            // investigateReport.setWxJourDatetimeStart(budgetOrder
+            // .getWxJourDatetimeStart());
+            // investigateReport.setWxJourDatetimeEnd(budgetOrder
+            // .getWxJourDatetimeEnd());
+            // investigateReport.setWxJourInterest1(budgetOrder
+            // .getWxJourInterest1());
+            // investigateReport.setWxJourInterest2(budgetOrder
+            // .getWxJourInterest2());
+            // investigateReport.setWxInterest1(budgetOrder.getWxInterest1());
+            // investigateReport.setWxInterest2(budgetOrder.getWxInterest2());
+            //
+            // investigateReport
+            // .setWxJourIncome(budgetOrder.getWxJourIncome());
+            // investigateReport
+            // .setWxJourExpend(budgetOrder.getWxJourExpend());
+            // investigateReport.setWxJourBalance(budgetOrder
+            // .getWxJourBalance());
+            // investigateReport.setWxJourMonthIncome(budgetOrder
+            // .getWxJourMonthIncome());
+            // investigateReport.setWxJourMonthExpend(budgetOrder
+            // .getWxJourMonthExpend());
+            // investigateReport.setWxJourPic(budgetOrder.getWxJourPic());
+            // investigateReport
+            // .setWxJourRemark(budgetOrder.getWxJourRemark());
+            //
+            // investigateReport.setJourDatetimeStart(budgetOrder
+            // .getJourDatetimeStart());
+            // investigateReport.setJourDatetimeEnd(budgetOrder
+            // .getJourDatetimeEnd());
+            // investigateReport.setJourInterest1(budgetOrder
+            // .getJourInterest1());
+            // investigateReport.setJourInterest2(budgetOrder
+            // .getJourInterest2());
+            // investigateReport.setInterest1(budgetOrder.getInterest1());
+            // investigateReport.setInterest2(budgetOrder.getInterest2());
+            //
+            // investigateReport.setJourIncome(budgetOrder.getJourIncome());
+            // investigateReport.setJourExpend(budgetOrder.getJourExpend());
+            // investigateReport.setJourBalance(budgetOrder.getJourBalance());
+            // investigateReport.setJourMonthIncome(budgetOrder
+            // .getJourMonthIncome());
+            // investigateReport.setJourMonthExpend(budgetOrder
+            // .getJourMonthExpend());
+            // investigateReport.setJourPic(budgetOrder.getJourPic());
+            // investigateReport.setJourRemark(budgetOrder.getJourRemark());
+            //
+            // investigateReport.setHouseContract(budgetOrder
+            // .getHouseContract());
+            // investigateReport
+            // .setHousePicture(budgetOrder.getHousePicture());
+            // String basicsInformation = "品牌：" + budgetOrder.getCarBrand()
+            // + "," + "车型：" + budgetOrder.getCarModel() + ","
+            // + "新手指导价" + budgetOrder.getOriginalPrice() / 1000 + ","
+            // + "落户地点：" + budgetOrder.getSettleAddress();
+            // investigateReport.setBasicsInformation(basicsInformation);
+            // investigateReport
+            // .setCurNodeCode(EInvestigateReportNode.COMMIT_APPLY
+            // .getCode());
+            // String irCode = investigateReportBO
+            // .saveInvestigateReport(investigateReport);
+            // // 日志记录
+            // sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+            // EBizLogType.INVESTIGATEREPORT, irCode,
+            // investigateReport.getCurNodeCode());
+            // }
+            // /*************生成调查报告****************/
+        }
     }
 
 }
