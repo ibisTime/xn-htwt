@@ -8,8 +8,11 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SpecsOrder;
+import com.cdkj.loan.dto.req.XN632120Req;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
+
+    public String saveRepayBiz(XN632120Req req);
 
     public void refreshBankcardNew(String code, String bankcardCode,
             String updater, String remark);
@@ -129,4 +132,6 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void refreshRestPeriods(RepayBiz repayBiz);
 
     // ********************************common********************************
+
+    public RepayBiz getRepayBizByBizCode(String bizCode);
 }

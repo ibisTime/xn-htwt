@@ -14,7 +14,7 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public boolean isCdbizExist(String code);
 
     public String saveCdbiz(String bankCode, String bizType, Long dkAmount,
-            SYSUser sysUser, String node);
+            SYSUser sysUser, String node, String remark);
 
     public int removeCdbiz(String code);
 
@@ -32,6 +32,8 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public Cdbiz getCdbiz(String code);
 
     public void refreshStatus(Cdbiz cdbiz, String status);
+
+    public void refreshStatus(Cdbiz cdbiz, String status, String remark);
 
     public void refreshMqStatus(Cdbiz cdbiz, String status);
 

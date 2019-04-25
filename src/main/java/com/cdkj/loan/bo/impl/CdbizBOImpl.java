@@ -110,7 +110,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
 
     @Override
     public String saveCdbiz(String bankCode, String bizType, Long dkAmount,
-            SYSUser sysUser, String node) {
+            SYSUser sysUser, String node, String remark) {
         BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.Cdbiz.getCode());
@@ -128,6 +128,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbiz.setStatus(ECdbizStatus.A0.getCode());
         cdbiz.setCurNodeCode(node);
         cdbiz.setZfStatus("0");
+        cdbiz.setRemark(remark);
         cdbizDAO.insert(cdbiz);
         return code;
     }
@@ -141,6 +142,13 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     @Override
     public void refreshStatus(Cdbiz cdbiz, String status) {
         cdbiz.setStatus(status);
+        cdbizDAO.updateStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshStatus(Cdbiz cdbiz, String status, String remark) {
+        cdbiz.setStatus(status);
+        cdbiz.setRemark(remark);
         cdbizDAO.updateStatus(cdbiz);
     }
 

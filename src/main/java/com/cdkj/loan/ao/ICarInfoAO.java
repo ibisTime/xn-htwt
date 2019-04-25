@@ -3,6 +3,7 @@ package com.cdkj.loan.ao;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632143Req;
 
 //CHECK ��鲢��ע�� 
 @Component
@@ -35,5 +36,7 @@ public interface ICarInfoAO {
     // 业务总监审核
     void yBizChargeApprove(String code, String operator, String approveResult,
             String approveNote);
+
+    public void financeAudit(XN632143Req req);
 
 }

@@ -224,7 +224,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // 生成业务编号
         String bizCode = cdbizBO.saveCdbiz(req.getLoanBankCode(),
             req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
-            sysUser, currentNode.getCode());
+            sysUser, currentNode.getCode(), req.getNote());
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
             // 二手车报告
             EAttachName attachName = EAttachName.getMap().get(
@@ -406,7 +406,8 @@ public class CdbizAOImpl implements ICdbizAO {
             // 审核通过，改变节点
             cdbizBO.refershCurNodeCode(cdbiz, nodeFlow.getNextNode());
             // 修改业务状态
-            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode());
+            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode(),
+                req.getApproveNote());
             // 业务出现面签状态
             cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B00.getCode());
             // 新增车辆信息

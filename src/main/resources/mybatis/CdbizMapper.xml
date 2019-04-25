@@ -397,6 +397,7 @@
 		UPDATE tqj_cdbiz
 		SET
 		status=#{status}
+		,remark=#{remark}
 		WHERE code=#{code}
 	</update>
 	

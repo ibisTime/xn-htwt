@@ -206,4 +206,12 @@ CREATE TABLE `tdq_car_info` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行支行信息表';
 
+ALTER TABLE `tdh_repay_biz` 
+ADD COLUMN `biz_code` VARCHAR(32) NULL COMMENT '业务编号' AFTER `code`,
+ADD COLUMN `loan_product_code` VARCHAR(32) NULL COMMENT '贷款产品编号' AFTER `biz_code`,
+ADD COLUMN `loan_product_name` VARCHAR(64) NULL COMMENT '贷款产品名称' AFTER `loan_product_code`,
+ADD COLUMN `bank_benchmark_rate` DECIMAL(18,8) NULL AFTER `bank_rate`,
+ADD COLUMN `company_loan_cs` DECIMAL(18,8) NULL COMMENT '我司贷款成数' AFTER `bank_benchmark_rate`,
+ADD COLUMN `global_rate` DECIMAL(18,8) NULL COMMENT '综合利率' AFTER `company_loan_cs`,
+ADD COLUMN `fx_amount` BIGINT(20) NULL COMMENT '担保风险金' AFTER `cur_node_code`;
 

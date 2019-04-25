@@ -4,6 +4,9 @@
 <mapper namespace="com.cdkj.loan.dao.IRepayBizDAO">
 	<resultMap id="repayBiz_DB_Result" type="repayBiz">
 		<result column="code" property="code" />
+		<result column="biz_code" property="bizCode" />
+		<result column="loan_product_code" property="loanProductCode" />
+		<result column="loan_product_name" property="loanProductName" />
 		<result column="user_id" property="userId" />
 		<result column="real_name" property="realName" />
 		<result column="id_kind" property="idKind" />
@@ -22,6 +25,9 @@
 		<result column="rest_periods" property="restPeriods" />
 		
 		<result column="bank_rate" property="bankRate" />
+		<result column="bank_benchmark_rate" property="bankBenchmarkRate" />
+		<result column="company_loan_cs" property="companyLoanCs" />
+		<result column="global_rate" property="globalRate" />
 		<result column="loan_start_datetime" property="loanStartDatetime" />
 		<result column="loan_end_datetime" property="loanEndDatetime" />
 		
@@ -35,6 +41,7 @@
 		<result column="ly_deposit" property="lyDeposit" />
 		<result column="cut_ly_deposit" property="cutLyDeposit" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="fx_amount" property="fxAmount" />
 		<result column="rest_amount" property="restAmount" />
 		<result column="rest_total_cost" property="restTotalCost" />
 		
@@ -61,6 +68,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
 			</if>
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
@@ -116,6 +126,9 @@
 	<select id="select_repayBiz" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
 		SELECT
 		t.code
+		,t.biz_code
+		,t.loan_product_code
+		,t.loan_product_name
 		,t.user_id
 		,t.real_name
 		,t.id_kind
@@ -133,6 +146,9 @@
 		,t.periods
 		,t.rest_periods
 		,t.bank_rate
+		,t.bank_benchmark_rate
+		,t.company_loan_cs
+		,t.global_rate
 		,t.loan_start_datetime
 		,t.loan_end_datetime
 		,t.bank_fk_datetime
@@ -146,6 +162,7 @@
 		
 		,t.cut_ly_deposit
 		,t.cur_node_code
+		,t.fx_amount
 		,t.rest_amount
 		,t.rest_total_cost
 		,t.overdue_total_deposit
@@ -180,6 +197,9 @@
 	<select id="select_repayBiz_byRoleCode" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
 		SELECT
 		t.code
+		,t.biz_code
+		,t.loan_product_code
+		,t.loan_product_name
 		,t.user_id
 		,t.real_name
 		,t.id_kind
@@ -197,11 +217,14 @@
 		,t.periods
 		,t.rest_periods
 		,t.bank_rate
+		,t.bank_benchmark_rate
+		,t.company_loan_cs
+		,t.global_rate
 		,t.loan_start_datetime
 		,t.loan_end_datetime
 		,t.bank_fk_datetime
-		,t.fx_deposit
 		
+		,t.fx_deposit
 		,t.first_repay_datetime
 		,t.first_repay_amount
 		,t.month_datetime
@@ -210,6 +233,7 @@
 		
 		,t.cut_ly_deposit
 		,t.cur_node_code
+		,t.fx_amount
 		,t.rest_amount
 		,t.rest_total_cost
 		,t.overdue_total_deposit
@@ -257,6 +281,9 @@
 		INSERT INTO
 		tdh_repay_biz(
 		code
+		,biz_code
+		,loan_product_code
+		,loan_product_name
 		,user_id
 		,real_name
 		,id_kind
@@ -274,6 +301,9 @@
 		,periods
 		,rest_periods
 		,bank_rate
+		,bank_benchmark_rate
+		,company_loan_cs
+		,global_rate
 		,loan_start_datetime
 		,loan_end_datetime
 		,bank_fk_datetime
@@ -287,6 +317,7 @@
 		,ly_deposit
 		,cut_ly_deposit
 		,cur_node_code
+		,fx_amount
 		,rest_amount
 		,rest_total_cost
 		
@@ -306,6 +337,9 @@
 		)
 		VALUES(
 		#{code}
+		,#{bizCode}
+		,#{loanProductCode}
+		,#{loanProductName}
 		,#{userId}
 		,#{realName}
 		,#{idKind}
@@ -324,6 +358,9 @@
 		,#{restPeriods}
 		
 		,#{bankRate}
+		,#{bankBenchmarkRate}
+		,#{companyLoanCs}
+		,#{globalRate}
 		,#{loanStartDatetime}
 		,#{loanEndDatetime}
 		,#{bankFkDatetime}
@@ -337,6 +374,7 @@
 		,#{cutLyDeposit}
 		
 		,#{curNodeCode}
+		,#{fxAmount}
 		,#{restAmount}
 		,#{restTotalCost}
 		,#{overdueTotalDeposit}

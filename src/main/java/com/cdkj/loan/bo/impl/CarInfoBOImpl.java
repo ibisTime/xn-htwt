@@ -99,49 +99,77 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     @Override
     public void saveAttachment(XN632120Req req) {
         String bizCode = req.getCode();
+        EAttachName attachName = null;
         // 合格证
-        EAttachName attachName = EAttachName.carHgzPic;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getCarHgzPic());
+        if (StringUtils.isNotBlank(req.getCarHgzPic())) {
+            attachName = EAttachName.carHgzPic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getCarHgzPic());
+        }
 
         // 行驶证正面
-        attachName = EAttachName.driveLicenseFront;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getDriveLicenseFront());
+        if (StringUtils.isNotBlank(req.getDriveLicenseFront())) {
+
+            attachName = EAttachName.driveLicenseFront;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getDriveLicenseFront());
+        }
 
         // 行驶证反面
-        attachName = EAttachName.driveLicenseReverse;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getDriveLicenseReverse());
+        if (StringUtils.isNotBlank(req.getDriveLicenseReverse())) {
 
+            attachName = EAttachName.driveLicenseReverse;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getDriveLicenseReverse());
+        }
         // 工作资料上传
-        attachName = EAttachName.workAssetPdf;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getWorkAssetPdf());
+        if (StringUtils.isNotBlank(req.getWorkAssetPdf())) {
 
+            attachName = EAttachName.workAssetPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getWorkAssetPdf());
+        }
         // 申请人资产资料pdf
-        attachName = EAttachName.assetPdf;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getAssetPdf());
+        if (StringUtils.isNotBlank(req.getAssetPdf())) {
 
+            attachName = EAttachName.assetPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getAssetPdf());
+        }
         // 配偶资产资料pdf
-        attachName = EAttachName.mateAssetPdf;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getMateAssetPdf());
+        if (StringUtils.isNotBlank(req.getMateAssetPdf())) {
 
+            attachName = EAttachName.mateAssetPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getMateAssetPdf());
+        }
         // 担保人资料pdf
-        attachName = EAttachName.guaAssetPdf;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getGuaAssetPdf());
+        if (StringUtils.isNotBlank(req.getGuaAssetPdf())) {
 
+            attachName = EAttachName.guaAssetPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getGuaAssetPdf());
+        }
         // 购房合同
-        attachName = EAttachName.houseContract;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getHouseContract());
+        if (StringUtils.isNotBlank(req.getHouseContract())) {
 
+            attachName = EAttachName.houseContract;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getHouseContract());
+        }
         // 结婚证资料
-        attachName = EAttachName.marryPdf;
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), req.getMarryPdf());
+        if (StringUtils.isNotBlank(req.getMarryPdf())) {
+
+            attachName = EAttachName.marryPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getMarryPdf());
+        }
+        // 房屋照片
+        if (StringUtils.isNotBlank(req.getHousePicture())) {
+
+            attachName = EAttachName.house_pic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getHousePicture());
+        }
     }
 }

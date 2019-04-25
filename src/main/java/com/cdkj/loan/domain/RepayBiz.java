@@ -18,6 +18,15 @@ public class RepayBiz extends ABaseDO {
     // 编号
     private String code;
 
+    // 业务编号
+    private String bizCode;
+
+    // 贷款产品编号
+    private String loanProductCode;
+
+    // 贷款产品名称
+    private String loanProductName;
+
     // 申请人编号
     private String userId;
 
@@ -61,7 +70,16 @@ public class RepayBiz extends ABaseDO {
     private int restPeriods;
 
     // 银行利率(作废)
-    private double bankRate;
+    private Double bankRate;
+
+    // 银行基准利率
+    private Double bankBenchmarkRate;
+
+    // 我司贷款成数
+    private Double companyLoanCs;
+
+    // 综合利率
+    private Double globalRate;
 
     // 贷款时间起点
     private Date loanStartDatetime;
@@ -95,6 +113,9 @@ public class RepayBiz extends ABaseDO {
 
     // 节点
     private String curNodeCode;
+
+    // 担保风险金
+    private String fxAmount;
 
     // 剩余欠款(剩余本金本息，利息已包含在本金中)
     private Long restAmount;
@@ -714,6 +735,66 @@ public class RepayBiz extends ABaseDO {
 
     public void setReleaseDatetime(Date releaseDatetime) {
         this.releaseDatetime = releaseDatetime;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
+
+    public String getLoanProductCode() {
+        return loanProductCode;
+    }
+
+    public void setLoanProductCode(String loanProductCode) {
+        this.loanProductCode = loanProductCode;
+    }
+
+    public String getLoanProductName() {
+        return loanProductName;
+    }
+
+    public void setLoanProductName(String loanProductName) {
+        this.loanProductName = loanProductName;
+    }
+
+    public Double getBankBenchmarkRate() {
+        return bankBenchmarkRate;
+    }
+
+    public void setBankBenchmarkRate(Double bankBenchmarkRate) {
+        this.bankBenchmarkRate = bankBenchmarkRate;
+    }
+
+    public Double getCompanyLoanCs() {
+        return companyLoanCs;
+    }
+
+    public void setCompanyLoanCs(Double companyLoanCs) {
+        this.companyLoanCs = companyLoanCs;
+    }
+
+    public Double getGlobalRate() {
+        return globalRate;
+    }
+
+    public void setGlobalRate(Double globalRate) {
+        this.globalRate = globalRate;
+    }
+
+    public String getFxAmount() {
+        return fxAmount;
+    }
+
+    public void setFxAmount(String fxAmount) {
+        this.fxAmount = fxAmount;
+    }
+
+    public void setBankRate(Double bankRate) {
+        this.bankRate = bankRate;
     }
 
 }
