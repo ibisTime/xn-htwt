@@ -44,7 +44,7 @@
 	
 	<sql id="join_condition">
 		<if test="userName != null and userName != '' ">
-			join tdq_credit_user tcu on tcu.biz_code = t.code and tcu.loan_code = '1'
+			join tdq_credit_user tcu on tcu.biz_code = t.code and tcu.loan_role = '1'
 		</if>
 	</sql>
 	
@@ -246,6 +246,7 @@
 		,t.remark
 		FROM
 		tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code  )
+		<include refid="join_condition" />
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -256,7 +257,8 @@
 	
 	<select id="select_cdbiz_count_byRoleCode" parameterType="budgetOrder"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code  )
+		SELECT count(1) FROM (SELECT distinct t.code FROM tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code  )
+		<include refid="join_condition" />
 		<include refid="where_condition" />) tb
 	</select>
 

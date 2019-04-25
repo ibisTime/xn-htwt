@@ -22,7 +22,7 @@
         <result column="education" property="education" />
         <result column="company_name" property="companyName" />
         <result column="company_address" property="companyAddress" />
-        <result column="company_contact_to" property="companyContactTo" />
+        <result column="company_contact_no" property="companyContactNo" />
         <result column="house_asset_address" property="houseAssetAddress" />
         <result column="id_no_front" property="idFront" />
         <result column="id_no_reverse" property="idReverse" />
@@ -198,7 +198,7 @@
 		,birth_address=#{birthAddress}
 		,company_name=#{companyName}
 		,company_address=#{companyAddress}
-		,company_contact_to=#{companyContactTo}
+		,company_contact_no=#{companyContactNo}
 		,house_asset_address=#{houseAssetAddress}
 		,data_report=#{dataCreditReport}
 		,bank_report=#{bankCreditReport}

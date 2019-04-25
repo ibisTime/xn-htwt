@@ -62,7 +62,7 @@ public class CreditUser extends ABaseDO {
 
     private String companyAddress;
 
-    private String companyContactTo;
+    private String companyContactNo;
 
     private String houseAssetAddress;
 
@@ -290,12 +290,12 @@ public class CreditUser extends ABaseDO {
         this.companyAddress = companyAddress;
     }
 
-    public String getCompanyContactTo() {
-        return companyContactTo;
+    public String getCompanyContactNo() {
+        return companyContactNo;
     }
 
-    public void setCompanyContactTo(String companyContactTo) {
-        this.companyContactTo = companyContactTo;
+    public void setCompanyContactNo(String companyContactNo) {
+        this.companyContactNo = companyContactNo;
     }
 
     public String getHouseAssetAddress() {

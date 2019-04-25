@@ -45,6 +45,14 @@ public enum EAttachName {
             "图片"), other_vedio("other_video", "视频"), interview_other_pdf(
             "interview_other_pdf", "其他"),
 
+    // 录入准入单图片
+    carHgzPic("car_hgz_pic", "合格证"), driveLicenseFront("drive_license_front",
+            "行驶证正面"), driveLicenseReverse("drive_license_reverse", "行驶证反面"), workAssetPdf(
+            "work_asset_pdf", "工作资料上传"), assetPdf("asset_pdf_apply",
+            "申请人资产资料pdf"), mateAssetPdf("asset_pdf_gh", "申请人资产资料pdf"), guaAssetPdf(
+            "asset_pdf_gua", "申请人资产资料pdf"), houseContract("house_contract",
+            "购房合同"), marryPdf("marry_pdf", "结婚证资料"),
+
     water_bill("h1", "图片")
 
     ;

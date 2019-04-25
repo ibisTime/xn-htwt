@@ -6,11 +6,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICarInfoDAO;
 import com.cdkj.loan.domain.CarInfo;
+import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -21,6 +24,9 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
     @Autowired
     private ICarInfoDAO carInfoDAO;
+
+    @Autowired
+    private IAttachmentBO attachmentBO;
 
     @Override
     public boolean isCarInfoExist(String code) {
@@ -88,5 +94,54 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         condition.setBizCode(bizCode);
 
         return carInfoDAO.select(condition);
+    }
+
+    @Override
+    public void saveAttachment(XN632120Req req) {
+        String bizCode = req.getCode();
+        // 合格证
+        EAttachName attachName = EAttachName.carHgzPic;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getCarHgzPic());
+
+        // 行驶证正面
+        attachName = EAttachName.driveLicenseFront;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getDriveLicenseFront());
+
+        // 行驶证反面
+        attachName = EAttachName.driveLicenseReverse;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getDriveLicenseReverse());
+
+        // 工作资料上传
+        attachName = EAttachName.workAssetPdf;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getWorkAssetPdf());
+
+        // 申请人资产资料pdf
+        attachName = EAttachName.assetPdf;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getAssetPdf());
+
+        // 配偶资产资料pdf
+        attachName = EAttachName.mateAssetPdf;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getMateAssetPdf());
+
+        // 担保人资料pdf
+        attachName = EAttachName.guaAssetPdf;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getGuaAssetPdf());
+
+        // 购房合同
+        attachName = EAttachName.houseContract;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getHouseContract());
+
+        // 结婚证资料
+        attachName = EAttachName.marryPdf;
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), req.getMarryPdf());
     }
 }

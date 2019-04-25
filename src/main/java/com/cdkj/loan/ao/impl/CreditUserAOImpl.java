@@ -54,7 +54,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
     @Override
     public void inputBankCreditResult(XN632111Req req) {
 
-        Credit credit = creditAO.getCredit(req.getCreditCode());
+        Credit credit = creditAO.getCredit(req.getBizCode());
 
         if (credit == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信单不存在");
