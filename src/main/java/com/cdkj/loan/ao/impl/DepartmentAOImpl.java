@@ -61,13 +61,19 @@ public class DepartmentAOImpl implements IDepartmentAO {
         data.setType(req.getType());
         data.setName(req.getName());
         SYSUser sysUser = sysUserBO.getUser(req.getLeadUserId());
-        if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "负责人已被注销");
+
+        if (null != sysUser) {
+            if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "负责人已被注销");
+            }
+        }
+        if (StringUtils.isNotBlank(req.getOrderNo())) {
+            data.setOrderNo(StringValidater.toInteger(req.getOrderNo()));
         }
 
         data.setLeadUserId(req.getLeadUserId());
         data.setParentCode(req.getParentCode());
-        data.setOrderNo(StringValidater.toInteger(req.getOrderNo()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
@@ -78,8 +84,8 @@ public class DepartmentAOImpl implements IDepartmentAO {
     @Override
     public void dropDepartment(String code) {
         Department department = departmentBO.getDepartment(code);
-        if (EDepartmentStatus.UNAVAILABLE.getCode().equals(
-            department.getStatus())) {
+        if (EDepartmentStatus.UNAVAILABLE.getCode()
+            .equals(department.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前职能部门已被删除");
         }

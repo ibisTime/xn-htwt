@@ -421,3 +421,12 @@ CREATE TABLE `tqj_mission` (
   `deadline` DATETIME NULL,
   `finish_datetime` DATETIME NULL,
   PRIMARY KEY (`code`));
+
+  CREATE TABLE `tsys_table_export` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `url` varchar(255) DEFAULT NULL COMMENT 'URL',
+  `operator` varchar(255) DEFAULT NULL COMMENT '操作人',
+  `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
+  `update_datetime` datetime DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='表格导出'

@@ -30,6 +30,7 @@
 		<typeAlias alias="sysDict" type="com.cdkj.loan.domain.SYSDict" />
 		<typeAlias alias="sysConfig" type="com.cdkj.loan.domain.SYSConfig" />
 		<typeAlias alias="department" type="com.cdkj.loan.domain.Department" />
+		<typeAlias alias="tableExport" type="com.cdkj.loan.domain.TableExport" />
 
         <!-- 车贷意向  -->
 		<typeAlias alias="brand" type="com.cdkj.loan.domain.Brand" />

@@ -472,4 +472,8 @@
 	<bean id="advanceBO" class="com.cdkj.loan.bo.impl.AdvanceBOImpl">
 		<property name="paginableDAO" ref="advanceDAOImpl"/>
 	</bean>
+	
+	<bean id="tableExportBO" class="com.cdkj.loan.bo.impl.TableExportBOImpl">
+		<property name="paginableDAO" ref="tableExportDAOImpl"/>
+	</bean>
 </beans>
