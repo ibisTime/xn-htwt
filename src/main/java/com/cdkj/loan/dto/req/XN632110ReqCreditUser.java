@@ -32,11 +32,11 @@ public class XN632110ReqCreditUser {
 
     // 身份证正面
     @NotBlank
-    private String idNoFront;
+    private String idFront;
 
     // 身份证反面
     @NotBlank
-    private String idNoReverse;
+    private String idReverse;
 
     // 征信查询授权书
     @NotBlank
@@ -87,19 +87,19 @@ public class XN632110ReqCreditUser {
     }
 
     public String getIdNoFront() {
-        return idNoFront;
+        return idFront;
     }
 
     public void setIdNoFront(String idNoFront) {
-        this.idNoFront = idNoFront;
+        this.idFront = idNoFront;
     }
 
     public String getIdNoReverse() {
-        return idNoReverse;
+        return idReverse;
     }
 
     public void setIdNoReverse(String idNoReverse) {
-        this.idNoReverse = idNoReverse;
+        this.idReverse = idNoReverse;
     }
 
     public String getAuthPdf() {

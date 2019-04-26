@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.EntityUtils;
@@ -27,6 +29,11 @@ public class XN632515 extends AProcessor {
     public Object doBusiness() throws BizException {
         Cdbiz condition = new Cdbiz();
         EntityUtils.copyData(req, condition);
+        String column = req.getOrderColumn();
+        if (StringUtils.isBlank(column)) {
+            column = ICdbizAO.DEFAULT_ORDER_COLUMN;
+        }
+        condition.setOrder(column, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return cdbizAO.queryCdbizPage(start, limit, condition);

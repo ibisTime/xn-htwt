@@ -183,6 +183,7 @@ CREATE TABLE `tdq_car_info` (
   `other_fee` BIGINT(20) NULL ,
   `company_fee` BIGINT(20) NULL , 
   `team_fee` BIGINT(20) NULL ,
+  `month_deposit` BIGINT(20) NULL ,
   PRIMARY KEY (`code`));
 
   
