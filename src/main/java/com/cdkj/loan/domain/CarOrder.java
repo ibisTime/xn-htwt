@@ -7,6 +7,8 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class CarOrder extends ABaseDO {
 
+    private static final long serialVersionUID = 4928406832516243577L;
+
     private String code; // 编号
 
     private String userId; // 申请人编号
@@ -58,6 +60,12 @@ public class CarOrder extends ABaseDO {
     private SYSUser sysUser;
 
     private List<String> statusList; // 状态List
+
+    private Date createDatetimeStart;
+
+    private Date createDatetimeEnd;
+
+    private String statusForQuery; // 状态
 
     public SYSUser getSysUser() {
         return sysUser;
@@ -249,6 +257,30 @@ public class CarOrder extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getCreateDatetimeStart() {
+        return createDatetimeStart;
+    }
+
+    public void setCreateDatetimeStart(Date createDatetimeStart) {
+        this.createDatetimeStart = createDatetimeStart;
+    }
+
+    public Date getCreateDatetimeEnd() {
+        return createDatetimeEnd;
+    }
+
+    public void setCreateDatetimeEnd(Date createDatetimeEnd) {
+        this.createDatetimeEnd = createDatetimeEnd;
+    }
+
+    public String getStatusForQuery() {
+        return statusForQuery;
+    }
+
+    public void setStatusForQuery(String statusForQuery) {
+        this.statusForQuery = statusForQuery;
     }
 
 }

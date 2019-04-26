@@ -45,4 +45,24 @@ public class AdvanceDAOImpl extends AMybatisTemplate implements IAdvanceDAO {
             count, condition, Advance.class);
     }
 
+    @Override
+    public void updateConfirmApply(Advance data) {
+        super.update(NAMESPACE.concat("update_confirmApply"), data);
+    }
+
+    @Override
+    public void updateAreaManageApprove(Advance data) {
+        super.update(NAMESPACE.concat("update_areaManageApprove"), data);
+    }
+
+    @Override
+    public void updateProvinceManageApprove(Advance data) {
+        super.update(NAMESPACE.concat("update_provinceManageApprove"), data);
+    }
+
+    @Override
+    public void updateConfirmMakeBill(Advance data) {
+        super.update(NAMESPACE.concat("update_confirmMakeBill"), data);
+    }
+
 }

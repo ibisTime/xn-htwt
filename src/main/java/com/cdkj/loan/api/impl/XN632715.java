@@ -31,6 +31,8 @@ public class XN632715 extends AProcessor {
         condition.setCompanyCode(req.getCompany());
         condition.setApplyUser(req.getApplyUser());
         condition.setStatus(req.getStatus());
+        condition.setApplyUserName(req.getApplyUserName());
+        condition.setCompanyName(req.getCompanyName());
 
         if (StringUtils.isNotBlank(req.getApplyCount())) {
             condition.setApplyCount(Integer.parseInt(req.getApplyCount()));

@@ -12,15 +12,19 @@ public interface IAdvanceAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 确认用款单
+    public void confirmApply(String code, String operator);
 
     // 区域总经理审核
-    public void areaManageApprove();
+    public void areaManageApprove(String code, String operator,
+            String approveResult, String approveNote);
 
     // 省分公司总经理审核
-    public void provinceManageApprove();
+    public void provinceManageApprove(String code, String operator,
+            String approveResult, String approveNote);
 
     // 确认制单
-    public void confirmMakeBill();
+    public void confirmMakeBill(String code, String operator,
+            String makeBillNote);
 
     // 上传复核回单
 

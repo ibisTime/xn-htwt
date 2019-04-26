@@ -21,6 +21,8 @@ public interface IGpsBO extends IPaginableBO<Gps> {
 
     public List<Gps> queryGpsList(Gps condition);
 
+    public List<Gps> queryGpsList(String applyCode);
+
     public Gps getGps(String code);
 
     public Gps getGpsByDevNo(String gpsDevNo);

@@ -30,6 +30,10 @@ public class XN632715Req extends APageReq {
     // 申请结束时间
     private String applyDatetimeEnd;
 
+    private String companyName;
+
+    private String applyUserName;
+
     public String getApplyUser() {
         return applyUser;
     }
@@ -76,6 +80,22 @@ public class XN632715Req extends APageReq {
 
     public void setApplyDatetimeEnd(String applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
     }
 
 }

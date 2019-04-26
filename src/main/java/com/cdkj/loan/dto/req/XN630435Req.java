@@ -37,6 +37,8 @@ public class XN630435Req extends APageReq {
 
     private String handler; // 处理人
 
+    private String statusForQuery; // 状态
+
     public List<String> getStatusList() {
         return statusList;
     }
@@ -147,6 +149,14 @@ public class XN630435Req extends APageReq {
 
     public void setHandler(String handler) {
         this.handler = handler;
+    }
+
+    public String getStatusForQuery() {
+        return statusForQuery;
+    }
+
+    public void setStatusForQuery(String statusForQuery) {
+        this.statusForQuery = statusForQuery;
     }
 
 }

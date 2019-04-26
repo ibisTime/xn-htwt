@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -78,6 +79,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private IBizTaskBO bizTaskBO;
+
+    @Autowired
+    private IGpsBO gpsBO;
 
     @Override
     @Transactional
@@ -470,10 +474,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
             SYSUser user = sysUserBO.getUser(logistics.getReceiver());
             logistics.setReceiverName(user.getRealName());
         }
-        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
-            GpsApply gpsApply = gpsApplyBO.getGpsApply(logistics.getBizCode());
-            logistics.setGpsApply(gpsApply);
-        }
         if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
             BudgetOrder budgetOrder = budgetOrderBO
                 .getBudgetOrder(logistics.getBizCode());
@@ -489,6 +489,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             GpsApply gpsApply = gpsApplyBO.getGpsApply(logistics.getBizCode());
+            gpsApply.setGpsList(gpsBO.queryGpsList(gpsApply.getCode()));
+            logistics.setGpsApply(gpsApply);
+
             if (StringUtils.isNotBlank(gpsApply.getBudgetOrderCode())) {
                 BudgetOrder budgetOrder = budgetOrderBO
                     .getBudgetOrder(gpsApply.getBudgetOrderCode());

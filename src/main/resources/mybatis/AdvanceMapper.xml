@@ -129,6 +129,40 @@
 		)
 	</insert>
 
+	<update id="update_confirmApply" parameterType="advance">
+		UPDATE tdq_advance
+		SET
+		status = #{status}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_areaManageApprove" parameterType="advance">
+		UPDATE tdq_advance
+		SET
+		status = #{status}
+		,cur_node_code = #{curNodeCode}
+		,advance_note = #{advanceNote}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_provinceManageApprove" parameterType="advance">
+		UPDATE tdq_advance
+		SET
+		status = #{status}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_confirmMakeBill" parameterType="advance">
+		UPDATE tdq_advance
+		SET
+		status = #{status}
+		,cur_node_code = #{curNodeCode}
+		,make_bill_note = #{makeBillNote}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_advance" parameterType="advance">
 		UPDATE tdq_advance
 		SET

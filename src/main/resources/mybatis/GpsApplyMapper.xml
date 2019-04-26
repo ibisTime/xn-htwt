@@ -28,6 +28,15 @@
 		<result column="remark" property="remark" />
 	</resultMap>
 	
+	<sql id="join_condition">
+		<if test="companyName != null and companyName != '' ">
+			join tsys_department td on t.company_code = td.code
+		</if>
+		<if test="applyUserName != null and applyUserName != '' ">
+			join tsys_user tu on t.apply_user = tu.user_id
+		</if>
+	</sql>
+	
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
@@ -53,6 +62,12 @@
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
+			</if>
+			<if test="companyName != null and companyName != '' ">
+				AND td.name like "%"#{companyName}"%"
+			</if>
+			<if test="applyUserName != null and applyUserName != '' ">
+				AND tu.real_name like "%"#{applyUserName}"%"
 			</if>
 		</trim>
 	</sql>
@@ -85,6 +100,7 @@
 		,t.remark
 		FROM
 		tb_gps_apply t
+		<include refid="join_condition" />
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -96,6 +112,7 @@
 	<select id="select_gpsApply_count" parameterType="gpsApply"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tb_gps_apply t
+		<include refid="join_condition" />
 		<include refid="where_condition" />
 	</select>
 

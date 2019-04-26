@@ -44,6 +44,9 @@
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
+			<if test="bizCodeForQuery != null and bizCodeForQuery != '' ">
+				AND t.biz_code like "%"#{bizCodeForQuery}"%"
+			</if>
 			<if test="fromNodeCode != null and fromNodeCode != '' ">
 				AND t.from_node_code = #{fromNodeCode}
 			</if>

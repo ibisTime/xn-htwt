@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.ICarOrderAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
@@ -45,6 +46,12 @@ public class XN630435 extends AProcessor {
         condition.setStatus(req.getStatus());
         condition.setStatusList(req.getStatusList());
         condition.setHandler(req.getHandler());
+        condition.setStatusForQuery(req.getStatusForQuery());
+
+        condition.setCreateDatetimeStart(DateUtil.strToDate(
+            req.getCreateDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setCreateDatetimeEnd(DateUtil.strToDate(
+            req.getCreateDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
