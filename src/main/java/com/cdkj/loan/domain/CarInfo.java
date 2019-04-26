@@ -145,28 +145,28 @@ public class CarInfo extends ABaseDO {
     private String gpsFeeWay;
 
     // GPS费用
-    private Long gpsFee;
+    private long gpsFee;
 
     // 公证费
-    private Long authFee;
+    private long authFee;
 
     // 其他费用
-    private Long otherFee;
+    private long otherFee;
 
     // 公司手续费
-    private Long companyFee;
+    private long companyFee;
 
     // 团队服务费
-    private Long teamFee;
+    private long teamFee;
 
     // 月供保证金
-    private Long monthDeposit;
+    private long monthDeposit;
 
-    public Long getMonthDeposit() {
+    public long getMonthDeposit() {
         return monthDeposit;
     }
 
-    public void setMonthDeposit(Long monthDeposit) {
+    public void setMonthDeposit(long monthDeposit) {
         this.monthDeposit = monthDeposit;
     }
 
@@ -522,43 +522,43 @@ public class CarInfo extends ABaseDO {
         return gpsFeeWay;
     }
 
-    public Long getGpsFee() {
+    public long getGpsFee() {
         return gpsFee;
     }
 
-    public void setGpsFee(Long gpsFee) {
+    public void setGpsFee(long gpsFee) {
         this.gpsFee = gpsFee;
     }
 
-    public Long getAuthFee() {
+    public long getAuthFee() {
         return authFee;
     }
 
-    public void setAuthFee(Long authFee) {
+    public void setAuthFee(long authFee) {
         this.authFee = authFee;
     }
 
-    public Long getOtherFee() {
+    public long getOtherFee() {
         return otherFee;
     }
 
-    public void setOtherFee(Long otherFee) {
+    public void setOtherFee(long otherFee) {
         this.otherFee = otherFee;
     }
 
-    public Long getCompanyFee() {
+    public long getCompanyFee() {
         return companyFee;
     }
 
-    public void setCompanyFee(Long companyFee) {
+    public void setCompanyFee(long companyFee) {
         this.companyFee = companyFee;
     }
 
-    public Long getTeamFee() {
+    public long getTeamFee() {
         return teamFee;
     }
 
-    public void setTeamFee(Long teamFee) {
+    public void setTeamFee(long teamFee) {
         this.teamFee = teamFee;
     }
 

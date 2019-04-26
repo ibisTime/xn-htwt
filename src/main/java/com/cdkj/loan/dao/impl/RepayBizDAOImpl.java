@@ -18,7 +18,7 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public int delete(RepayBiz data) {
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_repayBiz"), data);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
-            condition);
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_repayBiz_count"), condition);
     }
 
     @Override

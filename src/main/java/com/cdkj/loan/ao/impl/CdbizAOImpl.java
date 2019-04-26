@@ -324,8 +324,7 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     public void editCredit(XN632112Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
-        if (!ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())
-                && !ECdbizStatus.A0.getCode().equals(cdbiz.getStatus())) {
+        if (!ECdbizStatus.A0.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "该业务不处于征信审核不通过或新录状态状态，无法修改征信");
         }
@@ -471,7 +470,8 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     public void inputBankCreditResult(XN632111Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
-        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
+        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())
+                && !ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是录入银行征信结果节点，不能操作");
         }
