@@ -12,7 +12,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 预算单-录入抵押信息
+ * 录入发包合
  * @author: CYL 
  * @since: 2018年5月31日 上午3:20:09 
  * @history:

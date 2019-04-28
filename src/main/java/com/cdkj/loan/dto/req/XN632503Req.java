@@ -3,20 +3,18 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 区域总经理审核
+ * 确认完成
  * @author: silver 
- * @since: Apr 26, 2019 11:08:42 AM 
+ * @since: Apr 28, 2019 1:39:09 PM 
  * @history:
  */
-public class XN632461Req {
+public class XN632503Req {
 
     @NotBlank
-    private String code;
+    private String code;// 预算单编号
 
     @NotBlank
-    private String operator;
-
-    private String approveNote;
+    private String operator;// 操作人
 
     public String getCode() {
         return code;
@@ -32,14 +30,6 @@ public class XN632461Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getApproveNote() {
-        return approveNote;
-    }
-
-    public void setApproveNote(String approveNote) {
-        this.approveNote = approveNote;
     }
 
 }

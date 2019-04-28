@@ -16,7 +16,7 @@ public interface IAdvanceAO {
 
     // 区域总经理审核
     public void areaManageApprove(String code, String operator,
-            String approveResult, String approveNote);
+            String approveNote);
 
     // 省分公司总经理审核
     public void provinceManageApprove(String code, String operator,

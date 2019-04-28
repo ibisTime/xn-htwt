@@ -10,12 +10,14 @@ import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.dto.req.XN632131Req;
 
 //CHECK ��鲢��ע�� 
 public interface ICdbizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition);
+    public Paginable<Cdbiz> queryCdbizPage(int start, int limit,
+            Cdbiz condition);
 
     public List<Cdbiz> queryCdbizList(Cdbiz condition);
 
@@ -45,4 +47,11 @@ public interface ICdbizAO {
     // 面签内勤主管审核
     public void interviewInternalApprove(String code, String operator,
             String approveResult, String approveNote);
+
+    // 新录发保合
+    public void entryFbh(XN632131Req req);
+
+    // 第一/二次存档
+    public void archive(String code, String type, String operator,
+            String enterLocation);
 }

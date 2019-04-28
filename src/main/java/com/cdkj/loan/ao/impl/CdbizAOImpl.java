@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -10,8 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankLoanBO;
+import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
@@ -29,11 +33,14 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.bo.impl.RepayPlanBOImpl;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.CarInfo;
@@ -46,6 +53,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
@@ -55,18 +63,23 @@ import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.dto.req.XN632131Req;
+import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EArchiveType;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
 
 //CHECK ��鲢��ע�� 
@@ -133,8 +146,24 @@ public class CdbizAOImpl implements ICdbizAO {
     @Autowired
     private ICreditJourBO creditJourBO;
 
+    @Autowired
+    private IUserBO userBO;
+
+    @Autowired
+    private IAccountBO accountBO;
+
+    @Autowired
+    private IBankcardBO bankcardBO;
+
+    @Autowired
+    private IBankLoanBO bankLoanBO;
+
+    @Autowired
+    private RepayPlanBOImpl repayPlanBO;
+
     @Override
-    public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
+    public Paginable<Cdbiz> queryCdbizPage(int start, int limit,
+            Cdbiz condition) {
         Paginable<Cdbiz> page = null;
         if (StringUtils.isNotBlank(condition.getUserId())) {
             SYSUser sysUser = sysUserBO.getUser(condition.getUserId());
@@ -175,14 +204,14 @@ public class CdbizAOImpl implements ICdbizAO {
         }
 
         // 主贷人信息
-        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            cdbiz.getCode(), ELoanRole.APPLY_USER);
+        CreditUser creditUser = creditUserBO
+            .getCreditUserByBizCode(cdbiz.getCode(), ELoanRole.APPLY_USER);
         cdbiz.setCreditUser(creditUser);
 
         // 公司名称
         if (StringUtils.isNotBlank(cdbiz.getCompanyCode())) {
-            Department company = departmentBO.getDepartment(cdbiz
-                .getCompanyCode());
+            Department company = departmentBO
+                .getDepartment(cdbiz.getCompanyCode());
             cdbiz.setCompanyName(company.getName());
         }
 
@@ -222,14 +251,14 @@ public class CdbizAOImpl implements ICdbizAO {
             .querCreditJoursByBizCode(cdbiz.getCode());
         cdbiz.setCreditJours(creditJours);
 
-        List<BizTask> bizTasks = bizTaskBO.queryBizTaskByBizCode(cdbiz
-            .getCode());
+        List<BizTask> bizTasks = bizTaskBO
+            .queryBizTaskByBizCode(cdbiz.getCode());
         cdbiz.setBizTasks(bizTasks);
-        List<SYSBizLog> bizLogs = sysBizLogBO.queryBizLogByBizCode(cdbiz
-            .getCode());
+        List<SYSBizLog> bizLogs = sysBizLogBO
+            .queryBizLogByBizCode(cdbiz.getCode());
         cdbiz.setBizLogs(bizLogs);
-        List<Attachment> attachments = attachmentBO.queryBizAttachments(cdbiz
-            .getCode());
+        List<Attachment> attachments = attachmentBO
+            .queryBizAttachments(cdbiz.getCode());
         cdbiz.setAttachments(attachments);
     }
 
@@ -256,18 +285,18 @@ public class CdbizAOImpl implements ICdbizAO {
             sysUser, currentNode.getCode(), req.getNote());
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
             // 二手车报告
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.second_car_report.getCode());
+            EAttachName attachName = EAttachName.getMap()
+                .get(EAttachName.second_car_report.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getSecondCarReport());
             // 行驶证正面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_front.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszFront());
             // 行驶证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_reverse.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszReverse());
         }
@@ -295,7 +324,8 @@ public class CdbizAOImpl implements ICdbizAO {
         int applyUserCount = 0;// 申请人角色条数
         if (CollectionUtils.isNotEmpty(childList)) {
             for (XN632110ReqCreditUser child : childList) {
-                if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+                if (ELoanRole.APPLY_USER.getCode()
+                    .equals(child.getLoanRole())) {
                     applyUserCount++;
                     // 征信单设置客户姓名（征信人员的申请人）
 
@@ -315,8 +345,8 @@ public class CdbizAOImpl implements ICdbizAO {
 
         }
         // 待办事项
-        bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, bizCode,
-            currentNode, req.getOperator());
+        bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, bizCode, currentNode,
+            req.getOperator());
         return bizCode;
     }
 
@@ -333,18 +363,18 @@ public class CdbizAOImpl implements ICdbizAO {
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
 
             // 二手车报告
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.second_car_report.getCode());
+            EAttachName attachName = EAttachName.getMap()
+                .get(EAttachName.second_car_report.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getSecondCarReport());
             // 行驶证正面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_front.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszFront());
             // 行驶证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_reverse.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszReverse());
         }
@@ -384,7 +414,8 @@ public class CdbizAOImpl implements ICdbizAO {
         int applyUserCount = 0;
         if (CollectionUtils.isNotEmpty(childList)) {
             for (XN632112ReqCreditUser child : childList) {
-                if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+                if (ELoanRole.APPLY_USER.getCode()
+                    .equals(child.getLoanRole())) {
                     applyUserCount++;
                 }
                 if (applyUserCount > 1) {
@@ -425,8 +456,8 @@ public class CdbizAOImpl implements ICdbizAO {
         // 审核通过
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             for (CreditUser creditUser : req.getCreditUserList()) {
-                CreditUser user = creditUserBO.getCreditUser(creditUser
-                    .getCode());
+                CreditUser user = creditUserBO
+                    .getCreditUser(creditUser.getCode());
                 user.setRelation(creditUser.getRelation());
                 user.setLoanRole(creditUser.getLoanRole());
                 creditUserBO.refreshCreditUserLoanRole(user);
@@ -485,13 +516,14 @@ public class CdbizAOImpl implements ICdbizAO {
         List<XN632111ReqCreditUser> creditResult = req.getCreditList();
         for (XN632111ReqCreditUser reqCreditUser : creditResult) {
             // 录入结果与说明
-            CreditUser creditUser = creditUserBO.getCreditUser(reqCreditUser
-                .getCreditUserCode());
+            CreditUser creditUser = creditUserBO
+                .getCreditUser(reqCreditUser.getCreditUserCode());
             creditUserBO.inputBankCreditResult(creditUser,
                 reqCreditUser.getBankCreditReport(),
                 reqCreditUser.getDataCreditReport(),
                 reqCreditUser.getBankResult(), reqCreditUser.getCreditNote());
-            if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+            if (ELoanRole.APPLY_USER.getCode()
+                .equals(creditUser.getLoanRole())) {
                 // 银行征信报告
                 EAttachName attachName = EAttachName.mainLoaner_bank;
                 attachmentBO.saveAttachment(req.getBizCode(),
@@ -502,7 +534,8 @@ public class CdbizAOImpl implements ICdbizAO {
                 attachmentBO.saveAttachment(req.getBizCode(),
                     attachName.getCode(), attachName.getValue(),
                     reqCreditUser.getDataCreditReport());
-            } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+            } else if (ELoanRole.GHR.getCode()
+                .equals(creditUser.getLoanRole())) {
                 // 银行征信报告
                 EAttachName attachName = EAttachName.replier_bank;
                 attachmentBO.saveAttachment(req.getBizCode(),
@@ -590,8 +623,8 @@ public class CdbizAOImpl implements ICdbizAO {
     public void interviewInternalApprove(String code, String operator,
             String approveResult, String approveNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ENode.approve_interview.getCode().equals(
-            cdbiz.getIntevCurNodeCode())) {
+        if (!ENode.approve_interview.getCode()
+            .equals(cdbiz.getIntevCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是内勤主管审核节点，不能操作");
         }
@@ -604,9 +637,9 @@ public class CdbizAOImpl implements ICdbizAO {
             // 生成资料传递
             String logisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
-                ELogisticsCurNodeType.BANK_LOAN.getCode(), cdbiz.getCode(),
-                cdbiz.getSaleUserId(), preCurrentNode, nodeFlow.getNextNode(),
-                null);
+                ELogisticsCurNodeType.SALE_SEND_BANK_LOAN.getCode(),
+                cdbiz.getCode(), cdbiz.getSaleUserId(), preCurrentNode,
+                nodeFlow.getNextNode(), null);
             // 产生物流单后改变状态为物流传递中
             // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
             // budgetOrderBO.updateIsLogistics(budgetOrder);
@@ -649,4 +682,88 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbiz.getCode(), node);
 
     }
+
+    @Override
+    public void archive(String code, String type, String operator,
+            String enterLocation) {
+
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+
+        switch (EArchiveType.matchCode(type)) {
+            // 第一次存档
+            case FIRST:
+                // 更新业务状态
+                cdbizBO.refreshFircundangStatus(cdbiz,
+                    ECdbizStatus.D3.getCode());
+                break;
+
+            // 第二次存档
+            case SECOND:
+
+                CreditUser applyUser = creditUserBO.getCreditUserByBizCode(code,
+                    ELoanRole.APPLY_USER);
+
+                User user = userBO.getUser(applyUser.getMobile(),
+                    EUserKind.Customer.getCode());
+                String userId = null;
+                if (user == null) {
+                    // 用户代注册并实名认证
+                    userId = userBO.doRegisterAndIdentify(
+                        EBoolean.YES.getCode(), applyUser.getMobile(),
+                        applyUser.getIdKind(), applyUser.getUserName(),
+                        applyUser.getIdNo());
+                    distributeAccount(userId, applyUser.getMobile(),
+                        EUserKind.Customer.getCode());
+                } else {
+                    userId = user.getUserId();
+                }
+
+                BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(code);
+                Bank bank = bankBO.getBank(bankLoan.getRepayBankCode());
+
+                // 绑定用户银行卡
+                String bankcardCode = bankcardBO.bind(userId,
+                    applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
+                    bank.getBankCode(), bankLoan.getRepayBankName(),
+                    bankLoan.getRepaySubbranch());
+
+                // 自动生成还款业务
+                // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
+                // budgetOrder, userId, bankcardCode, operator);
+
+                // 自动生成还款计划
+                // repayPlanBO.genereateNewRepayPlan(repayBiz);
+
+                // 更新业务状态
+                cdbizBO.refreshSeccundangStatus(cdbiz,
+                    ECdbizStatus.E3.getCode());
+
+                break;
+            default:
+                break;
+        }
+
+        // 日志记录
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BUDGET_ORDER.getCode(),
+            cdbiz.getCode(), cdbiz.getCurNodeCode(), null, operator);
+    }
+
+    @Override
+    public void entryFbh(XN632131Req req) {
+
+    }
+
+    // 分配账号
+    private void distributeAccount(String userId, String mobile, String kind) {
+        List<String> currencyList = new ArrayList<String>();
+        currencyList.add(ECurrency.CNY.getCode());
+        currencyList.add(ECurrency.JF.getCode());
+        currencyList.add(ECurrency.XYF.getCode());
+
+        for (String currency : currencyList) {
+            accountBO.distributeAccount(userId, mobile,
+                EAccountType.getAccountType(kind), currency);
+        }
+    }
+
 }

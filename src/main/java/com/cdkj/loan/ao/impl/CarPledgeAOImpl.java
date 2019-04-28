@@ -21,6 +21,7 @@ import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632144Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
@@ -109,10 +110,10 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             carPledge.getCode(), nextNodeCode, req.getApproveNote(),
             req.getOperator());
 
-        // TODO 生成资料传递
+        // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
             ELogisticsType.BUDGET.getCode(),
-            ELogisticsCurNodeType.CAR_MORTGAGE.getCode(), cdbiz.getCode(),
+            ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE.getCode(), cdbiz.getCode(),
             cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(), nextNodeCode, null);
 
         // 资料传递待办事项
@@ -133,7 +134,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         if (!ENode.input_dy_info.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是业务员确认抵押申请节点，不能操作");
+                "当前不是业务员录入抵押信息节点，不能操作");
         }
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
@@ -142,8 +143,6 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 录入抵押信息
         carPledgeBO.entryPledgeInfo(nextNodeCode, req);
-
-        // TODO 车辆信息录入
 
         // 更新业务状态
         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
@@ -157,11 +156,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
             carPledge.getCode(), nextNodeCode, null, req.getOperator());
 
-        // TODO 生成资料传递
+        // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
             ELogisticsType.BUDGET.getCode(),
-            ELogisticsCurNodeType.CAR_MORTGAGE.getCode(), cdbiz.getCode(),
-            cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(), nextNodeCode, null);
+            ELogisticsCurNodeType.SALE_SEND_CAR_PLEDGE.getCode(),
+            cdbiz.getCode(), cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(),
+            nextNodeCode, null);
 
         // 资料传递待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.ZHDY_LOGISTICS,
@@ -202,20 +202,6 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         sysBizLogBO.recordCurOperate(code, EBizLogType.bank_push,
             carPledge.getCode(), nextNodeCode, null, operator);
 
-        // TODO 生成资料传递
-        String logisticsCode = logisticsBO.saveLogistics(
-            ELogisticsType.BUDGET.getCode(),
-            ELogisticsCurNodeType.CAR_MORTGAGE.getCode(), cdbiz.getCode(),
-            cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(), nextNodeCode, null);
-
-        // 资料传递待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.ZHDY_LOGISTICS, logisticsCode,
-            ENode.matchCode(nextNodeCode), operator);
-
-        // 资料传递操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.ZHDY_LOGISTICS,
-            logisticsCode, nextNodeCode, null, operator);
-
     }
 
     @Override
@@ -227,6 +213,10 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             .equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是抵押提交节点，不能操作");
+        }
+        if (!ECdbizStatus.E3.getCode().equals(cdbiz.getSeccundangStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "第二次存档未完成，不能操作");
         }
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
