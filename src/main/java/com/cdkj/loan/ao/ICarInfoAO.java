@@ -4,11 +4,15 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632143Req;
+import com.cdkj.loan.dto.req.XN632500Req;
 
 //CHECK ��鲢��ע�� 
 @Component
 public interface ICarInfoAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
+
+    // 录入准入单
+    public void inputBudgetOrder(XN632500Req req);
 
     public int editCarInfo(XN632120Req req);
 

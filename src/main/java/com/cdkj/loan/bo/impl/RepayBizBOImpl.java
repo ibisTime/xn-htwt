@@ -36,6 +36,7 @@ import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -91,6 +92,26 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
 
     @Override
     public String saveRepayBiz(XN632120Req req) {
+        RepayBiz repayBiz = new RepayBiz();
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+            .getCode());
+        repayBiz.setCode(code);
+        repayBiz.setBizCode(req.getCode());
+        repayBiz.setLoanProductCode(req.getLoanProductCode());
+        LoanProduct product = loanProductBO.getLoanProduct(req
+            .getLoanProductCode());
+        repayBiz.setLoanProductName(product.getName());
+        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
+        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
+        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
+        repayBiz.setRefCode(req.getCode());
+        repayBizDAO.insert(repayBiz);
+        return code;
+    }
+
+    @Override
+    public String saveRepayBiz(XN632500Req req) {
         RepayBiz repayBiz = new RepayBiz();
         String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
             .getCode());

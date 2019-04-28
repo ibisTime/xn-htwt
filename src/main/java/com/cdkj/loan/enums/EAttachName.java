@@ -51,7 +51,9 @@ public enum EAttachName {
             "work_asset_pdf", "工作资料上传"), assetPdf("asset_pdf_apply",
             "申请人资产资料pdf"), mateAssetPdf("asset_pdf_gh", "申请人资产资料pdf"), guaAssetPdf(
             "asset_pdf_gua", "申请人资产资料pdf"), houseContract("house_contract",
-            "购房合同"), marryPdf("marry_pdf", "结婚证资料"),
+            "购房合同"), marryPdf("marry_pdf", "结婚证资料"), carPic("car_pic", "车辆照片"), otherPdf(
+            "other_pdf", "其他资料"), otherPic("other_pic", "其他辅助资料"), hkBookPdf(
+            "hkb_apply", "户口本资料"),
 
     water_bill("h1", "图片")
 

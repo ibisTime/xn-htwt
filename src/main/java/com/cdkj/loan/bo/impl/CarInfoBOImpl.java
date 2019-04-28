@@ -13,6 +13,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICarInfoDAO;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
@@ -171,5 +172,97 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getHousePicture());
         }
+    }
+
+    @Override
+    public void saveAttachment(XN632500Req req) {
+        String bizCode = req.getCode();
+        EAttachName attachName = null;
+
+        // 车辆照片
+        if (StringUtils.isNotBlank(req.getCarPic())) {
+            attachName = EAttachName.carPic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getCarPic());
+        }
+
+        // 合格证
+        if (StringUtils.isNotBlank(req.getCarHgzPic())) {
+            attachName = EAttachName.carHgzPic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getCarHgzPic());
+        }
+
+        // 购房合同
+        if (StringUtils.isNotBlank(req.getHouseContract())) {
+
+            attachName = EAttachName.houseContract;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getHouseContract());
+        }
+
+        // 其他辅助资料
+        if (StringUtils.isNotBlank(req.getOtherPic())) {
+
+            attachName = EAttachName.otherPic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getOtherPic());
+        }
+
+        // 房屋照片
+        if (StringUtils.isNotBlank(req.getHousePicture())) {
+
+            attachName = EAttachName.house_pic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getHousePicture());
+        }
+
+        // 户口本资料
+        if (StringUtils.isNotBlank(req.getHkBookPdf())) {
+
+            attachName = EAttachName.hkBookPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getHkBookPdf());
+        }
+
+        // 结婚证资料
+        if (StringUtils.isNotBlank(req.getMarryPdf())) {
+
+            attachName = EAttachName.marryPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getMarryPdf());
+        }
+
+        // 其他资料
+        if (StringUtils.isNotBlank(req.getOtherPdf())) {
+
+            attachName = EAttachName.otherPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getOtherPdf());
+        }
+
+        // 工作资料上传
+        if (StringUtils.isNotBlank(req.getWorkAssetPdf())) {
+
+            attachName = EAttachName.workAssetPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getWorkAssetPdf());
+        }
+
+        // 配偶资产资料pdf
+        if (StringUtils.isNotBlank(req.getMateAssetPdf())) {
+
+            attachName = EAttachName.mateAssetPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getMateAssetPdf());
+        }
+        // 担保人资料pdf
+        if (StringUtils.isNotBlank(req.getGuaAssetPdf())) {
+
+            attachName = EAttachName.guaAssetPdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getGuaAssetPdf());
+        }
+
     }
 }
