@@ -35,6 +35,8 @@ public class XN632155 extends AProcessor {
         condition.setType(req.getType());
         condition.setTypeList(req.getTypeList());
         condition.setReceiver(req.getReceiver());
+        condition.setBizCodeForQuery(req.getBizCodeForQuery());
+
         if ("RO201800000000000001".equals(req.getRoleCode())) {
             condition.setReceiver(null);
         }

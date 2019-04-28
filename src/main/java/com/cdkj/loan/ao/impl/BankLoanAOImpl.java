@@ -49,7 +49,6 @@ public class BankLoanAOImpl implements IBankLoanAO {
             String bankCommitDatetime, String bankCommitNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(bizCode);
 
-        // TODO 作废状态待确定
         if (EBoolean.YES.getCode().equals(cdbiz.getZfStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前预算单已作废，不能操作");
@@ -103,8 +102,6 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         String nextNodeCode = nodeFlowBO
             .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
-
-        // TODO 差异字段补全
 
         // 录入放款信息
         bankLoanBO.entryFkInfo(nextNodeCode, req);

@@ -1,39 +1,39 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.IAdvanceAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632131Req;
+import com.cdkj.loan.dto.req.XN632464Req;
 import com.cdkj.loan.dto.res.BooleanRes;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 录入发包合
- * @author: CYL 
- * @since: 2018年5月31日 上午3:20:09 
+ * 上传复核回单
+ * @author: silver 
+ * @since: Apr 26, 2019 11:07:56 AM 
  * @history:
  */
-public class XN632131 extends AProcessor {
-    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
-        .getBean(IBudgetOrderAO.class);
+public class XN632464 extends AProcessor {
 
-    private XN632131Req req = null;
+    private IAdvanceAO advanceAO = SpringContextHolder
+        .getBean(IAdvanceAO.class);
+
+    private XN632464Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.entryMortgage(req);
-        return new BooleanRes(true, EBoolean.YES.getCode());
+        return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632131Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632464Req.class);
         ObjValidater.validateReq(req);
+
     }
 
 }

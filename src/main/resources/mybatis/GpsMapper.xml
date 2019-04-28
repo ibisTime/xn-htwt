@@ -27,6 +27,9 @@
 			<if test="gpsDevNo != null and gpsDevNo != '' ">
 				AND t.gps_dev_no = #{gpsDevNo}
 			</if>
+			<if test="gpsDevNoForQuery != null and gpsDevNoForQuery != '' ">
+				AND t.gps_dev_no like "%"#{gpsDevNoForQuery}"%"
+			</if>
 			<if test="gpsType != null and gpsType != '' ">
 				AND t.gps_type = #{gpsType}
 			</if>

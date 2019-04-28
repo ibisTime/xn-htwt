@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -33,7 +34,6 @@ import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -78,6 +78,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private IBizTaskBO bizTaskBO;
+
+    @Autowired
+    private IGpsBO gpsBO;
 
     @Override
     @Transactional
@@ -132,7 +135,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
-                    // TODO 第一次存档节点
                     // 风控寄送银行放款材料
                     case submit_2:
                         cdbizBO.refreshFircundangStatus(cdbiz,
@@ -164,7 +166,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
-                    // TODO 第二次存档节点
                     // 待风控寄件（车辆抵押）
                     case submit_6:
                         if (!ECdbizStatus.D3.getCode()
@@ -268,10 +269,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             cdbizBO.refreshFircundangStatus(cdbiz,
                                 ECdbizStatus.D0.getCode());
 
-                            // TODO 生成资料传递
+                            // 生成资料传递
                             String logisticsCode = logisticsBO.saveLogistics(
                                 ELogisticsType.BUDGET.getCode(),
-                                ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),
+                                ELogisticsCurNodeType.FK_SEND_BANK_LOAN
+                                    .getCode(),
                                 cdbiz.getCode(), cdbiz.getSaleUserId(),
                                 cdbiz.getCurNodeCode(), nextNodeCode, null);
 
@@ -310,22 +312,43 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             cdbizBO.refreshSeccundangStatus(cdbiz,
                                 ECdbizStatus.E0.getCode());
 
-                            // TODO 生成资料传递
-                            String logisticsCode = logisticsBO.saveLogistics(
-                                ELogisticsType.BUDGET.getCode(),
-                                ELogisticsCurNodeType.CAR_MORTGAGE.getCode(),
-                                cdbiz.getCode(), cdbiz.getSaleUserId(),
-                                cdbiz.getCurNodeCode(), nextNodeCode, null);
+                            // 生成【风控寄送材料】资料传递
+                            String fkSendlogisticsCode = logisticsBO
+                                .saveLogistics(ELogisticsType.BUDGET.getCode(),
+                                    ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE
+                                        .getCode(),
+                                    cdbiz.getCode(), cdbiz.getSaleUserId(),
+                                    cdbiz.getCurNodeCode(), nextNodeCode, null);
 
                             // 资料传递待办事项
                             bizTaskBO.saveBizTask(code,
-                                EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                EBizLogType.ZHDY_LOGISTICS, fkSendlogisticsCode,
                                 ENode.matchCode(nextNodeCode), operator);
 
                             // 资料传递操作日志
                             sysBizLogBO.recordCurOperate(code,
-                                EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                EBizLogType.ZHDY_LOGISTICS, fkSendlogisticsCode,
                                 nextNodeCode, null, operator);
+
+                            // 生成【风控审核通过】资料传递
+                            String fkApprovelogisticsCode = logisticsBO
+                                .saveLogistics(ELogisticsType.BUDGET.getCode(),
+                                    ELogisticsCurNodeType.FK_APPROVE_PASS_CAR_PLEDGE
+                                        .getCode(),
+                                    cdbiz.getCode(), cdbiz.getSaleUserId(),
+                                    cdbiz.getCurNodeCode(), nextNodeCode, null);
+
+                            // 资料传递待办事项
+                            bizTaskBO.saveBizTask(code,
+                                EBizLogType.ZHDY_LOGISTICS,
+                                fkApprovelogisticsCode,
+                                ENode.matchCode(nextNodeCode), operator);
+
+                            // 资料传递操作日志
+                            sysBizLogBO.recordCurOperate(code,
+                                EBizLogType.ZHDY_LOGISTICS,
+                                fkApprovelogisticsCode, nextNodeCode, null,
+                                operator);
 
                         } else {
 
@@ -343,17 +366,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
             default:
                 break;
-        }
-
-        if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
-            if (ELogisticsCurNodeType.BANK_LOAN.getCode()
-                .equals(logistics.getCurNodeType())) {
-                result = budgetOrderBO.logicOrderLoan(logistics.getBizCode(),
-                    operator, approveResult);
-            } else {
-                result = budgetOrderBO
-                    .logicOrderMortgage(logistics.getBizCode(), operator);
-            }
         }
 
         // 资料传递日志
@@ -470,10 +482,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
             SYSUser user = sysUserBO.getUser(logistics.getReceiver());
             logistics.setReceiverName(user.getRealName());
         }
-        if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
-            GpsApply gpsApply = gpsApplyBO.getGpsApply(logistics.getBizCode());
-            logistics.setGpsApply(gpsApply);
-        }
         if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
             BudgetOrder budgetOrder = budgetOrderBO
                 .getBudgetOrder(logistics.getBizCode());
@@ -489,6 +497,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
         if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
             GpsApply gpsApply = gpsApplyBO.getGpsApply(logistics.getBizCode());
+            gpsApply.setGpsList(gpsBO.queryGpsList(gpsApply.getCode()));
+            logistics.setGpsApply(gpsApply);
+
             if (StringUtils.isNotBlank(gpsApply.getBudgetOrderCode())) {
                 BudgetOrder budgetOrder = budgetOrderBO
                     .getBudgetOrder(gpsApply.getBudgetOrderCode());
@@ -538,17 +549,17 @@ public class LogisticsAOImpl implements ILogisticsAO {
         List<BudgetOrder> budgetOrderList = budgetOrderBO
             .queryBudgetOrderList(condition);
         for (BudgetOrder budgetOrder : budgetOrderList) {
-            // 生成资料传递
-            String logisticsCode = logisticsBO.saveLogistics(
-                ELogisticsType.BUDGET.getCode(),
-                ELogisticsCurNodeType.BANK_LOAN.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode(),
-                EBudgetOrderNode.DHAPPROVEDATA.getCode(), null);
-            // 资料传递日志
-            sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-                EBizLogType.LOGISTICS, logisticsCode,
-                EBudgetOrderNode.DHAPPROVEDATA.getCode());
+            // // 生成资料传递
+            // String logisticsCode = logisticsBO.saveLogistics(
+            // ELogisticsType.BUDGET.getCode(),
+            // ELogisticsCurNodeType.BANK_LOAN.getCode(),
+            // budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+            // EBudgetOrderNode.INTERVIEW_INTERNAL_APPROVE.getCode(),
+            // EBudgetOrderNode.DHAPPROVEDATA.getCode(), null);
+            // // 资料传递日志
+            // sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+            // EBizLogType.LOGISTICS, logisticsCode,
+            // EBudgetOrderNode.DHAPPROVEDATA.getCode());
         }
     }
 }

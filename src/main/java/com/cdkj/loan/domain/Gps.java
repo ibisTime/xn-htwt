@@ -73,6 +73,9 @@ public class Gps extends ABaseDO {
     // 业务
     private Cdbiz cdbiz;
 
+    // gps编号模糊查
+    private String gpsDevNoForQuery;
+
     public Cdbiz getCdbiz() {
         return cdbiz;
     }
@@ -231,6 +234,14 @@ public class Gps extends ABaseDO {
 
     public void setApplyUserName(String applyUserName) {
         this.applyUserName = applyUserName;
+    }
+
+    public String getGpsDevNoForQuery() {
+        return gpsDevNoForQuery;
+    }
+
+    public void setGpsDevNoForQuery(String gpsDevNoForQuery) {
+        this.gpsDevNoForQuery = gpsDevNoForQuery;
     }
 
 }

@@ -40,6 +40,55 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
     }
 
     @Override
+    public void confirmApply(String code, String curNodeCode, String status) {
+        Advance advance = new Advance();
+
+        advance.setCode(code);
+        advance.setCurNodeCode(curNodeCode);
+        advance.setStatus(status);
+
+        advanceDAO.updateConfirmApply(advance);
+    }
+
+    @Override
+    public void areaManageApprove(String code, String curNodeCode,
+            String status, String approveNote) {
+        Advance advance = new Advance();
+
+        advance.setCode(code);
+        advance.setCurNodeCode(curNodeCode);
+        advance.setStatus(status);
+        advance.setAdvanceNote(approveNote);
+
+        advanceDAO.updateAreaManageApprove(advance);
+    }
+
+    @Override
+    public void provinceManageApprove(String code, String curNodeCode,
+            String status) {
+        Advance advance = new Advance();
+
+        advance.setCode(code);
+        advance.setCurNodeCode(curNodeCode);
+        advance.setStatus(status);
+
+        advanceDAO.updateProvinceManageApprove(advance);
+    }
+
+    @Override
+    public void confirmMakeBill(String code, String curNodeCode, String status,
+            String makeBillNote) {
+        Advance advance = new Advance();
+
+        advance.setCode(code);
+        advance.setCurNodeCode(curNodeCode);
+        advance.setStatus(status);
+        advance.setMakeBillNote(makeBillNote);
+
+        advanceDAO.updateConfirmMakeBill(advance);
+    }
+
+    @Override
     public List<Advance> queryAdvanceList(Advance condition) {
         return advanceDAO.selectList(condition);
     }
@@ -57,4 +106,5 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
         }
         return data;
     }
+
 }

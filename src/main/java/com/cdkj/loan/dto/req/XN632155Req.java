@@ -38,6 +38,9 @@ public class XN632155Req extends APageReq {
     // 状态List
     private List<String> statusList;
 
+    // 业务编号模糊查
+    private String bizCodeForQuery;
+
     public String getRoleCode() {
         return roleCode;
     }
@@ -100,6 +103,14 @@ public class XN632155Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getBizCodeForQuery() {
+        return bizCodeForQuery;
+    }
+
+    public void setBizCodeForQuery(String bizCodeForQuery) {
+        this.bizCodeForQuery = bizCodeForQuery;
     }
 
 }

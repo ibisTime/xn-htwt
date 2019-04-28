@@ -108,6 +108,9 @@ public class Logistics extends ABaseDO {
     // 信贷专员姓名
     private String saleUserName;
 
+    // 业务编号模糊查
+    private String bizCodeForQuery;
+
     public String getInsideJobName() {
         return insideJobName;
     }
@@ -346,5 +349,13 @@ public class Logistics extends ABaseDO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getBizCodeForQuery() {
+        return bizCodeForQuery;
+    }
+
+    public void setBizCodeForQuery(String bizCodeForQuery) {
+        this.bizCodeForQuery = bizCodeForQuery;
     }
 }

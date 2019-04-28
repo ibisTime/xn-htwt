@@ -28,6 +28,9 @@ public class XN632705Req extends APageReq {
     // 申请人姓名(预算单)
     private String customerName;
 
+    // gps编号模糊查
+    private String gpsDevNoForQuery;
+
     public String getCustomerName() {
         return customerName;
     }
@@ -82,5 +85,13 @@ public class XN632705Req extends APageReq {
 
     public void setBizCode(String bizCode) {
         this.bizCode = bizCode;
+    }
+
+    public String getGpsDevNoForQuery() {
+        return gpsDevNoForQuery;
+    }
+
+    public void setGpsDevNoForQuery(String gpsDevNoForQuery) {
+        this.gpsDevNoForQuery = gpsDevNoForQuery;
     }
 }
