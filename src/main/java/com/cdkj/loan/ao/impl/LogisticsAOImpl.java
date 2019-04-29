@@ -289,8 +289,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 ELogisticsCurNodeType.FK_SEND_BANK_LOAN
                                     .getCode(),
                                 cdbiz.getCode(), cdbiz.getSaleUserId(),
-                                cdbiz.getCurNodeCode(),
-                                ENode.submit_2.getCode(), null);
+                                ENode.submit_2.getCode(),
+                                ENode.receive_2.getCode(), null);
 
                             // 资料传递待办事项
                             bizTaskBO.saveBizTask(cdbiz.getCode(),
