@@ -17,8 +17,7 @@ public interface ICarPledgeBO extends IPaginableBO<CarPledge> {
             String pledgeUserIdCardCopy, String pledgeAddress);
 
     // 业务员确认抵押申请
-    public void saleManConfirm(String code, String nextNodeCode,
-            XN632124Req req);
+    public void saleManConfirm(String code, String nextNodeCode, XN632124Req req);
 
     // 业务员录入抵押信息
     public void entryPledgeInfo(String code, String nextNodeCode,
@@ -38,4 +37,5 @@ public interface ICarPledgeBO extends IPaginableBO<CarPledge> {
 
     public CarPledge getCarPledgeByBizCode(String bizCode);
 
+    public void removeCarpledge(String bizCode);
 }

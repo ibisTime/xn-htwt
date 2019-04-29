@@ -20,8 +20,8 @@ import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge>
-        implements ICarPledgeBO {
+public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
+        ICarPledgeBO {
 
     @Autowired
     private ICarPledgeDAO carPledgeDAO;
@@ -30,8 +30,8 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge>
     public String saveCarPledge(String bizCode, String supplementNoteg) {
         CarPledge carPledge = new CarPledge();
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.CAR_PLEDGE.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.CAR_PLEDGE
+            .getCode());
         carPledge.setCode(code);
         carPledge.setBizCode(bizCode);
         carPledge.setCurNodeCode(ENode.confirm_pledge_apply.getCode());
@@ -47,8 +47,8 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge>
 
         CarPledge carPledge = new CarPledge();
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.CAR_PLEDGE.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.CAR_PLEDGE
+            .getCode());
         carPledge.setCode(code);
         carPledge.setBizCode(bizCode);
         carPledge.setPledgeUser(pledgeUserIdCardCopy);
@@ -60,8 +60,7 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge>
     }
 
     @Override
-    public void saleManConfirm(String code, String nextNodeCode,
-            XN632124Req req) {
+    public void saleManConfirm(String code, String nextNodeCode, XN632124Req req) {
         CarPledge carPledge = EntityUtils.copyData(req, CarPledge.class);
         carPledge.setCode(code);
         carPledge.setCurNodeCode(nextNodeCode);
@@ -87,8 +86,8 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge>
 
         carPledge.setCode(code);
         carPledge.setCurNodeCode(nextNodeCode);
-        carPledge.setPledgeBankCommitDatetime(DateUtil
-            .strToDate(pledgeBankCommitDatetime, DateUtil.DATA_TIME_PATTERN_1));
+        carPledge.setPledgeBankCommitDatetime(DateUtil.strToDate(
+            pledgeBankCommitDatetime, DateUtil.DATA_TIME_PATTERN_1));
         carPledge.setPledgeBankCommitNote(pledgeBankCommitNote);
 
         carPledgeDAO.updateCommitBank(carPledge);
@@ -130,11 +129,18 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge>
             CarPledge condition = new CarPledge();
             condition.setBizCode(bizCode);
             data = carPledgeDAO.select(condition);
-            if (data == null) {
-                throw new BizException("xn0000", "车辆抵押信息不存在");
-            }
         }
         return data;
+    }
+
+    @Override
+    public void removeCarpledge(String bizCode) {
+        CarPledge condition = new CarPledge();
+        condition.setBizCode(bizCode);
+        List<CarPledge> carPledges = carPledgeDAO.selectList(condition);
+        for (CarPledge carPledge : carPledges) {
+            carPledgeDAO.delete(carPledge);
+        }
     }
 
 }

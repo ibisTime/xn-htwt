@@ -19,6 +19,7 @@
         <result column="birth_address_city" property="birthAddressCity" />
         <result column="birth_address_area" property="birthAddressArea" />
         <result column="birth_address" property="birthAddress" />
+        <result column="post_code" property="postCode" />
         <result column="education" property="education" />
         <result column="company_name" property="companyName" />
         <result column="company_address" property="companyAddress" />
@@ -196,6 +197,8 @@
 		,birth_address_city=#{birthAddressCity}
 		,birth_address_area=#{birthAddressArea}
 		,birth_address=#{birthAddress}
+		,post_code=#{postCode}
+		,education=#{education}
 		,company_name=#{companyName}
 		,company_address=#{companyAddress}
 		,company_contact_no=#{companyContactNo}

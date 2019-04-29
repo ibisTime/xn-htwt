@@ -79,6 +79,9 @@
 		tdq_car_pledge(
 		code
 		,biz_code
+		,pledge_user
+		,pledge_user_id_card_copy
+		,pledge_address
 		,status
 		,cur_node_code
 		,pledge_supplement_note
@@ -86,6 +89,9 @@
 		VALUES(
 		#{code}
 		,#{bizCode}
+		,#{pledgeUser}
+		,#{pledgeUserIdCardCopy}
+		,#{pledgeAddress}
 		,#{status}
 		,#{curNodeCode}
 		,#{pledgeSupplementNote}
@@ -146,5 +152,9 @@
 		WHERE code = #{code}
 	</update>
 
+	<delete id="delete_carPledge" parameterType="carPledge">
+		DELETE FROM tdq_car_pledge
+		WHERE code=#{code}
+	</delete>
 
 </mapper>

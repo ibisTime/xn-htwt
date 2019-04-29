@@ -137,12 +137,14 @@ public class CarInfoAOImpl implements ICarInfoAO {
         creditUserExt.setMonthIncome(StringValidater.toLong(req
             .getMonthIncome()));
         creditUserExt.setIsSiteProve(req.getIsSelfCompany());
+        creditUserExt.setCarType(req.getCarTypeNow());
         creditUserExtBO.saveCreditUserExt(creditUserExt, cdbiz.getCode());
 
         // 附件录入
         carInfoBO.saveAttachment(req);
 
         // 抵押
+        carPledgeBO.removeCarpledge(req.getCode());
         carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
             req.getPledgeUserIdCardCopy(), req.getPledgeAddress());
 
