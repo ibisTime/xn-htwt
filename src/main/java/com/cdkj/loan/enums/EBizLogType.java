@@ -9,7 +9,7 @@ public enum EBizLogType {
             "012", "业务贷后资料传递"), ZHFK_LOGISTICS("013", "驻行放款资料传递"), ZHDY_LOGISTICS(
             "014", "驻行抵押资料传递"), LOGISTICS("012", "资料传递"), fbh("c", "发保合"), gps(
             "d", "gps"), bank_push("e", "银行放款"), fund("O", "垫资"), CAR_DEALER_AUDIT(
-            "CD", "车辆经销商审核"),
+            "CD", "车辆经销商审核"), makeCard("h", "制卡"),
 
     Pledge("f", "车辆抵押");
 

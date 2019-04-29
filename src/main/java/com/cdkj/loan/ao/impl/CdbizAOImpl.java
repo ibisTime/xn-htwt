@@ -481,6 +481,14 @@ public class CdbizAOImpl implements ICdbizAO {
             // 新增车辆信息
             String carInfoCode = carInfoBO.saveCarInfo(cdbiz.getCode());
 
+            // 制卡节点
+            cdbizBO.refreshMakeCardNode(cdbiz, ENode.make_card_apply.getCode());
+            // 制卡状态
+            cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H1.getCode());
+            // 制卡待办事项
+            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.makeCard,
+                req.getCode(), ENode.make_card_apply, req.getOperator());
+
             // 准入单开始的待办事项
             bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
                 carInfoCode, ENode.input_budget, req.getOperator());
@@ -905,6 +913,56 @@ public class CdbizAOImpl implements ICdbizAO {
             accountBO.distributeAccount(userId, mobile,
                 EAccountType.getAccountType(kind), currency);
         }
+    }
+
+    @Override
+    public void makeCardApply(String code, String operator,
+            String cardPostAddress) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ECdbizStatus.H1.getCode().equals(cdbiz.getMakeCardNode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是待制卡申请状态，无法申请");
+        }
+        // 录入卡邮寄地址
+        cdbizBO.refreshCardAddress(cdbiz, cardPostAddress);
+        // 制卡节点
+        cdbizBO.refreshMakeCardNode(cdbiz, ENode.input_card_number.getCode());
+        // 制卡状态
+        cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H2.getCode());
+        // 处理前待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.makeCard.getCode(), code,
+            ENode.make_card_apply);
+        // 操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.makeCard, code,
+            ENode.make_card_apply.getCode(), ENode.make_card_apply.getValue(),
+            operator);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(code, EBizLogType.makeCard, code,
+            ENode.input_card_number, operator);
+    }
+
+    @Override
+    public void inputCardNumber(String code, String cardNumber, String operator) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardNode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是回录卡号状态，无法录入");
+        }
+        // 录入卡号
+        cdbizBO.refreshRepayCard(cdbiz, cardNumber);
+        // 制卡节点
+        cdbizBO.refreshMakeCardNode(cdbiz, ENode.input_card_number.getCode());
+        // 制卡状态
+        cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H3.getCode());
+        // 处理前待办事项
+        bizTaskBO.handlePreBizTask(EBizLogType.makeCard.getCode(), code,
+            ENode.input_card_number);
+        // 操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.makeCard, code,
+            ENode.input_card_number.getCode(),
+            ENode.input_card_number.getValue(), operator);
+
     }
 
 }

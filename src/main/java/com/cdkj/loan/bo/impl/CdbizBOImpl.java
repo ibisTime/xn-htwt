@@ -237,4 +237,23 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbizDAO.updateIntevNode(cdbiz);
     }
 
+    @Override
+    public void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress) {
+        cdbiz.setCardPostAddress(cardPostAddress);
+        cdbizDAO.updateCdbiz(cdbiz);
+    }
+
+    @Override
+    public void refreshMakeCardNode(Cdbiz cdbiz, String node) {
+        cdbiz.setMakeCardNode(node);
+        cdbizDAO.updateCdbiz(cdbiz);
+    }
+
+    @Override
+    public void refreshRepayCard(Cdbiz cdbiz, String repayCardNumber) {
+        cdbiz.setRepayCardNumber(repayCardNumber);
+        cdbizDAO.updateCdbiz(cdbiz);
+
+    }
+
 }

@@ -11,17 +11,20 @@ import java.util.Map;
  */
 public enum ENode {
 
-    // 200征信节点
+    // 征信节点
     new_credit("a1", "新录征信资料"), input_credit("a2", "录入征信结果"), approve_credit(
             "a3", "审核征信"), renew_credit("a1x", "重录征信资料"),
 
-    // 200准入单节点
+    // 准入单节点
     input_budget("b1", "录入准入单资料"), area_approve_budget("b2", "区域总审核准入单"), fk_fir_approve(
             "b3", "风控一审准入单"), fk_sec_approve("b4", "风控二审准入单"), fk_finish_approve(
             "b5", "风控终审准入单"), yw_approve_budget("b6", "业务总监审核准入单"), cw_approve_budget(
             "b7", "财务总监审核准入单"), renew_budget("b1x", "重录准入单"),
 
-    // 200面签节点
+    // 制卡节点
+    make_card_apply("h1", "制卡申请"), input_card_number("h2", "回录卡号"),
+
+    // 面签节点
     input_interview("b01", "新录面签信息"), approve_interview("b02", "主管审核面签信息"),
 
     reinput_interview("b01x", "重录面签信息"), achieve_interview("b03", "面签完成"),
@@ -34,14 +37,14 @@ public enum ENode {
     upload_approve_back_bill("g5", "上传复核回单"),
 
     // 发保合节点
-    input_fbh("c1", "新录入发保合"),approve_fbh("c2", "审核发保合"),
-    
+    input_fbh("c1", "新录入发保合"), approve_fbh("c2", "审核发保合"),
+
     reinput_fbh("c1x", "重录入发保合"),
 
     // gps
     set_gps("d1", "安装gps"), approve_gps("d2", "审核gps"),
-    
-    approve_fail_gps("d3", "gps审核不通过"),gps_done("d4", "gps安装完成"),
+
+    approve_fail_gps("d3", "gps审核不通过"), gps_done("d4", "gps安装完成"),
 
     // 银行放款节点
     submit_1("e1", "业务员寄送银行放款材料"), receive_approve_1("e2", "风控审核收件（银行放款）"),
