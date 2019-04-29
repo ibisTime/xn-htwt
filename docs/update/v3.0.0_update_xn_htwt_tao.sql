@@ -238,3 +238,16 @@ ADD COLUMN `company_loan_cs` DECIMAL(18,8) NULL COMMENT '我司贷款成数' AFT
 ADD COLUMN `global_rate` DECIMAL(18,8) NULL COMMENT '综合利率' AFTER `company_loan_cs`,
 ADD COLUMN `fx_amount` BIGINT(20) NULL COMMENT '担保风险金' AFTER `cur_node_code`;
 
+
+
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('h1','申请制卡','a',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('h2','回录卡号','a',NULL);
+
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'make_card_status','面签状态','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','make_card_status','000','待申请制卡','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','make_card_status','001','待回录制卡卡号','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','make_card_status','002','制卡完成','admin','2018-06-23 09:19:19',NULL,'CD-HTWT000020','CD-HTWT000020');
+
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('h1','申请制卡','h',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('h2','录入制卡卡号','h',NULL);

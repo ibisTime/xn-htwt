@@ -65,6 +65,18 @@ public class CreditJour extends ABaseDO {
     // 流水备注
     private String remark;
 
+    // **************************88
+
+    private CreditUser creditUser;
+
+    public CreditUser getCreditUser() {
+        return creditUser;
+    }
+
+    public void setCreditUser(CreditUser creditUser) {
+        this.creditUser = creditUser;
+    }
+
     public String getCode() {
         return code;
     }
