@@ -916,6 +916,7 @@ public class CdbizAOImpl implements ICdbizAO {
         }
     }
 
+    @Transactional
     @Override
     public void makeCardApply(String code, String operator,
             String cardPostAddress) {
@@ -946,7 +947,7 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     public void inputCardNumber(String code, String cardNumber, String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardNode())) {
+        if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是回录卡号状态，无法录入");
         }
