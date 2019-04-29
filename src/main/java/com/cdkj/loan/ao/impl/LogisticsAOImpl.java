@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
@@ -25,6 +26,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.GpsApply;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSRole;
@@ -35,6 +37,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -81,6 +84,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private IGpsBO gpsBO;
+
+    @Autowired
+    private ICreditUserBO creditUserBO;
 
     @Override
     @Transactional
@@ -469,9 +475,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
         if (StringUtils.isNotBlank(logistics.getBizCode())) {
             if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
-                BudgetOrder budgetOrder = budgetOrderBO
-                    .getBudgetOrder(logistics.getBizCode());
-                logistics.setCustomerName(budgetOrder.getApplyUserName());
+                CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
+                    logistics.getBizCode(), ELoanRole.APPLY_USER);
+                if (null != creditUser) {
+                    logistics.setCustomerName(creditUser.getUserName());
+                }
             }
         }
         if (StringUtils.isNotBlank(logistics.getSender())) {
@@ -483,15 +491,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
             logistics.setReceiverName(user.getRealName());
         }
         if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(logistics.getBizCode());
-            if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
-                SYSUser saleuser = sysUserBO
-                    .getUser(budgetOrder.getSaleUserId());
+            Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
+
+            if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
+                SYSUser saleuser = sysUserBO.getUser(cdbiz.getSaleUserId());
                 logistics.setSaleUserName(saleuser.getRealName());
             }
-            if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
-                SYSUser jobuser = sysUserBO.getUser(budgetOrder.getInsideJob());
+            if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
+                SYSUser jobuser = sysUserBO.getUser(cdbiz.getInsideJob());
                 logistics.setInsideJobName(jobuser.getRealName());
             }
         }
@@ -501,16 +508,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
             logistics.setGpsApply(gpsApply);
 
             if (StringUtils.isNotBlank(gpsApply.getBudgetOrderCode())) {
-                BudgetOrder budgetOrder = budgetOrderBO
-                    .getBudgetOrder(gpsApply.getBudgetOrderCode());
-                if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
-                    SYSUser saleuser = sysUserBO
-                        .getUser(budgetOrder.getSaleUserId());
+                Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
+                if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
+                    SYSUser saleuser = sysUserBO.getUser(cdbiz.getSaleUserId());
                     logistics.setSaleUserName(saleuser.getRealName());
                 }
-                if (StringUtils.isNotBlank(budgetOrder.getInsideJob())) {
-                    SYSUser jobuser = sysUserBO
-                        .getUser(budgetOrder.getInsideJob());
+                if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
+                    SYSUser jobuser = sysUserBO.getUser(cdbiz.getInsideJob());
                     logistics.setInsideJobName(jobuser.getRealName());
                 }
             }
