@@ -231,6 +231,13 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbiz.setSaleUserName(saleUser.getRealName());
         }
 
+        // 内勤名称
+        if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
+
+            SYSUser insideJob = sysUserBO.getUser(cdbiz.getInsideJob());
+            cdbiz.setSaleUserName(insideJob.getRealName());
+        }
+
         // 团队名称
         if (StringUtils.isNotBlank(cdbiz.getTeamCode())) {
             BizTeam team = bizTeamBO.getBizTeam(cdbiz.getTeamCode());
@@ -909,11 +916,12 @@ public class CdbizAOImpl implements ICdbizAO {
         }
     }
 
+    @Transactional
     @Override
     public void makeCardApply(String code, String operator,
             String cardPostAddress) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ECdbizStatus.H1.getCode().equals(cdbiz.getMakeCardNode())) {
+        if (!ECdbizStatus.H1.getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是待制卡申请状态，无法申请");
         }
@@ -940,7 +948,7 @@ public class CdbizAOImpl implements ICdbizAO {
     public void inputCardNumber(String code, String cardNumber,
             String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardNode())) {
+        if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是回录卡号状态，无法录入");
         }
