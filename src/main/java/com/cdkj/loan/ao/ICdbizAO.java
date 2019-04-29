@@ -17,8 +17,7 @@ import com.cdkj.loan.dto.req.XN632131Req;
 public interface ICdbizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public Paginable<Cdbiz> queryCdbizPage(int start, int limit,
-            Cdbiz condition);
+    public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition);
 
     public List<Cdbiz> queryCdbizList(Cdbiz condition);
 
@@ -67,4 +66,7 @@ public interface ICdbizAO {
     // 第一/二次存档
     public void archive(String code, String type, String operator,
             String enterLocation);
+
+    // 制卡申请
+    // public void makeCardApply(String code,String operator);
 }
