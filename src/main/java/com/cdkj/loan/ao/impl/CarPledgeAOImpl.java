@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICarPledgeAO;
+import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
@@ -47,6 +48,9 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
     @Autowired
     private ILogisticsBO logisticsBO;
+
+    @Autowired
+    private IAttachmentBO attachmentBO;
 
     @Override
     @Transactional
@@ -95,7 +99,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
 
         // 业务员确认抵押
-        carPledgeBO.saleManConfirm(nextNodeCode, req);
+        carPledgeBO.saleManConfirm(carPledge.getCode(), nextNodeCode, req);
 
         // 更新业务状态
         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
@@ -143,7 +147,10 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
 
         // 录入抵押信息
-        carPledgeBO.entryPledgeInfo(nextNodeCode, req);
+        carPledgeBO.entryPledgeInfo(carPledge.getCode(), nextNodeCode, req);
+
+        // 添加附件
+        attachmentBO.saveAttachment(cdbiz.getCode(), req);
 
         // 更新业务状态
         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);

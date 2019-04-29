@@ -10,7 +10,7 @@ public interface IAttachmentBO extends IPaginableBO<Attachment> {
     public String saveAttachment(String bizCode, String name, String attachType,
             String url);
 
-    public <T> void saveAttachment(String bizCode, String category, T clazz);
+    public <T> void saveAttachment(String bizCode, T clazz);
 
     public void removeAttachmentByBiz(String bizCode, String attachType);
 

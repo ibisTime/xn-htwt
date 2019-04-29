@@ -104,7 +104,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
             .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
 
         // 录入放款信息
-        bankLoanBO.entryFkInfo(nextNodeCode, req);
+        bankLoanBO.entryFkInfo(bankLoan.getCode(), nextNodeCode, req);
 
         // 更新业务状态
         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
@@ -135,7 +135,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
             .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
 
         // 确认收款
-        bankLoanBO.confirmSk(nextNodeCode, req);
+        bankLoanBO.confirmSk(bankLoan.getCode(), nextNodeCode, req);
 
         // 更新业务状态
         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);

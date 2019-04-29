@@ -23,7 +23,7 @@ public class XN632134 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        cdbizAO.archive(req.getCode(), req.getType(), req.getOperator(),
+        cdbizAO.archive(req.getCode(), req.getOperator(),
             req.getEnterLocation());
         return new BooleanRes(true);
     }

@@ -70,9 +70,7 @@ import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
-import com.cdkj.loan.enums.EArchiveType;
 import com.cdkj.loan.enums.EAttachName;
-import com.cdkj.loan.enums.EAttachmentCategory;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -708,63 +706,54 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     @Transactional
-    public void archive(String code, String type, String operator,
-            String enterLocation) {
+    public void archive(String code, String operator, String enterLocation) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        switch (EArchiveType.matchCode(type)) {
-            // 第一次存档
-            case FIRST:
-                // 更新业务状态
-                cdbizBO.refreshFircundangStatus(cdbiz,
-                    ECdbizStatus.D3.getCode());
-                break;
+        // 第一次存档
+        if (ECdbizStatus.D2.getCode().equals(cdbiz.getFircundangStatus())) {
+            // 更新业务状态
+            cdbizBO.refreshFircundangStatus(cdbiz, ECdbizStatus.D3.getCode());
+        }
+        // 第二次存档
+        if (ECdbizStatus.E2.getCode().equals(cdbiz.getSeccundangStatus())) {
 
-            // 第二次存档
-            case SECOND:
+            CreditUser applyUser = creditUserBO.getCreditUserByBizCode(code,
+                ELoanRole.APPLY_USER);
 
-                CreditUser applyUser = creditUserBO.getCreditUserByBizCode(code,
-                    ELoanRole.APPLY_USER);
-
-                User user = userBO.getUser(applyUser.getMobile(),
+            User user = userBO.getUser(applyUser.getMobile(),
+                EUserKind.Customer.getCode());
+            String userId = null;
+            if (user == null) {
+                // 用户代注册并实名认证
+                userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
+                    applyUser.getMobile(), applyUser.getIdKind(),
+                    applyUser.getUserName(), applyUser.getIdNo());
+                distributeAccount(userId, applyUser.getMobile(),
                     EUserKind.Customer.getCode());
-                String userId = null;
-                if (user == null) {
-                    // 用户代注册并实名认证
-                    userId = userBO.doRegisterAndIdentify(
-                        EBoolean.YES.getCode(), applyUser.getMobile(),
-                        applyUser.getIdKind(), applyUser.getUserName(),
-                        applyUser.getIdNo());
-                    distributeAccount(userId, applyUser.getMobile(),
-                        EUserKind.Customer.getCode());
-                } else {
-                    userId = user.getUserId();
-                }
+            } else {
+                userId = user.getUserId();
+            }
 
-                BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(code);
-                Bank bank = bankBO.getBank(bankLoan.getRepayBankCode());
+            BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(code);
+            Bank bank = bankBO.getBank(bankLoan.getRepayBankCode());
 
-                // 绑定用户银行卡
-                String bankcardCode = bankcardBO.bind(userId,
-                    applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
-                    bank.getBankCode(), bankLoan.getRepayBankName(),
-                    bankLoan.getRepaySubbranch());
+            // 绑定用户银行卡
+            String bankcardCode = bankcardBO.bind(userId,
+                applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
+                bank.getBankCode(), bankLoan.getRepayBankName(),
+                bankLoan.getRepaySubbranch());
 
-                // 自动生成还款业务
-                // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
-                // budgetOrder, userId, bankcardCode, operator);
+            // 自动生成还款业务
+            // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
+            // budgetOrder, userId, bankcardCode, operator);
 
-                // 自动生成还款计划
-                // repayPlanBO.genereateNewRepayPlan(repayBiz);
+            // 自动生成还款计划
+            // repayPlanBO.genereateNewRepayPlan(repayBiz);
 
-                // 更新业务状态
-                cdbizBO.refreshSeccundangStatus(cdbiz,
-                    ECdbizStatus.E3.getCode());
+            // 更新业务状态
+            cdbizBO.refreshSeccundangStatus(cdbiz, ECdbizStatus.E3.getCode());
 
-                break;
-            default:
-                break;
         }
 
         // 日志记录
@@ -791,8 +780,7 @@ public class CdbizAOImpl implements ICdbizAO {
             req.getPolicyDueDate());
 
         // 添加附件
-        attachmentBO.saveAttachment(req.getCode(),
-            EAttachmentCategory.car_procedure.getCode(), req);
+        attachmentBO.saveAttachment(req.getCode(), req);
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fbh, req.getCode(),
@@ -949,7 +937,8 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    public void inputCardNumber(String code, String cardNumber, String operator) {
+    public void inputCardNumber(String code, String cardNumber,
+            String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),

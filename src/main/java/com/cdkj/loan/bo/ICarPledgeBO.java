@@ -17,10 +17,12 @@ public interface ICarPledgeBO extends IPaginableBO<CarPledge> {
             String pledgeUserIdCardCopy, String pledgeAddress);
 
     // 业务员确认抵押申请
-    public void saleManConfirm(String nextNodeCode, XN632124Req req);
+    public void saleManConfirm(String code, String nextNodeCode,
+            XN632124Req req);
 
     // 业务员录入抵押信息
-    public void entryPledgeInfo(String nextNodeCode, XN632133Req req);
+    public void entryPledgeInfo(String code, String nextNodeCode,
+            XN632133Req req);
 
     // 抵押提交银行
     public void pledgeCommitBank(String code, String nextNodeCode,
