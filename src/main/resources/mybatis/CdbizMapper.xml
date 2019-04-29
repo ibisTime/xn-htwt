@@ -412,7 +412,7 @@
 	<update id="update_makeCardStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
-		make_card_status=#{makCardStatus}
+		make_card_status=#{makeCardStatus}
 		WHERE code=#{code}
 	</update>
 	
