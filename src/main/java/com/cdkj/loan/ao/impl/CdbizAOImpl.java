@@ -232,6 +232,13 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbiz.setSaleUserName(saleUser.getRealName());
         }
 
+        // 内勤名称
+        if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
+
+            SYSUser insideJob = sysUserBO.getUser(cdbiz.getInsideJob());
+            cdbiz.setSaleUserName(insideJob.getRealName());
+        }
+
         // 团队名称
         if (StringUtils.isNotBlank(cdbiz.getTeamCode())) {
             BizTeam team = bizTeamBO.getBizTeam(cdbiz.getTeamCode());
