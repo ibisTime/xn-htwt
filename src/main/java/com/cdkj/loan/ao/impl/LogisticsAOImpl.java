@@ -141,12 +141,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
-                    // 风控寄送银行放款材料
-                    case submit_2:
-                        cdbizBO.refreshFircundangStatus(cdbiz,
-                            ECdbizStatus.D1.getCode());
-                        break;
-
                     // 1、风控寄抵押合同
                     // 2、风控重寄抵押合同
                     case submit_3:
@@ -188,6 +182,19 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         break;
                 }
 
+                if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
+                    switch (cdbiz.getFircundangStatus()) {
+                        // 风控寄送银行放款材料
+                        case "000":
+                            cdbizBO.refreshFircundangStatus(cdbiz,
+                                ECdbizStatus.D1.getCode());
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
                 // 完成待办事项
                 bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
                     cdbiz.getCode(),
@@ -210,6 +217,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 break;
 
         }
+
     }
 
     @Override
@@ -281,15 +289,16 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 ELogisticsCurNodeType.FK_SEND_BANK_LOAN
                                     .getCode(),
                                 cdbiz.getCode(), cdbiz.getSaleUserId(),
-                                cdbiz.getCurNodeCode(), nextNodeCode, null);
+                                cdbiz.getCurNodeCode(),
+                                ENode.submit_2.getCode(), null);
 
                             // 资料传递待办事项
-                            bizTaskBO.saveBizTask(code,
+                            bizTaskBO.saveBizTask(cdbiz.getCode(),
                                 EBizLogType.ZHDY_LOGISTICS, logisticsCode,
                                 ENode.matchCode(nextNodeCode), operator);
 
                             // 资料传递操作日志
-                            sysBizLogBO.recordCurOperate(code,
+                            sysBizLogBO.recordCurOperate(cdbiz.getCode(),
                                 EBizLogType.ZHDY_LOGISTICS, logisticsCode,
                                 nextNodeCode, null, operator);
                         } else {
@@ -327,12 +336,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                     cdbiz.getCurNodeCode(), nextNodeCode, null);
 
                             // 资料传递待办事项
-                            bizTaskBO.saveBizTask(code,
+                            bizTaskBO.saveBizTask(cdbiz.getCode(),
                                 EBizLogType.ZHDY_LOGISTICS, fkSendlogisticsCode,
                                 ENode.matchCode(nextNodeCode), operator);
 
                             // 资料传递操作日志
-                            sysBizLogBO.recordCurOperate(code,
+                            sysBizLogBO.recordCurOperate(cdbiz.getCode(),
                                 EBizLogType.ZHDY_LOGISTICS, fkSendlogisticsCode,
                                 nextNodeCode, null, operator);
 
@@ -345,13 +354,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                     cdbiz.getCurNodeCode(), nextNodeCode, null);
 
                             // 资料传递待办事项
-                            bizTaskBO.saveBizTask(code,
+                            bizTaskBO.saveBizTask(cdbiz.getCode(),
                                 EBizLogType.ZHDY_LOGISTICS,
                                 fkApprovelogisticsCode,
                                 ENode.matchCode(nextNodeCode), operator);
 
                             // 资料传递操作日志
-                            sysBizLogBO.recordCurOperate(code,
+                            sysBizLogBO.recordCurOperate(cdbiz.getCode(),
                                 EBizLogType.ZHDY_LOGISTICS,
                                 fkApprovelogisticsCode, nextNodeCode, null,
                                 operator);
@@ -412,12 +421,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                 switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
 
-                    // 贷后收件（银行放款）
-                    case receive_2:
-                        cdbizBO.refreshFircundangStatus(cdbiz,
-                            ECdbizStatus.D2.getCode());
-                        break;
-
                     // 银行收件（车辆抵押）
                     case receive_5:
                         cdbizBO.refreshStatus(cdbiz,
@@ -433,6 +436,21 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     default:
                         break;
                 }
+
+                if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
+                    switch (ECdbizStatus
+                        .matchCode(cdbiz.getFircundangStatus())) {
+                        // 贷后收件（银行放款）
+                        case D1:
+                            cdbizBO.refreshFircundangStatus(cdbiz,
+                                ECdbizStatus.D2.getCode());
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
                 break;
 
             default:

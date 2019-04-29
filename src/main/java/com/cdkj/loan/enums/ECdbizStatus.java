@@ -65,6 +65,15 @@ public enum ECdbizStatus {
 
     F3("003", "确认制单"), F4("004", "上传复核回单");
 
+    public static ECdbizStatus matchCode(String code) {
+        for (ECdbizStatus eCdbizStatus : ECdbizStatus.values()) {
+            if (eCdbizStatus.code.equalsIgnoreCase(code)) {
+                return eCdbizStatus;
+            }
+        }
+        return null;
+    }
+
     ECdbizStatus(String code, String value) {
         this.code = code;
         this.value = value;
