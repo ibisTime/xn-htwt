@@ -35,6 +35,11 @@ CHANGE COLUMN `biz_type` `repay_biz_code` VARCHAR(32) NULL DEFAULT NULL ,
 CHANGE COLUMN `bank_credit_result_pdf` `bank_credit_result` VARCHAR(4) NULL DEFAULT NULL ,
 CHANGE COLUMN `dk_amount` `company_code` VARCHAR(32) NULL DEFAULT NULL ;
 
+ALTER TABLE `tqj_cdbiz` 
+ADD COLUMN `repay_card_number` VARCHAR(64) NULL COMMENT '还款卡号' AFTER `team_code`,
+ADD COLUMN `card_post_address` VARCHAR(255) NULL COMMENT '卡邮寄地址' AFTER `repay_card_number`;
+
+
 ALTER TABLE `tdq_file_list` 
 ADD COLUMN `vname` VARCHAR(32) NULL AFTER `kname`,
 ADD COLUMN `attach_type` VARCHAR(32) NULL AFTER `vname`,

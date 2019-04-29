@@ -18,6 +18,8 @@
 		<result column="enter_location" property="enterLocation" />
 		<result column="enter_datetime" property="enterDatetime" />
 		<result column="enter_filelist" property="enterFilelist" />
+		<result column="repay_card_number" property="repayCardNumber" />
+		<result column="card_post_address" property="cardPostAddress" />
 		<result column="status" property="status" />
 		<result column="mq_status" property="mqStatus" />
 		<result column="make_card_status" property="makeCardStatus" />
@@ -171,6 +173,8 @@
 		,t.enter_location
 		,t.enter_datetime
 		,t.enter_filelist
+		,t.repay_card_number
+		,t.card_post_address
 		,t.status
 		,t.mq_status
 		,t.make_card_status
@@ -222,6 +226,8 @@
 		,t.enter_location
 		,t.enter_datetime
 		,t.enter_filelist
+		,t.repay_card_number
+		,t.card_post_address
 		,t.status
 		,t.mq_status
 		,t.make_card_status
@@ -368,8 +374,10 @@
 		,enter_location = #{enterLocation}
 		,enter_datetime = #{enterDatetime}
 		,enter_filelist = #{enterFilelist}
+		,card_post_address=#{cardPostAddress}
 		,status = #{status}
 		,mq_status = #{mqStatus}
+		,repay_card_number=#{repayCardNumber}
 		,make_card_status = #{makeCardStatus}
 		,fbhgps_status = #{fbhgpsStatus}
 		,fircundang_status = #{fircundangStatus}

@@ -49,6 +49,8 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     public void refreshMakeCardStatus(Cdbiz cdbiz, String status);
 
+    public void refreshMakeCardNode(Cdbiz cdbiz, String node);
+
     public void refershCurNodeCode(Cdbiz cdbiz, String node);
 
     public void refreshInsideJob(Cdbiz cdbiz, String insideJob);
@@ -56,5 +58,9 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
 
     public void interview(Cdbiz cdbiz, XN632123Req req);
+
+    public void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress);
+
+    public void refreshRepayCard(Cdbiz cdbiz, String repayCardNumber);
 
 }

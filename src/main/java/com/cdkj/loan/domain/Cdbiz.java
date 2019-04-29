@@ -60,6 +60,12 @@ public class Cdbiz extends ABaseDO {
     // 档案目录
     private String enterFilelist;
 
+    // 还款卡号
+    private String repayCardNumber;
+
+    // 卡邮寄地址
+    private String cardPostAddress;
+
     // 主线状态
     private String status;
 
@@ -717,6 +723,22 @@ public class Cdbiz extends ABaseDO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getCardPostAddress() {
+        return cardPostAddress;
+    }
+
+    public void setCardPostAddress(String cardPostAddress) {
+        this.cardPostAddress = cardPostAddress;
+    }
+
+    public String getRepayCardNumber() {
+        return repayCardNumber;
+    }
+
+    public void setRepayCardNumber(String repayCardNumber) {
+        this.repayCardNumber = repayCardNumber;
     }
 
 }
