@@ -114,7 +114,8 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         String logisticsCode = logisticsBO.saveLogistics(
             ELogisticsType.BUDGET.getCode(),
             ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE.getCode(), cdbiz.getCode(),
-            cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(), nextNodeCode, null);
+            cdbiz.getSaleUserId(), ENode.submit_3.getCode(),
+            ENode.receive_approve_3.getCode(), null);
 
         // 资料传递待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.ZHDY_LOGISTICS,
@@ -160,8 +161,8 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         String logisticsCode = logisticsBO.saveLogistics(
             ELogisticsType.BUDGET.getCode(),
             ELogisticsCurNodeType.SALE_SEND_CAR_PLEDGE.getCode(),
-            cdbiz.getCode(), cdbiz.getSaleUserId(), cdbiz.getCurNodeCode(),
-            nextNodeCode, null);
+            cdbiz.getCode(), cdbiz.getSaleUserId(), ENode.submit_4.getCode(),
+            ENode.receive_approve_4.getCode(), null);
 
         // 资料传递待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.ZHDY_LOGISTICS,

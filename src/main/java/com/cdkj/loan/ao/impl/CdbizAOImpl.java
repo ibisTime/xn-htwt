@@ -173,7 +173,8 @@ public class CdbizAOImpl implements ICdbizAO {
     private IGpsBO gpsBO;
 
     @Override
-    public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
+    public Paginable<Cdbiz> queryCdbizPage(int start, int limit,
+            Cdbiz condition) {
         Paginable<Cdbiz> page = null;
         if (StringUtils.isNotBlank(condition.getUserId())) {
             SYSUser sysUser = sysUserBO.getUser(condition.getUserId());
@@ -214,14 +215,14 @@ public class CdbizAOImpl implements ICdbizAO {
         }
 
         // 主贷人信息
-        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            cdbiz.getCode(), ELoanRole.APPLY_USER);
+        CreditUser creditUser = creditUserBO
+            .getCreditUserByBizCode(cdbiz.getCode(), ELoanRole.APPLY_USER);
         cdbiz.setCreditUser(creditUser);
 
         // 公司名称
         if (StringUtils.isNotBlank(cdbiz.getCompanyCode())) {
-            Department company = departmentBO.getDepartment(cdbiz
-                .getCompanyCode());
+            Department company = departmentBO
+                .getDepartment(cdbiz.getCompanyCode());
             cdbiz.setCompanyName(company.getName());
         }
 
@@ -261,14 +262,14 @@ public class CdbizAOImpl implements ICdbizAO {
             .querCreditJoursByBizCode(cdbiz.getCode());
         cdbiz.setCreditJours(creditJours);
 
-        List<BizTask> bizTasks = bizTaskBO.queryBizTaskByBizCode(cdbiz
-            .getCode());
+        List<BizTask> bizTasks = bizTaskBO
+            .queryBizTaskByBizCode(cdbiz.getCode());
         cdbiz.setBizTasks(bizTasks);
-        List<SYSBizLog> bizLogs = sysBizLogBO.queryBizLogByBizCode(cdbiz
-            .getCode());
+        List<SYSBizLog> bizLogs = sysBizLogBO
+            .queryBizLogByBizCode(cdbiz.getCode());
         cdbiz.setBizLogs(bizLogs);
-        List<Attachment> attachments = attachmentBO.queryBizAttachments(cdbiz
-            .getCode());
+        List<Attachment> attachments = attachmentBO
+            .queryBizAttachments(cdbiz.getCode());
         cdbiz.setAttachments(attachments);
     }
 
@@ -295,18 +296,18 @@ public class CdbizAOImpl implements ICdbizAO {
             sysUser, currentNode.getCode(), req.getNote());
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
             // 二手车报告
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.second_car_report.getCode());
+            EAttachName attachName = EAttachName.getMap()
+                .get(EAttachName.second_car_report.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getSecondCarReport());
             // 行驶证正面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_front.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszFront());
             // 行驶证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_reverse.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszReverse());
         }
@@ -337,7 +338,8 @@ public class CdbizAOImpl implements ICdbizAO {
         int applyUserCount = 0;// 申请人角色条数
         if (CollectionUtils.isNotEmpty(childList)) {
             for (XN632110ReqCreditUser child : childList) {
-                if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+                if (ELoanRole.APPLY_USER.getCode()
+                    .equals(child.getLoanRole())) {
                     applyUserCount++;
                     // 征信单设置客户姓名（征信人员的申请人）
 
@@ -357,8 +359,8 @@ public class CdbizAOImpl implements ICdbizAO {
 
         }
         // 待办事项
-        bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, bizCode,
-            currentNode, req.getOperator());
+        bizTaskBO.saveBizTask(bizCode, EBizLogType.CREDIT, bizCode, currentNode,
+            req.getOperator());
         return bizCode;
     }
 
@@ -375,18 +377,18 @@ public class CdbizAOImpl implements ICdbizAO {
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
 
             // 二手车报告
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.second_car_report.getCode());
+            EAttachName attachName = EAttachName.getMap()
+                .get(EAttachName.second_car_report.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getSecondCarReport());
             // 行驶证正面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_front.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszFront());
             // 行驶证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.xsz_reverse.getCode());
+            attachName = EAttachName.getMap()
+                .get(EAttachName.xsz_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getXszReverse());
         }
@@ -426,7 +428,8 @@ public class CdbizAOImpl implements ICdbizAO {
         int applyUserCount = 0;
         if (CollectionUtils.isNotEmpty(childList)) {
             for (XN632112ReqCreditUser child : childList) {
-                if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+                if (ELoanRole.APPLY_USER.getCode()
+                    .equals(child.getLoanRole())) {
                     applyUserCount++;
                 }
                 if (applyUserCount > 1) {
@@ -467,8 +470,8 @@ public class CdbizAOImpl implements ICdbizAO {
         // 审核通过
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             for (CreditUser creditUser : req.getCreditUserList()) {
-                CreditUser user = creditUserBO.getCreditUser(creditUser
-                    .getCode());
+                CreditUser user = creditUserBO
+                    .getCreditUser(creditUser.getCode());
                 user.setRelation(creditUser.getRelation());
                 user.setLoanRole(creditUser.getLoanRole());
                 creditUserBO.refreshCreditUserLoanRole(user);
@@ -535,13 +538,14 @@ public class CdbizAOImpl implements ICdbizAO {
         List<XN632111ReqCreditUser> creditResult = req.getCreditList();
         for (XN632111ReqCreditUser reqCreditUser : creditResult) {
             // 录入结果与说明
-            CreditUser creditUser = creditUserBO.getCreditUser(reqCreditUser
-                .getCreditUserCode());
+            CreditUser creditUser = creditUserBO
+                .getCreditUser(reqCreditUser.getCreditUserCode());
             creditUserBO.inputBankCreditResult(creditUser,
                 reqCreditUser.getBankCreditReport(),
                 reqCreditUser.getDataCreditReport(),
                 reqCreditUser.getBankResult(), reqCreditUser.getCreditNote());
-            if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+            if (ELoanRole.APPLY_USER.getCode()
+                .equals(creditUser.getLoanRole())) {
                 // 银行征信报告
                 EAttachName attachName = EAttachName.mainLoaner_bank;
                 attachmentBO.saveAttachment(req.getBizCode(),
@@ -552,7 +556,8 @@ public class CdbizAOImpl implements ICdbizAO {
                 attachmentBO.saveAttachment(req.getBizCode(),
                     attachName.getCode(), attachName.getValue(),
                     reqCreditUser.getDataCreditReport());
-            } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+            } else if (ELoanRole.GHR.getCode()
+                .equals(creditUser.getLoanRole())) {
                 // 银行征信报告
                 EAttachName attachName = EAttachName.replier_bank;
                 attachmentBO.saveAttachment(req.getBizCode(),
@@ -640,8 +645,8 @@ public class CdbizAOImpl implements ICdbizAO {
     public void interviewInternalApprove(String code, String operator,
             String approveResult, String approveNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ENode.approve_interview.getCode().equals(
-            cdbiz.getIntevCurNodeCode())) {
+        if (!ENode.approve_interview.getCode()
+            .equals(cdbiz.getIntevCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是内勤主管审核节点，不能操作");
         }
@@ -655,8 +660,9 @@ public class CdbizAOImpl implements ICdbizAO {
             String logisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.SALE_SEND_BANK_LOAN.getCode(),
-                cdbiz.getCode(), cdbiz.getSaleUserId(), preCurrentNode,
-                nodeFlow.getNextNode(), null);
+                cdbiz.getCode(), cdbiz.getSaleUserId(),
+                ENode.submit_1.getCode(), ENode.receive_approve_1.getCode(),
+                null);
             // 产生物流单后改变状态为物流传递中
             // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
             // budgetOrderBO.updateIsLogistics(budgetOrder);
@@ -708,7 +714,7 @@ public class CdbizAOImpl implements ICdbizAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
         switch (EArchiveType.matchCode(type)) {
-        // 第一次存档
+            // 第一次存档
             case FIRST:
                 // 更新业务状态
                 cdbizBO.refreshFircundangStatus(cdbiz,
@@ -718,8 +724,8 @@ public class CdbizAOImpl implements ICdbizAO {
             // 第二次存档
             case SECOND:
 
-                CreditUser applyUser = creditUserBO.getCreditUserByBizCode(
-                    code, ELoanRole.APPLY_USER);
+                CreditUser applyUser = creditUserBO.getCreditUserByBizCode(code,
+                    ELoanRole.APPLY_USER);
 
                 User user = userBO.getUser(applyUser.getMobile(),
                     EUserKind.Customer.getCode());
@@ -793,9 +799,9 @@ public class CdbizAOImpl implements ICdbizAO {
             ENode.approve_fbh, req.getOperator());
 
         // 操作日志
-        sysBizLogBO
-            .recordCurOperate(req.getCode(), EBizLogType.fbh, req.getCode(),
-                ENode.approve_fbh.getCode(), null, req.getOperator());
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.fbh,
+            req.getCode(), ENode.approve_fbh.getCode(), null,
+            req.getOperator());
     }
 
     @Override
@@ -835,8 +841,8 @@ public class CdbizAOImpl implements ICdbizAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ENode.set_gps.getCode().equals(cdbiz.getFbhgpsNode())
-                || !ENode.approve_fail_gps.getCode().equals(
-                    cdbiz.getFbhgpsNode())) {
+                || !ENode.approve_fail_gps.getCode()
+                    .equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是安装gps节点，不能操作");
         }
@@ -884,8 +890,8 @@ public class CdbizAOImpl implements ICdbizAO {
             List<BudgetOrderGps> list = budgetOrderGpsBO
                 .queryBudgetOrderGpsList(code);
             for (BudgetOrderGps budgetOrderGps : list) {
-                gpsBO
-                    .refreshUseGps(budgetOrderGps.getCode(), null, EBoolean.NO);
+                gpsBO.refreshUseGps(budgetOrderGps.getCode(), null,
+                    EBoolean.NO);
             }
             budgetOrderGpsBO.removeBudgetOrderGpsList(code);
         }
