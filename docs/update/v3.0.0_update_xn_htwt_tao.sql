@@ -59,6 +59,7 @@ INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `numb
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'car_procedure', 'car_xsz_smj', '车辆行驶证扫描件', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'car_procedure', 'car_pd', '车辆批单', '图片', '1');
 
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'car_config', 'car_pic', '车照片', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'car_config', 'car_key', '车钥匙', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'car_config', 'forward_pdf', '车辆照片正前', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'car_config', 'queen_pdf', '车辆照片正后', '图片', '1');
@@ -131,6 +132,7 @@ INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `numb
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'income_prove_pdf', '收入证明', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'live_prove_pdf', '居住证明', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'build_prove_pdf', '自建房证明', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'other_pic', '其他辅助资产', '图片', '1');
 
 
 CREATE TABLE `tdq_car_info` (
