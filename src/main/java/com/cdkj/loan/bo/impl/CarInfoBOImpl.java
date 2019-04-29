@@ -193,30 +193,6 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
                 attachName.getValue(), req.getCarHgzPic());
         }
 
-        // 购房合同
-        if (StringUtils.isNotBlank(req.getHouseContract())) {
-
-            attachName = EAttachName.houseContract;
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHouseContract());
-        }
-
-        // 其他辅助资料
-        if (StringUtils.isNotBlank(req.getOtherPic())) {
-
-            attachName = EAttachName.otherPic;
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getOtherPic());
-        }
-
-        // 房屋照片
-        if (StringUtils.isNotBlank(req.getHousePicture())) {
-
-            attachName = EAttachName.house_pic;
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHousePicture());
-        }
-
         // 户口本资料
         if (StringUtils.isNotBlank(req.getHkBookPdf())) {
 
@@ -233,12 +209,76 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
                 attachName.getValue(), req.getMarryPdf());
         }
 
-        // 其他资料
-        if (StringUtils.isNotBlank(req.getOtherPdf())) {
+        // 购房合同
+        if (StringUtils.isNotBlank(req.getHouseContract())) {
 
-            attachName = EAttachName.otherPdf;
+            attachName = EAttachName.houseContract;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getOtherPdf());
+                attachName.getValue(), req.getHouseContract());
+        }
+
+        // 购房发票new
+        if (StringUtils.isNotBlank(req.getHouseInvoice())) {
+
+            attachName = EAttachName.houseInvoice;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getHouseInvoice());
+        }
+
+        // 居住证明new
+        if (StringUtils.isNotBlank(req.getLiveProvePdf())) {
+
+            attachName = EAttachName.liveProvePdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getLiveProvePdf());
+        }
+
+        // 自建房证明new
+        if (StringUtils.isNotBlank(req.getBuildProvePdf())) {
+
+            attachName = EAttachName.liveProvePdf;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getBuildProvePdf());
+        }
+
+        // 家访证明new
+        if (StringUtils.isNotBlank(req.getHousePictureApply())) {
+
+            attachName = EAttachName.housePictureApply;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getHousePictureApply());
+        }
+
+        // 收入证明new
+        if (StringUtils.isNotBlank(req.getImprovePdf())) {
+
+            attachName = EAttachName.house_pic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getImprovePdf());
+        }
+
+        // 单位前台照片new
+        if (StringUtils.isNotBlank(req.getFrontTablePic())) {
+
+            attachName = EAttachName.frontTablePic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getFrontTablePic());
+        }
+
+        // 单位场地照片new
+        if (StringUtils.isNotBlank(req.getWorkPlacePic())) {
+
+            attachName = EAttachName.workPlacePic;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getWorkPlacePic());
+        }
+
+        // 业务员与客户合影new
+        if (StringUtils.isNotBlank(req.getSalerAndcustomer())) {
+
+            attachName = EAttachName.salerAndcustomer;
+            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+                attachName.getValue(), req.getSalerAndcustomer());
         }
 
         // 工作资料上传

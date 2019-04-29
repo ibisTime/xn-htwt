@@ -133,6 +133,16 @@ INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `numb
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'live_prove_pdf', '居住证明', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'build_prove_pdf', '自建房证明', '图片', '1');
 INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'other_pic', '其他辅助资产', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'house_invoice', '购房发票', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'live_prove_pdf', '居住证明', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'build_prove_pdf', '自建房证明', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'house_picture_apply', '家访照片', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'improve_pdf', '收入证明', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'front_table_pic', '单位前台照片', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'work_place_pic', '单位场地照片', '图片', '1');
+INSERT INTO `tdq_file_list` ( `category`, `kname`, `vname`, `attach_type`, `number`) VALUES ( 'credit_user_ext', 'saler_and_customer', '业务员与客户合影', '图片', '1');
+
+
 
 
 CREATE TABLE `tdq_car_info` (

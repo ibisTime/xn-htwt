@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.ELoanRole;
 
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
@@ -43,5 +44,7 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
             ELoanRole creditUserRelation);
 
     public void refreshCreditUser(CreditUser data);
+
+    public void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req);
 
 }

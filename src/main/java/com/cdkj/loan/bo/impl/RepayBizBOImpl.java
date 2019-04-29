@@ -126,6 +126,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(req.getCode());
+        repayBiz.setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
+        repayBiz.setFirstRepayAmount(StringValidater.toLong(req
+            .getFirstRepayAmount()));
         repayBizDAO.insert(repayBiz);
         return code;
     }

@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,12 @@ import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.CreditUserExt;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
@@ -113,7 +116,15 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // 业务信息更新
         cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
         cdbiz.setIsFinacing(req.getIsFinancing());
+        cdbiz.setIsGpsAz(req.getIsAzGps());
         cdbizBO.refreshCdbiz(cdbiz);
+
+        // 车辆信息录入
+        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
+        String carInfoCode = carInfo.getCode();
+        EntityUtils.copyData(req, carInfo);
+        carInfo.setCode(carInfoCode);
+        carInfoBO.refreshCarInfo(carInfo);
 
         // 贷款信息
         repayBizBO.removeByBizCode(req.getCode());
@@ -123,6 +134,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
         creditUserExtBO.removeBizUserExt(req.getCode());
         CreditUserExt creditUserExt = EntityUtils.copyData(req,
             CreditUserExt.class);
+        creditUserExt.setMonthIncome(StringValidater.toLong(req
+            .getMonthIncome()));
+        creditUserExt.setIsSiteProve(req.getIsSelfCompany());
         creditUserExtBO.saveCreditUserExt(creditUserExt, cdbiz.getCode());
 
         // 附件录入
@@ -131,6 +145,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // 抵押
         carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
             req.getPledgeUserIdCardCopy(), req.getPledgeAddress());
+
+        // 征信人
+        List<CreditUser> creditUsers = creditUserBO.queryCreditUserList(req
+            .getCode());
+        creditUserBO.refreshCreditUsers(creditUsers, req);
 
         String preNodeCode = cdbiz.getCurNodeCode(); // 当前节点
 
@@ -244,12 +263,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
         String status = cdbiz.getStatus();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A5.getCode();
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
         } else {
             status = ECdbizStatus.A3x.getCode();
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
         }
         ENode node = ENode.getMap().get(preCurrentNode);
 
@@ -266,7 +285,6 @@ public class CarInfoAOImpl implements ICarInfoAO {
     @Override
     public void internalApprove(String code, String approveResult,
             String approveNote, String operator) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -291,12 +309,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
         bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
             ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
             status = ECdbizStatus.A6.getCode();
         } else {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
         }
         cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
@@ -332,12 +350,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
         bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
             ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
             status = ECdbizStatus.A7.getCode();
         } else {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
         }
         // 节点改变
@@ -384,12 +402,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
         bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
             ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
             status = ECdbizStatus.A8.getCode();
         } else {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
         }
         cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
@@ -425,13 +443,13 @@ public class CarInfoAOImpl implements ICarInfoAO {
             ENode.getMap().get(preCurrentNode));
 
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
             status = ECdbizStatus.A9.getCode();
 
         } else {
-            preCurrentNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+            preCurrentNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
         }
         cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
@@ -483,8 +501,8 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 advanceBO.saveAdvance(req.getCode());
             }
             // 待办事项
-            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fbh, req.getCode(),
-                node, null);
+            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fbh,
+                req.getCode(), node, null);
             // 发保合状态更新
             cdbizBO.refreshFbhgpsStatus(cdbiz, fbhgpsStatus);
 
@@ -519,8 +537,8 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // creditBO.refreshCredit(credit);
 
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
-        LoanProduct loanProduct = loanProductBO
-            .getLoanProduct(repayBiz.getLoanProductCode());
+        LoanProduct loanProduct = loanProductBO.getLoanProduct(repayBiz
+            .getLoanProductCode());
         if (StringUtils.isNotBlank(cdbiz.getTeamCode())) {
             /**************生成返点数据***************/
             Repoint repoint = new Repoint();

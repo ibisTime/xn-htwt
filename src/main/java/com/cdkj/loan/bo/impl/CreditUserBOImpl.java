@@ -15,6 +15,7 @@ import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -295,6 +296,42 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     public void refreshCreditUser(CreditUser data) {
         if (StringUtils.isNotBlank(data.getCode())) {
             creditUserDAO.updateCreditUser(data);
+        }
+    }
+
+    @Override
+    public void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req) {
+        for (CreditUser creditUser : creditUsers) {
+            if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+                creditUser.setBirthAddress(req.getResidenceAddress());
+                creditUser.setPostCode(req.getPostCode2());
+                creditUser.setCompanyName(req.getWorkCompanyName());
+                creditUser.setCompanyAddress(req.getWorkCompanyAddress());
+                creditUser.setCompanyContactNo(req.getWorkPhone());
+            } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+                creditUser.setBirthAddressProvince(req
+                    .getMateBirthAddressProvince());
+                creditUser.setBirthAddressCity(req.getMateBirthAddressCity());
+                creditUser.setBirthAddressArea(req.getMateBirthAddressArea());
+                creditUser.setBirthAddress(req.getMateBirthAddress());
+                creditUser.setPostCode(req.getMatePostCode());
+                creditUser.setEducation(req.getMateEducation());
+                creditUser.setCompanyName(req.getMateCompanyName());
+                creditUser.setCompanyAddress(req.getMateCompanyAddress());
+                creditUser.setCompanyContactNo(req.getMateCompanyContactNo());
+            } else {
+                creditUser.setBirthAddressProvince(req
+                    .getGuaBirthAddressProvince());
+                creditUser.setBirthAddressCity(req.getGuaBirthAddressCity());
+                creditUser.setBirthAddressArea(req.getGuaBirthAddressArea());
+                creditUser.setBirthAddress(req.getGuaBirthAddress());
+                creditUser.setPostCode(req.getGuaPostCode());
+                creditUser.setEducation(req.getGuaEducation());
+                creditUser.setCompanyName(req.getGuaCompanyName());
+                creditUser.setCompanyAddress(req.getGuaCompanyAddress());
+                creditUser.setCompanyContactNo(req.getGuaCompanyContactNo());
+            }
+            creditUserDAO.updateCreditUser(creditUser);
         }
     }
 

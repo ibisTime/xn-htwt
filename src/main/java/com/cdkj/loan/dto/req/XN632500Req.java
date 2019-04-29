@@ -41,11 +41,11 @@ public class XN632500Req {
 
     // GPS费用
     @NotBlank
-    private String gpsFee;
+    private String gpsFee;// carinfo
 
     // 公证费用
     @NotBlank
-    private String authFee;
+    private String authFee;// carinfo
 
     // 返点利率
     @NotBlank
@@ -64,11 +64,11 @@ public class XN632500Req {
 
     // 首月月供
     @NotBlank
-    private String firstRepayAmount;
+    private String firstRepayAmount;// repayBiz
 
     // 月供金额
     @NotBlank
-    private String monthAmount;
+    private String monthAmount;// repayBiz
 
     // 是否垫资
     @NotBlank
@@ -80,7 +80,7 @@ public class XN632500Req {
 
     // 是否安装gps
     @NotBlank
-    private String isAzGps;
+    private String isAzGps;// cdbiz
 
     // 月供保证金
     @NotBlank
@@ -147,24 +147,24 @@ public class XN632500Req {
     private String region;// carInfo
 
     // 厂家贴息
-    private String carDealerSubsidy;
+    private String carDealerSubsidy;// carInfo
 
     // 油补公里数
-    private String oilSubsidyKil;
+    private String oilSubsidyKil;// carInfo
 
     // 油补
-    private String oilSubsidy;
+    private String oilSubsidy;// carInfo
 
     // 代理人
     @NotBlank
-    private String pledgeUser;
+    private String pledgeUser;// carPledge
 
     // 代理人身份证复印件
-    private String pledgeUserIdCardCopy;
+    private String pledgeUserIdCardCopy;// carPledge
 
     // 抵押地点
     @NotBlank
-    private String pledgeAddress;
+    private String pledgeAddress;// carPledge
 
     // 落户地点
     @NotBlank
@@ -183,60 +183,60 @@ public class XN632500Req {
     /***************客户信息start**************/
     // 性别
     @NotBlank
-    private String gender;
+    private String gender;// creditUserExt
 
     // 年龄
     @NotBlank
-    private String age;
+    private String age;// creditUserExt
 
     // 民族
     @NotBlank
-    private String nation;
+    private String nation;// creditUserExt
 
     // 学历
     @NotBlank
-    private String education;
+    private String education;// creditUserExt
 
     // 政治面貌
     @NotBlank
-    private String political;
+    private String political;// creditUserExt
 
     // 职业
-    private String workProfession;
+    private String workProfession;// creditUserExt
 
     // 职称
-    private String postTitle;
+    private String postTitle;// creditUserExt
 
     // 有无驾照
-    private String isDriceLicense;
+    private String isDriceLicense;// creditUserExt
 
     // 现有车辆
-    private String carTypeNow;
+    private String carTypeNow;// creditUserExt
 
     // 主要收入来源
     @NotBlank
-    private String mainIncome;
+    private String mainIncome;// creditUserExt
 
     // 家庭紧急联系人信息1 姓名
     @NotBlank
-    private String emergencyName1;
+    private String emergencyName1;// creditUserExt
 
     // 家庭紧急联系人信息1 与申请人关系
     @NotBlank
-    private String emergencyRelation1;
+    private String emergencyRelation1;// creditUserExt
 
     // 家庭紧急联系人信息1 手机号码
     @NotBlank
-    private String emergencyMobile1;
+    private String emergencyMobile1;// creditUserExt
 
     // 家庭紧急联系人信息2 姓名
-    private String emergencyName2;
+    private String emergencyName2;// creditUserExt
 
     // 家庭紧急联系人信息2 与申请人关系
-    private String emergencyRelation2;
+    private String emergencyRelation2;// creditUserExt
 
     // 家庭紧急联系人信息2 手机号码
-    private String emergencyMobile2;
+    private String emergencyMobile2;// creditUserExt
 
     /****************客户信息end***************/
 
@@ -244,39 +244,39 @@ public class XN632500Req {
 
     // 婚姻状况
     @NotBlank
-    private String marryState;
+    private String marryState;// creditUserExt
 
     // 家庭人口
     @NotBlank
-    private String familyNumber;
+    private String familyNumber;// creditUserExt
 
     // 家庭电话
     @NotBlank
-    private String familyPhone;
+    private String familyPhone;// creditUserExt
 
     // 家庭主要财产
     @NotBlank
-    private String familyMainAsset;
+    private String familyMainAsset;// creditUserExt
 
     // 主要财产包括
     @NotBlank
-    private String mainAssetInclude;
+    private String mainAssetInclude;// creditUserExt
 
     // 户口所在地
     @NotBlank
-    private String residenceAddress;
+    private String residenceAddress;// creditUser
 
     // 户口所在地邮编2
     @NotBlank
-    private String postCode2;
+    private String postCode2;// creditUser
 
     // 现居住地址
     @NotBlank
-    private String nowAddress;
+    private String nowAddress;// creditUserExt
 
     // 现居住地址邮编1
     @NotBlank
-    private String postCode1;
+    private String postCode;// creditUserExt
 
     // 户口本资料
     private String hkBookPdf;
@@ -304,34 +304,34 @@ public class XN632500Req {
     /***************工作情况start**************/
 
     // 是否自己单位
-    private String isSelfCompany;
+    private String isSelfCompany;// creditUserExt
 
     // 所属行业
-    private String workBelongIndustry;
+    private String workBelongIndustry;// creditUserExt
 
     // 单位性质
-    private String workCompanyProperty;
+    private String workCompanyProperty;// creditUserExt
 
     // 工作单位名称
     @NotBlank
-    private String workCompanyName;
+    private String workCompanyName;// creditUser
 
     // 工作单位地址
     @NotBlank
-    private String workCompanyAddress;
+    private String workCompanyAddress;// creditUser
 
     // 工作单位电话
-    private String workPhone;
+    private String workPhone;// creditUser
 
     // 何时进入现单位工作
-    private String workDatetime;
+    private String workDatetime;// creditUserExt
 
     // 职位
-    private String position;
+    private String position;// creditUserExt
 
     // 月收入
     @NotBlank
-    private String monthIncome;
+    private String monthIncome;// creditUserExt
 
     // 收入证明
     private String improvePdf;
@@ -350,29 +350,29 @@ public class XN632500Req {
     /***************共还人信息start**************/
 
     // 户籍地省市区
-    private String mateBirthAddressProvince;
+    private String mateBirthAddressProvince;// creditUser
 
-    private String mateBirthAddressCity;
+    private String mateBirthAddressCity;// creditUser
 
-    private String mateBirthAddressArea;
+    private String mateBirthAddressArea;// creditUser
 
     // 户籍地地址
-    private String mateBirthAddress;
+    private String mateBirthAddress;// creditUser
 
     // 户籍地邮编
-    private String matePostCode;
+    private String matePostCode;// creditUser
 
     // 配偶学历
-    private String mateEducation;
+    private String mateEducation;// creditUser
 
     // 配偶工作单位名称
-    private String mateCompanyName;
+    private String mateCompanyName;// creditUser
 
     // 配偶工作单位地址
-    private String mateCompanyAddress;
+    private String mateCompanyAddress;// creditUser
 
     // 配偶工作单位联系电话
-    private String mateCompanyContactNo;
+    private String mateCompanyContactNo;// creditUser
 
     private String mateAssetPdf;
 
@@ -381,29 +381,29 @@ public class XN632500Req {
     /***************担保人信息start**************/
 
     // 户籍地省市区
-    private String guaBirthAddressProvince;
+    private String guaBirthAddressProvince;// creditUser
 
-    private String guaBirthAddressCity;
+    private String guaBirthAddressCity;// creditUser
 
-    private String guaBirthAddressArea;
+    private String guaBirthAddressArea;// creditUser
 
     // 户籍地地址
-    private String guaBirthAddress;
+    private String guaBirthAddress;// creditUser
 
     // 户籍地邮编
-    private String guaPostCode;
+    private String guaPostCode;// creditUser
 
     // 配偶学历
-    private String guaEducation;
+    private String guaEducation;// creditUser
 
     // 配偶工作单位名称
-    private String guaCompanyName;
+    private String guaCompanyName;// creditUser
 
     // 配偶工作单位地址
-    private String guaCompanyAddress;
+    private String guaCompanyAddress;// creditUser
 
     // 配偶工作单位联系电话
-    private String guaCompanyContactNo;
+    private String guaCompanyContactNo;// creditUser
 
     private String guaAssetPdf;
 
@@ -726,12 +726,12 @@ public class XN632500Req {
         this.nowAddress = nowAddress;
     }
 
-    public String getPostCode1() {
-        return postCode1;
+    public String getPostCode() {
+        return postCode;
     }
 
-    public void setPostCode1(String postCode1) {
-        this.postCode1 = postCode1;
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     public String getResidenceAddress() {

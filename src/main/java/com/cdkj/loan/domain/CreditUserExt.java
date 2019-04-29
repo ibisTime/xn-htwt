@@ -638,4 +638,8 @@ public class CreditUserExt extends ABaseDO {
         this.isDriceLicense = isDriceLicense;
     }
 
+    public String getSingleProvePdf() {
+        return singleProvePdf;
+    }
+
 }
