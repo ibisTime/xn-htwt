@@ -417,20 +417,20 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
                     .getNextNode();
 
-                cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
-
                 switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
 
                     // 银行收件（车辆抵押）
                     case receive_5:
                         cdbizBO.refreshStatus(cdbiz,
                             ECdbizStatus.A27.getCode());
+                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     // 待担保公司收件（车辆抵押）
                     case receive_6:
                         cdbizBO.refreshSeccundangStatus(cdbiz,
                             ECdbizStatus.E2.getCode());
+                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     default:
@@ -438,10 +438,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 }
 
                 if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
-                    switch (ECdbizStatus
-                        .matchCode(cdbiz.getFircundangStatus())) {
+                    switch (cdbiz.getFircundangStatus()) {
                         // 贷后收件（银行放款）
-                        case D1:
+                        case "001":
                             cdbizBO.refreshFircundangStatus(cdbiz,
                                 ECdbizStatus.D2.getCode());
                             break;
