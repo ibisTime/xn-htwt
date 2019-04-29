@@ -19,6 +19,7 @@ import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditBO;
@@ -26,6 +27,7 @@ import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.ICreditUserExtBO;
 import com.cdkj.loan.bo.IDepartmentBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.IMissionBO;
 import com.cdkj.loan.bo.INodeBO;
@@ -43,6 +45,7 @@ import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditJour;
@@ -63,11 +66,13 @@ import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EArchiveType;
 import com.cdkj.loan.enums.EAttachName;
+import com.cdkj.loan.enums.EAttachmentCategory;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -160,6 +165,12 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private RepayPlanBOImpl repayPlanBO;
+
+    @Autowired
+    private IBudgetOrderGpsBO budgetOrderGpsBO;
+
+    @Autowired
+    private IGpsBO gpsBO;
 
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit,
@@ -684,6 +695,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional
     public void archive(String code, String type, String operator,
             String enterLocation) {
 
@@ -749,8 +761,139 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional
     public void entryFbh(XN632131Req req) {
 
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        if (!ENode.input_fbh.getCode().equals(cdbiz.getFbhgpsNode())
+                || !ENode.reinput_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是录入发保合节点，不能操作");
+        }
+
+        cdbiz.setFbhgpsNode(ENode.approve_fbh.getCode());
+        cdbizBO.refreshFbhgpsStatus(cdbiz, ECdbizStatus.C02.getCode());
+
+        // 更新车辆信息
+        carInfoBO.entryFbhInfoByBiz(req.getCode(), req.getPolicyDatetime(),
+            req.getPolicyDueDate());
+
+        // 添加附件
+        attachmentBO.saveAttachment(req.getCode(),
+            EAttachmentCategory.car_procedure.getCode(), req);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fbh, req.getCode(),
+            ENode.approve_fbh, req.getOperator());
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.fbh,
+            req.getCode(), ENode.approve_fbh.getCode(), null,
+            req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void approveFbh(String code, String approveResult,
+            String approveNote, String operator) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ENode.approve_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是审核发保合节点，不能操作");
+        }
+
+        String nextStatus = ECdbizStatus.C03.getCode();
+        String nextNodeCode = ENode.set_gps.getCode();
+        if (EBoolean.NO.getCode().equals(approveResult)) {
+            nextStatus = ECdbizStatus.C01x.getCode();
+            nextNodeCode = ENode.reinput_fbh.getCode();
+        }
+
+        cdbiz.setFbhgpsNode(nextNodeCode);
+        cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(code, EBizLogType.fbh, code,
+            ENode.matchCode(nextNodeCode), operator);
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.fbh, code, nextNodeCode,
+            approveNote, operator);
+
+    }
+
+    @Override
+    @Transactional
+    public void installGps(String code, String operator,
+            List<XN632126ReqGps> gpsAzList) {
+
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ENode.set_gps.getCode().equals(cdbiz.getFbhgpsNode())
+                || !ENode.approve_fail_gps.getCode()
+                    .equals(cdbiz.getFbhgpsNode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是安装gps节点，不能操作");
+        }
+
+        // 删除
+        budgetOrderGpsBO.removeBudgetOrderGpsList(code);
+
+        // 添加
+        budgetOrderGpsBO.saveBudgetOrderGpsList(code, gpsAzList);
+
+        String nextNodeCode = ENode.approve_gps.getCode();
+        String nextStatus = ECdbizStatus.C04.getCode();
+
+        cdbiz.setFbhgpsNode(nextNodeCode);
+        cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(code, EBizLogType.gps, code,
+            ENode.matchCode(nextNodeCode), operator);
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code, nextNodeCode,
+            null, operator);
+    }
+
+    @Override
+    public void gpsManagerApprove(String code, String operator,
+            String approveResult, String approveNote) {
+
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ENode.approve_gps.getCode().equals(cdbiz.getFbhgpsNode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是GPS管理员审核节点，不能操作");
+        }
+
+        String nextNodeCode = ENode.gps_done.getCode();
+        String nextStatus = ECdbizStatus.C06.getCode();
+
+        if (EApproveResult.NOT_PASS.getCode().equals(approveResult)) {
+
+            nextNodeCode = ENode.approve_fail_gps.getCode();
+            nextStatus = ECdbizStatus.C05.getCode();
+
+            // gps使用状态改为未使用
+            List<BudgetOrderGps> list = budgetOrderGpsBO
+                .queryBudgetOrderGpsList(code);
+            for (BudgetOrderGps budgetOrderGps : list) {
+                gpsBO.refreshUseGps(budgetOrderGps.getCode(), null,
+                    EBoolean.NO);
+            }
+            budgetOrderGpsBO.removeBudgetOrderGpsList(code);
+        }
+
+        cdbiz.setFbhgpsNode(nextNodeCode);
+        cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
+
+        // 待办事项
+        bizTaskBO.saveBizTask(code, EBizLogType.gps, code,
+            ENode.matchCode(nextNodeCode), operator);
+
+        // 操作日志
+        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code, nextNodeCode,
+            null, operator);
     }
 
     // 分配账号

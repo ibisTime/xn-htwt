@@ -51,4 +51,9 @@ public class CarInfoDAOImpl extends AMybatisTemplate implements ICarInfoDAO {
         return super.update(NAMESPACE.concat("update_carInfo"), data);
     }
 
+    @Override
+    public int updateEntryFbhInfo(CarInfo data) {
+        return super.update(NAMESPACE.concat("update_entryFbhInfo"), data);
+    }
+
 }

@@ -162,6 +162,20 @@ public class CarInfo extends ABaseDO {
     // 月供保证金
     private long monthDeposit;
 
+    /****DB Properties****/
+
+    // 绿大本扫描件
+    private String greenBigSmj;
+
+    // 发票
+    private String carInvoice;
+
+    // 交强险
+    private String carJqx;
+
+    // 商业险
+    private String carSyx;
+
     public long getMonthDeposit() {
         return monthDeposit;
     }
@@ -560,6 +574,38 @@ public class CarInfo extends ABaseDO {
 
     public void setTeamFee(long teamFee) {
         this.teamFee = teamFee;
+    }
+
+    public String getGreenBigSmj() {
+        return greenBigSmj;
+    }
+
+    public void setGreenBigSmj(String greenBigSmj) {
+        this.greenBigSmj = greenBigSmj;
+    }
+
+    public String getCarInvoice() {
+        return carInvoice;
+    }
+
+    public void setCarInvoice(String carInvoice) {
+        this.carInvoice = carInvoice;
+    }
+
+    public String getCarJqx() {
+        return carJqx;
+    }
+
+    public void setCarJqx(String carJqx) {
+        this.carJqx = carJqx;
+    }
+
+    public String getCarSyx() {
+        return carSyx;
+    }
+
+    public void setCarSyx(String carSyx) {
+        this.carSyx = carSyx;
     }
 
 }

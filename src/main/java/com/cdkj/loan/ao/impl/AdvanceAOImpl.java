@@ -16,10 +16,12 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Advance;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class AdvanceAOImpl implements IAdvanceAO {
@@ -45,6 +47,14 @@ public class AdvanceAOImpl implements IAdvanceAO {
     @Override
     @Transactional
     public void confirmApply(String code, String operator) {
+
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+
+        if (!ENode.sure_dz.getCode().equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是确认用款单节点，不能操作");
+        }
+
         Advance advance = advanceBO.getAdvance(code);
 
         String nextNodeCode = nodeFlowBO
@@ -54,7 +64,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
         advanceBO.confirmApply(code, nextNodeCode, ECdbizStatus.F1.getCode());
 
         // 更新业务状态
-        Cdbiz cdbiz = cdbizBO.getCdbiz(advance.getBizCode());
         cdbizBO.refreshFbhgpsStatus(cdbiz, ECdbizStatus.F1.getCode());
 
         // 操作日志
@@ -69,6 +78,14 @@ public class AdvanceAOImpl implements IAdvanceAO {
     public void areaManageApprove(String code, String operator,
             String approveNote) {
 
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+
+        if (!ENode.qy_manager_approve.getCode()
+            .equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是区域总经理审批节点，不能操作");
+        }
+
         Advance advance = advanceBO.getAdvance(code);
 
         String nextNodeCode = nodeFlowBO
@@ -80,7 +97,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
             approveNote);
 
         // 更新业务状态
-        Cdbiz cdbiz = cdbizBO.getCdbiz(advance.getBizCode());
         cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
 
         // 操作日志
@@ -94,6 +110,14 @@ public class AdvanceAOImpl implements IAdvanceAO {
     @Override
     public void provinceManageApprove(String code, String operator,
             String approveResult, String approveNote) {
+
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+
+        if (!ENode.sfgs_manage_approve.getCode()
+            .equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是省分公司总经理审批审批节点，不能操作");
+        }
 
         Advance advance = advanceBO.getAdvance(code);
 
@@ -118,7 +142,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
         missionBO.saveMission(advance.getBizCode(), null, null, operator, null);
 
         // 更新业务状态
-        Cdbiz cdbiz = cdbizBO.getCdbiz(advance.getBizCode());
         cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
 
         // 操作日志
@@ -133,6 +156,13 @@ public class AdvanceAOImpl implements IAdvanceAO {
     public void confirmMakeBill(String code, String operator,
             String makeBillNote) {
 
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+
+        if (!ENode.confirm_make_bill.getCode().equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是确认制单节点，不能操作");
+        }
+
         Advance advance = advanceBO.getAdvance(code);
 
         String nextNodeCode = nodeFlowBO
@@ -143,7 +173,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
             makeBillNote);
 
         // 更新业务状态
-        Cdbiz cdbiz = cdbizBO.getCdbiz(advance.getBizCode());
         cdbizBO.refreshFbhgpsStatus(cdbiz, ECdbizStatus.F4.getCode());
 
         // 操作日志
