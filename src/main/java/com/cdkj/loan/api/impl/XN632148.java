@@ -53,8 +53,8 @@ public class XN632148 extends AProcessor {
             condition.setCurNodeCodeList(req.getCurNodeCodeList());
         }
         if (StringUtils.isNotBlank(req.getIntevCurNodeCode())) {
-            boolean b = req.getIntevCurNodeCodeList().contains(
-                req.getIntevCurNodeCode());
+            boolean b = req.getIntevCurNodeCodeList()
+                .contains(req.getIntevCurNodeCode());
             if (b == false) {
                 condition.setIntevCurNodeCode("000_00");// 意为空
             } else {
@@ -80,6 +80,8 @@ public class XN632148 extends AProcessor {
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         // condition.setIsMortgage(req.getIsMortgage());
         condition.setIsGpsAz(req.getIsGpsAz());
+        condition.setCundangStatusList(req.getCundangStatusList());
+
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;

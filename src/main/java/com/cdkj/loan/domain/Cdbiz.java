@@ -205,6 +205,9 @@ public class Cdbiz extends ABaseDO {
     // 征信人流水
     private List<CreditJour> creditJours;
 
+    // 存档状态列表
+    private List<String> cundangStatusList;
+
     public RepayBiz getRepayBiz() {
         return repayBiz;
     }
@@ -739,6 +742,14 @@ public class Cdbiz extends ABaseDO {
 
     public void setRepayCardNumber(String repayCardNumber) {
         this.repayCardNumber = repayCardNumber;
+    }
+
+    public List<String> getCundangStatusList() {
+        return cundangStatusList;
+    }
+
+    public void setCundangStatusList(List<String> cundangStatusList) {
+        this.cundangStatusList = cundangStatusList;
     }
 
 }

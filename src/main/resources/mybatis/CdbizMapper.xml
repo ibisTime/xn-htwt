@@ -145,6 +145,16 @@
 		            #{item}
 		        </foreach>
 			</if>
+			<if test="cundangStatusList != null and cundangStatusList.size() > 0 ">
+				AND (t.fircundang_status in 
+				<foreach collection="fbhgpsNodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+		        	or t.seccundang_status in 
+				<foreach collection="fbhgpsNodeList" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>)
+			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>

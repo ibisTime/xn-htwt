@@ -63,6 +63,9 @@ public class XN632148Req extends APageReq {
 
     private String userId; // 操作人
 
+    // 存档状态列表
+    private List<String> cundangStatusList;
+
     public String getBizCode() {
         return bizCode;
     }
@@ -245,6 +248,14 @@ public class XN632148Req extends APageReq {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
+    }
+
+    public List<String> getCundangStatusList() {
+        return cundangStatusList;
+    }
+
+    public void setCundangStatusList(List<String> cundangStatusList) {
+        this.cundangStatusList = cundangStatusList;
     }
 
 }
