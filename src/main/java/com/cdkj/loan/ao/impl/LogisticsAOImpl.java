@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ILogisticsAO;
+import com.cdkj.loan.bo.IBankLoanBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
@@ -87,6 +88,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private ICreditUserBO creditUserBO;
+
+    @Autowired
+    private IBankLoanBO bankLoanBO;
 
     @Override
     @Transactional
@@ -282,6 +286,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 ECdbizStatus.A13.getCode());
                             cdbizBO.refreshFircundangStatus(cdbiz,
                                 ECdbizStatus.D0.getCode());
+
+                            // 生成银行放款
+                            bankLoanBO.saveBankLoan(cdbiz.getCode());
 
                             // 生成资料传递
                             String logisticsCode = logisticsBO.saveLogistics(

@@ -19,10 +19,6 @@ public class XN632134Req {
     @NotBlank
     private String enterLocation;// 入档位置
 
-    // 入档类型（第一次/第二次）
-    @NotBlank
-    private String type;
-
     public String getCode() {
         return code;
     }
@@ -45,14 +41,6 @@ public class XN632134Req {
 
     public void setEnterLocation(String enterLocation) {
         this.enterLocation = enterLocation;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
 }

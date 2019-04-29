@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IFileListBO;
@@ -60,7 +61,8 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
     }
 
     @Override
-    public <T> void saveAttachment(String bizCode, String category, T clazz) {
+    @Transactional
+    public <T> void saveAttachment(String bizCode, T clazz) {
         try {
             Field[] fields = clazz.getClass().getDeclaredFields();
             for (Field field : fields) {
@@ -70,10 +72,12 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
 
                 String fieldName = FieldNameUtil
                     .humpToUnderline(field.getName());
-                EAttachmentName attachmentName = EAttachmentName
-                    .matchCode(fieldName);
-                if (null != fieldValue && null != attachmentName) {
-                    saveAttachment(bizCode, category, attachmentName,
+
+                FileList fileList = fileListBO.getFileListByKname(fieldName);
+
+                if (null != fieldValue && null != fileList) {
+                    saveAttachment(bizCode, fileList.getCategory(),
+                        fileList.getKname(), fileList.getVname(),
                         fieldValue.toString());
                 }
 
@@ -83,8 +87,8 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
         }
     }
 
-    public String saveAttachment(String bizCode, String category,
-            EAttachmentName attachmentName, String url) {
+    public String saveAttachment(String bizCode, String category, String kName,
+            String vName, String url) {
         Attachment data = new Attachment();
 
         String code = OrderNoGenerater
@@ -93,8 +97,8 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
         data.setBizCode(bizCode);
         data.setCategory(category);
 
-        data.setKname(attachmentName.getCode());
-        data.setVname(attachmentName.getValue());
+        data.setKname(kName);
+        data.setVname(vName);
         data.setUrl(url);
 
         attachmentDAO.insert(data);

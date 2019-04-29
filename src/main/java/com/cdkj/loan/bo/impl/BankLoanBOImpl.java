@@ -16,6 +16,7 @@ import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -38,6 +39,19 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
     }
 
     @Override
+    public String saveBankLoan(String bizCode) {
+        BankLoan bankLoan = new BankLoan();
+
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.BANK_LOAN.getCode());
+        bankLoan.setCode(code);
+        bankLoan.setBizCode(bizCode);
+        bankLoan.setCurNodeCode(ENode.fk_submit.getCode());
+        bankLoanDAO.insert(bankLoan);
+        return code;
+    }
+
+    @Override
     public void commitBank(String code, String nextNodeCode, String operator,
             String bankCommitDatetime, String bankCommitNote) {
         BankLoan bankLoan = new BankLoan();
@@ -52,16 +66,18 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
     }
 
     @Override
-    public void entryFkInfo(String nextNodeCode, XN632135Req req) {
+    public void entryFkInfo(String code, String nextNodeCode, XN632135Req req) {
         BankLoan bankLoan = EntityUtils.copyData(req, BankLoan.class);
+        bankLoan.setCode(code);
         bankLoan.setCurNodeCode(nextNodeCode);
 
         bankLoanDAO.updateEntryFkInfo(bankLoan);
     }
 
     @Override
-    public void confirmSk(String nextNodeCode, XN632130Req req) {
+    public void confirmSk(String code, String nextNodeCode, XN632130Req req) {
         BankLoan bankLoan = EntityUtils.copyData(req, BankLoan.class);
+        bankLoan.setCode(code);
         bankLoan.setCurNodeCode(nextNodeCode);
 
         bankLoanDAO.confirmSk(bankLoan);

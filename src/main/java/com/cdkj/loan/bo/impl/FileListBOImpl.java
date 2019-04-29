@@ -14,8 +14,8 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class FileListBOImpl extends PaginableBOImpl<FileList> implements
-        IFileListBO {
+public class FileListBOImpl extends PaginableBOImpl<FileList>
+        implements IFileListBO {
 
     @Autowired
     private IFileListDAO fileListDAO;
@@ -83,9 +83,6 @@ public class FileListBOImpl extends PaginableBOImpl<FileList> implements
         FileList condition = new FileList();
         condition.setKname(kname);
         FileList filelist = fileListDAO.select(condition);
-        if (null == filelist) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "材料清单不存在！");
-        }
         return filelist;
     }
 }
