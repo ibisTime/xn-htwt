@@ -208,6 +208,17 @@ public class Cdbiz extends ABaseDO {
     // 存档状态列表
     private List<String> cundangStatusList;
 
+    // 抵押
+    private CarPledge carPledge;
+
+    public CarPledge getCarPledge() {
+        return carPledge;
+    }
+
+    public void setCarPledge(CarPledge carPledge) {
+        this.carPledge = carPledge;
+    }
+
     public RepayBiz getRepayBiz() {
         return repayBiz;
     }

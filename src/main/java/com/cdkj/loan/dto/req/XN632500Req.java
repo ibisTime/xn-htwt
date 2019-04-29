@@ -86,6 +86,10 @@ public class XN632500Req {
     @NotBlank
     private String monthDeposit;// carInfo
 
+    // 履约保证金
+    @NotBlank
+    private String lyDeposit;
+
     // 团队服务费
     @NotBlank
     private String teamFee;// carInfo
@@ -1332,6 +1336,14 @@ public class XN632500Req {
 
     public void setGuaPostCode(String guaPostCode) {
         this.guaPostCode = guaPostCode;
+    }
+
+    public String getLyDeposit() {
+        return lyDeposit;
+    }
+
+    public void setLyDeposit(String lyDeposit) {
+        this.lyDeposit = lyDeposit;
     }
 
 }

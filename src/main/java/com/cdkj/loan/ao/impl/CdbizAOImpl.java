@@ -21,6 +21,7 @@ import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarInfoBO;
+import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditJourBO;
@@ -47,6 +48,7 @@ import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarInfo;
+import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
@@ -172,6 +174,9 @@ public class CdbizAOImpl implements ICdbizAO {
     @Autowired
     private IGpsBO gpsBO;
 
+    @Autowired
+    private ICarPledgeBO carPledgeBO;
+
     @Override
     public Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition) {
         Paginable<Cdbiz> page = null;
@@ -262,6 +267,11 @@ public class CdbizAOImpl implements ICdbizAO {
         CreditUserExt creditUserExt = creditUserExtBO
             .getCreditUserExtByBizCode(cdbiz.getCode());
         cdbiz.setCreditUserExt(creditUserExt);
+
+        // 车辆抵押
+        CarPledge carPledge = carPledgeBO
+            .getCarPledgeByBizCode(cdbiz.getCode());
+        cdbiz.setCarPledge(carPledge);
 
         // 征信人流水
         List<CreditJour> creditJours = creditJourBO
