@@ -1,8 +1,12 @@
 package com.cdkj.loan.bo.impl;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,16 +14,21 @@ import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IFileListBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.common.FieldNameUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IAttachmentDAO;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.FileList;
+import com.cdkj.loan.enums.EAttachmentName;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
 public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
         implements IAttachmentBO {
+
+    private final static Logger log = LoggerFactory
+        .getLogger(IAttachmentBO.class);
 
     @Autowired
     private IAttachmentDAO attachmentDAO;
@@ -51,6 +60,48 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
     }
 
     @Override
+    public <T> void saveAttachment(String bizCode, String category, T clazz) {
+        try {
+            Field[] fields = clazz.getClass().getDeclaredFields();
+            for (Field field : fields) {
+
+                field.setAccessible(true);
+                Object fieldValue = field.get(clazz);
+
+                String fieldName = FieldNameUtil
+                    .humpToUnderline(field.getName());
+                EAttachmentName attachmentName = EAttachmentName
+                    .matchCode(fieldName);
+                if (null != fieldValue && null != attachmentName) {
+                    saveAttachment(bizCode, category, attachmentName,
+                        fieldValue.toString());
+                }
+
+            }
+        } catch (Exception e) {
+            log.info("附件保存失败:{}", e.getMessage());
+        }
+    }
+
+    public String saveAttachment(String bizCode, String category,
+            EAttachmentName attachmentName, String url) {
+        Attachment data = new Attachment();
+
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.attachment.getCode());
+        data.setCode(code);
+        data.setBizCode(bizCode);
+        data.setCategory(category);
+
+        data.setKname(attachmentName.getCode());
+        data.setVname(attachmentName.getValue());
+        data.setUrl(url);
+
+        attachmentDAO.insert(data);
+        return code;
+    }
+
+    @Override
     public void removeAttachmentByBiz(String bizCode, String attachType) {
         Attachment attachment = new Attachment();
 
@@ -77,6 +128,54 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
             }
         }
         return data;
+    }
+
+    @Override
+    public Attachment getAttachment(String bizCode, String category,
+            String kname) {
+        Attachment data = null;
+        Attachment condition = new Attachment();
+        condition.setBizCode(bizCode);
+        condition.setCategory(category);
+        condition.setKname(kname);
+        data = attachmentDAO.select(condition);
+        return data;
+    }
+
+    @Override
+    public <T> T parseAttachment(String bizCode, String category, T clazz) {
+
+        try {
+            Field[] fields = clazz.getClass().getDeclaredFields();
+            for (int i = 0; i < fields.length; i++) {
+                Field field = fields[i];
+
+                String fieldName = FieldNameUtil
+                    .humpToUnderline(field.getName());
+
+                if (null != EAttachmentName.matchCode(fieldName)) {
+
+                    String setMethod = "set"
+                            + field.getName().substring(0, 1).toUpperCase()
+                            + field.getName().substring(1);
+                    Method method = clazz.getClass().getMethod(setMethod,
+                        String.class);
+
+                    Attachment attachment = getAttachment(bizCode, category,
+                        fieldName);
+
+                    if (null != attachment) {
+                        method.invoke(clazz, attachment.getUrl());
+                    }
+
+                }
+
+            }
+        } catch (Exception e) {
+            log.info("附件转化失败:{}", e.getMessage());
+        }
+
+        return clazz;
     }
 
     @Override

@@ -34,10 +34,14 @@ public enum ENode {
     upload_approve_back_bill("g5", "上传复核回单"),
 
     // 发保合节点
-    input_fbh("c1", "新录入发保合"),
+    input_fbh("c1", "新录入发保合"),approve_fbh("c2", "审核发保合"),
+    
+    reinput_fbh("c1x", "重录入发保合"),
 
     // gps
-    set_gps("d1", "安装gps"),
+    set_gps("d1", "安装gps"), approve_gps("d2", "审核gps"),
+    
+    approve_fail_gps("d3", "gps审核不通过"),gps_done("d4", "gps安装完成"),
 
     // 银行放款节点
     submit_1("e1", "业务员寄送银行放款材料"), receive_approve_1("e2", "风控审核收件（银行放款）"),

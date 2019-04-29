@@ -228,6 +228,14 @@
 		)
 	</insert>
 
+	<update id="update_entryFbhInfo" parameterType="carInfo">
+		UPDATE tdq_car_info
+		SET
+		policy_datetime = #{policyDatetime}
+		,policy_due_date = #{policyDueDate}
+		WHERE biz_code = #{bizCode}
+	</update>
+	
 	<update id="update_carInfo" parameterType="carInfo">
 		UPDATE tdq_car_info
 		SET

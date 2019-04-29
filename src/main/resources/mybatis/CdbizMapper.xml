@@ -419,6 +419,7 @@
 		UPDATE tqj_cdbiz
 		SET
 		fbhgps_status=#{fbhgpsStatus}
+		,fbhgps_node = #{fbhgpsNode}
 		WHERE code=#{code}
 	</update>
 	

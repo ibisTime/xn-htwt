@@ -25,4 +25,7 @@ public interface ICarInfoBO extends IPaginableBO<CarInfo> {
 
     public void saveAttachment(XN632120Req req);
 
+    public void entryFbhInfoByBiz(String bizCode, String policyDatetime,
+            String policyDueDate);
+
 }

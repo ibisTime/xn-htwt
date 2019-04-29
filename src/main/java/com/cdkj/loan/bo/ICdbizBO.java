@@ -56,4 +56,5 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
 
     public void interview(Cdbiz cdbiz, XN632123Req req);
+
 }

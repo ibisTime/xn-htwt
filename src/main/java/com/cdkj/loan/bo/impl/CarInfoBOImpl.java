@@ -19,8 +19,8 @@ import com.cdkj.loan.exception.BizException;
 
 //CHECK ��鲢��ע�� 
 @Component
-public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
-        ICarInfoBO {
+public class CarInfoBOImpl extends PaginableBOImpl<CarInfo>
+        implements ICarInfoBO {
 
     @Autowired
     private ICarInfoDAO carInfoDAO;
@@ -171,5 +171,17 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), req.getHousePicture());
         }
+    }
+
+    @Override
+    public void entryFbhInfoByBiz(String bizCode, String policyDatetime,
+            String policyDueDate) {
+        CarInfo carInfo = new CarInfo();
+
+        carInfo.setBizCode(bizCode);
+        carInfo.setPolicyDatetime(policyDatetime);
+        carInfo.setPolicyDueDate(policyDueDate);
+
+        carInfoDAO.updateEntryFbhInfo(carInfo);
     }
 }
