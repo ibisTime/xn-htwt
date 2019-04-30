@@ -17,81 +17,74 @@ public class XN632500Req {
     @NotBlank
     private String operator;
 
-    // 处理类型(0 保存 1 发送)
     @NotBlank
+    // 处理类型(0 保存 1 发送)
     private String dealType;
 
     /***************贷款信息start**************/
 
     // 贷款期限
-    @NotBlank
     private String loanPeriod;// repayBiz
 
     // 银行利率
-    @NotBlank
     private String bankRate;
 
     // 贷款产品编号
-    @NotBlank
     private String loanProductCode;// repayBiz
 
     // 年华费率
-    @NotBlank
     private String yearRate;
 
     // GPS费用
-    @NotBlank
     private String gpsFee;// carinfo
 
     // 公证费用
-    @NotBlank
     private String authFee;// carinfo
 
     // 返点利率
-    @NotBlank
     private String backRate;
 
     // 前置利率
     private double preRate;
 
     // 首付金额
-    @NotBlank
     private String firstAmount;// repayBiz
 
     // 首付比例
-    @NotBlank
     private String firstRate;// repayBiz
 
     // 首月月供
-    @NotBlank
     private String firstRepayAmount;// repayBiz
 
     // 月供金额
-    @NotBlank
+
     private String monthAmount;// repayBiz
 
     // 是否垫资
-    @NotBlank
+
     private String isAdvanceFund;// cdbiz
 
     // 是否融资
-    @NotBlank
+
     private String isFinancing;// cdbiz
 
     // 是否安装gps
-    @NotBlank
+
     private String isAzGps;// cdbiz
 
+    // 是否我司续保
+    private String isCompanyContinue;
+
     // 月供保证金
-    @NotBlank
+
     private String monthDeposit;// carInfo
 
     // 履约保证金
-    @NotBlank
-    private String lyDeposit;
+
+    private String lyDeposit;// repayBiz
 
     // 团队服务费
-    @NotBlank
+
     private String teamFee;// carInfo
 
     /****************贷款信息end***************/
@@ -99,55 +92,55 @@ public class XN632500Req {
     /***************车辆信息start**************/
 
     // 机动车销售公司
-    @NotBlank
+
     private String vehicleCompanyName;// carInfo
 
     // 开票单位
-    @NotBlank
+
     private String invoiceCompany;// carInfo
 
     // 开票价
-    @NotBlank
+
     private String invoicePrice;// carInfo
 
     // 车辆类型
-    @NotBlank
+
     private String carType;// carInfo
 
     // 品牌
-    @NotBlank
+
     private String carBrand;// carInfo
 
     // 车系
-    @NotBlank
+
     private String carSeries;// carInfo
 
     // 车型
-    @NotBlank
+
     private String carModel;// carInfo
 
     // 车型名称
-    @NotBlank
+
     private String carModelName;// carInfo
 
     // 颜色
-    @NotBlank
+
     private String carColor;// carInfo
 
     // 车架号
-    @NotBlank
+
     private String carFrameNo;// carInfo
 
     // 发动机号
-    @NotBlank
+
     private String carEngineNo;// carInfo
 
     // 市场指导价
-    @NotBlank
+
     private String originalPrice;// carInfo
 
     // 所属区域
-    @NotBlank
+
     private String region;// carInfo
 
     // 厂家贴息
@@ -160,49 +153,49 @@ public class XN632500Req {
     private String oilSubsidy;// carInfo
 
     // 代理人
-    @NotBlank
+
     private String pledgeUser;// carPledge
 
     // 代理人身份证复印件
     private String pledgeUserIdCardCopy;// carPledge
 
     // 抵押地点
-    @NotBlank
+
     private String pledgeAddress;// carPledge
 
     // 落户地点
-    @NotBlank
+
     private String settleAddress;// carInfo
 
     // 车辆照片
-    @NotBlank
+
     private String carPic;
 
     // 合格证
-    @NotBlank
+
     private String carHgzPic;
 
     /****************车辆信息end***************/
 
     /***************客户信息start**************/
     // 性别
-    @NotBlank
+
     private String gender;// creditUserExt
 
     // 年龄
-    @NotBlank
+
     private String age;// creditUserExt
 
     // 民族
-    @NotBlank
+
     private String nation;// creditUserExt
 
     // 学历
-    @NotBlank
+
     private String education;// creditUserExt
 
     // 政治面貌
-    @NotBlank
+
     private String political;// creditUserExt
 
     // 职业
@@ -218,19 +211,19 @@ public class XN632500Req {
     private String carTypeNow;// creditUserExt
 
     // 主要收入来源
-    @NotBlank
+
     private String mainIncome;// creditUserExt
 
     // 家庭紧急联系人信息1 姓名
-    @NotBlank
+
     private String emergencyName1;// creditUserExt
 
     // 家庭紧急联系人信息1 与申请人关系
-    @NotBlank
+
     private String emergencyRelation1;// creditUserExt
 
     // 家庭紧急联系人信息1 手机号码
-    @NotBlank
+
     private String emergencyMobile1;// creditUserExt
 
     // 家庭紧急联系人信息2 姓名
@@ -247,39 +240,39 @@ public class XN632500Req {
     /***************家庭情况start**************/
 
     // 婚姻状况
-    @NotBlank
+
     private String marryState;// creditUserExt
 
     // 家庭人口
-    @NotBlank
+
     private String familyNumber;// creditUserExt
 
     // 家庭电话
-    @NotBlank
+
     private String familyPhone;// creditUserExt
 
     // 家庭主要财产
-    @NotBlank
+
     private String familyMainAsset;// creditUserExt
 
     // 主要财产包括
-    @NotBlank
+
     private String mainAssetInclude;// creditUserExt
 
     // 户口所在地
-    @NotBlank
+
     private String residenceAddress;// creditUser
 
     // 户口所在地邮编2
-    @NotBlank
+
     private String postCode2;// creditUser
 
     // 现居住地址
-    @NotBlank
+
     private String nowAddress;// creditUserExt
 
     // 现居住地址邮编1
-    @NotBlank
+
     private String postCode;// creditUserExt
 
     // 户口本资料
@@ -317,11 +310,11 @@ public class XN632500Req {
     private String workCompanyProperty;// creditUserExt
 
     // 工作单位名称
-    @NotBlank
+
     private String workCompanyName;// creditUser
 
     // 工作单位地址
-    @NotBlank
+
     private String workCompanyAddress;// creditUser
 
     // 工作单位电话
@@ -334,7 +327,7 @@ public class XN632500Req {
     private String position;// creditUserExt
 
     // 月收入
-    @NotBlank
+
     private String monthIncome;// creditUserExt
 
     // 收入证明
@@ -1344,6 +1337,14 @@ public class XN632500Req {
 
     public void setLyDeposit(String lyDeposit) {
         this.lyDeposit = lyDeposit;
+    }
+
+    public String getIsCompanyContinue() {
+        return isCompanyContinue;
+    }
+
+    public void setIsCompanyContinue(String isCompanyContinue) {
+        this.isCompanyContinue = isCompanyContinue;
     }
 
 }
