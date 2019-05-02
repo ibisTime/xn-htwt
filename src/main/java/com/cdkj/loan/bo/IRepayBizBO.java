@@ -1,8 +1,5 @@
 package com.cdkj.loan.bo;
 
-import java.util.Date;
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
@@ -10,6 +7,9 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632500Req;
+import com.cdkj.loan.dto.req.XN632530Req;
+import java.util.Date;
+import java.util.List;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
@@ -20,6 +20,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public String saveRepayBiz(XN632120Req req);
 
     public String saveRepayBiz(XN632500Req req);
+
+    public String saveRepayBiz(XN632530Req req);
 
     public void refreshBankcardNew(String code, String bankcardCode,
             String updater, String remark);
@@ -141,4 +143,9 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // ********************************common********************************
 
     public RepayBiz getRepayBizByBizCode(String bizCode);
+
+    /**
+     * 修改还款业务
+     */
+    void refreshRepayBiz(RepayBiz repayBiz);
 }

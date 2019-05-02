@@ -3,32 +3,24 @@ package com.cdkj.loan.baofoo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
 /**
- * 项目名称：baofoo-fopay-sdk-java
- * 类名称：表单参数
- * 类描述：
- * 创建人：陈少杰
- * 创建时间：2014-10-22 下午2:58:22
- * 修改人：陈少杰
+ * 项目名称：baofoo-fopay-sdk-java 类名称：表单参数 类描述： 创建人：陈少杰 创建时间：2014-10-22 下午2:58:22 修改人：陈少杰
  * 修改时间：2014-10-22 下午2:58:22
- * @version
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class HttpSendModel implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +33,7 @@ public class HttpSendModel implements Serializable {
     private List<HttpFormParameter> params;
 
     /**
-     * 
+     *
      */
     public HttpSendModel() {
         charSet = CharSet.Default;
@@ -49,7 +41,7 @@ public class HttpSendModel implements Serializable {
     }
 
     /**
-     * @param url
+     *
      */
     public HttpSendModel(String url) {
         super();
@@ -67,17 +59,12 @@ public class HttpSendModel implements Serializable {
     }
 
     /**
-     * 注意：<br>
-     * 比如招行的提交地址https://netpay.cmbchina.com/netpayment/BaseHttp.dll?PrePayC1<br>
-     * 用get拼好的url串https://netpay.cmbchina.com/netpayment/BaseHttp.dll?PrePayC1?
-     * a=1 这种情况适用<br>
+     * 注意：<br> 比如招行的提交地址https://netpay.cmbchina.com/netpayment/BaseHttp.dll?PrePayC1<br>
+     * 用get拼好的url串https://netpay.cmbchina.com/netpayment/BaseHttp.dll?PrePayC1? a=1 这种情况适用<br>
      * <br>
      * 同时，需要非常注意的是：如果参数中有中文并且你已经url编码过了，那么，请保证url和urlPath保持一致，并使用get方式！
-     * 
-     * @param url
-     * @param urlPath
-     *            不带参数的纯地址
-     * @throws Exception 
+     *
+     * @param urlPath 不带参数的纯地址
      */
     public HttpSendModel(String url, String urlPath) throws Exception {
         super();
@@ -108,7 +95,7 @@ public class HttpSendModel implements Serializable {
     }
 
     /**
-     * @param paramsString
+     *
      */
     private void buildParams(String paramsString) {
         if (StringUtils.isBlank(paramsString)) {
@@ -135,8 +122,6 @@ public class HttpSendModel implements Serializable {
 
     /**
      * 生成get模式的请求地址
-     * 
-     * @return
      */
     public String buildGetRequestUrl() {
 
@@ -150,7 +135,7 @@ public class HttpSendModel implements Serializable {
             List<NameValuePair> qparams = new ArrayList<NameValuePair>();
             for (HttpFormParameter param : params) {
                 qparams.add(new BasicNameValuePair(param.getName(),
-                    param.getValue() == null ? "" : param.getValue()));
+                        param.getValue() == null ? "" : param.getValue()));
             }
             String appender = URLEncodedUtils.format(qparams, charSet);
 
@@ -173,8 +158,7 @@ public class HttpSendModel implements Serializable {
     }
 
     /**
-     * @param formName
-     * @return
+     *
      */
     public String buildPostRequestForm(String formName) {
         String url = this.getUrl();
@@ -184,23 +168,23 @@ public class HttpSendModel implements Serializable {
         StringBuilder buffer = new StringBuilder();
 
         buffer.append(
-            "<SCRIPT LANGUAGE=\"JavaScript\"> var isIE=!!window.ActiveXObject||\"ActiveXObject\" in window; </SCRIPT>");
+                "<SCRIPT LANGUAGE=\"JavaScript\"> var isIE=!!window.ActiveXObject||\"ActiveXObject\" in window; </SCRIPT>");
         buffer.append("<form id=\"").append(formName).append("\" name=\"")
-            .append(formName).append("\" action=\"").append(url)
-            .append("\" accept-charset=\"").append(charSet)
-            .append("\" method=\"" + this.getMethod().value()
-                    + "\" onsubmit=\"if(isIE)document.charset='" + charSet
-                    + "'\" >\n");
+                .append(formName).append("\" action=\"").append(url)
+                .append("\" accept-charset=\"").append(charSet)
+                .append("\" method=\"" + this.getMethod().value()
+                        + "\" onsubmit=\"if(isIE)document.charset='" + charSet
+                        + "'\" >\n");
 
         for (HttpFormParameter param : params) {
             if (param.isHidden()) {
                 buffer.append("<input type=\"hidden\" name=\"")
-                    .append(param.getName()).append("\" value=\"")
-                    .append(param.getValue()).append("\" />\n");
+                        .append(param.getName()).append("\" value=\"")
+                        .append(param.getValue()).append("\" />\n");
             } else {
                 buffer.append("<input type=\"text\" name=\"")
-                    .append(param.getName()).append("\" value=\"")
-                    .append(param.getValue()).append("\" />\n");
+                        .append(param.getName()).append("\" value=\"")
+                        .append(param.getValue()).append("\" />\n");
             }
         }
 
@@ -230,8 +214,7 @@ public class HttpSendModel implements Serializable {
     }
 
     /**
-     * @param charSet
-     *            the charSet to set
+     * @param charSet the charSet to set
      */
     public void setCharSet(String charSet) {
         this.charSet = charSet;
@@ -245,8 +228,7 @@ public class HttpSendModel implements Serializable {
     }
 
     /**
-     * @param method
-     *            the method to set
+     * @param method the method to set
      */
     public void setMethod(HttpMethod method) {
         this.method = method;
@@ -263,8 +245,7 @@ public class HttpSendModel implements Serializable {
     }
 
     /**
-     * @param params
-     *            the params to set
+     * @param params the params to set
      */
     public void setParams(List<HttpFormParameter> params) {
         this.params = params;

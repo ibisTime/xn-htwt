@@ -3,11 +3,12 @@ package com.cdkj.loan.domain;
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
-* 车辆信息
-* @author: tao 
-* @since: 2019-04-24 09:37:43
-* @history:
-*/
+ * 车辆信息
+ *
+ * @author: tao
+ * @since: 2019-04-24 09:37:43
+ * @history:
+ */
 public class CarInfo extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -27,7 +28,7 @@ public class CarInfo extends ABaseDO {
     // 车型
     private String carModel;
 
-    // 车型名称
+    // 车型名称--删除
     private String carModelName;
 
     // 车辆类型
@@ -45,7 +46,7 @@ public class CarInfo extends ABaseDO {
     // 市场指导价
     private String originalPrice;
 
-    // 开票价
+    // 开票价--删除
     private String invoicePrice;
 
     // 机动车销售公司

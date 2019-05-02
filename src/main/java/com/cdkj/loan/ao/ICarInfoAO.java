@@ -1,14 +1,15 @@
 package com.cdkj.loan.ao;
 
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632500Req;
+import com.cdkj.loan.dto.req.XN632530Req;
+import org.springframework.stereotype.Component;
 
 //CHECK ��鲢��ע�� 
 @Component
 public interface ICarInfoAO {
+
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 录入准入单
@@ -43,4 +44,8 @@ public interface ICarInfoAO {
 
     public void financeAudit(XN632143Req req);
 
+    /**
+     * 准入单-贷款信息
+     */
+    void inputLoanInfo(XN632530Req req);
 }
