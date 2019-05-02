@@ -37,6 +37,16 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="operater != null and operater != '' ">
+				AND t.operater = #{operater}
+			</if>
+			<if test="operateRole != null and operateRole != '' ">
+				AND t.operate_role = #{operateRole}
+			</if>
+			<if test="isMy != null and isMy != '' ">
+				AND (t.operater = #{userId} or (t.operate_role = #{roleCode} and t.operater
+				is null))
+			</if>
 		</trim>
 	</sql>
 	

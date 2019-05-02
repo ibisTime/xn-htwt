@@ -1,19 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IAccountBO;
@@ -100,7 +86,6 @@ import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EInvestigateReportNode;
 import com.cdkj.loan.enums.EIsAdvanceFund;
-import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -110,6 +95,18 @@ import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BudgetOrderAOImpl implements IBudgetOrderAO {
@@ -1475,7 +1472,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
         CreditUser creditUser = new CreditUser();
-        creditUser.setCreditCode(credit.getCode());
+        //****待处理*****
+//        creditUser.setCreditCode(credit.getCode());
         List<CreditUser> queryCreditUserList = creditUserBO
             .queryCreditUserList(creditUser);
         credit.setCreditUserList(queryCreditUserList);
@@ -1948,8 +1946,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     private BudgetOrder initTeamReport(BudgetOrder budgetOrder) {
-        CreditUser user = creditUserBO.getCreditUserByCreditCode(
-            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        CreditUser user = null;
+        //****待处理*****
+        //creditUserBO.getCreditUserByCreditCode(
+        //budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
         budgetOrder.setContactNo(user.getMobile());// 联系电话
         SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
         budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
@@ -2001,8 +2001,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // budgetOrder.setInsideJob(operator.getRealName());//
         // 内勤（使用这个业务单在日志表的最新操作人）
         // }
-        CreditUser user = creditUserBO.getCreditUserByCreditCode(
-            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        CreditUser user = null;
+        //****待处理*****
+        //creditUserBO.getCreditUserByCreditCode(
+        //budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
         budgetOrder.setContactNo(user.getMobile());// 联系电话
         long cardTotalFee = 0;
         long bankFee = 0;
@@ -2255,8 +2257,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         + budgetOrder.getFamilyNumber() + "口人，" + "邮编："
                         + budgetOrder.getPostCode1() + ",   " + "借款人无重大疾病，身体健康";
                 investigateReport.setCustomerInformation(customerInformation);
-                CreditUser domain = creditUserBO.getCreditUserByCreditCode(
-                    budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+                CreditUser domain = null;
+                //****待处理*****
+                //creditUserBO.getCreditUserByCreditCode(
+                //budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
                 investigateReport.setBankCreditResultRemark(domain
                     .getBankCreditResultRemark());
                 investigateReport.setJourDatetimeStart(budgetOrder

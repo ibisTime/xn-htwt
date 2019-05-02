@@ -1,8 +1,7 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
 
 /**
 * 待办事项表
@@ -46,6 +45,39 @@ public class BizTask extends ABaseDO {
 
     // 完成时间
     private Date finishDatetime;
+
+    //*************db properties*************
+
+    // 查询是否是我的,不空查询我的
+    private String isMy;
+
+    private String roleCode;
+
+    private String userId;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getIsMy() {
+        return isMy;
+    }
+
+    public void setIsMy(String isMy) {
+        this.isMy = isMy;
+    }
 
     public void setCode(String code) {
         this.code = code;

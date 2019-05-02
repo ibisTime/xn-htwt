@@ -17,7 +17,10 @@ public enum ELogisticsCurNodeType {
 
     FK_SEND_CAR_PLEDGE("5", "风控寄送材料（车辆抵押）"),
 
-    FK_APPROVE_PASS_CAR_PLEDGE("6", "风控审核通过（车辆抵押）");
+    FK_APPROVE_PASS_CAR_PLEDGE("6", "风控审核通过（车辆抵押）"),
+
+    BANK_LOAN("9", "other"),
+    CAR_MORTGAGE("9", "other");
 
     ELogisticsCurNodeType(String code, String value) {
         this.code = code;

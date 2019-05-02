@@ -1,26 +1,28 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.dto.req.XN632520Req;
+import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public interface IBizTaskAO {
-    static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBizTask(XN632520Req req);
+    String DEFAULT_ORDER_COLUMN = "code";
 
-    public void handleBizTask(String code, String operator);
+    String addBizTask(XN632520Req req);
 
-    public Paginable<BizTask> queryBizTaskPage(int start, int limit,
+    void handleBizTask(String code, String operator);
+
+    Paginable<BizTask> queryBizTaskPage(int start, int limit,
             BizTask condition);
 
-    public List<BizTask> queryBizTaskList(BizTask condition);
+    Paginable<BizTask> queryBizTaskPage(int start, int limit,
+            BizTask condition, String userId);
 
-    public BizTask getBizTask(String code);
+    List<BizTask> queryBizTaskList(BizTask condition);
+
+    BizTask getBizTask(String code);
 
 }
