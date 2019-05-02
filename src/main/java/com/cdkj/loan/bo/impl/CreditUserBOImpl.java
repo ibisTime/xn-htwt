@@ -1,12 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -21,16 +14,19 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * 
- * @author: jiafr 
- * @since: 2018年5月25日 下午2:04:01 
+ * @author: jiafr
+ * @since: 2018年5月25日 下午2:04:01
  * @history:
  */
 @Component
-public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
-        ICreditUserBO {
+public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICreditUserBO {
 
     @Autowired
     private ICreditUserDAO creditUserDAO;
@@ -57,73 +53,63 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         // 主贷人
         if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
             // 身份证正面
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.mainLoaner_id_front.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoFront());
+            EAttachName attachName = EAttachName.getMap()
+                    .get(EAttachName.mainLoaner_id_front.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoFront());
             // 身份证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.mainLoaner_id_reverse.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoReverse());
+            attachName = EAttachName.getMap().get(EAttachName.mainLoaner_id_reverse.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoReverse());
             // 征信查询授权
-            attachName = EAttachName.getMap().get(
-                EAttachName.mainLoaner_auth_pdf.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getAuthPdf());
+            attachName = EAttachName.getMap().get(EAttachName.mainLoaner_auth_pdf.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getAuthPdf());
             // 面签照片
-            attachName = EAttachName.getMap().get(
-                EAttachName.mainloaner_interview_pic.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getInterviewPic());
+            attachName = EAttachName.getMap().get(EAttachName.mainloaner_interview_pic.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getInterviewPic());
             // 共还人信息
         } else if (ELoanRole.GHR.getCode().equals(child.getLoanRole())) {
             // 身份证正面
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.replier_id_front.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoFront());
+            EAttachName attachName = EAttachName.getMap()
+                    .get(EAttachName.replier_id_front.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoFront());
             // 身份证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.replier_id_reverse.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoReverse());
+            attachName = EAttachName.getMap().get(EAttachName.replier_id_reverse.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoReverse());
             // 征信查询授权
-            attachName = EAttachName.getMap().get(
-                EAttachName.replier_auth_pdf.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getAuthPdf());
+            attachName = EAttachName.getMap().get(EAttachName.replier_auth_pdf.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getAuthPdf());
             // 面签照片
-            attachName = EAttachName.getMap().get(
-                EAttachName.replier_interview_pic.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getInterviewPic());
+            attachName = EAttachName.getMap().get(EAttachName.replier_interview_pic.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getInterviewPic());
 
             // 担保人
         } else if (ELoanRole.GUARANTOR.getCode().equals(child.getLoanRole())) {
             // 身份证正面
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.assurance_id_front.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoFront());
+            EAttachName attachName = EAttachName.getMap()
+                    .get(EAttachName.assurance_id_front.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoFront());
             // 身份证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.assurance_id_reverse.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoReverse());
+            attachName = EAttachName.getMap().get(EAttachName.assurance_id_reverse.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoReverse());
             // 征信查询授权
-            attachName = EAttachName.getMap().get(
-                EAttachName.assurance_auth_pdf.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getAuthPdf());
+            attachName = EAttachName.getMap().get(EAttachName.assurance_auth_pdf.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getAuthPdf());
             // 面签照片
-            attachName = EAttachName.getMap().get(
-                EAttachName.assurance_interview_pic.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getInterviewPic());
+            attachName = EAttachName.getMap().get(EAttachName.assurance_interview_pic.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getInterviewPic());
         }
         creditUserDAO.insert(creditUser);
-
     }
 
     @Override
@@ -145,73 +131,63 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         // 主贷人
         if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
             // 身份证正面
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.mainLoaner_id_front.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoFront());
+            EAttachName attachName = EAttachName.getMap()
+                    .get(EAttachName.mainLoaner_id_front.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoFront());
             // 身份证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.mainLoaner_id_reverse.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoReverse());
+            attachName = EAttachName.getMap().get(EAttachName.mainLoaner_id_reverse.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoReverse());
             // 征信查询授权
-            attachName = EAttachName.getMap().get(
-                EAttachName.mainLoaner_auth_pdf.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getAuthPdf());
+            attachName = EAttachName.getMap().get(EAttachName.mainLoaner_auth_pdf.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getAuthPdf());
             // 面签照片
-            attachName = EAttachName.getMap().get(
-                EAttachName.mainloaner_interview_pic.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getInterviewPic());
+            attachName = EAttachName.getMap().get(EAttachName.mainloaner_interview_pic.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getInterviewPic());
             // 共还人信息
         } else if (ELoanRole.GHR.getCode().equals(child.getLoanRole())) {
             // 身份证正面
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.replier_id_front.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoFront());
+            EAttachName attachName = EAttachName.getMap()
+                    .get(EAttachName.replier_id_front.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoFront());
             // 身份证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.replier_id_reverse.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoReverse());
+            attachName = EAttachName.getMap().get(EAttachName.replier_id_reverse.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoReverse());
             // 征信查询授权
-            attachName = EAttachName.getMap().get(
-                EAttachName.replier_auth_pdf.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getAuthPdf());
+            attachName = EAttachName.getMap().get(EAttachName.replier_auth_pdf.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getAuthPdf());
             // 面签照片
-            attachName = EAttachName.getMap().get(
-                EAttachName.replier_interview_pic.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getInterviewPic());
+            attachName = EAttachName.getMap().get(EAttachName.replier_interview_pic.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getInterviewPic());
 
             // 担保人
         } else if (ELoanRole.GUARANTOR.getCode().equals(child.getLoanRole())) {
             // 身份证正面
-            EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.assurance_id_front.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoFront());
+            EAttachName attachName = EAttachName.getMap()
+                    .get(EAttachName.assurance_id_front.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoFront());
             // 身份证反面
-            attachName = EAttachName.getMap().get(
-                EAttachName.assurance_id_reverse.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getIdNoReverse());
+            attachName = EAttachName.getMap().get(EAttachName.assurance_id_reverse.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getIdNoReverse());
             // 征信查询授权
-            attachName = EAttachName.getMap().get(
-                EAttachName.assurance_auth_pdf.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getAuthPdf());
+            attachName = EAttachName.getMap().get(EAttachName.assurance_auth_pdf.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getAuthPdf());
             // 面签照片
-            attachName = EAttachName.getMap().get(
-                EAttachName.assurance_interview_pic.getCode());
-            attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), child.getInterviewPic());
+            attachName = EAttachName.getMap().get(EAttachName.assurance_interview_pic.getCode());
+            attachmentBO.saveAttachment(
+                    bizCode, attachName.getCode(), attachName.getValue(), child.getInterviewPic());
         }
         creditUserDAO.insert(creditUser);
-
     }
 
     @Override
@@ -244,16 +220,28 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             creditUser.setCode(code);
             data = creditUserDAO.select(creditUser);
             if (data == null) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "征信人员不存在!");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信人员不存在!");
             }
         }
         return data;
     }
 
     @Override
-    public void inputBankCreditResult(CreditUser creditUser, String bankReport,
-            String dataReport, String result, String note) {
+    public CreditUser getCreditUserUncheck(String code) {
+
+        CreditUser data = null;
+        if (StringUtils.isNotBlank(code)) {
+            CreditUser creditUser = new CreditUser();
+            creditUser.setCode(code);
+            data = creditUserDAO.select(creditUser);
+        }
+        return data;
+    }
+
+    @Override
+    public void inputBankCreditResult(
+            CreditUser creditUser, String bankReport, String dataReport, String result,
+            String note) {
         if (StringUtils.isNotBlank(creditUser.getCode())) {
             creditUser.setBankCreditResult(result);
             creditUser.setBankCreditResultRemark(note);
@@ -261,7 +249,6 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             creditUser.setDataCreditReport(dataReport);
             creditUserDAO.inputBankCreditResult(creditUser);
         }
-
     }
 
     @Override
@@ -278,8 +265,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public CreditUser getCreditUserByBizCode(String bizCode,
-            ELoanRole creditUserLoanRole) {
+    public CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserLoanRole) {
         CreditUser creditUser = null;
         CreditUser condition = new CreditUser();
         condition.setBizCode(bizCode);
@@ -304,28 +290,26 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         for (CreditUser creditUser : creditUsers) {
             if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
                 creditUser.setBirthAddress(req.getResidenceAddress());
-                creditUser.setPostCode(req.getPostCode2());
+                creditUser.setBirthPostCode(req.getPostCode2());
                 creditUser.setCompanyName(req.getWorkCompanyName());
                 creditUser.setCompanyAddress(req.getWorkCompanyAddress());
                 creditUser.setCompanyContactNo(req.getWorkPhone());
             } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
-                creditUser.setBirthAddressProvince(req
-                    .getMateBirthAddressProvince());
+                creditUser.setBirthAddressProvince(req.getMateBirthAddressProvince());
                 creditUser.setBirthAddressCity(req.getMateBirthAddressCity());
                 creditUser.setBirthAddressArea(req.getMateBirthAddressArea());
                 creditUser.setBirthAddress(req.getMateBirthAddress());
-                creditUser.setPostCode(req.getMatePostCode());
+                creditUser.setBirthPostCode(req.getMatePostCode());
                 creditUser.setEducation(req.getMateEducation());
                 creditUser.setCompanyName(req.getMateCompanyName());
                 creditUser.setCompanyAddress(req.getMateCompanyAddress());
                 creditUser.setCompanyContactNo(req.getMateCompanyContactNo());
             } else {
-                creditUser.setBirthAddressProvince(req
-                    .getGuaBirthAddressProvince());
+                creditUser.setBirthAddressProvince(req.getGuaBirthAddressProvince());
                 creditUser.setBirthAddressCity(req.getGuaBirthAddressCity());
                 creditUser.setBirthAddressArea(req.getGuaBirthAddressArea());
                 creditUser.setBirthAddress(req.getGuaBirthAddress());
-                creditUser.setPostCode(req.getGuaPostCode());
+                creditUser.setBirthPostCode(req.getGuaPostCode());
                 creditUser.setEducation(req.getGuaEducation());
                 creditUser.setCompanyName(req.getGuaCompanyName());
                 creditUser.setCompanyAddress(req.getGuaCompanyAddress());
@@ -334,5 +318,4 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             creditUserDAO.updateCreditUser(creditUser);
         }
     }
-
 }

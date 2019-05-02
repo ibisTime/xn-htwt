@@ -1,216 +1,481 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICreditUserDAO">
-	<resultMap id="creditUser_DB_Result" type="creditUser">
-		<result column="code" property="code" />
-		<result column="biz_code" property="bizCode" />
-		<result column="relation" property="relation" />
-		<result column="loan_role" property="loanRole" />
-		<result column="user_name" property="userName" />
-		
-		<result column="mobile" property="mobile" />
-		<result column="idKind" property="id_kind" />
-		<result column="id_no" property="idNo" />
-		<result column="credit_card_occupation" property="creditCardOccupation" />
-        <result column="bank_credit_result" property="bankCreditResult" />
-        <result column="bank_credit_result_remark" property="bankCreditResultRemark" />
-        <result column="birth_address_province" property="birthAddressProvince" />
-        <result column="birth_address_city" property="birthAddressCity" />
-        <result column="birth_address_area" property="birthAddressArea" />
-        <result column="birth_address" property="birthAddress" />
-        <result column="post_code" property="postCode" />
-        <result column="education" property="education" />
-        <result column="company_name" property="companyName" />
-        <result column="company_address" property="companyAddress" />
-        <result column="company_contact_no" property="companyContactNo" />
-        <result column="house_asset_address" property="houseAssetAddress" />
-        <result column="id_no_front" property="idFront" />
-        <result column="id_no_reverse" property="idReverse" />
-        <result column="auth_pdf" property="authPdf" />
-        <result column="interview_pic" property="interviewPic" />
-        <result column="data_report" property="dataCreditReport" />
-        <result column="bank_report" property="BankCreditReport" />
-	</resultMap>
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">	
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="loanRole != null and loanRole != '' ">
-				AND t.loan_role = #{loanRole}
-			</if>
-			<if test="bizCode != null and bizCode != '' ">
-				AND t.biz_code = #{bizCode}
-			</if>
-			<if test="relation != null and relation != '' ">
-				AND t.relation = #{relation}
-			</if>
-			<if test="idNo != null and idNo != '' ">
-				AND t.id_no = #{idNo}
-			</if>
-		</trim>
-	</sql>
-	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
-		select 
-		t.code
-		,t.biz_code
-		,t.relation
-		,t.loan_role
-		,t.user_name
-		
-		,t.mobile
-		,t.id_kind
-		,t.id_no
-		,t.credit_card_occupation
-		,t.bank_credit_result
-		
-		,t.bank_credit_result_remark
-		,t.birth_address_province
-		,t.birth_address_city
-		,t.birth_address_area
-		,t.birth_address
-		
-		,t.post_code
-		,t.education
-		,t.company_name
-		,t.company_address
-		,t.company_contact_no
-		
-		,t.house_asset_address
-		,t.id_no_front
-		,t.id_no_reverse
-		,t.auth_pdf
-		,t.interview_pic
-		,t.data_report
-		,t.bank_report
-		from tdq_credit_user t
-		<include refid="where_condition"/>
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	<select id="select_creditUser_count" parameterType="creditUser"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_credit_user t
-		<include refid="where_condition" />
-	</select>
-	
-	<insert id="insert_creditUser" parameterType="creditUser">
-		INSERT INTO 
-		tdq_credit_user(
-		code
-		,biz_code
-		,relation
-		,loan_role
-		,user_name	
-		
-		,mobile
-		,id_kind
-		,id_no
-		,bank_credit_result
-		,bank_credit_result_remark
-		,id_no_front
-		,id_no_reverse
-		,auth_pdf
-		,interview_pic
-		,data_report
-		,bank_report
-		)
-		VALUES(
-		#{code}
-		,#{bizCode}
-		,#{relation}
-		,#{loanRole}
-		,#{userName}
-		
-		,#{mobile}
-		,#{idKind}
-		,#{idNo}	
-		,#{bankCreditResult}
-		,#{bankCreditResultRemark}
-		,#{idFront}
-		,#{idReverse}
-		,#{authPdf}
-		,#{interviewPic}
-		,#{dataCreditReport}
-		,#{bankCreditReport}
-		)
-	</insert>
-	
-	<insert id="insert_creditUserList" parameterType="List">
-		INSERT INTO 
-		tdq_credit_user(
-		code
-		,biz_code
-		,relation
-		,loan_role
-		,user_name	
-		
-		,mobile
-		,id_kind
-		,id_no
-		,bank_credit_result
-		,bank_credit_result_remark		
-		)
-		VALUES(
-		<foreach collection="list" item="creditUser" separator=",">
-			#{code}
-		,#{bizCode}
-		,#{relation}
-		,#{loanRole}
-		,#{userName}
-		
-		,#{mobile}
-		,#{idKind}
-		,#{idNo}	
-		,#{bankCreditResult}
-		,#{bankCreditResultRemark}
-		</foreach>
-		)
-	</insert>
-	
-	<update id="update_bankCreditResult" parameterType="creditUser">
-		UPDATE tdq_credit_user
-		SET
-		credit_card_occupation = #{creditCardOccupation}
-		,bank_credit_result = #{bankCreditResult}
-		,bank_credit_result_remark = #{bankCreditResultRemark}
-		,data_report=#{dataCreditReport}
-		,bank_report=#{bankCreditReport}
-		WHERE 
-		code = #{code}
-	</update>
-	
-	<update id="update_creditUser" parameterType="creditUser">
-		UPDATE tdq_credit_user
-		SET
-		loan_role = #{loanRole}
-		,relation = #{relation}
-		,credit_card_occupation = #{creditCardOccupation}
-		,bank_credit_result = #{bankCreditResult}
-		,bank_credit_result_remark = #{bankCreditResultRemark}
-		,birth_address_province=#{birthAddressProvince}
-		,birth_address_city=#{birthAddressCity}
-		,birth_address_area=#{birthAddressArea}
-		,birth_address=#{birthAddress}
-		,post_code=#{postCode}
-		,education=#{education}
-		,company_name=#{companyName}
-		,company_address=#{companyAddress}
-		,company_contact_no=#{companyContactNo}
-		,house_asset_address=#{houseAssetAddress}
-		,data_report=#{dataCreditReport}
-		,bank_report=#{bankCreditReport}
-		WHERE 
-		code = #{code}
-	</update>
-	
-	<delete id="delete_creditUser" parameterType="creditUser">
-		DELETE FROM tdq_credit_user 
-		WHERE code = #{code} 
-	</delete>
+    <resultMap id="creditUser_DB_Result" type="creditUser">
+
+        <result column="code" property="code"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="relation" property="relation"/>
+        <result column="loan_role" property="loanRole"/>
+        <result column="user_name" property="userName"/>
+        <result column="mobile" property="mobile"/>
+        <result column="idKind" property="id_kind"/>
+        <result column="id_no" property="idNo"/>
+        <result column="credit_card_occupation" property="creditCardOccupation"/>
+        <result column="bank_credit_result" property="bankCreditResult"/>
+        <result column="bank_credit_result_remark" property="bankCreditResultRemark"/>
+
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="political" property="political"/>
+        <result column="nation" property="nation"/>
+        <result column="education" property="education"/>
+        <result column="work_profession" property="workProfession"/>
+        <result column="post_title" property="postTitle"/>
+        <result column="customer_birth" property="customerBirth"/>
+        <result column="car_type" property="carType"/>
+        <result column="is_drice_license" property="isDriceLicense"/>
+        <result column="main_income" property="mainIncome"/>
+        <result column="other_income_note" property="otherIncomeNote"/>
+        <result column="is_house_property" property="isHouseProperty"/>
+        <result column="emergency_name1" property="emergencyName1"/>
+        <result column="emergency_relation1" property="emergencyRelation1"/>
+        <result column="emergency_mobile1" property="emergencyMobile1"/>
+        <result column="emergency_name2" property="emergencyName2"/>
+        <result column="emergency_relation2" property="emergencyRelation2"/>
+        <result column="emergency_mobile2" property="emergencyMobile2"/>
+
+        <result column="work_belong_industry" property="workBelongIndustry"/>
+        <result column="work_company_property" property="workCompanyProperty"/>
+        <result column="company_name" property="companyName"/>
+        <result column="company_address" property="companyAddress"/>
+        <result column="company_contact_no" property="companyContactNo"/>
+        <result column="work_datetime" property="workDatetime"/>
+        <result column="position" property="position"/>
+        <result column="employee_quantity" property="employeeQuantity"/>
+        <result column="enterprise_month_output" property="enterpriseMonthOutput"/>
+        <result column="month_income" property="monthIncome"/>
+        <result column="other_work_note" property="otherWorkNote"/>
+
+        <result column="marry_state" property="marryState"/>
+        <result column="family_number" property="familyNumber"/>
+        <result column="family_phone" property="familyPhone"/>
+        <result column="family_main_asset" property="familyMainAsset"/>
+        <result column="main_asset_include" property="mainAssetInclude"/>
+        <result column="birth_address_province" property="birthAddressProvince"/>
+        <result column="birth_address_city" property="birthAddressCity"/>
+        <result column="birth_address_area" property="birthAddressArea"/>
+        <result column="birth_address" property="birthAddress"/>
+        <result column="birth_post_code" property="birthPostCode"/>
+        <result column="now_house_type" property="nowHouseType"/>
+        <result column="now_address_province" property="nowAddressProvince"/>
+        <result column="now_address_city" property="nowAddressCity"/>
+        <result column="now_address_area" property="nowAddressArea"/>
+        <result column="now_address" property="nowAddress"/>
+        <result column="now_post_code" property="nowPostCode"/>
+
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="loanRole != null and loanRole != '' ">
+                AND t.loan_role = #{loanRole}
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="relation != null and relation != '' ">
+                AND t.relation = #{relation}
+            </if>
+            <if test="idNo != null and idNo != '' ">
+                AND t.id_no = #{idNo}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
+        select
+        t.code
+        ,t.biz_code
+        ,t.relation
+        ,t.loan_role
+        ,t.user_name
+        ,t.mobile
+        ,t.id_kind
+        ,t.id_no
+        ,t.credit_card_occupation
+        ,t.bank_credit_result
+        ,t.bank_credit_result_remark
+
+        ,t.gender
+        ,t.age
+        ,t.political
+        ,t.nation
+        ,t.education
+        ,t.work_profession
+        ,t.post_title
+        ,t.customer_birth
+        ,t.car_type
+        ,t.is_drice_license
+        ,t.main_income
+        ,t.other_income_note
+        ,t.is_house_property
+        ,t.emergency_name1
+        ,t.emergency_relation1
+        ,t.emergency_mobile1
+        ,t.emergency_name2
+        ,t.emergency_relation2
+        ,t.emergency_mobile2
+
+        ,t.work_belong_industry
+        ,t.work_company_property
+        ,t.company_name
+        ,t.company_address
+        ,t.company_contact_no
+        ,t.work_datetime
+        ,t.position
+        ,t.employee_quantity
+        ,t.enterprise_month_output
+        ,t.month_income
+        ,t.other_work_note
+
+        ,t.marry_state
+        ,t.family_number
+        ,t.family_phone
+        ,t.family_main_asset
+        ,t.main_asset_include
+        ,t.birth_address_province
+        ,t.birth_address_city
+        ,t.birth_address_area
+        ,t.birth_address
+        ,t.birth_post_code
+        ,t.now_house_type
+        ,t.now_address_province
+        ,t.now_address_city
+        ,t.now_address_area
+        ,t.now_address
+        ,t.now_post_code
+        from tdq_credit_user t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_creditUser_count" parameterType="creditUser"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tdq_credit_user t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_creditUser" parameterType="creditUser">
+        INSERT INTO tdq_credit_user( code
+                                   , biz_code
+                                   , relation
+                                   , loan_role
+                                   , user_name
+                                   , mobile
+                                   , id_kind
+                                   , id_no
+                                   , credit_card_occupation
+                                   , bank_credit_result
+                                   , bank_credit_result_remark
+                                   , gender
+                                   , age
+                                   , political
+                                   , nation
+                                   , education
+                                   , work_profession
+                                   , post_title
+                                   , customer_birth
+                                   , car_type
+                                   , is_drice_license
+                                   , main_income
+                                   , other_income_note
+                                   , is_house_property
+                                   , emergency_name1
+                                   , emergency_relation1
+                                   , emergency_mobile1
+                                   , emergency_name2
+                                   , emergency_relation2
+                                   , emergency_mobile2
+                                   , work_belong_industry
+                                   , work_company_property
+                                   , company_name
+                                   , company_address
+                                   , company_contact_no
+                                   , work_datetime
+                                   , "position"
+                                   , employee_quantity
+                                   , enterprise_month_output
+                                   , month_income
+                                   , other_work_note
+                                   , marry_state
+                                   , family_number
+                                   , family_phone
+                                   , family_main_asset
+                                   , main_asset_include
+                                   , birth_address_province
+                                   , birth_address_city
+                                   , birth_address_area
+                                   , birth_address
+                                   , birth_post_code
+                                   , now_house_type
+                                   , now_address_province
+                                   , now_address_city
+                                   , now_address_area
+                                   , now_address
+                                   , now_post_code)
+        VALUES ( #{code}
+               , #{bizCode}
+               , #{relation}
+               , #{loanRole}
+               , #{userName}
+               , #{mobile}
+               , #{idKind}
+               , #{idNo}
+               , #{creditCardOccupation}
+               , #{bankCreditResult}
+               , #{bankCreditResultRemark}
+               , #{gender}
+               , #{age}
+               , #{political}
+               , #{nation}
+               , #{education}
+               , #{workProfession}
+               , #{postTitle}
+               , #{customerBirth}
+               , #{carType}
+               , #{isDriceLicense}
+               , #{mainIncome}
+               , #{otherIncomeNote}
+               , #{isHouseProperty}
+               , #{emergencyName1}
+               , #{emergencyRelation1}
+               , #{emergencyMobile1}
+               , #{emergencyName2}
+               , #{emergencyRelation2}
+               , #{emergencyMobile2}
+               , #{workBelongIndustry}
+               , #{workCompanyProperty}
+               , #{companyName}
+               , #{companyAddress}
+               , #{companyContactNo}
+               , #{workDatetime}
+               , #{position}
+               , #{employeeQuantity}
+               , #{enterpriseMonthOutput}
+               , #{monthIncome}
+               , #{otherWorkNote}
+               , #{marryState}
+               , #{familyNumber}
+               , #{familyPhone}
+               , #{familyMainAsset}
+               , #{mainAssetInclude}
+               , #{birthAddressProvince}
+               , #{birthAddressCity}
+               , #{birthAddressArea}
+               , #{birthAddress}
+               , #{birthPostCode}
+               , #{nowHouseType}
+               , #{nowAddressProvince}
+               , #{nowAddressCity}
+               , #{nowAddressArea}
+               , #{nowAddress}
+               , #{nowPostCode})
+    </insert>
+
+    <insert id="insert_creditUserList" parameterType="List">
+        INSERT INTO
+        tdq_credit_user(
+        code
+        , biz_code
+        , relation
+        , loan_role
+        , user_name
+        , mobile
+        , id_kind
+        , id_no
+        , credit_card_occupation
+        , bank_credit_result
+        , bank_credit_result_remark
+        , gender
+        , age
+        , political
+        , nation
+        , education
+        , work_profession
+        , post_title
+        , customer_birth
+        , car_type
+        , is_drice_license
+        , main_income
+        , other_income_note
+        , is_house_property
+        , emergency_name1
+        , emergency_relation1
+        , emergency_mobile1
+        , emergency_name2
+        , emergency_relation2
+        , emergency_mobile2
+        , work_belong_industry
+        , work_company_property
+        , company_name
+        , company_address
+        , company_contact_no
+        , work_datetime
+        , "position"
+        , employee_quantity
+        , enterprise_month_output
+        , month_income
+        , other_work_note
+        , marry_state
+        , family_number
+        , family_phone
+        , family_main_asset
+        , main_asset_include
+        , birth_address_province
+        , birth_address_city
+        , birth_address_area
+        , birth_address
+        , birth_post_code
+        , now_house_type
+        , now_address_province
+        , now_address_city
+        , now_address_area
+        , now_address
+        , now_post_code
+        )
+        VALUES(
+        <foreach collection="list" item="creditUser" separator=",">
+            #{code}
+            , #{bizCode}
+            , #{relation}
+            , #{loanRole}
+            , #{userName}
+            , #{mobile}
+            , #{idKind}
+            , #{idNo}
+            , #{creditCardOccupation}
+            , #{bankCreditResult}
+            , #{bankCreditResultRemark}
+            , #{gender}
+            , #{age}
+            , #{political}
+            , #{nation}
+            , #{education}
+            , #{workProfession}
+            , #{postTitle}
+            , #{customerBirth}
+            , #{carType}
+            , #{isDriceLicense}
+            , #{mainIncome}
+            , #{otherIncomeNote}
+            , #{isHouseProperty}
+            , #{emergencyName1}
+            , #{emergencyRelation1}
+            , #{emergencyMobile1}
+            , #{emergencyName2}
+            , #{emergencyRelation2}
+            , #{emergencyMobile2}
+            , #{workBelongIndustry}
+            , #{workCompanyProperty}
+            , #{companyName}
+            , #{companyAddress}
+            , #{companyContactNo}
+            , #{workDatetime}
+            , #{position}
+            , #{employeeQuantity}
+            , #{enterpriseMonthOutput}
+            , #{monthIncome}
+            , #{otherWorkNote}
+            , #{marryState}
+            , #{familyNumber}
+            , #{familyPhone}
+            , #{familyMainAsset}
+            , #{mainAssetInclude}
+            , #{birthAddressProvince}
+            , #{birthAddressCity}
+            , #{birthAddressArea}
+            , #{birthAddress}
+            , #{birthPostCode}
+            , #{nowHouseType}
+            , #{nowAddressProvince}
+            , #{nowAddressCity}
+            , #{nowAddressArea}
+            , #{nowAddress}
+            , #{nowPostCode}
+        </foreach>
+        )
+    </insert>
+
+    <update id="update_bankCreditResult" parameterType="creditUser">
+        UPDATE tdq_credit_user
+        SET credit_card_occupation    = #{creditCardOccupation}
+          , bank_credit_result        = #{bankCreditResult}
+          , bank_credit_result_remark = #{bankCreditResultRemark}
+          , data_report=#{dataCreditReport}
+          , bank_report=#{bankCreditReport}
+        WHERE code = #{code}
+    </update>
+
+    <update id="update_creditUser" parameterType="creditUser">
+        UPDATE tdq_credit_user
+        SET relation                  = #{relation}
+          , loan_role                 = #{loanRole}
+          , user_name                 = #{userName}
+          , mobile                    = #{mobile}
+          , id_kind                   = #{idKind}
+          , id_no                     = #{idNo}
+          , credit_card_occupation    = #{creditCardOccupation}
+          , bank_credit_result        = #{bankCreditResult}
+          , bank_credit_result_remark = #{bankCreditResultRemark}
+          , gender                    = #{gender}
+          , age                       = #{age}
+          , political                 = #{political}
+          , nation                    = #{nation}
+          , education                 = #{education}
+          , work_profession           = #{workProfession}
+          , post_title                = #{postTitle}
+          , customer_birth            = #{customerBirth}
+          , car_type                  = #{carType}
+          , is_drice_license          = #{isDriceLicense}
+          , main_income               = #{mainIncome}
+          , other_income_note         = #{otherIncomeNote}
+          , is_house_property         = #{isHouseProperty}
+          , emergency_name1           = #{emergencyName1}
+          , emergency_relation1       = #{emergencyRelation1}
+          , emergency_mobile1         = #{emergencyMobile1}
+          , emergency_name2           = #{emergencyName2}
+          , emergency_relation2       = #{emergencyRelation2}
+          , emergency_mobile2         = #{emergencyMobile2}
+          , work_belong_industry      = #{workBelongIndustry}
+          , work_company_property     = #{workCompanyProperty}
+          , company_name              = #{companyName}
+          , company_address           = #{companyAddress}
+          , company_contact_no        = #{companyContactNo}
+          , work_datetime             = #{workDatetime}
+          , "position"                = #{position}
+          , employee_quantity         = #{employeeQuantity}
+          , enterprise_month_output   = #{enterpriseMonthOutput}
+          , month_income              = #{monthIncome}
+          , other_work_note           = #{otherWorkNote}
+          , marry_state               = #{marryState}
+          , family_number             = #{familyNumber}
+          , family_phone              = #{familyPhone}
+          , family_main_asset         = #{familyMainAsset}
+          , main_asset_include        = #{mainAssetInclude}
+          , birth_address_province    = #{birthAddressProvince}
+          , birth_address_city        = #{birthAddressCity}
+          , birth_address_area        = #{birthAddressArea}
+          , birth_address             = #{birthAddress}
+          , birth_post_code           = #{birthPostCode}
+          , now_house_type            = #{nowHouseType}
+          , now_address_province      = #{nowAddressProvince}
+          , now_address_city          = #{nowAddressCity}
+          , now_address_area          = #{nowAddressArea}
+          , now_address               = #{nowAddress}
+          , now_post_code             = #{nowPostCode}
+        WHERE code = #{code}
+    </update>
+
+    <delete id="delete_creditUser" parameterType="creditUser">
+        DELETE
+        FROM tdq_credit_user
+        WHERE code = #{code}
+    </delete>
 </mapper>

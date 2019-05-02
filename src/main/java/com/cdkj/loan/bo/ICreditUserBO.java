@@ -1,13 +1,12 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.ELoanRole;
+import java.util.List;
 
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
@@ -29,9 +28,13 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     // 查询征信人员
     public CreditUser getCreditUser(String code);
 
+    // 查询征信人员
+    public CreditUser getCreditUserUncheck(String code);
+
     // 录入银行征信结果
-    public void inputBankCreditResult(CreditUser creditUser, String bankReport,
-            String dataReport, String result, String note);
+    public void inputBankCreditResult(
+            CreditUser creditUser, String bankReport, String dataReport, String result,
+            String note);
 
     // 批量查询征信人员
     public List<CreditUser> queryCreditUserList(CreditUser condition);
@@ -40,11 +43,9 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     public List<CreditUser> queryCreditUserList(String bizCode);
 
     // 查询征信单共还人，担保人，本人
-    public CreditUser getCreditUserByBizCode(String bizCode,
-            ELoanRole creditUserRelation);
+    public CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserRelation);
 
     public void refreshCreditUser(CreditUser data);
 
     public void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req);
-
 }
