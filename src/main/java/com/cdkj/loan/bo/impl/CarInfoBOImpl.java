@@ -1,22 +1,24 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICarInfoDAO;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632500Req;
+import com.cdkj.loan.dto.req.XN632530Req;
+import com.cdkj.loan.dto.req.XN632531Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 //CHECK ��鲢��ע�� 
 @Component
@@ -83,7 +85,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
             condition.setCode(code);
             data = carInfoDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "车辆信息编号不存在");
             }
         }
         return data;
@@ -105,7 +107,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         if (StringUtils.isNotBlank(req.getCarHgzPic())) {
             attachName = EAttachName.carHgzPic;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getCarHgzPic());
+                    attachName.getValue(), req.getCarHgzPic());
         }
 
         // 行驶证正面
@@ -113,7 +115,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.driveLicenseFront;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getDriveLicenseFront());
+                    attachName.getValue(), req.getDriveLicenseFront());
         }
 
         // 行驶证反面
@@ -121,56 +123,56 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.driveLicenseReverse;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getDriveLicenseReverse());
+                    attachName.getValue(), req.getDriveLicenseReverse());
         }
         // 工作资料上传
         if (StringUtils.isNotBlank(req.getWorkAssetPdf())) {
 
             attachName = EAttachName.workAssetPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getWorkAssetPdf());
+                    attachName.getValue(), req.getWorkAssetPdf());
         }
         // 申请人资产资料pdf
         if (StringUtils.isNotBlank(req.getAssetPdf())) {
 
             attachName = EAttachName.assetPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getAssetPdf());
+                    attachName.getValue(), req.getAssetPdf());
         }
         // 配偶资产资料pdf
         if (StringUtils.isNotBlank(req.getMateAssetPdf())) {
 
             attachName = EAttachName.mateAssetPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getMateAssetPdf());
+                    attachName.getValue(), req.getMateAssetPdf());
         }
         // 担保人资料pdf
         if (StringUtils.isNotBlank(req.getGuaAssetPdf())) {
 
             attachName = EAttachName.guaAssetPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getGuaAssetPdf());
+                    attachName.getValue(), req.getGuaAssetPdf());
         }
         // 购房合同
         if (StringUtils.isNotBlank(req.getHouseContract())) {
 
             attachName = EAttachName.houseContract;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHouseContract());
+                    attachName.getValue(), req.getHouseContract());
         }
         // 结婚证资料
         if (StringUtils.isNotBlank(req.getMarryPdf())) {
 
             attachName = EAttachName.marryPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getMarryPdf());
+                    attachName.getValue(), req.getMarryPdf());
         }
         // 房屋照片
         if (StringUtils.isNotBlank(req.getHousePicture())) {
 
             attachName = EAttachName.house_pic;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHousePicture());
+                    attachName.getValue(), req.getHousePicture());
         }
     }
 
@@ -187,6 +189,47 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     }
 
     @Override
+    public void saveCarInfo(XN632530Req req) {
+        CarInfo carInfo = new CarInfo();
+        String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
+        carInfo.setCode(code);
+        carInfo.setGpsFee(StringValidater.toLong(req.getGpsFee()));
+        carInfo.setAuthFee(StringValidater.toLong(req.getAuthFee()));
+        carInfo.setMonthDeposit(StringValidater.toLong(req.getMonthDeposit()));
+        carInfo.setTeamFee(StringValidater.toLong(req.getTeamFee()));
+        carInfo.setOtherFee(StringValidater.toLong(req.getOtherFee()));
+        carInfoDAO.insert(carInfo);
+    }
+
+    @Override
+    public void saveCarInfo(XN632531Req req) {
+        CarInfo carInfo = new CarInfo();
+        EntityUtils.copyData(req, carInfo);
+        //重置code
+        String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
+        carInfo.setCode(code);
+        carInfoDAO.insert(carInfo);
+    }
+
+    @Override
+    public int refreshCarInfo(CarInfo carInfo, XN632530Req req) {
+        String code = carInfo.getCode();
+        EntityUtils.copyData(req, carInfo);
+        //重置code
+        carInfo.setCode(code);
+        return carInfoDAO.update(carInfo);
+    }
+
+    @Override
+    public int refreshCarInfo(CarInfo carInfo, XN632531Req req) {
+        String code = carInfo.getCode();
+        EntityUtils.copyData(req, carInfo);
+        //重置code
+        carInfo.setCode(code);
+        return carInfoDAO.update(carInfo);
+    }
+
+    @Override
     public void saveAttachment(XN632500Req req) {
         String bizCode = req.getCode();
         EAttachName attachName = null;
@@ -194,27 +237,27 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         if (StringUtils.isNotBlank(req.getCarPic())) {
             attachName = EAttachName.carPic;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getCarPic());
+                    attachName.getValue(), req.getCarPic());
         }
         // 合格证
         if (StringUtils.isNotBlank(req.getCarHgzPic())) {
             attachName = EAttachName.carHgzPic;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getCarHgzPic());
+                    attachName.getValue(), req.getCarHgzPic());
         }
 
         // 户口本资料
         if (StringUtils.isNotBlank(req.getHkBookPdf())) {
             attachName = EAttachName.hkBookPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHkBookPdf());
+                    attachName.getValue(), req.getHkBookPdf());
         }
         // 结婚证资料
         if (StringUtils.isNotBlank(req.getMarryPdf())) {
 
             attachName = EAttachName.marryPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getMarryPdf());
+                    attachName.getValue(), req.getMarryPdf());
         }
 
         // 购房合同
@@ -222,7 +265,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.houseContract;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHouseContract());
+                    attachName.getValue(), req.getHouseContract());
         }
 
         // 购房发票
@@ -230,7 +273,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.houseInvoice;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHouseInvoice());
+                    attachName.getValue(), req.getHouseInvoice());
         }
 
         // 居住证明
@@ -238,7 +281,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.liveProvePdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getLiveProvePdf());
+                    attachName.getValue(), req.getLiveProvePdf());
         }
 
         // 自建房证明
@@ -246,7 +289,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.buildProvePdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getBuildProvePdf());
+                    attachName.getValue(), req.getBuildProvePdf());
         }
 
         // 家访照片
@@ -254,7 +297,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.housePictureApply;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getHousePictureApply());
+                    attachName.getValue(), req.getHousePictureApply());
         }
 
         // 收入证明
@@ -262,7 +305,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.improvePdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getImprovePdf());
+                    attachName.getValue(), req.getImprovePdf());
         }
 
         // 单位前台照片
@@ -270,7 +313,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.frontTablePic;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getFrontTablePic());
+                    attachName.getValue(), req.getFrontTablePic());
         }
 
         // 单位场地照片
@@ -278,7 +321,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.workPlacePic;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getWorkPlacePic());
+                    attachName.getValue(), req.getWorkPlacePic());
         }
 
         // 业务员与客户合影
@@ -286,7 +329,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.salerAndcustomer;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getSalerAndcustomer());
+                    attachName.getValue(), req.getSalerAndcustomer());
         }
 
         // 配偶资产资料pdf
@@ -294,14 +337,14 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
             attachName = EAttachName.mateAssetPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getMateAssetPdf());
+                    attachName.getValue(), req.getMateAssetPdf());
         }
         // 担保人资料pdf
         if (StringUtils.isNotBlank(req.getGuaAssetPdf())) {
 
             attachName = EAttachName.guaAssetPdf;
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getGuaAssetPdf());
+                    attachName.getValue(), req.getGuaAssetPdf());
         }
 
     }

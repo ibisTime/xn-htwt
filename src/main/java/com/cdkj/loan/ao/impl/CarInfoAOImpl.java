@@ -24,6 +24,7 @@ import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.CreditUserExt;
 import com.cdkj.loan.domain.LoanProduct;
@@ -34,6 +35,9 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.dto.req.XN632530Req;
+import com.cdkj.loan.dto.req.XN632531Req;
+import com.cdkj.loan.dto.req.XN632537Req;
+import com.cdkj.loan.dto.res.XN632537Res;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -44,12 +48,14 @@ import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 //CHECK ��鲢��ע�� 
 @Service
@@ -542,10 +548,55 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (repayBiz == null) {
             repayBizBO.saveRepayBiz(req);
         } else {
-            EntityUtils.copyData(req, repayBiz);
-            repayBizBO.refreshRepayBiz(repayBiz);
+            repayBizBO.refreshRepayBiz(repayBiz, req);
         }
 
+        //判断车辆信息是否存在，存在则修改，不存在则新增
+        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
+        if (carInfo == null) {
+            carInfoBO.saveCarInfo(req);
+        } else {
+            carInfoBO.refreshCarInfo(carInfo, req);
+        }
+
+        cdbizBO.refreshCdbiz(cdbiz, req);
+
+    }
+
+    @Override
+    public void inputCarInfo(XN632531Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        //判断车辆信息是否存在，存在则修改，不存在则新增
+        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
+        if (carInfo == null) {
+            carInfoBO.saveCarInfo(req);
+        } else {
+            carInfoBO.refreshCarInfo(carInfo, req);
+        }
+
+        attachmentBO.removeByKname(req.getCode(), EAttachName.carPic.getCode());
+        attachmentBO.saveAttachment(req.getCode(), EAttachName.carPic.getCode(),
+                EAttachName.carPic.getValue(), req.getCarPic());
+        attachmentBO.removeByKname(req.getCode(), EAttachName.otherPdf.getCode());
+        attachmentBO.saveAttachment(req.getCode(), EAttachName.otherPdf.getCode(),
+                EAttachName.otherPdf.getValue(), req.getCarHgzPic());
+
+        cdbizBO.refreshCdbiz(cdbiz, req);
+    }
+
+    @Override
+    public void inputJourInfo(XN632537Req req) {
+        creditJourBO.removeBizJour(req.getCode());
+        ArrayList<CreditJour> jourList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(req.getJourList())) {
+            for (XN632537Res res : req.getJourList()) {
+                res.setBizCode(req.getCode());
+                CreditJour creditJour = new CreditJour();
+                EntityUtils.copyData(res, creditJour);
+                jourList.add(creditJour);
+            }
+            creditJourBO.saveCreditJourList(jourList);
+        }
     }
 
     private void lastApprove(Cdbiz cdbiz, String operator) {

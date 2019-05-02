@@ -4,6 +4,8 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.dto.req.XN632530Req;
+import com.cdkj.loan.dto.req.XN632531Req;
+import com.cdkj.loan.dto.req.XN632537Req;
 import org.springframework.stereotype.Component;
 
 //CHECK ��鲢��ע�� 
@@ -48,4 +50,14 @@ public interface ICarInfoAO {
      * 准入单-贷款信息
      */
     void inputLoanInfo(XN632530Req req);
+
+    /**
+     * 修改入准入单-车辆信息
+     */
+    void inputCarInfo(XN632531Req req);
+
+    /**
+     * 修改入准入单-流水
+     */
+    void inputJourInfo(XN632537Req req);
 }

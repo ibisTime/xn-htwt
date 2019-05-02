@@ -13,7 +13,6 @@ import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
@@ -131,17 +130,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
                 .getFirstRepayAmount()));
         repayBiz.setLyDeposit(StringValidater.toLong(req.getLyDeposit()));
         repayBizDAO.insert(repayBiz);
-        return code;
-    }
-
-    @Override
-    public String saveRepayBiz(XN632530Req req) {
-        RepayBiz data = new RepayBiz();
-        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
-                .getCode());
-        data.setCode(code);
-        EntityUtils.copyData(req, data);
-        repayBizDAO.insert(data);
         return code;
     }
 
@@ -591,7 +579,37 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void refreshRepayBiz(RepayBiz repayBiz) {
+    public String saveRepayBiz(XN632530Req req) {
+        RepayBiz repayBiz = new RepayBiz();
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+                .getCode());
+        repayBiz.setCode(code);
+        repayBiz.setBizCode(req.getCode());
+        repayBiz.setLoanProductCode(req.getLoanProductCode());
+        LoanProduct product = loanProductBO.getLoanProduct(req
+                .getLoanProductCode());
+        repayBiz.setLoanProductName(product.getName());
+        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
+        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
+        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
+        repayBiz.setRefCode(req.getCode());
+        repayBizDAO.insert(repayBiz);
+        return code;
+    }
+
+    @Override
+    public void refreshRepayBiz(RepayBiz repayBiz, XN632530Req req) {
+        repayBiz.setBizCode(req.getCode());
+        repayBiz.setLoanProductCode(req.getLoanProductCode());
+        LoanProduct product = loanProductBO.getLoanProduct(req
+                .getLoanProductCode());
+        repayBiz.setLoanProductName(product.getName());
+        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
+        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
+        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
+        repayBiz.setRefCode(req.getCode());
         repayBizDAO.updateRepayBiz(repayBiz);
     }
 

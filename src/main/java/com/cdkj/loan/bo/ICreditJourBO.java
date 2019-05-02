@@ -1,12 +1,11 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632490Req;
 import com.cdkj.loan.dto.req.XN632492Req;
+import java.util.List;
 
 public interface ICreditJourBO extends IPaginableBO<CreditJour> {
 
@@ -26,4 +25,8 @@ public interface ICreditJourBO extends IPaginableBO<CreditJour> {
 
     public List<CreditJour> querCreditJoursByBizCode(String bizCode);
 
+    /**
+     * 批量新增
+     */
+    void saveCreditJourList(List<CreditJour> jourList);
 }

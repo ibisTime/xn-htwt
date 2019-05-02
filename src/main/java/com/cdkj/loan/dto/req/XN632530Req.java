@@ -66,7 +66,7 @@ public class XN632530Req {
 
     // 是否我司续保
     @NotBlank
-    private String isCompanyContinue;
+    private String isCompanyContinue;// cdbiz
 
     // 月供保证金
     @NotBlank

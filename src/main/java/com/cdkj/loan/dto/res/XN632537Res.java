@@ -8,6 +8,9 @@ import java.util.Date;
  */
 public class XN632537Res {
 
+    // 业务编号
+    private String bizCode;
+
     // 征信人员编号
     private String creditUserCode;
 
@@ -52,6 +55,15 @@ public class XN632537Res {
 
     // 流水备注
     private String remark;
+
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
 
     public String getCreditUserCode() {
         return creditUserCode;

@@ -1,12 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -24,6 +17,11 @@ import com.cdkj.loan.enums.ECreditJourType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
@@ -41,13 +39,13 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
         BeanUtils.copyProperties(req, data);
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
-            .getCode());
+                .getCode());
         data.setCode(code);
 
         data.setDatetimeStart(DateUtil.strToDate(req.getDatetimeStart(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setDatetimeEnd(DateUtil.strToDate(req.getDatetimeEnd(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
 
         data.setInterest1(NumberUtil.parseInt(req.getInterest1()));
         data.setInterest2(NumberUtil.parseInt(req.getInterest2()));
@@ -79,9 +77,9 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
         BeanUtils.copyProperties(req, data);
 
         data.setDatetimeStart(DateUtil.strToDate(req.getDatetimeStart(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setDatetimeEnd(DateUtil.strToDate(req.getDatetimeEnd(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
 
         data.setInterest1(NumberUtil.parseInt(req.getInterest1()));
         data.setInterest2(NumberUtil.parseInt(req.getInterest2()));
@@ -119,112 +117,112 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
     @Override
     public void saveCreditJour(XN632120Req req) {
         List<CreditUser> creditUsers = creditUserBO.queryCreditUserList(req
-            .getCode());
+                .getCode());
         for (CreditUser creditUser : creditUsers) {
             // 主贷人
             if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
                 CreditJour creditJour = new CreditJour();
                 String code = OrderNoGenerater
-                    .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
+                        .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
                 // 微信流水
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.wx.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getWxJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour
-                    .setDatetimeEnd(DateUtil.strToDate(
-                        req.getWxJourDatetimeEnd(),
+                        req.getWxJourDatetimeStart(),
                         DateUtil.DB_DATE_FORMAT_STRING));
+                creditJour
+                        .setDatetimeEnd(DateUtil.strToDate(
+                                req.getWxJourDatetimeEnd(),
+                                DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getWxJourInterest1()));
+                        .getWxJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getWxJourInterest2()));
+                        .getWxJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getWxInterest1()));
+                        .getWxInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getWxInterest2()));
+                        .getWxInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getWxJourIncome()));
+                        .getWxJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getWxJourExpend()));
+                        .getWxJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getWxJourBalance()));
+                        .getWxJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getWxJourMonthIncome()));
+                        .getWxJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getWxJourMonthExpend()));
+                        .getWxJourMonthExpend()));
                 creditJour.setPic(req.getWxJourPic());
                 creditJour.setRemark(req.getWxJourRemark());
                 creditJourDAO.insert(creditJour);
                 // 支付宝流水
                 code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
-                    .getCode());
+                        .getCode());
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.zfb.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getZfbJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour
-                    .setDatetimeEnd(DateUtil.strToDate(
-                        req.getZfbJourDatetimeEnd(),
+                        req.getZfbJourDatetimeStart(),
                         DateUtil.DB_DATE_FORMAT_STRING));
+                creditJour
+                        .setDatetimeEnd(DateUtil.strToDate(
+                                req.getZfbJourDatetimeEnd(),
+                                DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getZfbJourInterest1()));
+                        .getZfbJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getZfbJourInterest2()));
+                        .getZfbJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getZfbInterest1()));
+                        .getZfbInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getZfbInterest2()));
+                        .getZfbInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getZfbJourIncome()));
+                        .getZfbJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getZfbJourExpend()));
+                        .getZfbJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getZfbJourBalance()));
+                        .getZfbJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getZfbJourMonthIncome()));
+                        .getZfbJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getZfbJourMonthExpend()));
+                        .getZfbJourMonthExpend()));
                 creditJour.setPic(req.getZfbJourPic());
                 creditJour.setRemark(req.getZfbJourRemark());
                 creditJourDAO.insert(creditJour);
                 // 银行流水
                 code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
-                    .getCode());
+                        .getCode());
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.bank.getCode());
                 creditJour
-                    .setDatetimeStart(DateUtil.strToDate(
-                        req.getJourDatetimeStart(),
-                        DateUtil.DB_DATE_FORMAT_STRING));
+                        .setDatetimeStart(DateUtil.strToDate(
+                                req.getJourDatetimeStart(),
+                                DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
-                    req.getJourDatetimeEnd(), DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getJourDatetimeEnd(), DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getJourInterest1()));
+                        .getJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getJourInterest2()));
+                        .getJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getInterest1()));
+                        .getInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getInterest2()));
+                        .getInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getJourIncome()));
+                        .getJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getJourExpend()));
+                        .getJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getJourBalance()));
+                        .getJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getJourMonthIncome()));
+                        .getJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getJourMonthExpend()));
+                        .getJourMonthExpend()));
                 creditJour.setPic(req.getJourPic());
                 creditJour.setRemark(req.getJourRemark());
                 creditJourDAO.insert(creditJour);
@@ -232,104 +230,104 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
             } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
                 CreditJour creditJour = new CreditJour();
                 String code = OrderNoGenerater
-                    .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
+                        .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
                 // 微信流水
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.wx.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getMateWxJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getMateWxJourDatetimeStart(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
-                    req.getMateWxJourDatetimeEnd(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getMateWxJourDatetimeEnd(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getMateWxJourInterest1()));
+                        .getMateWxJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getMateWxJourInterest2()));
+                        .getMateWxJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getMateWxInterest1()));
+                        .getMateWxInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getMateWxInterest2()));
+                        .getMateWxInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getMateWxJourIncome()));
+                        .getMateWxJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getMateWxJourExpend()));
+                        .getMateWxJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getMateWxJourBalance()));
+                        .getMateWxJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getMateWxJourMonthIncome()));
+                        .getMateWxJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getMateWxJourMonthExpend()));
+                        .getMateWxJourMonthExpend()));
                 creditJour.setPic(req.getMateWxJourPic());
                 creditJour.setRemark(req.getMateWxJourRemark());
                 creditJourDAO.insert(creditJour);
                 // 支付宝流水
                 code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
-                    .getCode());
+                        .getCode());
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.zfb.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getMateZfbJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getMateZfbJourDatetimeStart(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
-                    req.getMateZfbJourDatetimeEnd(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getMateZfbJourDatetimeEnd(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getMateZfbJourInterest1()));
+                        .getMateZfbJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getMateZfbJourInterest2()));
+                        .getMateZfbJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getMateZfbInterest1()));
+                        .getMateZfbInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getMateZfbInterest2()));
+                        .getMateZfbInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getMateZfbJourIncome()));
+                        .getMateZfbJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getMateZfbJourExpend()));
+                        .getMateZfbJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getMateZfbJourBalance()));
+                        .getMateZfbJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getMateZfbJourMonthIncome()));
+                        .getMateZfbJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getMateZfbJourMonthExpend()));
+                        .getMateZfbJourMonthExpend()));
                 creditJour.setPic(req.getMateZfbJourPic());
                 creditJour.setRemark(req.getMateZfbJourRemark());
                 creditJourDAO.insert(creditJour);
                 // 银行流水
                 code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
-                    .getCode());
+                        .getCode());
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.bank.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getMateJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getMateJourDatetimeStart(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
-                    req.getMateJourDatetimeEnd(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getMateJourDatetimeEnd(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getMateJourInterest1()));
+                        .getMateJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getMateJourInterest2()));
+                        .getMateJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getMateInterest1()));
+                        .getMateInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getMateInterest2()));
+                        .getMateInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getMateJourIncome()));
+                        .getMateJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getMateJourExpend()));
+                        .getMateJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getMateJourBalance()));
+                        .getMateJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getMateJourMonthIncome()));
+                        .getMateJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getMateJourMonthExpend()));
+                        .getMateJourMonthExpend()));
                 creditJour.setPic(req.getMateJourPic());
                 creditJour.setRemark(req.getMateJourRemark());
                 creditJourDAO.insert(creditJour);
@@ -337,105 +335,105 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
             } else {
                 CreditJour creditJour = new CreditJour();
                 String code = OrderNoGenerater
-                    .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
+                        .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
                 // 微信流水
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.wx.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getGuaWxJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getGuaWxJourDatetimeStart(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
-                    req.getGuaWxJourDatetimeEnd(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getGuaWxJourDatetimeEnd(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getGuaWxJourInterest1()));
+                        .getGuaWxJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getGuaWxJourInterest2()));
+                        .getGuaWxJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getGuaWxInterest1()));
+                        .getGuaWxInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getGuaWxInterest2()));
+                        .getGuaWxInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getGuaWxJourIncome()));
+                        .getGuaWxJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getGuaWxJourExpend()));
+                        .getGuaWxJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getGuaWxJourBalance()));
+                        .getGuaWxJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getGuaWxJourMonthIncome()));
+                        .getGuaWxJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getGuaWxJourMonthExpend()));
+                        .getGuaWxJourMonthExpend()));
                 creditJour.setPic(req.getGuaWxJourPic());
                 creditJour.setRemark(req.getGuaWxJourRemark());
                 creditJourDAO.insert(creditJour);
                 // 支付宝流水
                 code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
-                    .getCode());
+                        .getCode());
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.zfb.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getGuaZfbJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getGuaZfbJourDatetimeStart(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
-                    req.getGuaZfbJourDatetimeEnd(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
+                        req.getGuaZfbJourDatetimeEnd(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getGuaZfbJourInterest1()));
+                        .getGuaZfbJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getGuaZfbJourInterest2()));
+                        .getGuaZfbJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getGuaZfbInterest1()));
+                        .getGuaZfbInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getGuaZfbInterest2()));
+                        .getGuaZfbInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getGuaZfbJourIncome()));
+                        .getGuaZfbJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getGuaZfbJourExpend()));
+                        .getGuaZfbJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getGuaZfbJourBalance()));
+                        .getGuaZfbJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getGuaZfbJourMonthIncome()));
+                        .getGuaZfbJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getGuaZfbJourMonthExpend()));
+                        .getGuaZfbJourMonthExpend()));
                 creditJour.setPic(req.getGuaZfbJourPic());
                 creditJour.setRemark(req.getGuaZfbJourRemark());
                 creditJourDAO.insert(creditJour);
                 // 银行流水
                 code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
-                    .getCode());
+                        .getCode());
                 creditJour.setCode(code);
                 creditJour.setBizCode(req.getCode());
                 creditJour.setCreditUserCode(creditUser.getCode());
                 creditJour.setType(ECreditJourType.bank.getCode());
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    req.getGuaJourDatetimeStart(),
-                    DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour
-                    .setDatetimeEnd(DateUtil.strToDate(
-                        req.getGuaJourDatetimeEnd(),
+                        req.getGuaJourDatetimeStart(),
                         DateUtil.DB_DATE_FORMAT_STRING));
+                creditJour
+                        .setDatetimeEnd(DateUtil.strToDate(
+                                req.getGuaJourDatetimeEnd(),
+                                DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setJourInterest1(StringValidater.toInteger(req
-                    .getGuaJourInterest1()));
+                        .getGuaJourInterest1()));
                 creditJour.setJourInterest2(StringValidater.toInteger(req
-                    .getGuaJourInterest2()));
+                        .getGuaJourInterest2()));
                 creditJour.setInterest1(StringValidater.toInteger(req
-                    .getGuaInterest1()));
+                        .getGuaInterest1()));
                 creditJour.setInterest2(StringValidater.toInteger(req
-                    .getGuaInterest2()));
+                        .getGuaInterest2()));
                 creditJour.setIncome(StringValidater.toInteger(req
-                    .getGuaJourIncome()));
+                        .getGuaJourIncome()));
                 creditJour.setExpend(StringValidater.toInteger(req
-                    .getGuaJourExpend()));
+                        .getGuaJourExpend()));
                 creditJour.setBalance(StringValidater.toInteger(req
-                    .getGuaJourBalance()));
+                        .getGuaJourBalance()));
                 creditJour.setMonthIncome(StringValidater.toInteger(req
-                    .getGuaJourMonthIncome()));
+                        .getGuaJourMonthIncome()));
                 creditJour.setMonthExpend(StringValidater.toInteger(req
-                    .getGuaJourMonthExpend()));
+                        .getGuaJourMonthExpend()));
                 creditJour.setPic(req.getGuaJourPic());
                 creditJour.setRemark(req.getGuaJourRemark());
                 creditJourDAO.insert(creditJour);
@@ -462,5 +460,10 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
         condition.setBizCode(bizCode);
         List<CreditJour> jours = queryCreditJourList(condition);
         return jours;
+    }
+
+    @Override
+    public void saveCreditJourList(List<CreditJour> jourList) {
+        creditJourDAO.insertList(jourList);
     }
 }

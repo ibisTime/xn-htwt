@@ -1,12 +1,13 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.dto.req.XN632530Req;
+import com.cdkj.loan.dto.req.XN632531Req;
+import java.util.List;
 
 //CHECK ��鲢��ע�� 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
@@ -19,6 +20,10 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     public int removeCdbiz(String code);
 
     public int refreshCdbiz(Cdbiz data);
+
+    public int refreshCdbiz(Cdbiz cdbiz, XN632530Req req);
+
+    public int refreshCdbiz(Cdbiz cdbiz, XN632531Req req);
 
     public List<Cdbiz> queryCdbizList(Cdbiz condition);
 
