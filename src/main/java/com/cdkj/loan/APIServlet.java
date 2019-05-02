@@ -8,18 +8,15 @@
  */
 package com.cdkj.loan;
 
+import com.cdkj.loan.proxy.DispatcherImpl;
+import com.cdkj.loan.proxy.IDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
-
-import com.cdkj.loan.proxy.DispatcherImpl;
-import com.cdkj.loan.proxy.IDispatcher;
 
 /** 
  * @author: miyb 
@@ -42,7 +39,7 @@ public class APIServlet extends HttpServlet {
         logger.info("Successful Deployment");
         PrintWriter writer = response.getWriter();
         writer.append("Version:1.5.0/ \n");
-        writer.append("Description:htwt_meet_1227 \n");
+        writer.append("Description:htwt_meet_1228 \n");
         writer.flush();
     }
 
