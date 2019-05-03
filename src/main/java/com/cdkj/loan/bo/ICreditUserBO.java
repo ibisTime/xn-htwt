@@ -22,7 +22,7 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     CreditUser getCreditUser(String code);
 
     // 查询征信人员
-    public CreditUser getCreditUserUncheck(String code);
+    CreditUser getCreditUserUncheck(String code);
 
     // 录入银行征信结果
     void inputBankCreditResult(CreditUser creditUser, String bankReport,
@@ -35,11 +35,9 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     List<CreditUser> queryCreditUserList(String bizCode);
 
     // 查询征信单共还人，担保人，本人
-    CreditUser getCreditUserByBizCode(String bizCode,
-            ELoanRole creditUserRelation);
+    CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserRelation);
 
     void refreshCreditUser(CreditUser data);
 
     void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req);
-
 }

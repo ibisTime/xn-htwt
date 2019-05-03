@@ -33,7 +33,6 @@ import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112Req;
-import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.res.XN632917Res;
@@ -191,12 +190,11 @@ public class CreditAOImpl implements ICreditAO {
         // 修改内勤
         creditBO.distributeLeaflets(credit, req.getInsideJob());
         // 删除前待办事项
-        bizTaskBO.removeUnhandleBizTask(cdbiz.getCode(),
-            ENode.input_credit.getCode());
+//        bizTaskBO.removeUnhandleBizTask(cdbiz.getCode(),
+//            ENode.input_credit.getCode());
         // 新增该内勤的待办事项
         bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.CREDIT,
             credit.getCode(), ENode.input_credit, req.getInsideJob());
-
     }
 
     @Override
@@ -275,10 +273,10 @@ public class CreditAOImpl implements ICreditAO {
         //****待处理*****
         //creditUserBO.removeCreditUserByCreditCode(credit.getCode());
 
-        List<XN632112ReqCreditUser> childList = req.getCreditUserList();
+        List<XN632110ReqCreditUser> childList = req.getCreditUserList();
         int applyUserCount = 0;
         if (CollectionUtils.isNotEmpty(childList)) {
-            for (XN632112ReqCreditUser child : childList) {
+            for (XN632110ReqCreditUser child : childList) {
                 if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
                     applyUserCount++;
                 }

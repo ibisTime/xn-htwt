@@ -145,9 +145,20 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
             creditUser.setCode(code);
             data = creditUserDAO.select(creditUser);
             if (data == null) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "征信人员不存在!");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信人员不存在!");
             }
+        }
+        return data;
+    }
+
+    @Override
+    public CreditUser getCreditUserUncheck(String code) {
+
+        CreditUser data = null;
+        if (StringUtils.isNotBlank(code)) {
+            CreditUser creditUser = new CreditUser();
+            creditUser.setCode(code);
+            data = creditUserDAO.select(creditUser);
         }
         return data;
     }

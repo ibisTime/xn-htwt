@@ -6,7 +6,6 @@ import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
-import java.util.List;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
 import java.util.List;
@@ -18,11 +17,11 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     int refreshCdbiz(Cdbiz data);
 
-    List<Cdbiz> queryListByTeamCode(String teamCode);
-
     int refreshCdbiz(Cdbiz cdbiz, XN632530Req req);
 
     int refreshCdbiz(Cdbiz cdbiz, XN632531Req req);
+
+    List<Cdbiz> queryListByTeamCode(String teamCode);
 
     List<Cdbiz> queryCdbizList(Cdbiz condition);
 
