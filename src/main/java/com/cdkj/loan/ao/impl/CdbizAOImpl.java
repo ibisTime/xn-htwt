@@ -828,7 +828,6 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     public Cdbiz getCdbiz(String code) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-//        init(cdbiz);
         setInfo(cdbiz);
         return cdbiz;
     }
