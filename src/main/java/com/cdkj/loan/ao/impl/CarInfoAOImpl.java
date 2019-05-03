@@ -577,9 +577,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
         attachmentBO.removeByKname(req.getCode(), EAttachName.carPic.getCode());
         attachmentBO.saveAttachment(req.getCode(), EAttachName.carPic.getCode(),
                 EAttachName.carPic.getValue(), req.getCarPic());
-        attachmentBO.removeByKname(req.getCode(), EAttachName.otherPdf.getCode());
-        attachmentBO.saveAttachment(req.getCode(), EAttachName.otherPdf.getCode(),
-                EAttachName.otherPdf.getValue(), req.getCarHgzPic());
+        attachmentBO.removeByKname(req.getCode(), EAttachName.carHgzPic.getCode());
+        attachmentBO.saveAttachment(req.getCode(), EAttachName.carHgzPic.getCode(),
+                EAttachName.carHgzPic.getValue(), req.getCarHgzPic());
 
         cdbizBO.refreshCdbiz(cdbiz, req);
     }
