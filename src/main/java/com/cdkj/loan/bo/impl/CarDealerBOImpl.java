@@ -1,17 +1,15 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.ICarDealerDAO;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CarDealerBOImpl extends PaginableBOImpl<CarDealer> implements
@@ -20,23 +18,13 @@ public class CarDealerBOImpl extends PaginableBOImpl<CarDealer> implements
     @Autowired
     private ICarDealerDAO carDealerDAO;
 
+    @Override
     public String saveCarDealer(CarDealer data) {
         String code = null;
         if (data != null) {
             carDealerDAO.insert(data);
         }
         return code;
-    }
-
-    @Override
-    public int removeCarDealer(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            CarDealer data = new CarDealer();
-            data.setCode(code);
-            count = carDealerDAO.delete(data);
-        }
-        return count;
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 修改经销商管理
- * @author: CYL 
+ * @author: CYL
  * @since: 2018年5月25日 下午4:34:56 
  * @history:
  */
@@ -32,6 +32,8 @@ public class XN632062 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN632062Req.class);
+        req.setUpdater(operator);
         ObjValidater.validateReq(req);
+
     }
 }

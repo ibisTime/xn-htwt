@@ -6,6 +6,7 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.dto.req.XN632067Req;
+import com.cdkj.loan.enums.ECarDealerNode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -28,7 +29,7 @@ public class XN632067 extends AProcessor {
         CarDealer condition = new CarDealer();
         condition.setAbbrName(req.getAbbrName());
         condition.setIsSelfDevelop(req.getIsSelfDevelop());
-        condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setCurNodeCode(ECarDealerNode.NEW_ADD.getCode());
 
         return carDealerAO.queryCarDealerList(condition);
     }

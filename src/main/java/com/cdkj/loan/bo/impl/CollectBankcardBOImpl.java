@@ -1,24 +1,19 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICollectBankcardDAO;
-import com.cdkj.loan.domain.ChannelBank;
 import com.cdkj.loan.domain.CollectBankcard;
-import com.cdkj.loan.dto.req.XN632060ReqCollectBankcard;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
@@ -30,59 +25,59 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     @Autowired
     private IChannelBankBO channelBankBO;
 
-    @Override
-    public void saveCollectBankcardList(
-            List<XN632060ReqCollectBankcard> collectBankcardList, String type,
-            String code) {
-        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
-            for (XN632060ReqCollectBankcard collectBankcard : collectBankcardList) {
-                String cbCode = OrderNoGenerater
-                    .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
-                CollectBankcard data = new CollectBankcard();
-                data.setCode(cbCode);
-                data.setType(type);
-                data.setCompanyCode(code);
-                data.setRealName(collectBankcard.getRealName());
-                data.setBankCode(collectBankcard.getBankCode());
-                ChannelBank channelBank = channelBankBO
-                    .getChannelBank(collectBankcard.getBankCode());
-                data.setBankName(channelBank.getBankName());
-                data.setSubbranch(collectBankcard.getSubbranch());
-                data.setBankcardNumber(collectBankcard.getBankcardNumber());
-                data.setRemark(collectBankcard.getRemark());
-                data.setRemark(collectBankcard.getRemark());
-                collectBankcardDAO.insert(data);
-            }
-        }
-    }
-
-    @Override
-    public void saveCollectBankcardList(
-            List<XN632060ReqCollectBankcard> collectBankcardList, String type,
-            String belongBank, String code) {
-        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
-            for (XN632060ReqCollectBankcard collectBankcard : collectBankcardList) {
-                String cbCode = OrderNoGenerater
-                    .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
-                CollectBankcard data = new CollectBankcard();
-                data.setCode(cbCode);
-                data.setType(type);
-                data.setBelongBank(belongBank);
-                data.setCompanyCode(code);
-                data.setRealName(collectBankcard.getRealName());
-                data.setBankCode(collectBankcard.getBankCode());
-                ChannelBank channelBank = channelBankBO
-                    .getChannelBank(collectBankcard.getBankCode());
-                data.setBankName(channelBank.getBankName());
-                data.setSubbranch(collectBankcard.getSubbranch());
-                data.setBankcardNumber(collectBankcard.getBankcardNumber());
-                data.setPointRate(StringValidater.toDouble(collectBankcard
-                    .getPointRate()));
-                data.setRemark(collectBankcard.getRemark());
-                collectBankcardDAO.insert(data);
-            }
-        }
-    }
+//    @Override
+//    public void saveCollectBankcardList(
+//            List<XN632060ReqCollectBankcard> collectBankcardList, String type,
+//            String code) {
+//        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
+//            for (XN632060ReqCollectBankcard collectBankcard : collectBankcardList) {
+//                String cbCode = OrderNoGenerater
+//                    .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
+//                CollectBankcard data = new CollectBankcard();
+//                data.setCode(cbCode);
+//                data.setType(type);
+//                data.setCompanyCode(code);
+//                data.setRealName(collectBankcard.getRealName());
+//                data.setBankCode(collectBankcard.getBankCode());
+//                ChannelBank channelBank = channelBankBO
+//                    .getChannelBank(collectBankcard.getBankCode());
+//                data.setBankName(channelBank.getBankName());
+//                data.setSubbranch(collectBankcard.getSubbranch());
+//                data.setBankcardNumber(collectBankcard.getBankcardNumber());
+//                data.setRemark(collectBankcard.getRemark());
+//                data.setRemark(collectBankcard.getRemark());
+//                collectBankcardDAO.insert(data);
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void saveCollectBankcardList(
+//            List<XN632060ReqCollectBankcard> collectBankcardList, String type,
+//            String belongBank, String code) {
+//        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
+//            for (XN632060ReqCollectBankcard collectBankcard : collectBankcardList) {
+//                String cbCode = OrderNoGenerater
+//                    .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
+//                CollectBankcard data = new CollectBankcard();
+//                data.setCode(cbCode);
+//                data.setType(type);
+//                data.setBelongBank(belongBank);
+//                data.setCompanyCode(code);
+//                data.setRealName(collectBankcard.getRealName());
+//                data.setBankCode(collectBankcard.getBankCode());
+//                ChannelBank channelBank = channelBankBO
+//                    .getChannelBank(collectBankcard.getBankCode());
+//                data.setBankName(channelBank.getBankName());
+//                data.setSubbranch(collectBankcard.getSubbranch());
+//                data.setBankcardNumber(collectBankcard.getBankcardNumber());
+//                data.setPointRate(StringValidater.toDouble(collectBankcard
+//                    .getPointRate()));
+//                data.setRemark(collectBankcard.getRemark());
+//                collectBankcardDAO.insert(data);
+//            }
+//        }
+//    }
 
     @Override
     public String saveCollectBankcard(CollectBankcard data) {
