@@ -1,291 +1,303 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICdbizDAO">
-	<resultMap id="cdbiz_DB_Result" type="cdbiz">
-		<result column="code" property="code" />
-		<result column="biz_code" property="bizCode" />
-		<result column="type" property="type" />
-		<result column="biz_type" property="bizType" />
-		<result column="repay_biz_code" property="repayBizCode" />
-		<result column="company_code" property="companyCode" />
-		<result column="team_code" property="teamCode" />
-		<result column="captain_code" property="captainCode" />
-		<result column="sale_user_id" property="saleUserId" />
-		<result column="inside_job" property="insideJob" />
-		<result column="loan_bank" property="loanBank" />
-		<result column="loan_amount" property="loanAmount" />
-		<result column="enter_location" property="enterLocation" />
-		<result column="enter_datetime" property="enterDatetime" />
-		<result column="enter_filelist" property="enterFilelist" />
-		<result column="repay_card_number" property="repayCardNumber" />
-		<result column="card_post_address" property="cardPostAddress" />
-		<result column="status" property="status" />
-		<result column="mq_status" property="mqStatus" />
-		<result column="make_card_status" property="makeCardStatus" />
-		<result column="fbhgps_status" property="fbhgpsStatus" />
-		<result column="fircundang_status" property="fircundangStatus" />
-		<result column="seccundang_status" property="seccundangStatus" />
-		<result column="zf_status" property="zfStatus" />
-		<result column="cur_node_code" property="curNodeCode" />
-		<result column="intev_cur_node_code" property="intevCurNodeCode" />
-		<result column="make_card_node" property="makeCardNode" />
-		<result column="fbhgps_node" property="fbhgpsNode" />
-		<result column="cancel_node_code" property="cancelNodeCode" />
-		<result column="is_gps_az" property="isGpsAz" />
-		<result column="is_finacing" property="isFinacing" />
-		<result column="is_advance_fund" property="isAdvanceFund" />
-		<result column="is_plat_insure" property="isPlatInsure" />
-		<result column="should_fee_amount" property="shouldFeeAmount" />
-		<result column="real_fee_amount" property="realFeeAmount" />
-		<result column="gua_mode" property="guaMode" />
-		<result column="credit_note" property="creditNote" />
-		<result column="apply_datetime" property="applyDatetime" />
-		<result column="remark" property="remark" />
-	</resultMap>
-	
-	<sql id="join_condition">
-		<if test="userName != null and userName != '' ">
-			join tdq_credit_user tcu on tcu.biz_code = t.code and tcu.loan_role = '1'
-		</if>
-	</sql>
-	
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="bizCode != null and bizCode != '' ">
-				AND t.biz_code = #{bizCode}
-			</if>
-			<if test="type != null and type != '' ">
-				AND t.type = #{type}
-			</if>
-			<if test="bizType != null and bizType != '' ">
-				AND t.biz_type = #{bizType}
-			</if>
-			<if test="repayBizCode != null and repayBizCode != '' ">
-				AND t.repay_biz_code = #{repayBizCode}
-			</if>
-			<if test="companyCode != null and companyCode != '' ">
-				AND t.company_code = #{companyCode}
-			</if>
-			<if test="teamCode != null and teamCode != '' ">
-				AND t.team_code = #{teamCode}
-			</if>
-			<if test="captainCode != null and captainCode != '' ">
-				AND t.captain_code = #{captainCode}
-			</if>
-			<if test="saleUserId != null and saleUserId != '' ">
-				AND t.sale_user_id = #{saleUserId}
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
-			</if>
-			<if test="mqStatus != null and mqStatus != '' ">
-				AND t.mq_status = #{mqStatus}
-			</if>
-			<if test="fbhgpsStatus != null and fbhgpsStatus != '' ">
-				AND t.fbhgps_status = #{fbhgpsStatus}
-			</if>
-			<if test="fircundangStatus != null and fircundangStatus != '' ">
-				AND t.fircundang_status = #{fircundangStatus}
-			</if>
-			<if test="seccundangStatus != null and seccundangStatus != '' ">
-				AND t.seccundang_status = #{seccundangStatus}
-			</if>
-			<if test="zfStatus != null and zfStatus != '' ">
-				AND t.zf_status = #{zfStatus}
-			</if>
-			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
-			</if>
-			<if test="intevCurNodeCode != null and intevCurNodeCode != '' ">
-				AND t.intev_cur_node_code = #{intevCurNodeCode}
-			</if>
-			<if test="makeCardNode != null and makeCardNode != '' ">
-				AND t.make_card_node = #{makeCardNode}
-			</if>
-			<if test="fbhgpsNode != null and fbhgpsNode != '' ">
-				AND t.fbhgps_node = #{fbhgpsNode}
-			</if>
-			<if test="cancelNodeCode != null and cancelNodeCode != '' ">
-				AND t.cancel_node_code = #{cancelNodeCode}
-			</if>
-			<if test="isGpsAz != null and isGpsAz != '' ">
-				AND t.is_gps_az = #{isGpsAz}
-			</if>
-			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
-				AND t.is_advance_fund = #{isAdvanceFund}
-			</if>
-			<if test="guaMode != null and guaMode != '' ">
-				AND t.gua_mode = #{guaMode}
-			</if>
-			<if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
-				AND t.cur_node_code in 
-				<foreach collection="curNodeCodeList" index="index" item="item" open="(" separator="," close=")">
-		            #{item}
-		        </foreach>
-			</if>
-			<if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0 ">
-				AND t.intev_cur_node_code in 
-				<foreach collection="intevCurNodeCodeList" index="index" item="item" open="(" separator="," close=")">
-		            #{item}
-		        </foreach>
-			</if>
-			<if test="makeCardNodeList != null and makeCardNodeList.size() > 0 ">
-				AND t.make_card_node in 
-				<foreach collection="makeCardNodeList" index="index" item="item" open="(" separator="," close=")">
-		            #{item}
-		        </foreach>
-			</if>
-			<if test="fbhgpsNodeList != null and fbhgpsNodeList.size() > 0 ">
-				AND t.fbhgps_node in 
-				<foreach collection="fbhgpsNodeList" index="index" item="item" open="(" separator="," close=")">
-		            #{item}
-		        </foreach>
-			</if>
-			<if test="cundangStatusList != null and cundangStatusList.size() > 0 ">
-				AND (t.fircundang_status in 
-				<foreach collection="cundangStatusList" index="index" item="item" open="(" separator="," close=")">
-		            #{item}
-		        </foreach>
-		        	or t.seccundang_status in 
-				<foreach collection="cundangStatusList" index="index" item="item" open="(" separator="," close=")">
-		            #{item}
-		        </foreach>)
-			</if>
-			<if test="roleCode != null and roleCode != '' ">
-				AND trn.role_code = #{roleCode}
-			</if>
-			
-			<if test="userName != null and userName != '' ">
-				AND tcu.user_name = #{userName}
-			</if>
-		</trim>
-	</sql>
-	
-	<select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
-		SELECT
-		distinct
-		t.code
-		,t.biz_code
-		,t.type
-		,t.biz_type
-		,t.repay_biz_code
-		,t.company_code
-		,t.team_code
-		,t.captain_code
-		,t.sale_user_id
-		,t.inside_job
-		,t.loan_bank
-		,t.loan_amount
-		,t.enter_location
-		,t.enter_datetime
-		,t.enter_filelist
-		,t.repay_card_number
-		,t.card_post_address
-		,t.status
-		,t.mq_status
-		,t.make_card_status
-		,t.fbhgps_status
-		,t.fircundang_status
-		,t.seccundang_status
-		,t.zf_status
-		,t.cur_node_code
-		,t.intev_cur_node_code
-		,t.make_card_node
-		,t.fbhgps_node
-		,t.cancel_node_code
-		,t.is_gps_az
-		,t.is_finacing
-		,t.is_advance_fund
-		,t.is_plat_insure
-		,t.should_fee_amount
-		,t.real_fee_amount
-		,t.gua_mode
-		,t.credit_note
-		,t.apply_datetime
-		,t.remark
-		FROM
-		tqj_cdbiz t
-		<include refid="join_condition" />
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	<select id="select_cdbizByRoleCode" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
-		SELECT
-		distinct
-		t.code
-		,t.biz_code
-		,t.type
-		,t.biz_type
-		,t.repay_biz_code
-		,t.company_code
-		,t.team_code
-		,t.captain_code
-		,t.sale_user_id
-		,t.inside_job
-		,t.loan_bank
-		,t.loan_amount
-		,t.enter_location
-		,t.enter_datetime
-		,t.enter_filelist
-		,t.repay_card_number
-		,t.card_post_address
-		,t.status
-		,t.mq_status
-		,t.make_card_status
-		,t.fbhgps_status
-		,t.fircundang_status
-		,t.seccundang_status
-		,t.zf_status
-		,t.cur_node_code
-		,t.intev_cur_node_code
-		,t.make_card_node
-		,t.fbhgps_node
-		,t.cancel_node_code
-		,t.is_gps_az
-		,t.is_finacing
-		,t.is_advance_fund
-		,t.is_plat_insure
-		,t.should_fee_amount
-		,t.real_fee_amount
-		,t.gua_mode
-		,t.credit_note
-		,t.apply_datetime
-		,t.remark
-		FROM
-		tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code  )
-		<include refid="join_condition" />
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	<select id="select_cdbiz_count_byRoleCode" parameterType="budgetOrder"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct t.code FROM tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code  )
-		<include refid="join_condition" />
-		<include refid="where_condition" />) tb
-	</select>
+    <resultMap id="cdbiz_DB_Result" type="cdbiz">
+        <result column="code" property="code"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="type" property="type"/>
+        <result column="biz_type" property="bizType"/>
+        <result column="repay_biz_code" property="repayBizCode"/>
+        <result column="company_code" property="companyCode"/>
+        <result column="team_code" property="teamCode"/>
+        <result column="captain_code" property="captainCode"/>
+        <result column="sale_user_id" property="saleUserId"/>
+        <result column="inside_job" property="insideJob"/>
+        <result column="loan_bank" property="loanBank"/>
+        <result column="loan_amount" property="loanAmount"/>
+        <result column="enter_location" property="enterLocation"/>
+        <result column="enter_datetime" property="enterDatetime"/>
+        <result column="enter_filelist" property="enterFilelist"/>
+        <result column="repay_card_number" property="repayCardNumber"/>
+        <result column="card_post_address" property="cardPostAddress"/>
+        <result column="status" property="status"/>
+        <result column="mq_status" property="mqStatus"/>
+        <result column="make_card_status" property="makeCardStatus"/>
+        <result column="fbhgps_status" property="fbhgpsStatus"/>
+        <result column="fircundang_status" property="fircundangStatus"/>
+        <result column="seccundang_status" property="seccundangStatus"/>
+        <result column="zf_status" property="zfStatus"/>
+        <result column="cur_node_code" property="curNodeCode"/>
+        <result column="intev_cur_node_code" property="intevCurNodeCode"/>
+        <result column="make_card_node" property="makeCardNode"/>
+        <result column="fbhgps_node" property="fbhgpsNode"/>
+        <result column="cancel_node_code" property="cancelNodeCode"/>
+        <result column="is_gps_az" property="isGpsAz"/>
+        <result column="is_finacing" property="isFinacing"/>
+        <result column="is_advance_fund" property="isAdvanceFund"/>
+        <result column="is_plat_insure" property="isPlatInsure"/>
+        <result column="should_fee_amount" property="shouldFeeAmount"/>
+        <result column="real_fee_amount" property="realFeeAmount"/>
+        <result column="gua_mode" property="guaMode"/>
+        <result column="credit_note" property="creditNote"/>
+        <result column="apply_datetime" property="applyDatetime"/>
+        <result column="remark" property="remark"/>
 
-	<select id="select_cdbiz_count" parameterType="cdbiz"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tqj_cdbiz t
-		<include refid="join_condition" />
-		<include refid="where_condition" />
-	</select>
+        <result column="loan_bank_name" property="loanBankName"/>
+    </resultMap>
 
-	<insert id="insert_cdbiz" parameterType="cdbiz">
+    <sql id="join_condition">
+        <if test="userName != null and userName != '' ">
+            join tdq_credit_user tcu on tcu.biz_code = t.code and tcu.loan_role = '1'
+        </if>
+    </sql>
+
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="type != null and type != '' ">
+                AND t.type = #{type}
+            </if>
+            <if test="bizType != null and bizType != '' ">
+                AND t.biz_type = #{bizType}
+            </if>
+            <if test="repayBizCode != null and repayBizCode != '' ">
+                AND t.repay_biz_code = #{repayBizCode}
+            </if>
+            <if test="companyCode != null and companyCode != '' ">
+                AND t.company_code = #{companyCode}
+            </if>
+            <if test="teamCode != null and teamCode != '' ">
+                AND t.team_code = #{teamCode}
+            </if>
+            <if test="captainCode != null and captainCode != '' ">
+                AND t.captain_code = #{captainCode}
+            </if>
+            <if test="saleUserId != null and saleUserId != '' ">
+                AND t.sale_user_id = #{saleUserId}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="mqStatus != null and mqStatus != '' ">
+                AND t.mq_status = #{mqStatus}
+            </if>
+            <if test="fbhgpsStatus != null and fbhgpsStatus != '' ">
+                AND t.fbhgps_status = #{fbhgpsStatus}
+            </if>
+            <if test="fircundangStatus != null and fircundangStatus != '' ">
+                AND t.fircundang_status = #{fircundangStatus}
+            </if>
+            <if test="seccundangStatus != null and seccundangStatus != '' ">
+                AND t.seccundang_status = #{seccundangStatus}
+            </if>
+            <if test="zfStatus != null and zfStatus != '' ">
+                AND t.zf_status = #{zfStatus}
+            </if>
+            <if test="curNodeCode != null and curNodeCode != '' ">
+                AND t.cur_node_code = #{curNodeCode}
+            </if>
+            <if test="intevCurNodeCode != null and intevCurNodeCode != '' ">
+                AND t.intev_cur_node_code = #{intevCurNodeCode}
+            </if>
+            <if test="makeCardNode != null and makeCardNode != '' ">
+                AND t.make_card_node = #{makeCardNode}
+            </if>
+            <if test="fbhgpsNode != null and fbhgpsNode != '' ">
+                AND t.fbhgps_node = #{fbhgpsNode}
+            </if>
+            <if test="cancelNodeCode != null and cancelNodeCode != '' ">
+                AND t.cancel_node_code = #{cancelNodeCode}
+            </if>
+            <if test="isGpsAz != null and isGpsAz != '' ">
+                AND t.is_gps_az = #{isGpsAz}
+            </if>
+            <if test="isAdvanceFund != null and isAdvanceFund != '' ">
+                AND t.is_advance_fund = #{isAdvanceFund}
+            </if>
+            <if test="guaMode != null and guaMode != '' ">
+                AND t.gua_mode = #{guaMode}
+            </if>
+            <if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
+                AND t.cur_node_code in
+                <foreach collection="curNodeCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0 ">
+                AND t.intev_cur_node_code in
+                <foreach collection="intevCurNodeCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="makeCardNodeList != null and makeCardNodeList.size() > 0 ">
+                AND t.make_card_node in
+                <foreach collection="makeCardNodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="fbhgpsNodeList != null and fbhgpsNodeList.size() > 0 ">
+                AND t.fbhgps_node in
+                <foreach collection="fbhgpsNodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="cundangStatusList != null and cundangStatusList.size() > 0 ">
+                AND (t.fircundang_status in
+                <foreach collection="cundangStatusList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+                or t.seccundang_status in
+                <foreach collection="cundangStatusList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>)
+            </if>
+            <if test="roleCode != null and roleCode != '' ">
+                AND trn.role_code = #{roleCode}
+            </if>
+
+            <if test="userName != null and userName != '' ">
+                AND tcu.user_name = #{userName}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+        SELECT
+        distinct
+        t.code
+        ,t.biz_code
+        ,t.type
+        ,t.biz_type
+        ,t.repay_biz_code
+        ,t.company_code
+        ,t.team_code
+        ,t.captain_code
+        ,t.sale_user_id
+        ,t.inside_job
+        ,t.loan_bank
+        ,t.loan_amount
+        ,t.enter_location
+        ,t.enter_datetime
+        ,t.enter_filelist
+        ,t.repay_card_number
+        ,t.card_post_address
+        ,t.status
+        ,t.mq_status
+        ,t.make_card_status
+        ,t.fbhgps_status
+        ,t.fircundang_status
+        ,t.seccundang_status
+        ,t.zf_status
+        ,t.cur_node_code
+        ,t.intev_cur_node_code
+        ,t.make_card_node
+        ,t.fbhgps_node
+        ,t.cancel_node_code
+        ,t.is_gps_az
+        ,t.is_finacing
+        ,t.is_advance_fund
+        ,t.is_plat_insure
+        ,t.should_fee_amount
+        ,t.real_fee_amount
+        ,t.gua_mode
+        ,t.credit_note
+        ,t.apply_datetime
+        ,t.remark
+        ,b.bank_name as loan_bank_name
+        FROM
+        tqj_cdbiz t
+        left join tb_bank b on b.code = t.loan_bank
+        <include refid="join_condition"/>
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_cdbizByRoleCode" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+        SELECT
+        distinct
+        t.code
+        ,t.biz_code
+        ,t.type
+        ,t.biz_type
+        ,t.repay_biz_code
+        ,t.company_code
+        ,t.team_code
+        ,t.captain_code
+        ,t.sale_user_id
+        ,t.inside_job
+        ,t.loan_bank
+        ,t.loan_amount
+        ,t.enter_location
+        ,t.enter_datetime
+        ,t.enter_filelist
+        ,t.repay_card_number
+        ,t.card_post_address
+        ,t.status
+        ,t.mq_status
+        ,t.make_card_status
+        ,t.fbhgps_status
+        ,t.fircundang_status
+        ,t.seccundang_status
+        ,t.zf_status
+        ,t.cur_node_code
+        ,t.intev_cur_node_code
+        ,t.make_card_node
+        ,t.fbhgps_node
+        ,t.cancel_node_code
+        ,t.is_gps_az
+        ,t.is_finacing
+        ,t.is_advance_fund
+        ,t.is_plat_insure
+        ,t.should_fee_amount
+        ,t.real_fee_amount
+        ,t.gua_mode
+        ,t.credit_note
+        ,t.apply_datetime
+        ,t.remark
+        FROM
+        tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or
+        t.intev_cur_node_code = trn.node_code )
+        <include refid="join_condition"/>
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_cdbiz_count_byRoleCode" parameterType="budgetOrder"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM (SELECT distinct t.code FROM tqj_cdbiz t left join tsys_role_node trn
+        on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code )
+        <include refid="join_condition"/>
+        <include refid="where_condition"/>) tb
+    </select>
+
+    <select id="select_cdbiz_count" parameterType="cdbiz"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tqj_cdbiz t
+        <include refid="join_condition"/>
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_cdbiz" parameterType="cdbiz">
 		INSERT INTO
 		tqj_cdbiz(
 		code
@@ -367,7 +379,7 @@
 		)
 	</insert>
 
-	<update id="update_cdbiz" parameterType="cdbiz">
+    <update id="update_cdbiz" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		biz_code = #{bizCode}
@@ -410,73 +422,73 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="update_status" parameterType="cdbiz">
+
+    <update id="update_status" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		status=#{status}
 		,remark=#{remark}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_makeCardStatus" parameterType="cdbiz">
+
+    <update id="update_makeCardStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		make_card_status=#{makeCardStatus}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_mqStatus" parameterType="cdbiz">
+
+    <update id="update_mqStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		mq_status=#{mqStatus}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_fbhgpsStatus" parameterType="cdbiz">
+
+    <update id="update_fbhgpsStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		fbhgps_status=#{fbhgpsStatus}
 		,fbhgps_node = #{fbhgpsNode}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_fircundangStatus" parameterType="cdbiz">
+
+    <update id="update_fircundangStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		fircundang_status=#{fircundangStatus}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_seccundangStatus" parameterType="cdbiz">
+
+    <update id="update_seccundangStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		seccundang_status=#{seccundangStatus}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_zfStatus" parameterType="cdbiz">
+
+    <update id="update_zfStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		zf_status=#{zfStatus}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_node" parameterType="cdbiz">
+
+    <update id="update_node" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		cur_node_code=#{curNodeCode}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_intevNode" parameterType="cdbiz">
+
+    <update id="update_intevNode" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		intev_cur_node_code=#{intevCurNodeCode}
 		WHERE code=#{code}
 	</update>
 
-	<update id="update_intevNodeStart" parameterType="cdbiz">
+    <update id="update_intevNodeStart" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		cur_node_code=#{curNodeCode}
@@ -484,22 +496,22 @@
 		,mq_status=#{mqStatus}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_makeCardNode" parameterType="cdbiz">
+
+    <update id="update_makeCardNode" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		make_card_node=#{makeCardNode}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_insideJob" parameterType="cdbiz">
+
+    <update id="update_insideJob" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		inside_job=#{insideJob}
 		WHERE code=#{code}
 	</update>
-	
-	<update id="update_curNodeCode" parameterType="cdbiz">
+
+    <update id="update_curNodeCode" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		cur_node_code=#{curNodeCode}

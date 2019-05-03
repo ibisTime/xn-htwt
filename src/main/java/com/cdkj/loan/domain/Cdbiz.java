@@ -171,6 +171,15 @@ public class Cdbiz extends ABaseDO {
     // 业务员名称
     private String saleUserName;
 
+    // 业务员公司
+    private String saleUserCompanyName;
+
+    // 业务员部门
+    private String saleUserDepartMentName;
+
+    // 业务员职位
+    private String saleUserPositionName;
+
     // 主贷人
     private CreditUser creditUser;
 
@@ -218,6 +227,39 @@ public class Cdbiz extends ABaseDO {
 
     // 车辆信息
     private CarInfoRes carInfoRes;
+
+    // 车辆信息
+    private Advance advance;
+
+    // 返点列表
+    private List<Repoint> repointList;
+
+    // 手续费
+    private BudgetOrderFee budgetOrderFee;
+
+    public BudgetOrderFee getBudgetOrderFee() {
+        return budgetOrderFee;
+    }
+
+    public void setBudgetOrderFee(BudgetOrderFee budgetOrderFee) {
+        this.budgetOrderFee = budgetOrderFee;
+    }
+
+    public List<Repoint> getRepointList() {
+        return repointList;
+    }
+
+    public void setRepointList(List<Repoint> repointList) {
+        this.repointList = repointList;
+    }
+
+    public Advance getAdvance() {
+        return advance;
+    }
+
+    public void setAdvance(Advance advance) {
+        this.advance = advance;
+    }
 
     public LoanInfoRes getLoanInfo() {
         return loanInfo;

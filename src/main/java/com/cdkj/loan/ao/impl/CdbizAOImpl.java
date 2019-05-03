@@ -2,12 +2,14 @@ package com.cdkj.loan.ao.impl;
 
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.bo.IAccountBO;
+import com.cdkj.loan.bo.IAdvanceBO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankLoanBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
+import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
@@ -20,27 +22,30 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Advance;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
-import com.cdkj.loan.domain.CreditUserExt;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
@@ -136,10 +141,19 @@ public class CdbizAOImpl implements ICdbizAO {
     private IAccountBO accountBO;
 
     @Autowired
+    private IAdvanceBO advanceBO;
+
+    @Autowired
+    private IRepointBO repointBO;
+
+    @Autowired
     private IBankcardBO bankcardBO;
 
     @Autowired
     private IBankLoanBO bankLoanBO;
+
+    @Autowired
+    private IBudgetOrderFeeBO budgetOrderFeeBO;
 
     @Autowired
     private IBudgetOrderGpsBO budgetOrderGpsBO;
@@ -900,6 +914,13 @@ public class CdbizAOImpl implements ICdbizAO {
         return cdbiz;
     }
 
+    @Override
+    public Cdbiz getCdbizAll(String code) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        init(cdbiz);
+        return cdbiz;
+    }
+
     private void setInfo(Cdbiz cdbiz) {
         // 征信人列表
         List<CreditUser> creditUserList = creditUserBO.queryCreditUserList(cdbiz.getCode());
@@ -985,13 +1006,23 @@ public class CdbizAOImpl implements ICdbizAO {
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
         cdbiz.setRepayBiz(repayBiz);
 
-        // 征信人信息
-        CreditUserExt creditUserExt = creditUserExtBO.getCreditUserExtByBizCode(cdbiz.getCode());
-        cdbiz.setCreditUserExt(creditUserExt);
-
         // 车辆抵押
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(cdbiz.getCode());
         cdbiz.setCarPledge(carPledge);
+
+        //财务垫资
+        Advance advance = advanceBO.getAdvanceByBizCode(cdbiz.getCode());
+        cdbiz.setAdvance(advance);
+
+        //返点列表
+        Repoint repoint = new Repoint();
+        repoint.setBizCode(cdbiz.getCode());
+        List<Repoint> repointList = repointBO.queryRepointList(repoint);
+        cdbiz.setRepointList(repointList);
+
+        //手续费
+        BudgetOrderFee fee = budgetOrderFeeBO.getBudgetOrderFeeByBudget(cdbiz.getCode());
+        cdbiz.setBudgetOrderFee(fee);
 
         // 征信人流水
         List<CreditJour> creditJours = creditJourBO.querCreditJoursByBizCode(cdbiz.getCode());

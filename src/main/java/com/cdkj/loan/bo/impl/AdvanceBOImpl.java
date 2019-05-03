@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAdvanceBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -15,6 +9,10 @@ import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AdvanceBOImpl extends PaginableBOImpl<Advance>
@@ -28,7 +26,7 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
         Advance advance = new Advance();
 
         String code = OrderNoGenerater
-            .generate(EGeneratePrefix.ADVANCE.getCode());
+                .generate(EGeneratePrefix.ADVANCE.getCode());
         advance.setCode(code);
         advance.setBizCode(bizCode);
         advance.setStatus(ECdbizStatus.F0.getCode());
@@ -105,6 +103,17 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
             }
         }
         return data;
+    }
+
+    @Override
+    public Advance getAdvanceByBizCode(String code) {
+        Advance advance = null;
+        if (StringUtils.isNotBlank(code)) {
+            Advance condition = new Advance();
+            condition.setBizCode(code);
+            advance = advanceDAO.select(condition);
+        }
+        return advance;
     }
 
 }
