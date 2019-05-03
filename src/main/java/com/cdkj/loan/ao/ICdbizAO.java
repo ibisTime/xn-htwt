@@ -31,42 +31,38 @@ public interface ICdbizAO {
     // 征信初审
     void audit(XN632113Req req);
 
+    // 准入申请提交
+    void accesssApplySubmit(String code, String operator);
+
     // 面签
     void interview(XN632123Req req);
 
     // 面签内勤主管审核
-    void interviewInternalApprove(String code, String operator,
-            String approveResult, String approveNote);
+    void interviewInternalApprove(
+            String code, String operator, String approveResult, String approveNote);
 
     // 新录发保合
     void entryFbh(XN632131Req req);
 
     // 审核发包合
-    void approveFbh(String code, String approveResult,
-            String approveNote, String operator);
+    void approveFbh(String code, String approveResult, String approveNote, String operator);
 
     // 安装gps
-    void installGps(String code, String operator,
-            List<XN632126ReqGps> gpsAzList);
+    void installGps(String code, String operator, List<XN632126ReqGps> gpsAzList);
 
     // 审核gps
-    void gpsManagerApprove(String code, String operator,
-            String approveResult, String approveNote);
+    void gpsManagerApprove(String code, String operator, String approveResult, String approveNote);
 
     // 第一/二次存档
     void archive(String code, String operator, String enterLocation);
 
     // 制卡申请
-    void makeCardApply(String code, String operator,
-            String cardPostAddress);
+    void makeCardApply(String code, String operator, String cardPostAddress);
 
     // 卡号回录
-    void inputCardNumber(String code, String cardNumber,
-            String operator);
+    void inputCardNumber(String code, String cardNumber, String operator);
 
-
-    Paginable<Cdbiz> queryCdbizPage(int start, int limit,
-            Cdbiz condition);
+    Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition);
 
     List<Cdbiz> queryCdbizList(Cdbiz condition);
 
