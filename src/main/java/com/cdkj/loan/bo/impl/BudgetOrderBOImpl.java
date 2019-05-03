@@ -521,7 +521,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setPledgeUser(req.getPledgeUser());
             data.setPledgeUserIdCardCopy(req.getPledgeUserIdCardCopy());
             data.setPledgeAddress(req.getPledgeAddress());
-            data.setIsFinancing(req.getIsFinancing());
+            //data.setIsFinancing(req.getIsFinancing());
             String preNodeCode = data.getCurNodeCode(); // 当前节点
             if (EDealType.SEND.getCode().equals(req.getDealType())) {
                 // 下一个节点
