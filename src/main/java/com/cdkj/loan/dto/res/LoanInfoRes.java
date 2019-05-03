@@ -27,7 +27,7 @@ public class LoanInfoRes {
     private String loanProductName;
 
     // GPS费用
-    private String gpsFee;// carinfo
+    private Long gpsFee;// carinfo
 
     // 公证费用
     private String authFee;// carinfo
@@ -42,7 +42,7 @@ public class LoanInfoRes {
     private String isAdvanceFund;// cdbiz
 
     // 是否融资
-    private String isFinancing;// cdbiz
+    private String isFinacing;// cdbiz
 
     // 是否安装gps
     private String isAzGps;// cdbiz
@@ -84,11 +84,11 @@ public class LoanInfoRes {
         this.loanProductName = loanProductName;
     }
 
-    public String getGpsFee() {
+    public Long getGpsFee() {
         return gpsFee;
     }
 
-    public void setGpsFee(String gpsFee) {
+    public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
     }
 
@@ -109,12 +109,12 @@ public class LoanInfoRes {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getIsFinancing() {
-        return isFinancing;
+    public String getIsFinacing() {
+        return isFinacing;
     }
 
-    public void setIsFinancing(String isFinancing) {
-        this.isFinancing = isFinancing;
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
     }
 
     public String getIsAzGps() {

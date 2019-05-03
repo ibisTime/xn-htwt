@@ -68,7 +68,7 @@ public class XN632500Req {
 
     // 是否融资
 
-    private String isFinancing;// cdbiz
+    private String isFinacing;// cdbiz
 
     // 是否安装gps
 
@@ -485,12 +485,12 @@ public class XN632500Req {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getIsFinancing() {
-        return isFinancing;
+    public String getIsFinacing() {
+        return isFinacing;
     }
 
-    public void setIsFinancing(String isFinancing) {
-        this.isFinancing = isFinancing;
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
     }
 
     public String getFirstAmount() {

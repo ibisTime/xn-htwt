@@ -62,7 +62,7 @@ public class XN632530Req {
 
     // 是否融资
     @NotBlank
-    private String isFinancing;// cdbiz
+    private String isFinacing;// cdbiz
 
     // 是否安装gps
     @NotBlank
@@ -184,12 +184,12 @@ public class XN632530Req {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getIsFinancing() {
-        return isFinancing;
+    public String getIsFinacing() {
+        return isFinacing;
     }
 
-    public void setIsFinancing(String isFinancing) {
-        this.isFinancing = isFinancing;
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
     }
 
     public String getIsAzGps() {

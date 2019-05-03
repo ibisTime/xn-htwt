@@ -665,7 +665,7 @@ public class XN632120Req {
     private String otherPdf;
 
     // 是否融资
-    private String isFinancing;
+    private String isFinacing;
 
     // 二手车评估报告
     private String secondCarReport;
@@ -678,12 +678,12 @@ public class XN632120Req {
         this.secondCarReport = secondCarReport;
     }
 
-    public String getIsFinancing() {
-        return isFinancing;
+    public String getIsFinacing() {
+        return isFinacing;
     }
 
-    public void setIsFinancing(String isFinancing) {
-        this.isFinancing = isFinancing;
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
     }
 
     public String getHkBookPdf() {
