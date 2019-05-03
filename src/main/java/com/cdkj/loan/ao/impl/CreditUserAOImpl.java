@@ -93,7 +93,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
     @Override
     @Transactional
-    public void saveCommonRepayInfo(XN632535Req req) {
+    public void saveGhrInfo(XN632535Req req) {
         CreditUser creditUser =
                 creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GHR);
         if (creditUser != null) {
@@ -107,7 +107,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
     @Override
     @Transactional
-    public void saveBondsmanInfo(XN632536Req req) {
+    public void saveGuarantorInfo(XN632536Req req) {
         CreditUser creditUser =
                 creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GUARANTOR);
         if (creditUser != null) {

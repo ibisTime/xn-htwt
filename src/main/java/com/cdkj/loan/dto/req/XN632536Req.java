@@ -18,46 +18,58 @@ public class XN632536Req {
     @NotBlank
     private String operator;
 
-    /***************担保人信息start**************/
+    /** ***********担保人信息start************* */
 
-    // 户籍地省市区
+    /**
+     * 户籍地省
+     */
     @NotBlank
-    private String guaBirthAddressProvince;// creditUser
+    private String birthAddressProvince;
 
+    /**
+     * 户籍地市
+     */
     @NotBlank
-    private String guaBirthAddressCity;// creditUser
+    private String birthAddressCity;
 
+    /**
+     * 户籍地区
+     */
     @NotBlank
-    private String guaBirthAddressArea;// creditUser
+    private String birthAddressArea;
 
-    // 户籍地地址
+    /**
+     * 户籍地详细地址
+     */
     @NotBlank
-    private String guaBirthAddress;// creditUser
+    private String birthAddress;
 
-    // 户籍地邮编
+    /**
+     * 户口所在地邮编
+     */
     @NotBlank
-    private String guaPostCode;// creditUser
+    private String birthPostCode;
 
-    // 配偶学历
+    // 学历
     @NotBlank
-    private String guaEducation;// creditUser
+    private String education;
 
-    // 配偶工作单位名称
+    // 工作单位名称
     @NotBlank
-    private String guaCompanyName;// creditUser
+    private String companyName;
 
-    // 配偶工作单位地址
+    // 工作单位地址
     @NotBlank
-    private String guaCompanyAddress;// creditUser
+    private String companyAddress;
 
-    // 配偶工作单位联系电话
-    @NotBlank
-    private String guaCompanyContactNo;// creditUser
+    // 工作单位电话
+    private String companyContactNo;
 
     private String guaAssetPdf;
 
-    /****************担保人信息end***************/
-
+    /**
+     * **********担保人信息end**************
+     */
     public String getCode() {
         return code;
     }
@@ -74,76 +86,76 @@ public class XN632536Req {
         this.operator = operator;
     }
 
-    public String getGuaBirthAddressProvince() {
-        return guaBirthAddressProvince;
+    public String getBirthAddressProvince() {
+        return birthAddressProvince;
     }
 
-    public void setGuaBirthAddressProvince(String guaBirthAddressProvince) {
-        this.guaBirthAddressProvince = guaBirthAddressProvince;
+    public void setBirthAddressProvince(String birthAddressProvince) {
+        this.birthAddressProvince = birthAddressProvince;
     }
 
-    public String getGuaBirthAddressCity() {
-        return guaBirthAddressCity;
+    public String getBirthAddressCity() {
+        return birthAddressCity;
     }
 
-    public void setGuaBirthAddressCity(String guaBirthAddressCity) {
-        this.guaBirthAddressCity = guaBirthAddressCity;
+    public void setBirthAddressCity(String birthAddressCity) {
+        this.birthAddressCity = birthAddressCity;
     }
 
-    public String getGuaBirthAddressArea() {
-        return guaBirthAddressArea;
+    public String getBirthAddressArea() {
+        return birthAddressArea;
     }
 
-    public void setGuaBirthAddressArea(String guaBirthAddressArea) {
-        this.guaBirthAddressArea = guaBirthAddressArea;
+    public void setBirthAddressArea(String birthAddressArea) {
+        this.birthAddressArea = birthAddressArea;
     }
 
-    public String getGuaBirthAddress() {
-        return guaBirthAddress;
+    public String getBirthAddress() {
+        return birthAddress;
     }
 
-    public void setGuaBirthAddress(String guaBirthAddress) {
-        this.guaBirthAddress = guaBirthAddress;
+    public void setBirthAddress(String birthAddress) {
+        this.birthAddress = birthAddress;
     }
 
-    public String getGuaPostCode() {
-        return guaPostCode;
+    public String getBirthPostCode() {
+        return birthPostCode;
     }
 
-    public void setGuaPostCode(String guaPostCode) {
-        this.guaPostCode = guaPostCode;
+    public void setBirthPostCode(String birthPostCode) {
+        this.birthPostCode = birthPostCode;
     }
 
-    public String getGuaEducation() {
-        return guaEducation;
+    public String getEducation() {
+        return education;
     }
 
-    public void setGuaEducation(String guaEducation) {
-        this.guaEducation = guaEducation;
+    public void setEducation(String education) {
+        this.education = education;
     }
 
-    public String getGuaCompanyName() {
-        return guaCompanyName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setGuaCompanyName(String guaCompanyName) {
-        this.guaCompanyName = guaCompanyName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getGuaCompanyAddress() {
-        return guaCompanyAddress;
+    public String getCompanyAddress() {
+        return companyAddress;
     }
 
-    public void setGuaCompanyAddress(String guaCompanyAddress) {
-        this.guaCompanyAddress = guaCompanyAddress;
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
 
-    public String getGuaCompanyContactNo() {
-        return guaCompanyContactNo;
+    public String getCompanyContactNo() {
+        return companyContactNo;
     }
 
-    public void setGuaCompanyContactNo(String guaCompanyContactNo) {
-        this.guaCompanyContactNo = guaCompanyContactNo;
+    public void setCompanyContactNo(String companyContactNo) {
+        this.companyContactNo = companyContactNo;
     }
 
     public String getGuaAssetPdf() {

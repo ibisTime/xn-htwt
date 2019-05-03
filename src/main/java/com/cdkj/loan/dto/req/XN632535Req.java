@@ -18,46 +18,58 @@ public class XN632535Req {
     @NotBlank
     private String operator;
 
-    /***************共还人信息start**************/
+    /** ************共还人信息start************* */
 
-    // 户籍地省市区
+    /**
+     * 户籍地省
+     */
     @NotBlank
-    private String mateBirthAddressProvince;// creditUser
+    private String birthAddressProvince;
 
+    /**
+     * 户籍地市
+     */
     @NotBlank
-    private String mateBirthAddressCity;// creditUser
+    private String birthAddressCity;
 
+    /**
+     * 户籍地区
+     */
     @NotBlank
-    private String mateBirthAddressArea;// creditUser
+    private String birthAddressArea;
 
-    // 户籍地地址
+    /**
+     * 户籍地详细地址
+     */
     @NotBlank
-    private String mateBirthAddress;// creditUser
+    private String birthAddress;
 
-    // 户籍地邮编
+    /**
+     * 户口所在地邮编
+     */
     @NotBlank
-    private String matePostCode;// creditUser
+    private String birthPostCode;
 
-    // 配偶学历
+    // 学历
     @NotBlank
-    private String mateEducation;// creditUser
+    private String education;
 
-    // 配偶工作单位名称
+    // 工作单位名称
     @NotBlank
-    private String mateCompanyName;// creditUser
+    private String companyName;
 
-    // 配偶工作单位地址
+    // 工作单位地址
     @NotBlank
-    private String mateCompanyAddress;// creditUser
+    private String companyAddress;
 
-    // 配偶工作单位联系电话
-    @NotBlank
-    private String mateCompanyContactNo;// creditUser
+    // 工作单位电话
+    private String companyContactNo;
 
     private String mateAssetPdf;
 
-    /****************共还人信息end***************/
-
+    /**
+     * *********共还人信息end**************
+     */
     public String getCode() {
         return code;
     }
@@ -74,76 +86,76 @@ public class XN632535Req {
         this.operator = operator;
     }
 
-    public String getMateBirthAddressProvince() {
-        return mateBirthAddressProvince;
+    public String getBirthAddressProvince() {
+        return birthAddressProvince;
     }
 
-    public void setMateBirthAddressProvince(String mateBirthAddressProvince) {
-        this.mateBirthAddressProvince = mateBirthAddressProvince;
+    public void setBirthAddressProvince(String birthAddressProvince) {
+        this.birthAddressProvince = birthAddressProvince;
     }
 
-    public String getMateBirthAddressCity() {
-        return mateBirthAddressCity;
+    public String getBirthAddressCity() {
+        return birthAddressCity;
     }
 
-    public void setMateBirthAddressCity(String mateBirthAddressCity) {
-        this.mateBirthAddressCity = mateBirthAddressCity;
+    public void setBirthAddressCity(String birthAddressCity) {
+        this.birthAddressCity = birthAddressCity;
     }
 
-    public String getMateBirthAddressArea() {
-        return mateBirthAddressArea;
+    public String getBirthAddressArea() {
+        return birthAddressArea;
     }
 
-    public void setMateBirthAddressArea(String mateBirthAddressArea) {
-        this.mateBirthAddressArea = mateBirthAddressArea;
+    public void setBirthAddressArea(String birthAddressArea) {
+        this.birthAddressArea = birthAddressArea;
     }
 
-    public String getMateBirthAddress() {
-        return mateBirthAddress;
+    public String getBirthAddress() {
+        return birthAddress;
     }
 
-    public void setMateBirthAddress(String mateBirthAddress) {
-        this.mateBirthAddress = mateBirthAddress;
+    public void setBirthAddress(String birthAddress) {
+        this.birthAddress = birthAddress;
     }
 
-    public String getMatePostCode() {
-        return matePostCode;
+    public String getBirthPostCode() {
+        return birthPostCode;
     }
 
-    public void setMatePostCode(String matePostCode) {
-        this.matePostCode = matePostCode;
+    public void setBirthPostCode(String birthPostCode) {
+        this.birthPostCode = birthPostCode;
     }
 
-    public String getMateEducation() {
-        return mateEducation;
+    public String getEducation() {
+        return education;
     }
 
-    public void setMateEducation(String mateEducation) {
-        this.mateEducation = mateEducation;
+    public void setEducation(String education) {
+        this.education = education;
     }
 
-    public String getMateCompanyName() {
-        return mateCompanyName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setMateCompanyName(String mateCompanyName) {
-        this.mateCompanyName = mateCompanyName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getMateCompanyAddress() {
-        return mateCompanyAddress;
+    public String getCompanyAddress() {
+        return companyAddress;
     }
 
-    public void setMateCompanyAddress(String mateCompanyAddress) {
-        this.mateCompanyAddress = mateCompanyAddress;
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
 
-    public String getMateCompanyContactNo() {
-        return mateCompanyContactNo;
+    public String getCompanyContactNo() {
+        return companyContactNo;
     }
 
-    public void setMateCompanyContactNo(String mateCompanyContactNo) {
-        this.mateCompanyContactNo = mateCompanyContactNo;
+    public void setCompanyContactNo(String companyContactNo) {
+        this.companyContactNo = companyContactNo;
     }
 
     public String getMateAssetPdf() {
