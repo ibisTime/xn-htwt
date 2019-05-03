@@ -15,14 +15,14 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     // 删除征信人员
     void removeCreditUserByBizCode(String bizCode);
 
-    // 删除征信人员
-    void removeCreditUser(String code);
-
     // 修改贷款角色
     void refreshCreditUserLoanRole(CreditUser creditUser);
 
     // 查询征信人员
     CreditUser getCreditUser(String code);
+
+    // 查询征信人员
+    public CreditUser getCreditUserUncheck(String code);
 
     // 录入银行征信结果
     void inputBankCreditResult(CreditUser creditUser, String bankReport,

@@ -1,16 +1,16 @@
 package com.cdkj.loan.domain;
 
+import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.Date;
 import java.util.List;
 
-import com.cdkj.loan.dao.base.ABaseDO;
-
 /**
-* 还款业务
-* @author: haiqingzheng
-* @since: 2018年05月01日 17:58:51
-* @history:
-*/
+ * 还款业务
+ *
+ * @author: haiqingzheng
+ * @since: 2018年05月01日 17:58:51
+ * @history:
+ */
 public class RepayBiz extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -243,6 +243,10 @@ public class RepayBiz extends ABaseDO {
 
     public String getLoanProductCode() {
         return loanProductCode;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public void setLoanProductCode(String loanProductCode) {

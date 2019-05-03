@@ -6,12 +6,15 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICdbizDAO;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
+import com.cdkj.loan.dto.req.XN632530Req;
+import com.cdkj.loan.dto.req.XN632531Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
@@ -49,28 +52,28 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         // 加入附件
         EAttachName attachName = EAttachName.bank_vedio;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getBankVideo());
+                attachName.getValue(), req.getBankVideo());
         attachName = EAttachName.bank_photo;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getBankPhoto());
+                attachName.getValue(), req.getBankPhoto());
         attachName = EAttachName.company_vedio;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getCompanyVideo());
+                attachName.getValue(), req.getCompanyVideo());
         attachName = EAttachName.company_contract;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getCompanyContract());
+                attachName.getValue(), req.getCompanyContract());
         attachName = EAttachName.bank_contract;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getBankContract());
+                attachName.getValue(), req.getBankContract());
         attachName = EAttachName.advance_fund_pdf;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getAdvanceFundAmountPdf());
+                attachName.getValue(), req.getAdvanceFundAmountPdf());
         attachName = EAttachName.other_vedio;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getOtherVideo());
+                attachName.getValue(), req.getOtherVideo());
         attachName = EAttachName.interview_other_pdf;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getInterviewOtherPdf());
+                attachName.getValue(), req.getInterviewOtherPdf());
 
     }
 
@@ -92,7 +95,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     public Cdbiz saveCdbiz(String bankCode, String bizType, Long dkAmount,
             SYSUser sysUser, BizTeam bizTeam, String node, String dealType, String remark) {
         String code = OrderNoGenerater
-            .generate(EGeneratePrefix.Cdbiz.getCode());
+                .generate(EGeneratePrefix.Cdbiz.getCode());
         Cdbiz cdbiz = new Cdbiz();
         cdbiz.setCode(code);
         cdbiz.setBizCode(code);
@@ -133,6 +136,24 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     @Override
     public int refreshCdbiz(Cdbiz data) {
         return cdbizDAO.updateCdbiz(data);
+    }
+
+    @Override
+    public int refreshCdbiz(Cdbiz cdbiz, XN632530Req req) {
+        cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
+        cdbiz.setIsGpsAz(req.getIsAzGps());
+        cdbiz.setIsFinacing(req.getIsFinancing());
+        cdbiz.setIsPlatInsure(req.getIsCompanyContinue());
+        return cdbizDAO.updateCdbiz(cdbiz);
+    }
+
+    @Override
+    public int refreshCdbiz(Cdbiz cdbiz, XN632531Req req) {
+        String code = cdbiz.getCode();
+        EntityUtils.copyData(req, cdbiz);
+        //重置code
+        cdbiz.setCode(code);
+        return cdbizDAO.updateCdbiz(cdbiz);
     }
 
     @Override
@@ -222,7 +243,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         Long count = cdbizDAO.selectTotalCountByRoleCode(condition);
         Paginable<Cdbiz> page = new Page<Cdbiz>(start, limit, count);
         List<Cdbiz> dataList = cdbizDAO.selectListByRoleCode(condition,
-            page.getStart(), page.getPageSize());
+                page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
     }

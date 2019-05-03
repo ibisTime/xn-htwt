@@ -20,14 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * 
- * @author: jiafr 
- * @since: 2018年5月25日 下午2:04:01 
+ * @author: jiafr
+ * @since: 2018年5月25日 下午2:04:01
  * @history:
  */
 @Component
-public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
-        ICreditUserBO {
+public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICreditUserBO {
 
     @Autowired
     private ICreditUserDAO creditUserDAO;
@@ -124,12 +122,6 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public void removeCreditUser(String code) {
-        CreditUser creditUser = getCreditUser(code);
-        creditUserDAO.delete(creditUser);
-    }
-
-    @Override
     public void removeCreditUserByBizCode(String bizCode) {
         CreditUser creditUser = new CreditUser();
         creditUser.setBizCode(bizCode);
@@ -161,8 +153,9 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public void inputBankCreditResult(CreditUser creditUser, String bankReport,
-            String dataReport, String result, String note) {
+    public void inputBankCreditResult(
+            CreditUser creditUser, String bankReport, String dataReport, String result,
+            String note) {
         if (StringUtils.isNotBlank(creditUser.getCode())) {
             creditUser.setBankCreditResult(result);
             creditUser.setBankCreditResultRemark(note);
@@ -170,7 +163,6 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             creditUser.setDataCreditReport(dataReport);
             creditUserDAO.inputBankCreditResult(creditUser);
         }
-
     }
 
     @Override
@@ -187,8 +179,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public CreditUser getCreditUserByBizCode(String bizCode,
-            ELoanRole creditUserLoanRole) {
+    public CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserLoanRole) {
         CreditUser creditUser = null;
         CreditUser condition = new CreditUser();
         condition.setBizCode(bizCode);
@@ -213,28 +204,26 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         for (CreditUser creditUser : creditUsers) {
             if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
                 creditUser.setBirthAddress(req.getResidenceAddress());
-                creditUser.setPostCode(req.getPostCode2());
+                creditUser.setBirthPostCode(req.getPostCode2());
                 creditUser.setCompanyName(req.getWorkCompanyName());
                 creditUser.setCompanyAddress(req.getWorkCompanyAddress());
                 creditUser.setCompanyContactNo(req.getWorkPhone());
             } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
-                creditUser.setBirthAddressProvince(req
-                    .getMateBirthAddressProvince());
+                creditUser.setBirthAddressProvince(req.getMateBirthAddressProvince());
                 creditUser.setBirthAddressCity(req.getMateBirthAddressCity());
                 creditUser.setBirthAddressArea(req.getMateBirthAddressArea());
                 creditUser.setBirthAddress(req.getMateBirthAddress());
-                creditUser.setPostCode(req.getMatePostCode());
+                creditUser.setBirthPostCode(req.getMatePostCode());
                 creditUser.setEducation(req.getMateEducation());
                 creditUser.setCompanyName(req.getMateCompanyName());
                 creditUser.setCompanyAddress(req.getMateCompanyAddress());
                 creditUser.setCompanyContactNo(req.getMateCompanyContactNo());
             } else {
-                creditUser.setBirthAddressProvince(req
-                    .getGuaBirthAddressProvince());
+                creditUser.setBirthAddressProvince(req.getGuaBirthAddressProvince());
                 creditUser.setBirthAddressCity(req.getGuaBirthAddressCity());
                 creditUser.setBirthAddressArea(req.getGuaBirthAddressArea());
                 creditUser.setBirthAddress(req.getGuaBirthAddress());
-                creditUser.setPostCode(req.getGuaPostCode());
+                creditUser.setBirthPostCode(req.getGuaPostCode());
                 creditUser.setEducation(req.getGuaEducation());
                 creditUser.setCompanyName(req.getGuaCompanyName());
                 creditUser.setCompanyAddress(req.getGuaCompanyAddress());
@@ -243,5 +232,4 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             creditUserDAO.updateCreditUser(creditUser);
         }
     }
-
 }

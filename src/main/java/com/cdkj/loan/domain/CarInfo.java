@@ -3,11 +3,12 @@ package com.cdkj.loan.domain;
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
-* 车辆信息
-* @author: tao 
-* @since: 2019-04-24 09:37:43
-* @history:
-*/
+ * 车辆信息
+ *
+ * @author: tao
+ * @since: 2019-04-24 09:37:43
+ * @history:
+ */
 public class CarInfo extends ABaseDO {
 
     private static final long serialVersionUID = 1L;

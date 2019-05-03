@@ -1,12 +1,10 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.ICreditJourDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.CreditJour;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository("creditJourDAOImpl")
 public class CreditJourDAOImpl extends AMybatisTemplate
@@ -25,26 +23,26 @@ public class CreditJourDAOImpl extends AMybatisTemplate
     @Override
     public CreditJour select(CreditJour condition) {
         return super.select(NAMESPACE.concat("select_creditJour"), condition,
-            CreditJour.class);
+                CreditJour.class);
     }
 
     @Override
     public long selectTotalCount(CreditJour condition) {
         return super.selectTotalCount(
-            NAMESPACE.concat("select_creditJour_count"), condition);
+                NAMESPACE.concat("select_creditJour_count"), condition);
     }
 
     @Override
     public List<CreditJour> selectList(CreditJour condition) {
         return super.selectList(NAMESPACE.concat("select_creditJour"),
-            condition, CreditJour.class);
+                condition, CreditJour.class);
     }
 
     @Override
     public List<CreditJour> selectList(CreditJour condition, int start,
             int count) {
         return super.selectList(NAMESPACE.concat("select_creditJour"), start,
-            count, condition, CreditJour.class);
+                count, condition, CreditJour.class);
     }
 
     @Override
@@ -52,4 +50,9 @@ public class CreditJourDAOImpl extends AMybatisTemplate
         return super.update(NAMESPACE.concat("update_creditJour"), creditJour);
     }
 
+    @Override
+    public void insertList(List<CreditJour> jourList) {
+        super.insertBatch(NAMESPACE.concat("insert_jourList"),
+                (List) jourList);
+    }
 }
