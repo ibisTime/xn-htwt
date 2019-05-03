@@ -702,7 +702,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // + budgetOrder.getPostCode1() + ", " + "借款人无重大疾病，身体健康";
             // investigateReport.setCustomerInformation(customerInformation);
             // CreditUser domain = creditUserBO.getCreditUserByCreditCode(
-            // budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+            // budgetOrder.getCreditCode(), ECreditUserLoanRole.APPLY_USER);
             // investigateReport.setBankCreditResultRemark(domain
             // .getBankCreditResultRemark());
             // investigateReport.setJourDatetimeStart(budgetOrder

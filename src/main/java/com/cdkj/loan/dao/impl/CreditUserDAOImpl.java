@@ -1,12 +1,10 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.CreditUser;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  * 
@@ -49,10 +47,9 @@ public class CreditUserDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public List<CreditUser> selectList(CreditUser condition, int start,
-            int count) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<CreditUser> selectList(CreditUser condition, int start, int count) {
+        return super.selectList(NAMESPACE.concat("select_creditUser"), start, count,
+                condition, CreditUser.class);
     }
 
     @Override

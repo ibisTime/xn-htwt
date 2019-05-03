@@ -1,12 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -24,9 +17,14 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
@@ -55,7 +53,7 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
             .getLoanProductCode());
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
         CreditUser applyUser = creditUserBO.getCreditUserByBizCode(
-            cdbiz.getCode(), ELoanRole.APPLY_USER);
+                cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
         BudgetOrderFee data = new BudgetOrderFee();
         code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
             .getCode());

@@ -315,6 +315,11 @@ public class CreditUser extends ABaseDO {
     private List<CreditUser> creditUserList;
 
     /**
+     * 征信报告
+     */
+    private List<Attachment> attachments;
+
+    /**
      * ************** 附件图片 ************************
      */
     private String idFront;
@@ -919,5 +924,13 @@ public class CreditUser extends ABaseDO {
 
     public void setBuildProvePdf(String buildProvePdf) {
         this.buildProvePdf = buildProvePdf;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 }

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -14,19 +16,33 @@ public class XN632111ReqCreditUser {
     @NotBlank
     private String creditUserCode;
 
-    // 银行征信结果
+    // 信用卡占比
     @NotBlank
-    private String bankCreditReport;
+    @Min(0)
+    @Max(1)
+    private String creditCardOccupation;
 
     // 银行征信结果
     @NotBlank
     private String bankResult;
+
+    // 银行征信结果
+    @NotBlank
+    private String bankCreditReport;
 
     // 大数据征信结果
     private String dataCreditReport;
 
     // 征信说明
     private String creditNote;
+
+    public String getCreditCardOccupation() {
+        return creditCardOccupation;
+    }
+
+    public void setCreditCardOccupation(String creditCardOccupation) {
+        this.creditCardOccupation = creditCardOccupation;
+    }
 
     public String getBankResult() {
         return bankResult;
