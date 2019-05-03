@@ -906,16 +906,20 @@ public class CdbizAOImpl implements ICdbizAO {
         // 还款信息
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
         // 贷款信息
+
         LoanInfoRes loanInfoRes = new LoanInfoRes();
-        BeanUtils.copyProperties(repayBiz, loanInfoRes);
-        BeanUtils.copyProperties(carInfo, loanInfoRes);
+        CarInfoRes carInfoRes = new CarInfoRes();
+        if (carInfo != null) {
+            BeanUtils.copyProperties(carInfo, loanInfoRes);
+            BeanUtils.copyProperties(carInfo, carInfoRes);
+        }
+        if (repayBiz != null) {
+            BeanUtils.copyProperties(repayBiz, loanInfoRes);
+            BeanUtils.copyProperties(repayBiz, carInfoRes);
+        }
+        cdbiz.setCarInfoRes(carInfoRes);
         cdbiz.setLoanInfo(loanInfoRes);
         // 车辆信息
-        CarInfoRes carInfoRes = new CarInfoRes();
-        BeanUtils.copyProperties(repayBiz, carInfoRes);
-        BeanUtils.copyProperties(carInfo, carInfoRes);
-        cdbiz.setCarInfoRes(carInfoRes);
-
         // 征信人流水
         List<CreditJour> creditJours = creditJourBO.querCreditJoursByBizCode(cdbiz.getCode());
         cdbiz.setCreditJours(creditJours);
