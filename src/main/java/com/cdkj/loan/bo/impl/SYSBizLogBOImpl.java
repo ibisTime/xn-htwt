@@ -1,15 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.cdkj.loan.bo.IBizTaskBO;
-import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Page;
@@ -21,6 +11,12 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
@@ -31,12 +27,6 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
 
     @Autowired
     private ISYSUserBO sysUserBO;
-
-    @Autowired
-    private IBizTaskBO bizTaskBO;
-
-    @Autowired
-    private INodeFlowBO nodeFlowBO;
 
     @Override
     public void recordCurOperate(String bizCode, EBizLogType refType,
