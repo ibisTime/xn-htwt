@@ -30,7 +30,7 @@ public class LoanInfoRes {
     private Long gpsFee;// carinfo
 
     // 公证费用
-    private String authFee;// carinfo
+    private Long authFee;// carinfo
 
     // 首付金额
     private Long sfAmount;// repayBiz
@@ -104,14 +104,13 @@ public class LoanInfoRes {
         this.gpsFee = gpsFee;
     }
 
-    public String getAuthFee() {
+    public Long getAuthFee() {
         return authFee;
     }
 
-    public void setAuthFee(String authFee) {
+    public void setAuthFee(Long authFee) {
         this.authFee = authFee;
     }
-
 
     public String getIsAdvanceFund() {
         return isAdvanceFund;

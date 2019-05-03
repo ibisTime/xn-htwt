@@ -1,138 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICarInfoDAO">
-	<resultMap id="carInfo_DB_Result" type="carInfo">
-		<result column="code" property="code" />
-		<result column="biz_code" property="bizCode" />
-		<result column="car_brand" property="carBrand" />
-		<result column="car_series" property="carSeries" />
-		<result column="car_model" property="carModel" />
-		<result column="car_model_name" property="carModelName" />
-		<result column="car_type" property="carType" />
-		<result column="car_color" property="carColor" />
-		<result column="car_frame_no" property="carFrameNo" />
-		<result column="car_engine_no" property="carEngineNo" />
-		<result column="original_price" property="originalPrice" />
-		<result column="invoice_price" property="invoicePrice" />
-		<result column="vehicle_company_name" property="vehicleCompanyName" />
-		<result column="invoice_company" property="invoiceCompany" />
-		<result column="region" property="region" />
-		<result column="evaluate_column" property="evaluateColumn" />
-		<result column="settle_address" property="settleAddress" />
-		<result column="policy_datetime" property="policyDatetime" />
-		<result column="policy_due_date" property="policyDueDate" />
-		<result column="car_dealer_code" property="carDealerCode" />
-		<result column="out_car_dealer_name" property="outCarDealerName" />
-		<result column="shop_way" property="shopWay" />
-		<result column="commerce_insurance" property="commerceInsurance" />
-		<result column="guarantee_contract_code" property="guaranteeContractCode" />
-		<result column="bank_contract_code" property="bankContractCode" />
-		<result column="contract_sign_date" property="contractSignDate" />
-		<result column="reg_certificate_code" property="regCertificateCode" />
-		<result column="second_odometer" property="secondOdometer" />
-		<result column="check_approve_link" property="checkApproveLink" />
-		<result column="check_approve_software" property="checkApproveSoftware" />
-		<result column="information_source" property="informationSource" />
-		<result column="valuation" property="valuation" />
-		<result column="car_168_price" property="car168Price" />
-		<result column="second_number" property="secondNumber" />
-		<result column="is_right_invoice" property="isRightInvoice" />
-		<result column="current_invoice_price" property="currentInvoicePrice" />
-		<result column="green_big_code" property="greenBigCode" />
-		<result column="car_number" property="carNumber" />
-		<result column="car_settle_datetime" property="carSettleDatetime" />
-		<result column="car_dealer_subsidy" property="carDealerSubsidy" />
-		<result column="oil_subsidy" property="oilSubsidy" />
-		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
-		<result column="gps_deduct" property="gpsDeduct" />
-		<result column="gps_fee_way" property="gpsFeeWay" />
-		<result column="gps_fee" property="gpsFee" />
-		<result column="auth_fee" property="authFee" />
-		<result column="other_fee" property="otherFee" />
-		<result column="company_fee" property="companyFee" />
-		<result column="team_fee" property="teamFee" />
-		<result column="month_deposit" property="monthDeposit" />
-	</resultMap>
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="bizCode != null and bizCode != '' ">
-				AND t.biz_code = #{bizCode}
-			</if>
-		</trim>
-	</sql>
-	<select id="select_carInfo" parameterType="carInfo" resultMap="carInfo_DB_Result">
-		SELECT
-		t.code
-		,t.biz_code
-		,t.car_brand
-		,t.car_series
-		,t.car_model
-		,t.car_model_name
-		,t.car_type
-		,t.car_color
-		,t.car_frame_no
-		,t.car_engine_no
-		,t.original_price
-		,t.invoice_price
-		,t.vehicle_company_name
-		,t.invoice_company
-		,t.region
-		,t.evaluate_column
-		,t.settle_address
-		,t.policy_datetime
-		,t.policy_due_date
-		,t.car_dealer_code
-		,t.out_car_dealer_name
-		,t.shop_way
-		,t.commerce_insurance
-		,t.guarantee_contract_code
-		,t.bank_contract_code
-		,t.contract_sign_date
-		,t.reg_certificate_code
-		,t.second_odometer
-		,t.check_approve_link
-		,t.check_approve_software
-		,t.information_source
-		,t.valuation
-		,t.car_168_price
-		,t.second_number
-		,t.is_right_invoice
-		,t.current_invoice_price
-		,t.green_big_code
-		,t.car_number
-		,t.car_settle_datetime
-		,t.car_dealer_subsidy
-		,t.oil_subsidy
-		,t.oil_subsidy_kil
-		,t.gps_deduct
-		,t.gps_fee_way
-		,t.gps_fee
-		,t.auth_fee
-		,t.other_fee
-		,t.company_fee
-		,t.team_fee
-		,t.month_deposit
-		FROM
-		tdq_car_info t
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
+    <resultMap id="carInfo_DB_Result" type="carInfo">
+        <result column="code" property="code"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="car_brand" property="carBrand"/>
+        <result column="car_series" property="carSeries"/>
+        <result column="car_model" property="carModel"/>
+        <result column="car_model_name" property="carModelName"/>
+        <result column="car_type" property="carType"/>
+        <result column="car_color" property="carColor"/>
+        <result column="car_frame_no" property="carFrameNo"/>
+        <result column="car_engine_no" property="carEngineNo"/>
+        <result column="original_price" property="originalPrice"/>
+        <result column="invoice_price" property="invoicePrice"/>
+        <result column="vehicle_company_name" property="vehicleCompanyName"/>
+        <result column="invoice_company" property="invoiceCompany"/>
+        <result column="region" property="region"/>
+        <result column="evaluate_column" property="evaluateColumn"/>
+        <result column="settle_address" property="settleAddress"/>
+        <result column="policy_datetime" property="policyDatetime"/>
+        <result column="policy_due_date" property="policyDueDate"/>
+        <result column="car_dealer_code" property="carDealerCode"/>
+        <result column="out_car_dealer_name" property="outCarDealerName"/>
+        <result column="shop_way" property="shopWay"/>
+        <result column="commerce_insurance" property="commerceInsurance"/>
+        <result column="guarantee_contract_code" property="guaranteeContractCode"/>
+        <result column="bank_contract_code" property="bankContractCode"/>
+        <result column="contract_sign_date" property="contractSignDate"/>
+        <result column="reg_certificate_code" property="regCertificateCode"/>
+        <result column="second_odometer" property="secondOdometer"/>
+        <result column="check_approve_link" property="checkApproveLink"/>
+        <result column="check_approve_software" property="checkApproveSoftware"/>
+        <result column="information_source" property="informationSource"/>
+        <result column="valuation" property="valuation"/>
+        <result column="car_168_price" property="car168Price"/>
+        <result column="second_number" property="secondNumber"/>
+        <result column="is_right_invoice" property="isRightInvoice"/>
+        <result column="current_invoice_price" property="currentInvoicePrice"/>
+        <result column="green_big_code" property="greenBigCode"/>
+        <result column="car_number" property="carNumber"/>
+        <result column="car_settle_datetime" property="carSettleDatetime"/>
+        <result column="car_dealer_subsidy" property="carDealerSubsidy"/>
+        <result column="oil_subsidy" property="oilSubsidy"/>
+        <result column="oil_subsidy_kil" property="oilSubsidyKil"/>
+        <result column="gps_deduct" property="gpsDeduct"/>
+        <result column="gps_fee_way" property="gpsFeeWay"/>
+        <result column="gps_fee" property="gpsFee"/>
+        <result column="auth_fee" property="authFee"/>
+        <result column="other_fee" property="otherFee"/>
+        <result column="company_fee" property="companyFee"/>
+        <result column="team_fee" property="teamFee"/>
+        <result column="month_deposit" property="monthDeposit"/>
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_carInfo" parameterType="carInfo" resultMap="carInfo_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.car_brand
+        ,t.car_series
+        ,t.car_model
+        ,t.car_model_name
+        ,t.car_type
+        ,t.car_color
+        ,t.car_frame_no
+        ,t.car_engine_no
+        ,t.original_price
+        ,t.invoice_price
+        ,t.vehicle_company_name
+        ,t.invoice_company
+        ,t.region
+        ,t.evaluate_column
+        ,t.settle_address
+        ,t.policy_datetime
+        ,t.policy_due_date
+        ,t.car_dealer_code
+        ,t.out_car_dealer_name
+        ,t.shop_way
+        ,t.commerce_insurance
+        ,t.guarantee_contract_code
+        ,t.bank_contract_code
+        ,t.contract_sign_date
+        ,t.reg_certificate_code
+        ,t.second_odometer
+        ,t.check_approve_link
+        ,t.check_approve_software
+        ,t.information_source
+        ,t.valuation
+        ,t.car_168_price
+        ,t.second_number
+        ,t.is_right_invoice
+        ,t.current_invoice_price
+        ,t.green_big_code
+        ,t.car_number
+        ,t.car_settle_datetime
+        ,t.car_dealer_subsidy
+        ,t.oil_subsidy
+        ,t.oil_subsidy_kil
+        ,t.gps_deduct
+        ,t.gps_fee_way
+        ,t.gps_fee
+        ,t.auth_fee
+        ,t.other_fee
+        ,t.company_fee
+        ,t.team_fee
+        ,t.month_deposit
+        FROM
+        tdq_car_info t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
 
-	<select id="select_carInfo_count" parameterType="carInfo"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_car_info t
-		<include refid="where_condition" />
-	</select>
+    <select id="select_carInfo_count" parameterType="carInfo"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tdq_car_info t
+        <include refid="where_condition"/>
+    </select>
 
-	<insert id="insert_carInfo" parameterType="carInfo">
+    <insert id="insert_carInfo" parameterType="carInfo">
 		INSERT INTO
 		tdq_car_info(
 		code
@@ -179,6 +179,12 @@
 		,oil_subsidy_kil
 		,gps_deduct
 		,gps_fee_way
+		,gps_fee
+		,auth_fee
+		,other_fee
+		,company_fee
+		,team_fee
+		,month_deposit
 		)
 		VALUES(
 		#{code}
@@ -225,18 +231,24 @@
 		,#{oilSubsidyKil}
 		,#{gpsDeduct}
 		,#{gpsFeeWay}
+		,#{gpsFee}
+		,#{authFee}
+		,#{otherFee}
+		,#{companyFee}
+		,#{teamFee}
+		,#{monthDeposit}
 		)
 	</insert>
 
-	<update id="update_entryFbhInfo" parameterType="carInfo">
+    <update id="update_entryFbhInfo" parameterType="carInfo">
 		UPDATE tdq_car_info
 		SET
 		policy_datetime = #{policyDatetime}
 		,policy_due_date = #{policyDueDate}
 		WHERE biz_code = #{bizCode}
 	</update>
-	
-	<update id="update_carInfo" parameterType="carInfo">
+
+    <update id="update_carInfo" parameterType="carInfo">
 		UPDATE tdq_car_info
 		SET
 		car_brand = #{carBrand}

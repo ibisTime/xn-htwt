@@ -5,7 +5,6 @@ import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICarInfoDAO;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -192,14 +191,9 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     public void saveCarInfo(XN632530Req req) {
         CarInfo carInfo = new CarInfo();
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
-        carInfo.setCode(code);
         carInfo.setBizCode(req.getCode());
-        carInfo.setInvoicePrice(req.getInvoicePrice());
-        carInfo.setGpsFee(StringValidater.toLong(req.getGpsFee()));
-        carInfo.setAuthFee(StringValidater.toLong(req.getAuthFee()));
-        carInfo.setMonthDeposit(StringValidater.toLong(req.getMonthDeposit()));
-        carInfo.setTeamFee(StringValidater.toLong(req.getTeamFee()));
-        carInfo.setOtherFee(StringValidater.toLong(req.getOtherFee()));
+        EntityUtils.copyData(req, carInfo);
+        carInfo.setCode(code);
         carInfoDAO.insert(carInfo);
     }
 
