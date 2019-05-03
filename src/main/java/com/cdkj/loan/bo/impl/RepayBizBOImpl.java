@@ -42,6 +42,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -581,18 +582,14 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public String saveRepayBiz(XN632530Req req) {
         RepayBiz repayBiz = new RepayBiz();
+        BeanUtils.copyProperties(req, repayBiz);
         String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
                 .getCode());
         repayBiz.setCode(code);
         repayBiz.setBizCode(req.getCode());
-        repayBiz.setLoanProductCode(req.getLoanProductCode());
         LoanProduct product = loanProductBO.getLoanProduct(req
                 .getLoanProductCode());
         repayBiz.setLoanProductName(product.getName());
-        repayBiz.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
-        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
-        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
-        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(req.getCode());
         repayBizDAO.insert(repayBiz);
@@ -601,17 +598,15 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
 
     @Override
     public void refreshRepayBiz(RepayBiz repayBiz, XN632530Req req) {
+        String code = repayBiz.getCode();
+        BeanUtils.copyProperties(req, repayBiz);
         repayBiz.setBizCode(req.getCode());
-        repayBiz.setLoanProductCode(req.getLoanProductCode());
         LoanProduct product = loanProductBO.getLoanProduct(req
                 .getLoanProductCode());
         repayBiz.setLoanProductName(product.getName());
-        repayBiz.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
-        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
-        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
-        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(req.getCode());
+        repayBiz.setCode(code);
         repayBizDAO.updateRepayBiz(repayBiz);
     }
 
