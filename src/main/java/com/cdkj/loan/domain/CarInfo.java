@@ -28,7 +28,7 @@ public class CarInfo extends ABaseDO {
     // 车型
     private String carModel;
 
-    // 车型名称--删除
+    // 车型名称
     private String carModelName;
 
     // 车辆类型
@@ -46,7 +46,7 @@ public class CarInfo extends ABaseDO {
     // 市场指导价
     private String originalPrice;
 
-    // 开票价--删除
+    // 开票价
     private String invoicePrice;
 
     // 机动车销售公司
