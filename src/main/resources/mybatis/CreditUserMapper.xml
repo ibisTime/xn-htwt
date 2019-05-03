@@ -408,8 +408,6 @@
         SET credit_card_occupation    = #{creditCardOccupation}
           , bank_credit_result        = #{bankCreditResult}
           , bank_credit_result_remark = #{bankCreditResultRemark}
-          , data_report=#{dataCreditReport}
-          , bank_report=#{bankCreditReport}
         WHERE code = #{code}
     </update>
 

@@ -1,5 +1,6 @@
 package com.cdkj.loan.enums;
 
+import com.cdkj.loan.exception.BizException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,12 +93,18 @@ public enum ENode {
     }
 
     public static ENode matchCode(String code) {
+        ENode resultNote = null;
         for (ENode eNode : ENode.values()) {
             if (eNode.code.equalsIgnoreCase(code)) {
-                return eNode;
+                resultNote = eNode;
+                break;
             }
         }
-        return null;
+        if (null == resultNote) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "节点[" + code + "]未找到匹配的节点信息数据");
+        }
+
+        return resultNote;
     }
 
     private ENode(String code, String value) {
