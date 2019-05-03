@@ -1,11 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ICarPledgeAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTaskBO;
@@ -27,6 +21,10 @@ import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CarPledgeAOImpl implements ICarPledgeAO {
@@ -71,7 +69,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             req.getSupplementNote());
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge, carPledgeCode,
@@ -102,7 +100,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         carPledgeBO.saleManConfirm(carPledge.getCode(), nextNodeCode, req);
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge,
@@ -153,7 +151,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         attachmentBO.saveAttachment(cdbiz.getCode(), req);
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge,
@@ -200,7 +198,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             pledgeBankCommitDatetime, pledgeBankCommitNote);
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.Pledge, carPledge.getCode(),
@@ -235,7 +233,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         carPledgeBO.confirmDone(code, nextNodeCode, operator);
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.Pledge, carPledge.getCode(),

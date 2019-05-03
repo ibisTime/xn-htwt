@@ -169,7 +169,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             preNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
                     .getNextNode();
 
-            cdbizBO.refershCurNodeCode(cdbiz, preNodeCode);
+            cdbizBO.refreshCurNodeCode(cdbiz, preNodeCode);
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
             // 处理待办事项
@@ -231,7 +231,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             preNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
                     .getNextNode();
 
-            cdbizBO.refershCurNodeCode(cdbiz, preNodeCode);
+            cdbizBO.refreshCurNodeCode(cdbiz, preNodeCode);
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
             // 处理待办事项
@@ -279,7 +279,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         }
         ENode node = ENode.getMap().get(preCurrentNode);
 
-        cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
+        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
 
         // 状态更新
         cdbizBO.refreshStatus(cdbiz, status);
@@ -324,7 +324,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
         }
-        cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
+        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
 
         // 业务更新状态
         cdbizBO.refreshStatus(cdbiz, status);
@@ -366,7 +366,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             status = ECdbizStatus.A3x.getCode();
         }
         // 节点改变
-        cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
+        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
 
         if (StringUtils.isNotBlank(carPriceCheckReport)) {
             EAttachName attachName = EAttachName.car_check_reprot;
@@ -417,7 +417,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
         }
-        cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
+        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
 
         // 业务更新状态
         cdbizBO.refreshStatus(cdbiz, status, approveNote);
@@ -459,7 +459,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
         }
-        cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
+        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
         cdbizBO.refreshStatus(cdbiz, status, approveNote);
 
         ENode node = ENode.getMap().get(preCurrentNode);
@@ -528,7 +528,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             bizTaskBO.saveBizTask(req.getCode(), EBizLogType.BUDGET_ORDER,
                     req.getCode(), ENode.getMap().get(preCurrentNode), null);
         }
-        cdbizBO.refershCurNodeCode(cdbiz, preCurrentNode);
+        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
 
         cdbizBO.refreshStatus(cdbiz, status, req.getApproveNote());
 

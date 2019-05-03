@@ -52,9 +52,12 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     void refreshMakeCardNode(Cdbiz cdbiz, String node);
 
-    void refershCurNodeCode(Cdbiz cdbiz, String node);
+    void refreshCurNodeCode(Cdbiz cdbiz, String node);
 
     void refreshInsideJob(Cdbiz cdbiz, String insideJob);
+
+    void refreshIntevNodeStart(Cdbiz cdbiz, String node, String intevCurNodeCode,
+            String mqStatus);
 
     void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
 

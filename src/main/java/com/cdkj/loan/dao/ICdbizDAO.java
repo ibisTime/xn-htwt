@@ -1,39 +1,41 @@
 package com.cdkj.loan.dao;
 
-import java.util.List;
-
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.Cdbiz;
+import java.util.List;
 
-//dao层 
+// dao层
 public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
+
     String NAMESPACE = ICdbizDAO.class.getName().concat(".");
 
-    public int updateStatus(Cdbiz data);
+    int updateStatus(Cdbiz data);
 
-    public int updateMakeCardStatus(Cdbiz data);
+    int updateMakeCardStatus(Cdbiz data);
 
-    public int updateMqStatus(Cdbiz data);
+    int updateMqStatus(Cdbiz data);
 
-    public int updateFbhgpsStatus(Cdbiz data);
+    int updateFbhgpsStatus(Cdbiz data);
 
-    public int updateFircundangStatus(Cdbiz data);
+    int updateFircundangStatus(Cdbiz data);
 
-    public int updateSeccundangStatus(Cdbiz data);
+    int updateSeccundangStatus(Cdbiz data);
 
-    public int updateZfStatus(Cdbiz data);
+    int updateZfStatus(Cdbiz data);
 
-    public int updateCurNodeCode(Cdbiz data);
+    int updateCurNodeCode(Cdbiz data);
 
-    public int updateYwy(Cdbiz data);
+    int updateYwy(Cdbiz data);
 
-    public int updateInsideJob(Cdbiz data);
+    int updateInsideJob(Cdbiz data);
 
-    public int updateCdbiz(Cdbiz data);
+    int updateCdbiz(Cdbiz data);
 
     List<Cdbiz> selectListByRoleCode(Cdbiz condition, int start, int count);
 
     long selectTotalCountByRoleCode(Cdbiz condition);
 
-    public int updateIntevNode(Cdbiz data);
+    int updateIntevNode(Cdbiz data);
+
+    int updateIntevNodeStart(Cdbiz data);
 }

@@ -226,9 +226,18 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public void refershCurNodeCode(Cdbiz cdbiz, String node) {
+    public void refreshCurNodeCode(Cdbiz cdbiz, String node) {
         cdbiz.setCurNodeCode(node);
         cdbizDAO.updateCurNodeCode(cdbiz);
+    }
+
+    @Override
+    public void refreshIntevNodeStart(Cdbiz cdbiz, String node, String intevCurNodeCode,
+            String mqStatus) {
+        cdbiz.setCurNodeCode(node);
+        cdbiz.setIntevCurNodeCode(intevCurNodeCode);
+        cdbiz.setMqStatus(mqStatus);
+        cdbizDAO.updateIntevNodeStart(cdbiz);
     }
 
     @Override

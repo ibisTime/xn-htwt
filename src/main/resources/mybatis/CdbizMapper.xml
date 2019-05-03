@@ -475,6 +475,15 @@
 		intev_cur_node_code=#{intevCurNodeCode}
 		WHERE code=#{code}
 	</update>
+
+	<update id="update_intevNodeStart" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cur_node_code=#{curNodeCode}
+		,intev_cur_node_code=#{intevCurNodeCode}
+		,mq_status=#{mqStatus}
+		WHERE code=#{code}
+	</update>
 	
 	<update id="update_makeCardNode" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
@@ -496,8 +505,5 @@
 		cur_node_code=#{curNodeCode}
 		WHERE code=#{code}
 	</update>
-	
-	
-
 
 </mapper>

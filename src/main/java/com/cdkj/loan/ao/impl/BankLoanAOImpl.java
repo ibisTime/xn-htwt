@@ -1,12 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.IBankLoanAO;
 import com.cdkj.loan.bo.IBankLoanBO;
 import com.cdkj.loan.bo.IBizTaskBO;
@@ -24,6 +17,11 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BankLoanAOImpl implements IBankLoanAO {
@@ -69,7 +67,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
             bankCommitDatetime, bankCommitNote);
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(bizCode, EBizLogType.bank_push,
@@ -107,7 +105,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
         bankLoanBO.entryFkInfo(bankLoan.getCode(), nextNodeCode, req);
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,
@@ -138,7 +136,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
         bankLoanBO.confirmSk(bankLoan.getCode(), nextNodeCode, req);
 
         // 更新业务状态
-        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,

@@ -277,7 +277,11 @@ public class CdbizAOImpl implements ICdbizAO {
 
             // 更新节点
             NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
-            cdbizBO.refershCurNodeCode(cdbiz, nodeFlow.getNextNode());
+
+            // 更新提交节点信息
+            cdbizBO.refreshIntevNodeStart(cdbiz, nodeFlow.getNextNode(),
+                    ENode.input_interview.getCode(),
+                    ECdbizStatus.B00.getCode());
 
             // 修改业务主状态
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1.getCode(), ECdbizStatus.A1.getValue());
@@ -363,7 +367,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // 当前节点
         String preCurNodeCode = cdbiz.getCurNodeCode();
         String curNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode).getNextNode();
-        cdbizBO.refershCurNodeCode(cdbiz, curNode);
+        cdbizBO.refreshCurNodeCode(cdbiz, curNode);
         cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A2.getCode(), ECdbizStatus.A2.getValue());
 
         // 待办事项处理
@@ -433,7 +437,7 @@ public class CdbizAOImpl implements ICdbizAO {
                 creditUserBO.refreshCreditUserLoanRole(user);
             }
             // 审核通过，改变节点
-            cdbizBO.refershCurNodeCode(cdbiz, ENode.input_budget.getCode());
+            cdbizBO.refreshCurNodeCode(cdbiz, ENode.input_budget.getCode());
             // 修改业务状态
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode(), req.getApproveNote());
 
@@ -460,7 +464,7 @@ public class CdbizAOImpl implements ICdbizAO {
                     req.getOperator());
 
         } else {
-            cdbizBO.refershCurNodeCode(cdbiz, nodeFlow.getBackNode());
+            cdbizBO.refreshCurNodeCode(cdbiz, nodeFlow.getBackNode());
             // 重录征信单待办事项
             bizTaskBO.saveBizTask(
                     req.getCode(),
@@ -499,7 +503,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // 下一个节点
         preNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode();
 
-        cdbizBO.refershCurNodeCode(cdbiz, preNodeCode);
+        cdbizBO.refreshCurNodeCode(cdbiz, preNodeCode);
         // 业务状态变化
         cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
         // 处理待办事项

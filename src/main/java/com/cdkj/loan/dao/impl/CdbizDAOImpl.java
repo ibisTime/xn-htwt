@@ -1,14 +1,11 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.ICdbizDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Cdbiz;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
-//CHECK 。。。 
 @Repository("cdbizDAOImpl")
 public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
 
@@ -110,9 +107,15 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     }
 
     @Override
+    public int updateIntevNodeStart(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_intevNodeStart"), data);
+    }
+
+    @Override
     public int updateIntevNode(Cdbiz data) {
         return super.update(NAMESPACE.concat("update_intevNode"), data);
     }
+
 
     @Override
     public int updateCdbiz(Cdbiz data) {

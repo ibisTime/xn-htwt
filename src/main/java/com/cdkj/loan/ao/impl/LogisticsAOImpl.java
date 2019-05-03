@@ -140,7 +140,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     case re_submit_1:
                         cdbizBO.refreshStatus(cdbiz,
                             ECdbizStatus.A11.getCode());
-                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     // 1、风控寄抵押合同
@@ -149,7 +149,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     case re_submit_3:
                         cdbizBO.refreshStatus(cdbiz,
                             ECdbizStatus.A19.getCode());
-                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     // 1、业务员寄送材料（车辆抵押）
@@ -158,14 +158,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     case re_submit_4:
                         cdbizBO.refreshStatus(cdbiz,
                             ECdbizStatus.A23.getCode());
-                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     // 风控审核通过（车辆抵押）
                     case submit_5:
                         cdbizBO.refreshStatus(cdbiz,
                             ECdbizStatus.A26.getCode());
-                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     // 待风控寄件（车辆抵押）
@@ -382,7 +382,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         break;
                 }
 
-                cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
             default:
                 break;
@@ -428,14 +428,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     case receive_5:
                         cdbizBO.refreshStatus(cdbiz,
                             ECdbizStatus.A27.getCode());
-                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     // 待担保公司收件（车辆抵押）
                     case receive_6:
                         cdbizBO.refreshSeccundangStatus(cdbiz,
                             ECdbizStatus.E2.getCode());
-                        cdbizBO.refershCurNodeCode(cdbiz, nextNodeCode);
+                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
                         break;
 
                     default:
