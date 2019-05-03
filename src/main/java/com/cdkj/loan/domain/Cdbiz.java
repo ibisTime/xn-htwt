@@ -171,6 +171,15 @@ public class Cdbiz extends ABaseDO {
     // 业务员名称
     private String saleUserName;
 
+    // 业务员公司
+    private String saleUserCompanyName;
+
+    // 业务员部门
+    private String saleUserDepartMentName;
+
+    // 业务员职位
+    private String saleUserPositionName;
+
     // 主贷人
     private CreditUser creditUser;
 
