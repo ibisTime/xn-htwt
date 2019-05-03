@@ -22,23 +22,23 @@ public class XN632533Req {
 
     // 婚姻状况
     @NotBlank
-    private String marryState;// creditUserExt
+    private String marryState;// creditUser
 
     // 家庭人口
     @NotBlank
-    private String familyNumber;// creditUserExt
+    private String familyNumber;// creditUser
 
     // 家庭电话
     @NotBlank
-    private String familyPhone;// creditUserExt
+    private String familyPhone;// creditUser
 
     // 家庭主要财产
     @NotBlank
-    private String familyMainAsset;// creditUserExt
+    private String familyMainAsset;// creditUser
 
     // 主要财产包括
     @NotBlank
-    private String mainAssetInclude;// creditUserExt
+    private String mainAssetInclude;// creditUser
 
     // 户口所在地
     @NotBlank
@@ -50,11 +50,17 @@ public class XN632533Req {
 
     // 现居住地址
     @NotBlank
-    private String nowAddress;// creditUserExt
+    private String nowAddress;// creditUser
+
+    /**
+     * 现住房屋类型
+     */
+    @NotBlank
+    private String nowHouseType;
 
     // 现居住地址邮编1
     @NotBlank
-    private String postCode;// creditUserExt
+    private String postCode;// creditUser
 
     // 户口本资料
     private String hkBookPdf;
@@ -141,6 +147,14 @@ public class XN632533Req {
 
     public void setResidenceAddress(String residenceAddress) {
         this.residenceAddress = residenceAddress;
+    }
+
+    public String getNowHouseType() {
+        return nowHouseType;
+    }
+
+    public void setNowHouseType(String nowHouseType) {
+        this.nowHouseType = nowHouseType;
     }
 
     public String getPostCode2() {
