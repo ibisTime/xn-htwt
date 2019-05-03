@@ -927,6 +927,11 @@ public class CdbizAOImpl implements ICdbizAO {
         // 征信人流水
         List<CreditJour> creditJours = creditJourBO.querCreditJoursByBizCode(cdbiz.getCode());
         cdbiz.setCreditJours(creditJours);
+
+        // 附件
+        List<Attachment> attachments = attachmentBO
+                .queryBizAttachments(cdbiz.getCode());
+        cdbiz.setAttachments(attachments);
     }
 
     private void init(Cdbiz cdbiz) {
