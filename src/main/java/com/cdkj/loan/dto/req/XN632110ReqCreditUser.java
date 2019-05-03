@@ -42,7 +42,7 @@ public class XN632110ReqCreditUser {
     @NotBlank
     private String authPdf;
 
-    // 面签照片
+    // 手持授权书照片
     @NotBlank
     private String interviewPic;
 

@@ -1,7 +1,6 @@
 package com.cdkj.loan.dto.req;
 
 import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -23,6 +22,7 @@ public class XN632112Req {
     private String loanAmount;
 
     // 业务种类
+    @NotBlank
     private String bizType;
 
     // 二手车评估报告
@@ -32,7 +32,7 @@ public class XN632112Req {
 
     private String xszReverse;
 
-    private List<XN632112ReqCreditUser> creditUserList;
+    private List<XN632110ReqCreditUser> creditUserList;
 
     // 操作按钮
     @NotBlank
@@ -98,11 +98,11 @@ public class XN632112Req {
         this.secondCarReport = secondCarReport;
     }
 
-    public List<XN632112ReqCreditUser> getCreditUserList() {
+    public List<XN632110ReqCreditUser> getCreditUserList() {
         return creditUserList;
     }
 
-    public void setCreditUserList(List<XN632112ReqCreditUser> creditUserList) {
+    public void setCreditUserList(List<XN632110ReqCreditUser> creditUserList) {
         this.creditUserList = creditUserList;
     }
 

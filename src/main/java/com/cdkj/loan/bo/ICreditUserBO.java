@@ -3,7 +3,6 @@ package com.cdkj.loan.bo;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
-import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.ELoanRole;
 import java.util.List;
@@ -11,41 +10,34 @@ import java.util.List;
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     // 新增征信人员
-    public void saveCreditUser(XN632110ReqCreditUser child, String bizCode);
-
-    // 修改征信人员
-    public void saveCreditUser(XN632112ReqCreditUser child, String bizCode);
+    void saveCreditUser(XN632110ReqCreditUser child, String bizCode);
 
     // 删除征信人员
-    public void removeCreditUserByBizCode(String bizCode);
-
-    // 删除征信人员
-    public void removeCreditUser(String code);
+    void removeCreditUserByBizCode(String bizCode);
 
     // 修改贷款角色
-    public void refreshCreditUserLoanRole(CreditUser creditUser);
+    void refreshCreditUserLoanRole(CreditUser creditUser);
 
     // 查询征信人员
-    public CreditUser getCreditUser(String code);
+    CreditUser getCreditUser(String code);
 
     // 查询征信人员
-    public CreditUser getCreditUserUncheck(String code);
+    CreditUser getCreditUserUncheck(String code);
 
     // 录入银行征信结果
-    public void inputBankCreditResult(
-            CreditUser creditUser, String bankReport, String dataReport, String result,
-            String note);
+    void inputBankCreditResult(CreditUser creditUser, String bankReport,
+            String dataReport, String result, String note);
 
     // 批量查询征信人员
-    public List<CreditUser> queryCreditUserList(CreditUser condition);
+    List<CreditUser> queryCreditUserList(CreditUser condition);
 
     // 查询对应的征信人员信息
-    public List<CreditUser> queryCreditUserList(String bizCode);
+    List<CreditUser> queryCreditUserList(String bizCode);
 
     // 查询征信单共还人，担保人，本人
-    public CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserRelation);
+    CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserRelation);
 
-    public void refreshCreditUser(CreditUser data);
+    void refreshCreditUser(CreditUser data);
 
-    public void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req);
+    void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req);
 }

@@ -24,7 +24,7 @@ public class XN632119 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        cdbizAO.distributeLeaflets(req);
+        cdbizAO.sendOrder(req);
         return new BooleanRes(true);
     }
 

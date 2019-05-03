@@ -1,13 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -21,6 +13,11 @@ import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 资料传递
@@ -32,11 +29,9 @@ import com.cdkj.loan.enums.ELogisticsStatus;
 @Component
 public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         implements ILogisticsBO {
-    @Autowired
-    private ILogisticsDAO logisticsDAO;
 
     @Autowired
-    private IBudgetOrderBO budgetOrderBO;
+    private ILogisticsDAO logisticsDAO;
 
     @Autowired
     private ISYSUserBO sysUserBO;

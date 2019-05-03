@@ -2,6 +2,7 @@ package com.cdkj.loan.bo;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
@@ -9,63 +10,58 @@ import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
 import java.util.List;
 
-//CHECK ��鲢��ע�� 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
-    public boolean isCdbizExist(String code);
+    Cdbiz saveCdbiz(String bankCode, String bizType, Long dkAmount,
+            SYSUser sysUser, BizTeam bizTeam, String node, String dealType, String remark);
 
-    public String saveCdbiz(String bankCode, String bizType, Long dkAmount,
-            SYSUser sysUser, String node, String remark);
+    int refreshCdbiz(Cdbiz data);
 
-    public int removeCdbiz(String code);
+    int refreshCdbiz(Cdbiz cdbiz, XN632530Req req);
 
-    public int refreshCdbiz(Cdbiz data);
+    int refreshCdbiz(Cdbiz cdbiz, XN632531Req req);
 
-    public int refreshCdbiz(Cdbiz cdbiz, XN632530Req req);
+    List<Cdbiz> queryListByTeamCode(String teamCode);
 
-    public int refreshCdbiz(Cdbiz cdbiz, XN632531Req req);
+    List<Cdbiz> queryCdbizList(Cdbiz condition);
 
-    public List<Cdbiz> queryCdbizList(Cdbiz condition);
+    List<Cdbiz> queryListByYwyUser(String ywyUser);
 
-    public List<Cdbiz> queryListByTeamCode(String teamCode);
-
-    public List<Cdbiz> queryListByYwyUser(String ywyUser);
-
-    public Paginable<Cdbiz> getPaginableByRoleCode(Cdbiz condition, int start,
+    Paginable<Cdbiz> getPaginableByRoleCode(Cdbiz condition, int start,
             int limit);
 
-    public Cdbiz getCdbiz(String code);
+    Cdbiz getCdbiz(String code);
 
-    public void refreshStatus(Cdbiz cdbiz, String status);
+    void refreshStatus(Cdbiz cdbiz, String status);
 
-    public void refreshStatus(Cdbiz cdbiz, String status, String remark);
+    void refreshStatus(Cdbiz cdbiz, String status, String remark);
 
-    public void refreshMqStatus(Cdbiz cdbiz, String status);
+    void refreshMqStatus(Cdbiz cdbiz, String status);
 
-    public void refreshFbhgpsStatus(Cdbiz cdbiz, String status);
+    void refreshFbhgpsStatus(Cdbiz cdbiz, String status);
 
-    public void refreshFircundangStatus(Cdbiz cdbiz, String status);
+    void refreshFircundangStatus(Cdbiz cdbiz, String status);
 
-    public void refreshSeccundangStatus(Cdbiz cdbiz, String status);
+    void refreshSeccundangStatus(Cdbiz cdbiz, String status);
 
-    public void refreshZfStatus(Cdbiz cdbiz, String status);
+    void refreshZfStatus(Cdbiz cdbiz, String status);
 
-    public void refreshYwy(Cdbiz cdbiz, String ywyUser);
+    void refreshYwy(Cdbiz cdbiz, String ywyUser);
 
-    public void refreshMakeCardStatus(Cdbiz cdbiz, String status);
+    void refreshMakeCardStatus(Cdbiz cdbiz, String status);
 
-    public void refreshMakeCardNode(Cdbiz cdbiz, String node);
+    void refreshMakeCardNode(Cdbiz cdbiz, String node);
 
-    public void refershCurNodeCode(Cdbiz cdbiz, String node);
+    void refershCurNodeCode(Cdbiz cdbiz, String node);
 
-    public void refreshInsideJob(Cdbiz cdbiz, String insideJob);
+    void refreshInsideJob(Cdbiz cdbiz, String insideJob);
 
-    public void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
+    void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
 
-    public void interview(Cdbiz cdbiz, XN632123Req req);
+    void interview(Cdbiz cdbiz, XN632123Req req);
 
-    public void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress);
+    void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress);
 
-    public void refreshRepayCard(Cdbiz cdbiz, String repayCardNumber);
+    void refreshRepayCard(Cdbiz cdbiz, String repayCardNumber);
 
 }

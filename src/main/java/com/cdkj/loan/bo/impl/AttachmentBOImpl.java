@@ -1,16 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IFileListBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -23,6 +12,15 @@ import com.cdkj.loan.domain.FileList;
 import com.cdkj.loan.enums.EAttachmentName;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
@@ -42,8 +40,8 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
             String url) {
         String code = null;
         if (isAttachmentExist(bizCode, name)) {
-            refreshAttachment(bizCode, name, url);
-            return code;
+            Attachment attachment = refreshAttachment(bizCode, name, url);
+            code = attachment.getCode();
         } else {
             Attachment data = new Attachment();
             FileList fileList = fileListBO.getFileListByKname(name);
@@ -57,6 +55,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
 
             attachmentDAO.insert(data);
         }
+
         return code;
     }
 
@@ -218,13 +217,15 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
     }
 
     @Override
-    public void refreshAttachment(String bizCode, String name, String url) {
+    public Attachment refreshAttachment(String bizCode, String name, String url) {
         Attachment condition = new Attachment();
         condition.setBizCode(bizCode);
         condition.setKname(name);
         Attachment attachment = attachmentDAO.select(condition);
         attachment.setUrl(url);
         attachmentDAO.updateAttachment(attachment);
+
+        return attachment;
     }
 
     @Override

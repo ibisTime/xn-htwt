@@ -1,10 +1,8 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.List;
-
-import org.hibernate.validator.constraints.NotBlank;
-
 import com.cdkj.loan.domain.CreditUser;
+import java.util.List;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 风控专员审核
