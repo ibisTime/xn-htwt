@@ -7,7 +7,6 @@ import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
-import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
@@ -20,9 +19,11 @@ import com.cdkj.loan.dto.req.XN632536Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,54 +113,68 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
     @Override
     public void saveSelfExtentInfo(XN632532Req req) {
-        CreditUser creditUser = creditUserBO.getCreditUserUncheck(req.getCode());
-        EntityUtils.copyData(req, creditUser);
-        creditUserBO.refreshCreditUser(creditUser);
+        CreditUser creditUser =
+                creditUserBO.getCreditUserByBizCode(req.getCode(), ELoanRole.APPLY_USER);
+        if (creditUser != null) {
+            BeanUtils.copyProperties(req, creditUser, "code");
+            creditUserBO.refreshCreditUser(creditUser);
+        }
     }
 
     @Override
     @Transactional
     public void saveSelfHomeInfo(XN632533Req req) {
-        CreditUser creditUser = creditUserBO.getCreditUserUncheck(req.getCode());
-        EntityUtils.copyData(req, creditUser);
-        creditUserBO.refreshCreditUser(creditUser);
-        saveAttachment(req.getCode(), EAttachName.hkBookPdf, req.getHkBookPdf());
-        saveAttachment(req.getCode(), EAttachName.marryPdf, req.getMarryPdf());
-        saveAttachment(req.getCode(), EAttachName.liveProvePdf, req.getLiveProvePdf());
-        saveAttachment(req.getCode(), EAttachName.buildProvePdf, req.getBuildProvePdf());
-        saveAttachment(req.getCode(), EAttachName.houseContract, req.getHouseContract());
-        saveAttachment(req.getCode(), EAttachName.houseInvoice, req.getHouseInvoice());
-        saveAttachment(req.getCode(), EAttachName.housePictureApply, req.getHousePictureApply());
+        CreditUser creditUser =
+                creditUserBO.getCreditUserByBizCode(req.getCode(), ELoanRole.APPLY_USER);
+        if (creditUser != null) {
+            BeanUtils.copyProperties(req, creditUser, "code");
+            saveAttachment(req.getCode(), EAttachName.hkBookPdf, req.getHkBookPdf());
+            saveAttachment(req.getCode(), EAttachName.marryPdf, req.getMarryPdf());
+            saveAttachment(req.getCode(), EAttachName.liveProvePdf, req.getLiveProvePdf());
+            saveAttachment(req.getCode(), EAttachName.buildProvePdf, req.getBuildProvePdf());
+            saveAttachment(req.getCode(), EAttachName.houseContract, req.getHouseContract());
+            saveAttachment(req.getCode(), EAttachName.houseInvoice, req.getHouseInvoice());
+            saveAttachment(req.getCode(), EAttachName.housePictureApply,
+                    req.getHousePictureApply());
+        }
     }
 
     @Override
     @Transactional
     public void saveSelfWorkInfo(XN632534Req req) {
-        CreditUser creditUser = creditUserBO.getCreditUserUncheck(req.getCode());
-        EntityUtils.copyData(req, creditUser);
-        creditUserBO.refreshCreditUser(creditUser);
-        saveAttachment(req.getCode(), EAttachName.improvePdf, req.getImprovePdf());
-        saveAttachment(req.getCode(), EAttachName.frontTablePic, req.getFrontTablePic());
-        saveAttachment(req.getCode(), EAttachName.workPlacePic, req.getWorkPlacePic());
-        saveAttachment(req.getCode(), EAttachName.salerAndcustomer, req.getSalerAndcustomer());
+        CreditUser creditUser =
+                creditUserBO.getCreditUserByBizCode(req.getCode(), ELoanRole.APPLY_USER);
+        if (creditUser != null) {
+            BeanUtils.copyProperties(req, creditUser, "code");
+            creditUserBO.refreshCreditUser(creditUser);
+            saveAttachment(req.getCode(), EAttachName.improvePdf, req.getImprovePdf());
+            saveAttachment(req.getCode(), EAttachName.frontTablePic, req.getFrontTablePic());
+            saveAttachment(req.getCode(), EAttachName.workPlacePic, req.getWorkPlacePic());
+            saveAttachment(req.getCode(), EAttachName.salerAndcustomer, req.getSalerAndcustomer());
+        }
     }
 
     @Override
     @Transactional
     public void saveCommonRepayInfo(XN632535Req req) {
-        CreditUser creditUser = creditUserBO.getCreditUserUncheck(req.getCode());
-        EntityUtils.copyData(req, creditUser);
-        creditUserBO.refreshCreditUser(creditUser);
-        saveAttachment(req.getCode(), EAttachName.mateAssetPdf, req.getMateAssetPdf());
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(req.getCode(), ELoanRole.GHR);
+        if (creditUser != null) {
+            BeanUtils.copyProperties(req, creditUser, "code");
+            creditUserBO.refreshCreditUser(creditUser);
+            saveAttachment(req.getCode(), EAttachName.mateAssetPdf, req.getMateAssetPdf());
+        }
     }
 
     @Override
     @Transactional
     public void saveBondsmanInfo(XN632536Req req) {
-        CreditUser creditUser = creditUserBO.getCreditUserUncheck(req.getCode());
-        EntityUtils.copyData(req, creditUser);
-        creditUserBO.refreshCreditUser(creditUser);
-        saveAttachment(req.getCode(), EAttachName.guaAssetPdf, req.getGuaAssetPdf());
+        CreditUser creditUser = creditUserBO
+                .getCreditUserByBizCode(req.getCode(), ELoanRole.GUARANTOR);
+        if (creditUser != null) {
+            BeanUtils.copyProperties(req, creditUser, "code");
+            creditUserBO.refreshCreditUser(creditUser);
+            saveAttachment(req.getCode(), EAttachName.guaAssetPdf, req.getGuaAssetPdf());
+        }
     }
 
     public void saveAttachment(String bizCode, EAttachName attachName, String value) {
