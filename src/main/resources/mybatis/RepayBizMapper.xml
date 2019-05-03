@@ -63,6 +63,8 @@
         <result column="update_datetime" property="updateDatetime"/>
         <result column="remark" property="remark"/>
         <result column="team_code" property="teamCode"/>
+
+        <result column="loan_bank_name" property="loanBankName"/>
     </resultMap>
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -185,8 +187,10 @@
 
         ,t.remark
         ,t.team_code
+        ,cb.bank_name as loan_bank_name
         FROM
         tdh_repay_biz t
+        left join tstd_channel_bank cb on t.loan_bank = cb.bank_code
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">

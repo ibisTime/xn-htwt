@@ -2,6 +2,7 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IBizTaskAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
@@ -11,10 +12,10 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 
 /**
  * 我的分页查待办事项
+ *
  * @author: silver
  * @since: Apr 3, 2019 2:05:35 PM
  * @history:
@@ -29,7 +30,7 @@ public class XN632528 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         BizTask condition = new BizTask();
-        BeanUtils.copyProperties(req, condition);
+        EntityUtils.copyData(req, condition);
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

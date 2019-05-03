@@ -59,6 +59,18 @@ public class LoanInfoRes {
     // 其他费用
     private Long otherFee;// carInfo
 
+    /********* DB *********/
+
+    // 银行名称
+    private String loanBankName;
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
 
     public String getInvoicePrice() {
         return invoicePrice;

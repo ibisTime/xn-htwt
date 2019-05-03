@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICarInfoDAO;
@@ -16,7 +17,6 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -205,7 +205,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     @Override
     public void saveCarInfo(XN632531Req req) {
         CarInfo carInfo = new CarInfo();
-        BeanUtils.copyProperties(req, carInfo);
+        EntityUtils.copyData(req, carInfo);
         //重置code
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
         carInfo.setCode(code);
@@ -215,7 +215,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     @Override
     public int refreshCarInfo(CarInfo carInfo, XN632530Req req) {
         String code = carInfo.getCode();
-        BeanUtils.copyProperties(req, carInfo);
+        EntityUtils.copyData(req, carInfo);
         //重置code
         carInfo.setCode(code);
         return carInfoDAO.update(carInfo);
@@ -224,7 +224,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     @Override
     public int refreshCarInfo(CarInfo carInfo, XN632531Req req) {
         String code = carInfo.getCode();
-        BeanUtils.copyProperties(req, carInfo);
+        EntityUtils.copyData(req, carInfo);
         //重置code
         carInfo.setCode(code);
         return carInfoDAO.update(carInfo);
