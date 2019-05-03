@@ -68,14 +68,14 @@ public class XN632500Req {
 
     // 是否融资
 
-    private String isFinancing;// cdbiz
+    private String isFinacing;// cdbiz
 
     // 是否安装gps
 
     private String isAzGps;// cdbiz
 
     // 是否我司续保
-    private String isCompanyContinue;
+    private String isPlatInsure;
 
     // 月供保证金
 
@@ -485,12 +485,12 @@ public class XN632500Req {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getIsFinancing() {
-        return isFinancing;
+    public String getIsFinacing() {
+        return isFinacing;
     }
 
-    public void setIsFinancing(String isFinancing) {
-        this.isFinancing = isFinancing;
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
     }
 
     public String getFirstAmount() {
@@ -1341,12 +1341,11 @@ public class XN632500Req {
         this.lyDeposit = lyDeposit;
     }
 
-    public String getIsCompanyContinue() {
-        return isCompanyContinue;
+    public String getIsPlatInsure() {
+        return isPlatInsure;
     }
 
-    public void setIsCompanyContinue(String isCompanyContinue) {
-        this.isCompanyContinue = isCompanyContinue;
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
     }
-
 }

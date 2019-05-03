@@ -22,7 +22,7 @@ public class XN632530Req {
 
     // 贷款期限
     @NotBlank
-    private String loanPeriod;// repayBiz
+    private String periods;// repayBiz
 
     // 银行利率
     @NotBlank
@@ -50,11 +50,11 @@ public class XN632530Req {
 
     // 首付金额
     @NotBlank
-    private String firstAmount;// repayBiz
+    private String sfAmount;// repayBiz
 
     // 首付比例
     @NotBlank
-    private String firstRate;// repayBiz
+    private String sfRate;// repayBiz
 
     // 是否垫资
     @NotBlank
@@ -62,7 +62,7 @@ public class XN632530Req {
 
     // 是否融资
     @NotBlank
-    private String isFinancing;// cdbiz
+    private String isFinacing;// cdbiz
 
     // 是否安装gps
     @NotBlank
@@ -70,7 +70,7 @@ public class XN632530Req {
 
     // 是否我司续保
     @NotBlank
-    private String isCompanyContinue;// cdbiz
+    private String isPlatInsure;// cdbiz
 
     // 月供保证金
     @NotBlank
@@ -103,13 +103,6 @@ public class XN632530Req {
         this.operator = operator;
     }
 
-    public String getLoanPeriod() {
-        return loanPeriod;
-    }
-
-    public void setLoanPeriod(String loanPeriod) {
-        this.loanPeriod = loanPeriod;
-    }
 
     public String getBankRate() {
         return bankRate;
@@ -159,20 +152,28 @@ public class XN632530Req {
         this.authFee = authFee;
     }
 
-    public String getFirstAmount() {
-        return firstAmount;
+    public String getPeriods() {
+        return periods;
     }
 
-    public void setFirstAmount(String firstAmount) {
-        this.firstAmount = firstAmount;
+    public void setPeriods(String periods) {
+        this.periods = periods;
     }
 
-    public String getFirstRate() {
-        return firstRate;
+    public String getSfAmount() {
+        return sfAmount;
     }
 
-    public void setFirstRate(String firstRate) {
-        this.firstRate = firstRate;
+    public void setSfAmount(String sfAmount) {
+        this.sfAmount = sfAmount;
+    }
+
+    public String getSfRate() {
+        return sfRate;
+    }
+
+    public void setSfRate(String sfRate) {
+        this.sfRate = sfRate;
     }
 
     public String getIsAdvanceFund() {
@@ -183,12 +184,12 @@ public class XN632530Req {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getIsFinancing() {
-        return isFinancing;
+    public String getIsFinacing() {
+        return isFinacing;
     }
 
-    public void setIsFinancing(String isFinancing) {
-        this.isFinancing = isFinancing;
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
     }
 
     public String getIsAzGps() {
@@ -199,14 +200,6 @@ public class XN632530Req {
         this.isAzGps = isAzGps;
     }
 
-    public String getIsCompanyContinue() {
-        return isCompanyContinue;
-    }
-
-    public void setIsCompanyContinue(String isCompanyContinue) {
-        this.isCompanyContinue = isCompanyContinue;
-    }
-
     public String getMonthDeposit() {
         return monthDeposit;
     }
@@ -215,6 +208,13 @@ public class XN632530Req {
         this.monthDeposit = monthDeposit;
     }
 
+    public String getIsPlatInsure() {
+        return isPlatInsure;
+    }
+
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
+    }
 
     public String getTeamFee() {
         return teamFee;

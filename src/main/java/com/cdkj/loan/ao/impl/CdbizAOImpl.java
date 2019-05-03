@@ -54,6 +54,8 @@ import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
+import com.cdkj.loan.dto.res.CarInfoRes;
+import com.cdkj.loan.dto.res.LoanInfoRes;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAttachName;
@@ -74,6 +76,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -154,12 +157,12 @@ public class CdbizAOImpl implements ICdbizAO {
 
         if (StringUtils.isBlank(sysUser.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "您还未设置职位，暂无法使用征信申请");
+                    "您还未设置职位，暂无法使用征信申请");
         }
 
         if (StringUtils.isBlank(sysUser.getTeamCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "您还未设置团队，暂无法申请!");
+                    "您还未设置团队，暂无法申请!");
         }
         BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
 
@@ -168,7 +171,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 生成业务编号
         Cdbiz cdbiz = cdbizBO.saveCdbiz(req.getLoanBankCode(),
-            req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
+                req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
                 sysUser, bizTeam, currentNode.getCode(), req.getButtonCode(), req.getNote());
 
         // 二手车材料处理
@@ -329,12 +332,12 @@ public class CdbizAOImpl implements ICdbizAO {
         if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())
                 && !ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是录入银行征信结果节点，不能操作");
+                    "当前节点不是录入银行征信结果节点，不能操作");
         }
         // 当前节点
         String preCurNodeCode = cdbiz.getCurNodeCode();
         String curNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode)
-            .getNextNode();
+                .getNextNode();
         cdbizBO.refershCurNodeCode(cdbiz, curNode);
         cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A2.getCode(), ECdbizStatus.A2.getValue());
 
@@ -450,7 +453,7 @@ public class CdbizAOImpl implements ICdbizAO {
         if (!ENode.input_interview.getCode().equals(preCurrentNode)
                 && !ENode.reinput_interview.getCode().equals(preCurrentNode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是新录/重录面签节点，不能操作");
+                    "当前不是新录/重录面签节点，不能操作");
         }
 
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
@@ -460,7 +463,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // 操作日志
         ENode node = ENode.getMap().get(preCurrentNode);
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.INTERVIEW,
-            req.getCode(), node.getCode(), node.getValue(), req.getOperator());
+                req.getCode(), node.getCode(), node.getValue(), req.getOperator());
 
         if (EBoolean.YES.getCode().equals(req.getIsSend())) {
             cdbizBO.refreshIntevCurNodeCode(cdbiz, nodeFlow.getNextNode());
