@@ -199,7 +199,7 @@
                                    , company_address
                                    , company_contact_no
                                    , work_datetime
-                                   , "position"
+                                   , position
                                    , employee_quantity
                                    , enterprise_month_output
                                    , month_income
@@ -318,7 +318,7 @@
         , company_address
         , company_contact_no
         , work_datetime
-        , "position"
+        , position
         , employee_quantity
         , enterprise_month_output
         , month_income
@@ -449,7 +449,7 @@
           , company_address           = #{companyAddress}
           , company_contact_no        = #{companyContactNo}
           , work_datetime             = #{workDatetime}
-          , "position"                = #{position}
+          , position                  = #{position}
           , employee_quantity         = #{employeeQuantity}
           , enterprise_month_output   = #{enterpriseMonthOutput}
           , month_income              = #{monthIncome}
