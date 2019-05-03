@@ -4,11 +4,13 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 新录入准入单
- * @author: taojian 
- * @since: 2019年4月28日 上午10:19:41 
+ *
+ * @author: taojian
+ * @since: 2019年4月28日 上午10:19:41
  * @history:
  */
 public class XN632500Req {
+
     // 业务编号
     @NotBlank
     private String code;
@@ -45,7 +47,7 @@ public class XN632500Req {
     private String backRate;
 
     // 前置利率
-    private double preRate;
+    private Double preRate;
 
     // 首付金额
     private String firstAmount;// repayBiz
@@ -1091,11 +1093,11 @@ public class XN632500Req {
         this.backRate = backRate;
     }
 
-    public double getPreRate() {
+    public Double getPreRate() {
         return preRate;
     }
 
-    public void setPreRate(double preRate) {
+    public void setPreRate(Double preRate) {
         this.preRate = preRate;
     }
 

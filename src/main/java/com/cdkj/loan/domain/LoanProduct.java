@@ -1,19 +1,19 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
 
 /**
  * 贷款产品
- * @author: silver 
- * @since: 2018年5月30日 上午11:29:54 
+ *
+ * @author: silver
+ * @since: 2018年5月30日 上午11:29:54
  * @history:
  */
 public class LoanProduct extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = -3072309115192038821L;
 
@@ -33,22 +33,22 @@ public class LoanProduct extends ABaseDO {
     private Long wanFactor;
 
     // 年利率
-    private double yearRate;
+    private Double yearRate;
 
     // GPS费用
     private Long gpsFee;
 
     // 公证费利率
-    private double authRate;
+    private Double authRate;
 
     // 返点利率
-    private double backRate;
+    private Double backRate;
 
     // 是否前置
     private String isPre;
 
     // 前置利率
-    private double preRate;
+    private Double preRate;
 
     // 状态
     private String status;
@@ -115,11 +115,11 @@ public class LoanProduct extends ABaseDO {
         this.wanFactor = wanFactor;
     }
 
-    public double getYearRate() {
+    public Double getYearRate() {
         return yearRate;
     }
 
-    public void setYearRate(double yearRate) {
+    public void setYearRate(Double yearRate) {
         this.yearRate = yearRate;
     }
 
@@ -131,27 +131,27 @@ public class LoanProduct extends ABaseDO {
         this.gpsFee = gpsFee;
     }
 
-    public double getAuthRate() {
+    public Double getAuthRate() {
         return authRate;
     }
 
-    public void setAuthRate(double authRate) {
+    public void setAuthRate(Double authRate) {
         this.authRate = authRate;
     }
 
-    public double getBackRate() {
+    public Double getBackRate() {
         return backRate;
     }
 
-    public void setBackRate(double backRate) {
+    public void setBackRate(Double backRate) {
         this.backRate = backRate;
     }
 
-    public double getPreRate() {
+    public Double getPreRate() {
         return preRate;
     }
 
-    public void setPreRate(double preRate) {
+    public void setPreRate(Double preRate) {
         this.preRate = preRate;
     }
 

@@ -18,10 +18,6 @@ public class XN632530Req {
     @NotBlank
     private String operator;
 
-    @NotBlank
-    // 处理类型(0 保存 1 发送)
-    private String dealType;
-
     /***************贷款信息start**************/
 
     // 贷款期限
@@ -105,14 +101,6 @@ public class XN632530Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getDealType() {
-        return dealType;
-    }
-
-    public void setDealType(String dealType) {
-        this.dealType = dealType;
     }
 
     public String getLoanPeriod() {

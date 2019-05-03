@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 共同还款人
+ * 准入单-共同还款人
  *
  * @author : cyl
  * @since : 2019-05-02 21:38

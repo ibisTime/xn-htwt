@@ -18,10 +18,6 @@ public class XN632534Req {
     @NotBlank
     private String operator;
 
-    @NotBlank
-    // 处理类型(0 保存 1 发送)
-    private String dealType;
-
     /***************工作情况start**************/
 
     // 是否自己单位
@@ -87,14 +83,6 @@ public class XN632534Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getDealType() {
-        return dealType;
-    }
-
-    public void setDealType(String dealType) {
-        this.dealType = dealType;
     }
 
     public String getIsSelfCompany() {
