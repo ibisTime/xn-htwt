@@ -146,22 +146,22 @@ public class CarInfo extends ABaseDO {
     private String gpsFeeWay;
 
     // GPS费用
-    private long gpsFee;
+    private Long gpsFee;
 
     // 公证费
-    private long authFee;
+    private Long authFee;
 
     // 其他费用
-    private long otherFee;
+    private Long otherFee;
 
     // 公司手续费
-    private long companyFee;
+    private Long companyFee;
 
     // 团队服务费
-    private long teamFee;
+    private Long teamFee;
 
     // 月供保证金
-    private long monthDeposit;
+    private Long monthDeposit;
 
     /****DB Properties****/
 
@@ -177,11 +177,11 @@ public class CarInfo extends ABaseDO {
     // 商业险
     private String carSyx;
 
-    public long getMonthDeposit() {
+    public Long getMonthDeposit() {
         return monthDeposit;
     }
 
-    public void setMonthDeposit(long monthDeposit) {
+    public void setMonthDeposit(Long monthDeposit) {
         this.monthDeposit = monthDeposit;
     }
 
@@ -537,43 +537,43 @@ public class CarInfo extends ABaseDO {
         return gpsFeeWay;
     }
 
-    public long getGpsFee() {
+    public Long getGpsFee() {
         return gpsFee;
     }
 
-    public void setGpsFee(long gpsFee) {
+    public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
     }
 
-    public long getAuthFee() {
+    public Long getAuthFee() {
         return authFee;
     }
 
-    public void setAuthFee(long authFee) {
+    public void setAuthFee(Long authFee) {
         this.authFee = authFee;
     }
 
-    public long getOtherFee() {
+    public Long getOtherFee() {
         return otherFee;
     }
 
-    public void setOtherFee(long otherFee) {
+    public void setOtherFee(Long otherFee) {
         this.otherFee = otherFee;
     }
 
-    public long getCompanyFee() {
+    public Long getCompanyFee() {
         return companyFee;
     }
 
-    public void setCompanyFee(long companyFee) {
+    public void setCompanyFee(Long companyFee) {
         this.companyFee = companyFee;
     }
 
-    public long getTeamFee() {
+    public Long getTeamFee() {
         return teamFee;
     }
 
-    public void setTeamFee(long teamFee) {
+    public void setTeamFee(Long teamFee) {
         this.teamFee = teamFee;
     }
 

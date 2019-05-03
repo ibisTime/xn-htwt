@@ -18,10 +18,6 @@ public class XN632531Req {
     @NotBlank
     private String operator;
 
-    @NotBlank
-    // 处理类型(0 保存 1 发送)
-    private String dealType;
-
     /***************车辆信息start**************/
 
     // 机动车销售公司
@@ -106,14 +102,6 @@ public class XN632531Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getDealType() {
-        return dealType;
-    }
-
-    public void setDealType(String dealType) {
-        this.dealType = dealType;
     }
 
     public String getVehicleCompanyName() {

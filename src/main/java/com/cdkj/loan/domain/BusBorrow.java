@@ -1,16 +1,16 @@
 package com.cdkj.loan.domain;
 
+import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.Date;
 import java.util.List;
 
-import com.cdkj.loan.dao.base.ABaseDO;
-
 /**
-* 公车借用
-* @author: CYunlai 
-* @since: 2018-06-23 11:31:58
-* @history:
-*/
+ * 公车借用
+ *
+ * @author: CYunlai
+ * @since: 2018-06-23 11:31:58
+ * @history:
+ */
 public class BusBorrow extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class BusBorrow extends ABaseDO {
     private Date useDatetimeEnd;
 
     // 行驶公里数
-    private double driveKil;
+    private Double driveKil;
 
     // 归还时间
     private Date returnDatetime;
@@ -189,11 +189,11 @@ public class BusBorrow extends ABaseDO {
         this.useDatetimeEnd = useDatetimeEnd;
     }
 
-    public double getDriveKil() {
+    public Double getDriveKil() {
         return driveKil;
     }
 
-    public void setDriveKil(double driveKil) {
+    public void setDriveKil(Double driveKil) {
         this.driveKil = driveKil;
     }
 

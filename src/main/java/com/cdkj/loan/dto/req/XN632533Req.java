@@ -18,10 +18,6 @@ public class XN632533Req {
     @NotBlank
     private String operator;
 
-    @NotBlank
-    // 处理类型(0 保存 1 发送)
-    private String dealType;
-
     /***************家庭情况start**************/
 
     // 婚姻状况
@@ -97,14 +93,6 @@ public class XN632533Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getDealType() {
-        return dealType;
-    }
-
-    public void setDealType(String dealType) {
-        this.dealType = dealType;
     }
 
     public String getMarryState() {

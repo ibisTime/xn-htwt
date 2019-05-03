@@ -18,10 +18,6 @@ public class XN632536Req {
     @NotBlank
     private String operator;
 
-    @NotBlank
-    // 处理类型(0 保存 1 发送)
-    private String dealType;
-
     /***************担保人信息start**************/
 
     // 户籍地省市区
@@ -76,14 +72,6 @@ public class XN632536Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getDealType() {
-        return dealType;
-    }
-
-    public void setDealType(String dealType) {
-        this.dealType = dealType;
     }
 
     public String getGuaBirthAddressProvince() {
