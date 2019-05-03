@@ -18,39 +18,59 @@ public class XN632533Req {
     @NotBlank
     private String operator;
 
-    /***************家庭情况start**************/
+    /**
+     * **********家庭情况start*************
+     */
 
     // 婚姻状况
     @NotBlank
-    private String marryState;// creditUser
+    private String marryState;
 
     // 家庭人口
     @NotBlank
-    private String familyNumber;// creditUser
+    private String familyNumber;
 
     // 家庭电话
     @NotBlank
-    private String familyPhone;// creditUser
+    private String familyPhone;
 
     // 家庭主要财产
     @NotBlank
-    private String familyMainAsset;// creditUser
+    private String familyMainAsset;
 
     // 主要财产包括
     @NotBlank
-    private String mainAssetInclude;// creditUser
+    private String mainAssetInclude;
 
-    // 户口所在地
+    /**
+     * 户籍地省
+     */
     @NotBlank
-    private String residenceAddress;// creditUser
+    private String birthAddressProvince;
 
-    // 户口所在地邮编2
+    /**
+     * 户籍地市
+     */
     @NotBlank
-    private String postCode2;// creditUser
+    private String birthAddressCity;
 
-    // 现居住地址
+    /**
+     * 户籍地区
+     */
     @NotBlank
-    private String nowAddress;// creditUser
+    private String birthAddressArea;
+
+    /**
+     * 户籍地详细地址
+     */
+    @NotBlank
+    private String birthAddress;
+
+    /**
+     * 户口所在地邮编
+     */
+    @NotBlank
+    private String birthPostCode;
 
     /**
      * 现住房屋类型
@@ -58,9 +78,35 @@ public class XN632533Req {
     @NotBlank
     private String nowHouseType;
 
-    // 现居住地址邮编1
+    /**
+     * 现住地址省
+     */
     @NotBlank
-    private String postCode;// creditUser
+    private String nowAddressProvince;
+
+    /**
+     * 现住地址市
+     */
+    @NotBlank
+    private String nowAddressCity;
+
+    /**
+     * 现住地址区
+     */
+    @NotBlank
+    private String nowAddressArea;
+
+    /**
+     * 现居住地址
+     */
+    @NotBlank
+    private String nowAddress;
+
+    /**
+     * 现居住地址邮编
+     */
+    @NotBlank
+    private String nowPostCode;
 
     // 户口本资料
     private String hkBookPdf;
@@ -82,8 +128,6 @@ public class XN632533Req {
 
     // 家访照片
     private String housePictureApply;
-
-    /****************家庭情况end***************/
 
     public String getCode() {
         return code;
@@ -141,12 +185,44 @@ public class XN632533Req {
         this.mainAssetInclude = mainAssetInclude;
     }
 
-    public String getResidenceAddress() {
-        return residenceAddress;
+    public String getBirthAddressProvince() {
+        return birthAddressProvince;
     }
 
-    public void setResidenceAddress(String residenceAddress) {
-        this.residenceAddress = residenceAddress;
+    public void setBirthAddressProvince(String birthAddressProvince) {
+        this.birthAddressProvince = birthAddressProvince;
+    }
+
+    public String getBirthAddressCity() {
+        return birthAddressCity;
+    }
+
+    public void setBirthAddressCity(String birthAddressCity) {
+        this.birthAddressCity = birthAddressCity;
+    }
+
+    public String getBirthAddressArea() {
+        return birthAddressArea;
+    }
+
+    public void setBirthAddressArea(String birthAddressArea) {
+        this.birthAddressArea = birthAddressArea;
+    }
+
+    public String getBirthAddress() {
+        return birthAddress;
+    }
+
+    public void setBirthAddress(String birthAddress) {
+        this.birthAddress = birthAddress;
+    }
+
+    public String getBirthPostCode() {
+        return birthPostCode;
+    }
+
+    public void setBirthPostCode(String birthPostCode) {
+        this.birthPostCode = birthPostCode;
     }
 
     public String getNowHouseType() {
@@ -157,12 +233,28 @@ public class XN632533Req {
         this.nowHouseType = nowHouseType;
     }
 
-    public String getPostCode2() {
-        return postCode2;
+    public String getNowAddressProvince() {
+        return nowAddressProvince;
     }
 
-    public void setPostCode2(String postCode2) {
-        this.postCode2 = postCode2;
+    public void setNowAddressProvince(String nowAddressProvince) {
+        this.nowAddressProvince = nowAddressProvince;
+    }
+
+    public String getNowAddressCity() {
+        return nowAddressCity;
+    }
+
+    public void setNowAddressCity(String nowAddressCity) {
+        this.nowAddressCity = nowAddressCity;
+    }
+
+    public String getNowAddressArea() {
+        return nowAddressArea;
+    }
+
+    public void setNowAddressArea(String nowAddressArea) {
+        this.nowAddressArea = nowAddressArea;
     }
 
     public String getNowAddress() {
@@ -173,12 +265,12 @@ public class XN632533Req {
         this.nowAddress = nowAddress;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public String getNowPostCode() {
+        return nowPostCode;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setNowPostCode(String nowPostCode) {
+        this.nowPostCode = nowPostCode;
     }
 
     public String getHkBookPdf() {

@@ -18,70 +18,73 @@ public class XN632532Req {
     @NotBlank
     private String operator;
 
-    /***************客户信息start**************/
+    /**
+     * ***********客户信息start*************
+     */
     // 性别
     @NotBlank
-    private String gender;// creditUserExt
+    private String gender; // creditUserExt
 
     // 年龄
     @NotBlank
-    private String age;// creditUserExt
+    private String age; // creditUserExt
 
     // 民族
     @NotBlank
-    private String nation;// creditUserExt
+    private String nation; // creditUserExt
 
     // 学历
     @NotBlank
-    private String education;// creditUserExt
+    private String education; // creditUserExt
 
     // 政治面貌
     @NotBlank
-    private String political;// creditUserExt
+    private String political; // creditUserExt
 
     // 职业
-    private String workProfession;// creditUserExt
+    private String workProfession; // creditUserExt
 
     // 职称
-    private String postTitle;// creditUserExt
+    private String postTitle; // creditUserExt
 
     // 有无驾照
     @NotBlank
-    private String isDriceLicense;// creditUserExt
+    private String isDriceLicense; // creditUserExt
 
     // 现有车辆
-    private String carTypeNow;// creditUserExt
+    private String carType; // creditUserExt
 
     // 主要收入来源
     @NotBlank
-    private String mainIncome;// creditUserExt
+    private String mainIncome; // creditUserExt
 
     // 家庭紧急联系人信息1 姓名
     @NotBlank
-    private String emergencyName1;// creditUserExt
+    private String emergencyName1; // creditUserExt
 
     // 家庭紧急联系人信息1 与申请人关系
     @NotBlank
-    private String emergencyRelation1;// creditUserExt
+    private String emergencyRelation1; // creditUserExt
 
     // 家庭紧急联系人信息1 手机号码
     @NotBlank
-    private String emergencyMobile1;// creditUserExt
+    private String emergencyMobile1; // creditUserExt
 
     // 家庭紧急联系人信息2 姓名
     @NotBlank
-    private String emergencyName2;// creditUserExt
+    private String emergencyName2; // creditUserExt
 
     // 家庭紧急联系人信息2 与申请人关系
     @NotBlank
-    private String emergencyRelation2;// creditUserExt
+    private String emergencyRelation2; // creditUserExt
 
     // 家庭紧急联系人信息2 手机号码
     @NotBlank
-    private String emergencyMobile2;// creditUserExt
+    private String emergencyMobile2; // creditUserExt
 
-    /****************客户信息end***************/
-
+    /**
+     * ************客户信息end**************
+     */
     public String getCode() {
         return code;
     }
@@ -162,12 +165,12 @@ public class XN632532Req {
         this.isDriceLicense = isDriceLicense;
     }
 
-    public String getCarTypeNow() {
-        return carTypeNow;
+    public String getCarType() {
+        return carType;
     }
 
-    public void setCarTypeNow(String carTypeNow) {
-        this.carTypeNow = carTypeNow;
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
     public String getMainIncome() {

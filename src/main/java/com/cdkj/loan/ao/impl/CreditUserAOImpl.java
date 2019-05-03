@@ -62,6 +62,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
+            creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.hkBookPdf, req.getHkBookPdf());
             saveAttachment(req.getCode(), EAttachName.marryPdf, req.getMarryPdf());
             saveAttachment(req.getCode(), EAttachName.liveProvePdf, req.getLiveProvePdf());
@@ -93,8 +94,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
     @Override
     @Transactional
     public void saveCommonRepayInfo(XN632535Req req) {
-        CreditUser creditUser = creditUserBO
-                .getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GHR);
+        CreditUser creditUser =
+                creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GHR);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
@@ -107,8 +108,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
     @Override
     @Transactional
     public void saveBondsmanInfo(XN632536Req req) {
-        CreditUser creditUser = creditUserBO
-                .getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GUARANTOR);
+        CreditUser creditUser =
+                creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GUARANTOR);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);

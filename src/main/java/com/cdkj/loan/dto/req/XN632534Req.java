@@ -18,35 +18,37 @@ public class XN632534Req {
     @NotBlank
     private String operator;
 
-    /***************工作情况start**************/
+    /**
+     * ***********工作情况start*************
+     */
 
     // 所属行业
-    private String workBelongIndustry;// creditUserExt
+    private String workBelongIndustry; // creditUserExt
 
     // 单位性质
     @NotBlank
-    private String workCompanyProperty;// creditUserExt
+    private String workCompanyProperty; // creditUserExt
 
     // 工作单位名称
     @NotBlank
-    private String workCompanyName;// creditUser
+    private String companyName; // creditUser
 
     // 工作单位地址
     @NotBlank
-    private String workCompanyAddress;// creditUser
+    private String companyAddress; // creditUser
 
     // 工作单位电话
-    private String workPhone;// creditUser
+    private String companyContactNo; // creditUser
 
     // 何时进入现单位工作
-    private String workDatetime;// creditUserExt
+    private String workDatetime; // creditUserExt
 
     // 职位
-    private String position;// creditUserExt
+    private String position; // creditUserExt
 
     // 月收入
     @NotBlank
-    private String monthIncome;// creditUserExt
+    private String monthIncome; // creditUserExt
 
     /**
      * 员工数量
@@ -74,8 +76,9 @@ public class XN632534Req {
     @NotBlank
     private String otherWorkNote;
 
-    /****************工作情况end***************/
-
+    /**
+     * ************工作情况end**************
+     */
     public String getCode() {
         return code;
     }
@@ -124,28 +127,28 @@ public class XN632534Req {
         this.workCompanyProperty = workCompanyProperty;
     }
 
-    public String getWorkCompanyName() {
-        return workCompanyName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setWorkCompanyName(String workCompanyName) {
-        this.workCompanyName = workCompanyName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getWorkCompanyAddress() {
-        return workCompanyAddress;
+    public String getCompanyAddress() {
+        return companyAddress;
     }
 
-    public void setWorkCompanyAddress(String workCompanyAddress) {
-        this.workCompanyAddress = workCompanyAddress;
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
 
-    public String getWorkPhone() {
-        return workPhone;
+    public String getCompanyContactNo() {
+        return companyContactNo;
     }
 
-    public void setWorkPhone(String workPhone) {
-        this.workPhone = workPhone;
+    public void setCompanyContactNo(String companyContactNo) {
+        this.companyContactNo = companyContactNo;
     }
 
     public String getWorkDatetime() {
