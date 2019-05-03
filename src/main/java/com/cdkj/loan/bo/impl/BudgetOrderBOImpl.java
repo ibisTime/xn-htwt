@@ -1,12 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
@@ -37,15 +30,20 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanProductStatus;
-import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
@@ -82,15 +80,15 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         CreditUser ghrCreditUser = null;
         CreditUser guaCreditUser = null;
         for (CreditUser creditUser : creditUserList) {
-            if (applyCreditUser == null && ELoanRole.APPLY_USER.getCode()
+            if (applyCreditUser == null && ECreditUserLoanRole.APPLY_USER.getCode()
                 .equals(creditUser.getLoanRole())) {
                 applyCreditUser = creditUser;
             }
-            if (ghrCreditUser == null && ELoanRole.GHR.getCode()
+            if (ghrCreditUser == null && ECreditUserLoanRole.GHR.getCode()
                 .equals(creditUser.getLoanRole())) {
                 ghrCreditUser = creditUser;
             }
-            if (guaCreditUser == null && ELoanRole.GUARANTOR.getCode()
+            if (guaCreditUser == null && ECreditUserLoanRole.GUARANTOR.getCode()
                 .equals(creditUser.getLoanRole())) {
                 guaCreditUser = creditUser;
             }
@@ -523,7 +521,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             data.setPledgeUser(req.getPledgeUser());
             data.setPledgeUserIdCardCopy(req.getPledgeUserIdCardCopy());
             data.setPledgeAddress(req.getPledgeAddress());
-            data.setIsFinancing(req.getIsFinancing());
+            //data.setIsFinancing(req.getIsFinancing());
             String preNodeCode = data.getCurNodeCode(); // 当前节点
             if (EDealType.SEND.getCode().equals(req.getDealType())) {
                 // 下一个节点

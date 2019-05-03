@@ -62,7 +62,7 @@ public class XN632530Req {
 
     // 是否融资
     @NotBlank
-    private String isFinancing;// cdbiz
+    private String isFinacing;// cdbiz
 
     // 是否安装gps
     @NotBlank
@@ -70,7 +70,7 @@ public class XN632530Req {
 
     // 是否我司续保
     @NotBlank
-    private String isCompanyContinue;// cdbiz
+    private String isPlatInsure;// cdbiz
 
     // 月供保证金
     @NotBlank
@@ -184,12 +184,12 @@ public class XN632530Req {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getIsFinancing() {
-        return isFinancing;
+    public String getIsFinacing() {
+        return isFinacing;
     }
 
-    public void setIsFinancing(String isFinancing) {
-        this.isFinancing = isFinancing;
+    public void setIsFinacing(String isFinacing) {
+        this.isFinacing = isFinacing;
     }
 
     public String getIsAzGps() {
@@ -200,14 +200,6 @@ public class XN632530Req {
         this.isAzGps = isAzGps;
     }
 
-    public String getIsCompanyContinue() {
-        return isCompanyContinue;
-    }
-
-    public void setIsCompanyContinue(String isCompanyContinue) {
-        this.isCompanyContinue = isCompanyContinue;
-    }
-
     public String getMonthDeposit() {
         return monthDeposit;
     }
@@ -216,6 +208,13 @@ public class XN632530Req {
         this.monthDeposit = monthDeposit;
     }
 
+    public String getIsPlatInsure() {
+        return isPlatInsure;
+    }
+
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
+    }
 
     public String getTeamFee() {
         return teamFee;

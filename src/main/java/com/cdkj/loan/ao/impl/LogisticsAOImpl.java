@@ -1,13 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ILogisticsAO;
 import com.cdkj.loan.bo.IBankLoanBO;
 import com.cdkj.loan.bo.IBizTaskBO;
@@ -38,12 +30,18 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
-import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 资料传递
@@ -500,7 +498,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (StringUtils.isNotBlank(logistics.getBizCode())) {
             if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
                 CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-                    logistics.getBizCode(), ELoanRole.APPLY_USER);
+                        logistics.getBizCode(), ECreditUserLoanRole.APPLY_USER);
                 if (null != creditUser) {
                     logistics.setCustomerName(creditUser.getUserName());
                 }

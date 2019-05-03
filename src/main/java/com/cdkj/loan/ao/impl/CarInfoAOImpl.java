@@ -120,7 +120,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         }
         // 业务信息更新
         cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
-        cdbiz.setIsFinacing(req.getIsFinancing());
+        cdbiz.setIsFinacing(req.getIsFinacing());
         cdbiz.setIsGpsAz(req.getIsAzGps());
         cdbizBO.refreshCdbiz(cdbiz);
 
@@ -194,7 +194,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         }
         // 业务信息更新
         cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
-        cdbiz.setIsFinacing(req.getIsFinancing());
+        cdbiz.setIsFinacing(req.getIsFinacing());
         cdbizBO.refreshCdbiz(cdbiz);
         // 车辆信息录入
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
@@ -702,7 +702,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // + budgetOrder.getPostCode1() + ", " + "借款人无重大疾病，身体健康";
             // investigateReport.setCustomerInformation(customerInformation);
             // CreditUser domain = creditUserBO.getCreditUserByCreditCode(
-            // budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+            // budgetOrder.getCreditCode(), ECreditUserLoanRole.APPLY_USER);
             // investigateReport.setBankCreditResultRemark(domain
             // .getBankCreditResultRemark());
             // investigateReport.setJourDatetimeStart(budgetOrder

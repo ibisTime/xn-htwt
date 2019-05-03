@@ -1,7 +1,6 @@
 package com.cdkj.loan.ao;
 
 import com.cdkj.loan.domain.CreditUser;
-import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632532Req;
 import com.cdkj.loan.dto.req.XN632533Req;
 import com.cdkj.loan.dto.req.XN632534Req;
@@ -10,16 +9,13 @@ import com.cdkj.loan.dto.req.XN632536Req;
 
 public interface ICreditUserAO {
 
-    static final String DEFAULT_ORDER_COLUMN = "code";
-
-    // 录入银行征信结果
-    public void inputBankCreditResult(XN632111Req req);
+    String DEFAULT_ORDER_COLUMN = "code";
 
     // 查看征信报告详情
-    public CreditUser getCreditUserReport(String code);
+    CreditUser getCreditUserReport(String code);
 
     // 主贷人和配偶一键互换
-    public Object changeLender(String selfCode, String wifeCode);
+    Object changeLender(String selfCode, String wifeCode);
 
     /**
      * 客户信息

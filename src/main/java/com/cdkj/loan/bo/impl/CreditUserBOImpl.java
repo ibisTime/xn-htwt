@@ -4,14 +4,17 @@ import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditUserDAO;
+import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
@@ -50,7 +53,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
         creditUser.setInterviewPic(child.getInterviewPic());
         creditUser.setIdNo(child.getIdNo());
         // 主贷人
-        if (ELoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+        if (ECreditUserLoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
             // 身份证正面
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.mainLoaner_id_front.getCode());
@@ -72,7 +75,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), child.getInterviewPic());
             // 共还人信息
-        } else if (ELoanRole.GHR.getCode().equals(child.getLoanRole())) {
+        } else if (ECreditUserLoanRole.GHR.getCode().equals(child.getLoanRole())) {
             // 身份证正面
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.replier_id_front.getCode());
@@ -95,7 +98,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
                 attachName.getValue(), child.getInterviewPic());
 
             // 担保人
-        } else if (ELoanRole.GUARANTOR.getCode().equals(child.getLoanRole())) {
+        } else if (ECreditUserLoanRole.GUARANTOR.getCode().equals(child.getLoanRole())) {
             // 身份证正面
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.assurance_id_front.getCode());
@@ -164,14 +167,13 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
     }
 
     @Override
-    public void inputBankCreditResult(
-            CreditUser creditUser, String bankReport, String dataReport, String result,
-            String note) {
+    public void inputBankCreditResult(CreditUser creditUser, XN632111ReqCreditUser reqCreditUser) {
         if (StringUtils.isNotBlank(creditUser.getCode())) {
-            creditUser.setBankCreditResult(result);
-            creditUser.setBankCreditResultRemark(note);
-            creditUser.setBankCreditReport(bankReport);
-            creditUser.setDataCreditReport(dataReport);
+            creditUser.setCreditCardOccupation(
+                    StringValidater.toDouble(reqCreditUser.getCreditCardOccupation()));
+            creditUser.setBankCreditResult(reqCreditUser.getBankResult());
+            creditUser.setBankCreditResultRemark(reqCreditUser.getCreditNote());
+
             creditUserDAO.inputBankCreditResult(creditUser);
         }
     }
@@ -186,11 +188,19 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
     public List<CreditUser> queryCreditUserList(String bizCode) {
         CreditUser condition = new CreditUser();
         condition.setBizCode(bizCode);
-        return creditUserDAO.selectList(condition);
+        List<CreditUser> list = creditUserDAO.selectList(condition);
+
+        for (CreditUser creditUser : list) {
+            List<Attachment> attachments = attachmentBO
+                    .queryBizAttachments(creditUser.getCode());
+            creditUser.setAttachments(attachments);
+        }
+        return list;
     }
 
     @Override
-    public CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserLoanRole) {
+    public CreditUser getCreditUserByBizCode(String bizCode,
+            ECreditUserLoanRole creditUserLoanRole) {
         CreditUser creditUser = null;
         CreditUser condition = new CreditUser();
         condition.setBizCode(bizCode);
@@ -213,13 +223,13 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
     @Override
     public void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req) {
         for (CreditUser creditUser : creditUsers) {
-            if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+            if (ECreditUserLoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
                 creditUser.setBirthAddress(req.getResidenceAddress());
                 creditUser.setBirthPostCode(req.getPostCode2());
                 creditUser.setCompanyName(req.getWorkCompanyName());
                 creditUser.setCompanyAddress(req.getWorkCompanyAddress());
                 creditUser.setCompanyContactNo(req.getWorkPhone());
-            } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+            } else if (ECreditUserLoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
                 creditUser.setBirthAddressProvince(req.getMateBirthAddressProvince());
                 creditUser.setBirthAddressCity(req.getMateBirthAddressCity());
                 creditUser.setBirthAddressArea(req.getMateBirthAddressArea());

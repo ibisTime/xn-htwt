@@ -1949,7 +1949,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         CreditUser user = null;
         //****待处理*****
         //creditUserBO.getCreditUserByCreditCode(
-        //budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        //budgetOrder.getCreditCode(), ECreditUserLoanRole.APPLY_USER);
         budgetOrder.setContactNo(user.getMobile());// 联系电话
         SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
         budgetOrder.setSaleUserName(saleUser.getRealName());// 信贷专员
@@ -2004,7 +2004,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         CreditUser user = null;
         //****待处理*****
         //creditUserBO.getCreditUserByCreditCode(
-        //budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        //budgetOrder.getCreditCode(), ECreditUserLoanRole.APPLY_USER);
         budgetOrder.setContactNo(user.getMobile());// 联系电话
         long cardTotalFee = 0;
         long bankFee = 0;
@@ -2260,7 +2260,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 CreditUser domain = null;
                 //****待处理*****
                 //creditUserBO.getCreditUserByCreditCode(
-                //budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+                //budgetOrder.getCreditCode(), ECreditUserLoanRole.APPLY_USER);
                 investigateReport.setBankCreditResultRemark(domain
                     .getBankCreditResultRemark());
                 investigateReport.setJourDatetimeStart(budgetOrder

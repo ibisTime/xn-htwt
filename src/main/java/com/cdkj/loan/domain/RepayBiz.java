@@ -69,7 +69,7 @@ public class RepayBiz extends ABaseDO {
     // 剩余期数
     private Integer restPeriods;
 
-    // 银行利率(作废)
+    // 银行利率
     private Double bankRate;
 
     // 银行基准利率

@@ -14,8 +14,8 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632490Req;
 import com.cdkj.loan.dto.req.XN632492Req;
 import com.cdkj.loan.enums.ECreditJourType;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -120,7 +120,7 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                 .getCode());
         for (CreditUser creditUser : creditUsers) {
             // 主贷人
-            if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+            if (ECreditUserLoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
                 CreditJour creditJour = new CreditJour();
                 String code = OrderNoGenerater
                         .generate(EGeneratePrefix.CREDIT_JOUR.getCode());
@@ -227,7 +227,7 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                 creditJour.setRemark(req.getJourRemark());
                 creditJourDAO.insert(creditJour);
                 // 共还人=配偶
-            } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+            } else if (ECreditUserLoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
                 CreditJour creditJour = new CreditJour();
                 String code = OrderNoGenerater
                         .generate(EGeneratePrefix.CREDIT_JOUR.getCode());

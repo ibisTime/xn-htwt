@@ -20,10 +20,6 @@ public class XN632534Req {
 
     /***************工作情况start**************/
 
-    // 是否自己单位
-    @NotBlank
-    private String isSelfCompany;// creditUserExt
-
     // 所属行业
     private String workBelongIndustry;// creditUserExt
 
@@ -52,6 +48,16 @@ public class XN632534Req {
     @NotBlank
     private String monthIncome;// creditUserExt
 
+    /**
+     * 员工数量
+     */
+    private String employeeQuantity;
+
+    /**
+     * 企业月产值
+     */
+    private String enterpriseMonthOutput;
+
     // 收入证明
     private String improvePdf;
 
@@ -65,6 +71,7 @@ public class XN632534Req {
     private String salerAndcustomer;
 
     // 工作描述及还款来源分析
+    @NotBlank
     private String otherWorkNote;
 
     /****************工作情况end***************/
@@ -85,20 +92,28 @@ public class XN632534Req {
         this.operator = operator;
     }
 
-    public String getIsSelfCompany() {
-        return isSelfCompany;
-    }
-
-    public void setIsSelfCompany(String isSelfCompany) {
-        this.isSelfCompany = isSelfCompany;
-    }
-
     public String getWorkBelongIndustry() {
         return workBelongIndustry;
     }
 
     public void setWorkBelongIndustry(String workBelongIndustry) {
         this.workBelongIndustry = workBelongIndustry;
+    }
+
+    public String getEmployeeQuantity() {
+        return employeeQuantity;
+    }
+
+    public void setEmployeeQuantity(String employeeQuantity) {
+        this.employeeQuantity = employeeQuantity;
+    }
+
+    public String getEnterpriseMonthOutput() {
+        return enterpriseMonthOutput;
+    }
+
+    public void setEnterpriseMonthOutput(String enterpriseMonthOutput) {
+        this.enterpriseMonthOutput = enterpriseMonthOutput;
     }
 
     public String getWorkCompanyProperty() {

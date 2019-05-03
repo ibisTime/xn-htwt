@@ -3,8 +3,9 @@ package com.cdkj.loan.bo;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632500Req;
-import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import java.util.List;
 
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
@@ -25,8 +26,7 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     CreditUser getCreditUserUncheck(String code);
 
     // 录入银行征信结果
-    void inputBankCreditResult(CreditUser creditUser, String bankReport,
-            String dataReport, String result, String note);
+    void inputBankCreditResult(CreditUser creditUser, XN632111ReqCreditUser reqCreditUser);
 
     // 批量查询征信人员
     List<CreditUser> queryCreditUserList(CreditUser condition);
@@ -35,7 +35,7 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     List<CreditUser> queryCreditUserList(String bizCode);
 
     // 查询征信单共还人，担保人，本人
-    CreditUser getCreditUserByBizCode(String bizCode, ELoanRole creditUserRelation);
+    CreditUser getCreditUserByBizCode(String bizCode, ECreditUserLoanRole creditUserRelation);
 
     void refreshCreditUser(CreditUser data);
 

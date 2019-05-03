@@ -142,8 +142,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     public int refreshCdbiz(Cdbiz cdbiz, XN632530Req req) {
         cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
         cdbiz.setIsGpsAz(req.getIsAzGps());
-        cdbiz.setIsFinacing(req.getIsFinancing());
-        cdbiz.setIsPlatInsure(req.getIsCompanyContinue());
+        cdbiz.setIsFinacing(req.getIsFinacing());
+        cdbiz.setIsPlatInsure(req.getIsPlatInsure());
         return cdbizDAO.updateCdbiz(cdbiz);
     }
 
