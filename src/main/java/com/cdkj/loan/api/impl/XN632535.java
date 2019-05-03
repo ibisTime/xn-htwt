@@ -24,7 +24,7 @@ public class XN632535 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        creditUserAO.saveCommonRepayInfo(req);
+        creditUserAO.saveGhrInfo(req);
         return new BooleanRes(true);
     }
 

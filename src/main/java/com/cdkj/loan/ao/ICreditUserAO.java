@@ -43,12 +43,12 @@ public interface ICreditUserAO {
      *
      * @param req 共还人信息入参
      */
-    void saveCommonRepayInfo(XN632535Req req);
+    void saveGhrInfo(XN632535Req req);
 
     /**
      * 担保人信息
      *
      * @param req 担保人信息入参
      */
-    void saveBondsmanInfo(XN632536Req req);
+    void saveGuarantorInfo(XN632536Req req);
 }
