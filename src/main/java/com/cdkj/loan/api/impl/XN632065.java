@@ -1,7 +1,5 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.ICarDealerAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -9,9 +7,11 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.dto.req.XN632065Req;
+import com.cdkj.loan.enums.ECarDealerNode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 分页查询经销商管理
@@ -31,7 +31,7 @@ public class XN632065 extends AProcessor {
         CarDealer condition = new CarDealer();
         condition.setAbbrName(req.getAbbrName());
         condition.setIsSelfDevelop(req.getIsSelfDevelop());
-        condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setCurNodeCode(ECarDealerNode.NEW_ADD.getCode());
         condition.setAgreementStatus(req.getAgreementStatus());
 
         String orderColumn = req.getOrderColumn();

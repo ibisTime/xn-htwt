@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 汽车经销商协议下架
- * @author: jiafr 
- * @since: 2018年7月26日 下午9:38:36 
+ * 删除经销商管理
+ * @author: CYL
+ * @since: 2018年5月25日 下午4:34:56 
  * @history:
  */
 public class XN632061 extends AProcessor {
@@ -24,14 +24,14 @@ public class XN632061 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        carDealerAO.carDealerProtocolDown(req);
+        carDealerAO.dropCarDealer(req);
         return new BooleanRes(true);
     }
 
     @Override
-    public void doCheck(String inputparams, String operator)
-            throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN632061Req.class);
+        req.setUpdater(operator);
         ObjValidater.validateReq(req);
     }
 }

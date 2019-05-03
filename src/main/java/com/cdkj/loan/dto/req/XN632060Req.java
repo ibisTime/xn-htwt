@@ -1,9 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632060Req {
 
@@ -40,6 +37,7 @@ public class XN632060Req {
     @NotBlank
     private String agreementValidDateEnd;// 合作协议有效期止
 
+    @NotBlank
     private String agreementStatus;// 协议状态(0下架1上架)
 
     @NotBlank
@@ -54,74 +52,22 @@ public class XN632060Req {
     @NotBlank
     private String belongBranchCompany;// 归属分公司
 
-    private String operator;// 操作人
-
     private String policyNote;// 政策说明
+
+    private String updater;//更新人
 
     private String remark;// 备注
 
-    @NotEmpty
-    private List<XN632060ReqCollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
+    public String getUpdater() {
+        return updater;
+    }
 
-    @NotEmpty
-    private List<XN632060ReqProtocol> carDealerProtocolList;// 经销商协议表
-
-    @NotEmpty
-    private List<XN632060ReqCollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
-
-    @NotEmpty
-    private List<XN632060ReqCollectBankcard> zhCollectBankcardList;// 中行银行返点账号列表
-
-    @NotEmpty
-    private List<XN632060ReqCollectBankcard> jhCollectBankcardList;// 建行银行返点账号列表
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 
     public String getFullName() {
         return fullName;
-    }
-
-    public List<XN632060ReqCollectBankcard> getJxsCollectBankcardList() {
-        return jxsCollectBankcardList;
-    }
-
-    public void setJxsCollectBankcardList(
-            List<XN632060ReqCollectBankcard> jxsCollectBankcardList) {
-        this.jxsCollectBankcardList = jxsCollectBankcardList;
-    }
-
-    public List<XN632060ReqProtocol> getCarDealerProtocolList() {
-        return carDealerProtocolList;
-    }
-
-    public void setCarDealerProtocolList(
-            List<XN632060ReqProtocol> carDealerProtocolList) {
-        this.carDealerProtocolList = carDealerProtocolList;
-    }
-
-    public List<XN632060ReqCollectBankcard> getGsCollectBankcardList() {
-        return gsCollectBankcardList;
-    }
-
-    public void setGsCollectBankcardList(
-            List<XN632060ReqCollectBankcard> gsCollectBankcardList) {
-        this.gsCollectBankcardList = gsCollectBankcardList;
-    }
-
-    public List<XN632060ReqCollectBankcard> getZhCollectBankcardList() {
-        return zhCollectBankcardList;
-    }
-
-    public void setZhCollectBankcardList(
-            List<XN632060ReqCollectBankcard> zhCollectBankcardList) {
-        this.zhCollectBankcardList = zhCollectBankcardList;
-    }
-
-    public List<XN632060ReqCollectBankcard> getJhCollectBankcardList() {
-        return jhCollectBankcardList;
-    }
-
-    public void setJhCollectBankcardList(
-            List<XN632060ReqCollectBankcard> jhCollectBankcardList) {
-        this.jhCollectBankcardList = jhCollectBankcardList;
     }
 
     public void setFullName(String fullName) {
@@ -208,6 +154,14 @@ public class XN632060Req {
         this.agreementValidDateEnd = agreementValidDateEnd;
     }
 
+    public String getAgreementStatus() {
+        return agreementStatus;
+    }
+
+    public void setAgreementStatus(String agreementStatus) {
+        this.agreementStatus = agreementStatus;
+    }
+
     public String getAgreementPic() {
         return agreementPic;
     }
@@ -240,14 +194,6 @@ public class XN632060Req {
         this.belongBranchCompany = belongBranchCompany;
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
     public String getPolicyNote() {
         return policyNote;
     }
@@ -263,13 +209,4 @@ public class XN632060Req {
     public void setRemark(String remark) {
         this.remark = remark;
     }
-
-    public String getAgreementStatus() {
-        return agreementStatus;
-    }
-
-    public void setAgreementStatus(String agreementStatus) {
-        this.agreementStatus = agreementStatus;
-    }
-
 }

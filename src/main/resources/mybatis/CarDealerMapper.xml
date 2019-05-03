@@ -21,8 +21,10 @@
 		<result column="business_area" property="businessArea" />
 		<result column="belong_branch_company" property="belongBranchCompany" />
 		<result column="cur_node_code" property="curNodeCode" />
-		<result column="approve_note" property="approveNote" />
-		<result column="remark" property="remark" />
+        <result column="policy_note" property="policyNote"/>
+        <result column="updater" property="updater"/>
+        <result column="update_datetime" property="updateDatetime"/>
+        <result column="remark" property="remark"/>
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -35,18 +37,24 @@
 			<if test="isSelfDevelop != null and isSelfDevelop != '' ">
 				AND t.is_self_develop = #{isSelfDevelop}
 			</if>
-			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
+            <if test="carDealerType != null and carDealerType != '' ">
+                AND t.car_dealer_type = #{carDealerType}
 			</if>
-			<if test="warnDatetimeStart != null and warnDatetimeStart != '' ">
-				AND t.agreement_valid_date_end &gt;= #{warnDatetimeStart}
-			</if>
-			<if test="warnDatetimeEnd != null and warnDatetimeEnd != '' ">
-				AND t.agreement_valid_date_end &lt;= #{warnDatetimeEnd}
-			</if>
+            <!--<if test="warnDatetimeStart != null and warnDatetimeStart != '' ">-->
+            <!--AND t.agreement_valid_date_end &gt;= #{warnDatetimeStart}-->
+            <!--</if>-->
+            <!--<if test="warnDatetimeEnd != null and warnDatetimeEnd != '' ">-->
+            <!--AND t.agreement_valid_date_end &lt;= #{warnDatetimeEnd}-->
+            <!--</if>-->
 			<if test="agreementStatus != null and agreementStatus != '' ">
 				AND t.agreement_status = #{agreementStatus}
-			</if>
+            </if>
+            <if test="settleWay != null and settleWay != '' ">
+                AND t.settle_way = #{settleWay}
+            </if>
+            <if test="curNodeCode != null and curNodeCode != '' ">
+                AND t.cur_node_code = #{curNodeCode}
+            </if>
 		</trim>
 	</sql>
 	<select id="select_carDealer" parameterType="carDealer" resultMap="carDealer_DB_Result">
@@ -69,7 +77,9 @@
 		,t.business_area
 		,t.belong_branch_company
 		,t.cur_node_code
-		,t.approve_note
+        ,t.policy_note
+        ,t.updater
+        ,t.update_datetime
 		,t.remark
 		FROM
 		tb_car_dealer t
@@ -108,7 +118,9 @@
 		,business_area
 		,belong_branch_company
 		,cur_node_code
-		,approve_note
+		,policy_note
+		,updater
+        ,update_datetime
 		,remark
 		)
 		VALUES(
@@ -130,7 +142,9 @@
 		,#{businessArea}
 		,#{belongBranchCompany}
 		,#{curNodeCode}
-		,#{approveNote}
+		,#{policyNote}
+		,#{updater}
+        ,#{updateDatetime}
 		,#{remark}
 		)
 	</insert>
@@ -155,7 +169,9 @@
 		,business_area = #{businessArea}
 		,belong_branch_company = #{belongBranchCompany}
 		,cur_node_code = #{curNodeCode}
-		,approve_note = #{approveNote}
+		,policy_note = #{policyNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -164,9 +180,10 @@
 		UPDATE tb_car_dealer
 		SET
 		cur_node_code = #{curNodeCode}
-		,approve_note = #{approveNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-
 
 </mapper>

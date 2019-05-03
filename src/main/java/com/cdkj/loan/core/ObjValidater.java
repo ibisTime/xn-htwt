@@ -1,7 +1,5 @@
 package com.cdkj.loan.core;
 
-import com.cdkj.loan.creditCommon.StringUtils;
-import com.cdkj.loan.enums.EParamErrorCode;
 import com.cdkj.loan.exception.ParaException;
 import java.util.Iterator;
 import java.util.Set;
@@ -24,13 +22,6 @@ public class ObjValidater {
             .buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
 
-    }
-
-    static public <T> void validateReq(T req, String userId) {
-        if (StringUtils.isBlank(userId)) {
-            throw new ParaException(EParamErrorCode.DEFAULT.getCode(), "token不能为空");
-        }
-        validateReq(req);
     }
 
     // jsr 验证
