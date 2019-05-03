@@ -979,13 +979,19 @@ public class CdbizAOImpl implements ICdbizAO {
 
             SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
             cdbiz.setSaleUserName(saleUser.getRealName());
+            cdbiz.setSaleUserCompanyName(saleUser.getCompanyName());
+            cdbiz.setSaleUserDepartMentName(saleUser.getDepartmentName());
+            cdbiz.setSaleUserPostName(saleUser.getPostName());
         }
 
         // 内勤名称
         if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
 
             SYSUser insideJob = sysUserBO.getUser(cdbiz.getInsideJob());
-            cdbiz.setSaleUserName(insideJob.getRealName());
+            cdbiz.setInsideJobName(insideJob.getRealName());
+            cdbiz.setInsideJobCompanyName(insideJob.getCompanyName());
+            cdbiz.setInsideJobDepartMentName(insideJob.getDepartmentName());
+            cdbiz.setInsideJobPostName(insideJob.getPostName());
         }
 
         // 团队名称

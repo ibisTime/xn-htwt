@@ -178,7 +178,19 @@ public class Cdbiz extends ABaseDO {
     private String saleUserDepartMentName;
 
     // 业务员职位
-    private String saleUserPositionName;
+    private String saleUserPostName;
+
+    // 内勤名称
+    private String insideJobName;
+
+    // 内勤公司
+    private String insideJobCompanyName;
+
+    // 内勤部门
+    private String insideJobDepartMentName;
+
+    // 内勤职位
+    private String insideJobPostName;
 
     // 主贷人
     private CreditUser creditUser;
@@ -243,6 +255,62 @@ public class Cdbiz extends ABaseDO {
 
     public void setBudgetOrderFee(BudgetOrderFee budgetOrderFee) {
         this.budgetOrderFee = budgetOrderFee;
+    }
+
+    public String getSaleUserCompanyName() {
+        return saleUserCompanyName;
+    }
+
+    public void setSaleUserCompanyName(String saleUserCompanyName) {
+        this.saleUserCompanyName = saleUserCompanyName;
+    }
+
+    public String getSaleUserDepartMentName() {
+        return saleUserDepartMentName;
+    }
+
+    public void setSaleUserDepartMentName(String saleUserDepartMentName) {
+        this.saleUserDepartMentName = saleUserDepartMentName;
+    }
+
+    public String getSaleUserPostName() {
+        return saleUserPostName;
+    }
+
+    public void setSaleUserPostName(String saleUserPostName) {
+        this.saleUserPostName = saleUserPostName;
+    }
+
+    public String getInsideJobName() {
+        return insideJobName;
+    }
+
+    public void setInsideJobName(String insideJobName) {
+        this.insideJobName = insideJobName;
+    }
+
+    public String getInsideJobCompanyName() {
+        return insideJobCompanyName;
+    }
+
+    public void setInsideJobCompanyName(String insideJobCompanyName) {
+        this.insideJobCompanyName = insideJobCompanyName;
+    }
+
+    public String getInsideJobDepartMentName() {
+        return insideJobDepartMentName;
+    }
+
+    public void setInsideJobDepartMentName(String insideJobDepartMentName) {
+        this.insideJobDepartMentName = insideJobDepartMentName;
+    }
+
+    public String getInsideJobPostName() {
+        return insideJobPostName;
+    }
+
+    public void setInsideJobPostName(String insideJobPostName) {
+        this.insideJobPostName = insideJobPostName;
     }
 
     public List<Repoint> getRepointList() {

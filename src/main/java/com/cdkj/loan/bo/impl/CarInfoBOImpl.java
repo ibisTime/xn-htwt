@@ -193,6 +193,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         CarInfo carInfo = new CarInfo();
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
         carInfo.setCode(code);
+        carInfo.setBizCode(req.getCode());
         carInfo.setInvoicePrice(req.getInvoicePrice());
         carInfo.setGpsFee(StringValidater.toLong(req.getGpsFee()));
         carInfo.setAuthFee(StringValidater.toLong(req.getAuthFee()));
