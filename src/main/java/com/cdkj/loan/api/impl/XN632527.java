@@ -1,10 +1,8 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-
 import com.cdkj.loan.ao.IBizTaskAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.BizTask;
@@ -12,23 +10,26 @@ import com.cdkj.loan.dto.req.XN632527Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 列表查待办事项
- * @author: silver 
- * @since: Apr 3, 2019 2:05:35 PM 
+ *
+ * @author: silver
+ * @since: Apr 3, 2019 2:05:35 PM
  * @history:
  */
 public class XN632527 extends AProcessor {
+
     private IBizTaskAO bizTaskAO = SpringContextHolder
-        .getBean(IBizTaskAO.class);
+            .getBean(IBizTaskAO.class);
 
     private XN632527Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
         BizTask condition = new BizTask();
-        BeanUtils.copyProperties(req, condition);
+        EntityUtils.copyData(req, condition);
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

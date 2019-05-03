@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632532Req;
 import com.cdkj.loan.dto.req.XN632533Req;
@@ -11,7 +12,6 @@ import com.cdkj.loan.dto.req.XN632535Req;
 import com.cdkj.loan.dto.req.XN632536Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +46,9 @@ public class CreditUserAOImpl implements ICreditUserAO {
         CreditUser creditUser =
                 creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
-            BeanUtils.copyProperties(req, creditUser, "code");
+            String code = creditUser.getCode();
+            EntityUtils.copyData(req, creditUser);
+            creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
         }
     }
@@ -57,7 +59,9 @@ public class CreditUserAOImpl implements ICreditUserAO {
         CreditUser creditUser =
                 creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
-            BeanUtils.copyProperties(req, creditUser, "code");
+            String code = creditUser.getCode();
+            EntityUtils.copyData(req, creditUser);
+            creditUser.setCode(code);
             saveAttachment(req.getCode(), EAttachName.hkBookPdf, req.getHkBookPdf());
             saveAttachment(req.getCode(), EAttachName.marryPdf, req.getMarryPdf());
             saveAttachment(req.getCode(), EAttachName.liveProvePdf, req.getLiveProvePdf());
@@ -75,7 +79,9 @@ public class CreditUserAOImpl implements ICreditUserAO {
         CreditUser creditUser =
                 creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
-            BeanUtils.copyProperties(req, creditUser, "code");
+            String code = creditUser.getCode();
+            EntityUtils.copyData(req, creditUser);
+            creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.improvePdf, req.getImprovePdf());
             saveAttachment(req.getCode(), EAttachName.frontTablePic, req.getFrontTablePic());
@@ -90,7 +96,9 @@ public class CreditUserAOImpl implements ICreditUserAO {
         CreditUser creditUser = creditUserBO
                 .getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GHR);
         if (creditUser != null) {
-            BeanUtils.copyProperties(req, creditUser, "code");
+            String code = creditUser.getCode();
+            EntityUtils.copyData(req, creditUser);
+            creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.mateAssetPdf, req.getMateAssetPdf());
         }
@@ -102,7 +110,9 @@ public class CreditUserAOImpl implements ICreditUserAO {
         CreditUser creditUser = creditUserBO
                 .getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GUARANTOR);
         if (creditUser != null) {
-            BeanUtils.copyProperties(req, creditUser, "code");
+            String code = creditUser.getCode();
+            EntityUtils.copyData(req, creditUser);
+            creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.guaAssetPdf, req.getGuaAssetPdf());
         }

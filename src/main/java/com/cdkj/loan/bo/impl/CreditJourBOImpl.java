@@ -4,6 +4,7 @@ import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.common.NumberUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
@@ -19,7 +20,6 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
     @Override
     public String saveCreditJour(XN632490Req req) {
         CreditJour data = new CreditJour();
-        BeanUtils.copyProperties(req, data);
+        EntityUtils.copyData(req, data);
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT_JOUR
                 .getCode());
@@ -74,7 +74,7 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
     @Override
     public void refreshCreditJour(XN632492Req req) {
         CreditJour data = new CreditJour();
-        BeanUtils.copyProperties(req, data);
+        EntityUtils.copyData(req, data);
 
         data.setDatetimeStart(DateUtil.strToDate(req.getDatetimeStart(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));

@@ -905,7 +905,6 @@ public class CdbizAOImpl implements ICdbizAO {
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
         // 还款信息
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
-        // 贷款信息
 
         LoanInfoRes loanInfoRes = new LoanInfoRes();
         CarInfoRes carInfoRes = new CarInfoRes();
@@ -917,9 +916,10 @@ public class CdbizAOImpl implements ICdbizAO {
             BeanUtils.copyProperties(repayBiz, loanInfoRes);
             BeanUtils.copyProperties(repayBiz, carInfoRes);
         }
-        cdbiz.setCarInfoRes(carInfoRes);
+        // 贷款信息
         cdbiz.setLoanInfo(loanInfoRes);
         // 车辆信息
+        cdbiz.setCarInfoRes(carInfoRes);
         // 征信人流水
         List<CreditJour> creditJours = creditJourBO.querCreditJoursByBizCode(cdbiz.getCode());
         cdbiz.setCreditJours(creditJours);

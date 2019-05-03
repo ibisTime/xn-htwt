@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
@@ -42,7 +43,6 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -582,7 +582,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public String saveRepayBiz(XN632530Req req) {
         RepayBiz repayBiz = new RepayBiz();
-        BeanUtils.copyProperties(req, repayBiz);
+        EntityUtils.copyData(req, repayBiz);
         String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
                 .getCode());
         repayBiz.setCode(code);
@@ -599,7 +599,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public void refreshRepayBiz(RepayBiz repayBiz, XN632530Req req) {
         String code = repayBiz.getCode();
-        BeanUtils.copyProperties(req, repayBiz);
+        EntityUtils.copyData(req, repayBiz);
         repayBiz.setBizCode(req.getCode());
         LoanProduct product = loanProductBO.getLoanProduct(req
                 .getLoanProductCode());
