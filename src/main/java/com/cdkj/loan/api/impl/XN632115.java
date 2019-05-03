@@ -1,9 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.ICdbizAO;
-import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
@@ -13,6 +10,7 @@ import com.cdkj.loan.dto.req.XN632115Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 按角色编号分页查询征信列表
@@ -53,7 +51,7 @@ public class XN632115 extends AProcessor {
         // condition.setIsCancel(req.getIsCancel());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = ICreditAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = ICdbizAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());
