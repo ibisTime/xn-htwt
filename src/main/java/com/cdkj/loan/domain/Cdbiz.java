@@ -1,16 +1,18 @@
 package com.cdkj.loan.domain;
 
+import com.cdkj.loan.dao.base.ABaseDO;
+import com.cdkj.loan.dto.res.CarInfoRes;
+import com.cdkj.loan.dto.res.LoanInfoRes;
 import java.util.Date;
 import java.util.List;
 
-import com.cdkj.loan.dao.base.ABaseDO;
-
 /**
-* 车贷业务
-* @author: tao 
-* @since: 2019-04-02 16:54:29
-* @history:
-*/
+ * 车贷业务
+ *
+ * @author: tao
+ * @since: 2019-04-02 16:54:29
+ * @history:
+ */
 public class Cdbiz extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -210,6 +212,28 @@ public class Cdbiz extends ABaseDO {
 
     // 抵押
     private CarPledge carPledge;
+
+    // 贷款信息
+    private LoanInfoRes loanInfo;
+
+    // 车辆信息
+    private CarInfoRes carInfoRes;
+
+    public LoanInfoRes getLoanInfo() {
+        return loanInfo;
+    }
+
+    public void setLoanInfo(LoanInfoRes loanInfo) {
+        this.loanInfo = loanInfo;
+    }
+
+    public CarInfoRes getCarInfoRes() {
+        return carInfoRes;
+    }
+
+    public void setCarInfoRes(CarInfoRes carInfoRes) {
+        this.carInfoRes = carInfoRes;
+    }
 
     public CarPledge getCarPledge() {
         return carPledge;

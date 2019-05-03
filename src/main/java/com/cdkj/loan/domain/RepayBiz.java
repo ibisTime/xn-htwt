@@ -52,7 +52,7 @@ public class RepayBiz extends ABaseDO {
     private Long bizPrice;
 
     // 首付比例
-    private double sfRate;
+    private Double sfRate;
 
     // 首付金额
     private Long sfAmount;
@@ -64,10 +64,10 @@ public class RepayBiz extends ABaseDO {
     private Long loanAmount;
 
     // 总期数
-    private int periods;
+    private Integer periods;
 
     // 剩余期数
-    private int restPeriods;
+    private Integer restPeriods;
 
     // 银行利率(作废)
     private Double bankRate;
@@ -100,7 +100,7 @@ public class RepayBiz extends ABaseDO {
     private Long firstRepayAmount;
 
     // 每期还款日期
-    private int monthDatetime;
+    private Integer monthDatetime;
 
     // 每期月供金额
     private Long monthAmount;
@@ -136,10 +136,10 @@ public class RepayBiz extends ABaseDO {
     private Long overdueAmount;
 
     // 累计逾期期数(记住历史逾期的次数)
-    private int totalOverdueCount;
+    private Integer totalOverdueCount;
 
     // 实际逾期期数(现在在逾期的次数)
-    private int curOverdueCount;
+    private Integer curOverdueCount;
 
     // 黑名单处理结果备案(商品分期)
     private String blackHandleNote;
@@ -325,11 +325,11 @@ public class RepayBiz extends ABaseDO {
         this.bizPrice = bizPrice;
     }
 
-    public double getSfRate() {
+    public Double getSfRate() {
         return sfRate;
     }
 
-    public void setSfRate(double sfRate) {
+    public void setSfRate(Double sfRate) {
         this.sfRate = sfRate;
     }
 
@@ -357,19 +357,19 @@ public class RepayBiz extends ABaseDO {
         this.loanAmount = loanAmount;
     }
 
-    public int getPeriods() {
+    public Integer getPeriods() {
         return periods;
     }
 
-    public void setPeriods(int periods) {
+    public void setPeriods(Integer periods) {
         this.periods = periods;
     }
 
-    public int getRestPeriods() {
+    public Integer getRestPeriods() {
         return restPeriods;
     }
 
-    public void setRestPeriods(int restPeriods) {
+    public void setRestPeriods(Integer restPeriods) {
         this.restPeriods = restPeriods;
     }
 
@@ -453,11 +453,11 @@ public class RepayBiz extends ABaseDO {
         this.firstRepayAmount = firstRepayAmount;
     }
 
-    public int getMonthDatetime() {
+    public Integer getMonthDatetime() {
         return monthDatetime;
     }
 
-    public void setMonthDatetime(int monthDatetime) {
+    public void setMonthDatetime(Integer monthDatetime) {
         this.monthDatetime = monthDatetime;
     }
 
@@ -549,19 +549,19 @@ public class RepayBiz extends ABaseDO {
         this.overdueAmount = overdueAmount;
     }
 
-    public int getTotalOverdueCount() {
+    public Integer getTotalOverdueCount() {
         return totalOverdueCount;
     }
 
-    public void setTotalOverdueCount(int totalOverdueCount) {
+    public void setTotalOverdueCount(Integer totalOverdueCount) {
         this.totalOverdueCount = totalOverdueCount;
     }
 
-    public int getCurOverdueCount() {
+    public Integer getCurOverdueCount() {
         return curOverdueCount;
     }
 
-    public void setCurOverdueCount(int curOverdueCount) {
+    public void setCurOverdueCount(Integer curOverdueCount) {
         this.curOverdueCount = curOverdueCount;
     }
 

@@ -22,7 +22,7 @@ public class XN632530Req {
 
     // 贷款期限
     @NotBlank
-    private String loanPeriod;// repayBiz
+    private String periods;// repayBiz
 
     // 银行利率
     @NotBlank
@@ -50,11 +50,11 @@ public class XN632530Req {
 
     // 首付金额
     @NotBlank
-    private String firstAmount;// repayBiz
+    private String sfAmount;// repayBiz
 
     // 首付比例
     @NotBlank
-    private String firstRate;// repayBiz
+    private String sfRate;// repayBiz
 
     // 是否垫资
     @NotBlank
@@ -103,13 +103,6 @@ public class XN632530Req {
         this.operator = operator;
     }
 
-    public String getLoanPeriod() {
-        return loanPeriod;
-    }
-
-    public void setLoanPeriod(String loanPeriod) {
-        this.loanPeriod = loanPeriod;
-    }
 
     public String getBankRate() {
         return bankRate;
@@ -159,20 +152,28 @@ public class XN632530Req {
         this.authFee = authFee;
     }
 
-    public String getFirstAmount() {
-        return firstAmount;
+    public String getPeriods() {
+        return periods;
     }
 
-    public void setFirstAmount(String firstAmount) {
-        this.firstAmount = firstAmount;
+    public void setPeriods(String periods) {
+        this.periods = periods;
     }
 
-    public String getFirstRate() {
-        return firstRate;
+    public String getSfAmount() {
+        return sfAmount;
     }
 
-    public void setFirstRate(String firstRate) {
-        this.firstRate = firstRate;
+    public void setSfAmount(String sfAmount) {
+        this.sfAmount = sfAmount;
+    }
+
+    public String getSfRate() {
+        return sfRate;
+    }
+
+    public void setSfRate(String sfRate) {
+        this.sfRate = sfRate;
     }
 
     public String getIsAdvanceFund() {
