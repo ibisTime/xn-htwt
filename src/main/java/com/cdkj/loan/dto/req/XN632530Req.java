@@ -70,7 +70,7 @@ public class XN632530Req {
 
     // 是否我司续保
     @NotBlank
-    private String isCompanyContinue;// cdbiz
+    private String isPlatInsure;// cdbiz
 
     // 月供保证金
     @NotBlank
@@ -200,14 +200,6 @@ public class XN632530Req {
         this.isAzGps = isAzGps;
     }
 
-    public String getIsCompanyContinue() {
-        return isCompanyContinue;
-    }
-
-    public void setIsCompanyContinue(String isCompanyContinue) {
-        this.isCompanyContinue = isCompanyContinue;
-    }
-
     public String getMonthDeposit() {
         return monthDeposit;
     }
@@ -216,6 +208,13 @@ public class XN632530Req {
         this.monthDeposit = monthDeposit;
     }
 
+    public String getIsPlatInsure() {
+        return isPlatInsure;
+    }
+
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
+    }
 
     public String getTeamFee() {
         return teamFee;

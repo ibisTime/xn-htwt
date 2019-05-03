@@ -75,7 +75,7 @@ public class XN632500Req {
     private String isAzGps;// cdbiz
 
     // 是否我司续保
-    private String isCompanyContinue;
+    private String isPlatInsure;
 
     // 月供保证金
 
@@ -1341,12 +1341,11 @@ public class XN632500Req {
         this.lyDeposit = lyDeposit;
     }
 
-    public String getIsCompanyContinue() {
-        return isCompanyContinue;
+    public String getIsPlatInsure() {
+        return isPlatInsure;
     }
 
-    public void setIsCompanyContinue(String isCompanyContinue) {
-        this.isCompanyContinue = isCompanyContinue;
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
     }
-
 }

@@ -48,7 +48,7 @@ public class LoanInfoRes {
     private String isAzGps;// cdbiz
 
     // 是否我司续保
-    private String isCompanyContinue;// cdbiz
+    private String isPlatInsure;// cdbiz
 
     // 月供保证金
     private Long monthDeposit;// carInfo
@@ -125,12 +125,12 @@ public class LoanInfoRes {
         this.isAzGps = isAzGps;
     }
 
-    public String getIsCompanyContinue() {
-        return isCompanyContinue;
+    public String getIsPlatInsure() {
+        return isPlatInsure;
     }
 
-    public void setIsCompanyContinue(String isCompanyContinue) {
-        this.isCompanyContinue = isCompanyContinue;
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
     }
 
     public Integer getPeriods() {
