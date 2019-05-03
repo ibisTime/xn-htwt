@@ -67,4 +67,6 @@ public interface ICdbizAO {
     List<Cdbiz> queryCdbizList(Cdbiz condition);
 
     Cdbiz getCdbiz(String code);
+
+    Cdbiz getCdbizAll(String code);
 }

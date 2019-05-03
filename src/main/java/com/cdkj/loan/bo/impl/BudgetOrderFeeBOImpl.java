@@ -1,6 +1,7 @@
 package com.cdkj.loan.bo.impl;
 
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
+import com.cdkj.loan.bo.IBudgetOrderFeeDetailBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.ILoanProductBO;
@@ -11,6 +12,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderFeeDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
+import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditUser;
@@ -45,18 +47,21 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     @Autowired
     private IRepayBizBO repayBizBO;
 
+    @Autowired
+    private IBudgetOrderFeeDetailBO budgetOrderFeeDetailBO;
+
     @Override
     public String saveBudgetOrderFee(Cdbiz cdbiz, String operator) {
         String code = null;
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
         LoanProduct loanProduct = loanProductBO.getLoanProduct(repayBiz
-            .getLoanProductCode());
+                .getLoanProductCode());
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
         CreditUser applyUser = creditUserBO.getCreditUserByBizCode(
                 cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
         BudgetOrderFee data = new BudgetOrderFee();
         code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
-            .getCode());
+                .getCode());
         data.setCode(code);
         data.setCompanyCode(cdbiz.getCompanyCode());
         data.setUserId(cdbiz.getSaleUserId());
@@ -65,7 +70,7 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
         // 应收手续费=银行服务费+公证费+gps费+月供保证金+公司服务费+服务费
 
         Long amount = AmountUtil.mul(cdbiz.getLoanAmount(),
-            loanProduct.getPreRate());
+                loanProduct.getPreRate());
         Long bankFee = AmountUtil.div(amount, (1.0 + loanProduct.getPreRate()));
         data.setShouldAmount(bankFee + carInfo.getAuthFee()
                 + carInfo.getGpsFee() + carInfo.getMonthDeposit()
@@ -84,7 +89,7 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
         String code = null;
         BudgetOrderFee data = new BudgetOrderFee();
         code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
-            .getCode());
+                .getCode());
         data.setCode(code);
         data.setCompanyCode(budgetOrder.getCompanyCode());
         data.setUserId(budgetOrder.getSaleUserId());
@@ -133,7 +138,15 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     public BudgetOrderFee getBudgetOrderFeeByBudget(String budgetOrderCode) {
         BudgetOrderFee condition = new BudgetOrderFee();
         condition.setBudgetOrder(budgetOrderCode);
-        return budgetOrderFeeDAO.select(condition);
+        BudgetOrderFee budgetOrderFee = budgetOrderFeeDAO.select(condition);
+        if (budgetOrderFee != null) {
+            BudgetOrderFeeDetail feeDetail = new BudgetOrderFeeDetail();
+            feeDetail.setFeeCode(budgetOrderFee.getCode());
+            List<BudgetOrderFeeDetail> feeDetailList = budgetOrderFeeDetailBO
+                    .queryBudgetOrderFeeDetailList(feeDetail);
+            budgetOrderFee.setBudgetOrderFeeDetailList(feeDetailList);
+        }
+        return budgetOrderFee;
     }
 
 }

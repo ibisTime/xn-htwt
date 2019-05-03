@@ -11,8 +11,9 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 征信详情查询
- * @author: jiafr 
- * @since: 2018年5月26日 下午2:33:29 
+ *
+ * @author: jiafr
+ * @since: 2018年5月26日 下午2:33:29
  * @history:
  */
 public class XN632117 extends AProcessor {
@@ -24,7 +25,7 @@ public class XN632117 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        return cdbizAO.getCdbiz(req.getCode());
+        return cdbizAO.getCdbizAll(req.getCode());
     }
 
     @Override

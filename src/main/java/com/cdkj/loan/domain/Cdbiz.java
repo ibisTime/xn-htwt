@@ -219,6 +219,39 @@ public class Cdbiz extends ABaseDO {
     // 车辆信息
     private CarInfoRes carInfoRes;
 
+    // 车辆信息
+    private Advance advance;
+
+    // 返点列表
+    private List<Repoint> repointList;
+
+    // 手续费
+    private BudgetOrderFee budgetOrderFee;
+
+    public BudgetOrderFee getBudgetOrderFee() {
+        return budgetOrderFee;
+    }
+
+    public void setBudgetOrderFee(BudgetOrderFee budgetOrderFee) {
+        this.budgetOrderFee = budgetOrderFee;
+    }
+
+    public List<Repoint> getRepointList() {
+        return repointList;
+    }
+
+    public void setRepointList(List<Repoint> repointList) {
+        this.repointList = repointList;
+    }
+
+    public Advance getAdvance() {
+        return advance;
+    }
+
+    public void setAdvance(Advance advance) {
+        this.advance = advance;
+    }
+
     public LoanInfoRes getLoanInfo() {
         return loanInfo;
     }
