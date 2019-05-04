@@ -119,7 +119,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
         }
     }
 
-    public void saveAttachment(String bizCode, EAttachName attachName, String value) {
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(), attachName.getValue(), value);
+    public void saveAttachment(String bizCode, EAttachName attachName, String url) {
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(), attachName.getValue(), url);
     }
 }
