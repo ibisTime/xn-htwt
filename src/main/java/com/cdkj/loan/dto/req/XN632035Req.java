@@ -1,11 +1,14 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
+
 /**
  * 分页查询银行
  * @author: silver 
  * @since: 2018年5月27日 下午5:36:00 
  * @history:
  */
+@Data
 public class XN632035Req extends APageReq {
 
     /** 

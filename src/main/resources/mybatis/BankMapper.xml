@@ -116,15 +116,14 @@
 		,t.rate24 = #{rate24}
 		
 		,t.rate36 = #{rate36}
-		,t.status = #{status}
 		,t.updater = #{updater}
 		,t.update_datetime = #{updateDatetime}
 		,t.remark = #{remark}
 		WHERE code = #{code}
 	</update>
-	
+
 	<delete id="delete_bank" parameterType="bank">
-		DELETE FROM tb_bank 
+		DELETE FROM tb_bank
 		WHERE code = #{code}
 	</delete>
 </mapper>

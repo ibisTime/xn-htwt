@@ -1,8 +1,7 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
 
 public class SYSBizLog extends ABaseDO {
 
@@ -10,7 +9,7 @@ public class SYSBizLog extends ABaseDO {
 
     private Integer id;// 序号
 
-    private String bizCode;// 业务编号编号
+    private String bizCode;// 业务编号
 
     private String refType;// 关联订单类型
 

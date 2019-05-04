@@ -9,8 +9,6 @@
 package com.cdkj.loan.dao.base;
 
 import java.io.Serializable;
-import java.util.UUID;
-
 import org.apache.commons.lang3.StringUtils;
 
 /** 
@@ -47,10 +45,4 @@ public abstract class ABaseDO implements Serializable {
     public String getOrder() {
         return this.order;
     }
-
-    public String generateId() {
-        return StringUtils.replace(UUID.randomUUID().toString(), "-".intern(),
-            StringUtils.EMPTY);
-    }
-
 }

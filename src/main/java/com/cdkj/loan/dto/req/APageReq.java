@@ -9,9 +9,8 @@
 package com.cdkj.loan.dto.req;
 
 import java.io.Serializable;
-
 import javax.validation.constraints.Min;
-
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /** 
@@ -19,6 +18,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @since: 2015-5-7 上午10:23:31 
  * @history:
  */
+@Data
 public abstract class APageReq implements Serializable {
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
@@ -42,53 +42,5 @@ public abstract class APageReq implements Serializable {
     private String orderColumn;// 排序字段(数据库字段)
 
     private String orderDir;// 排序方向
-
-    public String getStart() {
-        return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public String getLimit() {
-        return limit;
-    }
-
-    public void setLimit(String limit) {
-        this.limit = limit;
-    }
-
-    public String getOrderColumn() {
-        return orderColumn;
-    }
-
-    public void setOrderColumn(String orderColumn) {
-        this.orderColumn = orderColumn;
-    }
-
-    public String getOrderDir() {
-        return orderDir;
-    }
-
-    public void setOrderDir(String orderDir) {
-        this.orderDir = orderDir;
-    }
-
-    public String getCreateDatetimeStart() {
-        return createDatetimeStart;
-    }
-
-    public void setCreateDatetimeStart(String createDatetimeStart) {
-        this.createDatetimeStart = createDatetimeStart;
-    }
-
-    public String getCreateDatetimeEnd() {
-        return createDatetimeEnd;
-    }
-
-    public void setCreateDatetimeEnd(String createDatetimeEnd) {
-        this.createDatetimeEnd = createDatetimeEnd;
-    }
 
 }
