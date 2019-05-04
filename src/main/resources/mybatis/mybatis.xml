@@ -90,12 +90,10 @@
 		<typeAlias alias="bank" type="com.cdkj.loan.domain.Bank" />
 		
 		<typeAlias alias="bankRate" type="com.cdkj.loan.domain.BankRate" />
-		<typeAlias alias="bankSubbranch" type="com.cdkj.loan.domain.BankSubbranch" />
 		<typeAlias alias="loanProduct" type="com.cdkj.loan.domain.LoanProduct" />
 		
 		<!-- 经销商信息 -->
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
-		<typeAlias alias="carDealerProtocol" type="com.cdkj.loan.domain.CarDealerProtocol" />
 
 		<!-- 资料传递 -->
 		<typeAlias alias="logistics" type="com.cdkj.loan.domain.Logistics" />

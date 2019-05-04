@@ -3,7 +3,6 @@ package com.cdkj.loan.ao.impl;
 import com.cdkj.loan.ao.ICarDealerAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ICarDealerBO;
-import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -32,9 +31,6 @@ public class CarDealerAOImpl implements ICarDealerAO {
 
     @Autowired
     ICollectBankcardBO collectBankcardBO;
-
-    @Autowired
-    ICarDealerProtocolBO carDealerProtocolBO;
 
     @Autowired
     ISYSBizLogBO sysBizLogBO;

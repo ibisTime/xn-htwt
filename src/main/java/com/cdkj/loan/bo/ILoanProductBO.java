@@ -1,9 +1,8 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.LoanProduct;
+import java.util.List;
 
 /**
  * 贷款产品
@@ -12,17 +11,18 @@ import com.cdkj.loan.domain.LoanProduct;
  * @history:
  */
 public interface ILoanProductBO extends IPaginableBO<LoanProduct> {
-    public void saveLoanProduct(LoanProduct data);
 
-    public void dropLoanProduct(String code);
+    void saveLoanProduct(LoanProduct data);
 
-    public void editLoanProduct(LoanProduct data);
+    void dropLoanProduct(String code);
 
-    public void publishYesLoanProduct(String code, String updater);
+    void editLoanProduct(LoanProduct data);
 
-    public void publishNoLoanProduct(String code, String updater);
+    void publishYesLoanProduct(String code, String updater);
 
-    public LoanProduct getLoanProduct(String code);
+    void publishNoLoanProduct(String code, String updater);
 
-    public List<LoanProduct> queryLoanProductList(LoanProduct condition);
+    LoanProduct getLoanProduct(String code);
+
+    List<LoanProduct> queryLoanProductList(LoanProduct condition);
 }

@@ -2184,7 +2184,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             repoint.setBank(bizTeam.getBank());
             repoint.setSubbranch(bizTeam.getSubbranch());
-            double backRate = loanProduct.getBackRate();
+            double backRate = loanProduct.getReturnPointRate();
             long shouldAmount = AmountUtil.mul(loanAmount, backRate);
             repoint.setShouldAmount(shouldAmount);
 

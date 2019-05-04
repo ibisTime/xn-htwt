@@ -58,7 +58,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-//CHECK ��鲢��ע�� 
 @Service
 public class CarInfoAOImpl implements ICarInfoAO {
 
@@ -633,7 +632,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
             repoint.setBank(bizTeam.getBank());
             repoint.setSubbranch(bizTeam.getSubbranch());
-            double backRate = loanProduct.getBackRate();
+            double backRate = loanProduct.getReturnPointRate();
             long shouldAmount = AmountUtil.mul(loanAmount, backRate);
             repoint.setShouldAmount(shouldAmount);
 

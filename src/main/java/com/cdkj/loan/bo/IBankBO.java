@@ -1,9 +1,8 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Bank;
+import java.util.List;
 
 /**
  * 银行信息
@@ -12,15 +11,14 @@ import com.cdkj.loan.domain.Bank;
  * @history:
  */
 public interface IBankBO extends IPaginableBO<Bank> {
-    public String saveBank(Bank data);
 
-    public int dropBank(String code);
+    String saveBank(Bank data);
 
-    public Bank getBank(String code);
+    int dropBank(String code);
 
-    public int editBank(Bank data);
+    Bank getBank(String code);
 
-    public List<Bank> queryBankList(Bank condition);
+    int editBank(Bank data);
 
-    public Bank getBankBySubbranch(String code);
+    List<Bank> queryBankList(Bank condition);
 }

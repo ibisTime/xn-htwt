@@ -87,6 +87,7 @@ public class XN632032Req {
     private String belongArea;
 
     // 更新人
+    @NotBlank
     private String updater;
 
     // 备注
