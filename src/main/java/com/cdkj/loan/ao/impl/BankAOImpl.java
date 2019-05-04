@@ -16,6 +16,7 @@ import com.cdkj.loan.exception.BizException;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,31 +39,25 @@ public class BankAOImpl implements IBankAO {
     @Override
     @Transactional
     public String addBank(XN632030Req req) {
-        Bank bank = new Bank();
-        bank.setBankCode(req.getBankCode());
-        List<Bank> bankList = bankBO.queryBankList(bank);
+        Bank condition = new Bank();
+        condition.setBankCode(req.getBankCode());
+        List<Bank> bankList = bankBO.queryBankList(condition);
         if (CollectionUtils.isNotEmpty(bankList)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "银行信息已存在，请勿重复添加!");
         }
+
         Bank data = new Bank();
-        data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
-        data.setSubbranch(req.getSubbranch());
+        BeanUtils.copyProperties(req, data);
         data.setRate12(StringValidater.toDouble(req.getRate12()));
         data.setRate18(StringValidater.toDouble(req.getRate18()));
         data.setRate24(StringValidater.toDouble(req.getRate24()));
 
         data.setRate36(StringValidater.toDouble(req.getRate36()));
         data.setStatus(EBankStatus.Shelf_YES.getCode());
-        data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
-        data.setRemark(req.getRemark());
-        String code = bankBO.saveBank(data);
 
-        // 保存利率明细
-        // bankRateBO.saveBankRate(req.getBankRateList(), code);
-        return code;
+        return bankBO.saveBank(data);
     }
 
     @Override
@@ -73,54 +68,25 @@ public class BankAOImpl implements IBankAO {
         }
 
         bankBO.dropBank(code);
-
-        // 删除利率明细
-        // BankRate rateCondition = new BankRate();
-        // rateCondition.setBankCode(code);
-        // bankRateBO.dropBankRate(rateCondition);
-
-        // 删除支行信息
-        // BankSubbranch subCondition = new BankSubbranch();
-        // subCondition.setBankCode(code);
-        // bankSubbranchBO.dropBankSubbranch(subCondition);
     }
 
     @Override
     public void editBank(XN632032Req req) {
         // 编辑银行信息
         Bank data = bankBO.getBank(req.getCode());
-        data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
-        data.setSubbranch(req.getSubbranch());
-
+        BeanUtils.copyProperties(req, data);
         data.setRate12(StringValidater.toDouble(req.getRate12()));
         data.setRate18(StringValidater.toDouble(req.getRate18()));
         data.setRate24(StringValidater.toDouble(req.getRate24()));
         data.setRate36(StringValidater.toDouble(req.getRate36()));
 
-        data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
-        data.setRemark(req.getRemark());
-
         bankBO.editBank(data);
-
-        // // 删除利率明细
-        // BankRate rateCondition = new BankRate();
-        // rateCondition.setBankCode(req.getCode());
-        // bankRateBO.dropBankRate(rateCondition);
-
-        // 保存利率明细
-        // bankRateBO.saveBankRate(req.getBankRateList(), req.getCode());
     }
 
     @Override
     public Bank getBank(String code) {
-        Bank data = bankBO.getBank(code);
-        //
-        // BankRate rateCondition = new BankRate();
-        // rateCondition.setBankCode(code);
-        // data.setBankRateList(bankRateBO.queryBankRateList(rateCondition));
-        return data;
+        return bankBO.getBank(code);
     }
 
     @Override
@@ -132,32 +98,12 @@ public class BankAOImpl implements IBankAO {
                 bank.setUpdaterName(user.getRealName());
             }
         }
-        // List<Bank> bankList = page.getList();
-        // List<BankRate> bankRateList = null;
-        // BankRate rateCondition = new BankRate();
-        //
-        // // 添加利率明细信息
-        // for (Bank data : bankList) {
-        // rateCondition.setBankCode(condition.getCode());
-        // bankRateList = bankRateBO.queryBankRateList(rateCondition);
-        // data.setBankRateList(bankRateList);
-        // }
 
         return page;
     }
 
     @Override
     public List<Bank> queryBankList(Bank condition) {
-        List<Bank> bankList = bankBO.queryBankList(condition);
-        // BankRate rateCondition = new BankRate();
-        // List<BankRate> bankRateList = null;
-        // // 添加利率明细信息
-        // for (Bank data : bankList) {
-        // rateCondition.setBankCode(condition.getCode());
-        // bankRateList = bankRateBO.queryBankRateList(rateCondition);
-        // data.setBankRateList(bankRateList);
-        // }
-
-        return bankList;
+        return bankBO.queryBankList(condition);
     }
 }
