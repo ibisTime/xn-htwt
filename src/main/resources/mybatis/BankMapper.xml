@@ -94,7 +94,7 @@
 		,t.belong_area
 		,t.status
 		,t.updater
-		,tu.updater_name
+		,tu.login_name as updater_name
 		,t.update_datetime
 		,t.remark
 		FROM
