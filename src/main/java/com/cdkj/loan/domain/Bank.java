@@ -67,7 +67,7 @@ public class Bank extends ABaseDO {
     private String bankClient;
 
     // 委托有效期
-    private Integer clientValidDate;
+    private Date clientValidDate;
 
     // 授权人姓名
     private String autherName;

@@ -35,6 +35,18 @@ public class XN632030Req {
     // 36期
     private String rate36;
 
+    // 直客12期
+    private String zkRate12;
+
+    // 直客18期
+    private String zkRate18;
+
+    // 直客24期
+    private String zkRate24;
+
+    // 直客36期
+    private String zkRate36;
+
     // 银行地址
     private String address;
 

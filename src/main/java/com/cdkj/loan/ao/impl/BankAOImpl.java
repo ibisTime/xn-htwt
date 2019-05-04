@@ -4,6 +4,7 @@ import com.cdkj.loan.ao.IBankAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.Bank;
@@ -54,9 +55,17 @@ public class BankAOImpl implements IBankAO {
         data.setRate24(StringValidater.toDouble(req.getRate24()));
 
         data.setRate36(StringValidater.toDouble(req.getRate36()));
+
+        data.setZkRate12(StringValidater.toDouble(req.getZkRate12()));
+        data.setZkRate18(StringValidater.toDouble(req.getZkRate18()));
+        data.setZkRate24(StringValidater.toDouble(req.getZkRate24()));
+
+        data.setZkRate36(StringValidater.toDouble(req.getZkRate36()));
+
+        data.setClientValidDate(
+                DateUtil.strToDate(req.getClientValidDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setStatus(EBankStatus.Shelf_YES.getCode());
         data.setUpdateDatetime(new Date());
-
         return bankBO.saveBank(data);
     }
 
@@ -79,6 +88,14 @@ public class BankAOImpl implements IBankAO {
         data.setRate18(StringValidater.toDouble(req.getRate18()));
         data.setRate24(StringValidater.toDouble(req.getRate24()));
         data.setRate36(StringValidater.toDouble(req.getRate36()));
+
+        data.setZkRate12(StringValidater.toDouble(req.getZkRate12()));
+        data.setZkRate18(StringValidater.toDouble(req.getZkRate18()));
+        data.setZkRate24(StringValidater.toDouble(req.getZkRate24()));
+
+        data.setZkRate36(StringValidater.toDouble(req.getZkRate36()));
+        data.setClientValidDate(
+                DateUtil.strToDate(req.getClientValidDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         data.setUpdateDatetime(new Date());
         bankBO.editBank(data);
