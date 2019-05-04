@@ -1,7 +1,11 @@
 package com.cdkj.loan.dto.req;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
+@Data
 public class XN632002Req {
 
     @NotBlank
@@ -24,70 +28,11 @@ public class XN632002Req {
 
     private String subbranch;// 支行名称
 
+    @NotBlank
+    @Min(0)
+    @Max(1)
+    private String pointRate;
+
     private String remark;// 备注
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getBankcardNumber() {
-        return bankcardNumber;
-    }
-
-    public void setBankcardNumber(String bankcardNumber) {
-        this.bankcardNumber = bankcardNumber;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
-    }
 
 }
