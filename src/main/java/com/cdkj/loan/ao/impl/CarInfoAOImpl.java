@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BizTeam;
@@ -593,6 +594,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 res.setBizCode(req.getCode());
                 CreditJour creditJour = new CreditJour();
                 EntityUtils.copyData(res, creditJour);
+                creditJour.setDatetimeStart(DateUtil.strToDate(res.getDatetimeStart(),
+                        DateUtil.FRONT_DATE_FORMAT_STRING));
+                creditJour.setDatetimeEnd(DateUtil.strToDate(res.getDatetimeEnd(),
+                        DateUtil.FRONT_DATE_FORMAT_STRING));
                 jourList.add(creditJour);
             }
             creditJourBO.saveCreditJourList(jourList);
