@@ -153,6 +153,7 @@
 	</delete>
 
     <insert id="insert_jourList" parameterType="List">
+        INSERT INTO
         tdq_credit_jour(
         code
         ,biz_code
@@ -176,27 +177,27 @@
         ,remark
         )
         VALUES(
-        <foreach collection="list" item="jourList" separator=",">
-            #{code}
-            ,#{bizCode}
-            ,#{creditUserCode}
-            ,#{type}
-            ,#{datetimeStart}
+        <foreach collection="list" item="creditJour" separator=",">
+            #{creditJour.code}
+            ,#{creditJour.bizCode}
+            ,#{creditJour.creditUserCode}
+            ,#{creditJour.type}
+            ,#{creditJour.datetimeStart}
 
-            ,#{datetimeEnd}
-            ,#{jourInterest1}
-            ,#{jourInterest2}
-            ,#{interest1}
-            ,#{interest2}
+            ,#{creditJour.datetimeEnd}
+            ,#{creditJour.jourInterest1}
+            ,#{creditJour.jourInterest2}
+            ,#{creditJour.interest1}
+            ,#{creditJour.interest2}
 
-            ,#{income}
-            ,#{expend}
-            ,#{balance}
-            ,#{monthIncome}
-            ,#{monthExpend}
+            ,#{creditJour.income}
+            ,#{creditJour.expend}
+            ,#{creditJour.balance}
+            ,#{creditJour.monthIncome}
+            ,#{creditJour.monthExpend}
 
-            ,#{pic}
-            ,#{remark}
+            ,#{creditJour.pic}
+            ,#{creditJour.remark}
         </foreach>
         )
     </insert>

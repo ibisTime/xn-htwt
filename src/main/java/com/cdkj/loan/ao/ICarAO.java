@@ -1,15 +1,15 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Calculate;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
+import java.util.List;
 
 public interface ICarAO {
+
     String DEFAULT_ORDER_COLUMN = "order_no";
 
     // 新增品牌
@@ -36,4 +36,6 @@ public interface ICarAO {
 
     // 车贷计算器
     public Calculate calculate(String carCode, String period, String isTotal);
+
+    List<Car> queryList(Car condition);
 }

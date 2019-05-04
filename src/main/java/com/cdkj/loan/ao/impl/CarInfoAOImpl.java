@@ -20,6 +20,7 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderFee;
@@ -257,6 +258,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是区域经理审核节点，不能操作");
         }
+        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getMqStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "面签流程未走完，不能操作");
+        }
 
         String preCurrentNode = cdbiz.getCurNodeCode();// 当前节点
         // 日志记录
@@ -481,10 +486,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是财务审核节点，不能操作");
         }
-        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getMqStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "面签流程未走完，不能操作");
-        }
+
         if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "制卡流程未走完，不能操作");
@@ -602,13 +604,16 @@ public class CarInfoAOImpl implements ICarInfoAO {
     }
 
     @Override
+    @Transactional
     public void inputJourInfo(XN632537Req req) {
+        cdbizBO.getCdbiz(req.getCode());
         creditJourBO.removeBizJour(req.getCode());
         ArrayList<CreditJour> jourList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(req.getJourList())) {
             for (XN632537Res res : req.getJourList()) {
                 res.setBizCode(req.getCode());
                 CreditJour creditJour = new CreditJour();
+                creditJour.setCode(OrderNoGenerater.generate("CJ"));
                 EntityUtils.copyData(res, creditJour);
                 creditJour.setDatetimeStart(DateUtil.strToDate(res.getDatetimeStart(),
                         DateUtil.FRONT_DATE_FORMAT_STRING));
