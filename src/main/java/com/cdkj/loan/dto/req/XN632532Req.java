@@ -58,6 +58,16 @@ public class XN632532Req {
     @NotBlank
     private String mainIncome;
 
+    /**
+     * 其他收入说明
+     */
+    private String otherIncomeNote;
+
+    /**
+     * 房产证情况
+     */
+    private String isHouseProperty;
+
     // 家庭紧急联系人信息1 姓名
     @NotBlank
     private String emergencyName1;
@@ -147,6 +157,22 @@ public class XN632532Req {
 
     public void setWorkProfession(String workProfession) {
         this.workProfession = workProfession;
+    }
+
+    public String getOtherIncomeNote() {
+        return otherIncomeNote;
+    }
+
+    public void setOtherIncomeNote(String otherIncomeNote) {
+        this.otherIncomeNote = otherIncomeNote;
+    }
+
+    public String getIsHouseProperty() {
+        return isHouseProperty;
+    }
+
+    public void setIsHouseProperty(String isHouseProperty) {
+        this.isHouseProperty = isHouseProperty;
     }
 
     public String getPostTitle() {
