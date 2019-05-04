@@ -257,6 +257,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是区域经理审核节点，不能操作");
         }
+        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getMqStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "面签流程未走完，不能操作");
+        }
 
         String preCurrentNode = cdbiz.getCurNodeCode();// 当前节点
         // 日志记录
@@ -481,10 +485,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是财务审核节点，不能操作");
         }
-        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getMqStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "面签流程未走完，不能操作");
-        }
+
         if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "制卡流程未走完，不能操作");
