@@ -1,11 +1,10 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.dto.req.XN632030Req;
 import com.cdkj.loan.dto.req.XN632032Req;
+import java.util.List;
 
 /**
  * 银行信息
@@ -14,17 +13,18 @@ import com.cdkj.loan.dto.req.XN632032Req;
  * @history:
  */
 public interface IBankAO {
-    String DEFAULT_ORDER_COLUMN = "update_datetime";
 
-    public String addBank(XN632030Req req);
+    String DEFAULT_ORDER_COLUMN = "code";
 
-    public void dropBank(String code);
+    String addBank(XN632030Req req);
 
-    public int editBank(XN632032Req req);
+    void dropBank(String code);
 
-    public Bank getBank(String code);
+    void editBank(XN632032Req req);
 
-    public Paginable<Bank> queryBankPage(int start, int limit, Bank condition);
+    Bank getBank(String code);
 
-    public List<Bank> queryBankList(Bank condition);
+    Paginable<Bank> queryBankPage(int start, int limit, Bank condition);
+
+    List<Bank> queryBankList(Bank condition);
 }
