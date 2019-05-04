@@ -23,89 +23,74 @@ public class XN632533Req {
      */
 
     // 婚姻状况
-    @NotBlank
     private String marryState;
 
     // 家庭人口
-    @NotBlank
     private String familyNumber;
 
     // 家庭电话
-    @NotBlank
     private String familyPhone;
 
     // 家庭主要财产
-    @NotBlank
     private String familyMainAsset;
 
     // 主要财产包括
-    @NotBlank
     private String mainAssetInclude;
 
     /**
      * 户籍地省
      */
-    @NotBlank
     private String birthAddressProvince;
 
     /**
      * 户籍地市
      */
-    @NotBlank
     private String birthAddressCity;
 
     /**
      * 户籍地区
      */
-    @NotBlank
     private String birthAddressArea;
 
     /**
      * 户籍地详细地址
      */
-    @NotBlank
+
     private String birthAddress;
 
     /**
      * 户口所在地邮编
      */
-    @NotBlank
     private String birthPostCode;
 
     /**
      * 现住房屋类型
      */
-    @NotBlank
     private String nowHouseType;
 
     /**
      * 现住地址省
      */
-    @NotBlank
     private String nowAddressProvince;
 
     /**
      * 现住地址市
      */
-    @NotBlank
     private String nowAddressCity;
 
     /**
      * 现住地址区
      */
-    @NotBlank
     private String nowAddressArea;
 
     /**
      * 现居住地址
      */
-    @NotBlank
     private String nowAddress;
 
     /**
      * 现居住地址邮编
      */
-    @NotBlank
     private String nowPostCode;
 
     // 户口本资料

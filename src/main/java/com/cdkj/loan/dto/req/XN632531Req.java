@@ -21,70 +21,54 @@ public class XN632531Req {
     /***************车辆信息start**************/
 
     // 机动车销售公司
-    @NotBlank
     private String vehicleCompanyName;// carInfo
 
     // 开票单位
-    @NotBlank
     private String invoiceCompany;// carInfo
 
     // 车辆类型
-    @NotBlank
     private String carType;// carInfo
 
     // 品牌
-    @NotBlank
     private String carBrand;// carInfo
 
     // 车系
-    @NotBlank
     private String carSeries;// carInfo
 
     // 车型
-    @NotBlank
     private String carModel;// carInfo
 
     // 颜色
-    @NotBlank
     private String carColor;// carInfo
 
     // 车架号
-    @NotBlank
     private String carFrameNo;// carInfo
 
     // 发动机号
-    @NotBlank
     private String carEngineNo;// carInfo
 
     // 市场指导价
-    @NotBlank
     private String originalPrice;// carInfo
 
     // 所属区域
-    @NotBlank
     private String region;// carInfo
 
     // 厂家贴息
-    @NotBlank
     private String carDealerSubsidy;// carInfo
 
     // 油补公里数
-    @NotBlank
     private String oilSubsidyKil;// carInfo
 
     // 油补
     private String oilSubsidy;// carInfo
 
     // 落户地点
-    @NotBlank
     private String settleAddress;// carInfo
 
     // 车辆照片
-    @NotBlank
     private String carPic;
 
     // 合格证
-    @NotBlank
     private String carHgzPic;
 
     /****************车辆信息end***************/

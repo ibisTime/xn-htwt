@@ -26,15 +26,12 @@ public class XN632534Req {
     private String workBelongIndustry; // creditUserExt
 
     // 单位性质
-    @NotBlank
     private String workCompanyProperty; // creditUserExt
 
     // 工作单位名称
-    @NotBlank
     private String companyName; // creditUser
 
     // 工作单位地址
-    @NotBlank
     private String companyAddress; // creditUser
 
     // 工作单位电话
@@ -47,7 +44,6 @@ public class XN632534Req {
     private String position; // creditUserExt
 
     // 月收入
-    @NotBlank
     private String monthIncome; // creditUserExt
 
     /**
@@ -73,7 +69,6 @@ public class XN632534Req {
     private String salerAndcustomer;
 
     // 工作描述及还款来源分析
-    @NotBlank
     private String otherWorkNote;
 
     /**

@@ -22,23 +22,18 @@ public class XN632532Req {
      * **********客户信息start*************
      */
     // 性别
-    @NotBlank
     private String gender;
 
     // 年龄
-    @NotBlank
     private String age;
 
     // 民族
-    @NotBlank
     private String nation;
 
     // 学历
-    @NotBlank
     private String education;
 
     // 政治面貌
-    @NotBlank
     private String political;
 
     // 职业
@@ -48,14 +43,12 @@ public class XN632532Req {
     private String postTitle;
 
     // 有无驾照
-    @NotBlank
     private String isDriceLicense;
 
     // 现有车辆
     private String carType;
 
     // 主要收入来源
-    @NotBlank
     private String mainIncome;
 
     /**
@@ -69,27 +62,21 @@ public class XN632532Req {
     private String isHouseProperty;
 
     // 家庭紧急联系人信息1 姓名
-    @NotBlank
     private String emergencyName1;
 
     // 家庭紧急联系人信息1 与申请人关系
-    @NotBlank
     private String emergencyRelation1;
 
     // 家庭紧急联系人信息1 手机号码
-    @NotBlank
     private String emergencyMobile1;
 
     // 家庭紧急联系人信息2 姓名
-    @NotBlank
     private String emergencyName2;
 
     // 家庭紧急联系人信息2 与申请人关系
-    @NotBlank
     private String emergencyRelation2;
 
     // 家庭紧急联系人信息2 手机号码
-    @NotBlank
     private String emergencyMobile2;
 
     /**

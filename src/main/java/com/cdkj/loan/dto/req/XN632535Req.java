@@ -23,43 +23,36 @@ public class XN632535Req {
     /**
      * 户籍地省
      */
-    @NotBlank
     private String birthAddressProvince;
 
     /**
      * 户籍地市
      */
-    @NotBlank
     private String birthAddressCity;
 
     /**
      * 户籍地区
      */
-    @NotBlank
     private String birthAddressArea;
 
     /**
      * 户籍地详细地址
      */
-    @NotBlank
     private String birthAddress;
 
     /**
      * 户口所在地邮编
      */
-    @NotBlank
+
     private String birthPostCode;
 
     // 学历
-    @NotBlank
     private String education;
 
     // 工作单位名称
-    @NotBlank
     private String companyName;
 
     // 工作单位地址
-    @NotBlank
     private String companyAddress;
 
     // 工作单位电话

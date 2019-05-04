@@ -21,67 +21,51 @@ public class XN632530Req {
     /***************贷款信息start**************/
 
     // 贷款期限
-    @NotBlank
     private String periods;// repayBiz
 
     // 银行利率
-    @NotBlank
     private String bankRate;
 
     // 贷款金额
-    @NotBlank
     private String loanAmount;
 
     // 开票价
-    @NotBlank
     private String invoicePrice;// carInfo
 
     // 贷款产品编号
-    @NotBlank
     private String loanProductCode;// repayBiz
 
     // GPS费用
-    @NotBlank
     private String gpsFee;// carinfo
 
     // 公证费用
-    @NotBlank
     private String authFee;// carinfo
 
     // 首付金额
-    @NotBlank
     private String sfAmount;// repayBiz
 
     // 首付比例
-    @NotBlank
     private String sfRate;// repayBiz
 
     // 是否垫资
-    @NotBlank
     private String isAdvanceFund;// cdbiz
 
     // 是否融资
-    @NotBlank
     private String isFinacing;// cdbiz
 
     // 是否安装gps
-    @NotBlank
     private String isAzGps;// cdbiz
 
     // 是否我司续保
-    @NotBlank
     private String isPlatInsure;// cdbiz
 
     // 月供保证金
-    @NotBlank
     private String monthDeposit;// carInfo
 
     // 团队服务费
-    @NotBlank
     private String teamFee;// carInfo
 
     // 其他费用
-    @NotBlank
     private String otherFee;// carInfo
 
     /****************贷款信息end***************/
