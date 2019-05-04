@@ -13,7 +13,10 @@
 		<result column="create_datetime" property="createDatetime" />
 		<result column="status" property="status" />
 		<result column="operater" property="operater" />
+		<result column="operater_name" property="operaterName"/>
+
 		<result column="operate_role" property="operateRole" />
+		<result column="operate_role_name" property="operateRoleName"/>
 		<result column="finish_datetime" property="finishDatetime" />
 	</resultMap>
 	
@@ -57,15 +60,18 @@
 		,t.ref_type
 		,t.ref_order
 		,t.ref_node
-		
+
 		,t.content
 		,t.create_datetime
 		,t.status
 		,t.operater
+		,tu.login_name as operater_name
 		,t.operate_role
+		,tr.name as operate_role_name
 		,t.finish_datetime
 		FROM
-		tqj_biz_task t
+		tqj_biz_task t left join tsys_role tr on t.operate_role = tr.code
+		left join tsys_user tu on t.operater = tu.user_id
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -73,7 +79,7 @@
 			</if>
 		</trim>
 	</select>
-	
+
 	<select id="select_lastBizTask" parameterType="bizTask" resultMap="bizTask_DB_Result">
 		SELECT
 		t.code
@@ -81,7 +87,7 @@
 		,t.ref_type
 		,t.ref_order
 		,t.ref_node
-		
+
 		,t.content
 		,t.create_datetime
 		,t.status

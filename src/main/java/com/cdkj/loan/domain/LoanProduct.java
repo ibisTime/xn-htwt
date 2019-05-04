@@ -2,6 +2,7 @@ package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.Date;
+import lombok.Data;
 
 /**
  * 贷款产品
@@ -10,6 +11,7 @@ import java.util.Date;
  * @since: 2018年5月30日 上午11:29:54
  * @history:
  */
+@Data
 public class LoanProduct extends ABaseDO {
 
     /**
@@ -28,6 +30,9 @@ public class LoanProduct extends ABaseDO {
 
     // 贷款银行(编号)
     private String loanBank;
+
+    // 贷款期限
+    private String loanPeriod;
 
     // 万元系数
     private Long wanFactor;
@@ -66,133 +71,4 @@ public class LoanProduct extends ABaseDO {
 
     // 贷款银行名称
     private String loanBankName;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getIsPre() {
-        return isPre;
-    }
-
-    public void setIsPre(String isPre) {
-        this.isPre = isPre;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLoanBank() {
-        return loanBank;
-    }
-
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
-    }
-
-    public Long getWanFactor() {
-        return wanFactor;
-    }
-
-    public void setWanFactor(Long wanFactor) {
-        this.wanFactor = wanFactor;
-    }
-
-    public Double getYearRate() {
-        return yearRate;
-    }
-
-    public void setYearRate(Double yearRate) {
-        this.yearRate = yearRate;
-    }
-
-    public Long getGpsFee() {
-        return gpsFee;
-    }
-
-    public void setGpsFee(Long gpsFee) {
-        this.gpsFee = gpsFee;
-    }
-
-    public Double getAuthRate() {
-        return authRate;
-    }
-
-    public void setAuthRate(Double authRate) {
-        this.authRate = authRate;
-    }
-
-    public Double getBackRate() {
-        return backRate;
-    }
-
-    public void setBackRate(Double backRate) {
-        this.backRate = backRate;
-    }
-
-    public Double getPreRate() {
-        return preRate;
-    }
-
-    public void setPreRate(Double preRate) {
-        this.preRate = preRate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getLoanBankName() {
-        return loanBankName;
-    }
-
-    public void setLoanBankName(String loanBankName) {
-        this.loanBankName = loanBankName;
-    }
-
 }

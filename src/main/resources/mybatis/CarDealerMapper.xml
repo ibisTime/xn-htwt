@@ -34,6 +34,9 @@
 			<if test="abbrName != null and abbrName != '' ">
 				AND t.abbr_name = #{abbrName}
 			</if>
+			<if test="abbrNameQuery != null and abbrNameQuery != '' ">
+				AND t.abbr_name like "%"#{abbrNameQuery}"%"
+			</if>
 			<if test="isSelfDevelop != null and isSelfDevelop != '' ">
 				AND t.is_self_develop = #{isSelfDevelop}
 			</if>

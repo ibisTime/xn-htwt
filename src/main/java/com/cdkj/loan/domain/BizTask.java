@@ -2,6 +2,7 @@ package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.Date;
+import lombok.Data;
 
 /**
 * 待办事项表
@@ -9,6 +10,7 @@ import java.util.Date;
 * @since: 2019-04-03 11:39:28
 * @history:
 */
+@Data
 public class BizTask extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -55,116 +57,10 @@ public class BizTask extends ABaseDO {
 
     private String userId;
 
-    public String getRoleCode() {
-        return roleCode;
-    }
+    // 操作人名称
+    private String operaterName;
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getIsMy() {
-        return isMy;
-    }
-
-    public void setIsMy(String isMy) {
-        this.isMy = isMy;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
-    }
-
-    public String getBizCode() {
-        return bizCode;
-    }
-
-    public void setRefType(String refType) {
-        this.refType = refType;
-    }
-
-    public String getRefType() {
-        return refType;
-    }
-
-    public void setRefOrder(String refOrder) {
-        this.refOrder = refOrder;
-    }
-
-    public String getRefOrder() {
-        return refOrder;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Date getCreateDatetime() {
-        return createDatetime;
-    }
-
-    public void setCreateDatetime(Date createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getOperater() {
-        return operater;
-    }
-
-    public void setOperater(String operater) {
-        this.operater = operater;
-    }
-
-    public String getOperateRole() {
-        return operateRole;
-    }
-
-    public void setOperateRole(String operateRole) {
-        this.operateRole = operateRole;
-    }
-
-    public Date getFinishDatetime() {
-        return finishDatetime;
-    }
-
-    public void setFinishDatetime(Date finishDatetime) {
-        this.finishDatetime = finishDatetime;
-    }
-
-    public String getRefNode() {
-        return refNode;
-    }
-
-    public void setRefNode(String refNode) {
-        this.refNode = refNode;
-    }
+    // 操作角色名称
+    private String operateRoleName;
 
 }

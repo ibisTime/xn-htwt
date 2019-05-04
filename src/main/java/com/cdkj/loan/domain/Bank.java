@@ -58,4 +58,7 @@ public class Bank extends ABaseDO {
 
     // 更新人名称
     private String updaterName;
+
+    // 支行名称
+    private String subbranchQuery;
 }
