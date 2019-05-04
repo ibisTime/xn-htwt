@@ -119,4 +119,5 @@ public class LoanProduct extends ABaseDO {
 
     // 贷款银行名称
     private String loanBankName;
+
 }
