@@ -188,11 +188,12 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     }
 
     @Override
-    public void saveCarInfo(XN632530Req req) {
+    public void saveCarInfo(XN632530Req req, Long companyFee) {
         CarInfo carInfo = new CarInfo();
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
         carInfo.setBizCode(req.getCode());
         EntityUtils.copyData(req, carInfo);
+        carInfo.setCompanyFee(companyFee);
         carInfo.setCode(code);
         carInfoDAO.insert(carInfo);
     }

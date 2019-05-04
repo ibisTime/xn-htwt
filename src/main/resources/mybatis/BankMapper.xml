@@ -8,14 +8,34 @@
 		<result column="bank_name" property="bankName" />
 		<result column="subbranch" property="subbranch" />
 		<result column="rate12" property="rate12" />
+
 		<result column="rate18" property="rate18" />
-		
 		<result column="rate24" property="rate24" />
 		<result column="rate36" property="rate36" />
+
+		<result column="zk_rate12" property="zkRate12"/>
+		<result column="zk_rate18" property="zkRate18"/>
+		<result column="zk_rate24" property="zkRate24"/>
+		<result column="zk_rate36" property="zkRate36"/>
+		<result column="address" property="address"/>
+		<result column="phone_number" property="phoneNumber"/>
+
+		<result column="post_code" property="postCode"/>
+		<result column="bank_client" property="bankClient"/>
+		<result column="client_valid_date" property="clientValidDate"/>
+		<result column="auther_name" property="autherName"/>
+		<result column="auther_phone_number" property="autherPhoneNumber"/>
+
+		<result column="auther_id_no" property="autherIdNo"/>
+		<result column="auther_address" property="autherAddress"/>
+		<result column="credit_card_type" property="creditCardType"/>
+		<result column="credit_card_name" property="creditCardName"/>
+		<result column="belong_area" property="belongArea"/>
+
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
+		<result column="updater_name" property="updaterName"/>
 		<result column="update_datetime" property="updateDatetime" />
-
 		<result column="remark" property="remark" />
 	</resultMap>
 
@@ -53,13 +73,32 @@
 		
 		,t.rate24
 		,t.rate36
+		,t.zk_rate12
+		,t.zk_rate18
+
+		,t.zk_rate24
+		,t.zk_rate36
+		,t.address
+		,t.phone_number
+		,t.post_code
+		,t.bank_client
+		,t.client_valid_date
+
+		,t.auther_name
+		,t.auther_phone_number
+		,t.auther_id_no
+		,t.auther_address
+		,t.credit_card_type
+
+		,t.credit_card_name
+		,t.belong_area
 		,t.status
 		,t.updater
+		,tu.login_name as updater_name
 		,t.update_datetime
-		
 		,t.remark
 		FROM
-		tb_bank t
+		tb_bank t left join tsys_user tu on t.updater=tu.user_id
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -84,10 +123,29 @@
 		
 		,rate24
 		,rate36
+		,zk_rate12
+		,zk_rate18
+
+		,zk_rate24
+		,zk_rate36
+		,address
+		,phone_number
+
+		,post_code
+		,bank_client
+		,client_valid_date
+
+		,auther_name
+		,auther_phone_number
+		,auther_id_no
+		,auther_address
+		,credit_card_type
+
+		,credit_card_name
+		,belong_area
 		,status
 		,updater
 		,update_datetime
-		
 		,remark
 		)
 		VALUES(
@@ -100,10 +158,28 @@
 		
 		,#{rate24}
 		,#{rate36}
+		,#{zkRate12}
+		,#{zkRate18}
+
+		,#{zkRate24}
+		,#{zkRate36}
+		,#{address}
+		,#{phoneNumber}
+		,#{postCode}
+		,#{bankClient}
+		,#{clientValidDate}
+
+		,#{autherName}
+		,#{autherPhoneNumber}
+		,#{autherIdNo}
+		,#{autherAddress}
+		,#{creditCardType}
+
+		,#{creditCardName}
+		,#{belongArea}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
-		
 		,#{remark}
 		)
 	</insert>
@@ -119,7 +195,28 @@
 		,t.rate24 = #{rate24}
 		
 		,t.rate36 = #{rate36}
+		,t.zk_rate12 = #{zkRate12}
+		,t.zk_rate18 = #{zkRate18}
+		,t.zk_rate24 = #{zkRate24}
+
+		,t.zk_rate36 = #{zkRate36}
+		,t.address = #{address}
+		,t.phone_number = #{phoneNumber}
+		,t.post_code = #{postCode}
+		,t.bank_client = #{bankClient}
+
+		,t.client_valid_date = #{clientValidDate}
+		,t.auther_name = #{autherName}
+		,t.auther_phone_number = #{autherPhoneNumber}
+		,t.auther_id_no = #{autherIdNo}
+		,t.auther_address = #{autherAddress}
+
+		,t.credit_card_type = #{creditCardType}
+		,t.credit_card_name = #{creditCardName}
+		,t.belong_area = #{belongArea}
+		,t.status = #{status}
 		,t.updater = #{updater}
+
 		,t.update_datetime = #{updateDatetime}
 		,t.remark = #{remark}
 		WHERE code = #{code}

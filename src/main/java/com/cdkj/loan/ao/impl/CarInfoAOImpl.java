@@ -268,7 +268,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
                 cdbiz.getCode(), ENode.getMap().get(preCurrentNode));
 
-        String status = cdbiz.getStatus();
+        String status;
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A5.getCode();
             preCurrentNode = nodeFlowBO
@@ -552,11 +552,28 @@ public class CarInfoAOImpl implements ICarInfoAO {
             repayBizBO.refreshRepayBiz(repayBiz, req);
         }
 
+        // 公司服务费计算公式：
+        // 1、前置产品：贷款额*前置利率；
+        // 2、非前置产品：(贷款额*(年化利率*3-9)/100)/(1+前置利率)）
+        //公司服务费
+        LoanProduct loanProduct = loanProductBO.getLoanProduct(req.getLoanProductCode());
+        Long companyFee;
+        if (EBoolean.YES.getCode().equals(loanProduct.getIsPre())) {
+            companyFee = AmountUtil
+                    .mul(StringValidater.toLong(req.getLoanAmount()), loanProduct.getPreRate());
+        } else {
+            double rate = (loanProduct.getPreRate() * 3 - 9) / 100;
+            companyFee = AmountUtil
+                    .div(AmountUtil.mul(StringValidater.toLong(req.getLoanAmount()), rate),
+                            loanProduct.getPreRate() + 1);
+        }
+
         //判断车辆信息是否存在，存在则修改，不存在则新增
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
         if (carInfo == null) {
-            carInfoBO.saveCarInfo(req);
+            carInfoBO.saveCarInfo(req, companyFee);
         } else {
+            carInfo.setCompanyFee(companyFee);
             carInfoBO.refreshCarInfo(carInfo, req);
         }
 

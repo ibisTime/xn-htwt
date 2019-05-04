@@ -27,7 +27,7 @@ public class Bank extends ABaseDO {
     // 银行名称
     private String bankName;
 
-    // 支行名称
+    // 开户支行名称
     private String subbranch;
 
     // 12期
@@ -42,6 +42,54 @@ public class Bank extends ABaseDO {
     // 36期
     private Double rate36;
 
+    // 直客12期
+    private Double zkRate12;
+
+    // 直客18期
+    private Double zkRate18;
+
+    // 直客24期
+    private Double zkRate24;
+
+    // 直客36期
+    private Double zkRate36;
+
+    // 银行地址
+    private String address;
+
+    // 电话号码
+    private String phoneNumber;
+
+    // 邮编
+    private String postCode;
+
+    // 银行委托人
+    private String bankClient;
+
+    // 委托有效期
+    private Integer clientValidDate;
+
+    // 授权人姓名
+    private String autherName;
+
+    // 授权人电话
+    private String autherPhoneNumber;
+
+    // 授权人身份证
+    private String autherIdNo;
+
+    // 授权人地址
+    private String autherAddress;
+
+    // 信用卡类型
+    private String creditCardType;
+
+    // 信用卡名称
+    private String creditCardName;
+
+    // 所属地区
+    private String belongArea;
+
     // 状态(预留)
     private String status;
 
@@ -53,6 +101,7 @@ public class Bank extends ABaseDO {
 
     // 备注
     private String remark;
+
 
     /*---------辅助字段-----------*/
 
