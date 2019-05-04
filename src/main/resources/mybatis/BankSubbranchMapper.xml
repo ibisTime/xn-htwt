@@ -10,23 +10,7 @@
 		<result column="full_name" property="fullName" />
 		<result column="open_bank" property="openBank" />
 		
-		<result column="address" property="address" />
-		<result column="phone_number" property="phoneNumber" />
-		<result column="post_code" property="postCode" />
-		<result column="bank_client" property="bankClient" />
-		<result column="client_valid_date" property="clientValidDate" />
 
-		<result column="auther_name" property="autherName" />
-		<result column="auther_phone_number" property="autherPhoneNumber" />
-		<result column="auther_id_no" property="autherIdNo" />
-		<result column="auther_address" property="autherAddress" />
-		<result column="credit_card_type" property="creditCardType" />
-		
-		<result column="credit_card_name" property="creditCardName" />
-		<result column="belong_area" property="belongArea" />
-		<result column="updater" property="updater" />
-		<result column="update_datetime" property="updateDatetime" />
-		<result column="remark" property="remark" />
 	</resultMap>
 
 	<sql id="where_condition">

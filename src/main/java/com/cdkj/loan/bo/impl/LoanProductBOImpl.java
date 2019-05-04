@@ -1,18 +1,16 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.ILoanProductDAO;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.enums.ELoanProductStatus;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 贷款产品
@@ -49,30 +47,24 @@ public class LoanProductBOImpl extends PaginableBOImpl<LoanProduct> implements
 
     @Override
     public void publishYesLoanProduct(String code, String updater) {
-        if (null == code) {
-            throw new BizException("xn0000", "产品编号不能为空");
-        }
+        LoanProduct data = getLoanProduct(code);
+        data.setCode(code);
+        data.setStatus(ELoanProductStatus.PUBLISH_YES.getCode());
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
 
-        LoanProduct condition = new LoanProduct();
-        condition.setCode(code);
-        condition.setStatus(ELoanProductStatus.PUBLISH_YES.getCode());
-        condition.setUpdater(updater);
-        condition.setUpdateDatetime(new Date());
-        loanProductDAO.updateLoanProductPublish(condition);
+        loanProductDAO.updateLoanProductPublish(data);
     }
 
     @Override
     public void publishNoLoanProduct(String code, String updater) {
-        if (null == code) {
-            throw new BizException("xn0000", "产品编号不能为空");
-        }
+        LoanProduct data = getLoanProduct(code);
+        data.setCode(code);
+        data.setStatus(ELoanProductStatus.PUBLISH_NO.getCode());
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
 
-        LoanProduct condition = new LoanProduct();
-        condition.setCode(code);
-        condition.setStatus(ELoanProductStatus.PUBLISH_NO.getCode());
-        condition.setUpdater(updater);
-        condition.setUpdateDatetime(new Date());
-        loanProductDAO.updateLoanProductPublish(condition);
+        loanProductDAO.updateLoanProductPublish(data);
     }
 
     @Override

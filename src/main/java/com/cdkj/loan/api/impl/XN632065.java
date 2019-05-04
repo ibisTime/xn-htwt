@@ -29,7 +29,7 @@ public class XN632065 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         CarDealer condition = new CarDealer();
-        condition.setAbbrName(req.getAbbrName());
+        condition.setAbbrNameQuery(req.getAbbrName());
         condition.setIsSelfDevelop(req.getIsSelfDevelop());
         condition.setCurNodeCode(ECarDealerNode.NEW_ADD.getCode());
         condition.setAgreementStatus(req.getAgreementStatus());

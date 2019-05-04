@@ -23,7 +23,6 @@ public class XN632032Req {
     @NotBlank
     private String bankName;
 
-    // 支行名称
     @NotBlank
     private String subbranch;
 
@@ -38,6 +37,42 @@ public class XN632032Req {
 
     // 36期
     private String rate36;
+
+    // 银行地址
+    private String address;
+
+    // 电话号码
+    private String phoneNumber;
+
+    // 邮编
+    private String postCode;
+
+    // 银行委托人
+    private String bankClient;
+
+    // 委托有效期
+    private String clientValidDate;
+
+    // 授权人姓名
+    private String autherName;
+
+    // 授权人电话
+    private String autherPhoneNumber;
+
+    // 授权人身份证
+    private String autherIdNo;
+
+    // 授权人地址
+    private String autherAddress;
+
+    // 信用卡类型
+    private String creditCardType;
+
+    // 信用卡名称
+    private String creditCardName;
+
+    // 所属地区
+    private String belongArea;
 
     // 更新人
     private String updater;

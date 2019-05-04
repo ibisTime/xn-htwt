@@ -31,6 +31,9 @@ public class LoanProduct extends ABaseDO {
     // 贷款银行(编号)
     private String loanBank;
 
+    // 贷款期限
+    private String loanPeriod;
+
     // 万元系数
     private Long wanFactor;
 

@@ -16,7 +16,6 @@ import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
-import com.cdkj.loan.bo.ICreditUserExtBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
@@ -127,9 +126,6 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private IRepayBizBO repayBizBO;
-
-    @Autowired
-    private ICreditUserExtBO creditUserExtBO;
 
     @Autowired
     private ICreditJourBO creditJourBO;

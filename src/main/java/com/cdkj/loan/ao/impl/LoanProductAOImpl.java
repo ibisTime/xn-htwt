@@ -1,11 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.cdkj.loan.ao.ILoanProductAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ILoanProductBO;
@@ -18,6 +12,10 @@ import com.cdkj.loan.dto.req.XN632170Req;
 import com.cdkj.loan.dto.req.XN632172Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EProductStatus;
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 贷款产品
@@ -43,6 +41,7 @@ public class LoanProductAOImpl implements ILoanProductAO {
         data.setType(req.getType());
         data.setName(req.getName());
         data.setLoanBank(req.getLoanBank());
+        data.setLoanPeriod(req.getLoanPeriod());
         data.setWanFactor(StringValidater.toLong(req.getWanFactor()));
 
         data.setYearRate(StringValidater.toDouble(req.getYearRate()));
@@ -71,6 +70,7 @@ public class LoanProductAOImpl implements ILoanProductAO {
         data.setType(req.getType());
         data.setName(req.getName());
         data.setLoanBank(req.getLoanBank());
+        data.setLoanPeriod(req.getLoanPeriod());
         data.setWanFactor(StringValidater.toLong(req.getWanFactor()));
 
         data.setYearRate(StringValidater.toDouble(req.getYearRate()));

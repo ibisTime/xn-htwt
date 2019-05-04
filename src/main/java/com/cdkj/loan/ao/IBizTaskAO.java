@@ -4,9 +4,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.dto.req.XN632520Req;
 import java.util.List;
-import org.springframework.stereotype.Component;
 
-@Component
 public interface IBizTaskAO {
 
     String DEFAULT_ORDER_COLUMN = "code";

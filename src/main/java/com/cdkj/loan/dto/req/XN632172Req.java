@@ -1,5 +1,6 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -8,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @since: 2018年5月30日 下午12:52:02 
  * @history:
  */
+@Data
 public class XN632172Req {
     // 编号
     @NotBlank
@@ -24,6 +26,9 @@ public class XN632172Req {
     // 贷款银行(编号)
     @NotBlank
     private String loanBank;
+
+    @NotBlank
+    private String loanPeriod;
 
     // 万元系数
     @NotBlank
