@@ -40,20 +40,68 @@ public class LoanProduct extends ABaseDO {
     // 年利率
     private Double yearRate;
 
-    // GPS费用
-    private Long gpsFee;
-
     // 公证费利率
     private Double authRate;
-
-    // 返点利率
-    private Double backRate;
 
     // 是否前置
     private String isPre;
 
     // 前置利率
     private Double preRate;
+
+    private String assureType;// 担保费类型(1单笔/2贷款额百分比)
+
+    private Long assureFee;// 单笔担保费
+
+    private Double assureRate;// 担保费贷款额百分比
+
+    private String dzType;// 垫资费类型(1单笔/2贷款额百分比)
+
+    private Long dzFee;// 单笔垫资费
+
+    private Double dzRate;// 垫资费贷款额百分比
+
+    private String lyAmountType;// 履约保证金类型(1单笔/2贷款额百分比)
+
+    private Long lyAmountFee;// 单笔履约保证金
+
+    private Double lyAmountRate;// 履约保证金贷款额百分比
+
+    private String gpsType;// GPS类型(1单笔/2贷款额百分比)
+
+    private Long gpsFee;// 单笔GPS费
+
+    private Double gpsRate;// GPS垫资费贷款额百分比
+
+    private String otherType;// 杂费类型(1单笔/2贷款额百分比)
+
+    private Long otherFee;// 单笔杂费
+
+    private Double otherRate;// 杂费贷款额百分比
+
+    private String introduceType;// 介绍费类型(1单笔/2贷款额百分比)
+
+    private Long introduceFee;// 单笔介绍费
+
+    private Double introduceRate;// 介绍费贷款额百分比
+
+    private String returnPointType;// 返点类型(1单笔/2贷款额百分比)
+
+    private Long returnPointFee;// 单笔返点
+
+    private Double returnPointRate;// 返点贷款额百分比
+
+    private String insuAgencyYear1Type;// 1年保险代理费类型(1平台/2车行)
+
+    private Long insuAgencyYear1Fee;// 1年保险代理费
+
+    private String insuAgencyYear2Type;// 2年保险代理费类型(1平台/2车行)
+
+    private Long insuAgencyYear2Fee;// 2年保险代理费
+
+    private String insuAgencyYear3Type;// 3年保险代理费类型(1平台/2车行)
+
+    private Long insuAgencyYear3Fee;// 3年保险代理费
 
     // 状态
     private String status;

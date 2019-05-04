@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 	
 	<!-- 分页BO层注入paginableDao -->
@@ -200,10 +193,6 @@
 		<property name="paginableDAO" ref="carDealerDAOImpl"/>
 	</bean>
 	
-	<bean id="carDealerProtocolBO" class="com.cdkj.loan.bo.impl.CarDealerProtocolBOImpl">
-		<property name="paginableDAO" ref="carDealerProtocolDAOImpl"/>
-	</bean>
-	
 	<bean id="gpsBO" class="com.cdkj.loan.bo.impl.GpsBOImpl">
 		<property name="paginableDAO" ref="gpsDAOImpl"/>
 	</bean>
@@ -222,10 +211,6 @@
 	
 	<bean id="bankBO" class="com.cdkj.loan.bo.impl.BankBOImpl">
 		<property name="paginableDAO" ref="bankDAOImpl"/>
-	</bean>
-	
-	<bean id="bankSubbranchBO" class="com.cdkj.loan.bo.impl.BankSubbranchBOImpl">
-		<property name="paginableDAO" ref="bankSubbranchDAOImpl"/>
 	</bean>
 	
 	<bean id="loanProductBO" class="com.cdkj.loan.bo.impl.LoanProductBOImpl">
