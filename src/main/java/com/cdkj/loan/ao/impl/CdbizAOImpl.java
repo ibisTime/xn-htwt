@@ -287,6 +287,14 @@ public class CdbizAOImpl implements ICdbizAO {
                     ENode.input_credit,
                     cdbiz.getCaptainCode());
 
+            // 面签开始的待办事项
+            bizTaskBO.saveBizTask(
+                    cdbiz.getBizCode(),
+                    EBizLogType.INTERVIEW,
+                    cdbiz.getBizCode(),
+                    ENode.input_interview,
+                    req.getOperator());
+
             // 更新节点
             NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
 

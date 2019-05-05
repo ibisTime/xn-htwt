@@ -20,6 +20,7 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderFee;
@@ -603,13 +604,16 @@ public class CarInfoAOImpl implements ICarInfoAO {
     }
 
     @Override
+    @Transactional
     public void inputJourInfo(XN632537Req req) {
+        cdbizBO.getCdbiz(req.getCode());
         creditJourBO.removeBizJour(req.getCode());
         ArrayList<CreditJour> jourList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(req.getJourList())) {
             for (XN632537Res res : req.getJourList()) {
                 res.setBizCode(req.getCode());
                 CreditJour creditJour = new CreditJour();
+                creditJour.setCode(OrderNoGenerater.generate("CJ"));
                 EntityUtils.copyData(res, creditJour);
                 creditJour.setDatetimeStart(DateUtil.strToDate(res.getDatetimeStart(),
                         DateUtil.FRONT_DATE_FORMAT_STRING));

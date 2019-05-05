@@ -45,8 +45,8 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         data.setRefNode(curNode.getCode());
         data.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
 
-        String content = "你有新的待" + curNode.getValue() + bizLogType.getValue()
-                + "单";
+        String content = "你有新的待" + curNode.getValue() + bizLogType.getValue();
+
         data.setContent(content);
         data.setCreateDatetime(new Date());
         if (StringUtils.isNotBlank(userId)) {
