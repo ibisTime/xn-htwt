@@ -2,7 +2,7 @@
 -- Query: SELECT * FROM dev_xn_htwt_new.tsys_user
 -- Date: 2019-05-04 20:48
 */
-INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`real_name`,`login_pwd`,`login_pwd_strength`,`create_datetime`,`role_code`,`company_code`,`department_code`,`post_code`,`updater`,`update_datetime`,`status`,`remark`,`team_code`,`archive_code`) VALUES ('USYS201800000000001','P',NULL,'admin',NULL,'admin','fb62579e990da4e2a8f15c3d1e123438','1','2018-06-12 12:23:42','RO201800000000000001','DP201800000000000000001','DP201905041812163454313','DP201905041812163454313','USYS201800000000001','2019-04-18 10:05:37','1','','BT201905042043221526979',NULL);
+INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`real_name`,`login_pwd`,`login_pwd_strength`,`create_datetime`,`role_code`,`company_code`,`department_code`,`post_code`,`updater`,`update_datetime`,`status`,`remark`,`team_code`,`archive_code`) VALUES ('USYS201800000000001','P',NULL,'admin',NULL,'admin','fb62579e990da4e2a8f15c3d1e123438','1','2018-06-12 12:23:42','RO201800000000000001','DP201800000000000000001','DP201905041812163454313','DP201905041812163454313','USYS201800000000001','2019-04-18 10:05:37','1','',NULL,NULL);
 
 /*
 -- Query: SELECT * FROM dev_xn_htwt_new.tsys_role
@@ -3745,7 +3745,6 @@ INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2273,'SR2018
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2274,'SR201800000000000000YWY','b1x');
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2275,'SR201800000000000000YWY','e1');
 
-/*
 -- /*
 -- Query: SELECT
     `tsys_dict`.`id`,
@@ -4526,3 +4525,11 @@ INSERT INTO `tdq_file_list` (`id`,`category`,`kname`,`vname`,`attach_type`,`numb
 INSERT INTO `tdq_file_list` (`id`,`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES (95,'credit_user_ext','front_table_pic','单位前台照片','图片',1,NULL,NULL);
 INSERT INTO `tdq_file_list` (`id`,`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES (96,'credit_user_ext','work_place_pic','单位场地照片','图片',1,NULL,NULL);
 INSERT INTO `tdq_file_list` (`id`,`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES (97,'credit_user_ext','saler_and_customer','业务员与客户合影','图片',1,NULL,NULL);
+
+
+/*
+-- Query: SELECT * FROM dev_xn_htwt_new.tsys_department limit 0,2
+-- Date: 2019-05-05 12:25
+*/
+INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201800000000000000001','1','温州浩源有限公司',NULL,'0',NULL,'1','admin',NULL,'');
+INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201905041812163454313','2','技术部','USYS201800000000001','DP201800000000000000001',0,'1','USYS201800000000001','2019-05-04 22:27:59',NULL);
