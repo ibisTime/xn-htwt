@@ -32,4 +32,5 @@ public interface IAttachmentBO extends IPaginableBO<Attachment> {
 
     boolean isAttachmentExist(String bizCode, String attachName);
 
+    void removeByCategory(String code, String car_procedure);
 }

@@ -15,6 +15,7 @@ import com.cdkj.loan.exception.BizException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
         implements IAttachmentBO {
 
     private final static Logger log = LoggerFactory
-        .getLogger(IAttachmentBO.class);
+            .getLogger(IAttachmentBO.class);
 
     @Autowired
     private IAttachmentDAO attachmentDAO;
@@ -46,7 +47,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
             Attachment data = new Attachment();
             FileList fileList = fileListBO.getFileListByKname(name);
             code = OrderNoGenerater
-                .generate(EGeneratePrefix.attachment.getCode());
+                    .generate(EGeneratePrefix.attachment.getCode());
             data.setCode(code);
             data.setBizCode(bizCode);
 
@@ -70,14 +71,14 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
                 Object fieldValue = field.get(clazz);
 
                 String fieldName = FieldNameUtil
-                    .humpToUnderline(field.getName());
+                        .humpToUnderline(field.getName());
 
                 FileList fileList = fileListBO.getFileListByKname(fieldName);
 
                 if (null != fieldValue && null != fileList) {
                     saveAttachment(bizCode, fileList.getCategory(),
-                        fileList.getKname(), fileList.getVname(),
-                        fieldValue.toString());
+                            fileList.getKname(), fileList.getVname(),
+                            fieldValue.toString());
                 }
 
             }
@@ -91,7 +92,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
         Attachment data = new Attachment();
 
         String code = OrderNoGenerater
-            .generate(EGeneratePrefix.attachment.getCode());
+                .generate(EGeneratePrefix.attachment.getCode());
         data.setCode(code);
         data.setBizCode(bizCode);
         data.setCategory(category);
@@ -154,7 +155,7 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
                 Field field = fields[i];
 
                 String fieldName = FieldNameUtil
-                    .humpToUnderline(field.getName());
+                        .humpToUnderline(field.getName());
 
                 if (null != EAttachmentName.matchCode(fieldName)) {
 
@@ -162,10 +163,10 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
                             + field.getName().substring(0, 1).toUpperCase()
                             + field.getName().substring(1);
                     Method method = clazz.getClass().getMethod(setMethod,
-                        String.class);
+                            String.class);
 
                     Attachment attachment = getAttachment(bizCode, category,
-                        fieldName);
+                            fieldName);
 
                     if (null != attachment) {
                         method.invoke(clazz, attachment.getUrl());
@@ -237,6 +238,19 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void removeByCategory(String code, String category) {
+        Attachment condition = new Attachment();
+        condition.setBizCode(code);
+        condition.setCategory(category);
+        List<Attachment> attachmentList = attachmentDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(attachmentList)) {
+            for (Attachment attachment : attachmentList) {
+                attachmentDAO.deleteAttachment(attachment);
+            }
+        }
     }
 
 }

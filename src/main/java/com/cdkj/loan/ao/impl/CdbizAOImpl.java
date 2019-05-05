@@ -713,6 +713,8 @@ public class CdbizAOImpl implements ICdbizAO {
         // 更新车辆信息
         carInfoBO.entryFbhInfoByBiz(req.getCode(), req.getPolicyDatetime(), req.getPolicyDueDate());
 
+        // 删除附件
+        attachmentBO.removeByCategory(req.getCode(), "car_procedure");
         // 添加附件
         attachmentBO.saveAttachment(req.getCode(), req);
 
