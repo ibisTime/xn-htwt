@@ -205,6 +205,16 @@ public class CdbizAOImpl implements ICdbizAO {
                     req.getNote(),
                     sysUser.getUserId());
 
+            if (!bizTeam.getCaptain().equals(req.getOperator())) {
+                // 给团队长发起待办事项
+                bizTaskBO.saveBizTask(
+                        cdbiz.getBizCode(),
+                        EBizLogType.CREDIT,
+                        cdbiz.getBizCode(),
+                        ENode.input_credit,
+                        bizTeam.getCaptain());
+            }
+
             // 录入征信的待办事项
             bizTaskBO.saveBizTask(
                     cdbiz.getBizCode(),
@@ -212,14 +222,6 @@ public class CdbizAOImpl implements ICdbizAO {
                     cdbiz.getBizCode(),
                     ENode.input_credit,
                     req.getOperator());
-
-            // 给团队长发起待办事项
-            bizTaskBO.saveBizTask(
-                    cdbiz.getBizCode(),
-                    EBizLogType.CREDIT,
-                    cdbiz.getBizCode(),
-                    ENode.input_credit,
-                    bizTeam.getCaptain());
 
             // 面签开始的待办事项
             bizTaskBO.saveBizTask(
