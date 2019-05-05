@@ -703,7 +703,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ENode.input_fbh.getCode().equals(cdbiz.getFbhgpsNode())
-                || !ENode.reinput_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
+                && !ENode.reinput_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前节点不是录入发保合节点，不能操作");
         }
 
@@ -763,7 +763,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ENode.set_gps.getCode().equals(cdbiz.getFbhgpsNode())
-                || !ENode.approve_fail_gps.getCode().equals(cdbiz.getFbhgpsNode())) {
+                && !ENode.approve_fail_gps.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前节点不是安装gps节点，不能操作");
         }
 
