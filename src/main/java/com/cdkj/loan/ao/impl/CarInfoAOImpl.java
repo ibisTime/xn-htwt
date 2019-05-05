@@ -519,6 +519,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // 发保合状态更新
             cdbizBO.refreshFbhgpsStatus(cdbiz, fbhgpsStatus);
 
+            // 发保合节点更新
+            cdbizBO.refreshFbhgpsNode(cdbiz, node);
+
             // 主节点
             preCurrentNode = ENode.submit_1.getCode();
             // 生成报告、返点、费用
