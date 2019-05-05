@@ -869,11 +869,13 @@ public class CdbizAOImpl implements ICdbizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前不是回录卡号状态，无法录入");
         }
         // 录入卡号
-        cdbizBO.refreshRepayCard(cdbiz, cardNumber);
+        cdbiz.setRepayCardNumber(cardNumber);
         // 制卡节点
-        cdbizBO.refreshMakeCardNode(cdbiz, ENode.input_card_number.getCode());
+        cdbiz.setMakeCardNode(ENode.make_card_finish.getCode());
         // 制卡状态
-        cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H3.getCode());
+        cdbiz.setMakeCardStatus(ECdbizStatus.H3.getCode());
+        cdbizBO.refreshCdbiz(cdbiz);
+
         // 处理前待办事项
         bizTaskBO.handlePreBizTask(EBizLogType.makeCard.getCode(), code, ENode.input_card_number);
         // 操作日志

@@ -1,34 +1,33 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.cdkj.loan.ao.IBudgetOrderFeeAO;
 import com.cdkj.loan.bo.IBankBO;
-import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeDetailBO;
+import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Bank;
-import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderFeeDetail;
+import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBudgetOrderFeeDetailStatus;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 准入单手续费
- * @author: jiafr 
- * @since: 2018年5月30日 下午9:46:40 
+ *
+ * @author: jiafr
+ * @since: 2018年5月30日 下午9:46:40
  * @history:
  */
 @Service
@@ -41,7 +40,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     private IBudgetOrderFeeDetailBO budgetOrderFeeDetailBO;
 
     @Autowired
-    private IBudgetOrderBO budgetOrderBO;
+    private ICdbizBO cdbizBO;
 
     @Autowired
     private IDepartmentBO departmentBO;
@@ -60,7 +59,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             int limit, BudgetOrderFee condition) {
 
         Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO
-            .getPaginable(start, limit, condition);
+                .getPaginable(start, limit, condition);
 
         List<BudgetOrderFee> list = paginable.getList();
 
@@ -77,13 +76,12 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
             if (StringUtils.isNotBlank(budgetOrderFee.getUserId())) {
                 SYSUser saleUser = sysUserBO
-                    .getUser(budgetOrderFee.getUserId());
+                        .getUser(budgetOrderFee.getUserId());
                 budgetOrderFee.setUserName(saleUser.getRealName());
             }
             if (StringUtils.isNotBlank(budgetOrderFee.getBudgetOrder())) {
-                BudgetOrder budgetOrder = budgetOrderBO
-                    .getBudgetOrder(budgetOrderFee.getBudgetOrder());
-                budgetOrderFee.setCurNodeCode(budgetOrder.getCurNodeCode());
+                Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrderFee.getBudgetOrder());
+                budgetOrderFee.setCurNodeCode(cdbiz.getCurNodeCode());
             }
         }
 
@@ -99,7 +97,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     @Override
     public BudgetOrderFee getBudgetOrderFee(String code) {
         BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
-            .getBudgetOrderFee(code);
+                .getBudgetOrderFee(code);
         if (null == budgetOrderFee) {
             throw new BizException("xn0000", "手续费不存在");
         }
@@ -112,36 +110,35 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
         // 设置业务公司真实姓名
         Department department = departmentBO
-            .getDepartment(budgetOrderFee.getCompanyCode());
-        BudgetOrder budgetOrder = budgetOrderBO
-            .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+                .getDepartment(budgetOrderFee.getCompanyCode());
+        Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrderFee.getBudgetOrder());
         SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
         budgetOrderFee.setUserName(saleUser.getRealName());
 
         // 设置贷款银行和贷款金额
-        if (null != budgetOrder) {
+        if (null != cdbiz) {
 
-            Bank bank = bankBO.getBank(budgetOrder.getLoanBank());
+            Bank bank = bankBO.getBank(cdbiz.getLoanBank());
             if (null != bank) {
                 budgetOrderFee.setLoanBankName(bank.getBankName());
             }
-            budgetOrderFee.setLoanAmount(budgetOrder.getLoanAmount());
+            budgetOrderFee.setLoanAmount(cdbiz.getLoanAmount());
         }
 
         BudgetOrderFeeDetail condition = new BudgetOrderFeeDetail();
         condition.setFeeCode(code);
         condition.setStatus(EBudgetOrderFeeDetailStatus.SUBMITTED.getCode());
         List<BudgetOrderFeeDetail> list = budgetOrderFeeDetailBO
-            .queryBudgetOrderFeeDetailList(condition);
+                .queryBudgetOrderFeeDetailList(condition);
         budgetOrderFee.setCompanyName(department.getName());
         // 设置银行对象（汇入我司账号和银行名）
         for (BudgetOrderFeeDetail budgetOrderFeeDetail : list) {
             String platBankcard = budgetOrderFeeDetail.getPlatBankcard();
             CollectBankcard collectBankcard = collectBankcardBO
-                .getCollectBankcard(platBankcard);
+                    .getCollectBankcard(platBankcard);
             budgetOrderFeeDetail.setCollectBankcard(collectBankcard);
             SYSUser updateUser = sysUserBO
-                .getUser(budgetOrderFeeDetail.getUpdater());
+                    .getUser(budgetOrderFeeDetail.getUpdater());
             if (null != updateUser) {
                 budgetOrderFeeDetail.setUpdater(updateUser.getRealName());
             }
@@ -149,19 +146,15 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         }
 
         BudgetOrderFeeDetail budgetOrderFeeDetail = budgetOrderFeeDetailBO
-            .getBudgetOrderFeeDetailByStatus(code,
-                EBudgetOrderFeeDetailStatus.UNCOMMITTED.getCode());
+                .getBudgetOrderFeeDetailByStatus(code,
+                        EBudgetOrderFeeDetailStatus.UNCOMMITTED.getCode());
         // 未提交的手续费明细
         budgetOrderFee.setUnSubmitBudgetOrderFeeDetail(budgetOrderFeeDetail);
         // 已提交手续费明细列表
         budgetOrderFee.setBudgetOrderFeeDetailList(list);
 
         // 预算单
-        if (StringUtils.isNotBlank(budgetOrderFee.getBudgetOrder())) {
-            BudgetOrder order = budgetOrderBO
-                .getBudgetOrder(budgetOrderFee.getBudgetOrder());
-            budgetOrderFee.setBudgetOrderObject(order);
-        }
+        budgetOrderFee.setBudgetOrderObject(cdbiz);
 
         return budgetOrderFee;
     }
