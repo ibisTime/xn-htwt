@@ -40,14 +40,13 @@ public class XN632528 extends AProcessor {
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
 
-        return bizTaskAO.queryBizTaskPage(start, limit, condition, req.getUserId());
+        return bizTaskAO.queryBizTaskPage(start, limit, condition, req.getOperator());
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN632528Req.class);
-        req.setUserId(operator);
         ObjValidater.validateReq(req);
     }
 

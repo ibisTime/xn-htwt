@@ -6,8 +6,9 @@ import java.util.Map;
 
 /**
  * 征信节点
- * @author: jiafr 
- * @since: 2018年5月25日 下午3:01:56 
+ *
+ * @author: jiafr
+ * @since: 2018年5月25日 下午3:01:56
  * @history:
  */
 public enum ENode {
@@ -23,7 +24,8 @@ public enum ENode {
             "b7", "财务总监审核准入单"), renew_budget("b1x", "重录准入单"),
 
     // 制卡节点
-    make_card_apply("h1", "制卡申请"), input_card_number("h2", "回录卡号"),
+    make_card_apply("h1", "制卡申请"), input_card_number("h2", "回录卡号"), make_card_finish(
+            "h3", "制卡完成"),
 
     // 面签节点
     input_interview("b01", "新录面签信息"), approve_interview("b02", "主管审核面签信息"),
