@@ -357,6 +357,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void sendOrder(XN632119Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
         if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
@@ -632,7 +633,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void archive(String code, String operator, String enterLocation) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
@@ -698,7 +699,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void entryFbh(XN632131Req req) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
@@ -734,7 +735,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void approveFbh(String code, String approveResult, String approveNote, String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ENode.approve_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
@@ -760,7 +761,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void installGps(String code, String operator, List<XN632126ReqGps> gpsAzList) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
@@ -789,6 +790,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void gpsManagerApprove(
             String code, String operator, String approveResult, String approveNote) {
 
@@ -836,8 +838,8 @@ public class CdbizAOImpl implements ICdbizAO {
         }
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void makeCardApply(String code, String operator, String cardPostAddress) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ECdbizStatus.H1.getCode().equals(cdbiz.getMakeCardStatus())) {
@@ -865,6 +867,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void inputCardNumber(String code, String cardNumber, String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardStatus())) {
@@ -991,12 +994,6 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     private void init(Cdbiz cdbiz) {
-        // 贷款银行
-        if (StringUtils.isNotBlank(cdbiz.getLoanBank())) {
-            Bank bank = bankBO.getBank(cdbiz.getLoanBank());
-            cdbiz.setLoanBankName(bank.getBankName());
-        }
-
         // 主贷人信息
         CreditUser creditUser =
                 creditUserBO
@@ -1027,12 +1024,6 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbiz.setInsideJobCompanyName(insideJob.getCompanyName());
             cdbiz.setInsideJobDepartMentName(insideJob.getDepartmentName());
             cdbiz.setInsideJobPostName(insideJob.getPostName());
-        }
-
-        // 团队名称
-        if (StringUtils.isNotBlank(cdbiz.getTeamCode())) {
-            BizTeam team = bizTeamBO.getBizTeam(cdbiz.getTeamCode());
-            cdbiz.setTeamName(team.getName());
         }
 
         // 征信人列表
