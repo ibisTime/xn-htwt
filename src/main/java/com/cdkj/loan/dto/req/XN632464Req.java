@@ -20,12 +20,15 @@ public class XN632464Req {
     private String operator;
 
     // 垫资日期
+    @NotBlank
     private String advanceFundDatetime;
 
     // 垫资金额
+    @NotBlank
     private String advanceFundAmount;
 
     // 水单
+    @NotBlank
     private String billPdf;
 
 }

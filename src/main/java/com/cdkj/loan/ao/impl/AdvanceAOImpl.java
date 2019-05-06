@@ -242,7 +242,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
         EAttachName attachName = EAttachName.getMap()
                 .get(EAttachName.advanceBillPdf.getCode());
         attachmentBO.saveAttachment(
-                cdbiz.getBizCode(), attachName.getCode(), attachName.getValue(), req.getBillPdf());
+                cdbiz.getCode(), attachName.getCode(), attachName.getValue(), req.getBillPdf());
 
         // 更新业务状态
         cdbiz.setFbhgpsNode(nextNodeCode);
