@@ -77,6 +77,7 @@ public enum EAttachName {
     frontTablePic("front_table_pic", "单位前台照片"),
     workPlacePic("work_place_pic", "单位场地照片"),
     salerAndcustomer("saler_and_customer", "业务员与客户合影"),
+    advanceBillPdf("advance_bill_pdf", "垫资水单"),
 
     water_bill("h1", "图片");
 

@@ -2,9 +2,10 @@ package com.cdkj.loan.ao;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Advance;
+import com.cdkj.loan.dto.req.XN632462ReqMission;
+import com.cdkj.loan.dto.req.XN632464Req;
 import java.util.List;
 import org.springframework.stereotype.Component;
-import com.cdkj.loan.dto.req.XN632462ReqMission;
 
 @Component
 public interface IAdvanceAO {
@@ -12,28 +13,30 @@ public interface IAdvanceAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 确认用款单
-    public void confirmApply(String code, String operator, String isAdvanceFund);
+    void confirmApply(String code, String operator, String isAdvanceFund);
 
     // 区域总经理审核
-    public void areaManageApprove(String code, String operator,
+    void areaManageApprove(String code, String operator,
             String approveResult, String approveNote);
 
     // 省分公司总经理审核
-    public void provinceManageApprove(String code, String operator,
+    void provinceManageApprove(String code, String operator,
             String approveResult, String approveNote,
             List<XN632462ReqMission> missionList);
 
     // 确认制单
-    public void confirmMakeBill(String code, String operator,
+    void confirmMakeBill(String code, String operator,
             String makeBillNote);
 
-    // 上传复核回单
-
-    public Paginable<Advance> queryAdvancePage(int start, int limit,
+    Paginable<Advance> queryAdvancePage(int start, int limit,
             Advance condition);
 
-    public List<Advance> queryAdvanceList(Advance condition);
+    List<Advance> queryAdvanceList(Advance condition);
 
-    public Advance getAdvance(String code);
+    Advance getAdvance(String code);
 
+    /**
+     * 垫资回录
+     */
+    void advanceBackUp(XN632464Req req);
 }

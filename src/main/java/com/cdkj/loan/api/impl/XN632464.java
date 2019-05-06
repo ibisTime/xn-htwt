@@ -12,19 +12,21 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 上传复核回单
- * @author: silver 
- * @since: Apr 26, 2019 11:07:56 AM 
+ *
+ * @author: silver
+ * @since: Apr 26, 2019 11:07:56 AM
  * @history:
  */
 public class XN632464 extends AProcessor {
 
     private IAdvanceAO advanceAO = SpringContextHolder
-        .getBean(IAdvanceAO.class);
+            .getBean(IAdvanceAO.class);
 
     private XN632464Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
+        advanceAO.advanceBackUp(req);
         return new BooleanRes(true);
     }
 

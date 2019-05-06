@@ -33,4 +33,9 @@ public interface IAdvanceBO extends IPaginableBO<Advance> {
      * 通过业务编号查询垫资单
      */
     Advance getAdvanceByBizCode(String code);
+
+    /**
+     * 垫资回录入
+     */
+    void advanceBackUp(Advance advance);
 }

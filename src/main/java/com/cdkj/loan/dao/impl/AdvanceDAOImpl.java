@@ -1,12 +1,10 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.IAdvanceDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Advance;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository("advanceDAOImpl")
 public class AdvanceDAOImpl extends AMybatisTemplate implements IAdvanceDAO {
@@ -24,25 +22,25 @@ public class AdvanceDAOImpl extends AMybatisTemplate implements IAdvanceDAO {
     @Override
     public Advance select(Advance condition) {
         return super.select(NAMESPACE.concat("select_advance"), condition,
-            Advance.class);
+                Advance.class);
     }
 
     @Override
     public long selectTotalCount(Advance condition) {
         return super.selectTotalCount(NAMESPACE.concat("select_advance_count"),
-            condition);
+                condition);
     }
 
     @Override
     public List<Advance> selectList(Advance condition) {
         return super.selectList(NAMESPACE.concat("select_advance"), condition,
-            Advance.class);
+                Advance.class);
     }
 
     @Override
     public List<Advance> selectList(Advance condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_advance"), start,
-            count, condition, Advance.class);
+                count, condition, Advance.class);
     }
 
     @Override
@@ -63,6 +61,11 @@ public class AdvanceDAOImpl extends AMybatisTemplate implements IAdvanceDAO {
     @Override
     public void updateConfirmMakeBill(Advance data) {
         super.update(NAMESPACE.concat("update_confirmMakeBill"), data);
+    }
+
+    @Override
+    public void updateAdvanceBackUp(Advance data) {
+        super.update(NAMESPACE.concat("update_advanceBackUp"), data);
     }
 
 }

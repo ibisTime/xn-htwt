@@ -116,4 +116,9 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
         return advance;
     }
 
+    @Override
+    public void advanceBackUp(Advance advance) {
+        advanceDAO.updateAdvanceBackUp(advance);
+    }
+
 }
