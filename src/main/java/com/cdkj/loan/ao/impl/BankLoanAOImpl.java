@@ -42,40 +42,45 @@ public class BankLoanAOImpl implements IBankLoanAO {
     private ISYSBizLogBO sysBizLogBO;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void commitBank(String bizCode, String operator,
             String bankCommitDatetime, String bankCommitNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(bizCode);
 
         if (EBoolean.YES.getCode().equals(cdbiz.getZfStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前预算单已作废，不能操作");
+                    "当前预算单已作废，不能操作");
+        }
+
+        if (!ENode.gps_done.getCode().equals(cdbiz.getFbhgpsNode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "gps未安装完成，不能提交银行");
         }
 
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(bizCode);
 
         if (!ENode.fk_submit.getCode().equals(bankLoan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是确认提交银行节点，不能操作");
+                    "当前节点不是确认提交银行节点，不能操作");
         }
 
         String nextNodeCode = nodeFlowBO
-            .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
 
         // 更新银行放款状态
         bankLoanBO.commitBank(bankLoan.getCode(), nextNodeCode, operator,
-            bankCommitDatetime, bankCommitNote);
+                bankCommitDatetime, bankCommitNote);
 
         // 更新业务状态
         cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(bizCode, EBizLogType.bank_push,
-            bankLoan.getCode(), ENode.matchCode(nextNodeCode), operator);
+                bankLoan.getCode(), ENode.matchCode(nextNodeCode), operator);
 
         // 操作日志
         sysBizLogBO.recordCurOperate(bizCode, EBizLogType.bank_push,
-            bankLoan.getCode(), nextNodeCode, bankCommitNote, operator);
+                bankLoan.getCode(), nextNodeCode, bankCommitNote, operator);
     }
 
     @Override
@@ -86,20 +91,20 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         if (!ENode.fk_input.getCode().equals(bankLoan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是录入放款信息节点，不能操作");
+                    "当前节点不是录入放款信息节点，不能操作");
         }
 
         Date repayFirstMonthDatetime = DateUtil.strToDate(
-            req.getRepayFirstMonthDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING);
+                req.getRepayFirstMonthDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING);
         Date tomorrowDate = DateUtil.getTomorrowStart(new Date());
         if (tomorrowDate.compareTo(repayFirstMonthDatetime) > 0) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "首次还款日期请从明天开始算起");
+                    "首次还款日期请从明天开始算起");
         }
 
         String nextNodeCode = nodeFlowBO
-            .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
 
         // 录入放款信息
         bankLoanBO.entryFkInfo(bankLoan.getCode(), nextNodeCode, req);
@@ -109,12 +114,12 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,
-            bankLoan.getCode(), ENode.matchCode(nextNodeCode),
-            req.getOperator());
+                bankLoan.getCode(), ENode.matchCode(nextNodeCode),
+                req.getOperator());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-            bankLoan.getCode(), nextNodeCode, null, req.getOperator());
+                bankLoan.getCode(), nextNodeCode, null, req.getOperator());
     }
 
     @Override
@@ -124,13 +129,13 @@ public class BankLoanAOImpl implements IBankLoanAO {
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(req.getCode());
 
         if (!ENode.cw_confirm_receipt.getCode()
-            .equals(bankLoan.getCurNodeCode())) {
+                .equals(bankLoan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是确认收款节点，不能操作");
+                    "当前节点不是确认收款节点，不能操作");
         }
 
         String nextNodeCode = nodeFlowBO
-            .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
 
         // 确认收款
         bankLoanBO.confirmSk(bankLoan.getCode(), nextNodeCode, req);
@@ -140,12 +145,12 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,
-            bankLoan.getCode(), ENode.matchCode(nextNodeCode),
-            req.getOperator());
+                bankLoan.getCode(), ENode.matchCode(nextNodeCode),
+                req.getOperator());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-            bankLoan.getCode(), nextNodeCode, null, req.getOperator());
+                bankLoan.getCode(), nextNodeCode, null, req.getOperator());
     }
 
     @Override

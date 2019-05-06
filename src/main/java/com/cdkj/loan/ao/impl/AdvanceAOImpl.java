@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.cdkj.loan.ao.IAdvanceAO;
 import com.cdkj.loan.bo.IAdvanceBO;
@@ -156,6 +157,17 @@ public class AdvanceAOImpl implements IAdvanceAO {
             nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                 cdbiz.getFbhgpsNode()).getNextNode();
             nextStatus = ECdbizStatus.F3.getCode();
+
+            if (CollectionUtils.isEmpty(missionList)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "任务列表不能为空");
+            }
+            // 生成任务单
+            for (XN632462ReqMission mission : missionList) {
+                missionBO.saveMission(advance.getBizCode(), mission.getName(),
+                    StringValidater.toLong(mission.getTime()), operator,
+                    cdbiz.getSaleUserId());
+            }
         } else {
             nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                 cdbiz.getFbhgpsNode()).getBackNode();
@@ -164,15 +176,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
         ENode nextNode = ENode.matchCode(nextNodeCode);
 
         advanceBO.provinceManageApprove(code, nextNodeCode, nextStatus);
-
-        // 生成任务单
-        if (!missionList.isEmpty()) {
-            for (XN632462ReqMission mission : missionList) {
-                missionBO.saveMission(advance.getBizCode(), mission.getName(),
-                    StringValidater.toLong(mission.getTime()), operator,
-                    mission.getGetUser());
-            }
-        }
 
         // 更新业务状态
         cdbiz.setFbhgpsStatus(nextStatus);

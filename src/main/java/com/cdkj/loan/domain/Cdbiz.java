@@ -230,6 +230,9 @@ public class Cdbiz extends ABaseDO {
     // 征信人流水
     private List<CreditJour> creditJours;
 
+    // gps安装列表
+    private List<BudgetOrderGps> budgetOrderGps;
+
     // 存档状态列表
     private List<String> cundangStatusList;
 
