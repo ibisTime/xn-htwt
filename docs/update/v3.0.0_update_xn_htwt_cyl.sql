@@ -15,3 +15,5 @@ INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) 
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('g', 'g3', 'g4', 'c1');
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('g', 'g4', 'g5');
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('g', 'g5', 'c1');
+
+INSERT INTO `tdq_file_list` (`category`, `kname`, `vname`, `attach_type`, `number`) VALUES ('advance', 'advance_bill_pdf', '垫资水单', '图片', '1');

@@ -979,6 +979,11 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbiz.setInsideJobPostName(insideJob.getPostName());
         }
 
+        // gps安装列表
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+                .queryBudgetOrderGpsList(cdbiz.getCode());
+        cdbiz.setBudgetOrderGps(budgetOrderGpsList);
+
         // 附件
         List<Attachment> attachments = attachmentBO
                 .queryBizAttachments(cdbiz.getCode());
