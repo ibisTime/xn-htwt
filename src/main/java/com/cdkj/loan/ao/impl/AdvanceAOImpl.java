@@ -1,5 +1,12 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import com.cdkj.loan.ao.IAdvanceAO;
 import com.cdkj.loan.bo.IAdvanceBO;
 import com.cdkj.loan.bo.IAttachmentBO;
@@ -22,11 +29,6 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
-import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdvanceAOImpl implements IAdvanceAO {
@@ -60,19 +62,19 @@ public class AdvanceAOImpl implements IAdvanceAO {
         cdbiz.setIsAdvanceFund(isAdvanceFund);
         if (!ENode.sure_dz.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是确认用款单节点，不能操作");
+                "当前不是确认用款单节点，不能操作");
         }
 
-        //判断是否垫资，垫资的话去审核，不垫资的话去录入发保和
+        // 判断是否垫资，垫资的话去审核，不垫资的话去录入发保和
         String nextNodeCode;
         String nextStatus;
         if (EBoolean.YES.getCode().equals(isAdvanceFund)) {
-            nextNodeCode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getNextNode();
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                cdbiz.getFbhgpsNode()).getNextNode();
             nextStatus = ECdbizStatus.F1.getCode();
         } else {
-            nextNodeCode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getBackNode();
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                cdbiz.getFbhgpsNode()).getBackNode();
             nextStatus = ECdbizStatus.C01.getCode();
         }
         ENode nextNode = ENode.matchCode(nextNodeCode);
@@ -85,34 +87,34 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-                cdbiz.getFbhgpsNode(), null, operator);
+            cdbiz.getFbhgpsNode(), null, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
     }
 
     @Override
-    public void areaManageApprove(String code, String operator, String approveResult,
-            String approveNote) {
+    public void areaManageApprove(String code, String operator,
+            String approveResult, String approveNote) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
         if (!ENode.qy_manager_approve.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是用款一审节点，不能操作");
+                "当前不是用款一审节点，不能操作");
         }
 
         String nextNodeCode;
         String nextStatus;
-        //审批通过，去二审，不通过去录入发保和
+        // 审批通过，去二审，不通过去录入发保和
         if (EBoolean.YES.getCode().equals(approveResult)) {
-            nextNodeCode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getNextNode();
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                cdbiz.getFbhgpsNode()).getNextNode();
             nextStatus = ECdbizStatus.F2.getCode();
 
         } else {
-            nextNodeCode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getBackNode();
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                cdbiz.getFbhgpsNode()).getBackNode();
             nextStatus = ECdbizStatus.C01.getCode();
         }
         ENode nextNode = ENode.matchCode(nextNodeCode);
@@ -128,7 +130,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-                cdbiz.getFbhgpsNode(), approveNote, operator);
+            cdbiz.getFbhgpsNode(), approveNote, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
@@ -142,10 +144,9 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ENode.sfgs_manage_approve.getCode()
-                .equals(cdbiz.getFbhgpsNode())) {
+        if (!ENode.sfgs_manage_approve.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是用款二审节点，不能操作");
+                "当前不是用款二审节点，不能操作");
         }
 
         Advance advance = advanceBO.getAdvanceByBizCode(code);
@@ -153,24 +154,23 @@ public class AdvanceAOImpl implements IAdvanceAO {
         String nextNodeCode;
         String nextStatus;
         if (EBoolean.YES.getCode().equals(approveResult)) {
-            nextNodeCode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode())
-                    .getNextNode();
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                cdbiz.getFbhgpsNode()).getNextNode();
             nextStatus = ECdbizStatus.F3.getCode();
 
             if (CollectionUtils.isEmpty(missionList)) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "任务列表不能为空");
+                    "任务列表不能为空");
             }
             // 生成任务单
             for (XN632462ReqMission mission : missionList) {
                 missionBO.saveMission(advance.getBizCode(), mission.getName(),
-                        StringValidater.toLong(mission.getTime()), operator,
-                        cdbiz.getSaleUserId());
+                    StringValidater.toLong(mission.getTime()), operator,
+                    cdbiz.getSaleUserId());
             }
         } else {
-            nextNodeCode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getBackNode();
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                cdbiz.getFbhgpsNode()).getBackNode();
             nextStatus = ECdbizStatus.C01.getCode();
         }
         ENode nextNode = ENode.matchCode(nextNodeCode);
@@ -184,7 +184,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-                cdbiz.getFbhgpsNode(), approveNote, operator);
+            cdbiz.getFbhgpsNode(), approveNote, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
@@ -199,15 +199,15 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         if (!ENode.confirm_make_bill.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是制单回录节点，不能操作");
+                "当前不是制单回录节点，不能操作");
         }
 
-        String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getNextNode();
+        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+            cdbiz.getFbhgpsNode()).getNextNode();
         ENode nextNode = ENode.matchCode(nextNodeCode);
 
-        advanceBO.confirmMakeBill(code, nextNodeCode, ECdbizStatus.F4.getCode(),
-                makeBillNote);
+        advanceBO.confirmMakeBill(code, nextNodeCode,
+            ECdbizStatus.F4.getCode(), makeBillNote);
 
         // 更新业务状态
         cdbiz.setFbhgpsNode(nextNodeCode);
@@ -216,7 +216,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-                cdbiz.getFbhgpsNode(), makeBillNote, operator);
+            cdbiz.getFbhgpsNode(), makeBillNote, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
@@ -227,27 +227,29 @@ public class AdvanceAOImpl implements IAdvanceAO {
     public void advanceBackUp(XN632464Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
 
-        if (!ENode.upload_approve_back_bill.getCode().equals(cdbiz.getFbhgpsNode())) {
+        if (!ENode.upload_approve_back_bill.getCode().equals(
+            cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是垫资回录节点，不能操作");
+                "当前不是垫资回录节点，不能操作");
         }
 
         Advance advance = advanceBO.getAdvanceByBizCode(req.getCode());
 
-        String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getNextNode();
+        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+            cdbiz.getFbhgpsNode()).getNextNode();
         ENode nextNode = ENode.matchCode(nextNodeCode);
 
-        advance.setAdvanceFundAmount(StringValidater.toInteger(req.getAdvanceFundAmount()));
-        advance.setAdvanceFundDatetime(DateUtil.strToDate(req.getAdvanceFundDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        advance.setAdvanceFundAmount(StringValidater.toInteger(req
+            .getAdvanceFundAmount()));
+        advance.setAdvanceFundDatetime(DateUtil.strToDate(
+            req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         advanceBO.advanceBackUp(advance);
 
         // 水单
-        EAttachName attachName = EAttachName.getMap()
-                .get(EAttachName.advanceBillPdf.getCode());
-        attachmentBO.saveAttachment(
-                cdbiz.getCode(), attachName.getCode(), attachName.getValue(), req.getBillPdf());
+        EAttachName attachName = EAttachName.getMap().get(
+            EAttachName.advanceBillPdf.getCode());
+        attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
+            attachName.getValue(), req.getBillPdf());
 
         // 更新业务状态
         cdbiz.setFbhgpsNode(nextNodeCode);
@@ -255,12 +257,12 @@ public class AdvanceAOImpl implements IAdvanceAO {
         cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.fund, req.getCode(),
-                cdbiz.getFbhgpsNode(), null, req.getOperator());
+        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.fund,
+            req.getCode(), cdbiz.getFbhgpsNode(), null, req.getOperator());
 
         // 待办事项
-        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fund, req.getCode(), nextNode,
-                req.getOperator());
+        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fund, req.getCode(),
+            nextNode, req.getOperator());
     }
 
     @Override
