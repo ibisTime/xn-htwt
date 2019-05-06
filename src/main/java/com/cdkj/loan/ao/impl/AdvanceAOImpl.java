@@ -62,7 +62,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
                     "当前不是确认用款单节点，不能操作");
         }
 
-        Advance advance = advanceBO.getAdvance(code);
         //判断是否垫资，垫资的话去审核，不垫资的话去录入发保和
         String nextNodeCode;
         String nextStatus;
@@ -102,7 +101,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
                     "当前不是用款一审节点，不能操作");
         }
 
-        Advance advance = advanceBO.getAdvance(code);
         String nextNodeCode;
         String nextStatus;
         //审批通过，去二审，不通过去录入发保和
@@ -117,8 +115,10 @@ public class AdvanceAOImpl implements IAdvanceAO {
             nextStatus = ECdbizStatus.C01.getCode();
         }
         ENode nextNode = ENode.matchCode(nextNodeCode);
-        advanceBO.areaManageApprove(code, nextNodeCode, nextStatus,
-                approveNote);
+
+        Advance advance = advanceBO.getAdvanceByBizCode(code);
+        advance.setAdvanceNote(approveNote);
+        advanceBO.areaManageApprove(advance);
 
         // 更新业务状态
         cdbiz.setFbhgpsNode(nextNodeCode);

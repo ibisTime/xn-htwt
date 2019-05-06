@@ -49,15 +49,7 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
     }
 
     @Override
-    public void areaManageApprove(String code, String curNodeCode,
-            String status, String approveNote) {
-        Advance advance = new Advance();
-
-        advance.setCode(code);
-        advance.setCurNodeCode(curNodeCode);
-        advance.setStatus(status);
-        advance.setAdvanceNote(approveNote);
-
+    public void areaManageApprove(Advance advance) {
         advanceDAO.updateAreaManageApprove(advance);
     }
 

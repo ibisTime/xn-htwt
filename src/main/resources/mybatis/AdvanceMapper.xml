@@ -140,9 +140,7 @@
     <update id="update_areaManageApprove" parameterType="advance">
 		UPDATE tdq_advance
 		SET
-		status = #{status}
-		,cur_node_code = #{curNodeCode}
-		,advance_note = #{advanceNote}
+		advance_note = #{advanceNote}
 		WHERE code = #{code}
 	</update>
 

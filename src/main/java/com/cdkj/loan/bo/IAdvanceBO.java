@@ -12,8 +12,7 @@ public interface IAdvanceBO extends IPaginableBO<Advance> {
     void confirmApply(String code, String curNodeCode, String status);
 
     // 区域总经理审核
-    void areaManageApprove(String code, String curNodeCode,
-            String status, String approveNote);
+    void areaManageApprove(Advance condition);
 
     // 省分公司总经理审核
     void provinceManageApprove(String code, String curNodeCode,
