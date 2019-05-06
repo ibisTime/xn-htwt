@@ -36,8 +36,6 @@ INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`rema
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201806251517388498827','贷后专员','2','USYS201800000000001','2018-09-07 11:18:32','gps库存管理');
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201810300913444865717','风控复审','2','USYS201800000000001','2018-10-30 09:13:44','风控部');
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201811061357238176758','GPS专员','2','USYS201800000000001','2018-11-06 13:57:23','');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201904181136491241237','详情111','3','USYS201800000000001','2019-04-18 11:36:49','');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201904181420598722112','演示','1','USYS201800000000001','2019-04-18 14:20:59','');
 
 /*
 -- Query: SELECT * FROM dev_xn_htwt_new.tsys_menu
@@ -3718,11 +3716,6 @@ INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2238,'RO2018
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2239,'RO201800000000000001','b5');
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2240,'RO201800000000000001','b6');
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2241,'RO201800000000000001','b7');
-INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2243,'SR201904181420598722112','001_01');
-INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2244,'SR201904181420598722112','a1');
-INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2245,'SR201904181420598722112','a1x');
-INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2246,'SR201904181420598722112','a2');
-INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2247,'SR201904181420598722112','a3');
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2248,'SR201800000000000000YWY','001_01');
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2249,'SR201800000000000000YWY','002_01');
 INSERT INTO `tsys_role_node` (`id`,`role_code`,`node_code`) VALUES (2250,'SR201800000000000000YWY','002_04');

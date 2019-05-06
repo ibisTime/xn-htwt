@@ -703,7 +703,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ENode.input_fbh.getCode().equals(cdbiz.getFbhgpsNode())
-                || !ENode.reinput_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
+                && !ENode.reinput_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前节点不是录入发保合节点，不能操作");
         }
 
@@ -713,6 +713,8 @@ public class CdbizAOImpl implements ICdbizAO {
         // 更新车辆信息
         carInfoBO.entryFbhInfoByBiz(req.getCode(), req.getPolicyDatetime(), req.getPolicyDueDate());
 
+        // 删除附件
+        attachmentBO.removeByCategory(req.getCode(), "car_procedure");
         // 添加附件
         attachmentBO.saveAttachment(req.getCode(), req);
 
@@ -763,7 +765,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ENode.set_gps.getCode().equals(cdbiz.getFbhgpsNode())
-                || !ENode.approve_fail_gps.getCode().equals(cdbiz.getFbhgpsNode())) {
+                && !ENode.approve_fail_gps.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前节点不是安装gps节点，不能操作");
         }
 
@@ -869,11 +871,13 @@ public class CdbizAOImpl implements ICdbizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前不是回录卡号状态，无法录入");
         }
         // 录入卡号
-        cdbizBO.refreshRepayCard(cdbiz, cardNumber);
+        cdbiz.setRepayCardNumber(cardNumber);
         // 制卡节点
-        cdbizBO.refreshMakeCardNode(cdbiz, ENode.input_card_number.getCode());
+        cdbiz.setMakeCardNode(ENode.make_card_finish.getCode());
         // 制卡状态
-        cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H3.getCode());
+        cdbiz.setMakeCardStatus(ECdbizStatus.H3.getCode());
+        cdbizBO.refreshCdbiz(cdbiz);
+
         // 处理前待办事项
         bizTaskBO.handlePreBizTask(EBizLogType.makeCard.getCode(), code, ENode.input_card_number);
         // 操作日志
