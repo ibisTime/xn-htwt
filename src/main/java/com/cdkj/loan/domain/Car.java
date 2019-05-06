@@ -45,9 +45,9 @@ public class Car extends ABaseDO {
 
     private Long fwAmount;// 服务费
 
-    private String jsqByhf;// 必要花费
+    private Long jsqByhf;// 必要花费
 
-    private String jsqSybx;// 商业保险
+    private Long jsqSybx;// 商业保险
 
     private String location;// UI位置
 
@@ -429,19 +429,19 @@ public class Car extends ABaseDO {
         this.procedure = procedure;
     }
 
-    public String getJsqByhf() {
+    public Long getJsqByhf() {
         return jsqByhf;
     }
 
-    public void setJsqByhf(String jsqByhf) {
+    public void setJsqByhf(Long jsqByhf) {
         this.jsqByhf = jsqByhf;
     }
 
-    public String getJsqSybx() {
+    public Long getJsqSybx() {
         return jsqSybx;
     }
 
-    public void setJsqSybx(String jsqSybx) {
+    public void setJsqSybx(Long jsqSybx) {
         this.jsqSybx = jsqSybx;
     }
 

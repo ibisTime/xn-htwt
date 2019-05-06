@@ -9,7 +9,6 @@
 package com.cdkj.loan.domain;
 
 import com.cdkj.loan.common.AmountUtil;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.enums.EBoolean;
 
 /** 
@@ -54,8 +53,8 @@ public class Calculate {
 
     public Calculate(Double rate, Car car, String period, String isTotal) {
         this.saleAmount = car.getSalePrice();
-        this.sybx = StringValidater.toLong(car.getJsqSybx());
-        this.byhf = StringValidater.toLong(car.getJsqByhf());
+        this.sybx = car.getJsqSybx();
+        this.byhf = car.getJsqByhf();
         if (EBoolean.YES.getCode().equals(isTotal)) {
             this.totalAmount = this.saleAmount + this.sybx + this.byhf;
         } else {

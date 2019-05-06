@@ -69,7 +69,7 @@ public class CarAOImpl implements ICarAO {
         Series series = seriesBO.getSeries(req.getSeriesCode());
         Long price = StringValidater.toLong(req.getSalePrice());
         // 车系价格区间更改
-        if (null == series.getHighest() && null == series.getLowest()) {
+        if (0 == series.getHighest() && 0 == series.getLowest()) {
             seriesBO.refreshHighest(series, price);
             seriesBO.refreshLowest(series, price);
         } else if (price < series.getLowest()) {
@@ -98,8 +98,13 @@ public class CarAOImpl implements ICarAO {
         car.setSalePrice(price);
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         car.setFwAmount(StringValidater.toLong(req.getFwAmount()));
-        car.setJsqByhf(req.getJsqByhf());
-        car.setJsqSybx(req.getJsqSybx());
+        if (StringUtils.isNotBlank(req.getJsqByhf())
+                && !"NaN".equals(req.getJsqByhf())) {
+            car.setJsqByhf(StringValidater.toLong(req.getJsqByhf()));
+        } else {
+            car.setJsqByhf(0L);
+        }
+        car.setJsqSybx(StringValidater.toLong(req.getJsqSybx()));
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
 
@@ -151,8 +156,8 @@ public class CarAOImpl implements ICarAO {
         car.setSalePrice(price);
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         car.setFwAmount(StringValidater.toLong(req.getFwAmount()));
-        car.setJsqByhf(req.getJsqByhf());
-        car.setJsqSybx(req.getJsqSybx());
+        car.setJsqByhf(StringValidater.toLong(req.getJsqByhf()));
+        car.setJsqSybx(StringValidater.toLong(req.getJsqSybx()));
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
 
