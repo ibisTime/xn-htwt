@@ -22,32 +22,32 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     @Override
     public Cdbiz select(Cdbiz condition) {
         return super.select(NAMESPACE.concat("select_cdbiz"), condition,
-            Cdbiz.class);
+                Cdbiz.class);
     }
 
     @Override
     public long selectTotalCount(Cdbiz condition) {
         return super.selectTotalCount(NAMESPACE.concat("select_cdbiz_count"),
-            condition);
+                condition);
     }
 
     @Override
     public List<Cdbiz> selectList(Cdbiz condition) {
         return super.selectList(NAMESPACE.concat("select_cdbiz"), condition,
-            Cdbiz.class);
+                Cdbiz.class);
     }
 
     @Override
     public List<Cdbiz> selectList(Cdbiz condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_cdbiz"), start, count,
-            condition, Cdbiz.class);
+                condition, Cdbiz.class);
     }
 
     @Override
     public List<Cdbiz> selectListByRoleCode(Cdbiz condition, int start,
             int count) {
         return super.selectList(NAMESPACE.concat("select_cdbizByRoleCode"),
-            start, count, condition, Cdbiz.class);
+                start, count, condition, Cdbiz.class);
     }
 
     @Override
@@ -63,6 +63,11 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     @Override
     public int updateFbhgpsStatus(Cdbiz data) {
         return super.update(NAMESPACE.concat("update_fbhgpsStatus"), data);
+    }
+
+    @Override
+    public int updateFbhgpsNodeStatus(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_fbhgpsNodeStatus"), data);
     }
 
     @Override
@@ -103,7 +108,7 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     @Override
     public long selectTotalCountByRoleCode(Cdbiz condition) {
         return super.selectTotalCount(
-            NAMESPACE.concat("select_cdbiz_count_byRoleCode"), condition);
+                NAMESPACE.concat("select_cdbiz_count_byRoleCode"), condition);
     }
 
     @Override

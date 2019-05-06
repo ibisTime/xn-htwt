@@ -8,7 +8,6 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
-import com.cdkj.loan.enums.ENode;
 import java.util.List;
 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
@@ -71,5 +70,5 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     /**
      * 发保合节点更新
      */
-    void refreshFbhgpsNode(Cdbiz cdbiz, ENode node);
+    void refreshFbhgpsNodeStatus(Cdbiz cdbiz);
 }

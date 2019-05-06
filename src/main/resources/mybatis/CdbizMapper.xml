@@ -453,6 +453,14 @@
 		WHERE code=#{code}
 	</update>
 
+    <update id="update_fbhgpsNodeStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		fbhgps_status=#{fbhgpsStatus}
+		,fbhgps_node = #{fbhgpsNode}
+		WHERE code=#{code}
+	</update>
+
     <update id="update_fircundangStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET

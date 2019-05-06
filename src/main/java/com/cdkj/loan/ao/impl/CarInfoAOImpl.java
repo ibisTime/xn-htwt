@@ -475,7 +475,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void financeAudit(XN632143Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         // 之前节点
@@ -516,11 +516,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // 待办事项
             bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fbh,
                     req.getCode(), node, null);
-            // 发保合状态更新
-            cdbizBO.refreshFbhgpsStatus(cdbiz, fbhgpsStatus);
 
-            // 发保合节点更新
-            cdbizBO.refreshFbhgpsNode(cdbiz, node);
+            // 发保合状态节点更新
+            cdbiz.setFbhgpsStatus(fbhgpsStatus);
+            cdbiz.setFbhgpsNode(node.getCode());
+            cdbizBO.refreshCdbiz(cdbiz);
 
             // 主节点
             preCurrentNode = ENode.submit_1.getCode();

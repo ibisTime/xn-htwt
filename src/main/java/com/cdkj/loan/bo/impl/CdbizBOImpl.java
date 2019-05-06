@@ -283,9 +283,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public void refreshFbhgpsNode(Cdbiz cdbiz, ENode node) {
-        cdbiz.setFbhgpsNode(node.getCode());
-        cdbizDAO.updateCdbiz(cdbiz);
+    public void refreshFbhgpsNodeStatus(Cdbiz cdbiz) {
+        cdbizDAO.updateFbhgpsNodeStatus(cdbiz);
     }
 
 }
