@@ -6,8 +6,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 省分公司总经理审核
- * @author: silver 
- * @since: Apr 26, 2019 11:08:42 AM 
+ *
+ * @author: silver
+ * @since: Apr 26, 2019 11:08:42 AM
  * @history:
  */
 public class XN632462Req {
@@ -18,6 +19,9 @@ public class XN632462Req {
     @NotBlank
     private String operator;
 
+    /**
+     * 审核结果
+     */
     @NotBlank
     private String approveResult;
 

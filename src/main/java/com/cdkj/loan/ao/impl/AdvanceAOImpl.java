@@ -47,55 +47,71 @@ public class AdvanceAOImpl implements IAdvanceAO {
     private IMissionBO missionBO;
 
     @Override
-    @Transactional
-    public void confirmApply(String code, String operator) {
+    @Transactional(rollbackFor = Exception.class)
+    public void confirmApply(String code, String operator, String isAdvanceFund) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-
-        if (!ENode.sure_dz.getCode().equals(cdbiz.getCurNodeCode())) {
+        cdbiz.setIsAdvanceFund(isAdvanceFund);
+        if (!ENode.sure_dz.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是确认用款单节点，不能操作");
+                    "当前不是确认用款单节点，不能操作");
         }
 
         Advance advance = advanceBO.getAdvance(code);
-
-        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            advance.getCurNodeCode()).getNextNode();
+        //判断是否垫资，垫资的话去审核，不垫资的话去录入发保和
+        String nextNodeCode;
+        String nextStatus;
+        if (EBoolean.YES.getCode().equals(isAdvanceFund)) {
+            nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getNextNode();
+            nextStatus = ECdbizStatus.F1.getCode();
+        } else {
+            nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getBackNode();
+            nextStatus = ECdbizStatus.C01.getCode();
+        }
         ENode nextNode = ENode.matchCode(nextNodeCode);
-
-        advanceBO.confirmApply(code, nextNodeCode, ECdbizStatus.F1.getCode());
+        advanceBO.confirmApply(code, nextNodeCode, nextStatus);
 
         // 更新业务状态
-        cdbizBO.refreshFbhgpsStatus(cdbiz, ECdbizStatus.F1.getCode());
+        cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-            advance.getCurNodeCode(), null, operator);
+                advance.getCurNodeCode(), null, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
     }
 
     @Override
-    public void areaManageApprove(String code, String operator,
+    public void areaManageApprove(String code, String operator, String approveResult,
             String approveNote) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ENode.qy_manager_approve.getCode().equals(cdbiz.getCurNodeCode())) {
+        if (!ENode.qy_manager_approve.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是区域总经理审批节点，不能操作");
+                    "当前不是用款一审节点，不能操作");
         }
 
         Advance advance = advanceBO.getAdvance(code);
+        String nextNodeCode;
+        String nextStatus;
+        //审批通过，去二审，不通过去录入发保和
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getNextNode();
+            nextStatus = ECdbizStatus.F2.getCode();
 
-        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            advance.getCurNodeCode()).getNextNode();
-        String nextStatus = ECdbizStatus.F2.getCode();
+        } else {
+            nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getBackNode();
+            nextStatus = ECdbizStatus.C01.getCode();
+        }
         ENode nextNode = ENode.matchCode(nextNodeCode);
-
-        advanceBO
-            .areaManageApprove(code, nextNodeCode, nextStatus, approveNote);
+        advanceBO.areaManageApprove(code, nextNodeCode, nextStatus,
+                approveNote);
 
         // 更新业务状态
         cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
@@ -108,17 +124,18 @@ public class AdvanceAOImpl implements IAdvanceAO {
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void provinceManageApprove(String code, String operator,
             String approveResult, String approveNote,
             List<XN632462ReqMission> missionList) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ENode.sfgs_manage_approve.getCode().equals(cdbiz.getCurNodeCode())) {
+        if (!ENode.sfgs_manage_approve.getCode()
+                .equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是省分公司总经理审批审批节点，不能操作");
+                    "当前不是用款二审节点，不能操作");
         }
 
         Advance advance = advanceBO.getAdvance(code);
@@ -126,13 +143,14 @@ public class AdvanceAOImpl implements IAdvanceAO {
         String nextNodeCode = null;
         String nextStatus = null;
         if (EBoolean.YES.getCode().equals(approveResult)) {
-            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-                advance.getCurNodeCode()).getNextNode();
+            nextNodeCode = nodeFlowBO
+                .getNodeFlowByCurrentNode(advance.getCurNodeCode())
+                .getNextNode();
             nextStatus = ECdbizStatus.F3.getCode();
         } else {
-            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-                advance.getCurNodeCode()).getBackNode();
-            nextStatus = ECdbizStatus.F2.getCode();
+            nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getBackNode();
+            nextStatus = ECdbizStatus.C01.getCode();
         }
         ENode nextNode = ENode.matchCode(nextNodeCode);
 
@@ -169,12 +187,12 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         Advance advance = advanceBO.getAdvance(code);
 
-        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            advance.getCurNodeCode()).getNextNode();
+        String nextNodeCode = nodeFlowBO
+            .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getNextNode();
         ENode nextNode = ENode.matchCode(nextNodeCode);
 
-        advanceBO.confirmMakeBill(code, nextNodeCode,
-            ECdbizStatus.F4.getCode(), makeBillNote);
+        advanceBO.confirmMakeBill(code, nextNodeCode, ECdbizStatus.F4.getCode(),
+            makeBillNote);
 
         // 更新业务状态
         cdbizBO.refreshFbhgpsStatus(cdbiz, ECdbizStatus.F4.getCode());

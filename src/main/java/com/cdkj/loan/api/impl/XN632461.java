@@ -12,21 +12,22 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 区域总经理审核
- * @author: silver 
- * @since: Apr 26, 2019 11:07:56 AM 
+ *
+ * @author: silver
+ * @since: Apr 26, 2019 11:07:56 AM
  * @history:
  */
 public class XN632461 extends AProcessor {
 
     private IAdvanceAO advanceAO = SpringContextHolder
-        .getBean(IAdvanceAO.class);
+            .getBean(IAdvanceAO.class);
 
     private XN632461Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        advanceAO.areaManageApprove(req.getCode(), req.getOperator(),
-            req.getApproveNote());
+        advanceAO.areaManageApprove(req.getCode(), req.getOperator(), req.getApproveResult(),
+                req.getApproveNote());
         return new BooleanRes(true);
     }
 
