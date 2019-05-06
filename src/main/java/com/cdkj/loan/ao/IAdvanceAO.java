@@ -1,22 +1,21 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Advance;
+import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public interface IAdvanceAO {
+
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 确认用款单
-    public void confirmApply(String code, String operator);
+    public void confirmApply(String code, String operator, String isAdvanceFund);
 
     // 区域总经理审核
     public void areaManageApprove(String code, String operator,
-            String approveNote);
+            String approveResult, String approveNote);
 
     // 省分公司总经理审核
     public void provinceManageApprove(String code, String operator,
