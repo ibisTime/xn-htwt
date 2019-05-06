@@ -147,7 +147,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
                     "当前不是用款二审节点，不能操作");
         }
 
-        Advance advance = advanceBO.getAdvance(code);
+        Advance advance = advanceBO.getAdvanceByBizCode(code);
 
         String nextNodeCode;
         String nextStatus;
@@ -196,8 +196,6 @@ public class AdvanceAOImpl implements IAdvanceAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是制单回录节点，不能操作");
         }
-
-        Advance advance = advanceBO.getAdvance(code);
 
         String nextNodeCode = nodeFlowBO
                 .getNodeFlowByCurrentNode(cdbiz.getFbhgpsNode()).getNextNode();
