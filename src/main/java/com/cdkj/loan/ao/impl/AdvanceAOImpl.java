@@ -1,5 +1,11 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.cdkj.loan.ao.IAdvanceAO;
 import com.cdkj.loan.bo.IAdvanceBO;
 import com.cdkj.loan.bo.IBizTaskBO;
@@ -8,18 +14,16 @@ import com.cdkj.loan.bo.IMissionBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.dto.req.XN632462ReqMission;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdvanceAOImpl implements IAdvanceAO {
@@ -86,8 +90,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ENode.qy_manager_approve.getCode()
-                .equals(cdbiz.getFbhgpsNode())) {
+        if (!ENode.qy_manager_approve.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是用款一审节点，不能操作");
         }
@@ -115,15 +118,17 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-                advance.getCurNodeCode(), approveNote, operator);
+            advance.getCurNodeCode(), approveNote, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
     }
 
     @Override
+    @Transactional
     public void provinceManageApprove(String code, String operator,
-            String approveResult, String approveNote) {
+            String approveResult, String approveNote,
+            List<XN632462ReqMission> missionList) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
@@ -139,8 +144,8 @@ public class AdvanceAOImpl implements IAdvanceAO {
         String nextStatus = null;
         if (EBoolean.YES.getCode().equals(approveResult)) {
             nextNodeCode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(advance.getCurNodeCode())
-                    .getNextNode();
+                .getNodeFlowByCurrentNode(advance.getCurNodeCode())
+                .getNextNode();
             nextStatus = ECdbizStatus.F3.getCode();
         } else {
             nextNodeCode = nodeFlowBO
@@ -151,15 +156,19 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         advanceBO.provinceManageApprove(code, nextNodeCode, nextStatus);
 
-        // TODO 生成任务单
-        missionBO.saveMission(advance.getBizCode(), null, null, operator, null);
+        // 生成任务单
+        for (XN632462ReqMission mission : missionList) {
+            missionBO.saveMission(advance.getBizCode(), mission.getName(),
+                StringValidater.toLong(mission.getTime()), operator,
+                mission.getGetUser());
+        }
 
         // 更新业务状态
         cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-                advance.getCurNodeCode(), approveNote, operator);
+            advance.getCurNodeCode(), approveNote, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);
@@ -173,24 +182,24 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         if (!ENode.confirm_make_bill.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是确认制单节点，不能操作");
+                "当前不是确认制单节点，不能操作");
         }
 
         Advance advance = advanceBO.getAdvance(code);
 
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getNextNode();
+            .getNodeFlowByCurrentNode(advance.getCurNodeCode()).getNextNode();
         ENode nextNode = ENode.matchCode(nextNodeCode);
 
         advanceBO.confirmMakeBill(code, nextNodeCode, ECdbizStatus.F4.getCode(),
-                makeBillNote);
+            makeBillNote);
 
         // 更新业务状态
         cdbizBO.refreshFbhgpsStatus(cdbiz, ECdbizStatus.F4.getCode());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.fund, code,
-                advance.getCurNodeCode(), makeBillNote, operator);
+            advance.getCurNodeCode(), makeBillNote, operator);
 
         // 待办事项
         bizTaskBO.saveBizTask(code, EBizLogType.fund, code, nextNode, operator);

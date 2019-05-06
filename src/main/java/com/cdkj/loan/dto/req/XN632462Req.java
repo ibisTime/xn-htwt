@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -24,6 +26,16 @@ public class XN632462Req {
     private String approveResult;
 
     private String approveNote;
+
+    private List<XN632462ReqMission> missionList;
+
+    public List<XN632462ReqMission> getMissionList() {
+        return missionList;
+    }
+
+    public void setMissionList(List<XN632462ReqMission> missionList) {
+        this.missionList = missionList;
+    }
 
     public String getCode() {
         return code;

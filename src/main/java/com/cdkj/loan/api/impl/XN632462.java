@@ -26,7 +26,7 @@ public class XN632462 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         advanceAO.provinceManageApprove(req.getCode(), req.getOperator(),
-            req.getApproveResult(), req.getApproveNote());
+            req.getApproveResult(), req.getApproveNote(), req.getMissionList());
         return new BooleanRes(true);
     }
 
