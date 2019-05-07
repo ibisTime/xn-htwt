@@ -1,5 +1,12 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IRoleNodeBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -14,11 +21,6 @@ import com.cdkj.loan.enums.EBizTaskStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
-import java.util.Date;
-import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
@@ -73,10 +75,12 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
-    public void handlePreAndAdd(EBizLogType bizLogType, String refOrder, String bizCode,
-            String preNode, String curNode, String userId) {
-        handlePreBizTask(bizLogType.getCode(), refOrder, ENode.matchCode(preNode));
-        saveBizTask(bizCode, bizLogType, refOrder, ENode.matchCode(curNode), userId);
+    public void handlePreAndAdd(EBizLogType bizLogType, String refOrder,
+            String bizCode, String preNode, String curNode, String userId) {
+        handlePreBizTask(bizLogType.getCode(), refOrder,
+            ENode.matchCode(preNode));
+        saveBizTask(bizCode, bizLogType, refOrder, ENode.matchCode(curNode),
+            userId);
 
     }
 
@@ -135,13 +139,14 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
-    public void removeUnhandleBizTask(String bizCode, String node, String operater) {
+    public void removeUnhandleBizTask(String bizCode, String node,
+            String operater) {
         BizTask condition = new BizTask();
         condition.setBizCode(bizCode);
         condition.setRefNode(node);
         condition.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
         condition.setOperater(operater);
-        BizTask bizTask = bizTaskDAO.select(condition);
+        BizTask bizTask = bizTaskDAO.selectList(condition).get(0);
         bizTaskDAO.delete(bizTask);
     }
 

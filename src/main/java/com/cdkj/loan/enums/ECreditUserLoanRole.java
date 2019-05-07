@@ -1,5 +1,8 @@
 package com.cdkj.loan.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 征信人员表 贷款角色
  * @author: jiafr 
@@ -13,6 +16,14 @@ public enum ECreditUserLoanRole {
     ECreditUserLoanRole(String code, String value) {
         this.code = code;
         this.value = value;
+    }
+
+    public static Map<String, ECreditUserLoanRole> getMap() {
+        Map<String, ECreditUserLoanRole> map = new HashMap<String, ECreditUserLoanRole>();
+        for (ECreditUserLoanRole role : ECreditUserLoanRole.values()) {
+            map.put(role.getCode(), role);
+        }
+        return map;
     }
 
     private String code;

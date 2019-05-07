@@ -32,5 +32,7 @@ public class PropertiesUtil {
 
         public static String LMZX_URL = props.getProperty("LMZX_URL");
 
+        public static String CERTI_URL = props.getProperty("CERTI_URL");
+
     }
 }

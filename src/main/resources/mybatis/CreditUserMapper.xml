@@ -64,6 +64,14 @@
         <result column="now_address_area" property="nowAddressArea"/>
         <result column="now_address" property="nowAddress"/>
         <result column="now_post_code" property="nowPostCode"/>
+        <result column="icbank_code" property="icbankCode"/>
+        <result column="status" property="status"/>
+        <result column="result" property="result"/>
+        <result column="loan_crdt" property="loanCrdt"/>
+        <result column="card_crdt" property="cardCrdt"/>
+        <result column="left_num" property="leftNum"/>
+        <result column="left_amount" property="leftAmount"/>
+        <result column="note" property="note"/>
 
     </resultMap>
     <sql id="where_condition">
@@ -82,6 +90,9 @@
             </if>
             <if test="idNo != null and idNo != '' ">
                 AND t.id_no = #{idNo}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
             </if>
         </trim>
     </sql>
@@ -147,6 +158,15 @@
         ,t.now_address_area
         ,t.now_address
         ,t.now_post_code
+        
+        ,t.icbank_code
+        ,t.status
+        ,t.result
+        ,t.loan_crdt
+        ,t.card_crdt
+        ,t.left_num
+        ,t.left_amount
+        ,note
         from tdq_credit_user t
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
@@ -219,7 +239,8 @@
                                    , now_address_city
                                    , now_address_area
                                    , now_address
-                                   , now_post_code)
+                                   , now_post_code
+                                   , status)
         VALUES ( #{code}
                , #{bizCode}
                , #{relation}
@@ -276,7 +297,8 @@
                , #{nowAddressCity}
                , #{nowAddressArea}
                , #{nowAddress}
-               , #{nowPostCode})
+               , #{nowPostCode}
+               , #{status})
     </insert>
 
     <insert id="insert_creditUserList" parameterType="List">
@@ -339,6 +361,7 @@
         , now_address_area
         , now_address
         , now_post_code
+        , status
         )
         VALUES(
         <foreach collection="list" item="creditUser" separator=",">
@@ -399,6 +422,7 @@
             , #{nowAddressArea}
             , #{nowAddress}
             , #{nowPostCode}
+            , #{status}
         </foreach>
         )
     </insert>
@@ -476,4 +500,19 @@
         FROM tdq_credit_user
         WHERE code = #{code}
     </delete>
+    
+    <update id="update_icbankCredit" parameterType="creditUser">
+         UPDATE tdq_credit_user
+       	 SET result                   = #{result}
+          , loan_crdt                 = #{loanCrdt}
+          , card_crdt                 = #{cardCrdt}
+          , left_amount               = #{leftAmount}
+          , left_num                  = #{leftNum}
+          , note                      = #{note}
+          , status                    = #{status}
+          , icbank_code               = #{icbankCode}
+         WHERE code = #{code}
+    </update>
+    
+    
 </mapper>

@@ -51,4 +51,5 @@ public interface ICreditUserAO {
      * @param req 担保人信息入参
      */
     void saveGuarantorInfo(XN632536Req req);
+
 }

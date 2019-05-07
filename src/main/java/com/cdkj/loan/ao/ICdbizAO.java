@@ -1,5 +1,7 @@
 package com.cdkj.loan.ao;
 
+import java.util.List;
+
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632110Req;
@@ -10,7 +12,6 @@ import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
-import java.util.List;
 
 public interface ICdbizAO {
 
@@ -38,20 +39,22 @@ public interface ICdbizAO {
     void interview(XN632123Req req);
 
     // 面签内勤主管审核
-    void interviewInternalApprove(
-            String code, String operator, String approveResult, String approveNote);
+    void interviewInternalApprove(String code, String operator,
+            String approveResult, String approveNote);
 
     // 新录发保合
     void entryFbh(XN632131Req req);
 
     // 审核发包合
-    void approveFbh(String code, String approveResult, String approveNote, String operator);
+    void approveFbh(String code, String approveResult, String approveNote,
+            String operator);
 
     // 安装gps
     void installGps(String code, String operator, List<XN632126ReqGps> gpsAzList);
 
     // 审核gps
-    void gpsManagerApprove(String code, String operator, String approveResult, String approveNote);
+    void gpsManagerApprove(String code, String operator, String approveResult,
+            String approveNote);
 
     // 第一/二次存档
     void archive(String code, String operator, String enterLocation);
@@ -69,4 +72,8 @@ public interface ICdbizAO {
     Cdbiz getCdbiz(String code);
 
     Cdbiz getCdbizAll(String code);
+
+    void creditBank(String code);
+
+    Paginable<Cdbiz> queryIcbankCdbiz(int start, int limit, String userId);
 }

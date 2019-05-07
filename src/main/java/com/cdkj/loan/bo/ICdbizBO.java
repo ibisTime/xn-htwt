@@ -1,19 +1,22 @@
 package com.cdkj.loan.bo;
 
+import java.util.List;
+
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
-import java.util.List;
 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     Cdbiz saveCdbiz(String bankCode, String bizType, Long dkAmount,
-            SYSUser sysUser, BizTeam bizTeam, String node, String dealType, String remark);
+            SYSUser sysUser, BizTeam bizTeam, String node, String dealType,
+            String remark);
 
     int refreshCdbiz(Cdbiz data);
 
@@ -56,8 +59,8 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     void refreshInsideJob(Cdbiz cdbiz, String insideJob);
 
-    void refreshIntevNodeStart(Cdbiz cdbiz, String node, String intevCurNodeCode,
-            String mqStatus);
+    void refreshIntevNodeStart(Cdbiz cdbiz, String node,
+            String intevCurNodeCode, String mqStatus);
 
     void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
 
@@ -71,4 +74,6 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
      * 发保合节点更新
      */
     void refreshFbhgpsNodeStatus(Cdbiz cdbiz);
+
+    void creditIcBank(CreditUser creditUser);
 }

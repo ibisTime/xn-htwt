@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
@@ -16,19 +18,28 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICdbizDAO;
+import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
+import com.cdkj.loan.dto.req.XN798700Req;
+import com.cdkj.loan.dto.res.PKCodeRes;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
+import com.cdkj.loan.enums.ECreditUserStatus;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
+import com.cdkj.loan.http.BizConnecter;
+import com.cdkj.loan.http.JsonUtils;
 
 @Component
 public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
@@ -41,6 +52,14 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private ICreditUserBO creditUserBO;
+
+    @Autowired
+    private ICreditUserDAO creditUserDAO;
+
+    static Logger logger = Logger.getLogger(CdbizBOImpl.class);
 
     @Override
     public List<Cdbiz> queryCdbizList(Cdbiz condition) {
@@ -286,6 +305,67 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     @Override
     public void refreshFbhgpsNodeStatus(Cdbiz cdbiz) {
         cdbizDAO.updateFbhgpsNodeStatus(cdbiz);
+    }
+
+    @Override
+    public void creditIcBank(CreditUser creditUser) {
+        Cdbiz cdbiz = getCdbiz(creditUser.getBizCode());
+        CreditUser master = creditUserBO.getCreditUserByBizCode(
+            cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
+        try {
+            XN798700Req req = new XN798700Req();
+
+            req.setOrderno(cdbiz.getCode());
+            req.setMastername(master.getUserName());
+            req.setCustname(creditUser.getUserName());
+            req.setIdtype("000");
+            req.setIdno(creditUser.getIdNo());
+            String relation = null;
+            String idFront = null;
+            String idReverse = null;
+            String authPdf = null;
+            if (ECreditUserLoanRole.APPLY_USER.getCode().equals(
+                creditUser.getLoanRole())) {
+                relation = "本人";
+                idFront = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.mainLoaner_id_front.getCode()).getUrl();
+                idReverse = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.mainLoaner_id_reverse.getCode()).getUrl();
+                authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.mainLoaner_auth_pdf.getCode()).getUrl();
+            } else if (ECreditUserLoanRole.GHR.getCode().equals(
+                creditUser.getLoanRole())) {
+                relation = "配偶";
+                idFront = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.replier_id_front.getCode()).getUrl();
+                idReverse = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.replier_id_reverse.getCode()).getUrl();
+                authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.replier_auth_pdf.getCode()).getUrl();
+            } else {
+                relation = "反担保";
+                idFront = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.assurance_id_front.getCode()).getUrl();
+                idReverse = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.assurance_id_reverse.getCode()).getUrl();
+                authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
+                    EAttachName.assurance_auth_pdf.getCode()).getUrl();
+            }
+            req.setRelation(relation);
+            req.setIdNoFront(idFront);
+            req.setIdNoReverse(idReverse);
+            req.setAuthPdf(authPdf);
+            req.setSystemCode(ESystemCode.HTWT.getCode());
+            req.setCompanyCode(ESystemCode.HTWT.getCode());
+            PKCodeRes icbankCode = BizConnecter.getBizData("798700",
+                JsonUtils.object2Json(req), PKCodeRes.class);
+            creditUser.setIcbankCode(icbankCode.getCode());
+            creditUser.setStatus(ECreditUserStatus.to_callback.getCode());
+            creditUserDAO.updateIcbankCode(creditUser);
+        } catch (Exception e) {
+            logger.error("调用工行征信服务异常");
+            throw new BizException("xn0000", "调用工行征信服务异常");
+        }
     }
 
 }

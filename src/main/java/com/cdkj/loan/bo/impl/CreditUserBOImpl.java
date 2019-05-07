@@ -1,5 +1,13 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -7,20 +15,20 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
+import com.cdkj.loan.enums.ECreditUserStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
-import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.cdkj.loan.http.BizConnecter;
+import com.cdkj.loan.http.JsonUtils;
 
 /**
  * @author: jiafr
@@ -28,13 +36,16 @@ import org.springframework.stereotype.Component;
  * @history:
  */
 @Component
-public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICreditUserBO {
+public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
+        ICreditUserBO {
 
     @Autowired
     private ICreditUserDAO creditUserDAO;
 
     @Autowired
     private IAttachmentBO attachmentBO;
+
+    static Logger logger = Logger.getLogger(CreditUserBOImpl.class);
 
     @Override
     public void saveCreditUser(XN632110ReqCreditUser child, String bizCode) {
@@ -52,8 +63,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
         creditUser.setAuthPdf(child.getAuthPdf());
         creditUser.setInterviewPic(child.getInterviewPic());
         creditUser.setIdNo(child.getIdNo());
+        creditUser.setStatus(ECreditUserStatus.to_icCredit.getCode());
         // 主贷人
-        if (ECreditUserLoanRole.APPLY_USER.getCode().equals(child.getLoanRole())) {
+        if (ECreditUserLoanRole.APPLY_USER.getCode()
+            .equals(child.getLoanRole())) {
             // 身份证正面
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.mainLoaner_id_front.getCode());
@@ -75,7 +88,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                 attachName.getValue(), child.getInterviewPic());
             // 共还人信息
-        } else if (ECreditUserLoanRole.GHR.getCode().equals(child.getLoanRole())) {
+        } else if (ECreditUserLoanRole.GHR.getCode()
+            .equals(child.getLoanRole())) {
             // 身份证正面
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.replier_id_front.getCode());
@@ -98,7 +112,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
                 attachName.getValue(), child.getInterviewPic());
 
             // 担保人
-        } else if (ECreditUserLoanRole.GUARANTOR.getCode().equals(child.getLoanRole())) {
+        } else if (ECreditUserLoanRole.GUARANTOR.getCode().equals(
+            child.getLoanRole())) {
             // 身份证正面
             EAttachName attachName = EAttachName.getMap().get(
                 EAttachName.assurance_id_front.getCode());
@@ -148,7 +163,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
             creditUser.setCode(code);
             data = creditUserDAO.select(creditUser);
             if (data == null) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信人员不存在!");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信人员不存在!");
             }
         }
         return data;
@@ -167,10 +183,11 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
     }
 
     @Override
-    public void inputBankCreditResult(CreditUser creditUser, XN632111ReqCreditUser reqCreditUser) {
+    public void inputBankCreditResult(CreditUser creditUser,
+            XN632111ReqCreditUser reqCreditUser) {
         if (StringUtils.isNotBlank(creditUser.getCode())) {
-            creditUser.setCreditCardOccupation(
-                    StringValidater.toDouble(reqCreditUser.getCreditCardOccupation()));
+            creditUser.setCreditCardOccupation(StringValidater
+                .toDouble(reqCreditUser.getCreditCardOccupation()));
             creditUser.setBankCreditResult(reqCreditUser.getBankResult());
             creditUser.setBankCreditResultRemark(reqCreditUser.getCreditNote());
 
@@ -192,7 +209,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
 
         for (CreditUser creditUser : list) {
             List<Attachment> attachments = attachmentBO
-                    .queryBizAttachments(creditUser.getCode());
+                .queryBizAttachments(creditUser.getCode());
             creditUser.setAttachments(attachments);
         }
         return list;
@@ -223,14 +240,17 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
     @Override
     public void refreshCreditUsers(List<CreditUser> creditUsers, XN632500Req req) {
         for (CreditUser creditUser : creditUsers) {
-            if (ECreditUserLoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+            if (ECreditUserLoanRole.APPLY_USER.getCode().equals(
+                creditUser.getLoanRole())) {
                 creditUser.setBirthAddress(req.getResidenceAddress());
                 creditUser.setBirthPostCode(req.getPostCode2());
                 creditUser.setCompanyName(req.getWorkCompanyName());
                 creditUser.setCompanyAddress(req.getWorkCompanyAddress());
                 creditUser.setCompanyContactNo(req.getWorkPhone());
-            } else if (ECreditUserLoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
-                creditUser.setBirthAddressProvince(req.getMateBirthAddressProvince());
+            } else if (ECreditUserLoanRole.GHR.getCode().equals(
+                creditUser.getLoanRole())) {
+                creditUser.setBirthAddressProvince(req
+                    .getMateBirthAddressProvince());
                 creditUser.setBirthAddressCity(req.getMateBirthAddressCity());
                 creditUser.setBirthAddressArea(req.getMateBirthAddressArea());
                 creditUser.setBirthAddress(req.getMateBirthAddress());
@@ -240,7 +260,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
                 creditUser.setCompanyAddress(req.getMateCompanyAddress());
                 creditUser.setCompanyContactNo(req.getMateCompanyContactNo());
             } else {
-                creditUser.setBirthAddressProvince(req.getGuaBirthAddressProvince());
+                creditUser.setBirthAddressProvince(req
+                    .getGuaBirthAddressProvince());
                 creditUser.setBirthAddressCity(req.getGuaBirthAddressCity());
                 creditUser.setBirthAddressArea(req.getGuaBirthAddressArea());
                 creditUser.setBirthAddress(req.getGuaBirthAddress());
@@ -252,5 +273,34 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements ICr
             }
             creditUserDAO.updateCreditUser(creditUser);
         }
+    }
+
+    @Override
+    public int refreshIcbankCredit(CreditUser data, CreditIcbank creditIcbank) {
+        int count = 0;
+        data.setStatus(ECreditUserStatus.done.getCode());
+        data.setResult(creditIcbank.getResult());
+        data.setLoanCrdt(creditIcbank.getLoanCrdt());
+        data.setCardCrdt(creditIcbank.getCardCrdt());
+        data.setLeftNum(StringValidater.toLong(creditIcbank.getLeftNum()));
+        data.setLeftAmount(StringValidater.toLong(creditIcbank.getLeftAmount()));
+        data.setNote(creditIcbank.getNote());
+        count = creditUserDAO.updateIcbankCredit(data);
+        return count;
+    }
+
+    @Override
+    public CreditIcbank getCreditIcbank(String icbankCode) {
+        CreditIcbank creditIcbank = null;
+        XN632114Req req = new XN632114Req();
+        req.setCode(icbankCode);
+        try {
+            creditIcbank = BizConnecter.getBizData("798701",
+                JsonUtils.object2Json(req), CreditIcbank.class);
+
+        } catch (Exception e) {
+            logger.info("工行征信结果查询服务异常");
+        }
+        return creditIcbank;
     }
 }

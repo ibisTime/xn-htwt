@@ -1,5 +1,9 @@
 package com.cdkj.loan.ao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -12,9 +16,6 @@ import com.cdkj.loan.dto.req.XN632535Req;
 import com.cdkj.loan.dto.req.XN632536Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author: jiafr
@@ -43,8 +44,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
     @Override
     public void saveSelfExtentInfo(XN632532Req req) {
-        CreditUser creditUser =
-                creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.APPLY_USER);
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
+            req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
@@ -56,70 +57,85 @@ public class CreditUserAOImpl implements ICreditUserAO {
     @Override
     @Transactional
     public void saveSelfHomeInfo(XN632533Req req) {
-        CreditUser creditUser =
-                creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.APPLY_USER);
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
+            req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
-            saveAttachment(req.getCode(), EAttachName.hkBookPdf, req.getHkBookPdf());
-            saveAttachment(req.getCode(), EAttachName.marryPdf, req.getMarryPdf());
-            saveAttachment(req.getCode(), EAttachName.liveProvePdf, req.getLiveProvePdf());
-            saveAttachment(req.getCode(), EAttachName.buildProvePdf, req.getBuildProvePdf());
-            saveAttachment(req.getCode(), EAttachName.houseContract, req.getHouseContract());
-            saveAttachment(req.getCode(), EAttachName.houseInvoice, req.getHouseInvoice());
+            saveAttachment(req.getCode(), EAttachName.hkBookPdf,
+                req.getHkBookPdf());
+            saveAttachment(req.getCode(), EAttachName.marryPdf,
+                req.getMarryPdf());
+            saveAttachment(req.getCode(), EAttachName.liveProvePdf,
+                req.getLiveProvePdf());
+            saveAttachment(req.getCode(), EAttachName.buildProvePdf,
+                req.getBuildProvePdf());
+            saveAttachment(req.getCode(), EAttachName.houseContract,
+                req.getHouseContract());
+            saveAttachment(req.getCode(), EAttachName.houseInvoice,
+                req.getHouseInvoice());
             saveAttachment(req.getCode(), EAttachName.housePictureApply,
-                    req.getHousePictureApply());
+                req.getHousePictureApply());
         }
     }
 
     @Override
     @Transactional
     public void saveSelfWorkInfo(XN632534Req req) {
-        CreditUser creditUser =
-                creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.APPLY_USER);
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
+            req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
-            saveAttachment(req.getCode(), EAttachName.improvePdf, req.getImprovePdf());
-            saveAttachment(req.getCode(), EAttachName.frontTablePic, req.getFrontTablePic());
-            saveAttachment(req.getCode(), EAttachName.workPlacePic, req.getWorkPlacePic());
-            saveAttachment(req.getCode(), EAttachName.salerAndcustomer, req.getSalerAndcustomer());
+            saveAttachment(req.getCode(), EAttachName.improvePdf,
+                req.getImprovePdf());
+            saveAttachment(req.getCode(), EAttachName.frontTablePic,
+                req.getFrontTablePic());
+            saveAttachment(req.getCode(), EAttachName.workPlacePic,
+                req.getWorkPlacePic());
+            saveAttachment(req.getCode(), EAttachName.salerAndcustomer,
+                req.getSalerAndcustomer());
         }
     }
 
     @Override
     @Transactional
     public void saveGhrInfo(XN632535Req req) {
-        CreditUser creditUser =
-                creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GHR);
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
+            req.getCode(), ECreditUserLoanRole.GHR);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
-            saveAttachment(req.getCode(), EAttachName.mateAssetPdf, req.getMateAssetPdf());
+            saveAttachment(req.getCode(), EAttachName.mateAssetPdf,
+                req.getMateAssetPdf());
         }
     }
 
     @Override
     @Transactional
     public void saveGuarantorInfo(XN632536Req req) {
-        CreditUser creditUser =
-                creditUserBO.getCreditUserByBizCode(req.getCode(), ECreditUserLoanRole.GUARANTOR);
+        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
+            req.getCode(), ECreditUserLoanRole.GUARANTOR);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
-            saveAttachment(req.getCode(), EAttachName.guaAssetPdf, req.getGuaAssetPdf());
+            saveAttachment(req.getCode(), EAttachName.guaAssetPdf,
+                req.getGuaAssetPdf());
         }
     }
 
-    public void saveAttachment(String bizCode, EAttachName attachName, String url) {
-        attachmentBO.saveAttachment(bizCode, attachName.getCode(), attachName.getValue(), url);
+    public void saveAttachment(String bizCode, EAttachName attachName,
+            String url) {
+        attachmentBO.saveAttachment(bizCode, attachName.getCode(),
+            attachName.getValue(), url);
     }
+
 }

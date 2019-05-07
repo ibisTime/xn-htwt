@@ -1,7 +1,8 @@
 package com.cdkj.loan.domain;
 
-import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.List;
+
+import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
  * 征信人员
@@ -317,6 +318,30 @@ public class CreditUser extends ABaseDO {
     /**
      * 征信报告
      */
+    // 工行征信编号
+    private String icbankCode;
+
+    // 工行征信结果
+    private String result;
+
+    // 工行征信贷款逾期记录
+    private String loanCrdt;
+
+    // 工行征信信用卡逾期记录
+    private String cardCrdt;
+
+    // 工行征信专项卡分期笔数
+    private Long leftNum;
+
+    // 工行征信未结清余额
+    private Long leftAmount;
+
+    // 工行征信备注
+    private String note;
+
+    // 工行征信回调状态
+    private String status;
+
     private List<Attachment> attachments;
 
     /**
@@ -932,5 +957,69 @@ public class CreditUser extends ABaseDO {
 
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getLoanCrdt() {
+        return loanCrdt;
+    }
+
+    public void setLoanCrdt(String loanCrdt) {
+        this.loanCrdt = loanCrdt;
+    }
+
+    public String getCardCrdt() {
+        return cardCrdt;
+    }
+
+    public void setCardCrdt(String cardCrdt) {
+        this.cardCrdt = cardCrdt;
+    }
+
+    public Long getLeftNum() {
+        return leftNum;
+    }
+
+    public void setLeftNum(Long leftNum) {
+        this.leftNum = leftNum;
+    }
+
+    public Long getLeftAmount() {
+        return leftAmount;
+    }
+
+    public void setLeftAmount(Long leftAmount) {
+        this.leftAmount = leftAmount;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getIcbankCode() {
+        return icbankCode;
+    }
+
+    public void setIcbankCode(String icbankCode) {
+        this.icbankCode = icbankCode;
     }
 }
