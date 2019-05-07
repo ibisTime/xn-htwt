@@ -133,89 +133,131 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                 Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
 
-                String nextNodeCode = nodeFlowBO
-                        .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
-                        .getNextNode();
+                // 如果收件节点是待担保公司收件（车辆抵押）或提交银行（车辆抵押）
+                if (logistics.getFromNodeCode().equals(ENode.receive_approve_4.getCode())
+                        && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
 
-                switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
-                    // 1、业务员寄送银行放款材料
-                    // 2、业务员重寄材料（银行放款）
-                    case submit_1:
-                    case re_submit_1:
-                        cdbizBO.refreshStatus(cdbiz,
-                                ECdbizStatus.A11.getCode());
-                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
-                        break;
+                    if (!ECdbizStatus.D3.getCode().equals(cdbiz.getFircundangStatus())) {
+                        throw new BizException(EBizErrorCode.DEFAULT.getCode(), "第一次为入档，不能发件！");
+                    }
+                    // 完成待办事项
+                    bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                            cdbiz.getCode(),
+                            ENode.receive_approve_4);
 
-                    // 1、风控寄抵押合同
-                    // 2、风控重寄抵押合同
-                    case submit_3:
-                    case re_submit_3:
-                        cdbizBO.refreshStatus(cdbiz,
-                                ECdbizStatus.A19.getCode());
-                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
-                        break;
+                    // 添加待办事项
+                    bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
+                            req.getCode(), ENode.receive_approve_4,
+                            null);
 
-                    // 1、业务员寄送材料（车辆抵押）
-                    // 2、业务员重寄送材料（车辆抵押）
-                    case submit_4:
-                    case re_submit_4:
-                        cdbizBO.refreshStatus(cdbiz,
-                                ECdbizStatus.A23.getCode());
-                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
-                        break;
+                    // 日志记录
+                    sysBizLogBO.recordCurOperate(cdbiz.getCode(),
+                            EBizLogType.BUDGET_ORDER, req.getCode(),
+                            ENode.receive_approve_4.getCode(), req.getSendNote(),
+                            req.getOperator());
+                } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
+                        && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
+                    // 完成待办事项
+                    bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                            cdbiz.getCode(),
+                            ENode.submit_2);
 
-                    // 风控审核通过（车辆抵押）
-                    case submit_5:
-                        cdbizBO.refreshStatus(cdbiz,
-                                ECdbizStatus.A26.getCode());
-                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
-                        break;
+                    // 添加待办事项
+                    bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
+                            req.getCode(), ENode.submit_2,
+                            null);
 
-                    // 待风控寄件（车辆抵押）
-                    case submit_6:
-                        if (!ECdbizStatus.D3.getCode()
-                                .equals(cdbiz.getFircundangStatus())) {
-                            throw new BizException(
-                                    EBizErrorCode.DEFAULT.getCode(),
-                                    "第一次存档未完成，无法发件");
-                        }
-                        cdbizBO.refreshSeccundangStatus(cdbiz,
-                                ECdbizStatus.E1.getCode());
-                        break;
+                    // 日志记录
+                    sysBizLogBO.recordCurOperate(cdbiz.getCode(),
+                            EBizLogType.BUDGET_ORDER, req.getCode(),
+                            ENode.submit_2.getCode(), req.getSendNote(),
+                            req.getOperator());
+                } else {
 
-                    default:
-                        break;
-                }
+                    String nextNodeCode = nodeFlowBO
+                            .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
+                            .getNextNode();
 
-                if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
-                    switch (cdbiz.getFircundangStatus()) {
-                        // 风控寄送银行放款材料
-                        case "000":
-                            cdbizBO.refreshFircundangStatus(cdbiz,
-                                    ECdbizStatus.D1.getCode());
+                    switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
+                        // 1、业务员寄送银行放款材料
+                        // 2、业务员重寄材料（银行放款）
+                        case submit_1:
+                        case re_submit_1:
+                            cdbizBO.refreshStatus(cdbiz,
+                                    ECdbizStatus.A11.getCode());
+                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            break;
+
+                        // 1、风控寄抵押合同
+                        // 2、风控重寄抵押合同
+                        case submit_3:
+                        case re_submit_3:
+                            cdbizBO.refreshStatus(cdbiz,
+                                    ECdbizStatus.A19.getCode());
+                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            break;
+
+                        // 1、业务员寄送材料（车辆抵押）
+                        // 2、业务员重寄送材料（车辆抵押）
+                        case submit_4:
+                        case re_submit_4:
+                            cdbizBO.refreshStatus(cdbiz,
+                                    ECdbizStatus.A23.getCode());
+                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            break;
+
+                        // 风控审核通过（车辆抵押）
+                        case submit_5:
+                            cdbizBO.refreshStatus(cdbiz,
+                                    ECdbizStatus.A26.getCode());
+                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            break;
+
+                        // 待风控寄件（车辆抵押）
+                        case submit_6:
+                            if (!ECdbizStatus.D3.getCode()
+                                    .equals(cdbiz.getFircundangStatus())) {
+                                throw new BizException(
+                                        EBizErrorCode.DEFAULT.getCode(),
+                                        "第一次存档未完成，无法发件");
+                            }
+                            cdbizBO.refreshSeccundangStatus(cdbiz,
+                                    ECdbizStatus.E1.getCode());
                             break;
 
                         default:
                             break;
                     }
+
+                    if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
+                        switch (cdbiz.getFircundangStatus()) {
+                            // 风控寄送银行放款材料
+                            case "000":
+                                cdbizBO.refreshFircundangStatus(cdbiz,
+                                        ECdbizStatus.D1.getCode());
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+
+                    // 完成待办事项
+                    bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                            cdbiz.getCode(),
+                            ENode.getMap().get(cdbiz.getCurNodeCode()));
+
+                    // 添加待办事项
+                    bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
+                            req.getCode(), ENode.getMap().get(cdbiz.getCurNodeCode()),
+                            null);
+
+                    // 日志记录
+                    sysBizLogBO.recordCurOperate(cdbiz.getCode(),
+                            EBizLogType.BUDGET_ORDER, req.getCode(),
+                            cdbiz.getCurNodeCode(), req.getSendNote(),
+                            req.getOperator());
                 }
-
-                // 完成待办事项
-                bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                        cdbiz.getCode(),
-                        ENode.getMap().get(cdbiz.getCurNodeCode()));
-
-                // 添加待办事项
-                bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
-                        req.getCode(), ENode.getMap().get(cdbiz.getCurNodeCode()),
-                        null);
-
-                // 日志记录
-                sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                        EBizLogType.BUDGET_ORDER, req.getCode(),
-                        cdbiz.getCurNodeCode(), req.getSendNote(),
-                        req.getOperator());
 
                 break;
 
@@ -453,42 +495,47 @@ public class LogisticsAOImpl implements ILogisticsAO {
             case BUDGET:
 
                 Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
-                String nextNodeCode = nodeFlowBO
-                        .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
-                        .getNextNode();
 
-                switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
+                switch (ENode.matchCode(logistics.getToNodeCode())) {
 
                     // 银行收件（车辆抵押）
                     case receive_5:
-                        cdbizBO.refreshStatus(cdbiz,
-                                ECdbizStatus.A27.getCode());
-                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                        String nextNodeCode = nodeFlowBO
+                                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
+                                .getNextNode();
+                        cdbiz.setStatus(ECdbizStatus.A27.getCode());
+                        cdbiz.setCurNodeCode(nextNodeCode);
+                        cdbizBO.refreshCurNodeStatus(cdbiz);
                         break;
 
                     // 待担保公司收件（车辆抵押）
                     case receive_6:
                         cdbizBO.refreshSeccundangStatus(cdbiz,
                                 ECdbizStatus.E2.getCode());
-                        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                        break;
+
+                    // 贷后收件（银行放款）
+                    case receive_2:
+                        cdbizBO.refreshFircundangStatus(cdbiz,
+                                ECdbizStatus.D2.getCode());
                         break;
 
                     default:
                         break;
                 }
 
-                if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
-                    switch (cdbiz.getFircundangStatus()) {
-                        // 贷后收件（银行放款）
-                        case "001":
-                            cdbizBO.refreshFircundangStatus(cdbiz,
-                                    ECdbizStatus.D2.getCode());
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
+//                if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
+//                    switch (cdbiz.getFircundangStatus()) {
+//                        // 贷后收件（银行放款）
+//                        case "001":
+//                            cdbizBO.refreshFircundangStatus(cdbiz,
+//                                    ECdbizStatus.D2.getCode());
+//                            break;
+//
+//                        default:
+//                            break;
+//                    }
+//                }
 
                 break;
 
