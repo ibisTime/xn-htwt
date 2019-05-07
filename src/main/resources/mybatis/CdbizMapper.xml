@@ -273,10 +273,12 @@
         ,t.credit_note
         ,t.apply_datetime
         ,t.remark
+        ,b.bank_name as loan_bank_name
         ,bt.name as team_name
         FROM
         tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or
         t.intev_cur_node_code = trn.node_code )
+        left join tb_bank b on b.code = t.loan_bank
         left join tsys_biz_team bt on bt.code = t.team_code
         <include refid="join_condition"/>
         <include refid="where_condition"/>
