@@ -95,7 +95,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
     private ICarPledgeBO carPledgeBO;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = BizException.class)
     public void sendLogistics(XN632150Req req) {
 
         Logistics logistics = logisticsBO.getLogistics(req.getCode());
@@ -227,7 +227,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = BizException.class)
     public BooleanRes receiveApprove(String code, String approveResult,
             String operator, String remark) {
         Logistics logistics = logisticsBO.getLogistics(code);

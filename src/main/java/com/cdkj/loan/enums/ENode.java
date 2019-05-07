@@ -56,6 +56,8 @@ public enum ENode {
 
     fk_input("e4", "风控录入银行放款信息"), cw_confirm_receipt("e5", "财务确认银行收款"),
 
+    bank_receipt("e6", "待抵押申请"),
+
     submit_2("e7", "风控寄送银行放款材料"), receive_2("e8", "贷后收件（银行放款）"),
 
     first_receive_archive("e9", "第一次已收件待存档"), first_archive("e10", "第一次已存档"),

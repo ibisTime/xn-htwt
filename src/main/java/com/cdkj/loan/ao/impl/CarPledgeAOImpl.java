@@ -56,7 +56,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
 
-        if (!ENode.confirm_pledge_apply.getCode().equals(cdbiz.getCurNodeCode())) {
+        if (!ENode.bank_receipt.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是抵押申请节点，不能操作");
         }
