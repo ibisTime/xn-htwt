@@ -3152,6 +3152,9 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('b4','风控二�
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('b5','风控终审准入单','b',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('b6','业务总监审核准入单','b',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('b7','财务总监审核准入单','b',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('c1','新录入发保合','c',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('c2','审核发保合','c',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('c1x','重录入发保合','c',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('e1','业务员寄送银行放款材料','e',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('e10','第一次已存档','e',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('e1x','业务员重寄材料（银行放款）','e',NULL);
