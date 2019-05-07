@@ -17,3 +17,7 @@ INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('g', 
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('g', 'g5', 'c1');
 
 INSERT INTO `tdq_file_list` (`category`, `kname`, `vname`, `attach_type`, `number`) VALUES ('advance', 'advance_bill_pdf', '垫资水单', '图片', '1');
+
+DELETE FROM `tsys_node` WHERE `code`='e6';
+UPDATE `tsys_node_flow` SET `next_node`='f1' WHERE `id`='94';
+DELETE FROM `tsys_node_flow` WHERE `id`='95';

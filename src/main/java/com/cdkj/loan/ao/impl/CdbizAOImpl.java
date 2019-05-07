@@ -1,15 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAdvanceBO;
@@ -86,6 +76,14 @@ import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CdbizAOImpl implements ICdbizAO {
@@ -460,7 +458,8 @@ public class CdbizAOImpl implements ICdbizAO {
                 creditUserBO.refreshCreditUserLoanRole(user);
             }
             // 审核通过，改变节点
-            cdbizBO.refreshCurNodeCode(cdbiz, ENode.input_budget.getCode());
+            cdbizBO.refreshCurNodeCode(cdbiz, ENode.
+                    input_budget.getCode());
             // 修改业务状态
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode(), req.getApproveNote());
 
@@ -944,7 +943,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 主贷人信息
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
+                cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
         cdbiz.setCreditUser(creditUser);
 
         // 车辆信息
