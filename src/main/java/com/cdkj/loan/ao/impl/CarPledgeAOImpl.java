@@ -191,7 +191,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 抵押提交银行
         carPledgeBO.pledgeCommitBank(code, nextNodeCode, operator,

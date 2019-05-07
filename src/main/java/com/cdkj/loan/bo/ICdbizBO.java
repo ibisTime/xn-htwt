@@ -71,4 +71,9 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
      * 发保合节点更新
      */
     void refreshFbhgpsNodeStatus(Cdbiz cdbiz);
+
+    /**
+     * 更新主流程节点状态
+     */
+    void refreshCurNodeStatus(Cdbiz cdbiz);
 }

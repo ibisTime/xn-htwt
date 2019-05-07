@@ -1,12 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -29,6 +22,11 @@ import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
@@ -53,28 +51,28 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         // 加入附件
         EAttachName attachName = EAttachName.bank_vedio;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getBankVideo());
+                attachName.getValue(), req.getBankVideo());
         attachName = EAttachName.bank_photo;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getBankPhoto());
+                attachName.getValue(), req.getBankPhoto());
         attachName = EAttachName.company_vedio;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getCompanyVideo());
+                attachName.getValue(), req.getCompanyVideo());
         attachName = EAttachName.company_contract;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getCompanyContract());
+                attachName.getValue(), req.getCompanyContract());
         attachName = EAttachName.bank_contract;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getBankContract());
+                attachName.getValue(), req.getBankContract());
         attachName = EAttachName.advance_fund_pdf;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getAdvanceFundAmountPdf());
+                attachName.getValue(), req.getAdvanceFundAmountPdf());
         attachName = EAttachName.other_vedio;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getOtherVideo());
+                attachName.getValue(), req.getOtherVideo());
         attachName = EAttachName.interview_other_pdf;
         attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-            attachName.getValue(), req.getInterviewOtherPdf());
+                attachName.getValue(), req.getInterviewOtherPdf());
 
     }
 
@@ -97,7 +95,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             SYSUser sysUser, BizTeam bizTeam, String node, String dealType,
             String remark) {
         String code = OrderNoGenerater
-            .generate(EGeneratePrefix.Cdbiz.getCode());
+                .generate(EGeneratePrefix.Cdbiz.getCode());
         Cdbiz cdbiz = new Cdbiz();
         cdbiz.setCode(code);
         cdbiz.setBizCode(code);
@@ -253,7 +251,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         Long count = cdbizDAO.selectTotalCountByRoleCode(condition);
         Paginable<Cdbiz> page = new Page<Cdbiz>(start, limit, count);
         List<Cdbiz> dataList = cdbizDAO.selectListByRoleCode(condition,
-            page.getStart(), page.getPageSize());
+                page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
     }
@@ -286,6 +284,11 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     @Override
     public void refreshFbhgpsNodeStatus(Cdbiz cdbiz) {
         cdbizDAO.updateFbhgpsNodeStatus(cdbiz);
+    }
+
+    @Override
+    public void refreshCurNodeStatus(Cdbiz cdbiz) {
+        cdbizDAO.updateCurNodeStatus(cdbiz);
     }
 
 }
