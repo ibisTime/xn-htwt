@@ -368,4 +368,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         }
     }
 
+    public void refreshCurNodeStatus(Cdbiz cdbiz) {
+        cdbizDAO.updateCurNodeStatus(cdbiz);
+    }
+
 }

@@ -72,12 +72,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
-        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge, carPledgeCode,
+        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge, cdbiz.getCode(),
                 ENode.matchCode(nextNodeCode), req.getOperator());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                carPledgeCode, nextNodeCode, req.getSupplementNote(),
+                cdbiz.getCode(), nextNodeCode, req.getSupplementNote(),
                 req.getOperator());
     }
 
@@ -94,7 +94,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 业务员确认抵押
         carPledgeBO.saleManConfirm(carPledge.getCode(), nextNodeCode, req);
@@ -104,12 +104,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge,
-                carPledge.getCode(), ENode.matchCode(nextNodeCode),
+                cdbiz.getCode(), ENode.matchCode(nextNodeCode),
                 req.getOperator());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                carPledge.getCode(), nextNodeCode, req.getApproveNote(),
+                cdbiz.getCode(), nextNodeCode, req.getApproveNote(),
                 req.getOperator());
 
         // 生成资料传递
@@ -142,7 +142,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 录入抵押信息
         carPledgeBO.entryPledgeInfo(carPledge.getCode(), nextNodeCode, req);
@@ -155,12 +155,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.Pledge,
-                carPledge.getCode(), ENode.matchCode(nextNodeCode),
+                cdbiz.getCode(), ENode.matchCode(nextNodeCode),
                 req.getOperator());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                carPledge.getCode(), nextNodeCode, null, req.getOperator());
+                cdbiz.getCode(), nextNodeCode, null, req.getOperator());
 
         // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
@@ -191,7 +191,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 抵押提交银行
         carPledgeBO.pledgeCommitBank(code, nextNodeCode, operator,
@@ -201,12 +201,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.Pledge, carPledge.getCode(),
+        bizTaskBO.saveBizTask(code, EBizLogType.Pledge, cdbiz.getCode(),
                 ENode.matchCode(nextNodeCode), operator);
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.bank_push,
-                carPledge.getCode(), nextNodeCode, null, operator);
+                cdbiz.getCode(), nextNodeCode, null, operator);
 
     }
 
@@ -227,21 +227,21 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(carPledge.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 抵押确认完成
-        carPledgeBO.confirmDone(code, nextNodeCode, operator);
+        carPledgeBO.confirmDone(carPledge.getCode(), nextNodeCode, operator);
 
         // 更新业务状态
         cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
 
         // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.Pledge, carPledge.getCode(),
+        bizTaskBO.saveBizTask(code, EBizLogType.Pledge, cdbiz.getCode(),
                 ENode.matchCode(nextNodeCode), operator);
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.bank_push,
-                carPledge.getCode(), nextNodeCode, null, operator);
+                cdbiz.getCode(), nextNodeCode, null, operator);
 
     }
 

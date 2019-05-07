@@ -76,4 +76,9 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
     void refreshFbhgpsNodeStatus(Cdbiz cdbiz);
 
     void creditIcBank(CreditUser creditUser);
+
+    /**
+     * 更新主流程节点状态
+     */
+    void refreshCurNodeStatus(Cdbiz cdbiz);
 }

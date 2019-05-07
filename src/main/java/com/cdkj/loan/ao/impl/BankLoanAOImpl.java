@@ -57,15 +57,14 @@ public class BankLoanAOImpl implements IBankLoanAO {
                     "gps未安装完成，不能提交银行");
         }
 
-        BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(bizCode);
-
-        if (!ENode.fk_submit.getCode().equals(bankLoan.getCurNodeCode())) {
+        if (!ENode.fk_submit.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是确认提交银行节点，不能操作");
         }
+        BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(bizCode);
 
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 更新银行放款状态
         bankLoanBO.commitBank(bankLoan.getCode(), nextNodeCode, operator,
@@ -76,11 +75,11 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(bizCode, EBizLogType.bank_push,
-                bankLoan.getCode(), ENode.matchCode(nextNodeCode), operator);
+                cdbiz.getCode(), ENode.matchCode(nextNodeCode), operator);
 
         // 操作日志
         sysBizLogBO.recordCurOperate(bizCode, EBizLogType.bank_push,
-                bankLoan.getCode(), nextNodeCode, bankCommitNote, operator);
+                cdbiz.getCode(), nextNodeCode, bankCommitNote, operator);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(req.getCode());
 
-        if (!ENode.fk_input.getCode().equals(bankLoan.getCurNodeCode())) {
+        if (!ENode.fk_input.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是录入放款信息节点，不能操作");
         }
@@ -104,7 +103,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
         }
 
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 录入放款信息
         bankLoanBO.entryFkInfo(bankLoan.getCode(), nextNodeCode, req);
@@ -114,12 +113,12 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,
-                bankLoan.getCode(), ENode.matchCode(nextNodeCode),
+                cdbiz.getCode(), ENode.matchCode(nextNodeCode),
                 req.getOperator());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                bankLoan.getCode(), nextNodeCode, null, req.getOperator());
+                cdbiz.getCode(), nextNodeCode, null, req.getOperator());
     }
 
     @Override
@@ -129,13 +128,13 @@ public class BankLoanAOImpl implements IBankLoanAO {
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(req.getCode());
 
         if (!ENode.cw_confirm_receipt.getCode()
-                .equals(bankLoan.getCurNodeCode())) {
+                .equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是确认收款节点，不能操作");
         }
 
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(bankLoan.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 确认收款
         bankLoanBO.confirmSk(bankLoan.getCode(), nextNodeCode, req);
@@ -145,12 +144,12 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,
-                bankLoan.getCode(), ENode.matchCode(nextNodeCode),
+                cdbiz.getCode(), ENode.matchCode(nextNodeCode),
                 req.getOperator());
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                bankLoan.getCode(), nextNodeCode, null, req.getOperator());
+                cdbiz.getCode(), nextNodeCode, null, req.getOperator());
     }
 
     @Override

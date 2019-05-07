@@ -592,6 +592,12 @@ public class CdbizAOImpl implements ICdbizAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
+        if (!ECdbizStatus.D2.getCode().equals(cdbiz.getFircundangStatus())
+                && !ECdbizStatus.E2.getCode().equals(cdbiz.getSeccundangStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前状态不是入档状态，不能入档");
+        }
+
         // 第一次存档
         if (ECdbizStatus.D2.getCode().equals(cdbiz.getFircundangStatus())) {
             // 更新业务状态
