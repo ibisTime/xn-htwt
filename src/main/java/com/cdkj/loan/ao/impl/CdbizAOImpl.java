@@ -661,6 +661,7 @@ public class CdbizAOImpl implements ICdbizAO {
     public void entryFbh(XN632131Req req) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        String preFbhgpsNode = cdbiz.getFbhgpsNode();
         if (!ENode.input_fbh.getCode().equals(cdbiz.getFbhgpsNode())
                 && !ENode.reinput_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -686,7 +687,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // 操作日志
         sysBizLogBO
                 .recordCurOperate(req.getCode(), EBizLogType.fbh, req.getCode(),
-                        ENode.approve_fbh.getCode(), null, req.getOperator());
+                        preFbhgpsNode, null, req.getOperator());
     }
 
     @Override
@@ -694,6 +695,7 @@ public class CdbizAOImpl implements ICdbizAO {
     public void approveFbh(String code, String approveResult,
             String approveNote, String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        String preFbhgpsNode = cdbiz.getFbhgpsNode();
         if (!ENode.approve_fbh.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是审核发保合节点，不能操作");
@@ -714,7 +716,7 @@ public class CdbizAOImpl implements ICdbizAO {
                 ENode.matchCode(nextNodeCode), operator);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.fbh, code, nextNodeCode,
+        sysBizLogBO.recordCurOperate(code, EBizLogType.fbh, code, preFbhgpsNode,
                 approveNote, operator);
     }
 
@@ -724,6 +726,7 @@ public class CdbizAOImpl implements ICdbizAO {
             List<XN632126ReqGps> gpsAzList) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        String preFbhgpsNode = cdbiz.getFbhgpsNode();
         if (!ENode.set_gps.getCode().equals(cdbiz.getFbhgpsNode())
                 && !ENode.approve_fail_gps.getCode().equals(
                 cdbiz.getFbhgpsNode())) {
@@ -748,7 +751,7 @@ public class CdbizAOImpl implements ICdbizAO {
                 ENode.matchCode(nextNodeCode), operator);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code, nextNodeCode,
+        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code, preFbhgpsNode,
                 null, operator);
     }
 
@@ -758,6 +761,7 @@ public class CdbizAOImpl implements ICdbizAO {
             String approveResult, String approveNote) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        String preFbhgpsNode = cdbiz.getFbhgpsNode();
         if (!ENode.approve_gps.getCode().equals(cdbiz.getFbhgpsNode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是GPS管理员审核节点，不能操作");
@@ -789,7 +793,7 @@ public class CdbizAOImpl implements ICdbizAO {
                 ENode.matchCode(nextNodeCode), operator);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code, nextNodeCode,
+        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code, preFbhgpsNode,
                 null, operator);
     }
 
