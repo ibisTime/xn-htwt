@@ -12,8 +12,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 收件
- * @author: silver 
- * @since: 2018年5月30日 下午4:08:33 
+ * @author: silver
+ * @since: 2018年5月30日 下午4:08:33
  * @history:
  */
 public class XN632152 extends AProcessor {
