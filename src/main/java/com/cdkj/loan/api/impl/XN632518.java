@@ -1,10 +1,11 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ICdbizAO;
+import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632518Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -17,15 +18,18 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @history:
  */
 public class XN632518 extends AProcessor {
-    private ICdbizAO cdbizAO = SpringContextHolder.getBean(ICdbizAO.class);
+    private ICreditUserAO creditUserAO = SpringContextHolder
+        .getBean(ICreditUserAO.class);
 
     private XN632518Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
+        CreditUser condition = new CreditUser();
+        condition.setBizCode(req.getBizCode());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return cdbizAO.queryIcbankCdbiz(start, limit, req.getUserId());
+        return creditUserAO.queryCreditUserPage(start, limit, condition);
     }
 
     @Override
