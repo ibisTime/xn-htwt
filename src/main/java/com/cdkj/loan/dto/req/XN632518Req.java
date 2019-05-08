@@ -23,4 +23,7 @@ public class XN632518Req extends APageReq {
 
     // 用户编号
     private String userId;
+
+    // 业务编号
+    private String bizCode;
 }

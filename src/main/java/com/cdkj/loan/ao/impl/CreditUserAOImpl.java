@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632532Req;
 import com.cdkj.loan.dto.req.XN632533Req;
@@ -16,6 +18,7 @@ import com.cdkj.loan.dto.req.XN632535Req;
 import com.cdkj.loan.dto.req.XN632536Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
+import com.cdkj.loan.enums.ECreditUserStatus;
 
 /**
  * @author: jiafr
@@ -136,6 +139,24 @@ public class CreditUserAOImpl implements ICreditUserAO {
             String url) {
         attachmentBO.saveAttachment(bizCode, attachName.getCode(),
             attachName.getValue(), url);
+    }
+
+    @Override
+    public Paginable<CreditUser> queryCreditUserPage(int start, int limit,
+            CreditUser condition) {
+        Paginable<CreditUser> page = creditUserBO.getPaginable(start, limit,
+            condition);
+        for (CreditUser creditUser : page.getList()) {
+            if (ECreditUserStatus.to_callback.getCode().equals(
+                creditUser.getStatus())) {
+                CreditIcbank creditIcbank = creditUserBO
+                    .getCreditIcbank(creditUser.getIcbankCode());
+                if (null != creditIcbank.getResult()) {
+                    creditUserBO.refreshIcbankCredit(creditUser, creditIcbank);
+                }
+            }
+        }
+        return null;
     }
 
 }
