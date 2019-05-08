@@ -593,9 +593,10 @@ public class CdbizAOImpl implements ICdbizAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
         if (!ECdbizStatus.D2.getCode().equals(cdbiz.getFircundangStatus())
-                && !ECdbizStatus.E2.getCode().equals(cdbiz.getSeccundangStatus())) {
+                && !ECdbizStatus.E2.getCode().equals(
+                    cdbiz.getSeccundangStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前状态不是入档状态，不能入档");
+                "当前状态不是入档状态，不能入档");
         }
 
         // 第一次存档
@@ -1042,7 +1043,12 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     public void creditBank(String code) {
+
         CreditUser creditUser = creditUserBO.getCreditUser(code);
+        if (!ECreditUserStatus.to_icCredit.getCode().equals(
+            creditUser.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该征信用户已");
+        }
         cdbizBO.creditIcBank(creditUser);
     }
 
@@ -1066,6 +1072,7 @@ public class CdbizAOImpl implements ICdbizAO {
                     creditUserBO.refreshIcbankCredit(creditUser, creditIcbank);
                 }
             }
+            init(cdbiz);
         }
         return page;
     }

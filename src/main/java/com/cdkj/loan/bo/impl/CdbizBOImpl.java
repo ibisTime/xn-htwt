@@ -27,7 +27,6 @@ import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
 import com.cdkj.loan.dto.req.XN798700Req;
-import com.cdkj.loan.dto.res.PKCodeRes;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
@@ -320,6 +319,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setCustname(creditUser.getUserName());
             req.setIdtype("000");
             req.setIdno(creditUser.getIdNo());
+            req.setZoneno("3303");
             String relation = null;
             String idFront = null;
             String idReverse = null;
@@ -357,9 +357,9 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setAuthPdf(authPdf);
             req.setSystemCode(ESystemCode.HTWT.getCode());
             req.setCompanyCode(ESystemCode.HTWT.getCode());
-            PKCodeRes icbankCode = BizConnecter.getBizData("798700",
-                JsonUtils.object2Json(req), PKCodeRes.class);
-            creditUser.setIcbankCode(icbankCode.getCode());
+            String icbankCode = BizConnecter.getBizData("798700",
+                JsonUtils.object2Json(req), String.class);
+            creditUser.setIcbankCode(icbankCode);
             creditUser.setStatus(ECreditUserStatus.to_callback.getCode());
             creditUserDAO.updateIcbankCode(creditUser);
         } catch (Exception e) {
