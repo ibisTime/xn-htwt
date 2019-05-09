@@ -496,7 +496,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 req.getCode(), ENode.getMap().get(preCurrentNode));
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-            if (!ECdbizStatus.H3.getCode().equals(preCurrentNode)) {
+            if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "制卡流程未走完，不能操作");
             }
