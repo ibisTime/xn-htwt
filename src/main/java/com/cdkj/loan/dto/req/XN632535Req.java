@@ -58,6 +58,7 @@ public class XN632535Req {
     // 工作单位电话
     private String companyContactNo;
 
+    //其他资料
     private String mateAssetPdf;
 
     /**
