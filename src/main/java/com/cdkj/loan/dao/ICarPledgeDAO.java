@@ -4,6 +4,7 @@ import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.CarPledge;
 
 public interface ICarPledgeDAO extends IBaseDAO<CarPledge> {
+
     String NAMESPACE = ICarPledgeDAO.class.getName().concat(".");
 
     int updateSaleManConfirm(CarPledge carPledge);
@@ -14,4 +15,5 @@ public interface ICarPledgeDAO extends IBaseDAO<CarPledge> {
 
     int updateConfirmDone(CarPledge carPledge);
 
+    void updateSupplementNote(CarPledge condition);
 }

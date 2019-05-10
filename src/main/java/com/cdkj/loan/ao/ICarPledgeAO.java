@@ -1,17 +1,17 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.dto.req.XN632124Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632144Req;
+import com.cdkj.loan.dto.req.XN632539Req;
+import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public interface ICarPledgeAO {
+
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 申请抵押
@@ -37,4 +37,8 @@ public interface ICarPledgeAO {
 
     public CarPledge getCarPledge(String code);
 
+    /**
+     * 准入录入抵押信息
+     */
+    void inputPledgeInfo(XN632539Req req);
 }

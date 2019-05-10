@@ -72,12 +72,7 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
 
     @Override
     public int updateFircundangStatus(Cdbiz data) {
-        return super.update(NAMESPACE.concat("update_fircundangStatus"), data);
-    }
-
-    @Override
-    public int updateSeccundangStatus(Cdbiz data) {
-        return super.update(NAMESPACE.concat("update_seccundangStatus"), data);
+        return super.update(NAMESPACE.concat("update_enterStatus"), data);
     }
 
     @Override

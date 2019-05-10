@@ -45,7 +45,7 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
 
     @Override
     public String saveCarPledge(String bizCode, String pledgeUser,
-            String pledgeUserIdCardCopy, String pledgeAddress) {
+            String pledgeUserIdCard, String pledgeAddress) {
 
         CarPledge carPledge = new CarPledge();
 
@@ -53,8 +53,8 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
                 .getCode());
         carPledge.setCode(code);
         carPledge.setBizCode(bizCode);
-        carPledge.setPledgeUser(pledgeUserIdCardCopy);
-        carPledge.setPledgeUserIdCard(pledgeUserIdCardCopy);
+        carPledge.setPledgeUser(pledgeUser);
+        carPledge.setPledgeUserIdCard(pledgeUserIdCard);
         carPledge.setPledgeAddress(pledgeAddress);
         carPledgeDAO.insert(carPledge);
         return code;
@@ -142,6 +142,11 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
         for (CarPledge carPledge : carPledges) {
             carPledgeDAO.delete(carPledge);
         }
+    }
+
+    @Override
+    public void refreshSupplementNote(CarPledge condition) {
+        carPledgeDAO.updateSupplementNote(condition);
     }
 
 }

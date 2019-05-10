@@ -17,6 +17,7 @@ import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632124Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632144Req;
+import com.cdkj.loan.dto.req.XN632539Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -71,9 +72,14 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         String nextNodeCode = nodeFlowBO
                 .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
-        // 添加车辆抵押信息
-        String carPledgeCode = carPledgeBO.saveCarPledge(req.getCode(),
-                req.getSupplementNote());
+        // 车辆抵押信息
+        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
+        if (null == carPledge) {
+            carPledgeBO.saveCarPledge(req.getCode(), req.getSupplementNote());
+        } else {
+            carPledge.setPledgeSupplementNote(req.getSupplementNote());
+            carPledgeBO.refreshSupplementNote(carPledge);
+        }
 
         // 更新业务状态
         cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
@@ -303,6 +309,24 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
     @Override
     public CarPledge getCarPledge(String code) {
         return carPledgeBO.getCarPledge(code);
+    }
+
+    @Override
+    public void inputPledgeInfo(XN632539Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        if (!ENode.input_budget.getCode().equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前不是录入准入单资料节点，不能操作");
+        }
+        carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
+                req.getPledgeUserIdCard(), req.getPledgeAddress());
+
+        // 添加附件
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), EAttachName.pledgeUserIdCardFront.getCode(), null,
+                        req.getPledgeUserIdCardFront());
+        attachmentBO.saveAttachment(cdbiz.getCode(), EAttachName.pledgeUserIdCardReverse.getCode(),
+                null, req.getPledgeUserIdCardReverse());
     }
 
 }

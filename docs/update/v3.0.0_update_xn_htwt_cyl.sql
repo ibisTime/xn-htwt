@@ -31,3 +31,6 @@ INSERT INTO `tdq_file_list` (`category`, `kname`, `vname`, `attach_type`, `numbe
 --修改车辆抵押字段
 ALTER TABLE `tdq_car_pledge`
 CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证号' ;
+
+ALTER TABLE `dev_xn_htwt_new`.`tdq_car_pledge`
+CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证复印件' ;

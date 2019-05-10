@@ -94,9 +94,6 @@
             <if test="enterStatus != null and enterStatus != '' ">
                 AND t.enter_status = #{enterStatus}
             </if>
-            <if test="seccundangStatus != null and seccundangStatus != '' ">
-                AND t.seccundang_status = #{seccundangStatus}
-            </if>
             <if test="cancelStatus != null and cancelStatus != '' ">
                 AND t.cancel_status = #{cancelStatus}
             </if>
@@ -157,11 +154,6 @@
                 <foreach collection="cundangStatusList" index="index" item="item" open="("
                         separator="," close=")">
                     #{item}
-                </foreach>
-                or t.seccundang_status in
-                <foreach collection="cundangStatusList" index="index" item="item" open="("
-                        separator="," close=")">
-                    #{item}
                 </foreach>)
             </if>
             <if test="roleCode != null and roleCode != '' ">
@@ -199,7 +191,6 @@
         ,t.make_card_status
         ,t.fbhgps_status
         ,t.enter_status
-        ,t.seccundang_status
         ,t.cancel_status
         ,t.cur_node_code
         ,t.intev_cur_node_code
@@ -256,7 +247,6 @@
         ,t.make_card_status
         ,t.fbhgps_status
         ,t.enter_status
-        ,t.seccundang_status
         ,t.cancel_status
         ,t.cur_node_code
         ,t.intev_cur_node_code
@@ -327,7 +317,6 @@
 		,make_card_status
 		,fbhgps_status
 		,enter_status
-		,seccundang_status
 		,cancel_status
 		,cur_node_code
 		,intev_cur_node_code
@@ -366,7 +355,6 @@
 		,#{makeCardStatus}
 		,#{fbhgpsStatus}
 		,#{enterStatus}
-		,#{seccundangStatus}
 		,#{cancelStatus}
 		,#{curNodeCode}
 		,#{intevCurNodeCode}
@@ -410,7 +398,6 @@
 		,make_card_status = #{makeCardStatus}
 		,fbhgps_status = #{fbhgpsStatus}
 		,enter_status = #{enterStatus}
-		,seccundang_status = #{seccundangStatus}
 		,cancel_status = #{cancelStatus}
 		,cur_node_code = #{curNodeCode}
 		,intev_cur_node_code = #{intevCurNodeCode}
@@ -472,13 +459,6 @@
 		UPDATE tqj_cdbiz
 		SET
 		enter_status=#{enterStatus}
-		WHERE code=#{code}
-	</update>
-
-    <update id="update_seccundangStatus" parameterType="cdbiz">
-		UPDATE tqj_cdbiz
-		SET
-		seccundang_status=#{seccundangStatus}
 		WHERE code=#{code}
 	</update>
 

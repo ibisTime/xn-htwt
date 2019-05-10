@@ -21,8 +21,6 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
 
     int updateFircundangStatus(Cdbiz data);
 
-    int updateSeccundangStatus(Cdbiz data);
-
     int updateZfStatus(Cdbiz data);
 
     int updateCurNodeCode(Cdbiz data);

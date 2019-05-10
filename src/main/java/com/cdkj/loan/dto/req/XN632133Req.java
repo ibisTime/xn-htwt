@@ -55,6 +55,10 @@ public class XN632133Req {
     @NotBlank
     private String settleAddress;
 
+    // 抵押地点
+    @NotBlank
+    private String pledgeAddress;
+
     // 代理人
     @NotBlank
     private String pledgeUser;
