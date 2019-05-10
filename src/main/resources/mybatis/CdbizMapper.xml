@@ -21,12 +21,12 @@
         <result column="repay_card_number" property="repayCardNumber"/>
         <result column="card_post_address" property="cardPostAddress"/>
         <result column="status" property="status"/>
-        <result column="mq_status" property="mqStatus"/>
+        <result column="intev_status" property="intevStatus"/>
         <result column="make_card_status" property="makeCardStatus"/>
         <result column="fbhgps_status" property="fbhgpsStatus"/>
-        <result column="fircundang_status" property="fircundangStatus"/>
+        <result column="enter_status" property="enterStatus"/>
         <result column="seccundang_status" property="seccundangStatus"/>
-        <result column="zf_status" property="zfStatus"/>
+        <result column="cancel_status" property="cancelStatus"/>
         <result column="cur_node_code" property="curNodeCode"/>
         <result column="intev_cur_node_code" property="intevCurNodeCode"/>
         <result column="make_card_node" property="makeCardNode"/>
@@ -85,20 +85,20 @@
             <if test="status != null and status != '' ">
                 AND t.status = #{status}
             </if>
-            <if test="mqStatus != null and mqStatus != '' ">
-                AND t.mq_status = #{mqStatus}
+            <if test="intevStatus != null and intevStatus != '' ">
+                AND t.intev_status = #{intevStatus}
             </if>
             <if test="fbhgpsStatus != null and fbhgpsStatus != '' ">
                 AND t.fbhgps_status = #{fbhgpsStatus}
             </if>
-            <if test="fircundangStatus != null and fircundangStatus != '' ">
-                AND t.fircundang_status = #{fircundangStatus}
+            <if test="enterStatus != null and enterStatus != '' ">
+                AND t.enter_status = #{enterStatus}
             </if>
             <if test="seccundangStatus != null and seccundangStatus != '' ">
                 AND t.seccundang_status = #{seccundangStatus}
             </if>
-            <if test="zfStatus != null and zfStatus != '' ">
-                AND t.zf_status = #{zfStatus}
+            <if test="cancelStatus != null and cancelStatus != '' ">
+                AND t.cancel_status = #{cancelStatus}
             </if>
             <if test="curNodeCode != null and curNodeCode != '' ">
                 AND t.cur_node_code = #{curNodeCode}
@@ -153,7 +153,7 @@
                 </foreach>
             </if>
             <if test="cundangStatusList != null and cundangStatusList.size() > 0 ">
-                AND (t.fircundang_status in
+                AND (t.enter_status in
                 <foreach collection="cundangStatusList" index="index" item="item" open="("
                         separator="," close=")">
                     #{item}
@@ -195,12 +195,12 @@
         ,t.repay_card_number
         ,t.card_post_address
         ,t.status
-        ,t.mq_status
+        ,t.intev_status
         ,t.make_card_status
         ,t.fbhgps_status
-        ,t.fircundang_status
+        ,t.enter_status
         ,t.seccundang_status
-        ,t.zf_status
+        ,t.cancel_status
         ,t.cur_node_code
         ,t.intev_cur_node_code
         ,t.make_card_node
@@ -252,12 +252,12 @@
         ,t.repay_card_number
         ,t.card_post_address
         ,t.status
-        ,t.mq_status
+        ,t.intev_status
         ,t.make_card_status
         ,t.fbhgps_status
-        ,t.fircundang_status
+        ,t.enter_status
         ,t.seccundang_status
-        ,t.zf_status
+        ,t.cancel_status
         ,t.cur_node_code
         ,t.intev_cur_node_code
         ,t.make_card_node
@@ -323,12 +323,12 @@
 		,enter_datetime
 		,enter_filelist
 		,status
-		,mq_status
+		,intev_status
 		,make_card_status
 		,fbhgps_status
-		,fircundang_status
+		,enter_status
 		,seccundang_status
-		,zf_status
+		,cancel_status
 		,cur_node_code
 		,intev_cur_node_code
 		,make_card_node
@@ -362,12 +362,12 @@
 		,#{enterDatetime}
 		,#{enterFilelist}
 		,#{status}
-		,#{mqStatus}
+		,#{intevStatus}
 		,#{makeCardStatus}
 		,#{fbhgpsStatus}
-		,#{fircundangStatus}
+		,#{enterStatus}
 		,#{seccundangStatus}
-		,#{zfStatus}
+		,#{cancelStatus}
 		,#{curNodeCode}
 		,#{intevCurNodeCode}
 		,#{makeCardNode}
@@ -405,13 +405,13 @@
 		,enter_filelist = #{enterFilelist}
 		,card_post_address=#{cardPostAddress}
 		,status = #{status}
-		,mq_status = #{mqStatus}
+		,intev_status = #{intevStatus}
 		,repay_card_number=#{repayCardNumber}
 		,make_card_status = #{makeCardStatus}
 		,fbhgps_status = #{fbhgpsStatus}
-		,fircundang_status = #{fircundangStatus}
+		,enter_status = #{enterStatus}
 		,seccundang_status = #{seccundangStatus}
-		,zf_status = #{zfStatus}
+		,cancel_status = #{cancelStatus}
 		,cur_node_code = #{curNodeCode}
 		,intev_cur_node_code = #{intevCurNodeCode}
 		,make_card_node = #{makeCardNode}
@@ -445,10 +445,10 @@
 		WHERE code=#{code}
 	</update>
 
-    <update id="update_mqStatus" parameterType="cdbiz">
+    <update id="update_intevStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
-		mq_status=#{mqStatus}
+		intev_status=#{intevStatus}
 		WHERE code=#{code}
 	</update>
 
@@ -468,10 +468,10 @@
 		WHERE code=#{code}
 	</update>
 
-    <update id="update_fircundangStatus" parameterType="cdbiz">
+    <update id="update_enterStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
-		fircundang_status=#{fircundangStatus}
+		enter_status=#{enterStatus}
 		WHERE code=#{code}
 	</update>
 
@@ -482,10 +482,10 @@
 		WHERE code=#{code}
 	</update>
 
-    <update id="update_zfStatus" parameterType="cdbiz">
+    <update id="update_cancelStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
-		zf_status=#{zfStatus}
+		cancel_status=#{cancelStatus}
 		WHERE code=#{code}
 	</update>
 
@@ -508,7 +508,7 @@
 		SET
 		cur_node_code=#{curNodeCode}
 		,intev_cur_node_code=#{intevCurNodeCode}
-		,mq_status=#{mqStatus}
+		,intev_status=#{intevStatus}
 		WHERE code=#{code}
 	</update>
 

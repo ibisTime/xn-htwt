@@ -3,17 +3,21 @@ package com.cdkj.loan.ao.impl;
 import com.cdkj.loan.ao.ICarPledgeAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTaskBO;
+import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632124Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632144Req;
+import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ECdbizStatus;
@@ -34,6 +38,9 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
     @Autowired
     private ICdbizBO cdbizBO;
+
+    @Autowired
+    private ICarInfoBO carInfoBO;
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
@@ -89,15 +96,28 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         if (!ENode.confirm_pledge_apply.getCode()
                 .equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是业务员确认抵押申请节点，不能操作");
+                    "当前不是内勤确认抵押申请节点，不能操作");
         }
 
-        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
         String nextNodeCode = nodeFlowBO
                 .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
 
         // 业务员确认抵押
-        carPledgeBO.saleManConfirm(carPledge.getCode(), nextNodeCode, req);
+        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
+        carPledgeBO.saleManConfirm(carPledge, req);
+
+        // 行驶证正面
+        EAttachName pledgeUserIdCardFront = EAttachName.getMap().get(
+                EAttachName.pledgeUserIdCardFront.getCode());
+        attachmentBO.saveAttachment(carPledge.getBizCode(),
+                pledgeUserIdCardFront.getCode(), pledgeUserIdCardFront.getValue(),
+                req.getPledgeUserIdCardFront());
+        // 行驶证反面
+        EAttachName pledgeUserIdCardReverse = EAttachName.getMap().get(
+                EAttachName.pledgeUserIdCardReverse.getCode());
+        attachmentBO.saveAttachment(carPledge.getBizCode(),
+                pledgeUserIdCardReverse.getCode(), pledgeUserIdCardReverse.getValue(),
+                req.getPledgeUserIdCardReverse());
 
         // 更新业务状态
         cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
@@ -147,8 +167,32 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         // 录入抵押信息
         carPledgeBO.entryPledgeInfo(carPledge.getCode(), nextNodeCode, req);
 
+        // 修改车辆信息
+        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
+        EntityUtils.copyData(req, carInfo);
+        carInfoBO.refreshCarInfo(carInfo);
+
         // 添加附件
-        attachmentBO.saveAttachment(cdbiz.getCode(), req);
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), EAttachName.pledgeUserIdCardFront.getCode(), null,
+                        req.getPledgeUserIdCardFront());
+        attachmentBO.saveAttachment(cdbiz.getCode(), EAttachName.pledgeUserIdCardReverse.getCode(),
+                null, req.getPledgeUserIdCardReverse());
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), "car_regcerti", null,
+                        req.getCarRegcerti());
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), "car_pd", null,
+                        req.getCarPd());
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), "car_key", null,
+                        req.getCarKey());
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), "green_big_smj", null,
+                        req.getCarBigSmj());
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), "car_xsz_smj", null,
+                        req.getCarXszSmj());
 
         // 更新业务状态
         cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
@@ -220,7 +264,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是抵押提交节点，不能操作");
         }
-        if (!ECdbizStatus.E3.getCode().equals(cdbiz.getSeccundangStatus())) {
+        if (!ECdbizStatus.E3.getCode().equals(cdbiz.getEnterStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "第二次存档未完成，不能操作");
         }

@@ -1,15 +1,17 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
+import lombok.Data;
 
 /**
-* 车辆抵押
-* @author: tao 
-* @since: 2019-04-22 16:47:56
-* @history:
-*/
+ * 车辆抵押
+ *
+ * @author: tao
+ * @since: 2019-04-22 16:47:56
+ * @history:
+ */
+@Data
 public class CarPledge extends ABaseDO {
 
     private static final long serialVersionUID = 7359106558695265787L;
@@ -29,8 +31,8 @@ public class CarPledge extends ABaseDO {
     // 代理人
     private String pledgeUser;
 
-    // 代理人身份证复印件
-    private String pledgeUserIdCardCopy;
+    // 代理人身份证号
+    private String pledgeUserIdCard;
 
     // 抵押地点
     private String pledgeAddress;
@@ -58,125 +60,5 @@ public class CarPledge extends ABaseDO {
 
     // 抵押打印日期
     private Date pledgePrintDatetime;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getBizCode() {
-        return bizCode;
-    }
-
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
-    }
-
-    public String getPledgeUser() {
-        return pledgeUser;
-    }
-
-    public void setPledgeUser(String pledgeUser) {
-        this.pledgeUser = pledgeUser;
-    }
-
-    public String getPledgeUserIdCardCopy() {
-        return pledgeUserIdCardCopy;
-    }
-
-    public void setPledgeUserIdCardCopy(String pledgeUserIdCardCopy) {
-        this.pledgeUserIdCardCopy = pledgeUserIdCardCopy;
-    }
-
-    public String getPledgeAddress() {
-        return pledgeAddress;
-    }
-
-    public void setPledgeAddress(String pledgeAddress) {
-        this.pledgeAddress = pledgeAddress;
-    }
-
-    public Date getPledgeDatetime() {
-        return pledgeDatetime;
-    }
-
-    public void setPledgeDatetime(Date pledgeDatetime) {
-        this.pledgeDatetime = pledgeDatetime;
-    }
-
-    public Date getPledgeBankCommitDatetime() {
-        return pledgeBankCommitDatetime;
-    }
-
-    public void setPledgeBankCommitDatetime(Date pledgeBankCommitDatetime) {
-        this.pledgeBankCommitDatetime = pledgeBankCommitDatetime;
-    }
-
-    public String getPledgeBankCommitNote() {
-        return pledgeBankCommitNote;
-    }
-
-    public void setPledgeBankCommitNote(String pledgeBankCommitNote) {
-        this.pledgeBankCommitNote = pledgeBankCommitNote;
-    }
-
-    public String getPledgeSupplementNote() {
-        return pledgeSupplementNote;
-    }
-
-    public void setPledgeSupplementNote(String pledgeSupplementNote) {
-        this.pledgeSupplementNote = pledgeSupplementNote;
-    }
-
-    public String getPledgeContractCode() {
-        return pledgeContractCode;
-    }
-
-    public void setPledgeContractCode(String pledgeContractCode) {
-        this.pledgeContractCode = pledgeContractCode;
-    }
-
-    public String getPledgePrintTemplateId() {
-        return pledgePrintTemplateId;
-    }
-
-    public void setPledgePrintTemplateId(String pledgePrintTemplateId) {
-        this.pledgePrintTemplateId = pledgePrintTemplateId;
-    }
-
-    public String getPledgePrintUser() {
-        return pledgePrintUser;
-    }
-
-    public void setPledgePrintUser(String pledgePrintUser) {
-        this.pledgePrintUser = pledgePrintUser;
-    }
-
-    public Date getPledgePrintDatetime() {
-        return pledgePrintDatetime;
-    }
-
-    public void setPledgePrintDatetime(Date pledgePrintDatetime) {
-        this.pledgePrintDatetime = pledgePrintDatetime;
-    }
 
 }

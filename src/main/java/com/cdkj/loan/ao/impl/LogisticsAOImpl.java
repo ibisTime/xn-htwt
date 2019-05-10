@@ -137,7 +137,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 if (logistics.getFromNodeCode().equals(ENode.receive_approve_4.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
 
-                    if (!ECdbizStatus.D3.getCode().equals(cdbiz.getFircundangStatus())) {
+                    if (!ECdbizStatus.D3.getCode().equals(cdbiz.getEnterStatus())) {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(), "第一次为入档，不能发件！");
                     }
                     // 完成待办事项
@@ -216,7 +216,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         // 待风控寄件（车辆抵押）
                         case submit_6:
                             if (!ECdbizStatus.D3.getCode()
-                                    .equals(cdbiz.getFircundangStatus())) {
+                                    .equals(cdbiz.getEnterStatus())) {
                                 throw new BizException(
                                         EBizErrorCode.DEFAULT.getCode(),
                                         "第一次存档未完成，无法发件");
@@ -229,8 +229,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             break;
                     }
 
-                    if (StringUtils.isNotBlank(cdbiz.getFircundangStatus())) {
-                        switch (cdbiz.getFircundangStatus()) {
+                    if (StringUtils.isNotBlank(cdbiz.getEnterStatus())) {
+                        switch (cdbiz.getEnterStatus()) {
                             // 风控寄送银行放款材料
                             case "000":
                                 cdbizBO.refreshFircundangStatus(cdbiz,

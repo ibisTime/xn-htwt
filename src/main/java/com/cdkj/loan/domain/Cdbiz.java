@@ -77,19 +77,16 @@ public class Cdbiz extends ABaseDO {
     private String makeCardStatus;
 
     // 面签状态
-    private String mqStatus;
+    private String intevStatus;
 
     // 发保合GPS状态
     private String fbhgpsStatus;
 
-    // 第一次存档状态
-    private String fircundangStatus;
-
-    // 第二次存档状态
-    private String seccundangStatus;
+    // 存档状态
+    private String enterStatus;
 
     // 作废状态
-    private String zfStatus;
+    private String cancelStatus;
 
     // 当前节点编号
     private String curNodeCode;

@@ -79,6 +79,10 @@ public enum EAttachName {
     salerAndcustomer("saler_and_customer", "业务员与客户合影"),
     advanceBillPdf("advance_bill_pdf", "垫资水单"),
 
+    //车辆抵押
+    pledgeUserIdCardFront("pledge_user_id_card_front", "代理人身份证正"),
+    pledgeUserIdCardReverse("pledge_user_id_card_reverse", "代理人身份证反"),
+
     water_bill("h1", "图片");
 
     public static Map<String, EAttachName> getMap() {

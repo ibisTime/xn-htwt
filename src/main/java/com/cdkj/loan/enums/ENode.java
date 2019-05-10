@@ -63,7 +63,7 @@ public enum ENode {
     first_receive_archive("e9", "第一次已收件待存档"), first_archive("e10", "第一次已存档"),
 
     // 车辆抵押
-    confirm_pledge_apply("f1", "待业务员确认抵押申请"), submit_3("f2", "风控寄抵押合同"),
+    confirm_pledge_apply("f1", "内勤确认抵押申请"), submit_3("f2", "风控寄抵押合同"),
 
     receive_approve_3("f3", "业务员审核抵押合同"), re_submit_3("f2x", "风控重寄抵押合同"),
 

@@ -152,7 +152,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // 抵押
         carPledgeBO.removeCarpledge(req.getCode());
         carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
-                req.getPledgeUserIdCardCopy(), req.getPledgeAddress());
+                req.getPledgeUserIdCard(), req.getPledgeAddress());
 
         // 征信人
         List<CreditUser> creditUsers = creditUserBO.queryCreditUserList(req
@@ -258,7 +258,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是区域经理审核节点，不能操作");
         }
-        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getMqStatus())) {
+        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getIntevStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "面签流程未走完，不能操作");
         }
