@@ -489,7 +489,8 @@ public class CdbizAOImpl implements ICdbizAO {
     public void accesssApplySubmit(String code, String operator) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ENode.input_budget.getCode().equals(cdbiz.getCurNodeCode())) {
+        if (!ENode.input_budget.getCode().equals(cdbiz.getCurNodeCode())
+                && !ENode.renew_budget.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是录入准入单资料节点，不能操作");
         }

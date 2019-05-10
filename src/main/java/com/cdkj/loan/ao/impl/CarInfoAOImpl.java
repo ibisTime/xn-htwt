@@ -487,10 +487,6 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     "当前节点不是财务审核节点，不能操作");
         }
 
-        if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "制卡流程未走完，不能操作");
-        }
         // 日志记录
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.BUDGET_ORDER,
                 req.getCode(), preCurrentNode, req.getApproveNote(),
@@ -500,6 +496,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 req.getCode(), ENode.getMap().get(preCurrentNode));
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "制卡流程未走完，不能操作");
+            }
+
             // 主状态
             status = ECdbizStatus.A10.getCode();
             // 发保合gps状态
