@@ -4255,7 +4255,10 @@ INSERT INTO `tsys_dict` (`id`,`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`upd
 INSERT INTO `tsys_dict` (`id`,`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES (1031,'0',NULL,'credit_card_type','信用卡类型','admin','2019-05-04 13:58:44',NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`id`,`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES (1032,'1','credit_card_type','1','普通','admin','2019-05-04 13:58:44',NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`id`,`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES (1033,'1','credit_card_type','2','白金','admin','2019-05-04 13:58:44',NULL,'CD-HTWT000020','CD-HTWT000020');
-
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'credit_user_status','征信人工行征信状态','admin','2019-05-04 13:58:44',NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_status','0','待工行征信','admin','2019-05-04 13:58:44',NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_status','1','待回调','admin','2019-05-04 13:58:44',NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_status','2','回调完成','admin','2019-05-04 13:58:44',NULL,'CD-HTWT000020','CD-HTWT000020');
 /*
 -- Query: SELECT * FROM dev_xn_htwt_new.tsys_config
 -- Date: 2019-05-04 21:00

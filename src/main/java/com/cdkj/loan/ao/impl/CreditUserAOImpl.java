@@ -156,7 +156,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
                 }
             }
         }
-        return null;
+        return page;
     }
 
 }

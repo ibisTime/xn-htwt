@@ -1007,16 +1007,6 @@ public class CdbizAOImpl implements ICdbizAO {
         // 征信人列表
         List<CreditUser> creditUserList = creditUserBO
             .queryCreditUserList(cdbiz.getCode());
-        for (CreditUser creditUser2 : creditUserList) {
-            if (ECreditUserStatus.to_callback.getCode().equals(
-                creditUser2.getStatus())) {
-                CreditIcbank creditIcbank = creditUserBO
-                    .getCreditIcbank(creditUser2.getIcbankCode());
-                if (null != creditIcbank.getResult()) {
-                    creditUserBO.refreshIcbankCredit(creditUser2, creditIcbank);
-                }
-            }
-        }
         cdbiz.setCreditUserList(creditUserList);
 
         // 车辆信息
