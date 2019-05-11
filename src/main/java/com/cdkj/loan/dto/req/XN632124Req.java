@@ -16,9 +16,6 @@ public class XN632124Req {
     @NotBlank
     private String code;// 预算单编号
 
-    @NotBlank
-    private String approveNote;// 审核说明
-
     // 代理人
     @NotBlank
     private String pledgeUser;

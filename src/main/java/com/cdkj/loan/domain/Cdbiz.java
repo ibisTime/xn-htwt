@@ -100,6 +100,9 @@ public class Cdbiz extends ABaseDO {
     // 发保合gps节点
     private String fbhgpsNode;
 
+    // 入档节点
+    private String enterNodeCode;
+
     // 客户申请作废时的节点编号
     private String cancelNodeCode;
 

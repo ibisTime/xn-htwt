@@ -221,8 +221,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                         EBizErrorCode.DEFAULT.getCode(),
                                         "第一次存档未完成，无法发件");
                             }
-                            cdbizBO.refreshSeccundangStatus(cdbiz,
-                                    ECdbizStatus.E1.getCode());
+                            cdbizBO.refreshEnterNodeStatus(cdbiz,
+                                    ECdbizStatus.E1.getCode(), ENode.receive_6.getCode());
                             break;
 
                         default:
@@ -233,8 +233,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         switch (cdbiz.getEnterStatus()) {
                             // 风控寄送银行放款材料
                             case "000":
-                                cdbizBO.refreshFircundangStatus(cdbiz,
-                                        ECdbizStatus.D1.getCode());
+                                cdbizBO.refreshEnterNodeStatus(cdbiz,
+                                        ECdbizStatus.D1.getCode(), ENode.receive_2.getCode());
                                 break;
 
                             default:
@@ -317,7 +317,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 "该节点不能补件");
                     }
                     // 更新入档状态
-                    cdbizBO.refreshSeccundangStatus(cdbiz, ECdbizStatus.E2.getCode());
+                    cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E2.getCode(),
+                            ENode.second_received_archive.getCode());
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_5.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_5.getCode())) {
                     if (EBoolean.NO.getCode().equals(approveResult)) {
@@ -335,7 +336,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 "该节点不能补件");
                     }
                     // 更新入档状态
-                    cdbizBO.refreshSeccundangStatus(cdbiz, ECdbizStatus.D2.getCode());
+                    cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.D2.getCode(),
+                            ENode.first_receive_archive.getCode());
                 } else {
 
                     String nextNodeCode = null;
@@ -358,8 +360,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                                 cdbizBO.refreshStatus(cdbiz,
                                         ECdbizStatus.A13.getCode());
-                                cdbizBO.refreshFircundangStatus(cdbiz,
-                                        ECdbizStatus.D0.getCode());
+                                cdbizBO.refreshEnterNodeStatus(cdbiz,
+                                        ECdbizStatus.D0.getCode(), ENode.submit_2.getCode());
 
                                 // 生成银行放款
                                 bankLoanBO.saveBankLoan(cdbiz.getCode());
@@ -375,12 +377,17 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                                 // 资料传递待办事项
                                 bizTaskBO.saveBizTask(cdbiz.getCode(),
-                                        EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                        EBizLogType.bank_push, logisticsCode,
                                         ENode.matchCode(nextNodeCode), operator);
+
+                                // 入档资料传递待办事项
+                                bizTaskBO.saveBizTask(cdbiz.getCode(),
+                                        EBizLogType.enter, logisticsCode,
+                                        ENode.submit_2, operator);
 
                                 // 资料传递操作日志
                                 sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                                        EBizLogType.ZHDY_LOGISTICS, logisticsCode,
+                                        EBizLogType.bank_push, logisticsCode,
                                         nextNodeCode, null, operator);
                             } else {
 
@@ -405,8 +412,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                                 cdbizBO.refreshStatus(cdbiz,
                                         ECdbizStatus.A24.getCode());
-                                cdbizBO.refreshSeccundangStatus(cdbiz,
-                                        ECdbizStatus.E0.getCode());
+                                cdbizBO.refreshEnterNodeStatus(cdbiz,
+                                        ECdbizStatus.E0.getCode(), ENode.submit_6.getCode());
 
                                 // 生成【风控寄送材料】资料传递
                                 String fkSendlogisticsCode = logisticsBO
@@ -419,12 +426,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                                 // 资料传递待办事项
                                 bizTaskBO.saveBizTask(cdbiz.getCode(),
-                                        EBizLogType.ZHDY_LOGISTICS, fkSendlogisticsCode,
+                                        EBizLogType.enter, fkSendlogisticsCode,
                                         ENode.receive_6, operator);
 
                                 // 资料传递操作日志
                                 sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                                        EBizLogType.ZHDY_LOGISTICS, fkSendlogisticsCode,
+                                        EBizLogType.enter, fkSendlogisticsCode,
                                         ENode.receive_6.getCode(), null, operator);
 
                                 // 生成【风控审核通过】资料传递
@@ -510,14 +517,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                     // 待担保公司收件（车辆抵押）
                     case receive_6:
-                        cdbizBO.refreshSeccundangStatus(cdbiz,
-                                ECdbizStatus.E2.getCode());
+                        cdbizBO.refreshEnterNodeStatus(cdbiz,
+                                ECdbizStatus.E2.getCode(), ENode.second_received_archive.getCode());
                         break;
 
                     // 贷后收件（银行放款）
                     case receive_2:
-                        cdbizBO.refreshFircundangStatus(cdbiz,
-                                ECdbizStatus.D2.getCode());
+                        cdbizBO.refreshEnterNodeStatus(cdbiz,
+                                ECdbizStatus.D2.getCode(), ENode.first_receive_archive.getCode());
                         break;
 
                     default:

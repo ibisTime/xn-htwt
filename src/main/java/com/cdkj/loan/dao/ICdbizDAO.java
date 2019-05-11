@@ -19,7 +19,7 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
 
     int updateFbhgpsNodeStatus(Cdbiz data);
 
-    int updateFircundangStatus(Cdbiz data);
+    int updateEnterNodeStatus(Cdbiz data);
 
     int updateZfStatus(Cdbiz data);
 

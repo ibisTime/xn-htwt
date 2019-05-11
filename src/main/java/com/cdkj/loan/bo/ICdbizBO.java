@@ -1,7 +1,5 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTeam;
@@ -11,6 +9,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
+import java.util.List;
 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
@@ -43,9 +42,7 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     void refreshFbhgpsStatus(Cdbiz cdbiz, String status);
 
-    void refreshFircundangStatus(Cdbiz cdbiz, String status);
-
-    void refreshSeccundangStatus(Cdbiz cdbiz, String status);
+    void refreshEnterNodeStatus(Cdbiz cdbiz, String status, String enterNodeCode);
 
     void refreshZfStatus(Cdbiz cdbiz, String status);
 

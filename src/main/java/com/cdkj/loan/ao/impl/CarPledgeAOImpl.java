@@ -74,6 +74,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 车辆抵押信息
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
+        // 判断车辆抵押副表是不是空，不为空说明预算单填写过抵押信息
         if (null == carPledge) {
             carPledgeBO.saveCarPledge(req.getCode(), req.getSupplementNote());
         } else {
@@ -135,8 +136,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                cdbiz.getCode(), nextNodeCode, req.getApproveNote(),
-                req.getOperator());
+                cdbiz.getCode(), nextNodeCode, null, req.getOperator());
 
         // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
@@ -151,8 +151,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 资料传递操作日志
         sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.ZHDY_LOGISTICS,
-                logisticsCode, nextNodeCode, req.getApproveNote(),
-                req.getOperator());
+                logisticsCode, nextNodeCode, null, req.getOperator());
 
     }
 

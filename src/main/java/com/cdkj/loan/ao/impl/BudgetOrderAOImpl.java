@@ -608,7 +608,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-                nodeFlow.getNextNode(), req.getApproveNote(), req.getOperator());
+                nodeFlow.getNextNode(), null, req.getOperator());
     }
 
     // @Override

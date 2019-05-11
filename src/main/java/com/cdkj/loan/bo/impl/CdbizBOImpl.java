@@ -199,13 +199,10 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public void refreshFircundangStatus(Cdbiz cdbiz, String status) {
+    public void refreshEnterNodeStatus(Cdbiz cdbiz, String status, String enterNodeCode) {
         cdbiz.setEnterStatus(status);
-        cdbizDAO.updateFircundangStatus(cdbiz);
-    }
-
-    @Override
-    public void refreshSeccundangStatus(Cdbiz cdbiz, String status) {
+        cdbiz.setEnterNodeCode(enterNodeCode);
+        cdbizDAO.updateEnterNodeStatus(cdbiz);
     }
 
     @Override
@@ -364,6 +361,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         }
     }
 
+    @Override
     public void refreshCurNodeStatus(Cdbiz cdbiz) {
         cdbizDAO.updateCurNodeStatus(cdbiz);
     }

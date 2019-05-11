@@ -31,6 +31,7 @@
         <result column="intev_cur_node_code" property="intevCurNodeCode"/>
         <result column="make_card_node" property="makeCardNode"/>
         <result column="fbhgps_node" property="fbhgpsNode"/>
+        <result column="enter_node_code" property="enterNodeCode"/>
         <result column="cancel_node_code" property="cancelNodeCode"/>
         <result column="is_gps_az" property="isGpsAz"/>
         <result column="is_finacing" property="isFinacing"/>
@@ -103,11 +104,17 @@
             <if test="intevCurNodeCode != null and intevCurNodeCode != '' ">
                 AND t.intev_cur_node_code = #{intevCurNodeCode}
             </if>
+            <if test="enterNodeStatus != null and enterNodeStatus != '' ">
+                AND t.enter_node_status = #{enterNodeStatus}
+            </if>
             <if test="makeCardNode != null and makeCardNode != '' ">
                 AND t.make_card_node = #{makeCardNode}
             </if>
             <if test="fbhgpsNode != null and fbhgpsNode != '' ">
                 AND t.fbhgps_node = #{fbhgpsNode}
+            </if>
+            <if test="enterNodeCode != null and enterNodeCode != '' ">
+                AND t.enter_node_code = #{enterNodeCode}
             </if>
             <if test="cancelNodeCode != null and cancelNodeCode != '' ">
                 AND t.cancel_node_code = #{cancelNodeCode}
@@ -145,6 +152,13 @@
             <if test="fbhgpsNodeList != null and fbhgpsNodeList.size() > 0 ">
                 AND t.fbhgps_node in
                 <foreach collection="fbhgpsNodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="enterNodeCodeList != null and enterNodeCodeList.size() > 0 ">
+                AND t.enter_node_code in
+                <foreach collection="enterNodeCodeList" index="index" item="item" open="("
                         separator="," close=")">
                     #{item}
                 </foreach>
@@ -196,6 +210,7 @@
         ,t.intev_cur_node_code
         ,t.make_card_node
         ,t.fbhgps_node
+        ,t.enter_node_code
         ,t.cancel_node_code
         ,t.is_gps_az
         ,t.is_finacing
@@ -252,6 +267,7 @@
         ,t.intev_cur_node_code
         ,t.make_card_node
         ,t.fbhgps_node
+        ,t.enter_node_code
         ,t.cancel_node_code
         ,t.is_gps_az
         ,t.is_finacing
@@ -322,6 +338,7 @@
 		,intev_cur_node_code
 		,make_card_node
 		,fbhgps_node
+		,enter_node_code
 		,cancel_node_code
 		,is_gps_az
 		,is_finacing
@@ -360,6 +377,7 @@
 		,#{intevCurNodeCode}
 		,#{makeCardNode}
 		,#{fbhgpsNode}
+		,#{enterNodeCode}
 		,#{cancelNodeCode}
 		,#{isGpsAz}
 		,#{isFinacing}
@@ -403,6 +421,7 @@
 		,intev_cur_node_code = #{intevCurNodeCode}
 		,make_card_node = #{makeCardNode}
 		,fbhgps_node = #{fbhgpsNode}
+		,enter_node_code = #{enterNodeCode}
 		,cancel_node_code = #{cancelNodeCode}
 		,is_gps_az = #{isGpsAz}
 		,is_finacing = #{isFinacing}
@@ -455,10 +474,11 @@
 		WHERE code=#{code}
 	</update>
 
-    <update id="update_enterStatus" parameterType="cdbiz">
+    <update id="update_enterNodeStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		enter_status=#{enterStatus}
+		,enter_node_code=#{enterNodeCode}
 		WHERE code=#{code}
 	</update>
 
