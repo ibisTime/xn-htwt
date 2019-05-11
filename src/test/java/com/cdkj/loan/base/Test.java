@@ -1,30 +1,30 @@
 package com.cdkj.loan.base;
 
+import com.cdkj.loan.common.DateUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.cdkj.loan.common.DateUtil;
-
 public class Test {
+
     // 实体
-    private static String key = "interviewVideo";
+    private static String key = "enterFileList";
 
     // 实体名称
-    private static String keyName = "面签视频";
+    private static String keyName = "档案存放清单";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_interview_video";
+    private static String dbname = "tdq_enter_file_list";
 
-    private static String[] DBwords = { "id", "room_code", "file_id",
-            "video_url", "file_size", "start_time", "end_time", "file_format" };
+    private static String[] DBwords = {"code", "biz_code", "content",
+            "file_count", "deposit_location", "operator", "remark"};
 
-    private static String[] DBwordsName = { "序号", "房间编号", "视频编号", "点播视频的下载地址",
-            "文件大小", "开始时间", "结束时间", "文件格式" };
+    private static String[] DBwordsName = {"编号", "业务编号", "内容", "份数",
+            "存放位置", "存放人", "备注"};
 
     private static String[] DOwords = getDOwords();
 
@@ -34,36 +34,36 @@ public class Test {
     public static void main(String[] args) {
 
         File DOMAINfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/domain",
-            Key + ".java");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/java/com/cdkj/loan/domain",
+                Key + ".java");
 
         File Mapperfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/resources/mybatis",
-            Key + "Mapper.xml");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/resources/mybatis",
+                Key + "Mapper.xml");
 
         File IDAOfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao",
-            "I" + Key + "DAO.java");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/java/com/cdkj/loan/dao",
+                "I" + Key + "DAO.java");
 
         File DAOImplfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao/impl",
-            Key + "DAOImpl.java");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/java/com/cdkj/loan/dao/impl",
+                Key + "DAOImpl.java");
 
         File IBOfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo",
-            "I" + Key + "BO.java");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/java/com/cdkj/loan/bo",
+                "I" + Key + "BO.java");
 
         File BOImplfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo/impl",
-            Key + "BOImpl.java");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/java/com/cdkj/loan/bo/impl",
+                Key + "BOImpl.java");
 
         File IAOfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao",
-            "I" + Key + "AO.java");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/java/com/cdkj/loan/ao",
+                "I" + Key + "AO.java");
 
         File AOImplfile = new File(
-            "D:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao/impl",
-            Key + "AOImpl.java");
+                "/Users/cyl/IdeaProjects/xn-htwt/src/main/java/com/cdkj/loan/ao/impl",
+                Key + "AOImpl.java");
         try {
             DOMAINfile.createNewFile();
 
@@ -405,7 +405,7 @@ public class Test {
                 + "();\n\t\t\tcondition.setCode(code);\n\t\t\t" + "data = "
                 + key
                 + "DAO.select(condition);\n\t\t\tif (data == null) {\n\t\t\t\t"
-                + "throw new BizException(\"xn0000\", \"�� ��Ų�����\");\n\t\t\t"
+                + "throw new BizException(\"xn0000\", \"编号不存在\");\n\t\t\t"
                 + "}\n\t\t}\n\t\treturn data;\n\t}\n}";
         return str;
     }
@@ -414,7 +414,7 @@ public class Test {
         String str = "package " + packge + "ao;\n\n"
                 + "import java.util.List;\n\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
-                + ";\n\n\n\n" + "//CHECK ��鲢��ע�� \n@Component\n"
+                + ";\n\n\n\n" + "//CHECK \n@Component\n"
                 + "public interface I" + Key + "AO {\n\t"
                 + "static final String DEFAULT_ORDER_COLUMN = \"code\";\n\n\n\t"
                 + "public String add" + Key + "(" + Key + " data);\n\n\t"
@@ -437,7 +437,7 @@ public class Test {
                 + packge + "bo.I" + Key + "BO;\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
                 + ";\n" + "import " + packge + "exception.BizException;\n\n\n\n"
-                + "//CHECK ��鲢��ע�� \n@Service\n" + "public class " + Key
+                + "//CHECK \n@Service\n" + "public class " + Key
                 + "AOImpl implements I" + Key + "AO {\n\n\t"
                 + "@Autowired\n\tprivate I" + Key + "BO " + key + "BO;\n\n\t"
                 + "@Override\n\tpublic String add" + Key + "(" + Key

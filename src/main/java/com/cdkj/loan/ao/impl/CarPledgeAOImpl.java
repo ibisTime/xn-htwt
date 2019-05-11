@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.IEnterFileListBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -14,6 +15,7 @@ import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.EnterFileList;
 import com.cdkj.loan.dto.req.XN632124Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632144Req;
@@ -27,6 +29,7 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +60,9 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
     @Autowired
     private IAttachmentBO attachmentBO;
+
+    @Autowired
+    private IEnterFileListBO enterFileListBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -272,6 +278,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         if (!ECdbizStatus.E3.getCode().equals(cdbiz.getEnterStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "第二次存档未完成，不能操作");
+        }
+
+        List<EnterFileList> enterFileListList = enterFileListBO.queryEnterFileListByBizCode(code);
+        if (CollectionUtils.isEmpty(enterFileListList)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "入档清单不能为空");
         }
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
