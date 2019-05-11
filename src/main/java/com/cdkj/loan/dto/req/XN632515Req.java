@@ -159,6 +159,8 @@ public class XN632515Req extends APageReq {
 
     private List<String> fbhgpsNodeList;
 
+    private List<String> enterNodeCodeList;
+
     private String roleCode;
 
     private String userId;

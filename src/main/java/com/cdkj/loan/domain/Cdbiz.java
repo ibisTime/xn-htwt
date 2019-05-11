@@ -158,6 +158,9 @@ public class Cdbiz extends ABaseDO {
 
     private List<String> fbhgpsNodeList;
 
+    // 入档节点
+    private List<String> enterNodeCodeList;
+
     private String roleCode;
 
     private String userId;

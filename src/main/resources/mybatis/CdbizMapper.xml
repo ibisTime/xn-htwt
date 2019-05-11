@@ -104,8 +104,8 @@
             <if test="intevCurNodeCode != null and intevCurNodeCode != '' ">
                 AND t.intev_cur_node_code = #{intevCurNodeCode}
             </if>
-            <if test="enterNodeStatus != null and enterNodeStatus != '' ">
-                AND t.enter_node_status = #{enterNodeStatus}
+            <if test="enterNodeCode != null and enterNodeCode != '' ">
+                AND t.enter_node_code = #{enterNodeCode}
             </if>
             <if test="makeCardNode != null and makeCardNode != '' ">
                 AND t.make_card_node = #{makeCardNode}
