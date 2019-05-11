@@ -22,7 +22,7 @@ public class XN632222Req {
 
     // 份数
     @NotBlank
-    private Integer fileCount;
+    private String fileCount;
 
     // 存放时间
     @NotBlank

@@ -179,12 +179,12 @@ public class CdbizAOImpl implements ICdbizAO {
         BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
 
         // 初始节点
-        ENode currentNode = ENode.new_credit;
+        String currentNode = ENode.new_credit.getCode();
 
         // 生成业务编号
         Cdbiz cdbiz = cdbizBO.saveCdbiz(req.getLoanBankCode(),
                 req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
-                sysUser, bizTeam, currentNode.getCode(), req.getButtonCode(),
+                sysUser, bizTeam, currentNode, req.getButtonCode(),
                 req.getNote());
 
         // 二手车材料处理
@@ -192,28 +192,10 @@ public class CdbizAOImpl implements ICdbizAO {
                 req.getXszReverse());
 
         // 新增征信人员
-        modifyCreditUser(cdbiz.getBizCode(), req.getCreditUserList(), true);
+        modifyCreditUser(cdbiz.getCode(), req.getCreditUserList(), true);
 
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
-            // 操作日志
-            sysBizLogBO.recordCurOperate(cdbiz.getBizCode(),
-                    EBizLogType.CREDIT, cdbiz.getBizCode(), currentNode.getCode(),
-                    req.getNote(), sysUser.getUserId());
-
-            if (!bizTeam.getCaptain().equals(req.getOperator())) {
-                // 给团队长发起待办事项
-                bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.CREDIT,
-                        cdbiz.getBizCode(), ENode.input_credit,
-                        bizTeam.getCaptain());
-            }
-
-            // 录入征信的待办事项
-            bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.CREDIT,
-                    cdbiz.getBizCode(), ENode.input_credit, req.getOperator());
-
-            // 面签开始的待办事项
-            bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
-                    cdbiz.getBizCode(), ENode.input_interview, req.getOperator());
+            creditSend(cdbiz, currentNode, req.getOperator());
         }
 
         return cdbiz.getCode();
@@ -223,16 +205,16 @@ public class CdbizAOImpl implements ICdbizAO {
     @Transactional(rollbackFor = Exception.class)
     public void editCredit(XN632112Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
-        if (!ECdbizStatus.A0.getCode().equals(cdbiz.getStatus())) {
+        if (!ENode.new_credit.getCode().equals(cdbiz.getCurNodeCode())
+                && !ENode.renew_credit.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "该业务不处于征信审核不通过或新录状态，无法修改征信");
+                    "该业务不处于征信新录或重录状态，无法修改征信");
         }
 
         String bizCode = req.getBizCode();
 
         // 之前节点
         String preCurNodeCode = cdbiz.getCurNodeCode();
-        ENode node = ENode.getMap().get(preCurNodeCode);
 
         // 删除附件
         attachmentBO.removeBizAttachments(bizCode);
@@ -249,40 +231,42 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 更新当前节点
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
-            // 操作日志
-            sysBizLogBO.recordCurOperate(bizCode, EBizLogType.CREDIT, bizCode,
-                    node.getCode(), node.getValue(), req.getOperator());
-
-            // 处理之前的待办事项
-            bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(), bizCode,
-                    node);
-
-            // 发起征信的待办事项
-            bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.CREDIT,
-                    cdbiz.getBizCode(), ENode.input_credit, req.getOperator());
-
-            // 给团队长发起待办事项
-            bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.CREDIT,
-                    cdbiz.getBizCode(), ENode.input_credit, cdbiz.getCaptainCode());
-
-            // 面签开始的待办事项
-            bizTaskBO.saveBizTask(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
-                    cdbiz.getBizCode(), ENode.input_interview, req.getOperator());
-
-            // 更新节点
-            NodeFlow nodeFlow = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurNodeCode);
-
-            // 更新提交节点信息
-            cdbizBO.refreshIntevNodeStart(cdbiz, nodeFlow.getNextNode(),
-                    ENode.input_interview.getCode(), ECdbizStatus.B00.getCode());
-
-            // 修改业务主状态
-            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1.getCode(),
-                    ECdbizStatus.A1.getValue());
+            creditSend(cdbiz, preCurNodeCode, req.getOperator());
         }
     }
 
+
+    /**
+     * 征信发送
+     */
+    private void creditSend(Cdbiz cdbiz, String currentNode, String operator) {
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(currentNode);
+
+        // 操作日志:操作第一步记录本次操作
+        sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(), EBizLogType.CREDIT, cdbiz.getCode(),
+                currentNode, null, operator);
+
+        // 录入征信的待办事项
+        bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.CREDIT,
+                cdbiz.getCode(), ENode.input_credit);
+
+        // 面签开始的待办事项
+        bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
+                cdbiz.getCode(), ENode.input_interview);
+
+        // 更新提交节点信息
+        cdbizBO.refreshIntevNodeStart(cdbiz, ENode.input_interview.getCode(),
+                ECdbizStatus.B00.getCode());
+
+        // 修改业务主节点状态
+        cdbiz.setCurNodeCode(nodeFlow.getNextNode());
+        cdbiz.setStatus(ECdbizStatus.A1.getCode());
+        cdbizBO.refreshCurNodeStatus(cdbiz);
+    }
+
+    /**
+     * 征信人
+     */
     private void modifyCreditUser(String bizCode,
             List<XN632110ReqCreditUser> childList, boolean isAdd) {
         if (!isAdd) {
@@ -314,6 +298,9 @@ public class CdbizAOImpl implements ICdbizAO {
         }
     }
 
+    /**
+     * 二手车资料
+     */
     private void secondHandOperate(Cdbiz cdbiz, String secondCarReport,
             String xszFront, String xszReverse) {
         if (ENewBizType.second_hand.getCode().equals(cdbiz.getBizType())) {
@@ -357,26 +344,26 @@ public class CdbizAOImpl implements ICdbizAO {
     @Transactional(rollbackFor = Exception.class)
     public void inputBankCreditResult(XN632111Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
-        if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())
-                && !ECdbizStatus.A1x.getCode().equals(cdbiz.getStatus())) {
+        if (!ENode.input_credit.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是录入银行征信结果节点，不能操作");
         }
         // 当前节点
         String preCurNodeCode = cdbiz.getCurNodeCode();
-        String curNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode)
+        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode)
                 .getNextNode();
-        cdbizBO.refreshCurNodeCode(cdbiz, curNode);
-        cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A2.getCode(),
-                ECdbizStatus.A2.getValue());
+
+        cdbiz.setStatus(ECdbizStatus.A2.getCode());
+        cdbiz.setCurNodeCode(nextNode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
+
+        // 日志记录
+        sysBizLogBO.saveNewSYSBizLog(req.getBizCode(), EBizLogType.CREDIT,
+                req.getBizCode(), preCurNodeCode, null, req.getOperator());
 
         // 待办事项处理
         bizTaskBO.handlePreAndAdd(EBizLogType.CREDIT, cdbiz.getCode(),
-                cdbiz.getCode(), preCurNodeCode, curNode, req.getOperator());
-
-        // 日志记录
-        sysBizLogBO.recordCurOperate(req.getBizCode(), EBizLogType.CREDIT,
-                req.getBizCode(), preCurNodeCode, null, req.getOperator());
+                cdbiz.getCode(), preCurNodeCode, nextNode, req.getOperator());
 
         List<XN632111ReqCreditUser> creditResult = req.getCreditList();
         for (XN632111ReqCreditUser reqCreditUser : creditResult) {
@@ -444,10 +431,9 @@ public class CdbizAOImpl implements ICdbizAO {
                 creditUserBO.refreshCreditUserLoanRole(user);
             }
             // 审核通过，改变节点
-            cdbizBO.refreshCurNodeCode(cdbiz, ENode.input_budget.getCode());
-            // 修改业务状态
-            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A3.getCode(),
-                    req.getApproveNote());
+            cdbiz.setStatus(ECdbizStatus.A3.getCode());
+            cdbiz.setCurNodeCode(ENode.input_budget.getCode());
+            cdbizBO.refreshCurNodeStatus(cdbiz);
 
             // 制卡节点
             cdbizBO.refreshMakeCardNode(cdbiz, ENode.make_card_apply.getCode());
@@ -456,31 +442,30 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H1.getCode());
 
             // 制卡待办事项
-            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.makeCard,
-                    req.getCode(), ENode.make_card_apply, req.getOperator());
+            bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.makeCard,
+                    req.getCode(), ENode.make_card_apply);
 
             // 准入单开始的待办事项
-            bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
-                    req.getCode(), ENode.input_budget, req.getOperator());
+            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
+                    req.getCode(), ENode.input_budget);
 
         } else {
-            cdbizBO.refreshCurNodeCode(cdbiz, nodeFlow.getBackNode());
+            cdbiz.setCurNodeCode(nodeFlow.getBackNode());
+            cdbiz.setStatus(ECdbizStatus.A1x.getCode());
+            cdbizBO.refreshCurNodeStatus(cdbiz);
             // 重录征信单待办事项
-            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.CREDIT,
-                    req.getCode(), ENode.renew_credit, cdbiz.getSaleUserId());
-
-            // 业务状态修改
-            cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A1x.getCode());
+            bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.CREDIT,
+                    req.getCode(), ENode.renew_credit);
         }
 
         // 日志记录
-        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.CREDIT,
+        sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.CREDIT,
                 req.getCode(), preCurrentNode, req.getApproveNote(),
                 req.getOperator());
 
         // 处理待审核待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.CREDIT.getCode(), req.getCode(),
-                ENode.input_credit);
+        bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.CREDIT.getCode(), req.getCode(),
+                preCurrentNode, req.getOperator());
     }
 
     @Override
@@ -507,8 +492,8 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbiz.setStatus(ECdbizStatus.A4.getCode());
         cdbizBO.refreshCurNodeStatus(cdbiz);
         // 处理待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
-                ENode.getMap().get(nextNodeCode));
+        bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
+                preNodeCode, nextNodeCode, operator);
     }
 
     @Override
@@ -526,19 +511,18 @@ public class CdbizAOImpl implements ICdbizAO {
 
         cdbizBO.interview(cdbiz, req);
 
-        // 操作日志
-        ENode node = ENode.getMap().get(preCurrentNode);
-        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.INTERVIEW,
-                req.getCode(), node.getCode(), node.getValue(), req.getOperator());
-
         if (EBoolean.YES.getCode().equals(req.getIsSend())) {
+            // 操作日志
+            sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.INTERVIEW,
+                    req.getCode(), preCurrentNode, null, req.getOperator());
+
             cdbizBO.refreshIntevCurNodeCode(cdbiz, nodeFlow.getNextNode());
             cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B01.getCode());
 
             // 处理待办事项
             bizTaskBO.handlePreAndAdd(EBizLogType.INTERVIEW, req.getCode(),
                     req.getCode(), preCurrentNode,
-                    ENode.approve_interview.getCode(), req.getOperator());
+                    nodeFlow.getNextNode(), req.getOperator());
         }
     }
 
@@ -555,7 +539,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         String preCurrentNode = cdbiz.getIntevCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
-        String intevCurNodeCode = null;
+        String intevCurNodeCode;
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             intevCurNodeCode = nodeFlow.getNextNode();
 
@@ -567,31 +551,38 @@ public class CdbizAOImpl implements ICdbizAO {
                     ENode.submit_1.getCode(), ENode.receive_approve_1.getCode(),
                     null);
 
-            // 资料传递日志
-            sysBizLogBO.saveSYSBizLog(code, EBizLogType.LOGISTICS,
-                    logisticsCode, cdbiz.getIntevCurNodeCode());
+            // 资料传递日志:银行放款第一步，用记录日志的开始方法
+            sysBizLogBO.saveFirstSYSBizLog(code, EBizLogType.LOGISTICS, logisticsCode,
+                    ENode.submit_1.getCode(), ENode.receive_approve_1.getCode(), operator);
+            //资料传递待办
+            bizTaskBO.saveBizTaskNew(code, EBizLogType.LOGISTICS, logisticsCode, ENode.submit_1);
 
             // 更新面签业务状态
             cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B03.getCode());
+
+            //  面签最后一步操作日志
+            sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
+                    cdbiz.getCode(), preCurrentNode, approveNote, operator);
+
+            // 面签最后一步，处理前待办事项
+            bizTaskBO.handlePreBizTask(code, EBizLogType.INTERVIEW.getCode(),
+                    code, preCurrentNode, operator);
         } else {
             intevCurNodeCode = nodeFlow.getBackNode();
             cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B02.getCode());
 
+            // 操作日志
+            sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
+                    cdbiz.getCode(), preCurrentNode, approveNote, operator);
+
             // 添加待办事项
-            bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.INTERVIEW,
-                    cdbiz.getCode(), ENode.reinput_interview, operator);
+            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
+                    cdbiz.getCode(), ENode.reinput_interview);
         }
         cdbiz.setRemark(approveNote);
         cdbizBO.refreshIntevCurNodeCode(cdbiz, intevCurNodeCode);
 
-        // 操作日志
-        ENode node = ENode.getMap().get(preCurrentNode);
-        sysBizLogBO.recordCurOperate(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
-                cdbiz.getCode(), node.getCode(), approveNote, operator);
 
-        // 处理前待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
-                cdbiz.getCode(), node);
     }
 
     @Override
@@ -825,17 +816,13 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbizBO.refreshMakeCardNode(cdbiz, ENode.input_card_number.getCode());
         // 制卡状态
         cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H2.getCode());
-        // 处理前待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.makeCard.getCode(), code,
-                ENode.make_card_apply);
+        // 处理前待办事项并产生下一条
+        bizTaskBO.handlePreAndAdd(EBizLogType.makeCard, code, code,
+                ENode.make_card_apply.getCode(), ENode.input_card_number.getCode(), operator);
         // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.makeCard, code,
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.makeCard, code,
                 ENode.make_card_apply.getCode(), ENode.make_card_apply.getValue(),
                 operator);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.makeCard, code,
-                ENode.input_card_number, operator);
     }
 
     @Override
@@ -854,11 +841,11 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbiz.setMakeCardStatus(ECdbizStatus.H3.getCode());
         cdbizBO.refreshCdbiz(cdbiz);
 
-        // 处理前待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.makeCard.getCode(), code,
-                ENode.input_card_number);
+        // 制卡最后一步处理前待办事项
+        bizTaskBO.handlePreBizTask(code, EBizLogType.makeCard.getCode(), code,
+                ENode.input_card_number.getCode(), operator);
         // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.makeCard, code,
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.makeCard, code,
                 ENode.input_card_number.getCode(),
                 ENode.input_card_number.getValue(), operator);
     }

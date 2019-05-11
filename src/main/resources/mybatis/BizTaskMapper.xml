@@ -1,112 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.IBizTaskDAO">
-	<resultMap id="bizTask_DB_Result" type="bizTask">
-		<result column="code" property="code" />
-		<result column="biz_code" property="bizCode" />
-		<result column="ref_type" property="refType" />
-		<result column="ref_order" property="refOrder" />
-		<result column="ref_node" property="refNode" />
-		
-		<result column="content" property="content" />
-		<result column="create_datetime" property="createDatetime" />
-		<result column="status" property="status" />
-		<result column="operater" property="operater" />
-		<result column="operater_name" property="operaterName"/>
+    <resultMap id="bizTask_DB_Result" type="bizTask">
+        <result column="code" property="code"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="ref_type" property="refType"/>
+        <result column="ref_order" property="refOrder"/>
+        <result column="ref_node" property="refNode"/>
 
-		<result column="operate_role" property="operateRole" />
-		<result column="operate_role_name" property="operateRoleName"/>
-		<result column="finish_datetime" property="finishDatetime" />
-	</resultMap>
-	
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="bizCode != null and bizCode != '' ">
-				AND t.biz_code = #{bizCode}
-			</if>
-			<if test="refType != null and refType != '' ">
-				AND t.ref_type = #{refType}
-			</if>
-			<if test="refOrder != null and refOrder != '' ">
-				AND t.ref_order = #{refOrder}
-			</if>
-			<if test="refNode != null and refNode != '' ">
-				AND t.ref_node = #{refNode}
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
-			</if>
-			<if test="operater != null and operater != '' ">
-				AND t.operater = #{operater}
-			</if>
-			<if test="operateRole != null and operateRole != '' ">
-				AND t.operate_role = #{operateRole}
-			</if>
-			<if test="isMy != null and isMy != '' ">
-				AND (t.operater = #{userId} or (t.operate_role = #{roleCode} and t.operater
-				is null))
-			</if>
-		</trim>
-	</sql>
-	
-	<select id="select_bizTask" parameterType="bizTask" resultMap="bizTask_DB_Result">
-		SELECT
-		t.code
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.ref_node
+        <result column="content" property="content"/>
+        <result column="create_datetime" property="createDatetime"/>
+        <result column="status" property="status"/>
+        <result column="operater" property="operater"/>
+        <result column="operater_name" property="operaterName"/>
 
-		,t.content
-		,t.create_datetime
-		,t.status
-		,t.operater
-		,tu.login_name as operater_name
-		,t.operate_role
-		,tr.name as operate_role_name
-		,t.finish_datetime
-		FROM
-		tqj_biz_task t left join tsys_role tr on t.operate_role = tr.code
-		left join tsys_user tu on t.operater = tu.user_id
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
+        <result column="operate_role" property="operateRole"/>
+        <result column="operate_role_name" property="operateRoleName"/>
+        <result column="finish_datetime" property="finishDatetime"/>
+    </resultMap>
 
-	<select id="select_lastBizTask" parameterType="bizTask" resultMap="bizTask_DB_Result">
-		SELECT
-		t.code
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.ref_node
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="refType != null and refType != '' ">
+                AND t.ref_type = #{refType}
+            </if>
+            <if test="refOrder != null and refOrder != '' ">
+                AND t.ref_order = #{refOrder}
+            </if>
+            <if test="refNode != null and refNode != '' ">
+                AND t.ref_node = #{refNode}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="operater != null and operater != '' ">
+                AND t.operater = #{operater}
+            </if>
+            <if test="operateRole != null and operateRole != '' ">
+                AND t.operate_role = #{operateRole}
+            </if>
+            <if test="createDatetime != null and createDatetime != '' ">
+                AND t.create_datetime = #{createDatetime}
+            </if>
+            <if test="isMy != null and isMy != '' ">
+                AND (t.operater = #{userId} or (t.operate_role = #{roleCode} and t.operater
+                is null))
+            </if>
+        </trim>
+    </sql>
 
-		,t.content
-		,t.create_datetime
-		,t.status
-		,t.operater
-		,t.operate_role
-		,t.finish_datetime
-		FROM
-		tqj_biz_task t
-		<include refid="where_condition" />
-		order by t.create_datetime desc limit 0,1
-	</select>
+    <select id="select_bizTask" parameterType="bizTask" resultMap="bizTask_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.ref_node
 
-	<select id="select_bizTask_count" parameterType="bizTask"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tqj_biz_task t
-		<include refid="where_condition" />
-	</select>
+        ,t.content
+        ,t.create_datetime
+        ,t.status
+        ,t.operater
+        ,tu.login_name as operater_name
+        ,t.operate_role
+        ,tr.name as operate_role_name
+        ,t.finish_datetime
+        FROM
+        tqj_biz_task t left join tsys_role tr on t.operate_role = tr.code
+        left join tsys_user tu on t.operater = tu.user_id
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
 
-	<insert id="insert_bizTask" parameterType="bizTask">
+    <select id="select_lastBizTask" parameterType="bizTask" resultMap="bizTask_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.ref_node
+
+        ,t.content
+        ,t.create_datetime
+        ,t.status
+        ,t.operater
+        ,t.operate_role
+        ,t.finish_datetime
+        FROM
+        tqj_biz_task t
+        <include refid="where_condition"/>
+        order by t.create_datetime desc limit 0,1
+    </select>
+
+    <select id="select_bizTask_count" parameterType="bizTask"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tqj_biz_task t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_bizTask" parameterType="bizTask">
 		INSERT INTO
 		tqj_biz_task(
 		code
@@ -138,7 +141,7 @@
 		)
 	</insert>
 
-	<update id="update_operateBizTask" parameterType="bizTask">
+    <update id="update_operateBizTask" parameterType="bizTask">
 		UPDATE tqj_biz_task
 		SET
 		status = #{status}
@@ -147,8 +150,8 @@
 		,finish_datetime = #{finishDatetime}
 		WHERE code = #{code}
 	</update>
-	
-	<delete id="delete_bizTask" parameterType="bizTask">
+
+    <delete id="delete_bizTask" parameterType="bizTask">
 		DELETE FROM tqj_biz_task
 		WHERE code=#{code}
 	</delete>

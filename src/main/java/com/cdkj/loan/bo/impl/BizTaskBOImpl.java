@@ -1,12 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IRoleNodeBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -21,6 +14,11 @@ import com.cdkj.loan.enums.EBizTaskStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
@@ -47,24 +45,24 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         data.setRefNode(curNode.getCode());
         data.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
 
-        String content = "你有新的待" + curNode.getValue() + bizLogType.getValue();
+        String content = "你有新的待" + curNode.getValue() + "(" + bizLogType.getValue() + ")";
 
         data.setContent(content);
         data.setCreateDatetime(new Date());
         if (StringUtils.isNotBlank(userId)) {
             SYSUser sysUser = sysUserBO.getUser(userId);
             code = OrderNoGenerater
-                .generate(EGeneratePrefix.BIZ_TASK.getCode());
+                    .generate(EGeneratePrefix.BIZ_TASK.getCode());
             data.setCode(code);
             data.setOperater(userId);
             data.setOperateRole(sysUser.getRoleCode());
             bizTaskDAO.insert(data);
         } else {
             List<RoleNode> roleNodes = roleNodeBO.queryListByNode(curNode
-                .getCode());
+                    .getCode());
             for (RoleNode roleNode : roleNodes) {
                 code = OrderNoGenerater.generate(EGeneratePrefix.BIZ_TASK
-                    .getCode());
+                        .getCode());
                 data.setCode(code);
                 data.setOperateRole(roleNode.getRoleCode());
                 bizTaskDAO.insert(data);
@@ -75,29 +73,51 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
+    public String saveBizTaskNew(String bizCode, EBizLogType bizLogType,
+            String refOrder, ENode curNode) {
+        BizTask data = new BizTask();
+
+        data.setBizCode(bizCode);
+        data.setRefType(bizLogType.getCode());
+        data.setRefOrder(refOrder);
+        data.setRefNode(curNode.getCode());
+        data.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
+
+        String content = "你有新的待" + curNode.getValue() + "(" + bizLogType.getValue() + ")";
+
+        data.setContent(content);
+        data.setCreateDatetime(new Date());
+
+        String code = OrderNoGenerater.generate(EGeneratePrefix.BIZ_TASK
+                .getCode());
+        data.setCode(code);
+        bizTaskDAO.insert(data);
+        return code;
+    }
+
+    @Override
     public void handlePreAndAdd(EBizLogType bizLogType, String refOrder,
             String bizCode, String preNode, String curNode, String userId) {
-        handlePreBizTask(bizLogType.getCode(), refOrder,
-            ENode.matchCode(preNode));
-        saveBizTask(bizCode, bizLogType, refOrder, ENode.matchCode(curNode),
-            userId);
+        handlePreBizTask(bizCode, bizLogType.getCode(), refOrder,
+                preNode, userId);
+        saveBizTaskNew(bizCode, bizLogType, refOrder, ENode.matchCode(curNode));
 
     }
 
     @Override
-    public void handlePreBizTask(String refType, String refOrder, ENode preNode) {
-        List<BizTask> bizTasks = queryLastBizTask(refType, refOrder, preNode);
-        for (BizTask bizTask : bizTasks) {
-            handleBizTask(bizTask.getCode());
-        }
+    public void handlePreBizTask(String bizCode, String refType, String refOrder, String preNode,
+            String userId) {
+        BizTask bizTask = queryLastBizTask(bizCode, refType, refOrder, preNode);
+        handleBizTask(bizTask.getCode(), userId);
 
     }
 
     @Override
-    public void handleBizTask(String code) {
+    public void handleBizTask(String code, String userId) {
         BizTask data = new BizTask();
 
         data.setCode(code);
+        data.setOperater(userId);
         data.setStatus(EBizTaskStatus.DONE.getCode());
         data.setFinishDatetime(new Date());
 
@@ -124,18 +144,19 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
-    public List<BizTask> queryLastBizTask(String refType, String refOrder,
-            ENode curNode) {
-        BizTask bizTask = new BizTask();
+    public BizTask queryLastBizTask(String bizCode, String refType, String refOrder,
+            String curNode) {
+        BizTask condition = new BizTask();
+        condition.setBizCode(bizCode);
+        condition.setRefType(refType);
+        condition.setRefOrder(refOrder);
+        condition.setRefNode(curNode);
+        condition.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
+        condition.setOrder("create_datetime", "desc");
 
-        bizTask.setRefType(refType);
-        bizTask.setRefOrder(refOrder);
-        bizTask.setRefNode(curNode.getCode());
-        bizTask.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
-
-        List<BizTask> bizTasks = bizTaskDAO.selectList(bizTask);
-
-        return bizTasks;
+        List<BizTask> bizTasks = bizTaskDAO.selectList(condition);
+        BizTask bizTask = bizTasks.get(0);
+        return bizTask;
     }
 
     @Override

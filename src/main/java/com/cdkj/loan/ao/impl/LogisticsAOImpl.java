@@ -141,9 +141,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(), "第一次为入档，不能发件！");
                     }
                     // 完成待办事项
-                    bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                    bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
                             cdbiz.getCode(),
-                            ENode.receive_approve_4);
+                            ENode.receive_approve_4.getCode());
 
                     // 添加待办事项
                     bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
@@ -158,9 +158,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
                     // 完成待办事项
-                    bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                    bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
                             cdbiz.getCode(),
-                            ENode.submit_2);
+                            ENode.submit_2.getCode());
 
                     // 添加待办事项
                     bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
@@ -243,9 +243,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     }
 
                     // 完成待办事项
-                    bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+                    bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
                             cdbiz.getCode(),
-                            ENode.getMap().get(cdbiz.getCurNodeCode()));
+                            cdbiz.getCurNodeCode());
 
                     // 添加待办事项
                     bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,

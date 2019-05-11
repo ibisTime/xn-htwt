@@ -12,6 +12,32 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
     void recordCurOperate(String bizCode, EBizLogType refType,
             String refOrder, String dealNode, String dealNote, String operator);
 
+    /**
+     * 操作第一步记录本次操作的日志并产生下一步日志
+     *
+     * @param bizCode 业务编号
+     * @param refType 关联类型
+     * @param refOrder 关联编号
+     * @param dealNode 处理节点
+     * @param dealNote 处理说明
+     * @param operator 操作人
+     */
+    void saveFirstSYSBizLog(String bizCode, EBizLogType refType,
+            String refOrder, String dealNode, String dealNote, String operator);
+
+    /**
+     * 查找当前节点的待办，取创建时间为日志的开始时间
+     *
+     * @param bizCode 业务编号
+     * @param refType 关联类型
+     * @param refOrder 关联编号
+     * @param dealNode 处理节点
+     * @param dealNote 处理说明
+     * @param operator 操作人
+     */
+    void saveNewSYSBizLog(String bizCode, EBizLogType refType,
+            String refOrder, String dealNode, String dealNote, String operator);
+
     // 产生下一步操作的待补全的日志
     void saveSYSBizLog(String bizCode, EBizLogType refType,
             String refOrder, String dealNode);

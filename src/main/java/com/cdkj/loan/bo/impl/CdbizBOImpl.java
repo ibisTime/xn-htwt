@@ -244,9 +244,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public void refreshIntevNodeStart(Cdbiz cdbiz, String node,
+    public void refreshIntevNodeStart(Cdbiz cdbiz,
             String intevCurNodeCode, String mqStatus) {
-        cdbiz.setCurNodeCode(node);
         cdbiz.setIntevCurNodeCode(intevCurNodeCode);
         cdbiz.setIntevStatus(mqStatus);
         cdbizDAO.updateIntevNodeStart(cdbiz);

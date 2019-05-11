@@ -12,20 +12,26 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
     String saveBizTask(String bizCode, EBizLogType bizLogType,
             String refOrder, ENode curNode, String userId);
 
+    //新增待办
+    String saveBizTaskNew(String bizCode, EBizLogType bizLogType,
+            String refOrder, ENode curNode);
+
     // 处理前并产生后面的待办事项
     void handlePreAndAdd(EBizLogType bizLogType,
             String refOrder, String bizCode, String preNode, String curNode, String userId);
 
-    void handlePreBizTask(String refType, String refOrder, ENode preNode);
+    //最后一步，处理之前的待办
+    void handlePreBizTask(String bizCode, String refType, String refOrder, String preNode,
+            String userId);
 
-    void handleBizTask(String code);
+    void handleBizTask(String code, String userId);
 
     List<BizTask> queryBizTaskList(BizTask condition);
 
     BizTask getBizTask(String code);
 
-    List<BizTask> queryLastBizTask(String refType, String refOrder,
-            ENode curNode);
+    BizTask queryLastBizTask(String bizCode, String refType, String refOrder,
+            String curNode);
 
     void removeUnhandleBizTask(String bizCode, String node, String operater);
 

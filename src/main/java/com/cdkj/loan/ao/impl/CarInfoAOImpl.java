@@ -110,8 +110,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
     @Autowired
     private ICarPledgeBO carPledgeBO;
 
-    @Transactional
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void inputBudgetOrder(XN632500Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ECdbizStatus.A3.getCode().equals(cdbiz.getStatus())
@@ -160,32 +161,28 @@ public class CarInfoAOImpl implements ICarInfoAO {
         creditUserBO.refreshCreditUsers(creditUsers, req);
 
         String preNodeCode = cdbiz.getCurNodeCode(); // 当前节点
-
+        String curNodeCode;
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
             // 日志记录
             sysBizLogBO.recordCurOperate(req.getCode(),
                     EBizLogType.BUDGET_ORDER, req.getCode(), preNodeCode, null,
                     req.getOperator());
             // 下一个节点
-            preNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
+            curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
                     .getNextNode();
 
-            cdbizBO.refreshCurNodeCode(cdbiz, preNodeCode);
+            cdbizBO.refreshCurNodeCode(cdbiz, curNodeCode);
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
             // 处理待办事项
-            bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                    req.getCode(), ENode.getMap().get(preNodeCode));
+            bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, cdbiz.getCode(),
+                    cdbiz.getCode(), preNodeCode, curNodeCode, req.getOperator());
         }
-        ENode node = ENode.getMap().get(preNodeCode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.BUDGET_ORDER,
-                req.getCode(), node, null);
     }
 
-    @Transactional
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int editCarInfo(XN632120Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ECdbizStatus.A3.getCode().equals(cdbiz.getStatus())
@@ -236,8 +233,8 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
             // 处理待办事项
-            bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                    req.getCode(), ENode.getMap().get(preNodeCode));
+            bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, cdbiz.getCode(),
+                    cdbiz.getCode(), preNodeCode, preNodeCode, req.getOperator());
         }
         ENode node = ENode.getMap().get(preNodeCode);
 
@@ -247,8 +244,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
         return 0;
     }
 
-    @Transactional
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void areaApprove(String code, String approveResult,
             String approveNote, String operator) {
 
@@ -263,34 +261,34 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     "面签流程未走完，不能操作");
         }
 
-        String preCurrentNode = cdbiz.getCurNodeCode();// 当前节点
-        // 日志记录
-        sysBizLogBO.recordCurOperate(cdbiz.getBizCode(),
-                EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
-                operator);
-        // 处理前待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                cdbiz.getCode(), ENode.getMap().get(preCurrentNode));
+        // 当前节点
+        String preCurrentNode = cdbiz.getCurNodeCode();
 
         String status;
+        String curNodeCode;
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A5.getCode();
-            preCurrentNode = nodeFlowBO
+            curNodeCode = nodeFlowBO
                     .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
         } else {
             status = ECdbizStatus.A3x.getCode();
-            preCurrentNode = nodeFlowBO
+            curNodeCode = nodeFlowBO
                     .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
         }
-        ENode node = ENode.getMap().get(preCurrentNode);
 
-        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
+        // 日志记录
+        sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(),
+                EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
+                operator);
 
-        // 状态更新
-        cdbizBO.refreshStatus(cdbiz, status);
+        // 处理前并产生后面的待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER,
+                code, code, preCurrentNode, curNodeCode, operator);
 
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, node, null);
+        // 状态更新节点
+        cdbiz.setCurNodeCode(curNodeCode);
+        cdbiz.setStatus(status);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
 
     }
 
@@ -300,78 +298,75 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void riskOneApprove(String code, String approveResult,
             String approveNote, String operator) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ECdbizStatus.A5.getCode().equals(cdbiz.getStatus())) {
+        if (!ENode.fk_fir_approve.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "该业务当前状态不是风控一审状态，不能操作");
         }
 
-        String preCurrentNode = cdbiz.getCurNodeCode();// 当前节点
-        String status = cdbiz.getStatus();
-        // 日志记录
-        sysBizLogBO.recordCurOperate(code, EBizLogType.BUDGET_ORDER, code,
-                preCurrentNode, approveNote, operator);
-        // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
-                ENode.getMap().get(preCurrentNode));
+        // 当前节点
+        String preCurrentNode = cdbiz.getCurNodeCode();
+        String status;
+        String curNodeCode;
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
             status = ECdbizStatus.A6.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
         } else {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
         }
-        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
 
-        // 业务更新状态
-        cdbizBO.refreshStatus(cdbiz, status);
+        // 日志记录
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
+                preCurrentNode, approveNote, operator);
+        // 完成待办事项并产生下一条
+        bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
+                preCurrentNode, curNodeCode, operator);
 
-        ENode node = ENode.getMap().get(preCurrentNode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, node, null);
+        // 业务更新状态节点
+        cdbiz.setStatus(status);
+        cdbiz.setCurNodeCode(curNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
 
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void riskTwoApprove(String code, String carPriceCheckReport,
             String housePicture, String approveResult, String approveNote,
             String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ECdbizStatus.A6.getCode().equals(cdbiz.getStatus())) {
+        if (!ENode.fk_sec_approve.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是风控二审节点，不能操作");
         }
 
-        String preCurrentNode = cdbiz.getCurNodeCode();// 当前节点
-        String status = cdbiz.getStatus();
-        // 日志记录
-        sysBizLogBO.recordCurOperate(code, EBizLogType.BUDGET_ORDER, code,
-                preCurrentNode, approveNote, operator);
-        // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
-                ENode.getMap().get(preCurrentNode));
+        // 当前节点
+        String preCurrentNode = cdbiz.getCurNodeCode();
+        String status;
+        String curNodeCode;
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
             status = ECdbizStatus.A7.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
         } else {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
             status = ECdbizStatus.A3x.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
         }
-        // 节点改变
-        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
+        // 状态节点改变
+        cdbiz.setStatus(status);
+        cdbiz.setCurNodeCode(curNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
 
         if (StringUtils.isNotBlank(carPriceCheckReport)) {
             EAttachName attachName = EAttachName.car_check_reprot;
@@ -384,93 +379,85 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     attachName.getValue(), housePicture);
         }
 
-        // 业务更新状态
-        cdbizBO.refreshStatus(cdbiz, status);
-
-        ENode node = ENode.getMap().get(preCurrentNode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, node, null);
+        // 日志记录
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
+                preCurrentNode, approveNote, operator);
+        // 完成待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
+                preCurrentNode, curNodeCode, operator);
 
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void riskChargeApprove(String code, String operator,
             String approveResult, String approveNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ECdbizStatus.A7.getCode().equals(cdbiz.getStatus())) {
+        if (!ENode.fk_finish_approve.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是风控终审节点，不能操作");
         }
 
-        String preCurrentNode = cdbiz.getCurNodeCode();// 当前节点
-        String status = cdbiz.getStatus();
+        // 当前节点
+        String preCurrentNode = cdbiz.getCurNodeCode();
+        String status;
+        String curNodeCode;
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            status = ECdbizStatus.A8.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
+        } else {
+            status = ECdbizStatus.A3x.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
+        }
+
+        cdbiz.setStatus(status);
+        cdbiz.setCurNodeCode(curNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
+
         // 日志记录
         sysBizLogBO.recordCurOperate(code, EBizLogType.BUDGET_ORDER, code,
                 preCurrentNode, approveNote, operator);
-        // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
-                ENode.getMap().get(preCurrentNode));
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
-            status = ECdbizStatus.A8.getCode();
-        } else {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
-            status = ECdbizStatus.A3x.getCode();
-        }
-        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
-
-        // 业务更新状态
-        cdbizBO.refreshStatus(cdbiz, status, approveNote);
-
-        ENode node = ENode.getMap().get(preCurrentNode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, node, null);
-
+        // 完成待办事项并产生下一条
+        bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
+                preCurrentNode, curNodeCode, operator);
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void yBizChargeApprove(String code, String operator,
             String approveResult, String approveNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ECdbizStatus.A8.getCode().equals(cdbiz.getStatus())) {
+        if (!ENode.yw_approve_budget.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是业务总监审核节点，不能操作");
         }
         // 之前节点
         String preCurrentNode = cdbiz.getCurNodeCode();
-        String status = cdbiz.getStatus();
+        String status;
+        String curNodeCode;
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            status = ECdbizStatus.A9.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
+
+        } else {
+            status = ECdbizStatus.A3x.getCode();
+            curNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
+        }
+        cdbiz.setStatus(status);
+        cdbiz.setCurNodeCode(curNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
 
         // 日志记录
         sysBizLogBO.recordCurOperate(code, EBizLogType.BUDGET_ORDER, code,
                 preCurrentNode, approveNote, operator);
-        // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(), code,
-                ENode.getMap().get(preCurrentNode));
-
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
-            status = ECdbizStatus.A9.getCode();
-
-        } else {
-            preCurrentNode = nodeFlowBO
-                    .getNodeFlowByCurrentNode(preCurrentNode).getBackNode();
-            status = ECdbizStatus.A3x.getCode();
-        }
-        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
-        cdbizBO.refreshStatus(cdbiz, status, approveNote);
-
-        ENode node = ENode.getMap().get(preCurrentNode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, node, null);
+        // 完成待办并产生下一条
+        bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
+                preCurrentNode, curNodeCode, operator);
 
     }
 
@@ -480,20 +467,13 @@ public class CarInfoAOImpl implements ICarInfoAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         // 之前节点
         String preCurrentNode = cdbiz.getCurNodeCode();
-        String status = cdbiz.getStatus();
+        String status;
+        String curNodeCode;
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
-        if (!ECdbizStatus.A9.getCode().equals(cdbiz.getStatus())) {
+        if (!ENode.cw_approve_budget.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是财务审核节点，不能操作");
         }
-
-        // 日志记录
-        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.BUDGET_ORDER,
-                req.getCode(), preCurrentNode, req.getApproveNote(),
-                req.getOperator());
-        // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                req.getCode(), ENode.getMap().get(preCurrentNode));
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
@@ -515,28 +495,37 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 advanceBO.saveAdvance(req.getCode());
             }
             // 待办事项
-            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fbh,
-                    req.getCode(), node, null);
+            bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.fbh,
+                    req.getCode(), node);
 
             // 发保合状态节点更新
             cdbiz.setFbhgpsStatus(fbhgpsStatus);
             cdbiz.setFbhgpsNode(node.getCode());
-            cdbizBO.refreshCdbiz(cdbiz);
+            cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
             // 主节点
-            preCurrentNode = ENode.submit_1.getCode();
+            curNodeCode = ENode.submit_1.getCode();
             // 生成报告、返点、费用
             lastApprove(cdbiz, req.getOperator());
         } else {
-            preCurrentNode = nodeFlow.getBackNode();
+            curNodeCode = nodeFlow.getBackNode();
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
             bizTaskBO.saveBizTask(req.getCode(), EBizLogType.BUDGET_ORDER,
                     req.getCode(), ENode.getMap().get(preCurrentNode), null);
         }
-        cdbizBO.refreshCurNodeCode(cdbiz, preCurrentNode);
 
-        cdbizBO.refreshStatus(cdbiz, status, req.getApproveNote());
+        cdbiz.setStatus(status);
+        cdbiz.setCurNodeCode(curNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
+
+        // 日志记录
+        sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.BUDGET_ORDER,
+                req.getCode(), preCurrentNode, req.getApproveNote(),
+                req.getOperator());
+        // 完成待办事项主流程待办
+        bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, req.getCode(),
+                req.getCode(), preCurrentNode, curNodeCode, req.getOperator());
 
     }
 

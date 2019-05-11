@@ -233,8 +233,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
             // 处理待办事项
-            bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                    data.getCode(), ENode.getMap().get(preNodeCode));
+//            bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+//                    data.getCode(), ENode.getMap().get(preNodeCode));
         }
         ENode node = ENode.getMap().get(preNodeCode);
 
@@ -263,8 +263,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
                 operator);
         //
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             preCurrentNode = nodeFlowBO
                     .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
@@ -340,8 +340,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
                 operator);
         // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             preCurrentNode = nodeFlowBO
                     .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
@@ -386,8 +386,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
                 operator);
         // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             preCurrentNode = nodeFlowBO
                     .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
@@ -441,8 +441,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
                 operator);
         // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             preCurrentNode = nodeFlowBO
                     .getNodeFlowByCurrentNode(preCurrentNode).getNextNode();
@@ -486,8 +486,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
                 operator);
         // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
 
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             preCurrentNode = nodeFlowBO
@@ -546,8 +546,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         bizTaskBO.saveBizTask(budgetOrder.getBizCode(), EBizLogType.INTERVIEW,
                 budgetOrder.getCode(), ENode.approve_interview, req.getOperator());
         // 处理之前的待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
     }
 
     @Override
@@ -713,8 +713,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 EBizLogType.INTERVIEW, budgetOrder.getCode(), node.getCode(),
                 node.getValue(), operator);
         // 处理前待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
-                budgetOrder.getCode(), node);
+//        bizTaskBO.handlePreBizTask(EBizLogType.INTERVIEW.getCode(),
+//                budgetOrder.getCode(), node);
 
     }
 
@@ -740,8 +740,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 EBizLogType.BUDGET_ORDER, req.getCode(), preCurrentNode,
                 req.getApproveNote(), req.getOperator());
         // 完成待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.BUDGET_ORDER.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 主状态
@@ -811,8 +811,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         bizTaskBO.saveBizTask(budgetOrder.getBizCode(), EBizLogType.fbh,
                 budgetOrder.getCode(), node, req.getOperator());
         // 处理前待办事项
-        bizTaskBO.handlePreBizTask(EBizLogType.fund.getCode(),
-                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
+//        bizTaskBO.handlePreBizTask(EBizLogType.fund.getCode(),
+//                budgetOrder.getCode(), ENode.getMap().get(preCurrentNode));
     }
 
     @Override
