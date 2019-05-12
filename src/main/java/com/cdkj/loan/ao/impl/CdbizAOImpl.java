@@ -589,8 +589,9 @@ public class CdbizAOImpl implements ICdbizAO {
     public void archive(String code, String operator, String enterLocation) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-
-        if (!ECdbizStatus.D2.getCode().equals(cdbiz.getEnterStatus())) {
+        String preEnterNodeCode = cdbiz.getEnterNodeCode();
+        if (!ECdbizStatus.D2.getCode().equals(cdbiz.getEnterStatus())
+                && !ECdbizStatus.E2.getCode().equals(cdbiz.getEnterStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前状态不是入档状态，不能入档");
         }
@@ -603,40 +604,6 @@ public class CdbizAOImpl implements ICdbizAO {
         }
         // 第二次存档
         if (ECdbizStatus.E2.getCode().equals(cdbiz.getEnterStatus())) {
-
-            CreditUser applyUser = creditUserBO.getCreditUserByBizCode(code,
-                    ECreditUserLoanRole.APPLY_USER);
-
-            User user = userBO.getUser(applyUser.getMobile(),
-                    EUserKind.Customer.getCode());
-            String userId = null;
-            if (user == null) {
-                // 用户代注册并实名认证
-                userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
-                        applyUser.getMobile(), applyUser.getIdKind(),
-                        applyUser.getUserName(), applyUser.getIdNo());
-                distributeAccount(userId, applyUser.getMobile(),
-                        EUserKind.Customer.getCode());
-            } else {
-                userId = user.getUserId();
-            }
-
-            BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(code);
-            Bank bank = bankBO.getBank(bankLoan.getRepayBankCode());
-
-            // 绑定用户银行卡
-            String bankcardCode = bankcardBO.bind(userId,
-                    applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
-                    bank.getBankCode(), bankLoan.getRepayBankName(),
-                    bankLoan.getRepaySubbranch());
-
-            // 自动生成还款业务
-            // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
-            // budgetOrder, userId, bankcardCode, operator);
-
-            // 自动生成还款计划
-            // repayPlanBO.genereateNewRepayPlan(repayBiz);
-
             // 更新业务状态
             cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
                     ENode.second_archive.getCode());
@@ -644,7 +611,59 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 日志记录
         sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BUDGET_ORDER.getCode(),
-                cdbiz.getCode(), cdbiz.getEnterNodeCode(), null, operator);
+                cdbiz.getCode(), preEnterNodeCode, null, operator);
+    }
+
+
+    @Override
+    public void confirmArchive(String code, String operator, String enterLocation) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        String preEnterNodeCode = cdbiz.getEnterNodeCode();
+        if (!ECdbizStatus.E3.getCode().equals(cdbiz.getEnterStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前状态不是已入档状态，不能确认入档");
+        }
+
+        CreditUser applyUser = creditUserBO.getCreditUserByBizCode(code,
+                ECreditUserLoanRole.APPLY_USER);
+
+        User user = userBO.getUser(applyUser.getMobile(),
+                EUserKind.Customer.getCode());
+        String userId = null;
+        if (user == null) {
+            // 用户代注册并实名认证
+            userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
+                    applyUser.getMobile(), applyUser.getIdKind(),
+                    applyUser.getUserName(), applyUser.getIdNo());
+            distributeAccount(userId, applyUser.getMobile(),
+                    EUserKind.Customer.getCode());
+        } else {
+            userId = user.getUserId();
+        }
+
+        BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(code);
+        Bank bank = bankBO.getBank(bankLoan.getRepayBankCode());
+
+        // 绑定用户银行卡
+        String bankcardCode = bankcardBO.bind(userId,
+                applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
+                bank.getBankCode(), bankLoan.getRepayBankName(),
+                bankLoan.getRepaySubbranch());
+
+        // 自动生成还款业务
+        // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
+        // budgetOrder, userId, bankcardCode, operator);
+
+        // 自动生成还款计划
+        // repayPlanBO.genereateNewRepayPlan(repayBiz);
+
+        // 更新业务状态
+        cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
+                ENode.second_archive.getCode());
+
+        // 日志记录
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER,
+                cdbiz.getCode(), preEnterNodeCode, null, operator);
     }
 
     @Override
@@ -1021,4 +1040,5 @@ public class CdbizAOImpl implements ICdbizAO {
         }
         return page;
     }
+
 }

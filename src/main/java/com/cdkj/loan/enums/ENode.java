@@ -80,6 +80,8 @@ public enum ENode {
 
     second_received_archive("f13", "第二次已收件待存档"), second_archive("f14", "第二次已存档"),
 
+    confirm_archive("f15", "确认存档"),
+
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(
             "001_02", "录入征信结果"), AUDIT("001_03", "风控专员审核"), ACHIEVE("001_04",
