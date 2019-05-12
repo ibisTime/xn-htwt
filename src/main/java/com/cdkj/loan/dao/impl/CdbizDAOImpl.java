@@ -25,6 +25,7 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
                 Cdbiz.class);
     }
 
+
     @Override
     public long selectTotalCount(Cdbiz condition) {
         return super.selectTotalCount(NAMESPACE.concat("select_cdbiz_count"),
@@ -48,6 +49,11 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
             int count) {
         return super.selectList(NAMESPACE.concat("select_cdbizByRoleCode"),
                 start, count, condition, Cdbiz.class);
+    }
+
+    @Override
+    public Cdbiz selectForUpdate(Cdbiz condition) {
+        return super.select(NAMESPACE.concat("select_cdbiz_for_update"), condition, Cdbiz.class);
     }
 
     @Override

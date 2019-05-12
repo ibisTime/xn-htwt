@@ -34,6 +34,11 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     Cdbiz getCdbiz(String code);
 
+    /**
+     * 获取车贷业务，操作时候用(加锁)
+     */
+    Cdbiz getCdbizForUpdate(String code);
+
     void refreshStatus(Cdbiz cdbiz, String status);
 
     void refreshStatus(Cdbiz cdbiz, String status, String remark);
