@@ -417,7 +417,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         cdbizBO.refreshCurNodeStatus(cdbiz);
 
         // 日志记录
-        sysBizLogBO.recordCurOperate(code, EBizLogType.BUDGET_ORDER, code,
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
                 preCurrentNode, approveNote, operator);
         // 完成待办事项并产生下一条
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
@@ -452,7 +452,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         cdbizBO.refreshCurNodeStatus(cdbiz);
 
         // 日志记录
-        sysBizLogBO.recordCurOperate(code, EBizLogType.BUDGET_ORDER, code,
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
                 preCurrentNode, approveNote, operator);
         // 完成待办并产生下一条
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
