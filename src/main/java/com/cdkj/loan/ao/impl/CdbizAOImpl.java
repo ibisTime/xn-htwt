@@ -245,9 +245,9 @@ public class CdbizAOImpl implements ICdbizAO {
         sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(), EBizLogType.CREDIT, cdbiz.getCode(),
                 currentNode, null, operator);
 
-        // 录入征信的待办事项
-        bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.CREDIT,
-                cdbiz.getCode(), ENode.input_credit);
+        // 第一步录入征信的待办事项
+        bizTaskBO.saveBizTaskFirst(cdbiz.getCode(), EBizLogType.CREDIT,
+                cdbiz.getCode(), ENode.new_credit, ENode.input_credit);
 
         // 面签开始的待办事项
         bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
@@ -325,6 +325,7 @@ public class CdbizAOImpl implements ICdbizAO {
     @Transactional(rollbackFor = Exception.class)
     public void sendOrder(XN632119Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
+        String preCurNodeCode = cdbiz.getCurNodeCode();
         if (!ECdbizStatus.A1.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前征信单不能派单！");
@@ -332,11 +333,12 @@ public class CdbizAOImpl implements ICdbizAO {
         // 修改内勤
         cdbizBO.refreshInsideJob(cdbiz, req.getInsideJob());
         // 删除当前用户的之前待办事项
-        bizTaskBO.removeUnhandleBizTask(cdbiz.getCode(),
-                ENode.input_credit.getCode(), req.getOperator());
+//        bizTaskBO.removeUnhandleBizTask(cdbiz.getCode(),
+//                ENode.input_credit.getCode(), req.getOperator());
         // 新增该内勤的待办事项
-        bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.CREDIT,
-                cdbiz.getCode(), ENode.input_credit, req.getInsideJob());
+        bizTaskBO.handlePreAndAdd(EBizLogType.CREDIT, cdbiz.getCode(),
+                cdbiz.getCode(), preCurNodeCode, ENode.input_credit.getCode(),
+                req.getInsideJob());
     }
 
     @Override

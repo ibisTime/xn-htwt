@@ -84,10 +84,10 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         //查找当前节点的最新待办
         BizTask bizTask = bizTaskBO
                 .queryLastBizTask(bizCode, refType.getCode(), refOrder, dealNode);
-        data.setStartDatetime(bizTask.getFinishDatetime());
+        data.setStartDatetime(bizTask.getCreateDatetime());
         data.setEndDatetime(new Date());
         //计算花费时间
-        String speedTime = getSpeedTime(bizTask.getFinishDatetime(), new Date());
+        String speedTime = getSpeedTime(bizTask.getCreateDatetime(), new Date());
         data.setSpeedTime(speedTime);
         sysBizLogDAO.insert(data);
     }
