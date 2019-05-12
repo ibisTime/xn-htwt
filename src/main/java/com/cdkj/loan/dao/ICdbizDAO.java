@@ -35,9 +35,7 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
 
     long selectTotalCountByRoleCode(Cdbiz condition);
 
-    int updateIntevNode(Cdbiz data);
-
-    int updateIntevNodeStart(Cdbiz data);
+    int updateIntevNodeStatus(Cdbiz data);
 
     int updateCurNodeStatus(Cdbiz cdbiz);
 }

@@ -56,9 +56,7 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     void refreshInsideJob(Cdbiz cdbiz, String insideJob);
 
-    void refreshIntevNodeStart(Cdbiz cdbiz, String intevCurNodeCode, String mqStatus);
-
-    void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode);
+    void refreshIntevNodeStatus(Cdbiz cdbiz, String intevCurNodeCode, String mqStatus);
 
     void interview(Cdbiz cdbiz, XN632123Req req);
 

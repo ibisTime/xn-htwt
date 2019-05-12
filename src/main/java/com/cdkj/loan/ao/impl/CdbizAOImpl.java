@@ -254,7 +254,7 @@ public class CdbizAOImpl implements ICdbizAO {
                 cdbiz.getCode(), ENode.input_interview);
 
         // 更新提交节点信息
-        cdbizBO.refreshIntevNodeStart(cdbiz, ENode.input_interview.getCode(),
+        cdbizBO.refreshIntevNodeStatus(cdbiz, ENode.input_interview.getCode(),
                 ECdbizStatus.B00.getCode());
 
         // 修改业务主节点状态
@@ -517,8 +517,8 @@ public class CdbizAOImpl implements ICdbizAO {
             sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.INTERVIEW,
                     req.getCode(), preCurrentNode, null, req.getOperator());
 
-            cdbizBO.refreshIntevCurNodeCode(cdbiz, nodeFlow.getNextNode());
-            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B01.getCode());
+            cdbizBO.refreshIntevNodeStatus(cdbiz, nodeFlow.getNextNode(),
+                    ECdbizStatus.B01.getCode());
 
             // 处理待办事项
             bizTaskBO.handlePreAndAdd(EBizLogType.INTERVIEW, req.getCode(),
@@ -541,8 +541,11 @@ public class CdbizAOImpl implements ICdbizAO {
         String preCurrentNode = cdbiz.getIntevCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
         String intevCurNodeCode;
+        String mqStatus = "";
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             intevCurNodeCode = nodeFlow.getNextNode();
+            // 面签业务状态记录
+            mqStatus = ECdbizStatus.B03.getCode();
 
             // 生成资料传递
             String logisticsCode = logisticsBO.saveLogistics(
@@ -558,9 +561,6 @@ public class CdbizAOImpl implements ICdbizAO {
             //资料传递待办
             bizTaskBO.saveBizTaskNew(code, EBizLogType.LOGISTICS, logisticsCode, ENode.submit_1);
 
-            // 更新面签业务状态
-            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B03.getCode());
-
             //  面签最后一步操作日志
             sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
                     cdbiz.getCode(), preCurrentNode, approveNote, operator);
@@ -570,7 +570,7 @@ public class CdbizAOImpl implements ICdbizAO {
                     code, preCurrentNode, operator);
         } else {
             intevCurNodeCode = nodeFlow.getBackNode();
-            cdbizBO.refreshMqStatus(cdbiz, ECdbizStatus.B02.getCode());
+            mqStatus = ECdbizStatus.B02.getCode();
 
             // 操作日志
             sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(), EBizLogType.INTERVIEW,
@@ -581,9 +581,9 @@ public class CdbizAOImpl implements ICdbizAO {
                     cdbiz.getCode(), ENode.reinput_interview);
         }
         cdbiz.setRemark(approveNote);
-        cdbizBO.refreshIntevCurNodeCode(cdbiz, intevCurNodeCode);
 
-
+        //更新面签节点和状态
+        cdbizBO.refreshIntevNodeStatus(cdbiz, intevCurNodeCode, mqStatus);
     }
 
     @Override

@@ -244,7 +244,6 @@ public class CarInfoAOImpl implements ICarInfoAO {
         return 0;
     }
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void areaApprove(String code, String approveResult,

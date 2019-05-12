@@ -244,11 +244,11 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public void refreshIntevNodeStart(Cdbiz cdbiz,
+    public void refreshIntevNodeStatus(Cdbiz cdbiz,
             String intevCurNodeCode, String mqStatus) {
         cdbiz.setIntevCurNodeCode(intevCurNodeCode);
         cdbiz.setIntevStatus(mqStatus);
-        cdbizDAO.updateIntevNodeStart(cdbiz);
+        cdbizDAO.updateIntevNodeStatus(cdbiz);
     }
 
     @Override
@@ -266,12 +266,6 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                 page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
-    }
-
-    @Override
-    public void refreshIntevCurNodeCode(Cdbiz cdbiz, String intevCurNodeCode) {
-        cdbiz.setIntevCurNodeCode(intevCurNodeCode);
-        cdbizDAO.updateIntevNode(cdbiz);
     }
 
     @Override

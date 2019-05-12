@@ -151,7 +151,6 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
             String userId) {
         BizTask bizTask = queryLastBizTask(bizCode, refType, refOrder, preNode);
         handleBizTask(bizTask.getCode(), userId);
-
     }
 
     @Override
