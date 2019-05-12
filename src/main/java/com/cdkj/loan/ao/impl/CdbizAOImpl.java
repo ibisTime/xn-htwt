@@ -658,7 +658,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 更新业务状态
-        cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
+        cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),
                 ENode.second_archive.getCode());
 
         // 日志记录

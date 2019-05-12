@@ -16,7 +16,7 @@ ALTER TABLE `tqj_cdbiz`
   CHANGE COLUMN `captain_code` `captain_code` VARCHAR(32) NULL DEFAULT NULL COMMENT '团队长编号' ,
   CHANGE COLUMN `inside_job` `inside_job` VARCHAR(32) NULL DEFAULT NULL COMMENT '内勤编号';
 
---添加修改主表字段
+# 添加修改主表字段
 ALTER TABLE `tqj_cdbiz`
   DROP COLUMN `seccundang_status`,
   CHANGE COLUMN `mq_status` `intev_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '面签状态' ,
@@ -30,12 +30,15 @@ VALUES ('car_pledge', 'pledge_user_id_card_front', '代理人身份证正', '图
 INSERT INTO `tdq_file_list` (`category`, `kname`, `vname`, `attach_type`, `number`)
 VALUES ('car_pledge', 'pledge_user_id_card_reverse', '代理人身份证反', '图片', '1');
 
---修改车辆抵押字段
+# 修改车辆抵押字段
 ALTER TABLE `tdq_car_pledge`
   CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证号';
 
 ALTER TABLE `dev_xn_htwt_new`.`tdq_car_pledge`
   CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证复印件';
+
+INSERT INTO `dev_xn_htwt_new`.`tsys_node` (`code`, `name`, `type`)
+VALUES ('f15', '确认存档', 'f');
 
 
 DROP TABLE IF EXISTS `tdq_enter_file_list`;
