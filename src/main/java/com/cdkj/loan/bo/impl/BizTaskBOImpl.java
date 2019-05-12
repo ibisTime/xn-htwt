@@ -148,7 +148,7 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
             String curNode) {
         BizTask condition = new BizTask();
         condition.setBizCode(bizCode);
-        condition.setRefType(refType);
+//        condition.setRefType(refType);
         condition.setRefOrder(refOrder);
         condition.setRefNode(curNode);
         condition.setStatus(EBizTaskStatus.TO_HANDLE.getCode());

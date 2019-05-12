@@ -143,7 +143,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     // 完成待办事项
                     bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
                             cdbiz.getCode(),
-                            ENode.receive_approve_4.getCode());
+                            ENode.receive_approve_4.getCode(), req.getOperator());
 
                     // 添加待办事项
                     bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
@@ -160,7 +160,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     // 完成待办事项
                     bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
                             cdbiz.getCode(),
-                            ENode.submit_2.getCode());
+                            ENode.submit_2.getCode(), req.getOperator());
 
                     // 添加待办事项
                     bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
@@ -245,7 +245,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     // 完成待办事项
                     bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
                             cdbiz.getCode(),
-                            cdbiz.getCurNodeCode());
+                            cdbiz.getCurNodeCode(), req.getOperator());
 
                     // 添加待办事项
                     bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,

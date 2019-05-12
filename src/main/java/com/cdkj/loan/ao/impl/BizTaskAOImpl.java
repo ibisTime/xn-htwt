@@ -38,11 +38,11 @@ public class BizTaskAOImpl implements IBizTaskAO {
 
         if (!EBizTaskStatus.TO_HANDLE.getCode().equals(bizTask.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "待办事项未处于可处理状态");
+                    "待办事项未处于可处理状态");
         }
 
         sysUserBO.getUser(operator);
-        bizTaskBO.handleBizTask(code);
+        bizTaskBO.handleBizTask(code, operator);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class BizTaskAOImpl implements IBizTaskAO {
         condition.setIsMy(EBoolean.YES.getCode());
         condition.setUserId(userId);
         condition.setRoleCode(user.getRoleCode());
-        
+
         return bizTaskBO.getPaginable(start, limit, condition);
     }
 

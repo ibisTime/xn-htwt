@@ -397,10 +397,10 @@ public class CdbizAOImpl implements ICdbizAO {
                         EAttachName.assurance_data.getCode());
             }
 
-            attachmentBO.saveAttachment(creditUser.getCode(),
+            attachmentBO.saveAttachment(cdbiz.getCode(),
                     attachNameBank.getCode(), attachNameBank.getValue(),
                     reqCreditUser.getBankCreditReport());
-            attachmentBO.saveAttachment(creditUser.getCode(),
+            attachmentBO.saveAttachment(cdbiz.getCode(),
                     attachNameData.getCode(), attachNameData.getValue(),
                     reqCreditUser.getDataCreditReport());
         }
@@ -661,7 +661,8 @@ public class CdbizAOImpl implements ICdbizAO {
         }
 
         cdbiz.setFbhgpsNode(ENode.approve_fbh.getCode());
-        cdbizBO.refreshFbhgpsStatus(cdbiz, ECdbizStatus.C02.getCode());
+        cdbiz.setStatus(ECdbizStatus.C02.getCode());
+        cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
         // 更新车辆信息
         carInfoBO.entryFbhInfoByBiz(req.getCode(), req.getPolicyDatetime(),
@@ -672,13 +673,13 @@ public class CdbizAOImpl implements ICdbizAO {
         // 添加附件
         attachmentBO.saveAttachment(req.getCode(), req);
 
-        // 待办事项
-        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.fbh, req.getCode(),
-                ENode.approve_fbh, req.getOperator());
-
         // 操作日志
-        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.fbh,
+        sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fbh,
                 req.getCode(), preFbhgpsNode, null, req.getOperator());
+
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.fbh, req.getCode(), req.getCode(),
+                preFbhgpsNode, ENode.approve_fbh.getCode(), req.getOperator());
     }
 
     @Override
@@ -692,23 +693,28 @@ public class CdbizAOImpl implements ICdbizAO {
                     "当前节点不是审核发保合节点，不能操作");
         }
 
+        // 操作日志
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.fbh, code,
+                preFbhgpsNode, approveNote, operator);
+
         String nextStatus = ECdbizStatus.C03.getCode();
         String nextNodeCode = ENode.set_gps.getCode();
         if (EBoolean.NO.getCode().equals(approveResult)) {
             nextStatus = ECdbizStatus.C01x.getCode();
             nextNodeCode = ENode.reinput_fbh.getCode();
+            // 待办事项
+            bizTaskBO.handlePreAndAdd(EBizLogType.fbh, code, code,
+                    preFbhgpsNode, nextNodeCode, operator);
+        } else {
+            // gps安装待办事项
+            bizTaskBO.handlePreAndAdd(EBizLogType.gps, code, code,
+                    preFbhgpsNode, nextNodeCode, operator);
         }
 
         cdbiz.setFbhgpsNode(nextNodeCode);
         cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
 
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.fbh, code,
-                ENode.matchCode(nextNodeCode), operator);
 
-        // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.fbh, code,
-                preFbhgpsNode, approveNote, operator);
     }
 
     @Override
@@ -735,15 +741,16 @@ public class CdbizAOImpl implements ICdbizAO {
         String nextStatus = ECdbizStatus.C04.getCode();
 
         cdbiz.setFbhgpsNode(nextNodeCode);
-        cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.gps, code,
-                ENode.matchCode(nextNodeCode), operator);
+        cdbiz.setFbhgpsStatus(nextStatus);
+        cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code,
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.gps, code,
                 preFbhgpsNode, null, operator);
+
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.gps, code, code,
+                preFbhgpsNode, nextNodeCode, operator);
     }
 
     @Override
@@ -770,22 +777,22 @@ public class CdbizAOImpl implements ICdbizAO {
             List<BudgetOrderGps> list = budgetOrderGpsBO
                     .queryBudgetOrderGpsList(code);
             for (BudgetOrderGps budgetOrderGps : list) {
-                gpsBO
-                        .refreshUseGps(budgetOrderGps.getCode(), null, EBoolean.NO);
+                gpsBO.refreshUseGps(budgetOrderGps.getCode(), null, EBoolean.NO);
             }
             budgetOrderGpsBO.removeBudgetOrderGpsList(code);
         }
 
         cdbiz.setFbhgpsNode(nextNodeCode);
-        cdbizBO.refreshFbhgpsStatus(cdbiz, nextStatus);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(code, EBizLogType.gps, code,
-                ENode.matchCode(nextNodeCode), operator);
+        cdbiz.setFbhgpsStatus(nextStatus);
+        cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(code, EBizLogType.gps, code,
-                preFbhgpsNode, null, operator);
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.gps, code,
+                preFbhgpsNode, approveNote, operator);
+
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.gps, code, code,
+                preFbhgpsNode, nextNodeCode, operator);
     }
 
     // 分配账号

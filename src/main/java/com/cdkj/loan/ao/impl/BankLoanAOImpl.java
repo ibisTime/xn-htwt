@@ -15,6 +15,7 @@ import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
     public void commitBank(String bizCode, String operator,
             String bankCommitDatetime, String bankCommitNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(bizCode);
-
+        String preCurNodeCode = cdbiz.getCurNodeCode();
         if (EBoolean.YES.getCode().equals(cdbiz.getCancelStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前预算单已作废，不能操作");
@@ -64,28 +65,29 @@ public class BankLoanAOImpl implements IBankLoanAO {
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(bizCode);
 
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode();
 
         // 更新银行放款状态
         bankLoanBO.commitBank(bankLoan.getCode(), nextNodeCode, operator,
                 bankCommitDatetime, bankCommitNote);
 
         // 更新业务状态
-        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(bizCode, EBizLogType.bank_push,
-                cdbiz.getCode(), ENode.matchCode(nextNodeCode), operator);
+        cdbiz.setStatus(ECdbizStatus.A14.getCode());
+        cdbiz.setCurNodeCode(nextNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(bizCode, EBizLogType.bank_push,
-                cdbiz.getCode(), nextNodeCode, bankCommitNote, operator);
+        sysBizLogBO.saveNewSYSBizLog(bizCode, EBizLogType.bank_push,
+                cdbiz.getCode(), preCurNodeCode, bankCommitNote, operator);
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.bank_push, bizCode,
+                cdbiz.getCode(), preCurNodeCode, nextNodeCode, operator);
     }
 
     @Override
     public void entryFkInfo(XN632135Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
-
+        String preCurNodeCode = cdbiz.getCurNodeCode();
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(req.getCode());
 
         if (!ENode.fk_input.getCode().equals(cdbiz.getCurNodeCode())) {
@@ -103,28 +105,30 @@ public class BankLoanAOImpl implements IBankLoanAO {
         }
 
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode();
 
         // 录入放款信息
         bankLoanBO.entryFkInfo(bankLoan.getCode(), nextNodeCode, req);
 
         // 更新业务状态
-        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,
-                cdbiz.getCode(), ENode.matchCode(nextNodeCode),
-                req.getOperator());
+        cdbiz.setStatus(ECdbizStatus.A15.getCode());
+        cdbiz.setCurNodeCode(nextNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                cdbiz.getCode(), nextNodeCode, null, req.getOperator());
+        sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
+                cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
+
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.bank_push, req.getCode(),
+                cdbiz.getCode(), preCurNodeCode, nextNodeCode,
+                req.getOperator());
     }
 
     @Override
     public void confirmSk(XN632130Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
-
+        String preCurNodeCode = cdbiz.getCurNodeCode();
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(req.getCode());
 
         if (!ENode.cw_confirm_receipt.getCode()
@@ -134,22 +138,23 @@ public class BankLoanAOImpl implements IBankLoanAO {
         }
 
         String nextNodeCode = nodeFlowBO
-                .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode()).getNextNode();
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode();
 
         // 确认收款
         bankLoanBO.confirmSk(bankLoan.getCode(), nextNodeCode, req);
 
         // 更新业务状态
-        cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
-
-        // 待办事项
-        bizTaskBO.saveBizTask(req.getCode(), EBizLogType.bank_push,
-                cdbiz.getCode(), ENode.matchCode(nextNodeCode),
-                req.getOperator());
+        cdbiz.setStatus(ECdbizStatus.A16.getCode());
+        cdbiz.setCurNodeCode(nextNodeCode);
+        cdbizBO.refreshCurNodeStatus(cdbiz);
 
         // 操作日志
-        sysBizLogBO.recordCurOperate(req.getCode(), EBizLogType.bank_push,
-                cdbiz.getCode(), nextNodeCode, null, req.getOperator());
+        sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
+                cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.bank_push, req.getCode(),
+                cdbiz.getCode(), preCurNodeCode, nextNodeCode,
+                req.getOperator());
     }
 
     @Override

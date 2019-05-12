@@ -248,7 +248,7 @@ public class CreditAOImpl implements ICreditAO {
                     node.getValue(), req.getOperator());
             // 处理之前的待办事项
             bizTaskBO.handlePreBizTask(bizCode, EBizLogType.CREDIT.getCode(),
-                    credit.getCode(), preCurNodeCode);
+                    credit.getCode(), preCurNodeCode, req.getOperator());
             NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(credit
                     .getCurNodeCode());
 
@@ -430,7 +430,7 @@ public class CreditAOImpl implements ICreditAO {
 
         // 处理待审核待办事项
         bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.CREDIT.getCode(), req.getCode(),
-                ENode.approve_credit.getCode());
+                ENode.approve_credit.getCode(), req.getOperator());
 
     }
 
