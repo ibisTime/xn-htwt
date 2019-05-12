@@ -482,7 +482,7 @@ public class CdbizAOImpl implements ICdbizAO {
         String preNodeCode = cdbiz.getCurNodeCode(); // 当前节点
 
         // 日志记录
-        sysBizLogBO.recordCurOperate(code, EBizLogType.BUDGET_ORDER, code,
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
                 preNodeCode, null, operator);
         // 下一个节点
         String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
