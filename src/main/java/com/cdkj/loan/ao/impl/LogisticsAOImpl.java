@@ -174,6 +174,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             req.getOperator());
                 } else {
 
+                    String preCurNodeCode = cdbiz.getCurNodeCode();
                     String nextNodeCode = nodeFlowBO
                             .getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
                             .getNextNode();
@@ -244,8 +245,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                     // 完成待办事项
                     bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
-                            cdbiz.getCode(),
-                            cdbiz.getCurNodeCode(), req.getOperator());
+                            cdbiz.getCode(), preCurNodeCode, req.getOperator());
 
                     // 添加待办事项
                     bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,

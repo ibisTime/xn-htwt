@@ -345,7 +345,8 @@ public class CdbizAOImpl implements ICdbizAO {
     @Transactional(rollbackFor = Exception.class)
     public void inputBankCreditResult(XN632111Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getBizCode());
-        if (!ENode.input_credit.getCode().equals(cdbiz.getCurNodeCode())) {
+        if (!ENode.input_credit.getCode().equals(cdbiz.getCurNodeCode())
+                && !ENode.renew_credit.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是录入银行征信结果节点，不能操作");
         }
