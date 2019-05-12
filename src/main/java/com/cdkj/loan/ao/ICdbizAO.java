@@ -73,4 +73,9 @@ public interface ICdbizAO {
     void creditBank(String code);
 
     Paginable<Cdbiz> queryIcbankCdbiz(int start, int limit, String userId);
+
+    /**
+     * 确认入档
+     */
+    void confirmArchive(String code, String operator, String enterLocation);
 }

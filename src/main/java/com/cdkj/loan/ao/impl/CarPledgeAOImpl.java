@@ -198,6 +198,9 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         attachmentBO
                 .saveAttachment(cdbiz.getCode(), "car_xsz_smj", null,
                         req.getCarXszSmj());
+        attachmentBO
+                .saveAttachment(cdbiz.getCode(), "duty_paid_prove_smj", null,
+                        req.getDutyPaidProveSmj());
 
         // 更新业务状态
         cdbiz.setStatus(ECdbizStatus.A22.getCode());
