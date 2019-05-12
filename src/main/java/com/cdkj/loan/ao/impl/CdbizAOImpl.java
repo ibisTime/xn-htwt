@@ -42,7 +42,6 @@ import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
-import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
@@ -887,30 +886,44 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     public Cdbiz getCdbiz(String code) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        setInfo(cdbiz);
-        return cdbiz;
-    }
-
-    @Override
-    public Cdbiz getCdbizAll(String code) {
-        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         init(cdbiz);
         return cdbiz;
     }
 
-    private void setInfo(Cdbiz cdbiz) {
-        // 征信人列表
-        List<CreditUser> creditUserList = creditUserBO
-                .queryCreditUserList(cdbiz.getCode());
-        cdbiz.setCreditUserList(creditUserList);
-
+    private void init(Cdbiz cdbiz) {
         // 主贷人信息
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
                 cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
         cdbiz.setCreditUser(creditUser);
 
+        // 业务员名称
+        if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
+
+            SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
+            cdbiz.setSaleUserName(saleUser.getRealName());
+            cdbiz.setSaleUserCompanyName(saleUser.getCompanyName());
+            cdbiz.setSaleUserDepartMentName(saleUser.getDepartmentName());
+            cdbiz.setSaleUserPostName(saleUser.getPostName());
+        }
+
+        // 内勤名称
+        if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
+
+            SYSUser insideJob = sysUserBO.getUser(cdbiz.getInsideJob());
+            cdbiz.setInsideJobName(insideJob.getRealName());
+            cdbiz.setInsideJobCompanyName(insideJob.getCompanyName());
+            cdbiz.setInsideJobDepartMentName(insideJob.getDepartmentName());
+            cdbiz.setInsideJobPostName(insideJob.getPostName());
+        }
+
+        // 征信人列表
+        List<CreditUser> creditUserList = creditUserBO
+                .queryCreditUserList(cdbiz.getCode());
+        cdbiz.setCreditUserList(creditUserList);
+
         // 车辆信息
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
+
         // 还款信息
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
 
@@ -928,87 +941,6 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbiz.setLoanInfo(loanInfoRes);
         // 车辆信息
         cdbiz.setCarInfoRes(carInfoRes);
-        // 征信人流水
-        List<CreditJour> creditJours = creditJourBO
-                .querCreditJoursByBizCode(cdbiz.getCode());
-        cdbiz.setCreditJours(creditJours);
-
-        // 业务员名称
-        if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
-
-            SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
-            cdbiz.setSaleUserName(saleUser.getRealName());
-            cdbiz.setSaleUserCompanyName(saleUser.getCompanyName());
-            cdbiz.setSaleUserDepartMentName(saleUser.getDepartmentName());
-            cdbiz.setSaleUserPostName(saleUser.getPostName());
-        }
-
-        // 内勤名称
-        if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
-
-            SYSUser insideJob = sysUserBO.getUser(cdbiz.getInsideJob());
-            cdbiz.setInsideJobName(insideJob.getRealName());
-            cdbiz.setInsideJobCompanyName(insideJob.getCompanyName());
-            cdbiz.setInsideJobDepartMentName(insideJob.getDepartmentName());
-            cdbiz.setInsideJobPostName(insideJob.getPostName());
-        }
-
-        // gps安装列表
-        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
-                .queryBudgetOrderGpsList(cdbiz.getCode());
-        cdbiz.setBudgetOrderGps(budgetOrderGpsList);
-
-        // 附件
-        List<Attachment> attachments = attachmentBO.queryBizAttachments(cdbiz
-                .getCode());
-        cdbiz.setAttachments(attachments);
-    }
-
-    private void init(Cdbiz cdbiz) {
-        // 主贷人信息
-        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-                cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
-        cdbiz.setCreditUser(creditUser);
-
-        // 公司名称
-        if (StringUtils.isNotBlank(cdbiz.getCompanyCode())) {
-            Department company = departmentBO.getDepartment(cdbiz
-                    .getCompanyCode());
-            cdbiz.setCompanyName(company.getName());
-        }
-
-        // 业务员名称
-        if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
-
-            SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
-            cdbiz.setSaleUserName(saleUser.getRealName());
-            cdbiz.setSaleUserCompanyName(saleUser.getCompanyName());
-            cdbiz.setSaleUserDepartMentName(saleUser.getDepartmentName());
-            cdbiz.setSaleUserPostName(saleUser.getPostName());
-        }
-
-        // 内勤名称
-        if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
-
-            SYSUser insideJob = sysUserBO.getUser(cdbiz.getInsideJob());
-            cdbiz.setInsideJobName(insideJob.getRealName());
-            cdbiz.setInsideJobCompanyName(insideJob.getCompanyName());
-            cdbiz.setInsideJobDepartMentName(insideJob.getDepartmentName());
-            cdbiz.setInsideJobPostName(insideJob.getPostName());
-        }
-
-        // 征信人列表
-        List<CreditUser> creditUserList = creditUserBO
-                .queryCreditUserList(cdbiz.getCode());
-        cdbiz.setCreditUserList(creditUserList);
-
-        // 车辆信息
-        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
-        cdbiz.setCarInfo(carInfo);
-
-        // 还款信息
-        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
-        cdbiz.setRepayBiz(repayBiz);
 
         // 车辆抵押
         CarPledge carPledge = carPledgeBO
@@ -1041,6 +973,13 @@ public class CdbizAOImpl implements ICdbizAO {
         List<SYSBizLog> bizLogs = sysBizLogBO.queryBizLogByBizCode(cdbiz
                 .getCode());
         cdbiz.setBizLogs(bizLogs);
+
+        // gps安装列表
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+                .queryBudgetOrderGpsList(cdbiz.getCode());
+        cdbiz.setBudgetOrderGps(budgetOrderGpsList);
+
+        // 附件
         List<Attachment> attachments = attachmentBO.queryBizAttachments(cdbiz
                 .getCode());
         cdbiz.setAttachments(attachments);

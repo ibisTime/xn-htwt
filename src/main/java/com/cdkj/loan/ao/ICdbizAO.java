@@ -1,7 +1,5 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632110Req;
@@ -12,6 +10,7 @@ import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
+import java.util.List;
 
 public interface ICdbizAO {
 
@@ -70,8 +69,6 @@ public interface ICdbizAO {
     List<Cdbiz> queryCdbizList(Cdbiz condition);
 
     Cdbiz getCdbiz(String code);
-
-    Cdbiz getCdbizAll(String code);
 
     void creditBank(String code);
 
