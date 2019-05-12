@@ -176,30 +176,30 @@
         ,pic
         ,remark
         )
-        VALUES(
-        <foreach collection="list" item="creditJour" separator=",">
-            #{creditJour.code}
-            ,#{creditJour.bizCode}
-            ,#{creditJour.creditUserCode}
-            ,#{creditJour.type}
-            ,#{creditJour.datetimeStart}
+        VALUES
+        <foreach collection="list" item="domain" separator=",">
+            (#{domain.code}
+            ,#{domain.bizCode}
+            ,#{domain.creditUserCode}
+            ,#{domain.type}
+            ,#{domain.datetimeStart}
 
-            ,#{creditJour.datetimeEnd}
-            ,#{creditJour.jourInterest1}
-            ,#{creditJour.jourInterest2}
-            ,#{creditJour.interest1}
-            ,#{creditJour.interest2}
+            ,#{domain.datetimeEnd}
+            ,#{domain.jourInterest1}
+            ,#{domain.jourInterest2}
+            ,#{domain.interest1}
+            ,#{domain.interest2}
 
-            ,#{creditJour.income}
-            ,#{creditJour.expend}
-            ,#{creditJour.balance}
-            ,#{creditJour.monthIncome}
-            ,#{creditJour.monthExpend}
+            ,#{domain.income}
+            ,#{domain.expend}
+            ,#{domain.balance}
+            ,#{domain.monthIncome}
+            ,#{domain.monthExpend}
 
-            ,#{creditJour.pic}
-            ,#{creditJour.remark}
+            ,#{domain.pic}
+            ,#{domain.remark}
+            )
         </foreach>
-        )
     </insert>
 
 </mapper>
