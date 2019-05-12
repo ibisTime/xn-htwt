@@ -321,8 +321,15 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是录入准入单资料节点，不能操作");
         }
-        carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
-                req.getPledgeUserIdCard(), req.getPledgeAddress());
+        CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
+        if (null == carPledge) {
+            carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
+                    req.getPledgeUserIdCard(), req.getPledgeAddress());
+        } else {
+            String code = carPledge.getCode();
+            EntityUtils.copyData(req, carPledge);
+            carPledge.setCode(code);
+        }
 
         // 添加附件
         attachmentBO
