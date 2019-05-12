@@ -237,6 +237,51 @@
         </trim>
     </select>
 
+    <select id="select_cdbiz_for_update" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.type
+        ,t.biz_type
+        ,t.repay_biz_code
+        ,t.company_code
+        ,t.team_code
+        ,t.captain_code
+        ,t.sale_user_id
+        ,t.inside_job
+        ,t.loan_bank
+        ,t.loan_amount
+        ,t.enter_location
+        ,t.enter_datetime
+        ,t.enter_filelist
+        ,t.repay_card_number
+        ,t.card_post_address
+        ,t.status
+        ,t.intev_status
+        ,t.make_card_status
+        ,t.fbhgps_status
+        ,t.enter_status
+        ,t.cancel_status
+        ,t.cur_node_code
+        ,t.intev_cur_node_code
+        ,t.make_card_node
+        ,t.fbhgps_node
+        ,t.enter_node_code
+        ,t.cancel_node_code
+        ,t.is_gps_az
+        ,t.is_finacing
+        ,t.is_advance_fund
+        ,t.is_plat_insure
+        ,t.should_fee_amount
+        ,t.real_fee_amount
+        ,t.gua_mode
+        ,t.credit_note
+        ,t.apply_datetime
+        ,t.remark
+        FROM
+        tqj_cdbiz t where t.code = #{code} for update
+    </select>
+
     <select id="select_cdbizByRoleCode" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
         SELECT
         distinct

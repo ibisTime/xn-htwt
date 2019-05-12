@@ -109,6 +109,20 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
+    public Cdbiz getCdbizForUpdate(String code) {
+        Cdbiz data = null;
+        if (StringUtils.isNotBlank(code)) {
+            Cdbiz condition = new Cdbiz();
+            condition.setCode(code);
+            data = cdbizDAO.selectForUpdate(condition);
+            if (data == null) {
+                throw new BizException("xn0000", "业务不存在");
+            }
+        }
+        return data;
+    }
+
+    @Override
     public Cdbiz saveCdbiz(String bankCode, String bizType, Long dkAmount,
             SYSUser sysUser, BizTeam bizTeam, String node, String dealType,
             String remark) {

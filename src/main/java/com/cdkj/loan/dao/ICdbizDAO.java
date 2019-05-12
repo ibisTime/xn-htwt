@@ -9,6 +9,8 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
 
     String NAMESPACE = ICdbizDAO.class.getName().concat(".");
 
+    Cdbiz selectForUpdate(Cdbiz condition);
+
     int updateStatus(Cdbiz data);
 
     int updateMakeCardStatus(Cdbiz data);
