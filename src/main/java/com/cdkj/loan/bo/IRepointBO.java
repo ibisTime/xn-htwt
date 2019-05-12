@@ -1,9 +1,8 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Repoint;
+import java.util.List;
 
 /**
  * 
@@ -18,6 +17,9 @@ public interface IRepointBO extends IPaginableBO<Repoint> {
     public int refreshRepoint(Repoint data);
 
     public List<Repoint> queryRepointList(Repoint condition);
+
+    public List<Repoint> queryRepointList(String bizCode);
+
 
     public Repoint getRepoint(String code);
 

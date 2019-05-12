@@ -891,14 +891,28 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     private void init(Cdbiz cdbiz) {
+
+        // 征信人列表
+        List<CreditUser> creditUserList = creditUserBO
+                .queryCreditUserList(cdbiz.getCode());
+        cdbiz.setCreditUserList(creditUserList);
+
         // 主贷人信息
-        CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-                cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
-        cdbiz.setCreditUser(creditUser);
+        CreditUser mainCreditUser = null;
+        for (CreditUser creditUser : creditUserList) {
+            if (ECreditUserLoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+                mainCreditUser = creditUser;
+                break;
+            }
+        }
+        if (null == mainCreditUser) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "主贷人不能为空");
+
+        }
+        cdbiz.setCreditUser(mainCreditUser);
 
         // 业务员名称
         if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
-
             SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
             cdbiz.setSaleUserName(saleUser.getRealName());
             cdbiz.setSaleUserCompanyName(saleUser.getCompanyName());
@@ -916,31 +930,25 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbiz.setInsideJobPostName(insideJob.getPostName());
         }
 
-        // 征信人列表
-        List<CreditUser> creditUserList = creditUserBO
-                .queryCreditUserList(cdbiz.getCode());
-        cdbiz.setCreditUserList(creditUserList);
-
         // 车辆信息
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
-
-        // 还款信息
-        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
-
         LoanInfoRes loanInfoRes = new LoanInfoRes();
         CarInfoRes carInfoRes = new CarInfoRes();
         if (carInfo != null) {
             BeanUtils.copyProperties(carInfo, loanInfoRes);
             BeanUtils.copyProperties(carInfo, carInfoRes);
         }
+
+        // 还款信息
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
         if (repayBiz != null) {
             BeanUtils.copyProperties(repayBiz, loanInfoRes);
             BeanUtils.copyProperties(repayBiz, carInfoRes);
         }
-        // 贷款信息
-        cdbiz.setLoanInfo(loanInfoRes);
         // 车辆信息
         cdbiz.setCarInfoRes(carInfoRes);
+        // 贷款信息
+        cdbiz.setLoanInfo(loanInfoRes);
 
         // 车辆抵押
         CarPledge carPledge = carPledgeBO
@@ -952,37 +960,38 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbiz.setAdvance(advance);
 
         // 返点列表
-        Repoint repoint = new Repoint();
-        repoint.setBizCode(cdbiz.getCode());
-        List<Repoint> repointList = repointBO.queryRepointList(repoint);
+        List<Repoint> repointList = repointBO.queryRepointList(cdbiz.getCode());
         cdbiz.setRepointList(repointList);
 
         // 手续费
-        BudgetOrderFee fee = budgetOrderFeeBO.getBudgetOrderFeeByBudget(cdbiz
+        BudgetOrderFee budgetOrderFee = budgetOrderFeeBO.getBudgetOrderFeeByBudget(cdbiz
                 .getCode());
-        cdbiz.setBudgetOrderFee(fee);
+        cdbiz.setBudgetOrderFee(budgetOrderFee);
 
-        // 征信人流水
-        List<CreditJour> creditJours = creditJourBO
+        // 征信人流水列表
+        List<CreditJour> creditJourList = creditJourBO
                 .querCreditJoursByBizCode(cdbiz.getCode());
-        cdbiz.setCreditJours(creditJours);
+        cdbiz.setCreditJours(creditJourList);
 
-        List<BizTask> bizTasks = bizTaskBO.queryBizTaskByBizCode(cdbiz
+        // 待办事项
+        List<BizTask> bizTaskList = bizTaskBO.queryBizTaskByBizCode(cdbiz
                 .getCode());
-        cdbiz.setBizTasks(bizTasks);
-        List<SYSBizLog> bizLogs = sysBizLogBO.queryBizLogByBizCode(cdbiz
-                .getCode());
-        cdbiz.setBizLogs(bizLogs);
+        cdbiz.setBizTasks(bizTaskList);
 
-        // gps安装列表
+        // 操作日志
+        List<SYSBizLog> bizLogList = sysBizLogBO.queryBizLogByBizCode(cdbiz
+                .getCode());
+        cdbiz.setBizLogs(bizLogList);
+
+        // GPS安装列表
         List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
                 .queryBudgetOrderGpsList(cdbiz.getCode());
         cdbiz.setBudgetOrderGps(budgetOrderGpsList);
 
         // 附件
-        List<Attachment> attachments = attachmentBO.queryBizAttachments(cdbiz
+        List<Attachment> attachmentList = attachmentBO.queryBizAttachments(cdbiz
                 .getCode());
-        cdbiz.setAttachments(attachments);
+        cdbiz.setAttachments(attachmentList);
     }
 
     @Override
