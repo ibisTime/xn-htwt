@@ -12,4 +12,5 @@ public interface ICarNewsDAO extends IBaseDAO<CarNews> {
     public int updateStatus(CarNews data);
 
     public int updateReadCounts(CarNews data);
+
 }

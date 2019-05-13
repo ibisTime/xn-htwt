@@ -118,4 +118,10 @@ public class BrandAOImpl implements IBrandAO {
         }
     }
 
+    @Override
+    public void dropBrand(String code) {
+        Brand brand = brandBO.getBrand(code);
+        brandBO.removeBrand(brand);
+    }
+
 }

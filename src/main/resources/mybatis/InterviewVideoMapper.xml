@@ -27,6 +27,13 @@
 			<if test="streamId != null and streamId != '' ">
 				AND t.stream_id = #{streamId}
 			</if>
+			<if test="roomCodeList != null and roomCodeList > 0 ">
+                AND t.room_code in
+                <foreach collection="roomCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
 		</trim>
 	</sql>
 	<select id="select_interviewVideo" parameterType="interviewVideo" resultMap="interviewVideo_DB_Result">

@@ -182,5 +182,13 @@
 		WHERE code = #{code}
 	</update>
 	
+	<delete id="delete_series" parameterType="series">
+		DELETE FROM tht_car_carconfig WHERE car_code in (SELECT code FROM tht_car WHERE series_code={code});
+		DELETE FROM tht_car_order WHERE car_code in (SELECT code FROM tht_car WHERE series_code=#{code});
+		DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_car WHERE series_code=#{code});
+		DELETE FROM tht_car WHERE code in (SELECT code FROM tht_car WHERE series_code=#{code}));
+		DELETE FROM tht_series WHERE code = #{code}
+	</delete>
+	
 	
 </mapper>

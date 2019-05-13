@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,9 @@ public class ActionAOImpl implements IActionAO {
     @Override
     public String addAction(String type, String toType, String toCode,
             String creater, String remark) {
+        if (StringUtils.isBlank(creater)) {
+            return null;
+        }
         // 资讯阅读量
         if (EActionToType.news.getCode().equals(toType)
                 && EActionType.feet.getCode().equals(type)) {
