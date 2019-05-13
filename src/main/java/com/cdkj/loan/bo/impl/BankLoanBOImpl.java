@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IBankLoanBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
@@ -18,6 +12,10 @@ import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
@@ -31,7 +29,7 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
         String code = null;
         if (data != null) {
             code = OrderNoGenerater
-                .generate(EGeneratePrefix.BANK_LOAN.getCode());
+                    .generate(EGeneratePrefix.BANK_LOAN.getCode());
             data.setCode(code);
             bankLoanDAO.insert(data);
         }
@@ -43,7 +41,7 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
         BankLoan bankLoan = new BankLoan();
 
         String code = OrderNoGenerater
-            .generate(EGeneratePrefix.BANK_LOAN.getCode());
+                .generate(EGeneratePrefix.BANK_LOAN.getCode());
         bankLoan.setCode(code);
         bankLoan.setBizCode(bizCode);
         bankLoan.setCurNodeCode(ENode.fk_submit.getCode());
@@ -59,7 +57,7 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
         bankLoan.setCode(code);
         bankLoan.setCurNodeCode(nextNodeCode);
         bankLoan.setBankCommitDatetime(DateUtil.strToDate(bankCommitDatetime,
-            DateUtil.DATA_TIME_PATTERN_1));
+                DateUtil.DATA_TIME_PATTERN_1));
         bankLoan.setBankCommitNote(bankCommitNote);
 
         bankLoanDAO.updateCommitBank(bankLoan);
@@ -109,9 +107,6 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
             BankLoan condition = new BankLoan();
             condition.setBizCode(bizCode);
             data = bankLoanDAO.select(condition);
-            if (data == null) {
-                throw new BizException("xn0000", "银行放款不存在");
-            }
         }
         return data;
     }

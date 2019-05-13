@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
+import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632462ReqMission;
 import com.cdkj.loan.dto.req.XN632464Req;
@@ -227,16 +228,16 @@ public class AdvanceAOImpl implements IAdvanceAO {
     public void advanceBackUp(XN632464Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         String preFbhgpsNode = cdbiz.getFbhgpsNode();
-        if (!ENode.upload_approve_back_bill.getCode().equals(
-                cdbiz.getFbhgpsNode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是垫资回录节点，不能操作");
-        }
+//        if (!ENode.upload_approve_back_bill.getCode().equals(
+//                cdbiz.getFbhgpsNode())) {
+//            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+//                    "当前不是垫资回录节点，不能操作");
+//        }
 
         Advance advance = advanceBO.getAdvanceByBizCode(req.getCode());
 
-        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-                preFbhgpsNode).getNextNode();
+//        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+//                preFbhgpsNode).getNextNode();
 
         advance.setAdvanceFundAmount(StringValidater.toInteger(req
                 .getAdvanceFundAmount()));
@@ -251,17 +252,29 @@ public class AdvanceAOImpl implements IAdvanceAO {
                 attachName.getValue(), req.getBillPdf());
 
         // 更新业务状态
-        cdbiz.setFbhgpsNode(nextNodeCode);
-        cdbiz.setFbhgpsStatus(ECdbizStatus.F4.getCode());
+        cdbiz.setFbhgpsNode(ENode.input_fbh.getCode());
+        cdbiz.setFbhgpsStatus(ECdbizStatus.C01.getCode());
         cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
-        // 操作日志
-        sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fund,
-                req.getCode(), preFbhgpsNode, null, req.getOperator());
+        //查找当前节点的最新待办
+        BizTask bizTask = bizTaskBO
+                .queryLastBizTask(cdbiz.getCode(), null, null, preFbhgpsNode);
+        //找本次节点的待办，如果没有，说明走后门，记录日志并产生下一步待办
+        if (bizTask == null) {
+            sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(), EBizLogType.fund, req.getCode(),
+                    preFbhgpsNode, null, req.getOperator());
 
-        // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.fund, req.getCode(), req.getCode(), preFbhgpsNode,
-                nextNodeCode, req.getOperator());
+            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.fbh, req.getCode(),
+                    ENode.input_fbh);
+        } else {
+            // 操作日志
+            sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fund,
+                    req.getCode(), preFbhgpsNode, null, req.getOperator());
+
+            // 待办事项
+            bizTaskBO.handlePreAndAdd(EBizLogType.fbh, req.getCode(), req.getCode(), preFbhgpsNode,
+                    ENode.input_fbh.getCode(), req.getOperator());
+        }
     }
 
     @Override

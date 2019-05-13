@@ -603,13 +603,13 @@ public class CdbizAOImpl implements ICdbizAO {
         }
 
         // 第一次存档
-        if (ECdbizStatus.D2.getCode().equals(cdbiz.getEnterStatus())) {
+        if (ENode.first_receive_archive.getCode().equals(cdbiz.getEnterNodeCode())) {
             // 更新业务状态
             cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.D3.getCode(),
                     ENode.first_archive.getCode());
         }
         // 第二次存档
-        if (ECdbizStatus.E2.getCode().equals(cdbiz.getEnterStatus())) {
+        if (ENode.second_received_archive.getCode().equals(cdbiz.getEnterStatus())) {
             // 更新业务状态
             cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
                     ENode.second_archive.getCode());

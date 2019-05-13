@@ -156,8 +156,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             req.getOperator());
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
-                    cdbiz.setStatus(ECdbizStatus.D1.getCode());
-                    cdbiz.setCurNodeCode(ENode.receive_2.getCode());
+                    cdbiz.setEnterStatus(ECdbizStatus.D1.getCode());
+                    cdbiz.setEnterNodeCode(ENode.receive_2.getCode());
                     cdbizBO.refreshCurNodeStatus(cdbiz);
 
                     // 日志记录
@@ -307,7 +307,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 String nextNodeCode;
                 String bizStatus;
                 // 如果收件节点是待担保公司收件（车辆抵押）或提交银行（车辆抵押）
-                if (logistics.getFromNodeCode().equals(ENode.receive_approve_4.getCode())
+                if (logistics.getFromNodeCode().equals(ENode.submit_6.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
                     if (EBoolean.NO.getCode().equals(approveResult)) {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -416,7 +416,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                     operator);
                             break;
 
-                        // 风控审核收件（车辆抵押）
+                        // 待风控审核收件（车辆抵押）
                         case receive_approve_4:
                             if (EBoolean.YES.getCode().equals(approveResult)) {
 
@@ -429,15 +429,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 // 生成【风控寄送材料】资料传递
                                 String fkSendlogisticsCode = logisticsBO
                                         .saveLogistics(ELogisticsType.BUDGET.getCode(),
-                                                ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE
-                                                        .getCode(),
+                                                ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE.getCode(),
                                                 cdbiz.getCode(), cdbiz.getSaleUserId(),
-                                                cdbiz.getCurNodeCode(), ENode.receive_6.getCode(),
+                                                ENode.submit_6.getCode(), ENode.receive_6.getCode(),
                                                 null);
 
                                 // 资料传递待办事项
                                 bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
-                                        fkSendlogisticsCode, ENode.receive_6);
+                                        fkSendlogisticsCode, ENode.submit_6);
 
                                 // 生成【风控审核通过】资料传递
                                 String fkApprovelogisticsCode = logisticsBO
@@ -445,7 +444,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                                 ELogisticsCurNodeType.FK_APPROVE_PASS_CAR_PLEDGE
                                                         .getCode(),
                                                 cdbiz.getCode(), cdbiz.getSaleUserId(),
-                                                cdbiz.getCurNodeCode(), nextNodeCode, null);
+                                                ENode.submit_5.getCode(),
+                                                ENode.receive_5.getCode(), null);
 
                                 // 资料传递待办事项
                                 bizTaskBO.handlePreAndAdd(EBizLogType.ZHDY_LOGISTICS,
