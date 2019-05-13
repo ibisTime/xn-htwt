@@ -137,7 +137,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 if (logistics.getFromNodeCode().equals(ENode.submit_6.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
 
-                    if (!ECdbizStatus.D3.getCode().equals(cdbiz.getEnterStatus())) {
+                    if (!ENode.first_archive.getCode().equals(cdbiz.getEnterNodeCode())) {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(), "第一次未入档，不能发件！");
                     }
 
@@ -212,16 +212,16 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             break;
 
                         // 待风控寄件（车辆抵押）
-                        case submit_6:
-                            if (!ENode.first_archive.getCode()
-                                    .equals(cdbiz.getEnterNodeCode())) {
-                                throw new BizException(
-                                        EBizErrorCode.DEFAULT.getCode(),
-                                        "第一次存档未完成，无法发件");
-                            }
-                            cdbizBO.refreshEnterNodeStatus(cdbiz,
-                                    ECdbizStatus.E1.getCode(), ENode.receive_6.getCode());
-                            break;
+//                        case submit_6:
+//                            if (!ENode.first_archive.getCode()
+//                                    .equals(cdbiz.getEnterNodeCode())) {
+//                                throw new BizException(
+//                                        EBizErrorCode.DEFAULT.getCode(),
+//                                        "第一次存档未完成，无法发件");
+//                            }
+//                            cdbizBO.refreshEnterNodeStatus(cdbiz,
+//                                    ECdbizStatus.E1.getCode(), ENode.receive_6.getCode());
+//                            break;
 
                         default:
                             break;

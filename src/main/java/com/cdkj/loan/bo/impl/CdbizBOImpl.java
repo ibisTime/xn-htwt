@@ -373,4 +373,9 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbizDAO.updateCurNodeStatus(cdbiz);
     }
 
+    @Override
+    public void refreshLocation(Cdbiz cdbiz) {
+        cdbizDAO.updateCdbizLocation(cdbiz);
+    }
+
 }

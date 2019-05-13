@@ -40,4 +40,6 @@ public interface ICdbizDAO extends IBaseDAO<Cdbiz> {
     int updateIntevNodeStatus(Cdbiz data);
 
     int updateCurNodeStatus(Cdbiz cdbiz);
+
+    void updateCdbizLocation(Cdbiz cdbiz);
 }
