@@ -24,7 +24,7 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
     private IInterviewVideoBO interviewVideoBO;
 
     @Autowired
-    private IInterviewVideoRoomBO interviewVedioRoomBO;
+    private IInterviewVideoRoomBO interviewVideoRoomBO;
 
     @Override
     public void addInterviewVideo(InterviewVideo data) {
@@ -42,7 +42,7 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
         if (StringUtils.isNotBlank(condition.getBizCode())) {
             InterviewVideoRoom roomCondition = new InterviewVideoRoom();
             roomCondition.setBudgetCode(condition.getBizCode());
-            List<InterviewVideoRoom> rooms = interviewVedioRoomBO
+            List<InterviewVideoRoom> rooms = interviewVideoRoomBO
                 .queryInterviewVideoRoomList(roomCondition);
             List<String> roomCodeList = new ArrayList<String>();
             for (InterviewVideoRoom room : rooms) {
