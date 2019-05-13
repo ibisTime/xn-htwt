@@ -307,7 +307,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 String nextNodeCode;
                 String bizStatus;
                 // 如果收件节点是待担保公司收件（车辆抵押）或提交银行（车辆抵押）
-                if (logistics.getFromNodeCode().equals(ENode.receive_approve_4.getCode())
+                if (logistics.getFromNodeCode().equals(ENode.submit_6.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
                     if (EBoolean.NO.getCode().equals(approveResult)) {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -417,7 +417,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             break;
 
                         // 待风控审核收件（车辆抵押）
-                        case submit_5:
+                        case receive_approve_4:
                             if (EBoolean.YES.getCode().equals(approveResult)) {
 
                                 cdbiz.setStatus(ECdbizStatus.A24.getCode());

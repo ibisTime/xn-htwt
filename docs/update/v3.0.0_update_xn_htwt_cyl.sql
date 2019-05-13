@@ -40,6 +40,10 @@ ALTER TABLE `tdq_car_pledge`
 INSERT INTO `tsys_node` (`code`, `name`, `type`)
 VALUES ('f15', '确认存档', 'f');
 
+INSERT INTO `tsys_node` (`code`, `name`, `type`)
+VALUES ('f7', '风控审核通过（车辆抵押）', 'f');
+
+
 
 DROP TABLE IF EXISTS `tdq_enter_file_list`;
 CREATE TABLE `tdq_enter_file_list`
