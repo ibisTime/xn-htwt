@@ -9,6 +9,7 @@ import com.cdkj.loan.dao.IBizTaskDAO;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.RoleNode;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBizTaskStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -16,6 +17,7 @@ import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -190,12 +192,16 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         BizTask condition = new BizTask();
         condition.setBizCode(bizCode);
 //        condition.setRefType(refType);
-        condition.setRefOrder(refOrder);
+//        condition.setRefOrder(refOrder);
         condition.setRefNode(curNode);
         condition.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
         condition.setOrder("create_datetime", "desc");
 
         List<BizTask> bizTasks = bizTaskDAO.selectList(condition);
+        if (CollectionUtils.isEmpty(bizTasks)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "未找到" + curNode + "对应的待处理待办");
+        }
         BizTask bizTask = bizTasks.get(0);
         return bizTask;
     }

@@ -52,6 +52,9 @@ public class Cdbiz extends ABaseDO {
     // 贷款银行
     private String loanBank;
 
+    // 贷款信息
+    private BankLoan bankLoan;
+
     // 贷款额
     private Long loanAmount;
 

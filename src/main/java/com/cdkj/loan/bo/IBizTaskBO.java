@@ -12,7 +12,7 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
     String saveBizTask(String bizCode, EBizLogType bizLogType,
             String refOrder, ENode curNode, String userId);
 
-    //新增待办
+    //新增待处理待办
     String saveBizTaskNew(String bizCode, EBizLogType bizLogType,
             String refOrder, ENode curNode);
 

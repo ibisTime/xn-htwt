@@ -134,43 +134,40 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
 
                 // 如果收件节点是待担保公司收件（车辆抵押）或提交银行（车辆抵押）
-                if (logistics.getFromNodeCode().equals(ENode.receive_approve_4.getCode())
+                if (logistics.getFromNodeCode().equals(ENode.submit_6.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
 
                     if (!ECdbizStatus.D3.getCode().equals(cdbiz.getEnterStatus())) {
-                        throw new BizException(EBizErrorCode.DEFAULT.getCode(), "第一次为入档，不能发件！");
+                        throw new BizException(EBizErrorCode.DEFAULT.getCode(), "第一次未入档，不能发件！");
                     }
-                    // 完成待办事项
-                    bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
-                            cdbiz.getCode(),
-                            ENode.receive_approve_4.getCode(), req.getOperator());
 
-                    // 添加待办事项
-                    bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
-                            req.getCode(), ENode.receive_approve_4,
-                            null);
+                    cdbiz.setStatus(ECdbizStatus.E1.getCode());
+                    cdbiz.setCurNodeCode(ENode.receive_6.getCode());
+                    cdbizBO.refreshCurNodeStatus(cdbiz);
 
                     // 日志记录
-                    sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                            EBizLogType.BUDGET_ORDER, req.getCode(),
-                            ENode.receive_approve_4.getCode(), req.getSendNote(),
+                    sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS,
+                            req.getCode(), ENode.submit_6.getCode(), req.getSendNote(),
+                            req.getOperator());
+
+                    // 待办事项
+                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, cdbiz.getCode(),
+                            cdbiz.getCode(), ENode.submit_6.getCode(), ENode.receive_6.getCode(),
                             req.getOperator());
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
-                    // 完成待办事项
-                    bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
-                            cdbiz.getCode(),
-                            ENode.submit_2.getCode(), req.getOperator());
-
-                    // 添加待办事项
-                    bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
-                            req.getCode(), ENode.submit_2,
-                            null);
+                    cdbiz.setStatus(ECdbizStatus.D1.getCode());
+                    cdbiz.setCurNodeCode(ENode.receive_2.getCode());
+                    cdbizBO.refreshCurNodeStatus(cdbiz);
 
                     // 日志记录
-                    sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                            EBizLogType.BUDGET_ORDER, req.getCode(),
-                            ENode.submit_2.getCode(), req.getSendNote(),
+                    sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS,
+                            req.getCode(), ENode.submit_2.getCode(), req.getSendNote(),
+                            req.getOperator());
+
+                    // 待办事项
+                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, cdbiz.getCode(),
+                            cdbiz.getCode(), ENode.submit_2.getCode(), ENode.receive_2.getCode(),
                             req.getOperator());
                 } else {
 
@@ -184,34 +181,34 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         // 2、业务员重寄材料（银行放款）
                         case submit_1:
                         case re_submit_1:
-                            cdbizBO.refreshStatus(cdbiz,
-                                    ECdbizStatus.A11.getCode());
-                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            cdbiz.setStatus(ECdbizStatus.A11.getCode());
+                            cdbiz.setCurNodeCode(nextNodeCode);
+                            cdbizBO.refreshCurNodeStatus(cdbiz);
                             break;
 
                         // 1、风控寄抵押合同
                         // 2、风控重寄抵押合同
                         case submit_3:
                         case re_submit_3:
-                            cdbizBO.refreshStatus(cdbiz,
-                                    ECdbizStatus.A19.getCode());
-                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            cdbiz.setStatus(ECdbizStatus.A19.getCode());
+                            cdbiz.setCurNodeCode(nextNodeCode);
+                            cdbizBO.refreshCurNodeStatus(cdbiz);
                             break;
 
                         // 1、业务员寄送材料（车辆抵押）
                         // 2、业务员重寄送材料（车辆抵押）
                         case submit_4:
                         case re_submit_4:
-                            cdbizBO.refreshStatus(cdbiz,
-                                    ECdbizStatus.A23.getCode());
-                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            cdbiz.setStatus(ECdbizStatus.A23.getCode());
+                            cdbiz.setCurNodeCode(nextNodeCode);
+                            cdbizBO.refreshCurNodeStatus(cdbiz);
                             break;
 
                         // 风控审核通过（车辆抵押）
                         case submit_5:
-                            cdbizBO.refreshStatus(cdbiz,
-                                    ECdbizStatus.A26.getCode());
-                            cdbizBO.refreshCurNodeCode(cdbiz, nextNodeCode);
+                            cdbiz.setStatus(ECdbizStatus.A26.getCode());
+                            cdbiz.setCurNodeCode(nextNodeCode);
+                            cdbizBO.refreshCurNodeStatus(cdbiz);
                             break;
 
                         // 待风控寄件（车辆抵押）
@@ -243,20 +240,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         }
                     }
 
-                    // 完成待办事项
-                    bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
-                            cdbiz.getCode(), preCurNodeCode, req.getOperator());
-
-                    // 添加待办事项
-                    bizTaskBO.saveBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
-                            req.getCode(), ENode.getMap().get(cdbiz.getCurNodeCode()),
-                            null);
-
                     // 日志记录
-                    sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                            EBizLogType.BUDGET_ORDER, req.getCode(),
-                            cdbiz.getCurNodeCode(), req.getSendNote(),
-                            req.getOperator());
+                    sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS,
+                            req.getCode(), preCurNodeCode, req.getSendNote(), req.getOperator());
+
+                    // 待办事项
+                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, cdbiz.getCode(),
+                            cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
                 }
 
                 break;
@@ -309,6 +299,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                 Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
 
+                // 资料传递操作日志
+                sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.bank_push,
+                        logistics.getCode(), logistics.getToNodeCode(), remark, operator);
+
+                String preNodeCode;
+                String nextNodeCode;
+                String bizStatus;
                 // 如果收件节点是待担保公司收件（车辆抵押）或提交银行（车辆抵押）
                 if (logistics.getFromNodeCode().equals(ENode.receive_approve_4.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
@@ -316,18 +313,23 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                                 "该节点不能补件");
                     }
+                    preNodeCode = cdbiz.getEnterNodeCode();
+                    nextNodeCode = ENode.second_received_archive.getCode();
+                    bizStatus = ECdbizStatus.E2.getCode();
                     // 更新入档状态
-                    cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E2.getCode(),
-                            ENode.second_received_archive.getCode());
+                    cdbizBO.refreshEnterNodeStatus(cdbiz, bizStatus, nextNodeCode);
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_5.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_5.getCode())) {
                     if (EBoolean.NO.getCode().equals(approveResult)) {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                                 "该节点不能补件");
                     }
-                    cdbiz.setStatus(ECdbizStatus.A27.getCode());
-                    cdbiz.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(cdbiz.getCurNodeCode())
-                            .getNextNode());
+                    preNodeCode = cdbiz.getCurNodeCode();
+                    nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
+                            .getNextNode();
+                    bizStatus = ECdbizStatus.A27.getCode();
+                    cdbiz.setStatus(bizStatus);
+                    cdbiz.setCurNodeCode(nextNodeCode);
                     cdbizBO.refreshCurNodeStatus(cdbiz);
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
@@ -335,13 +337,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                                 "该节点不能补件");
                     }
+                    preNodeCode = cdbiz.getEnterNodeCode();
+                    nextNodeCode = ENode.first_receive_archive.getCode();
+                    bizStatus = ECdbizStatus.D2.getCode();
                     // 更新入档状态
-                    cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.D2.getCode(),
-                            ENode.first_receive_archive.getCode());
+                    cdbizBO.refreshEnterNodeStatus(cdbiz, bizStatus, nextNodeCode);
                 } else {
-
-                    String nextNodeCode = null;
-                    String bizStatus = null;
 
                     if (EBoolean.YES.getCode().equals(approveResult)) {
                         nextNodeCode = nodeFlowBO
@@ -356,8 +357,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     switch (ENode.matchCode(cdbiz.getCurNodeCode())) {
                         // 风控审核收件（银行放款）
                         case receive_approve_1:
-                            if (EBoolean.YES.getCode().equals(approveResult)) {
 
+                            preNodeCode = cdbiz.getCurNodeCode();
+                            if (EBoolean.YES.getCode().equals(approveResult)) {
                                 cdbizBO.refreshStatus(cdbiz,
                                         ECdbizStatus.A13.getCode());
                                 cdbizBO.refreshEnterNodeStatus(cdbiz,
@@ -375,24 +377,22 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                         ENode.submit_2.getCode(),
                                         ENode.receive_2.getCode(), null);
 
-                                // 资料传递待办事项
-                                bizTaskBO.saveBizTask(cdbiz.getCode(),
-                                        EBizLogType.bank_push, logisticsCode,
-                                        ENode.matchCode(nextNodeCode), operator);
+                                // 主流程待办事项
+                                bizTaskBO.handlePreAndAdd(EBizLogType.bank_push, cdbiz.getCode(),
+                                        cdbiz.getCode(), preNodeCode, nextNodeCode, operator);
 
                                 // 入档资料传递待办事项
-                                bizTaskBO.saveBizTask(cdbiz.getCode(),
-                                        EBizLogType.enter, logisticsCode,
-                                        ENode.submit_2, operator);
-
-                                // 资料传递操作日志
-                                sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                                        EBizLogType.bank_push, logisticsCode,
-                                        nextNodeCode, null, operator);
+                                bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
+                                        logisticsCode, ENode.submit_2);
                             } else {
 
                                 cdbizBO.refreshStatus(cdbiz,
                                         ECdbizStatus.A12.getCode());
+
+                                // 重新发件的待办
+                                bizTaskBO.handlePreAndAdd(EBizLogType.bank_push,
+                                        logistics.getCode(), cdbiz.getCode(), preNodeCode,
+                                        nextNodeCode, operator);
 
                             }
                             break;
@@ -403,15 +403,26 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                     ? ECdbizStatus.A20.getCode()
                                     : ECdbizStatus.A21.getCode();
 
-                            cdbizBO.refreshStatus(cdbiz, bizStatus);
+                            cdbiz.setCurNodeCode(nextNodeCode);
+                            cdbiz.setStatus(bizStatus);
+                            cdbizBO.refreshCurNodeStatus(cdbiz);
+
+                            EBizLogType bizLogType = EBoolean.YES.getCode().equals(approveResult)
+                                    ? EBizLogType.bank_push
+                                    : EBizLogType.LOGISTICS;
+                            // 待办事项
+                            bizTaskBO.handlePreAndAdd(bizLogType, cdbiz.getCode(),
+                                    cdbiz.getCode(), logistics.getToNodeCode(), nextNodeCode,
+                                    operator);
                             break;
 
                         // 风控审核收件（车辆抵押）
                         case receive_approve_4:
                             if (EBoolean.YES.getCode().equals(approveResult)) {
 
-                                cdbizBO.refreshStatus(cdbiz,
-                                        ECdbizStatus.A24.getCode());
+                                cdbiz.setStatus(ECdbizStatus.A24.getCode());
+                                cdbiz.setCurNodeCode(nextNodeCode);
+                                cdbizBO.refreshCurNodeStatus(cdbiz);
                                 cdbizBO.refreshEnterNodeStatus(cdbiz,
                                         ECdbizStatus.E0.getCode(), ENode.submit_6.getCode());
 
@@ -425,14 +436,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                                 null);
 
                                 // 资料传递待办事项
-                                bizTaskBO.saveBizTask(cdbiz.getCode(),
-                                        EBizLogType.enter, fkSendlogisticsCode,
-                                        ENode.receive_6, operator);
-
-                                // 资料传递操作日志
-                                sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                                        EBizLogType.enter, fkSendlogisticsCode,
-                                        ENode.receive_6.getCode(), null, operator);
+                                bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
+                                        fkSendlogisticsCode, ENode.receive_6);
 
                                 // 生成【风控审核通过】资料传递
                                 String fkApprovelogisticsCode = logisticsBO
@@ -443,22 +448,24 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                                 cdbiz.getCurNodeCode(), nextNodeCode, null);
 
                                 // 资料传递待办事项
-                                bizTaskBO.saveBizTask(cdbiz.getCode(),
-                                        EBizLogType.ZHDY_LOGISTICS,
-                                        fkApprovelogisticsCode,
-                                        ENode.matchCode(nextNodeCode), operator);
+                                bizTaskBO.handlePreAndAdd(EBizLogType.ZHDY_LOGISTICS,
+                                        fkApprovelogisticsCode, cdbiz.getCode(),
+                                        logistics.getToNodeCode(), nextNodeCode, operator);
 
                                 // 资料传递操作日志
-                                sysBizLogBO.recordCurOperate(cdbiz.getCode(),
-                                        EBizLogType.ZHDY_LOGISTICS,
-                                        fkApprovelogisticsCode, nextNodeCode, null,
-                                        operator);
+//                                sysBizLogBO.recordCurOperate(cdbiz.getCode(),
+//                                        EBizLogType.ZHDY_LOGISTICS,
+//                                        fkApprovelogisticsCode, nextNodeCode, null,
+//                                        operator);
 
                             } else {
 
                                 cdbizBO.refreshStatus(cdbiz,
                                         ECdbizStatus.A25.getCode());
-
+                                // 资料传递待办事项
+                                bizTaskBO.handlePreAndAdd(EBizLogType.ZHDY_LOGISTICS,
+                                        logistics.getCode(), cdbiz.getCode(),
+                                        logistics.getToNodeCode(), nextNodeCode, operator);
                             }
                             break;
 
