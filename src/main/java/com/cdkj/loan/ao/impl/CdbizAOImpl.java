@@ -723,8 +723,8 @@ public class CdbizAOImpl implements ICdbizAO {
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.fbh, code,
                 preFbhgpsNode, approveNote, operator);
 
-        String nextStatus = ECdbizStatus.C03.getCode();
-        String nextNodeCode = ENode.set_gps.getCode();
+        String nextStatus;
+        String nextNodeCode;
         if (EBoolean.NO.getCode().equals(approveResult)) {
             nextStatus = ECdbizStatus.C01x.getCode();
             nextNodeCode = ENode.reinput_fbh.getCode();
@@ -732,9 +732,19 @@ public class CdbizAOImpl implements ICdbizAO {
             bizTaskBO.handlePreAndAdd(EBizLogType.fbh, code, code,
                     preFbhgpsNode, nextNodeCode, operator);
         } else {
-            // gps安装待办事项
-            bizTaskBO.handlePreAndAdd(EBizLogType.gps, code, code,
-                    preFbhgpsNode, nextNodeCode, operator);
+
+            if (EBoolean.YES.getCode().equals(cdbiz.getIsGpsAz())) {
+                nextStatus = ECdbizStatus.C03.getCode();
+                nextNodeCode = ENode.set_gps.getCode();
+                // gps安装待办事项
+                bizTaskBO.handlePreAndAdd(EBizLogType.gps, code, code,
+                        preFbhgpsNode, nextNodeCode, operator);
+            } else {
+                nextStatus = ECdbizStatus.C07.getCode();
+                nextNodeCode = ENode.fbh_finish.getCode();
+                bizTaskBO.handlePreBizTask(code, EBizLogType.fbh.getCode(), code, preFbhgpsNode,
+                        operator);
+            }
         }
 
         cdbiz.setFbhgpsNode(nextNodeCode);

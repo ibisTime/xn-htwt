@@ -133,6 +133,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                 Cdbiz cdbiz = cdbizBO.getCdbiz(logistics.getBizCode());
 
+                if (logistics.getFromNodeCode().equals(ENode.submit_1.getCode())
+                        && logistics.getToNodeCode().equals(ENode.receive_approve_1.getCode())) {
+                    if (!ENode.submit_1.getCode().equals(cdbiz.getCurNodeCode())) {
+                        throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                                "未到银行放款环节，不能发件");
+                    }
+                }
                 // 如果收件节点是待担保公司收件（车辆抵押）或提交银行（车辆抵押）
                 if (logistics.getFromNodeCode().equals(ENode.submit_6.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_6.getCode())) {
@@ -318,6 +325,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     bizStatus = ECdbizStatus.E2.getCode();
                     // 更新入档状态
                     cdbizBO.refreshEnterNodeStatus(cdbiz, bizStatus, nextNodeCode);
+
+                    bizTaskBO.handlePreAndAdd(EBizLogType.enter, cdbiz.getCode(),
+                            cdbiz.getCode(), preNodeCode, nextNodeCode, operator);
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_5.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_5.getCode())) {
                     if (EBoolean.NO.getCode().equals(approveResult)) {
@@ -331,6 +341,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     cdbiz.setStatus(bizStatus);
                     cdbiz.setCurNodeCode(nextNodeCode);
                     cdbizBO.refreshCurNodeStatus(cdbiz);
+
+                    // 主流程待办事项
+                    bizTaskBO.handlePreAndAdd(EBizLogType.bank_push, cdbiz.getCode(),
+                            cdbiz.getCode(), preNodeCode, nextNodeCode, operator);
+
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
                     if (EBoolean.NO.getCode().equals(approveResult)) {
@@ -342,6 +357,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     bizStatus = ECdbizStatus.D2.getCode();
                     // 更新入档状态
                     cdbizBO.refreshEnterNodeStatus(cdbiz, bizStatus, nextNodeCode);
+
+                    bizTaskBO.handlePreAndAdd(EBizLogType.enter, cdbiz.getCode(),
+                            cdbiz.getCode(), preNodeCode, nextNodeCode, operator);
                 } else {
 
                     if (EBoolean.YES.getCode().equals(approveResult)) {
@@ -423,8 +441,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 cdbiz.setStatus(ECdbizStatus.A24.getCode());
                                 cdbiz.setCurNodeCode(nextNodeCode);
                                 cdbizBO.refreshCurNodeStatus(cdbiz);
-                                cdbizBO.refreshEnterNodeStatus(cdbiz,
-                                        ECdbizStatus.E0.getCode(), ENode.submit_6.getCode());
+//                                cdbizBO.refreshEnterNodeStatus(cdbiz,
+//                                        ECdbizStatus.E0.getCode(), ENode.submit_6.getCode());
 
                                 // 生成【风控寄送材料】资料传递
                                 String fkSendlogisticsCode = logisticsBO
