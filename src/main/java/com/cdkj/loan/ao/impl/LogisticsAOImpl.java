@@ -417,7 +417,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             break;
 
                         // 待风控审核收件（车辆抵押）
-                        case receive_approve_7:
+                        case submit_5:
                             if (EBoolean.YES.getCode().equals(approveResult)) {
 
                                 cdbiz.setStatus(ECdbizStatus.A24.getCode());
@@ -444,7 +444,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                                 ELogisticsCurNodeType.FK_APPROVE_PASS_CAR_PLEDGE
                                                         .getCode(),
                                                 cdbiz.getCode(), cdbiz.getSaleUserId(),
-                                                cdbiz.getCurNodeCode(), nextNodeCode, null);
+                                                ENode.submit_5.getCode(),
+                                                ENode.receive_5.getCode(), null);
 
                                 // 资料传递待办事项
                                 bizTaskBO.handlePreAndAdd(EBizLogType.ZHDY_LOGISTICS,

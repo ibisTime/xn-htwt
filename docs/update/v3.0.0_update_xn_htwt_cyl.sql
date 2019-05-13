@@ -40,15 +40,6 @@ ALTER TABLE `tdq_car_pledge`
 INSERT INTO `tsys_node` (`code`, `name`, `type`)
 VALUES ('f15', '确认存档', 'f');
 
-INSERT INTO `tsys_node` (`code`, `name`, `type`)
-VALUES ('f16', '待风控审核收件（车辆抵押）', 'f');
-UPDATE `tsys_node_flow`
-SET `next_node`='f16',
-    `back_node`='f5x'
-WHERE `id` = '104';
-INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`)
-VALUES ('f', 'f16', 'f6');
-
 
 DROP TABLE IF EXISTS `tdq_enter_file_list`;
 CREATE TABLE `tdq_enter_file_list`
