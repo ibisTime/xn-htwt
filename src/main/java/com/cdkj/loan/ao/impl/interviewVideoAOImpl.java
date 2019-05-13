@@ -44,11 +44,13 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
             roomCondition.setBudgetCode(condition.getBizCode());
             List<InterviewVideoRoom> rooms = interviewVideoRoomBO
                 .queryInterviewVideoRoomList(roomCondition);
-            List<String> roomCodeList = new ArrayList<String>();
-            for (InterviewVideoRoom room : rooms) {
-                roomCodeList.add(room.getCode());
+            if (!rooms.isEmpty()) {
+                List<String> roomCodeList = new ArrayList<String>();
+                for (InterviewVideoRoom room : rooms) {
+                    roomCodeList.add(room.getCode());
+                }
+                condition.setRoomCodeList(roomCodeList);
             }
-            condition.setRoomCodeList(roomCodeList);
         }
         return interviewVideoBO.getPaginable(start, limit, condition);
     }

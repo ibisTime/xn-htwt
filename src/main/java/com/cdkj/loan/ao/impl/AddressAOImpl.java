@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IAddressAO;
 import com.cdkj.loan.bo.IAddressBO;
 import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Address;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
@@ -130,5 +131,12 @@ public class AddressAOImpl implements IAddressAO {
     @Override
     public Address getAddress(String code) {
         return addressBO.getAddress(code);
+    }
+
+    @Override
+    public Paginable<Address> queryAddressPage(int start, int limit,
+            Address condition) {
+
+        return addressBO.getPaginable(start, limit, condition);
     }
 }
