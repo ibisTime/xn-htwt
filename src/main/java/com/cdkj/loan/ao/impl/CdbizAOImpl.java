@@ -653,10 +653,10 @@ public class CdbizAOImpl implements ICdbizAO {
         Bank bank = bankBO.getBank(bankLoan.getRepayBankCode());
 
         // 绑定用户银行卡
-        String bankcardCode = bankcardBO.bind(userId,
-                applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
-                bank.getBankCode(), bankLoan.getRepayBankName(),
-                bankLoan.getRepaySubbranch());
+//        String bankcardCode = bankcardBO.bind(userId,
+//                applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
+//                bank.getBankCode(), bankLoan.getRepayBankName(),
+//                bankLoan.getRepaySubbranch());
 
         // 自动生成还款业务
         // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
