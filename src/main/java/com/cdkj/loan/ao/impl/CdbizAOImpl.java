@@ -186,9 +186,11 @@ public class CdbizAOImpl implements ICdbizAO {
                 sysUser, bizTeam, currentNode, req.getButtonCode(),
                 req.getNote());
 
-        // 二手车材料处理
-        secondHandOperate(cdbiz, req.getSecondCarReport(), req.getXszFront(),
-                req.getXszReverse());
+        if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
+            // 二手车材料处理
+            secondHandOperate(cdbiz, req.getSecondCarReport(), req.getXszFront(),
+                    req.getXszReverse());
+        }
 
         // 新增征信人员
         modifyCreditUser(cdbiz.getCode(), req.getCreditUserList(), true);
@@ -215,12 +217,13 @@ public class CdbizAOImpl implements ICdbizAO {
         // 之前节点
         String preCurNodeCode = cdbiz.getCurNodeCode();
 
-        // 删除附件
-        attachmentBO.removeBizAttachments(bizCode);
-        // 二手车材料处理
-        secondHandOperate(cdbiz, req.getSecondCarReport(), req.getXszFront(),
-                req.getXszReverse());
-
+        if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
+            // 删除附件
+//            attachmentBO.removeBizAttachments(bizCode);
+            // 二手车材料处理
+            secondHandOperate(cdbiz, req.getSecondCarReport(), req.getXszFront(),
+                    req.getXszReverse());
+        }
         // 修改业务
         EntityUtils.copyData(req, cdbiz);
         cdbizBO.refreshCdbiz(cdbiz);
@@ -786,6 +789,10 @@ public class CdbizAOImpl implements ICdbizAO {
                     "当前节点不是GPS管理员审核节点，不能操作");
         }
 
+        // 操作日志
+        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.gps, code,
+                preFbhgpsNode, approveNote, operator);
+
         String nextNodeCode = ENode.gps_done.getCode();
         String nextStatus = ECdbizStatus.C06.getCode();
 
@@ -801,19 +808,21 @@ public class CdbizAOImpl implements ICdbizAO {
                 gpsBO.refreshUseGps(budgetOrderGps.getCode(), null, EBoolean.NO);
             }
             budgetOrderGpsBO.removeBudgetOrderGpsList(code);
+
+            // 生成重新安装的待办事项
+            bizTaskBO.handlePreAndAdd(EBizLogType.gps, code, code,
+                    preFbhgpsNode, nextNodeCode, operator);
+        } else {
+            // gps安装结束待办事项
+            bizTaskBO.handlePreBizTask(code, EBizLogType.gps.getCode(), code,
+                    preFbhgpsNode, operator);
         }
 
         cdbiz.setFbhgpsNode(nextNodeCode);
         cdbiz.setFbhgpsStatus(nextStatus);
         cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
-        // 操作日志
-        sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.gps, code,
-                preFbhgpsNode, approveNote, operator);
 
-        // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.gps, code, code,
-                preFbhgpsNode, nextNodeCode, operator);
     }
 
     // 分配账号
@@ -980,6 +989,9 @@ public class CdbizAOImpl implements ICdbizAO {
         // 财务垫资
         Advance advance = advanceBO.getAdvanceByBizCode(cdbiz.getCode());
         cdbiz.setAdvance(advance);
+
+        BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(cdbiz.getCode());
+        cdbiz.setBankLoan(bankLoan);
 
         // 返点列表
         List<Repoint> repointList = repointBO.queryRepointList(cdbiz.getCode());
