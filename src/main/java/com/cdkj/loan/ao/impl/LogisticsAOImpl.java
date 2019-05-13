@@ -156,8 +156,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             req.getOperator());
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
-                    cdbiz.setStatus(ECdbizStatus.D1.getCode());
-                    cdbiz.setCurNodeCode(ENode.receive_2.getCode());
+                    cdbiz.setEnterStatus(ECdbizStatus.D1.getCode());
+                    cdbiz.setEnterNodeCode(ENode.receive_2.getCode());
                     cdbizBO.refreshCurNodeStatus(cdbiz);
 
                     // 日志记录

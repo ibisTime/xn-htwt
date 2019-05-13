@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
+import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632462ReqMission;
 import com.cdkj.loan.dto.req.XN632464Req;
@@ -255,13 +256,25 @@ public class AdvanceAOImpl implements IAdvanceAO {
         cdbiz.setFbhgpsStatus(ECdbizStatus.C01.getCode());
         cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
-        // 操作日志
-        sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fund,
-                req.getCode(), preFbhgpsNode, null, req.getOperator());
+        //查找当前节点的最新待办
+        BizTask bizTask = bizTaskBO
+                .queryLastBizTask(cdbiz.getCode(), null, null, preFbhgpsNode);
+        //找本次节点的待办，如果没有，说明走后门，记录日志并产生下一步待办
+        if (bizTask == null) {
+            sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(), EBizLogType.fund, req.getCode(),
+                    preFbhgpsNode, null, req.getOperator());
 
-        // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.fund, req.getCode(), req.getCode(), preFbhgpsNode,
-                ENode.input_fbh.getCode(), req.getOperator());
+            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.fbh, req.getCode(),
+                    ENode.input_fbh);
+        } else {
+            // 操作日志
+            sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fund,
+                    req.getCode(), preFbhgpsNode, null, req.getOperator());
+
+            // 待办事项
+            bizTaskBO.handlePreAndAdd(EBizLogType.fbh, req.getCode(), req.getCode(), preFbhgpsNode,
+                    ENode.input_fbh.getCode(), req.getOperator());
+        }
     }
 
     @Override
