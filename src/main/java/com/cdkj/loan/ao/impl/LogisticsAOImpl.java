@@ -213,8 +213,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                         // 待风控寄件（车辆抵押）
                         case submit_6:
-                            if (!ECdbizStatus.D3.getCode()
-                                    .equals(cdbiz.getEnterStatus())) {
+                            if (!ENode.first_archive.getCode()
+                                    .equals(cdbiz.getEnterNodeCode())) {
                                 throw new BizException(
                                         EBizErrorCode.DEFAULT.getCode(),
                                         "第一次存档未完成，无法发件");
@@ -227,18 +227,18 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             break;
                     }
 
-                    if (StringUtils.isNotBlank(cdbiz.getEnterStatus())) {
-                        switch (cdbiz.getEnterStatus()) {
-                            // 风控寄送银行放款材料
-                            case "000":
-                                cdbizBO.refreshEnterNodeStatus(cdbiz,
-                                        ECdbizStatus.D1.getCode(), ENode.receive_2.getCode());
-                                break;
-
-                            default:
-                                break;
-                        }
-                    }
+//                    if (StringUtils.isNotBlank(cdbiz.getEnterStatus())) {
+//                        switch (cdbiz.getEnterStatus()) {
+//                            // 风控寄送银行放款材料
+//                            case "000":
+//                                cdbizBO.refreshEnterNodeStatus(cdbiz,
+//                                        ECdbizStatus.D1.getCode(), ENode.receive_2.getCode());
+//                                break;
+//
+//                            default:
+//                                break;
+//                        }
+//                    }
 
                     // 日志记录
                     sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS,
