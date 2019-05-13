@@ -416,8 +416,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                     operator);
                             break;
 
-                        // 风控审核收件（车辆抵押）
-                        case receive_approve_4:
+                        // 待风控审核收件（车辆抵押）
+                        case receive_approve_7:
                             if (EBoolean.YES.getCode().equals(approveResult)) {
 
                                 cdbiz.setStatus(ECdbizStatus.A24.getCode());
@@ -429,10 +429,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                                 // 生成【风控寄送材料】资料传递
                                 String fkSendlogisticsCode = logisticsBO
                                         .saveLogistics(ELogisticsType.BUDGET.getCode(),
-                                                ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE
-                                                        .getCode(),
+                                                ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE.getCode(),
                                                 cdbiz.getCode(), cdbiz.getSaleUserId(),
-                                                cdbiz.getCurNodeCode(), ENode.receive_6.getCode(),
+                                                ENode.submit_6.getCode(), ENode.receive_6.getCode(),
                                                 null);
 
                                 // 资料传递待办事项

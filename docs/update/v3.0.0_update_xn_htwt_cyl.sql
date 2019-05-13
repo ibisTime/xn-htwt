@@ -34,11 +34,20 @@ VALUES ('car_pledge', 'pledge_user_id_card_reverse', '代理人身份证反', '�
 ALTER TABLE `tdq_car_pledge`
   CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证号';
 
-ALTER TABLE `dev_xn_htwt_new`.`tdq_car_pledge`
+ALTER TABLE `tdq_car_pledge`
   CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证复印件';
 
-INSERT INTO `dev_xn_htwt_new`.`tsys_node` (`code`, `name`, `type`)
+INSERT INTO `tsys_node` (`code`, `name`, `type`)
 VALUES ('f15', '确认存档', 'f');
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`)
+VALUES ('f16', '待风控审核收件（车辆抵押）', 'f');
+UPDATE `tsys_node_flow`
+SET `next_node`='f16',
+    `back_node`='f5x'
+WHERE `id` = '104';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`)
+VALUES ('f', 'f16', 'f6');
 
 
 DROP TABLE IF EXISTS `tdq_enter_file_list`;

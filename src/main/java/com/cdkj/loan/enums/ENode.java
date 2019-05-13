@@ -70,7 +70,7 @@ public enum ENode {
     input_dy_info("f4", "业务员录入抵押信息"), submit_4("f5", "业务员寄送材料（车辆抵押）"),
 
     receive_approve_4("f6", "风控审核收件（车辆抵押）"), re_submit_4("f5x",
-            "业务员重寄送材料（车辆抵押）"),
+            "业务员重寄送材料（车辆抵押）"), receive_approve_7("f16", "待风控审核收件（车辆抵押）"),
 
     submit_5("f7", "风控审核通过（车辆抵押）"), receive_5("f8", "银行收件（车辆抵押）"),
 
