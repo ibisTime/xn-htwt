@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditUserDAO;
@@ -63,6 +65,14 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         creditUser.setAuthPdf(child.getAuthPdf());
         creditUser.setInterviewPic(child.getInterviewPic());
         creditUser.setIdNo(child.getIdNo());
+        String nowYear = DateUtil.dateToStr(new Date(),
+            DateUtil.FRONT_DATE_FORMAT_STRING).substring(0, 4);
+        String birthYear = getBirthYearByIdNo(child.getIdNo());
+        Integer age = StringValidater.toInteger(nowYear)
+                - StringValidater.toInteger(birthYear);
+        creditUser.setAge(age);
+        String sex = getSexByIdNo(child.getIdNo());
+        creditUser.setGender(sex);
         creditUser.setStatus(ECreditUserStatus.to_icCredit.getCode());
         // 主贷人
         if (ECreditUserLoanRole.APPLY_USER.getCode()
@@ -302,5 +312,32 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             logger.info("工行征信结果查询服务异常");
         }
         return creditIcbank;
+    }
+
+    private String getSexByIdNo(String idNo) {
+        /**
+         * 根据身份编号获取性别
+         * @param idCard 身份编号
+         * @return 性别(M-男，F-女，N-未知)
+         */
+        String sGender = null;
+
+        String sCardNum = idNo.substring(16, 17);
+        if (Integer.parseInt(sCardNum) % 2 != 0) {
+            sGender = "男";
+        } else {
+            sGender = "女";
+        }
+        return sGender;
+    }
+
+    private String getBirthYearByIdNo(String idNo) {
+        /**
+         * 根据身份编号获取生日
+         * @param idCard 身份编号
+         * @return 生日(yyyyMMdd)
+         */
+        String birth = idNo.substring(6, 10);
+        return birth;
     }
 }
