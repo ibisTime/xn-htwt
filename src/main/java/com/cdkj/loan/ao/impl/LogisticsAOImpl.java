@@ -436,7 +436,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                                 // 资料传递待办事项
                                 bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
-                                        fkSendlogisticsCode, ENode.receive_6);
+                                        fkSendlogisticsCode, ENode.submit_6);
 
                                 // 生成【风控审核通过】资料传递
                                 String fkApprovelogisticsCode = logisticsBO
