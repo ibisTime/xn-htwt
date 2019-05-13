@@ -24,4 +24,7 @@ public interface ISeriesBO extends IPaginableBO<Series> {
     public List<Series> querySeries(Series condition);
 
     public List<Series> queryUpSeries();
+
+    public void removeSeries(Series data);
+
 }

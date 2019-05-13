@@ -132,6 +132,11 @@
 		read_count = #{readCount}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_carNews" parameterType="carNews">
+		DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_carNews WHERE code=#{code});
+		DELETE FROM tht_carNews WHERE code=#{code};
+	</delete>
 
 
 </mapper>

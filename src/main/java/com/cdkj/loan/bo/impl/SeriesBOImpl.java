@@ -97,4 +97,9 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
         return dataList;
     }
 
+    @Override
+    public void removeSeries(Series data) {
+        seriesDAO.delete(data);
+    }
+
 }

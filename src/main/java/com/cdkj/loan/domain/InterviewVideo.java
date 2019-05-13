@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -40,6 +41,26 @@ public class InterviewVideo extends ABaseDO {
 
     // 文件格式
     private String fileFormat;
+
+    private String bizCode;
+
+    private List<String> roomCodeList;
+
+    public List<String> getRoomCodeList() {
+        return roomCodeList;
+    }
+
+    public void setRoomCodeList(List<String> roomCodeList) {
+        this.roomCodeList = roomCodeList;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
 
     public int getId() {
         return id;

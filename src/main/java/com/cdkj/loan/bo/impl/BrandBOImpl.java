@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBrandBO;
+import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBrandDAO;
@@ -19,6 +20,9 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
 
     @Autowired
     private IBrandDAO brandDAO;
+
+    @Autowired
+    private ISeriesBO seriesBO;
 
     @Override
     public long getTotalCount(Brand condition) {
@@ -72,6 +76,11 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
     @Override
     public void downBrand(Brand data) {
         brandDAO.updateDown(data);
+    }
+
+    @Override
+    public void removeBrand(Brand data) {
+        brandDAO.delete(data);
     }
 
 }

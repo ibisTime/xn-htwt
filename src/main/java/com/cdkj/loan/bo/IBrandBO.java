@@ -18,4 +18,6 @@ public interface IBrandBO extends IPaginableBO<Brand> {
     public void downBrand(Brand data);
 
     public List<Brand> queryBrand(Brand condition);
+
+    public void removeBrand(Brand data);
 }
