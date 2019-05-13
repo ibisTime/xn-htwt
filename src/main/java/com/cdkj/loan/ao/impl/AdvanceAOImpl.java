@@ -227,16 +227,16 @@ public class AdvanceAOImpl implements IAdvanceAO {
     public void advanceBackUp(XN632464Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         String preFbhgpsNode = cdbiz.getFbhgpsNode();
-        if (!ENode.upload_approve_back_bill.getCode().equals(
-                cdbiz.getFbhgpsNode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是垫资回录节点，不能操作");
-        }
+//        if (!ENode.upload_approve_back_bill.getCode().equals(
+//                cdbiz.getFbhgpsNode())) {
+//            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+//                    "当前不是垫资回录节点，不能操作");
+//        }
 
         Advance advance = advanceBO.getAdvanceByBizCode(req.getCode());
 
-        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-                preFbhgpsNode).getNextNode();
+//        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+//                preFbhgpsNode).getNextNode();
 
         advance.setAdvanceFundAmount(StringValidater.toInteger(req
                 .getAdvanceFundAmount()));
@@ -251,8 +251,8 @@ public class AdvanceAOImpl implements IAdvanceAO {
                 attachName.getValue(), req.getBillPdf());
 
         // 更新业务状态
-        cdbiz.setFbhgpsNode(nextNodeCode);
-        cdbiz.setFbhgpsStatus(ECdbizStatus.F4.getCode());
+        cdbiz.setFbhgpsNode(ENode.input_fbh.getCode());
+        cdbiz.setFbhgpsStatus(ECdbizStatus.C01.getCode());
         cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
         // 操作日志
@@ -261,7 +261,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
         // 待办事项
         bizTaskBO.handlePreAndAdd(EBizLogType.fund, req.getCode(), req.getCode(), preFbhgpsNode,
-                nextNodeCode, req.getOperator());
+                ENode.input_fbh.getCode(), req.getOperator());
     }
 
     @Override
