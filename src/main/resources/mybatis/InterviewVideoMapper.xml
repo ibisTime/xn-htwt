@@ -48,7 +48,7 @@
 		,t.start_time
 		,t.end_time
 		,t.file_format
-		,r.budget_order_code as biz_code
+		,r.budget_code as biz_code
 		FROM
 		tdq_interview_video t
 		left join tdq_interview_video_room r on t.room_code=r.code

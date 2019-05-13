@@ -200,6 +200,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
                 .toDouble(reqCreditUser.getCreditCardOccupation()));
             creditUser.setBankCreditResult(reqCreditUser.getBankResult());
             creditUser.setBankCreditResultRemark(reqCreditUser.getCreditNote());
+            creditUser.setCreditCardOccupation(StringValidater
+                .toDouble(reqCreditUser.getCreditCardOccupation()));
 
             creditUserDAO.inputBankCreditResult(creditUser);
         }
