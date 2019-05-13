@@ -596,8 +596,8 @@ public class CdbizAOImpl implements ICdbizAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         String preEnterNodeCode = cdbiz.getEnterNodeCode();
-        if (!ECdbizStatus.D2.getCode().equals(cdbiz.getEnterStatus())
-                && !ECdbizStatus.E2.getCode().equals(cdbiz.getEnterStatus())) {
+        if (!ENode.first_receive_archive.getCode().equals(preEnterNodeCode)
+                && !ENode.second_received_archive.getCode().equals(preEnterNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前状态不是入档状态，不能入档");
         }
@@ -609,11 +609,13 @@ public class CdbizAOImpl implements ICdbizAO {
                     ENode.first_archive.getCode());
         }
         // 第二次存档
-        if (ENode.second_received_archive.getCode().equals(cdbiz.getEnterStatus())) {
+        if (ENode.second_received_archive.getCode().equals(cdbiz.getEnterNodeCode())) {
             // 更新业务状态
             cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
                     ENode.second_archive.getCode());
         }
+        cdbiz.setEnterLocation(enterLocation);
+        cdbizBO.refreshLocation(cdbiz);
 
         // 日志记录
         sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BUDGET_ORDER.getCode(),
@@ -625,7 +627,7 @@ public class CdbizAOImpl implements ICdbizAO {
     public void confirmArchive(String code, String operator, String enterLocation) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         String preEnterNodeCode = cdbiz.getEnterNodeCode();
-        if (!ECdbizStatus.E3.getCode().equals(cdbiz.getEnterStatus())) {
+        if (!ENode.second_archive.getCode().equals(cdbiz.getEnterNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前状态不是已入档状态，不能确认入档");
         }
@@ -665,7 +667,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 更新业务状态
         cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),
-                ENode.second_archive.getCode());
+                ENode.confirm_archive.getCode());
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER,

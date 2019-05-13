@@ -541,6 +541,13 @@
 		WHERE code=#{code}
 	</update>
 
+    <update id="update_cdbizLocation" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		enter_location=#{enterLocation}
+		WHERE code=#{code}
+	</update>
+
     <update id="update_intevNodeStatus" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET

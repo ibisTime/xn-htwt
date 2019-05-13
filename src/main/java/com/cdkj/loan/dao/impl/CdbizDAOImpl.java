@@ -123,6 +123,11 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     }
 
     @Override
+    public void updateCdbizLocation(Cdbiz data) {
+        super.update(NAMESPACE.concat("update_cdbizLocation"), data);
+    }
+
+    @Override
     public int updateCdbiz(Cdbiz data) {
         return super.update(NAMESPACE.concat("update_cdbiz"), data);
     }

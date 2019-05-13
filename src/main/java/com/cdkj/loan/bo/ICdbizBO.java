@@ -80,4 +80,9 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
      * 更新主流程节点状态
      */
     void refreshCurNodeStatus(Cdbiz cdbiz);
+
+    /**
+     * 修改入档位置
+     */
+    void refreshLocation(Cdbiz cdbiz);
 }
