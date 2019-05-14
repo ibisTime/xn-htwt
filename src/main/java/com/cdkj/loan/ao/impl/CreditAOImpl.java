@@ -28,8 +28,10 @@ import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632099Req;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
@@ -52,7 +54,9 @@ import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ESysRole;
+import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
 import java.util.ArrayList;
 import java.util.List;
@@ -424,24 +428,32 @@ public class CreditAOImpl implements ICreditAO {
                     budgetCode, ENode.input_interview, req.getOperator());
 
             //生成用户
-//            CreditUser applyUser = creditUserBO.getCreditUserByBizCode(req.getCode(),
-//                    ECreditUserLoanRole.APPLY_USER);
-//
-//            User user = userBO.getUser(applyUser.getMobile(),
-//                    EUserKind.Customer.getCode());
-//            String userId;
-//            if (user == null) {
-//                // 用户代注册并实名认证
-//                userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
-//                        applyUser.getMobile(), applyUser.getIdKind(),
-//                        applyUser.getUserName(), applyUser.getIdNo());
-//                distributeAccount(userId, applyUser.getMobile(),
-//                        EUserKind.Customer.getCode());
-//            } else {
-//                userId = user.getUserId();
-//            }
-//
-//            repayBizBO.saveRepayBiz(req.getCode());
+            CreditUser applyUser = creditUserBO.getCreditUserByBizCode(req.getCode(),
+                    ECreditUserLoanRole.APPLY_USER);
+
+            User user = userBO.getUser(applyUser.getMobile(),
+                    EUserKind.Customer.getCode());
+            String userId;
+            if (user == null) {
+                // 用户代注册并实名认证
+                userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
+                        applyUser.getMobile(), applyUser.getIdKind(),
+                        applyUser.getUserName(), applyUser.getIdNo());
+                distributeAccount(userId, applyUser.getMobile(),
+                        EUserKind.Customer.getCode());
+            } else {
+                userId = user.getUserId();
+            }
+
+            RepayBiz repayBiz = new RepayBiz();
+            repayBiz.setUserId(userId);
+            repayBiz.setRealName(applyUser.getUserName());
+            repayBiz.setIdKind(applyUser.getIdKind());
+            repayBiz.setIdNo(applyUser.getIdNo());
+            repayBiz.setBizCode(req.getCode());
+            repayBiz.setRefType(ERepayBizType.CAR.getCode());
+            repayBiz.setRefCode(req.getCode());
+            repayBizBO.saveRepayBiz(repayBiz);
 
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(

@@ -78,14 +78,10 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     private ICdbizBO cdbizBO;
 
     @Override
-    public String saveRepayBiz(String bizCode) {
-        RepayBiz repayBiz = new RepayBiz();
+    public String saveRepayBiz(RepayBiz repayBiz) {
         String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
                 .getCode());
         repayBiz.setCode(code);
-        repayBiz.setBizCode(bizCode);
-        repayBiz.setRefType(ERepayBizType.CAR.getCode());
-        repayBiz.setRefCode(bizCode);
         repayBizDAO.insert(repayBiz);
         return code;
     }

@@ -15,7 +15,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public String removeByBizCode(String bizCode);
 
-    public String saveRepayBiz(String bizCode);
+    public String saveRepayBiz(RepayBiz repayBiz);
 
     public String saveRepayBiz(XN632120Req req);
 

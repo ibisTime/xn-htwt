@@ -129,7 +129,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         jo.put("eventId", HL.substring(2, 8));
         jo.put("interface", interFace);
 
-        String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
+        String sign = MD5Util.md5("0db7e7602ce81afb8ab75cd1b17f5785" + time);
         String string = OkHttpUtils.doAccessHTTPPostJson(
                 "http://fcgi.video.qcloud.com/common_access?appid=1252750864&interface=Mix_StreamV2&t="
                         + time + "&sign=" + sign,
@@ -148,15 +148,21 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
     @Override
     public Object foundHlVideo(XN632952Req req) {
-        String time = Long
-                .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
-        String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
-        String string = OkHttpUtils.doAccessHTTPGetJson(
-                "http://fcgi.video.qcloud.com/common_access?Param.s.channel_id="
-                        + req.getStreamId()
-                        + "&appid=1252750864&interface=Live_Tape_GetFilelist&sign="
-                        + sign + "&t=" + time);
-        return string;
+//        String time = Long
+//                .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
+//        String sign = MD5Util.md5("0db7e7602ce81afb8ab75cd1b17f5785" + time);
+//        String string = OkHttpUtils.doAccessHTTPGetJson(
+//                "http://fcgi.video.qcloud.com/common_access?Param.s.channel_id="
+//                        + req.getStreamId()
+//                        + "&appid=1252750864&interface=Live_Tape_GetFilelist&sign="
+//                        + sign + "&t=" + time);
+
+        InterviewVideo interviewVideo = new InterviewVideo();
+        interviewVideo.setStreamId(req.getStreamId());
+        List<InterviewVideo> interviewVideoList = interviewVideoBO
+                .queryInterviewVideoList(interviewVideo);
+        InterviewVideo video = interviewVideoList.get(0);
+        return video.getVideoUrl();
     }
 
     @Override
