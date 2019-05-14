@@ -585,5 +585,13 @@
 		cur_node_code=#{curNodeCode}
 		WHERE code=#{code}
 	</update>
+	
+	<update id="update_zfStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cancel_status=#{cancelStatus},
+		cancel_node_code=#{cancelNodeCode}
+		WHERE code=#{code}
+	</update>
 
 </mapper>

@@ -53,6 +53,12 @@ public class CarInfoRes {
     // 落户地点
     private String settleAddress;// carInfo
 
+    // 保单日期
+    private String policyDatetime;
+
+    // 保单到期日
+    private String policyDueDate;
+
     // 车辆照片
     private String carPic;
 
@@ -194,7 +200,20 @@ public class CarInfoRes {
     public void setCarHgzPic(String carHgzPic) {
         this.carHgzPic = carHgzPic;
     }
-}
 
-    
-    
+    public String getPolicyDatetime() {
+        return policyDatetime;
+    }
+
+    public void setPolicyDatetime(String policyDatetime) {
+        this.policyDatetime = policyDatetime;
+    }
+
+    public String getPolicyDueDate() {
+        return policyDueDate;
+    }
+
+    public void setPolicyDueDate(String policyDueDate) {
+        this.policyDueDate = policyDueDate;
+    }
+}
