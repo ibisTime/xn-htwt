@@ -69,6 +69,8 @@ import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.dto.req.XN632190Req;
+import com.cdkj.loan.dto.req.XN632191Req;
+import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.res.CarInfoRes;
 import com.cdkj.loan.dto.res.LoanInfoRes;
 import com.cdkj.loan.enums.EAccountType;
@@ -1094,6 +1096,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional
     public void applyCancel(XN632190Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ECdbizStatus.G0.getCode().equals(cdbiz.getCancelStatus())) {
@@ -1107,6 +1110,88 @@ public class CdbizAOImpl implements ICdbizAO {
         // 更新作废节点状态
         cdbizBO.refreshZfStatus(cdbiz, ECdbizStatus.G2.getCode(),
             ENode.biz_approve.getCode());
+        ENode node = ENode.cancel_apply;
+        // 操作日志
+        sysBizLogBO.saveFirstSYSBizLog(req.getCode(), EBizLogType.cancel,
+            req.getCode(), node.getCode(), req.getRemark(), req.getOperator());
+
+        node = ENode.biz_approve;
+        // 待办事项
+        bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.cancel,
+            req.getCode(), node);
     }
 
+    @Override
+    @Transactional
+    public void cancelBizAudit(XN632191Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        if (!ENode.biz_approve.getCode().equals(cdbiz.getCancelNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "不是该业务业务员无法作废该业务");
+        }
+        String cancelNode = cdbiz.getCancelNodeCode();
+        String cancelStatus = cdbiz.getCancelStatus();
+
+        // 处理待办事项
+        bizTaskBO.handlePreBizTask(req.getCode(), EBizLogType.cancel.getCode(),
+            req.getCode(), cancelNode, req.getOperator());
+        ENode node = null;
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            Advance advance = advanceBO.getAdvanceByBizCode(req.getCode());
+
+            // 判断是否已垫资 如果已经垫资 下一个节点是财务审核节点 未垫资 下一个节点是废流程结束节点
+            if (null != advance && null != advance.getAdvanceFundAmount()
+                    && null != advance.getAdvanceFundDatetime()) {
+                node = ENode.money_approve;
+                cancelStatus = ECdbizStatus.G3.getCode();
+
+                // 待办事项
+                bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.cancel,
+                    req.getCode(), node);
+            } else {// 没垫资情况
+                node = ENode.cancel_end;
+                cancelStatus = ECdbizStatus.G4.getCode();
+            }
+
+        } else {
+            node = null;
+            cancelStatus = ECdbizStatus.G0.getCode();
+        }
+        cdbizBO.refreshZfStatus(cdbiz, cancelStatus,
+            null == node ? null : node.getCode());
+
+        // 操作日志
+        sysBizLogBO.saveFirstSYSBizLog(req.getCode(), EBizLogType.cancel,
+            req.getCode(), cancelNode, req.getApproveNote(), req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void cancelFinanceAudit(XN632192Req req) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        if (!ENode.money_approve.getCode().equals(cdbiz.getCancelNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是作废流程财务总监审核节点，不能操作");
+        }
+
+        String cancelNode = cdbiz.getCancelNodeCode();
+        String cancelStatus = cdbiz.getCancelStatus();
+        // 处理待办事项
+        bizTaskBO.handlePreBizTask(req.getCode(), EBizLogType.cancel.getCode(),
+            req.getCode(), cancelNode, req.getOperator());
+        ENode node = ENode.biz_approve;
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            node = ENode.cancel_end;
+            cancelStatus = ECdbizStatus.G4.getCode();
+
+        } else {
+            cancelNode = null;
+            cancelStatus = ECdbizStatus.G0.getCode();
+        }
+        cdbizBO.refreshZfStatus(cdbiz, cancelStatus,
+            null == node ? null : node.getCode());
+        // 操作日志
+        sysBizLogBO.saveFirstSYSBizLog(req.getCode(), EBizLogType.cancel,
+            req.getCode(), cancelNode, req.getApproveNote(), req.getOperator());
+    }
 }
