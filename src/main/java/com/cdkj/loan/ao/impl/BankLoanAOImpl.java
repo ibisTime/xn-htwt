@@ -53,9 +53,16 @@ public class BankLoanAOImpl implements IBankLoanAO {
                     "当前预算单已作废，不能操作");
         }
 
-        if (!ENode.gps_done.getCode().equals(cdbiz.getFbhgpsNode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "gps未安装完成，不能提交银行");
+        if (EBoolean.YES.getCode().equals(cdbiz.getIsGpsAz())) {
+            if (!ENode.gps_done.getCode().equals(cdbiz.getFbhgpsNode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "gps未安装完成，不能提交银行");
+            }
+        } else {
+            if (!ENode.fbh_finish.getCode().equals(cdbiz.getFbhgpsNode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "发保合未完成，不能提交银行");
+            }
         }
 
         if (!ENode.fk_submit.getCode().equals(cdbiz.getCurNodeCode())) {

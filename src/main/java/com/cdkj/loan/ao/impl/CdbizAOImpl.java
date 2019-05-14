@@ -618,8 +618,12 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbizBO.refreshLocation(cdbiz);
 
         // 日志记录
-        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BUDGET_ORDER.getCode(),
+        sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.enter,
                 cdbiz.getCode(), preEnterNodeCode, null, operator);
+
+        //处理未处理的待办
+        bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.enter.getCode(), cdbiz.getCode(),
+                preEnterNodeCode, operator);
     }
 
 
