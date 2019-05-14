@@ -31,7 +31,7 @@ public interface ICarInfoBO extends IPaginableBO<CarInfo> {
     void entryFbhInfoByBiz(String bizCode, String policyDatetime,
             String policyDueDate);
 
-    void saveCarInfo(XN632530Req req, Long companyFee);
+    void saveCarInfo(XN632530Req req, CarInfo data);
 
     void saveCarInfo(XN632531Req req);
 

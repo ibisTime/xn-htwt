@@ -43,8 +43,11 @@ VALUES ('f15', '确认存档', 'f');
 INSERT INTO `tsys_node` (`code`, `name`, `type`)
 VALUES ('f7', '风控审核通过（车辆抵押）', 'f');
 
-INSERT INTO `dev_xn_htwt_new`.`tsys_node` (`code`, `name`, `type`)
+INSERT INTO `tsys_node` (`code`, `name`, `type`)
 VALUES ('c3', '发保合完成', 'c');
+
+ALTER TABLE `tdq_car_info`
+  ADD COLUMN `bank_fee` BIGINT(20) NULL COMMENT '银行服务费' AFTER `team_fee`;
 
 
 
