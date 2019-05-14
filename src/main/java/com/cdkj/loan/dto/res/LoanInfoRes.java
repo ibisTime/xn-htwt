@@ -1,11 +1,14 @@
 package com.cdkj.loan.dto.res;
 
+import lombok.Data;
+
 /**
  * 贷款信息res
  *
  * @author : cyl
  * @since : 2019-05-03 15:32
  */
+@Data
 public class LoanInfoRes {
 
     // 贷款期限
@@ -56,6 +59,9 @@ public class LoanInfoRes {
     // 团队服务费
     private Long teamFee;// carInfo
 
+    // 公司服务费
+    private Long companyFee;// carInfo
+
     // 其他费用
     private Long otherFee;// carInfo
 
@@ -64,149 +70,6 @@ public class LoanInfoRes {
     // 银行名称
     private String loanBankName;
 
-    public String getLoanBankName() {
-        return loanBankName;
-    }
-
-    public void setLoanBankName(String loanBankName) {
-        this.loanBankName = loanBankName;
-    }
-
-    public String getInvoicePrice() {
-        return invoicePrice;
-    }
-
-    public void setInvoicePrice(String invoicePrice) {
-        this.invoicePrice = invoicePrice;
-    }
-
-    public String getLoanProductCode() {
-        return loanProductCode;
-    }
-
-    public void setLoanProductCode(String loanProductCode) {
-        this.loanProductCode = loanProductCode;
-    }
-
-    public String getLoanProductName() {
-        return loanProductName;
-    }
-
-    public void setLoanProductName(String loanProductName) {
-        this.loanProductName = loanProductName;
-    }
-
-    public Long getGpsFee() {
-        return gpsFee;
-    }
-
-    public void setGpsFee(Long gpsFee) {
-        this.gpsFee = gpsFee;
-    }
-
-    public Long getAuthFee() {
-        return authFee;
-    }
-
-    public void setAuthFee(Long authFee) {
-        this.authFee = authFee;
-    }
-
-    public String getIsAdvanceFund() {
-        return isAdvanceFund;
-    }
-
-    public void setIsAdvanceFund(String isAdvanceFund) {
-        this.isAdvanceFund = isAdvanceFund;
-    }
-
-    public String getIsFinacing() {
-        return isFinacing;
-    }
-
-    public void setIsFinacing(String isFinacing) {
-        this.isFinacing = isFinacing;
-    }
-
-    public String getIsAzGps() {
-        return isAzGps;
-    }
-
-    public void setIsAzGps(String isAzGps) {
-        this.isAzGps = isAzGps;
-    }
-
-    public String getIsPlatInsure() {
-        return isPlatInsure;
-    }
-
-    public void setIsPlatInsure(String isPlatInsure) {
-        this.isPlatInsure = isPlatInsure;
-    }
-
-    public Integer getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(Integer periods) {
-        this.periods = periods;
-    }
-
-    public Double getBankRate() {
-        return bankRate;
-    }
-
-    public void setBankRate(Double bankRate) {
-        this.bankRate = bankRate;
-    }
-
-    public Long getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(Long loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public Long getSfAmount() {
-        return sfAmount;
-    }
-
-    public void setSfAmount(Long sfAmount) {
-        this.sfAmount = sfAmount;
-    }
-
-    public Double getSfRate() {
-        return sfRate;
-    }
-
-    public void setSfRate(Double sfRate) {
-        this.sfRate = sfRate;
-    }
-
-    public Long getMonthDeposit() {
-        return monthDeposit;
-    }
-
-    public void setMonthDeposit(Long monthDeposit) {
-        this.monthDeposit = monthDeposit;
-    }
-
-    public Long getTeamFee() {
-        return teamFee;
-    }
-
-    public void setTeamFee(Long teamFee) {
-        this.teamFee = teamFee;
-    }
-
-    public Long getOtherFee() {
-        return otherFee;
-    }
-
-    public void setOtherFee(Long otherFee) {
-        this.otherFee = otherFee;
-    }
 }
 
     
