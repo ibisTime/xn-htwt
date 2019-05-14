@@ -82,6 +82,7 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EInvestigateReportNode;
@@ -1670,16 +1671,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void doSmsInterviewInform(String budgetOrderCode, String roomId) {
-        BudgetOrder data = budgetOrderBO.getBudgetOrder(budgetOrderCode);
-        Cdbiz cdbiz = cdbizBO.getCdbiz(data.getBizCode());
-        if (!ECdbizStatus.B00.getCode().equals(cdbiz.getStatus())
-                && !ECdbizStatus.B02.getCode().equals(cdbiz.getStatus())) {
+//        BudgetOrder data = budgetOrderBO.getBudgetOrder(budgetOrderCode);
+        Cdbiz cdbiz = cdbizBO.getCdbiz(budgetOrderCode);
+        CreditUser applyUser = creditUserBO
+                .getCreditUserByBizCode(cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
+        if (!ENode.input_interview.getCode().equals(cdbiz.getIntevCurNodeCode())
+                && !ENode.reinput_interview.getCode().equals(cdbiz.getIntevCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是面签节点");
         }
         // String roomCode = data.getCode().substring(data.getCode().length() -
         // 7);
-        smsOutBO.sendSmsOut(data.getMobile(),
+        smsOutBO.sendSmsOut(applyUser.getMobile(),
                 "您的车贷准入申请单正在面签，请您现在打开APP，点击\"我的\"->\"开始面签\"，输入房间号[" + roomId
                         + "]，进入房间并完成面签。");
     }

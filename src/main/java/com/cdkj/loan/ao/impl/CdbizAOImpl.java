@@ -1,15 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAdvanceBO;
@@ -31,16 +21,17 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
 import com.cdkj.loan.domain.Attachment;
-import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
@@ -90,6 +81,16 @@ import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CdbizAOImpl implements ICdbizAO {
@@ -165,6 +166,9 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private ICarPledgeBO carPledgeBO;
+
+    @Autowired
+    private IRepayPlanBO repayPlanBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -665,21 +669,26 @@ public class CdbizAOImpl implements ICdbizAO {
             userId = user.getUserId();
         }
 
-        BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(code);
-        Bank bank = bankBO.getBank(bankLoan.getRepayBankCode());
-
         // 绑定用户银行卡
-        // String bankcardCode = bankcardBO.bind(userId,
-        // applyUser.getUserName(), bankLoan.getRepayBankcardNumber(),
-        // bank.getBankCode(), bankLoan.getRepayBankName(),
-        // bankLoan.getRepaySubbranch());
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
+        repayBiz.setUserId(userId);
+        repayBiz.setRealName(applyUser.getUserName());
+        repayBiz.setIdKind(applyUser.getIdKind());
+        repayBiz.setIdNo(applyUser.getIdNo());
+        repayBiz.setBankcardCode(cdbiz.getRepayCardNumber());
+        repayBiz.setRestPeriods(repayBiz.getPeriods());
+        Date loanDate = DateUtil.getTodayStart();
+        repayBiz.setLoanStartDatetime(loanDate);
+        Date addMonths = DateUtils.addMonths(loanDate, repayBiz.getPeriods());
+        repayBiz.setLoanEndDatetime(addMonths);
+        repayBiz.setFxDeposit(0L);
 
         // 自动生成还款业务
         // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
         // budgetOrder, userId, bankcardCode, operator);
 
         // 自动生成还款计划
-        // repayPlanBO.genereateNewRepayPlan(repayBiz);
+        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 更新业务状态
         cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),
