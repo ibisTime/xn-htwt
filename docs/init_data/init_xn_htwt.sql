@@ -3083,6 +3083,10 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('f8','银行收�
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('f9','提交银行','f',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('h1','申请制卡','h',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('h2','录入制卡卡号','h',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('i0','申请作废','i',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('i1','业务总监审核','i',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('i2','财务总监审核','i',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('i3','作废结束','i',NULL);
 
 /*
 -- Query: SELECT * FROM dev_xn_htwt_new.tsys_node_flow

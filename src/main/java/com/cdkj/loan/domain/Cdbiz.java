@@ -1,11 +1,13 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+import java.util.List;
+
+import lombok.Data;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 import com.cdkj.loan.dto.res.CarInfoRes;
 import com.cdkj.loan.dto.res.LoanInfoRes;
-import java.util.Date;
-import java.util.List;
-import lombok.Data;
 
 /**
  * 车贷业务
@@ -163,6 +165,8 @@ public class Cdbiz extends ABaseDO {
 
     // 入档节点
     private List<String> enterNodeCodeList;
+
+    private List<String> cancelNodeCodeList;
 
     private String roleCode;
 

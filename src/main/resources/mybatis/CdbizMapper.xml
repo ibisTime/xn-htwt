@@ -170,6 +170,13 @@
                     #{item}
                 </foreach>)
             </if>
+             <if test="cancelNodeCodeList != null and cancelNodeCodeList > 0 ">
+                AND (t.cancel_node_code in
+                <foreach collection="cancelNodeCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>)
+            </if>
             <if test="roleCode != null and roleCode != '' ">
                 AND trn.role_code = #{roleCode}
             </if>
