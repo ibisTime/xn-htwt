@@ -1,15 +1,13 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IInterviewVideoDAO;
 import com.cdkj.loan.domain.InterviewVideo;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InterviewVideoBOImpl extends PaginableBOImpl<InterviewVideo>
@@ -18,6 +16,7 @@ public class InterviewVideoBOImpl extends PaginableBOImpl<InterviewVideo>
     @Autowired
     private IInterviewVideoDAO interviewVideoDAO;
 
+    @Override
     public int saveInterviewVideo(InterviewVideo data) {
         int id = interviewVideoDAO.insert(data);
         return id;

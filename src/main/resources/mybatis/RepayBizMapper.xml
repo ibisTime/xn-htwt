@@ -673,17 +673,21 @@
 	</delete>
 
     <update id="update_repayBiz" parameterType="repayBiz">
-		UPDATE tdh_repay_biz
-		SET
-		biz_code = #{bizCode}
-		,periods = #{periods}
-		,bank_rate = #{bankRate}
-		,loan_product_code = #{loanProductCode}
-		,sf_amount = #{sfAmount}
-		,sf_rate = #{sfRate}
-		,loan_product_name = #{loanProductName}
-		,ref_type = #{refType}
-		,ref_code = #{refCode}
-		WHERE code = #{code}
-	</update>
+        UPDATE tdh_repay_biz
+        SET
+        biz_code = #{bizCode}
+        ,periods = #{periods}
+        ,bank_rate = #{bankRate}
+        ,loan_product_code = #{loanProductCode}
+        ,sf_amount = #{sfAmount}
+        ,sf_rate = #{sfRate}
+        ,loan_product_name = #{loanProductName}
+        ,ref_type = #{refType}
+        ,ref_code = #{refCode}
+
+        ,first_repay_datetime = #{firstRepayDatetime}
+        ,month_amount = #{monthAmount}
+        ,bank_fk_datetime = #{bankFkDatetime}
+        WHERE code = #{code}
+    </update>
 </mapper>

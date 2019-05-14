@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IInsuranceCompanyBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -14,6 +8,10 @@ import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InsuranceCompanyBOImpl extends PaginableBOImpl<InsuranceCompany>
@@ -22,11 +20,12 @@ public class InsuranceCompanyBOImpl extends PaginableBOImpl<InsuranceCompany>
     @Autowired
     private IInsuranceCompanyDAO insuranceCompanyDAO;
 
+    @Override
     public String saveInsuranceCompany(InsuranceCompany data) {
         String code = null;
         if (data != null) {
             code = OrderNoGenerater
-                .generate(EGeneratePrefix.INSURANCECOMPANY.getCode());
+                    .generate(EGeneratePrefix.INSURANCECOMPANY.getCode());
             data.setCode(code);
             insuranceCompanyDAO.insert(data);
         }
@@ -68,7 +67,7 @@ public class InsuranceCompanyBOImpl extends PaginableBOImpl<InsuranceCompany>
             data = insuranceCompanyDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "公司不存在");
+                        "公司不存在");
             }
         }
         return data;

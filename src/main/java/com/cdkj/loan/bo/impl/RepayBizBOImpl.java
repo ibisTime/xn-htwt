@@ -611,6 +611,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
+    public void refreshRepayBiz(RepayBiz repayBiz) {
+        repayBizDAO.updateRepayBiz(repayBiz);
+    }
+
+    @Override
     public String removeByBizCode(String bizCode) {
         RepayBiz repayBiz = getRepayBizByBizCode(bizCode);
         if (null != repayBiz) {

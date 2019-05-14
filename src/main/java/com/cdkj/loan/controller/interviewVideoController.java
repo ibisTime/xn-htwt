@@ -1,24 +1,27 @@
 package com.cdkj.loan.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.InterviewVideo;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 腾讯回调面签视频
+ *
+ * @author : cyl
+ * @since : 2019-05-14 23:37
+ */
 @Controller
 public class interviewVideoController {
     // private static Logger logger = Logger.getLogger(MobileReportDemo.class);
@@ -68,7 +71,7 @@ public class interviewVideoController {
 
         if (eventType == 1) {
             InterviewVideo video = interviewVideoBO
-                .getInterviewVideoByStreamId(streamId);
+                    .getInterviewVideoByStreamId(streamId);
             System.out.println("video:" + video);
             if (video == null) {
                 InterviewVideo interviewVideo = new InterviewVideo();
@@ -90,11 +93,11 @@ public class interviewVideoController {
         if (eventType == 100) {
             System.out.println("=====进入判断=====");
             InterviewVideo data = interviewVideoBO
-                .getInterviewVideoByStreamId(streamId);
+                    .getInterviewVideoByStreamId(streamId);
             // System.out.println("video:" + video);.
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "推流失败，未找到视频，请重试！");
+                        "推流失败，未找到视频，请重试！");
             }
             data.setVideoUrl(videoUrl);
             data.setFileSize(fileSize);

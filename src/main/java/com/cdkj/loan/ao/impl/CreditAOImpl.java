@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBizTaskBO;
@@ -11,8 +12,10 @@ import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -36,6 +39,7 @@ import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.res.XN632917Res;
+import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -44,6 +48,7 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
@@ -103,8 +108,18 @@ public class CreditAOImpl implements ICreditAO {
     @Autowired
     private IAttachmentBO attachmentBO;
 
+    @Autowired
+    private IUserBO userBO;
+
+    @Autowired
+    private IAccountBO accountBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
+
+
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public String addCredit(XN632110Req req) {
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
         if (StringUtils.isBlank(sysUser.getPostCode())) {
@@ -176,7 +191,7 @@ public class CreditAOImpl implements ICreditAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void distributeLeaflets(XN632119Req req) {
 
         Credit credit = null;
@@ -199,7 +214,7 @@ public class CreditAOImpl implements ICreditAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void editCredit(XN632112Req req) {
         Credit credit = null;
         //****待处理*****
@@ -356,7 +371,7 @@ public class CreditAOImpl implements ICreditAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void audit(XN632113Req req) {
         Credit credit = creditBO.getMoreCredit(req.getCode());
 
@@ -408,6 +423,26 @@ public class CreditAOImpl implements ICreditAO {
             bizTaskBO.saveBizTask(credit.getBizCode(), EBizLogType.INTERVIEW,
                     budgetCode, ENode.input_interview, req.getOperator());
 
+            //生成用户
+//            CreditUser applyUser = creditUserBO.getCreditUserByBizCode(req.getCode(),
+//                    ECreditUserLoanRole.APPLY_USER);
+//
+//            User user = userBO.getUser(applyUser.getMobile(),
+//                    EUserKind.Customer.getCode());
+//            String userId;
+//            if (user == null) {
+//                // 用户代注册并实名认证
+//                userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
+//                        applyUser.getMobile(), applyUser.getIdKind(),
+//                        applyUser.getUserName(), applyUser.getIdNo());
+//                distributeAccount(userId, applyUser.getMobile(),
+//                        EUserKind.Customer.getCode());
+//            } else {
+//                userId = user.getUserId();
+//            }
+//
+//            repayBizBO.saveRepayBiz(req.getCode());
+
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                     credit.getCurNodeCode()).getBackNode());
@@ -434,8 +469,23 @@ public class CreditAOImpl implements ICreditAO {
 
     }
 
+
+    // 分配账号
+    private void distributeAccount(String userId, String mobile, String kind) {
+        List<String> currencyList = new ArrayList<String>();
+        currencyList.add(ECurrency.CNY.getCode());
+        currencyList.add(ECurrency.JF.getCode());
+        currencyList.add(ECurrency.XYF.getCode());
+
+        for (String currency : currencyList) {
+            accountBO.distributeAccount(userId, mobile,
+                    EAccountType.getAccountType(kind), currency);
+        }
+    }
+
+
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void inputBankCreditResult(XN632111Req req) {
 
         Credit credit = null;

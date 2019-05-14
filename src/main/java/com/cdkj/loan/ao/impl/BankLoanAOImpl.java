@@ -5,11 +5,14 @@ import com.cdkj.loan.bo.IBankLoanBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -41,6 +44,9 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -96,6 +102,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         String preCurNodeCode = cdbiz.getCurNodeCode();
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(req.getCode());
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
 
         if (!ENode.fk_input.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -116,6 +123,13 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         // 录入放款信息
         bankLoanBO.entryFkInfo(bankLoan.getCode(), nextNodeCode, req);
+
+        //还款业务
+        repayBiz.setFirstRepayAmount(StringValidater.toLong(req.getRepayFirstMonthAmount()));
+        repayBiz.setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
+        repayBiz.setBankFkDatetime(
+                DateUtil.strToDate(req.getBankFkDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        repayBizBO.refreshRepayBiz(repayBiz);
 
         // 更新业务状态
         cdbiz.setStatus(ECdbizStatus.A15.getCode());

@@ -148,4 +148,9 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
      * 修改还款业务
      */
     void refreshRepayBiz(RepayBiz repayBiz, XN632530Req req);
+
+    /**
+     * 更新字段
+     */
+    void refreshRepayBiz(RepayBiz repayBiz);
 }

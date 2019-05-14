@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IInterviewVideoRoomBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -13,6 +7,10 @@ import com.cdkj.loan.dao.IInterviewVideoRoomDAO;
 import com.cdkj.loan.domain.InterviewVideoRoom;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InterviewVideoRoomBOImpl extends
@@ -21,6 +19,7 @@ public class InterviewVideoRoomBOImpl extends
     @Autowired
     private IInterviewVideoRoomDAO interviewVideoRoomDAO;
 
+    @Override
     public String saveInterviewVideoRoom(InterviewVideoRoom data) {
         String code = null;
         if (data != null) {
@@ -66,7 +65,7 @@ public class InterviewVideoRoomBOImpl extends
             data = interviewVideoRoomDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "房间id不存在！");
+                        "房间id不存在！");
             }
         }
         return data;
