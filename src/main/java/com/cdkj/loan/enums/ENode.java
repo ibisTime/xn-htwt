@@ -84,7 +84,8 @@ public enum ENode {
     confirm_archive("f15", "确认存档"),
 
     // 业务作废节点
-    biz_approve("i1", "业务总监审核"), money_approve("i2", "财务总监审核"),
+    cancel_apply("i0", "申请作废"), biz_approve("i1", "业务总监审核"), money_approve(
+            "i2", "财务总监审核"), cancel_end("i3", "作废结束"),
 
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(

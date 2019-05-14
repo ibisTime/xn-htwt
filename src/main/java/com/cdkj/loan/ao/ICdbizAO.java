@@ -13,6 +13,8 @@ import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
 import com.cdkj.loan.dto.req.XN632190Req;
+import com.cdkj.loan.dto.req.XN632191Req;
+import com.cdkj.loan.dto.req.XN632192Req;
 
 public interface ICdbizAO {
 
@@ -81,5 +83,12 @@ public interface ICdbizAO {
      */
     void confirmArchive(String code, String operator, String enterLocation);
 
+    // 申请作废
     void applyCancel(XN632190Req req);
+
+    // 业务总监审核作废申请
+    public void cancelBizAudit(XN632191Req req);
+
+    // 财务总监审核作废申请
+    public void cancelFinanceAudit(XN632192Req req);
 }

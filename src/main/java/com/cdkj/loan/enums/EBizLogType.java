@@ -11,7 +11,7 @@ public enum EBizLogType {
             "d", "gps"), bank_push("e", "银行放款"), fund("O", "垫资"), CAR_DEALER_AUDIT(
             "CD", "车辆经销商审核"), makeCard("h", "制卡"), enter("e", "入档"),
 
-    Pledge("f", "车辆抵押");
+    Pledge("f", "车辆抵押"), cancel("i", "客户作废");
 
     EBizLogType(String code, String value) {
         this.code = code;
