@@ -57,7 +57,7 @@ public class CarInfoRes {
     private String settleAddress;// carInfo
 
     // 车辆落户日期
-    private String carSettleDatetime;//carInfo
+    private String carSettleDatetime;// carInfo
 
     // 保单日期
     private String policyDatetime;
@@ -70,5 +70,8 @@ public class CarInfoRes {
 
     // 合格证
     private String carHgzPic;
+
+    // 开票价
+    private String invoicePrice;// carInfo
 
 }
