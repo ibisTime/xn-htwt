@@ -25,6 +25,7 @@ import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -48,6 +49,7 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
@@ -78,6 +80,8 @@ import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.enums.ERepayBizType;
+import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -167,6 +171,9 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private IRepayPlanBO repayPlanBO;
+
+    @Autowired
+    private ISmsOutBO smsOutBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -458,6 +465,37 @@ public class CdbizAOImpl implements ICdbizAO {
             // 准入单开始的待办事项
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
                     req.getCode(), ENode.input_budget);
+
+            //生成用户
+            CreditUser applyUser = creditUserBO.getCreditUserByBizCode(req.getCode(),
+                    ECreditUserLoanRole.APPLY_USER);
+
+            User user = userBO.getUser(applyUser.getMobile(),
+                    EUserKind.Customer.getCode());
+            String userId;
+            if (user == null) {
+                // 用户代注册并实名认证
+                userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
+                        applyUser.getMobile(), applyUser.getIdKind(),
+                        applyUser.getUserName(), applyUser.getIdNo());
+                distributeAccount(userId, applyUser.getMobile(),
+                        EUserKind.Customer.getCode());
+
+                smsOutBO.sendSmsOut(applyUser.getMobile(),
+                        "您的手机号已注册【微车生活】APP，密码为'888888'，请妥善保管");
+            } else {
+                userId = user.getUserId();
+            }
+
+            RepayBiz repayBiz = new RepayBiz();
+            repayBiz.setUserId(userId);
+            repayBiz.setRealName(applyUser.getUserName());
+            repayBiz.setIdKind(applyUser.getIdKind());
+            repayBiz.setIdNo(applyUser.getIdNo());
+            repayBiz.setBizCode(req.getCode());
+            repayBiz.setRefType(ERepayBizType.CAR.getCode());
+            repayBiz.setRefCode(req.getCode());
+            repayBizBO.saveRepayBiz(repayBiz);
 
         } else {
             cdbiz.setCurNodeCode(nodeFlow.getBackNode());
