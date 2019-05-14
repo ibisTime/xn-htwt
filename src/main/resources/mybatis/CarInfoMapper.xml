@@ -52,6 +52,7 @@
         <result column="other_fee" property="otherFee"/>
         <result column="company_fee" property="companyFee"/>
         <result column="team_fee" property="teamFee"/>
+        <result column="bank_fee" property="bankFee"/>
         <result column="month_deposit" property="monthDeposit"/>
     </resultMap>
     <sql id="where_condition">
@@ -115,6 +116,7 @@
         ,t.other_fee
         ,t.company_fee
         ,t.team_fee
+        ,t.bank_fee
         ,t.month_deposit
         FROM
         tdq_car_info t
@@ -184,6 +186,7 @@
 		,other_fee
 		,company_fee
 		,team_fee
+		,bank_fee
 		,month_deposit
 		)
 		VALUES(
@@ -236,6 +239,7 @@
 		,#{otherFee}
 		,#{companyFee}
 		,#{teamFee}
+		,#{bankFee}
 		,#{monthDeposit}
 		)
 	</insert>
@@ -298,6 +302,7 @@
 		,other_fee=#{otherFee}
 		,company_fee=#{companyFee}
 		,team_fee=#{teamFee}
+		,bank_fee=#{bankFee}
 		,month_deposit=#{monthDeposit}
 		WHERE code = #{code}
 	</update>

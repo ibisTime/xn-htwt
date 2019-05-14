@@ -156,11 +156,14 @@ public class CarInfo extends ABaseDO {
     // 其他费用
     private Long otherFee;
 
-    // 公司手续费
+    // 公司服务费
     private Long companyFee;
 
     // 团队服务费
     private Long teamFee;
+
+    // 银行服务费
+    private Long bankFee;
 
     // 月供保证金
     private Long monthDeposit;

@@ -569,12 +569,19 @@ public class CarInfoAOImpl implements ICarInfoAO {
                             loanProduct.getPreRate() + 1);
         }
 
+        // 银行服务费=贷款金额 * 贷款产品前置利率/ (1 +贷款产品前置利率)；
+        Long bankFee = AmountUtil.div(cdbiz.getLoanAmount(), (1.0 + loanProduct.getPreRate()));
+
         //判断车辆信息是否存在，存在则修改，不存在则新增
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
         if (carInfo == null) {
-            carInfoBO.saveCarInfo(req, companyFee);
+            CarInfo data = new CarInfo();
+            data.setCompanyFee(companyFee);
+            data.setBankFee(bankFee);
+            carInfoBO.saveCarInfo(req, data);
         } else {
             carInfo.setCompanyFee(companyFee);
+            carInfo.setBankFee(bankFee);
             carInfoBO.refreshCarInfo(carInfo, req);
         }
 
