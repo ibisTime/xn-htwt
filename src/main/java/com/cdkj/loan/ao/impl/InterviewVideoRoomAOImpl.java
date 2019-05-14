@@ -107,7 +107,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         }
 
         JSONObject para = new JSONObject();
-        para.put("app_id", 1252750864);
+        para.put("app_id", 1400211355);
         para.put("interface", "mix_streamv2.start_mix_stream_advanced");
         para.put("mix_stream_session_id", req.getRoomId());
         // para.put("output_stream_id",
@@ -131,7 +131,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
         String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
         String string = OkHttpUtils.doAccessHTTPPostJson(
-                "http://fcgi.video.qcloud.com/common_access?appid=1252750864&interface=Mix_StreamV2&t="
+                "http://fcgi.video.qcloud.com/common_access?appid=1400211355&interface=Mix_StreamV2&t="
                         + time + "&sign=" + sign,
                 jo.toString());
         // InterviewVideo interviewVideo = interviewVideoBO
@@ -154,7 +154,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         String string = OkHttpUtils.doAccessHTTPGetJson(
                 "http://fcgi.video.qcloud.com/common_access?Param.s.channel_id="
                         + req.getStreamId()
-                        + "&appid=1252750864&interface=Live_Tape_GetFilelist&sign="
+                        + "&appid=1400211355&interface=Live_Tape_GetFilelist&sign="
                         + sign + "&t=" + time);
         return string;
     }
