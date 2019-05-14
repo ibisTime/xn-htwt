@@ -43,6 +43,9 @@ VALUES ('f15', '确认存档', 'f');
 INSERT INTO `tsys_node` (`code`, `name`, `type`)
 VALUES ('f7', '风控审核通过（车辆抵押）', 'f');
 
+INSERT INTO `dev_xn_htwt_new`.`tsys_node` (`code`, `name`, `type`)
+VALUES ('c3', '发保合完成', 'c');
+
 
 
 DROP TABLE IF EXISTS `tdq_enter_file_list`;
