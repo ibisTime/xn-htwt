@@ -1,14 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.IInterviewVideoRoomAO;
@@ -26,6 +17,13 @@ import com.cdkj.loan.dto.req.XN632952Req;
 import com.cdkj.loan.dto.req.XN632954Req;
 import com.cdkj.loan.dto.req.XN632955Req;
 import com.cdkj.loan.enums.EBoolean;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
@@ -80,7 +78,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         InterviewVideo condition = new InterviewVideo();
         condition.setRoomCode(req.getRoomId());
         List<InterviewVideo> videoList = interviewVideoBO
-            .queryInterviewVideoList(condition);
+                .queryInterviewVideoList(condition);
 
         JSONArray inputList = new JSONArray();
         // 背景画面
@@ -109,7 +107,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         }
 
         JSONObject para = new JSONObject();
-        para.put("app_id", 1257046543);
+        para.put("app_id", 1400211355);
         para.put("interface", "mix_streamv2.start_mix_stream_advanced");
         para.put("mix_stream_session_id", req.getRoomId());
         // para.put("output_stream_id",
@@ -125,7 +123,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
         JSONObject jo = new JSONObject();
         String time = Long
-            .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
+                .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
         jo.put("timestamp", time);
         String HL = OrderNoGenerater.generate("HL");
         jo.put("eventId", HL.substring(2, 8));
@@ -133,13 +131,13 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
         String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
         String string = OkHttpUtils.doAccessHTTPPostJson(
-            "http://fcgi.video.qcloud.com/common_access?appid=1257046543&interface=Mix_StreamV2&t="
-                    + time + "&sign=" + sign,
-            jo.toString());
+                "http://fcgi.video.qcloud.com/common_access?appid=1400211355&interface=Mix_StreamV2&t="
+                        + time + "&sign=" + sign,
+                jo.toString());
         // InterviewVideo interviewVideo = interviewVideoBO
         // .getInterviewVideoByStreamId(videoList.get(0).getStreamId());
         InterviewVideoRoom videoRoom = interviewVideoRoomBO
-            .getInterviewVideoRoom(req.getRoomId());
+                .getInterviewVideoRoom(req.getRoomId());
         videoRoom.setHlUrl(videoList.get(0).getStreamId());
         videoRoom.setStatus(EBoolean.YES.getCode());
         interviewVideoRoomBO.refreshInterviewVideoRoom(videoRoom);
@@ -151,13 +149,13 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
     @Override
     public Object foundHlVideo(XN632952Req req) {
         String time = Long
-            .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
+                .toString(new Date().getTime() / 1000 + 24 * 60 * 60 * 1000);
         String sign = MD5Util.md5("152d1d67ad2dda121dc4ad95bc05b269" + time);
         String string = OkHttpUtils.doAccessHTTPGetJson(
-            "http://fcgi.video.qcloud.com/common_access?Param.s.channel_id="
-                    + req.getStreamId()
-                    + "&appid=1257046543&interface=Live_Tape_GetFilelist&sign="
-                    + sign + "&t=" + time);
+                "http://fcgi.video.qcloud.com/common_access?Param.s.channel_id="
+                        + req.getStreamId()
+                        + "&appid=1400211355&interface=Live_Tape_GetFilelist&sign="
+                        + sign + "&t=" + time);
         return string;
     }
 
@@ -166,7 +164,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         InterviewVideoRoom room = new InterviewVideoRoom();
         room.setBudgetCode(req.getBudgetCode());
         List<InterviewVideoRoom> roomList = interviewVideoRoomBO
-            .queryInterviewVideoRoomList(room);
+                .queryInterviewVideoRoomList(room);
         InterviewVideoRoom videoRoom = null;
         if (CollectionUtils.isNotEmpty(roomList)) {
             videoRoom = roomList.get(roomList.size() - 1);
@@ -177,7 +175,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
     @Override
     public void destroyRoom(XN632955Req req) {
         InterviewVideoRoom interviewVideoRoom = interviewVideoRoomBO
-            .getInterviewVideoRoom(req.getCode());
+                .getInterviewVideoRoom(req.getCode());
         interviewVideoRoom.setStatus(EBoolean.YES.getCode());
         interviewVideoRoomBO.refreshInterviewVideoRoom(interviewVideoRoom);
     }
