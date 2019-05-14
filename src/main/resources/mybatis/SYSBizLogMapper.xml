@@ -18,7 +18,6 @@
 		<result column="start_datetime" property="startDatetime" />
 		<result column="end_datetime" property="endDatetime" />
 		<result column="speed_time" property="speedTime" />
-		<result column="mobile" property="mobile" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -87,10 +86,8 @@
 		,t.start_datetime
 		,t.end_datetime
 		,t.speed_time
-		,u.mobile
 		FROM
 		tsys_biz_log t
-		left join tsys_user u on t.operator=u.user_id
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">

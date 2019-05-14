@@ -44,6 +44,26 @@ public class Mission extends ABaseDO {
     // 完成时间
     private Date finishDatetime;
 
+    private String createrName;
+
+    private String getUserName;
+
+    public String getCreaterName() {
+        return createrName;
+    }
+
+    public void setCreaterName(String createrName) {
+        this.createrName = createrName;
+    }
+
+    public String getGetUserName() {
+        return getUserName;
+    }
+
+    public void setGetUserName(String getUserName) {
+        this.getUserName = getUserName;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }
