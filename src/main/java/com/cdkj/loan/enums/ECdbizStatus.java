@@ -69,7 +69,11 @@ public enum ECdbizStatus {
     // 垫资状态(温州)
     F0("000", "确认用款单"), F1("001", "区域总经理审批"), F2("002", "省分公司总经理审批"),
 
-    F3("003", "确认制单"), F4("004", "上传复核回单");
+    F3("003", "确认制单"), F4("004", "上传复核回单"),
+
+    // 作废状态
+    G0("0", "可申请作废"), G1("1", "不可作废"), G2("2", "待业务总监审核"), G3("3", "待财务总监审核"), G4(
+            "4", "已作废");
 
     public static ECdbizStatus matchCode(String code) {
         for (ECdbizStatus eCdbizStatus : ECdbizStatus.values()) {

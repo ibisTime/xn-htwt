@@ -1,5 +1,7 @@
 package com.cdkj.loan.ao;
 
+import java.util.List;
+
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632110Req;
@@ -10,7 +12,7 @@ import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
-import java.util.List;
+import com.cdkj.loan.dto.req.XN632190Req;
 
 public interface ICdbizAO {
 
@@ -78,4 +80,6 @@ public interface ICdbizAO {
      * 确认入档
      */
     void confirmArchive(String code, String operator, String enterLocation);
+
+    void applyCancel(XN632190Req req);
 }

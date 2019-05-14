@@ -1,8 +1,9 @@
 package com.cdkj.loan.enums;
 
-import com.cdkj.loan.exception.BizException;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.cdkj.loan.exception.BizException;
 
 /**
  * 征信节点
@@ -82,6 +83,9 @@ public enum ENode {
 
     confirm_archive("f15", "确认存档"),
 
+    // 业务作废节点
+    biz_approve("i1", "业务总监审核"), money_approve("i2", "财务总监审核"),
+
     // 旧版本征信节点
     FILLIN_CREDIT("001_01", "发起征信查询"), DISTRIBUTE_LEAFLETS("001_08", "派单"), INPUT_CREDIT_RESULT(
             "001_02", "录入征信结果"), AUDIT("001_03", "风控专员审核"), ACHIEVE("001_04",
@@ -105,7 +109,8 @@ public enum ENode {
             }
         }
         if (null == resultNote) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "节点[" + code + "]未找到匹配的节点信息数据");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "节点["
+                    + code + "]未找到匹配的节点信息数据");
         }
 
         return resultNote;

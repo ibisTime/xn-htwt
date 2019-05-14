@@ -1,5 +1,7 @@
 package com.cdkj.loan.bo;
 
+import java.util.List;
+
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTeam;
@@ -9,7 +11,6 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
-import java.util.List;
 
 public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
@@ -49,7 +50,7 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     void refreshEnterNodeStatus(Cdbiz cdbiz, String status, String enterNodeCode);
 
-    void refreshZfStatus(Cdbiz cdbiz, String status);
+    void refreshZfStatus(Cdbiz cdbiz, String status, String cancelNode);
 
     void refreshYwy(Cdbiz cdbiz, String ywyUser);
 
@@ -61,7 +62,8 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     void refreshInsideJob(Cdbiz cdbiz, String insideJob);
 
-    void refreshIntevNodeStatus(Cdbiz cdbiz, String intevCurNodeCode, String mqStatus);
+    void refreshIntevNodeStatus(Cdbiz cdbiz, String intevCurNodeCode,
+            String mqStatus);
 
     void interview(Cdbiz cdbiz, XN632123Req req);
 
