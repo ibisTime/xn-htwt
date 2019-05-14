@@ -9,21 +9,23 @@ import java.util.List;
 
 public interface ICreditJourBO extends IPaginableBO<CreditJour> {
 
-    public String saveCreditJour(XN632490Req req);
+    String saveCreditJour(XN632490Req req);
 
-    public void removeCreditJour(String code);
+    void removeCreditJour(String code);
 
-    public void refreshCreditJour(XN632492Req req);
+    void refreshCreditJour(XN632492Req req);
 
-    public List<CreditJour> queryCreditJourList(CreditJour condition);
+    List<CreditJour> queryCreditJourList(CreditJour condition);
 
-    public CreditJour getCreditJour(String code);
+    CreditJour getCreditJour(String code);
 
-    public void saveCreditJour(XN632120Req req);
+    void saveCreditJour(XN632120Req req);
 
-    public void removeBizJour(String bizCode);
+    void removeBizJour(String bizCode);
 
-    public List<CreditJour> querCreditJoursByBizCode(String bizCode);
+    List<CreditJour> querCreditJoursByBizCode(String bizCode);
+
+    CreditJour getCreditJourByCondition(String bizCode, String creditUserCode);
 
     /**
      * 批量新增

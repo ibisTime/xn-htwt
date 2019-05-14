@@ -43,7 +43,7 @@ public enum ENode {
     // 发保合节点
     input_fbh("c1", "新录入发保合"), approve_fbh("c2", "审核发保合"),
 
-    reinput_fbh("c1x", "重录入发保合"), fbh_finish("c1", "发保合完成"),
+    reinput_fbh("c1x", "重录入发保合"), fbh_finish("c3", "发保合完成"),
 
     // gps
     set_gps("d1", "安装gps"), approve_gps("d2", "审核gps"),

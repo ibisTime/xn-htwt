@@ -463,6 +463,15 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
     }
 
     @Override
+    public CreditJour getCreditJourByCondition(String bizCode, String creditUserCode) {
+        CreditJour condition = new CreditJour();
+        condition.setBizCode(bizCode);
+        condition.setCreditUserCode(creditUserCode);
+        CreditJour jour = creditJourDAO.select(condition);
+        return jour;
+    }
+
+    @Override
     public void saveCreditJourList(List<CreditJour> jourList) {
         creditJourDAO.insertList(jourList);
     }

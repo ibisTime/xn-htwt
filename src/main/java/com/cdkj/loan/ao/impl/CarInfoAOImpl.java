@@ -17,11 +17,13 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.impl.InvestigateReportBOImpl;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.CarInfo;
@@ -29,6 +31,7 @@ import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.CreditUserExt;
+import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
@@ -46,7 +49,9 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.EDealType;
+import com.cdkj.loan.enums.EInvestigateReportNode;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.exception.BizException;
@@ -109,6 +114,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
     @Autowired
     private ICarPledgeBO carPledgeBO;
+
+    @Autowired
+    private InvestigateReportBOImpl investigateReportBO;
 
 
     @Override
@@ -656,167 +664,131 @@ public class CarInfoAOImpl implements ICarInfoAO {
             repointBO.saveRepoint(repoint);
             /**************生成返点数据***************/
 
-            // /*************生成调查报告****************/
-            // InvestigateReport report = new InvestigateReport();
-            // report.setBudgetOrderCode(budgetOrder.getCode());
-            // List<InvestigateReport> reportList = investigateReportBO
-            // .queryInvestigateReportList(report);
-            // if (CollectionUtils.isEmpty(reportList)) {
-            // InvestigateReport investigateReport = new InvestigateReport();
-            // investigateReport.setBudgetOrderCode(budgetOrder.getCode());
-            // investigateReport
-            // .setRepayBizCode(budgetOrder.getRepayBizCode());
-            // investigateReport.setCompanyCode(budgetOrder.getCompanyCode());
-            // investigateReport.setBizType(budgetOrder.getBizType());
-            // investigateReport.setTeamCode(budgetOrder.getTeamCode());
-            // investigateReport.setApplyUserName(budgetOrder
-            // .getApplyUserName());
-            // investigateReport.setApplyDatetime(new Date());
-            // investigateReport.setLoanBank(budgetOrder.getLoanBank());
-            // investigateReport.setLoanAmount(budgetOrder.getLoanAmount());
-            // investigateReport.setLoanPeriod(budgetOrder.getLoanPeriod());
-            // investigateReport.setIsAdvanceFund(budgetOrder
-            // .getIsAdvanceFund());
-            // investigateReport.setSaleUserId(budgetOrder.getSaleUserId());
-            // String gender = budgetOrder.getGender();
-            // if (gender == "1") {
-            // gender = "男";
-            // } else {
-            // gender = "女";
-            // }
-            // String education = budgetOrder.getEducation();
-            // if (education == "1") {
-            // education = "博士及以上";
-            // } else if (education == "2") {
-            // education = "硕士";
-            // } else if (education == "3") {
-            // education = "大学本科";
-            // } else if (education == "4") {
-            // education = "大学专科";
-            // } else {
-            // education = "高中及以下";
-            // }
-            // String marryState = budgetOrder.getMarryState();
-            // if (marryState == "1") {
-            // marryState = "未婚";
-            // } else if (marryState == "2") {
-            // marryState = "已婚";
-            // } else if (marryState == "3") {
-            // marryState = "离异";
-            // } else {
-            // marryState = "丧偶";
-            // }
-            // String customerInformation = "借款人:"
-            // + budgetOrder.getApplyUserName() + ", "
-            // + budgetOrder.getAge() + "岁, " + marryState + ", "
-            // + "性别：" + gender + ", " + "学历：" + education + ", "
-            // + "民族：" + budgetOrder.getNation() + ", " + "身份证号："
-            // + budgetOrder.getIdNo() + ", " + "政治面貌："
-            // + budgetOrder.getPolitical() + ", " + "户口所在地："
-            // + budgetOrder.getResidenceAddress() + ", " + "现在家庭住址："
-            // + budgetOrder.getNowAddress() + ", " + "联系电话："
-            // + budgetOrder.getMobile() + ", " + "家有"
-            // + budgetOrder.getFamilyNumber() + "口人，" + "邮编："
-            // + budgetOrder.getPostCode1() + ", " + "借款人无重大疾病，身体健康";
-            // investigateReport.setCustomerInformation(customerInformation);
-            // CreditUser domain = creditUserBO.getCreditUserByCreditCode(
-            // budgetOrder.getCreditCode(), ECreditUserLoanRole.APPLY_USER);
-            // investigateReport.setBankCreditResultRemark(domain
-            // .getBankCreditResultRemark());
-            // investigateReport.setJourDatetimeStart(budgetOrder
-            // .getJourDatetimeStart());
-            // investigateReport.setZfbJourDatetimeEnd(budgetOrder
-            // .getZfbJourDatetimeEnd());
-            //
-            // investigateReport.setZfbJourInterest1(budgetOrder
-            // .getZfbJourInterest1());
-            // investigateReport.setZfbJourInterest2(budgetOrder
-            // .getZfbJourInterest2());
-            // investigateReport
-            // .setZfbInterest1(budgetOrder.getZfbInterest1());
-            // investigateReport
-            // .setZfbInterest2(budgetOrder.getZfbInterest2());
-            //
-            // investigateReport.setZfbJourIncome(budgetOrder
-            // .getZfbJourIncome());
-            // investigateReport.setZfbJourExpend(budgetOrder
-            // .getZfbJourExpend());
-            // investigateReport.setZfbJourBalance(budgetOrder
-            // .getZfbJourBalance());
-            // investigateReport.setZfbJourMonthIncome(budgetOrder
-            // .getZfbJourMonthIncome());
-            // investigateReport.setZfbJourMonthExpend(budgetOrder
-            // .getZfbJourMonthExpend());
-            // investigateReport.setZfbJourPic(budgetOrder.getZfbJourPic());
-            // investigateReport.setZfbJourRemark(budgetOrder
-            // .getZfbJourRemark());
-            //
-            // investigateReport.setWxJourDatetimeStart(budgetOrder
-            // .getWxJourDatetimeStart());
-            // investigateReport.setWxJourDatetimeEnd(budgetOrder
-            // .getWxJourDatetimeEnd());
-            // investigateReport.setWxJourInterest1(budgetOrder
-            // .getWxJourInterest1());
-            // investigateReport.setWxJourInterest2(budgetOrder
-            // .getWxJourInterest2());
-            // investigateReport.setWxInterest1(budgetOrder.getWxInterest1());
-            // investigateReport.setWxInterest2(budgetOrder.getWxInterest2());
-            //
-            // investigateReport
-            // .setWxJourIncome(budgetOrder.getWxJourIncome());
-            // investigateReport
-            // .setWxJourExpend(budgetOrder.getWxJourExpend());
-            // investigateReport.setWxJourBalance(budgetOrder
-            // .getWxJourBalance());
-            // investigateReport.setWxJourMonthIncome(budgetOrder
-            // .getWxJourMonthIncome());
-            // investigateReport.setWxJourMonthExpend(budgetOrder
-            // .getWxJourMonthExpend());
-            // investigateReport.setWxJourPic(budgetOrder.getWxJourPic());
-            // investigateReport
-            // .setWxJourRemark(budgetOrder.getWxJourRemark());
-            //
-            // investigateReport.setJourDatetimeStart(budgetOrder
-            // .getJourDatetimeStart());
-            // investigateReport.setJourDatetimeEnd(budgetOrder
-            // .getJourDatetimeEnd());
-            // investigateReport.setJourInterest1(budgetOrder
-            // .getJourInterest1());
-            // investigateReport.setJourInterest2(budgetOrder
-            // .getJourInterest2());
-            // investigateReport.setInterest1(budgetOrder.getInterest1());
-            // investigateReport.setInterest2(budgetOrder.getInterest2());
-            //
-            // investigateReport.setJourIncome(budgetOrder.getJourIncome());
-            // investigateReport.setJourExpend(budgetOrder.getJourExpend());
-            // investigateReport.setJourBalance(budgetOrder.getJourBalance());
-            // investigateReport.setJourMonthIncome(budgetOrder
-            // .getJourMonthIncome());
-            // investigateReport.setJourMonthExpend(budgetOrder
-            // .getJourMonthExpend());
-            // investigateReport.setJourPic(budgetOrder.getJourPic());
-            // investigateReport.setJourRemark(budgetOrder.getJourRemark());
-            //
-            // investigateReport.setHouseContract(budgetOrder
-            // .getHouseContract());
-            // investigateReport
-            // .setHousePicture(budgetOrder.getHousePicture());
-            // String basicsInformation = "品牌：" + budgetOrder.getCarBrand()
-            // + "," + "车型：" + budgetOrder.getCarModel() + ","
-            // + "新手指导价" + budgetOrder.getOriginalPrice() / 1000 + ","
-            // + "落户地点：" + budgetOrder.getSettleAddress();
-            // investigateReport.setBasicsInformation(basicsInformation);
-            // investigateReport
-            // .setCurNodeCode(EInvestigateReportNode.COMMIT_APPLY
-            // .getCode());
-            // String irCode = investigateReportBO
-            // .saveInvestigateReport(investigateReport);
-            // // 日志记录
-            // sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-            // EBizLogType.INVESTIGATEREPORT, irCode,
-            // investigateReport.getCurNodeCode());
-            // }
-            // /*************生成调查报告****************/
+            /*************生成调查报告****************/
+            InvestigateReport report = new InvestigateReport();
+            report.setBudgetOrderCode(cdbiz.getCode());
+            List<InvestigateReport> reportList = investigateReportBO
+                    .queryInvestigateReportList(report);
+            if (CollectionUtils.isEmpty(reportList)) {
+
+                //申请人
+                CreditUser applyUser = creditUserBO
+                        .getCreditUserByBizCode(cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
+
+                InvestigateReport investigateReport = new InvestigateReport();
+                investigateReport.setBudgetOrderCode(cdbiz.getCode());
+                investigateReport
+                        .setRepayBizCode(cdbiz.getRepayBizCode());
+                investigateReport.setCompanyCode(cdbiz.getCompanyCode());
+                investigateReport.setBizType(cdbiz.getBizType());
+                investigateReport.setTeamCode(cdbiz.getTeamCode());
+                investigateReport.setApplyUserName(applyUser
+                        .getUserName());
+                investigateReport.setApplyDatetime(new Date());
+                investigateReport.setLoanBank(cdbiz.getLoanBank());
+                investigateReport.setLoanAmount(cdbiz.getLoanAmount());
+                investigateReport.setLoanPeriod(repayBiz.getPeriods().toString());
+                investigateReport.setIsAdvanceFund(cdbiz
+                        .getIsAdvanceFund());
+                investigateReport.setSaleUserId(cdbiz.getSaleUserId());
+                String gender = applyUser.getGender();
+                if (gender == "1") {
+                    gender = "男";
+                } else {
+                    gender = "女";
+                }
+                String education = applyUser.getEducation();
+                if (education == "1") {
+                    education = "博士及以上";
+                } else if (education == "2") {
+                    education = "硕士";
+                } else if (education == "3") {
+                    education = "大学本科";
+                } else if (education == "4") {
+                    education = "大学专科";
+                } else {
+                    education = "高中及以下";
+                }
+                String marryState = applyUser.getMarryState();
+                if (marryState == "1") {
+                    marryState = "未婚";
+                } else if (marryState == "2") {
+                    marryState = "已婚";
+                } else if (marryState == "3") {
+                    marryState = "离异";
+                } else {
+                    marryState = "丧偶";
+                }
+                String customerInformation = "借款人:"
+                        + applyUser.getUserName() + ", "
+                        + applyUser.getAge() + "岁, " + marryState + ", "
+                        + "性别：" + gender + ", " + "学历：" + education + ", "
+                        + "民族：" + applyUser.getNation() + ", " + "身份证号："
+                        + applyUser.getIdNo() + ", " + "政治面貌："
+                        + applyUser.getPolitical() + ", " + "户口所在地："
+                        + applyUser.getBirthAddressProvince() + applyUser.getBirthAddressCity()
+                        + applyUser.getBirthAddressArea()
+                        + applyUser.getBirthAddress() + ", " + "现在家庭住址："
+                        + applyUser.getNowAddressProvince() + applyUser.getNowAddressCity()
+                        + applyUser.getNowAddressArea()
+                        + applyUser.getNowAddress() + ", " + "联系电话："
+                        + applyUser.getMobile() + ", " + "家有"
+                        + applyUser.getFamilyNumber() + "口人，" + "邮编："
+                        + applyUser.getNowPostCode() + ", " + "借款人无重大疾病，身体健康";
+                investigateReport.setCustomerInformation(customerInformation);
+                investigateReport.setBankCreditResultRemark(applyUser
+                        .getBankCreditResultRemark());
+
+                //流水
+                CreditJour creditJour = creditJourBO
+                        .getCreditJourByCondition(cdbiz.getCode(), applyUser.getCode());
+
+                investigateReport.setJourDatetimeStart(creditJour
+                        .getDatetimeStart());
+                investigateReport.setJourDatetimeEnd(creditJour
+                        .getDatetimeEnd());
+
+                investigateReport.setJourInterest1(creditJour
+                        .getJourInterest1().toString());
+                investigateReport.setJourInterest2(creditJour
+                        .getJourInterest2().toString());
+                investigateReport.setInterest1(creditJour.getInterest1().longValue());
+                investigateReport.setInterest2(creditJour.getInterest2().longValue());
+
+                investigateReport.setJourIncome(creditJour.getIncome().longValue());
+                investigateReport.setJourExpend(creditJour.getExpend().longValue());
+                investigateReport.setJourBalance(creditJour.getBalance().longValue());
+                investigateReport.setJourMonthIncome(creditJour.getMonthIncome().longValue());
+                investigateReport.setJourMonthExpend(creditJour.getMonthExpend().longValue());
+                investigateReport.setJourPic(creditJour.getPic());
+                investigateReport.setJourRemark(creditJour.getRemark());
+
+                // 家纺照片
+                Attachment housePicture = attachmentBO
+                        .getAttachment(cdbiz.getCode(), "credit_user_ext", "house_picture_apply");
+                investigateReport
+                        .setHousePicture(housePicture.getUrl());
+
+                //车辆信息
+                CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
+
+                String basicsInformation = "品牌：" + carInfo.getCarBrand()
+                        + ",车系：" + carInfo.getCarSeries()
+                        + ",车型：" + carInfo.getCarModel() + ","
+                        + "新手指导价" + StringValidater.toLong(carInfo.getOriginalPrice()) / 1000 + ","
+                        + "落户地点：" + carInfo.getSettleAddress();
+                investigateReport.setBasicsInformation(basicsInformation);
+                investigateReport
+                        .setCurNodeCode(EInvestigateReportNode.COMMIT_APPLY
+                                .getCode());
+                String irCode = investigateReportBO
+                        .saveInvestigateReport(investigateReport);
+                // 日志记录
+                sysBizLogBO.saveSYSBizLog(cdbiz.getCode(),
+                        EBizLogType.INVESTIGATEREPORT, irCode,
+                        investigateReport.getCurNodeCode());
+            }
+            /*************生成调查报告****************/
         }
     }
 
