@@ -1,15 +1,17 @@
 package com.cdkj.loan.bo;
 
+import java.util.List;
+
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.dto.req.XN632124Req;
 import com.cdkj.loan.dto.req.XN632133Req;
-import java.util.List;
 
 public interface ICarPledgeBO extends IPaginableBO<CarPledge> {
 
     // 添加抵押信息
-    String saveCarPledge(String bizCode, String supplementNoteg);
+    String saveCarPledge(String bizCode, String supplementNote,
+            String pledgeUser, String pledgeUserIdCard, String pledgeAddress);
 
     // 添加抵押信息
     String saveCarPledge(String bizCode, String pledgeUser,
@@ -19,13 +21,11 @@ public interface ICarPledgeBO extends IPaginableBO<CarPledge> {
     void saleManConfirm(CarPledge carPledge, XN632124Req req);
 
     // 业务员录入抵押信息
-    void entryPledgeInfo(String code, String nextNodeCode,
-            XN632133Req req);
+    void entryPledgeInfo(String code, String nextNodeCode, XN632133Req req);
 
     // 抵押提交银行
-    void pledgeCommitBank(String code, String nextNodeCode,
-            String operator, String pledgeBankCommitDatetime,
-            String pledgeBankCommitNote);
+    void pledgeCommitBank(String code, String nextNodeCode, String operator,
+            String pledgeBankCommitDatetime, String pledgeBankCommitNote);
 
     // 抵押确认完成
     void confirmDone(String code, String nextNodeCode, String operator);

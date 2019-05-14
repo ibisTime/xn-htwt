@@ -18,6 +18,12 @@ public class XN632144Req {
     @NotBlank
     private String supplementNote;
 
+    private String pledgeUser;
+
+    private String pledgeUserIdCard;
+
+    private String pledgeAddress;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -44,6 +50,30 @@ public class XN632144Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getPledgeUser() {
+        return pledgeUser;
+    }
+
+    public void setPledgeUser(String pledgeUser) {
+        this.pledgeUser = pledgeUser;
+    }
+
+    public String getPledgeUserIdCard() {
+        return pledgeUserIdCard;
+    }
+
+    public void setPledgeUserIdCard(String pledgeUserIdCard) {
+        this.pledgeUserIdCard = pledgeUserIdCard;
+    }
+
+    public String getPledgeAddress() {
+        return pledgeAddress;
+    }
+
+    public void setPledgeAddress(String pledgeAddress) {
+        this.pledgeAddress = pledgeAddress;
     }
 
 }
