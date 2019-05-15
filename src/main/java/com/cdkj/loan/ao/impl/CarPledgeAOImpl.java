@@ -1,12 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ICarPledgeAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTaskBO;
@@ -35,6 +28,11 @@ import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CarPledgeAOImpl implements ICarPledgeAO {
@@ -74,19 +72,19 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         String preCurNodeCode = cdbiz.getCurNodeCode();
         if (!ENode.bank_receipt.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是抵押申请节点，不能操作");
+                    "当前不是抵押申请节点，不能操作");
         }
 
         String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            preCurNodeCode).getNextNode();
+                preCurNodeCode).getNextNode();
 
         // 车辆抵押信息
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
         // 判断车辆抵押副表是不是空，不为空说明预算单填写过抵押信息
         if (null == carPledge) {
             carPledgeBO.saveCarPledge(req.getCode(), req.getSupplementNote(),
-                req.getPledgeUser(), req.getPledgeUserIdCard(),
-                req.getPledgeAddress());
+                    req.getPledgeUser(), req.getPledgeUserIdCard(),
+                    req.getPledgeAddress());
         } else {
             carPledge.setPledgeSupplementNote(req.getSupplementNote());
             carPledge.setPledgeUser(req.getPledgeUser());
@@ -102,12 +100,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 操作日志
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
-            cdbiz.getCode(), preCurNodeCode, req.getSupplementNote(),
-            req.getOperator());
+                cdbiz.getCode(), preCurNodeCode, req.getSupplementNote(),
+                req.getOperator());
 
         // 待办事项
         bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, cdbiz.getCode(),
-            req.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
+                req.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
     }
 
     @Override
@@ -116,13 +114,13 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         String preCurNodeCode = cdbiz.getCurNodeCode();
         if (!ENode.confirm_pledge_apply.getCode()
-            .equals(cdbiz.getCurNodeCode())) {
+                .equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是内勤确认抵押申请节点，不能操作");
+                    "当前不是内勤确认抵押申请节点，不能操作");
         }
 
         String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            preCurNodeCode).getNextNode();
+                preCurNodeCode).getNextNode();
 
         // 业务员确认抵押
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
@@ -130,17 +128,17 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 行驶证正面
         EAttachName pledgeUserIdCardFront = EAttachName.getMap().get(
-            EAttachName.pledgeUserIdCardFront.getCode());
+                EAttachName.pledgeUserIdCardFront.getCode());
         attachmentBO.saveAttachment(carPledge.getBizCode(),
-            pledgeUserIdCardFront.getCode(), pledgeUserIdCardFront.getValue(),
-            req.getPledgeUserIdCardFront());
+                pledgeUserIdCardFront.getCode(), pledgeUserIdCardFront.getValue(),
+                req.getPledgeUserIdCardFront());
         // 行驶证反面
         EAttachName pledgeUserIdCardReverse = EAttachName.getMap().get(
-            EAttachName.pledgeUserIdCardReverse.getCode());
+                EAttachName.pledgeUserIdCardReverse.getCode());
         attachmentBO.saveAttachment(carPledge.getBizCode(),
-            pledgeUserIdCardReverse.getCode(),
-            pledgeUserIdCardReverse.getValue(),
-            req.getPledgeUserIdCardReverse());
+                pledgeUserIdCardReverse.getCode(),
+                pledgeUserIdCardReverse.getValue(),
+                req.getPledgeUserIdCardReverse());
 
         // 更新业务状态
         cdbiz.setStatus(ECdbizStatus.A18.getCode());
@@ -149,18 +147,18 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 操作日志
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
-            cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
+                cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
 
         // 待办事项
         bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, req.getCode(),
-            cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
+                cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
 
         // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
-            ELogisticsType.BUDGET.getCode(),
-            ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE.getCode(),
-            cdbiz.getCode(), cdbiz.getSaleUserId(), ENode.submit_3.getCode(),
-            ENode.receive_approve_3.getCode(), null);
+                ELogisticsType.BUDGET.getCode(),
+                ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE.getCode(),
+                cdbiz.getCode(), cdbiz.getSaleUserId(), ENode.submit_3.getCode(),
+                ENode.receive_approve_3.getCode(), null);
     }
 
     @Override
@@ -170,12 +168,12 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         String preCurNodeCode = cdbiz.getCurNodeCode();
         if (!ENode.input_dy_info.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是业务员录入抵押信息节点，不能操作");
+                    "当前不是业务员录入抵押信息节点，不能操作");
         }
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
         String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            preCurNodeCode).getNextNode();
+                preCurNodeCode).getNextNode();
 
         // 录入抵押信息
         carPledgeBO.entryPledgeInfo(carPledge.getCode(), nextNodeCode, req);
@@ -187,23 +185,23 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 添加附件
         attachmentBO.saveAttachment(cdbiz.getCode(),
-            EAttachName.pledgeUserIdCardFront.getCode(), null,
-            req.getPledgeUserIdCardFront());
+                EAttachName.pledgeUserIdCardFront.getCode(), null,
+                req.getPledgeUserIdCardFront());
         attachmentBO.saveAttachment(cdbiz.getCode(),
-            EAttachName.pledgeUserIdCardReverse.getCode(), null,
-            req.getPledgeUserIdCardReverse());
+                EAttachName.pledgeUserIdCardReverse.getCode(), null,
+                req.getPledgeUserIdCardReverse());
         attachmentBO.saveAttachment(cdbiz.getCode(), "car_regcerti", null,
-            req.getCarRegcerti());
+                req.getCarRegcerti());
         attachmentBO.saveAttachment(cdbiz.getCode(), "car_pd", null,
-            req.getCarPd());
+                req.getCarPd());
         attachmentBO.saveAttachment(cdbiz.getCode(), "car_key", null,
-            req.getCarKey());
+                req.getCarKey());
         attachmentBO.saveAttachment(cdbiz.getCode(), "green_big_smj", null,
-            req.getCarBigSmj());
+                req.getCarBigSmj());
         attachmentBO.saveAttachment(cdbiz.getCode(), "car_xsz_smj", null,
-            req.getCarXszSmj());
+                req.getCarXszSmj());
         attachmentBO.saveAttachment(cdbiz.getCode(), "duty_paid_prove_smj",
-            null, req.getDutyPaidProveSmj());
+                null, req.getDutyPaidProveSmj());
 
         // 更新业务状态
         cdbiz.setStatus(ECdbizStatus.A22.getCode());
@@ -212,18 +210,18 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 操作日志
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
-            cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
+                cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
 
         // 待办事项
         bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, req.getCode(),
-            cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
+                cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
 
         // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
-            ELogisticsType.BUDGET.getCode(),
-            ELogisticsCurNodeType.SALE_SEND_CAR_PLEDGE.getCode(),
-            cdbiz.getCode(), cdbiz.getSaleUserId(), ENode.submit_4.getCode(),
-            ENode.receive_approve_4.getCode(), null);
+                ELogisticsType.BUDGET.getCode(),
+                ELogisticsCurNodeType.SALE_SEND_CAR_PLEDGE.getCode(),
+                cdbiz.getCode(), cdbiz.getSaleUserId(), ENode.submit_4.getCode(),
+                ENode.receive_approve_4.getCode(), null);
     }
 
     @Override
@@ -234,16 +232,16 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         String preCurNodeCode = cdbiz.getCurNodeCode();
         if (!ENode.to_commit_bank.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是抵押提交节点，不能操作");
+                    "当前不是抵押提交节点，不能操作");
         }
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
         String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            cdbiz.getCurNodeCode()).getNextNode();
+                cdbiz.getCurNodeCode()).getNextNode();
 
         // 抵押提交银行
         carPledgeBO.pledgeCommitBank(code, nextNodeCode, operator,
-            pledgeBankCommitDatetime, pledgeBankCommitNote);
+                pledgeBankCommitDatetime, pledgeBankCommitNote);
 
         // 更新业务状态
         cdbiz.setStatus(ECdbizStatus.A28.getCode());
@@ -252,11 +250,11 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 操作日志
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.bank_push,
-            cdbiz.getCode(), preCurNodeCode, null, operator);
+                cdbiz.getCode(), preCurNodeCode, null, operator);
 
         // 待办事项
         bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, cdbiz.getCode(), code,
-            preCurNodeCode, nextNodeCode, operator);
+                preCurNodeCode, nextNodeCode, operator);
 
     }
 
@@ -266,24 +264,24 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
         if (!ENode.dy_info_confirm_submit.getCode().equals(
-            cdbiz.getCurNodeCode())) {
+                cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是抵押已提交节点，不能操作");
+                    "当前不是抵押已提交节点，不能操作");
         }
         if (!ECdbizStatus.E3.getCode().equals(cdbiz.getEnterStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "第二次存档未完成，不能操作");
+                    "第二次存档未完成，不能操作");
         }
 
         List<EnterFileList> enterFileListList = enterFileListBO
-            .queryEnterFileListByBizCode(code);
+                .queryEnterFileListByBizCode(code);
         if (CollectionUtils.isEmpty(enterFileListList)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "入档清单不能为空");
         }
 
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(code);
         String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-            cdbiz.getCurNodeCode()).getNextNode();
+                cdbiz.getCurNodeCode()).getNextNode();
 
         // 抵押确认完成
         carPledgeBO.confirmDone(carPledge.getCode(), nextNodeCode, operator);
@@ -297,7 +295,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 操作日志
         sysBizLogBO.recordCurOperate(code, EBizLogType.bank_push,
-            cdbiz.getCode(), nextNodeCode, null, operator);
+                cdbiz.getCode(), nextNodeCode, null, operator);
 
     }
 
@@ -320,14 +318,15 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
     @Override
     public void inputPledgeInfo(XN632539Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
-        if (!ENode.input_budget.getCode().equals(cdbiz.getCurNodeCode())) {
+        if (!ENode.input_budget.getCode().equals(cdbiz.getCurNodeCode())
+                && !ENode.renew_budget.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是录入准入单资料节点，不能操作");
+                    "当前不是录入准入单资料节点，不能操作");
         }
         CarPledge carPledge = carPledgeBO.getCarPledgeByBizCode(req.getCode());
         if (null == carPledge) {
             carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
-                req.getPledgeUserIdCard(), req.getPledgeAddress());
+                    req.getPledgeUserIdCard(), req.getPledgeAddress());
         } else {
             String code = carPledge.getCode();
             EntityUtils.copyData(req, carPledge);
@@ -336,11 +335,11 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 添加附件
         attachmentBO.saveAttachment(cdbiz.getCode(),
-            EAttachName.pledgeUserIdCardFront.getCode(), null,
-            req.getPledgeUserIdCardFront());
+                EAttachName.pledgeUserIdCardFront.getCode(), null,
+                req.getPledgeUserIdCardFront());
         attachmentBO.saveAttachment(cdbiz.getCode(),
-            EAttachName.pledgeUserIdCardReverse.getCode(), null,
-            req.getPledgeUserIdCardReverse());
+                EAttachName.pledgeUserIdCardReverse.getCode(), null,
+                req.getPledgeUserIdCardReverse());
     }
 
 }

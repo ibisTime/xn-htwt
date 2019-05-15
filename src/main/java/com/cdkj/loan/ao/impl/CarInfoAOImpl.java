@@ -764,29 +764,55 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     .getDatetimeStart());
                 investigateReport.setJourDatetimeEnd(creditJour
                     .getDatetimeEnd());
+                if (creditJour != null) {
+                    investigateReport.setJourDatetimeStart(creditJour
+                        .getDatetimeStart());
+                    investigateReport.setJourDatetimeEnd(creditJour
+                        .getDatetimeEnd());
 
-                investigateReport.setJourInterest1(creditJour
-                    .getJourInterest1().toString());
-                investigateReport.setJourInterest2(creditJour
-                    .getJourInterest2().toString());
-                investigateReport.setInterest1(creditJour.getInterest1()
-                    .longValue());
-                investigateReport.setInterest2(creditJour.getInterest2()
-                    .longValue());
+                    investigateReport.setJourInterest1(creditJour
+                        .getJourInterest1().toString());
+                    investigateReport.setJourInterest2(creditJour
+                        .getJourInterest2().toString());
+                    investigateReport.setInterest1(creditJour.getInterest1()
+                        .longValue());
+                    investigateReport.setInterest2(creditJour.getInterest2()
+                        .longValue());
+                    investigateReport.setJourInterest1(creditJour
+                        .getJourInterest1().toString());
+                    investigateReport.setJourInterest2(creditJour
+                        .getJourInterest2().toString());
+                    investigateReport.setInterest1(creditJour.getInterest1()
+                        .longValue());
+                    investigateReport.setInterest2(creditJour.getInterest2()
+                        .longValue());
 
-                investigateReport.setJourIncome(creditJour.getIncome()
-                    .longValue());
-                investigateReport.setJourExpend(creditJour.getExpend()
-                    .longValue());
-                investigateReport.setJourBalance(creditJour.getBalance()
-                    .longValue());
-                investigateReport.setJourMonthIncome(creditJour
-                    .getMonthIncome().longValue());
-                investigateReport.setJourMonthExpend(creditJour
-                    .getMonthExpend().longValue());
-                investigateReport.setJourPic(creditJour.getPic());
-                investigateReport.setJourRemark(creditJour.getRemark());
+                    investigateReport.setJourIncome(creditJour.getIncome()
+                        .longValue());
+                    investigateReport.setJourExpend(creditJour.getExpend()
+                        .longValue());
+                    investigateReport.setJourBalance(creditJour.getBalance()
+                        .longValue());
+                    investigateReport.setJourMonthIncome(creditJour
+                        .getMonthIncome().longValue());
+                    investigateReport.setJourMonthExpend(creditJour
+                        .getMonthExpend().longValue());
+                    investigateReport.setJourPic(creditJour.getPic());
+                    investigateReport.setJourRemark(creditJour.getRemark());
 
+                    investigateReport.setJourIncome(creditJour.getIncome()
+                        .longValue());
+                    investigateReport.setJourExpend(creditJour.getExpend()
+                        .longValue());
+                    investigateReport.setJourBalance(creditJour.getBalance()
+                        .longValue());
+                    investigateReport.setJourMonthIncome(creditJour
+                        .getMonthIncome().longValue());
+                    investigateReport.setJourMonthExpend(creditJour
+                        .getMonthExpend().longValue());
+                    investigateReport.setJourPic(creditJour.getPic());
+                    investigateReport.setJourRemark(creditJour.getRemark());
+                }
                 // 家纺照片
                 Attachment housePicture = attachmentBO.getAttachment(
                     cdbiz.getCode(), "credit_user_ext", "house_picture_apply");

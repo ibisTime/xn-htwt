@@ -15,6 +15,7 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -120,6 +121,9 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private IRepayBizBO repayBizBO;
+
+    @Autowired
+    private ISmsOutBO smsOutBO;
 
 
     @Override
@@ -441,6 +445,9 @@ public class CreditAOImpl implements ICreditAO {
                         applyUser.getUserName(), applyUser.getIdNo());
                 distributeAccount(userId, applyUser.getMobile(),
                         EUserKind.Customer.getCode());
+
+                smsOutBO.sendSmsOut(applyUser.getMobile(),
+                        "您的手机号已注册【微车生活】APP，密码为'888888'，请妥善保管");
             } else {
                 userId = user.getUserId();
             }
