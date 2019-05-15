@@ -1,17 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAdvanceBO;
@@ -95,6 +83,16 @@ import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CdbizAOImpl implements ICdbizAO {
@@ -699,13 +697,14 @@ public class CdbizAOImpl implements ICdbizAO {
         Date addMonths = DateUtils.addMonths(loanDate, repayBiz.getPeriods());
         repayBiz.setLoanEndDatetime(addMonths);
         repayBiz.setFxDeposit(0L);
+        repayBizBO.refreshRepayBiz(repayBiz);
 
         // 自动生成还款业务
         // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
         // budgetOrder, userId, bankcardCode, operator);
 
         // 自动生成还款计划
-        repayPlanBO.genereateNewRepayPlan(repayBiz);
+//        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 更新业务状态
         cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),

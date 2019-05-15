@@ -148,19 +148,22 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(), "第一次未入档，不能发件！");
                     }
 
-                    cdbiz.setStatus(ECdbizStatus.E1.getCode());
-                    cdbiz.setCurNodeCode(ENode.receive_6.getCode());
-                    cdbizBO.refreshCurNodeStatus(cdbiz);
+                    cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E1.getCode(),
+                            ENode.receive_6.getCode());
 
                     // 日志记录
                     sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS,
                             req.getCode(), ENode.submit_6.getCode(), req.getSendNote(),
                             req.getOperator());
+//                    sysBizLogBO.saveSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS, req.getCode(),
+//                            ENode.submit_6.getCode());
 
                     // 待办事项
                     bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(),
                             cdbiz.getCode(), ENode.submit_6.getCode(), ENode.receive_6.getCode(),
                             req.getOperator());
+//                    bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.LOGISTICS, req.getCode(),
+//                            ENode.receive_6);
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
                     cdbiz.setEnterStatus(ECdbizStatus.D1.getCode());
