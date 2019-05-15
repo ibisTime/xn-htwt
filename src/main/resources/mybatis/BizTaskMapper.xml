@@ -52,9 +52,6 @@
             <if test="createDatetime != null and createDatetime != '' ">
                 AND t.create_datetime = #{createDatetime}
             </if>
-            <if test="roleCode != null and roleCode != '' ">
-                AND t.role_code = #{roleCode}
-            </if>
             <if test="isMy != null and isMy != '' ">
                 AND (t.operater = #{userId} or (t.operate_role = #{roleCode} and t.operater
                 is null))

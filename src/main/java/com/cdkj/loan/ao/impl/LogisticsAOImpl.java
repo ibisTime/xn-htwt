@@ -247,13 +247,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
 //                        }
 //                    }
 
+                    // 待办事项
+                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(), cdbiz.getCode(),
+                            preCurNodeCode, nextNodeCode, req.getOperator());
+
                     // 日志记录
                     sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS,
                             req.getCode(), preCurNodeCode, req.getSendNote(), req.getOperator());
-
-                    // 待办事项
-                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, cdbiz.getCode(),
-                            req.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
                 }
 
                 break;
