@@ -142,8 +142,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
         carInfoBO.refreshCarInfo(carInfo);
 
         // 贷款信息
-        repayBizBO.removeByBizCode(req.getCode());
-        repayBizBO.saveRepayBiz(req);
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(req.getCode());
+        String code = repayBiz.getCode();
+        EntityUtils.copyData(req, repayBiz);
+        repayBiz.setCode(code);
+        repayBizBO.refreshRepayBiz(repayBiz);
 
         // 征信人信息录入
         creditUserExtBO.removeBizUserExt(req.getCode());

@@ -688,29 +688,8 @@ public class CdbizAOImpl implements ICdbizAO {
                     "当前状态不是已入档状态，不能确认入档");
         }
 
-//        CreditUser applyUser = creditUserBO.getCreditUserByBizCode(code,
-//            ECreditUserLoanRole.APPLY_USER);
-
-//        User user = userBO.getUser(applyUser.getMobile(),
-//            EUserKind.Customer.getCode());
-//        String userId = null;
-//        if (user == null) {
-//            // 用户代注册并实名认证
-//            userId = userBO.doRegisterAndIdentify(EBoolean.YES.getCode(),
-//                applyUser.getMobile(), applyUser.getIdKind(),
-//                applyUser.getUserName(), applyUser.getIdNo());
-//            distributeAccount(userId, applyUser.getMobile(),
-//                EUserKind.Customer.getCode());
-//        } else {
-//            userId = user.getUserId();
-//        }
-
         // 绑定用户银行卡
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
-//        repayBiz.setUserId(userId);
-//        repayBiz.setRealName(applyUser.getUserName());
-//        repayBiz.setIdKind(applyUser.getIdKind());
-//        repayBiz.setIdNo(applyUser.getIdNo());
         repayBiz.setBankcardCode(cdbiz.getRepayCardNumber());
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         Date loanDate = DateUtil.getTodayStart();
@@ -1051,6 +1030,10 @@ public class CdbizAOImpl implements ICdbizAO {
             BeanUtils.copyProperties(repayBiz, loanInfoRes);
             BeanUtils.copyProperties(repayBiz, carInfoRes);
         }
+
+        BeanUtils.copyProperties(cdbiz, loanInfoRes);
+        BeanUtils.copyProperties(cdbiz, carInfoRes);
+
         // 车辆信息
         cdbiz.setCarInfoRes(carInfoRes);
         // 贷款信息

@@ -688,6 +688,13 @@
         ,first_repay_datetime = #{firstRepayDatetime}
         ,month_amount = #{monthAmount}
         ,bank_fk_datetime = #{bankFkDatetime}
+
+        ,periods = #{periods}
+        ,bank_rate = #{bankRate}
+        ,loan_amount = #{loanAmount}
+        ,first_repay_amount = #{firstRepayAmount}
+        ,sf_rate = #{sfRate}
+        ,ly_deposit = #{lyDeposit}
         WHERE code = #{code}
     </update>
 </mapper>

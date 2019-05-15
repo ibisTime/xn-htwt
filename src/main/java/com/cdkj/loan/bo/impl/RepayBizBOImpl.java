@@ -1,7 +1,7 @@
 package com.cdkj.loan.bo.impl;
 
-import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.IOrderBO;
@@ -57,7 +57,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     private IBankBO bankBO;
 
     @Autowired
-    private IBankcardAO bankcardAO;
+    private IBankcardBO bankcardBO;
 
     @Autowired
     private IUserBO userBO;
@@ -292,7 +292,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setBizPrice(order.getAmount());
         repayBiz.setSfRate(specsOrder.getSfRate());
         repayBiz.setSfAmount(specsOrder.getSfAmount());
-        String bankCode = bankcardAO.getBankcard(specsOrder.getBankcardCode())
+        String bankCode = bankcardBO.getBankcard(specsOrder.getBankcardCode())
                 .getBankCode();
         repayBiz.setLoanBank(bankCode);// 存ICBC样式
         repayBiz.setLoanAmount(specsOrder.getLoanAmount());
@@ -596,12 +596,10 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     public void refreshRepayBiz(RepayBiz repayBiz, XN632530Req req) {
         String code = repayBiz.getCode();
         EntityUtils.copyData(req, repayBiz);
-        repayBiz.setBizCode(req.getCode());
         LoanProduct product = loanProductBO.getLoanProduct(req
                 .getLoanProductCode());
         repayBiz.setLoanProductName(product.getName());
-        repayBiz.setRefType(ERepayBizType.CAR.getCode());
-        repayBiz.setRefCode(req.getCode());
+        repayBiz.setLyDeposit(StringValidater.toLong(req.getMonthDeposit()));
         repayBiz.setCode(code);
         repayBizDAO.updateRepayBiz(repayBiz);
     }
