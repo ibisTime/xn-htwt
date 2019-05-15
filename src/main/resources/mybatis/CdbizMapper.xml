@@ -53,6 +53,42 @@
             join tdq_credit_user tcu on tcu.biz_code = t.code and tcu.loan_role = '1'
         </if>
     </sql>
+    
+    <sql id="cur_node_condition">
+        <if test="curNodeCodeList != null and curNodeCodeList.size()>0  ">
+            inner join tsys_role_node trn on t.cur_node_code=trn.node_code
+        </if>
+    </sql>
+    
+    <sql id="intev_node_condition">
+        <if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size()  ">
+            inner join tsys_role_node trn on t.intev_node_code=trn.node_code
+        </if>
+    </sql>
+    
+    <sql id="make_card_condition">
+        <if test="makeCardNodeList != null and makeCardNodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.make_card_code=trn.node_code
+        </if>
+    </sql>
+    
+    <sql id="fbhgps_node_condition">
+       <if test="fbhgpsNodeList != null and fbhgpsNodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.fbhgps_node=trn.node_code
+        </if>
+    </sql>
+    
+    <sql id="enter_node_condition">
+        <if test="enterNodeCodeList != null and enterNodeCodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.enter_node_code=trn.node_code
+        </if>
+    </sql>
+    
+    <sql id="cancel_node_condition">
+        <if test="cancelNodeCodeList != null and cancelNodeCodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.cancel_node_code=trn.node_code
+        </if>
+    </sql>
 
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -334,11 +370,16 @@
         ,b.bank_name as loan_bank_name
         ,bt.name as team_name
         FROM
-        tqj_cdbiz t left join tsys_role_node trn on (t.cur_node_code = trn.node_code or
-        t.intev_cur_node_code = trn.node_code )
+        tqj_cdbiz t 
         left join tb_bank b on b.code = t.loan_bank
         left join tsys_biz_team bt on bt.code = t.team_code
         <include refid="join_condition"/>
+        <include refid="cur_node_condition"/>
+        <include refid="intev_node_condition"/>
+        <include refid="make_card_condition"/>
+        <include refid="fbhgps_node_condition"/>
+        <include refid="enter_node_condition"/>
+        <include refid="cancel_node_condition"/>
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">
@@ -349,9 +390,14 @@
 
     <select id="select_cdbiz_count_byRoleCode" parameterType="budgetOrder"
             resultType="java.lang.Long">
-        SELECT count(1) FROM (SELECT distinct t.code FROM tqj_cdbiz t left join tsys_role_node trn
-        on (t.cur_node_code = trn.node_code or t.intev_cur_node_code = trn.node_code )
+        SELECT count(1) FROM (SELECT distinct t.code FROM tqj_cdbiz t 
         <include refid="join_condition"/>
+        <include refid="cur_node_condition"/>
+        <include refid="intev_node_condition"/>
+        <include refid="make_card_condition"/>
+        <include refid="fbhgps_node_condition"/>
+        <include refid="enter_node_condition"/>
+        <include refid="cancel_node_condition"/>
         <include refid="where_condition"/>) tb
     </select>
 
