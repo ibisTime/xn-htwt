@@ -18,6 +18,9 @@
         <result column="operate_role" property="operateRole"/>
         <result column="operate_role_name" property="operateRoleName"/>
         <result column="finish_datetime" property="finishDatetime"/>
+
+        <result column="role_code" property="roleCode"/>
+        <result column="user_id" property="userId"/>
     </resultMap>
 
     <sql id="where_condition">
@@ -49,9 +52,36 @@
             <if test="createDatetime != null and createDatetime != '' ">
                 AND t.create_datetime = #{createDatetime}
             </if>
+            <if test="roleCode != null and roleCode != '' ">
+                AND t.role_code = #{roleCode}
+            </if>
             <if test="isMy != null and isMy != '' ">
                 AND (t.operater = #{userId} or (t.operate_role = #{roleCode} and t.operater
                 is null))
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="where_condition_byRole">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="refOrder != null and refOrder != '' ">
+                AND t.ref_order = #{refOrder}
+            </if>
+            <if test="refNode != null and refNode != '' ">
+                AND t.ref_node = #{refNode}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="roleCode != null and roleCode != '' ">
+                AND rn.role_code = #{roleCode}
+            </if>
+            <if test="userId != null and userId != '' ">
+                AND (cd.sale_user_id = #{userId}
+                or cd.inside_job = #{userId})
             </if>
         </trim>
     </sql>
@@ -107,6 +137,34 @@
             resultType="java.lang.Long">
         SELECT count(1) FROM tqj_biz_task t
         <include refid="where_condition"/>
+    </select>
+
+    <select id="select_list_byRole" parameterType="bizTask" resultMap="bizTask_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.ref_node
+
+        ,t.content
+        ,t.create_datetime
+        ,t.status
+        ,t.operater
+        ,t.operate_role
+        ,t.finish_datetime
+        FROM tqj_biz_task t
+        inner join tsys_role_node rn on t.ref_node = rn.node_code
+        inner join tqj_cdbiz cd on t.biz_code = cd.code
+        <include refid="where_condition_byRole"/>
+    </select>
+
+    <select id="select_count_byRole" parameterType="bizTask"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tqj_biz_task t
+        inner join tsys_role_node rn on t.ref_node = rn.node_code
+        inner join tqj_cdbiz cd on t.biz_code = cd.code
+        <include refid="where_condition_byRole"/>
     </select>
 
     <insert id="insert_bizTask" parameterType="bizTask">

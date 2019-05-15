@@ -3,6 +3,8 @@ package com.cdkj.loan.bo.impl;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IRoleNodeBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBizTaskDAO;
@@ -224,6 +226,21 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         condition.setBizCode(bizCode);
         List<BizTask> bizTasks = bizTaskDAO.selectList(condition);
         return bizTasks;
+    }
+
+    @Override
+    public Paginable<BizTask> getPaginableByRole(int start, int pageSize, BizTask condition) {
+        prepare(condition);
+
+        long totalCount = bizTaskDAO.selectTotalCountByRole(condition);
+
+        Paginable<BizTask> page = new Page<BizTask>(start, pageSize, totalCount);
+
+        List<BizTask> dataList = bizTaskDAO.selectListByRole(condition, page.getStart(),
+                page.getPageSize());
+
+        page.setList(dataList);
+        return page;
     }
 
 }

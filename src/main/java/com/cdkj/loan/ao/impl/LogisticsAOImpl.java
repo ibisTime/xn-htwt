@@ -158,7 +158,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             req.getOperator());
 
                     // 待办事项
-                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, cdbiz.getCode(),
+                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(),
                             cdbiz.getCode(), ENode.submit_6.getCode(), ENode.receive_6.getCode(),
                             req.getOperator());
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
@@ -173,7 +173,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             req.getOperator());
 
                     // 待办事项
-                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, cdbiz.getCode(),
+                    bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(),
                             cdbiz.getCode(), ENode.submit_2.getCode(), ENode.receive_2.getCode(),
                             req.getOperator());
                 } else {
@@ -253,7 +253,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                     // 待办事项
                     bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, cdbiz.getCode(),
-                            cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
+                            req.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
                 }
 
                 break;

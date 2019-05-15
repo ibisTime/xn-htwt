@@ -10,6 +10,7 @@ import com.cdkj.loan.dto.req.XN632520Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizTaskStatus;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,16 @@ public class BizTaskAOImpl implements IBizTaskAO {
     @Override
     public Paginable<BizTask> queryBizTaskPage(int start, int limit,
             BizTask condition) {
-        return bizTaskBO.getPaginable(start, limit, condition);
+        SYSUser user = sysUserBO.getUser(condition.getUserId());
+        // 业务员与内勤看自己的
+        if (!ESysRole.SALE.getCode().equals(user.getRoleCode())
+                && !ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
+            condition.setUserId(null);
+        }
+        // 根据角色权限查待办
+        condition.setRoleCode(user.getRoleCode());
+
+        return bizTaskBO.getPaginableByRole(start, limit, condition);
     }
 
     @Override

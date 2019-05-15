@@ -1,6 +1,7 @@
 package com.cdkj.loan.bo;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ENode;
@@ -40,4 +41,5 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
     List<BizTask> queryBizTaskByBizCode(String bizCode);
 
+    Paginable<BizTask> getPaginableByRole(int start, int limit, BizTask condition);
 }
