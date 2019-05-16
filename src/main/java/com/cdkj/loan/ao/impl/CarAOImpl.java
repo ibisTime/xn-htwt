@@ -1,5 +1,13 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.bo.IActionBO;
 import com.cdkj.loan.bo.IBankBO;
@@ -26,12 +34,6 @@ import com.cdkj.loan.enums.EActionType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.exception.BizException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CarAOImpl implements ICarAO {
@@ -144,6 +146,8 @@ public class CarAOImpl implements ICarAO {
         car.setDisplacment(StringValidater.toDouble(req.getDisplacement()));
         car.setFromPlace(req.getFromPlace());
         car.setProcedure(req.getProcedure());
+        car.setSeriesCode(req.getSeriesCode());
+        car.setSeriesName(series.getName());
 
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(price);
@@ -166,10 +170,10 @@ public class CarAOImpl implements ICarAO {
         car.setRemark(req.getRemark());
         // 删除原配置
         List<CarCarconfig> carCarconfigs = carCarconfigBO.getCarconfigs(req
-                .getCode());
+            .getCode());
         for (CarCarconfig carCarconfig : carCarconfigs) {
             carCarconfigBO.removeCarCarconfig(req.getCode(),
-                    carCarconfig.getConfigCode());
+                carCarconfig.getConfigCode());
         }
 
         // 增加新配置
@@ -237,8 +241,7 @@ public class CarAOImpl implements ICarAO {
         List<Car> queryCar = carBO.queryCar(condition);
         List<Series> seriess = new ArrayList<Series>();
         if (null == condition.getIsMore()) {
-            outer:
-            for (Car car : queryCar) {
+            outer: for (Car car : queryCar) {
                 initCar(car);
                 Series series = seriesBO.getSeries(car.getSeriesCode());
                 for (Series data : seriess) {
@@ -295,7 +298,7 @@ public class CarAOImpl implements ICarAO {
         car.setCollectNumber(collectNumber);
         // 车型下配置列表
         List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
-                .getCode());
+            .getCode());
         // 所有配置
         List<Carconfig> configs = carconfigBO.queryCarconfigList(null);
         for (CarCarconfig carCarconfig : configList) {
@@ -307,7 +310,7 @@ public class CarAOImpl implements ICarAO {
                 }
             }
             carCarconfig.setConfig(carconfigBO.getCarconfig(carCarconfig
-                    .getConfigCode()));
+                .getConfigCode()));
         }
 
         car.setCaonfigList(configList);
@@ -335,6 +338,11 @@ public class CarAOImpl implements ICarAO {
     @Override
     public List<Car> queryList(Car condition) {
         return carBO.queryCar(condition);
+    }
+
+    @Override
+    public void dropCar(String code) {
+        carBO.removeCar(code);
     }
 
 }

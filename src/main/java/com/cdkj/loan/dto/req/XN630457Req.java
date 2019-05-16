@@ -14,7 +14,7 @@ package com.cdkj.loan.dto.req;
  * @since: 2019年3月12日 下午5:10:03 
  * @history:
  */
-public class XN630457Req {
+public class XN630457Req extends AListReq {
 
     private String title;
 

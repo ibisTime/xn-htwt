@@ -1,12 +1,13 @@
 package com.cdkj.loan.ao;
 
+import java.util.List;
+
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Calculate;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
-import java.util.List;
 
 public interface ICarAO {
 
@@ -38,4 +39,6 @@ public interface ICarAO {
     public Calculate calculate(String carCode, String period, String isTotal);
 
     List<Car> queryList(Car condition);
+
+    public void dropCar(String code);
 }

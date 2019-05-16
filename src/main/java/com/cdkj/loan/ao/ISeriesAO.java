@@ -33,4 +33,6 @@ public interface ISeriesAO {
 
     // 列表查询
     public List<Series> querySeriesList(Series condition);
+
+    public void dropSeries(String code);
 }
