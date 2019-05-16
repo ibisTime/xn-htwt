@@ -187,10 +187,10 @@
 
         ,t.remark
         ,t.team_code
-        ,cb.bank_name as loan_bank_name
+        ,b.bank_name as loan_bank_name
         FROM
         tdh_repay_biz t
-        left join tstd_channel_bank cb on t.loan_bank = cb.bank_code
+        left join tb_bank b on b.code = t.loan_bank
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">
@@ -677,6 +677,9 @@
         SET
         biz_code = #{bizCode}
         ,periods = #{periods}
+        ,rest_periods = #{restPeriods}
+        ,rest_total_cost = #{restTotalCost}
+        ,overdue_amount = #{overdueAmount}
         ,bank_rate = #{bankRate}
         ,loan_product_code = #{loanProductCode}
         ,sf_amount = #{sfAmount}
@@ -687,10 +690,9 @@
 
         ,first_repay_datetime = #{firstRepayDatetime}
         ,month_amount = #{monthAmount}
+        ,month_datetime = #{monthDatetime}
         ,bank_fk_datetime = #{bankFkDatetime}
 
-        ,periods = #{periods}
-        ,bank_rate = #{bankRate}
         ,loan_amount = #{loanAmount}
         ,first_repay_amount = #{firstRepayAmount}
         ,sf_rate = #{sfRate}

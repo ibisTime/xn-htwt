@@ -1,66 +1,84 @@
--- 主表字段注释
-ALTER TABLE `tqj_cdbiz`
-  CHANGE COLUMN `code` `code` VARCHAR(32) NOT NULL COMMENT '编号' ,
-  CHANGE COLUMN `type` `type` VARCHAR(4) NULL DEFAULT NULL COMMENT '类型' ,
-  CHANGE COLUMN `biz_type` `biz_type` VARCHAR(4) NULL DEFAULT NULL COMMENT '业务类型（0新车，1二手车）' ,
-  CHANGE COLUMN `repay_biz_code` `repay_biz_code` VARCHAR(32) NULL DEFAULT NULL COMMENT '还款业务编号' ,
-  CHANGE COLUMN `company_code` `company_code` VARCHAR(32) NULL DEFAULT NULL COMMENT '公司编号' ,
-  CHANGE COLUMN `team_code` `team_code` VARCHAR(32) NULL DEFAULT NULL COMMENT '团队编号' ,
-  CHANGE COLUMN `status` `status` VARCHAR(4) NULL DEFAULT NULL COMMENT '主状态' ,
-  CHANGE COLUMN `mq_status` `mq_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '面签状态' ,
-  CHANGE COLUMN `fbhgps_status` `fbhgps_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '发保合gps状态' ,
-  CHANGE COLUMN `fircundang_status` `fircundang_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '第一次入档状态' ,
-  CHANGE COLUMN `seccundang_status` `seccundang_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '第二次入档状态' ,
-  CHANGE COLUMN `zf_status` `zf_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '作废状态' ,
-  CHANGE COLUMN `cur_node_code` `cur_node_code` VARCHAR(5) NULL DEFAULT NULL COMMENT '主流程节点' ,
-  CHANGE COLUMN `captain_code` `captain_code` VARCHAR(32) NULL DEFAULT NULL COMMENT '团队长编号' ,
-  CHANGE COLUMN `inside_job` `inside_job` VARCHAR(32) NULL DEFAULT NULL COMMENT '内勤编号';
+INSERT INTO `tsys_node`
+VALUES ('010_01', '提交调查申请', '010', NULL),
+       ('010_02', '风控专员审核', '010', NULL),
+       ('010_03', '驻行人员审核', '010', NULL),
+       ('010_04', '已完成', '010', NULL);
 
-# 添加修改主表字段
-ALTER TABLE `tqj_cdbiz`
-  DROP COLUMN `seccundang_status`,
-  CHANGE COLUMN `mq_status` `intev_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '面签状态' ,
-  CHANGE COLUMN `fircundang_status` `enter_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '第一次入档状态' ,
-  CHANGE COLUMN `zf_status` `cancel_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '作废状态' ,
-  ADD COLUMN `enter_node_code` VARCHAR(5) NULL COMMENT '入档节点' AFTER `fbhgps_node`;
+INSERT INTO `tsys_node_flow`
+VALUES (52, '010', '010_01', '010_02', NULL, NULL, NULL),
+       (53, '010', '010_02', '010_03', '010_01', NULL, NULL),
+       (54, '010', '010_03', '010_04', '010_02', NULL, NULL);
 
 
-INSERT INTO `tdq_file_list` (`category`, `kname`, `vname`, `attach_type`, `number`)
-VALUES ('car_pledge', 'pledge_user_id_card_front', '代理人身份证正', '图片', '1');
-INSERT INTO `tdq_file_list` (`category`, `kname`, `vname`, `attach_type`, `number`)
-VALUES ('car_pledge', 'pledge_user_id_card_reverse', '代理人身份证反', '图片', '1');
-
-# 修改车辆抵押字段
-ALTER TABLE `tdq_car_pledge`
-  CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证号';
-
-ALTER TABLE `tdq_car_pledge`
-  CHANGE COLUMN `pledge_user_id_card_copy` `pledge_user_id_card` TINYTEXT NULL DEFAULT NULL COMMENT '代理人身份证复印件';
-
-INSERT INTO `tsys_node` (`code`, `name`, `type`)
-VALUES ('f15', '确认存档', 'f');
-
-INSERT INTO `tsys_node` (`code`, `name`, `type`)
-VALUES ('f7', '风控审核通过（车辆抵押）', 'f');
-
-INSERT INTO `tsys_node` (`code`, `name`, `type`)
-VALUES ('c3', '发保合完成', 'c');
-
-ALTER TABLE `tdq_car_info`
-  ADD COLUMN `bank_fee` BIGINT(20) NULL COMMENT '银行服务费' AFTER `team_fee`;
-
-
-
-DROP TABLE IF EXISTS `tdq_enter_file_list`;
-CREATE TABLE `tdq_enter_file_list`
-(
-  `code`              varchar(32) NOT NULL COMMENT '编号',
-  `biz_code`          varchar(32)  DEFAULT NULL COMMENT '业务编号',
-  `content`           text         DEFAULT NULL COMMENT '内容',
-  `file_count`        int(11)      DEFAULT NULL COMMENT '份数',
-  `deposit_date_time` datetime     DEFAULT NULL COMMENT '存放位置',
-  `operator`          varchar(32)  DEFAULT NULL COMMENT '存放人',
-  `remark`            varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8 COMMENT ='档案存放清单';
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '011', '待风控审核收件(银行放款)', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '010x', '待业务员重寄材料(银行放款)', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '012', '风控提交银行', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '013', '风控录入银行放款信息', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '014', '财务确认银行收款', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '015', '抵押申请', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '016', '业务员确认抵押申请', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '017', '风控寄抵押合同', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '018', '业务员审核抵押合同', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '019', '业务员录入抵押信息', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '020', '风控重寄抵押合同', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '021', '业务员寄送材料（车辆抵押）', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '022', '风控审核收件（车辆抵押）', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '023', '风控审核通过（车辆抵押）', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '024', '业务员重寄材料（车辆抵押）', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '025', '银行收件（车辆抵押）', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '026', '提交银行', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`,
+                         `update_datetime`, `remark`, `company_code`, `system_code`)
+VALUES ('1', 'cdbiz_status', '027', '抵押材料已确认提交', 'admin', '2019-05-04 13:58:44', '图片',
+        'CD-HTWT000020', 'CD-HTWT000020');
