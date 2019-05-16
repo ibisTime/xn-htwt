@@ -74,7 +74,7 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
         Long bankFee = AmountUtil.div(amount, (1.0 + loanProduct.getPreRate()));
         data.setShouldAmount(bankFee + carInfo.getAuthFee()
                 + carInfo.getGpsFee() + carInfo.getMonthDeposit()
-                + carInfo.getCompanyFee() + carInfo.getTeamFee());
+                + carInfo.getCompanyFee() + carInfo.getOtherFee());
         data.setRealAmount(0L);
         data.setIsSettled(EBoolean.NO.getCode());
         data.setUpdater(operator);

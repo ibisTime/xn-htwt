@@ -126,6 +126,9 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
         //还款业务
         repayBiz.setFirstRepayAmount(StringValidater.toLong(req.getRepayFirstMonthAmount()));
+        repayBiz.setFirstRepayDatetime(DateUtil.strToDate(req.getRepayFirstMonthDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        repayBiz.setMonthDatetime(StringValidater.toInteger(req.getRepayBankDate()));
         repayBiz.setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
         repayBiz.setBankFkDatetime(
                 DateUtil.strToDate(req.getBankFkDate(), DateUtil.FRONT_DATE_FORMAT_STRING));

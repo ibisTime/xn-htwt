@@ -682,6 +682,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void confirmArchive(String code, String operator,
             String enterLocation) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
@@ -707,7 +708,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // budgetOrder, userId, bankcardCode, operator);
 
         // 自动生成还款计划
-//        repayPlanBO.genereateNewRepayPlan(repayBiz);
+        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 更新业务状态
         cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),
