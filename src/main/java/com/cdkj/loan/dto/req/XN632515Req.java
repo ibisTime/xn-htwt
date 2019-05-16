@@ -181,4 +181,6 @@ public class XN632515Req extends APageReq {
     // 申请时间止
     private Date applyDatetimeEnd;
 
+    private String userName;
+
 }
