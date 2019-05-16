@@ -3,6 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 人工确认还款
@@ -13,8 +14,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @Data
 public class XN630530Req {
 
-    @NotBlank
-    private List<String> code;// 还款计划编号
+    @NotEmpty
+    private List<String> codeList;// 还款计划编号
 
+    // 操作人
+    @NotBlank
+    private String operator;
 
 }

@@ -8,11 +8,11 @@
  */
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IRemindLogAO;
+import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN630531Req;
+import com.cdkj.loan.dto.req.XN630530Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -26,17 +26,17 @@ import com.cdkj.loan.spring.SpringContextHolder;
  */
 public class XN630530 extends AProcessor {
 
-    private IRemindLogAO remindLogAO = SpringContextHolder
-            .getBean(IRemindLogAO.class);
+    private IRepayPlanAO repayPlanAO = SpringContextHolder
+            .getBean(IRepayPlanAO.class);
 
-    private XN630531Req req = null;
+    private XN630530Req req = null;
 
     /**
      * @see com.cdkj.loan.api.IProcessor#doBusiness()
      */
     @Override
     public Object doBusiness() throws BizException {
-        remindLogAO.collect(req.getCode(), req.getWay());
+        repayPlanAO.alreadyRepay(req);
         return new BooleanRes(true);
     }
 
@@ -46,7 +46,7 @@ public class XN630530 extends AProcessor {
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN630531Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN630530Req.class);
         ObjValidater.validateReq(req);
     }
 

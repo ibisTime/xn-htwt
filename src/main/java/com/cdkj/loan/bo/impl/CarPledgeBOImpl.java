@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -19,6 +13,10 @@ import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
@@ -36,7 +34,7 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
         CarPledge carPledge = new CarPledge();
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.CAR_PLEDGE
-            .getCode());
+                .getCode());
         carPledge.setCode(code);
         carPledge.setBizCode(bizCode);
         carPledge.setPledgeUser(pledgeUser);
@@ -56,7 +54,7 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
         CarPledge carPledge = new CarPledge();
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.CAR_PLEDGE
-            .getCode());
+                .getCode());
         carPledge.setCode(code);
         carPledge.setBizCode(bizCode);
         carPledge.setPledgeUser(pledgeUser);
@@ -94,7 +92,7 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
         carPledge.setCode(code);
         carPledge.setCurNodeCode(nextNodeCode);
         carPledge.setPledgeBankCommitDatetime(DateUtil.strToDate(
-            pledgeBankCommitDatetime, DateUtil.DATA_TIME_PATTERN_1));
+                pledgeBankCommitDatetime, DateUtil.DATA_TIME_PATTERN_1));
         carPledge.setPledgeBankCommitNote(pledgeBankCommitNote);
 
         carPledgeDAO.updateCommitBank(carPledge);
@@ -153,6 +151,11 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
     @Override
     public void refreshSupplementNote(CarPledge condition) {
         carPledgeDAO.updateSupplementNote(condition);
+    }
+
+    @Override
+    public void refreshCarPledge(CarPledge carPledge) {
+        carPledgeDAO.updateCarPledge(carPledge);
     }
 
 }

@@ -16,4 +16,6 @@ public interface ICarPledgeDAO extends IBaseDAO<CarPledge> {
     int updateConfirmDone(CarPledge carPledge);
 
     void updateSupplementNote(CarPledge condition);
+
+    void updateCarPledge(CarPledge carPledge);
 }
