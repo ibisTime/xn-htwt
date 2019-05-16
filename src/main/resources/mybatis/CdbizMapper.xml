@@ -218,8 +218,9 @@
             </if>
 
             <if test="userName != null and userName != '' ">
-                AND tcu.user_name = #{userName}
+                AND tcu.user_name like "%"#{userName}"#"
             </if>
+            
         </trim>
     </sql>
 
