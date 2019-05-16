@@ -664,6 +664,9 @@ public class CdbizAOImpl implements ICdbizAO {
             // 更新业务状态
             cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
                     ENode.second_archive.getCode());
+
+            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter, cdbiz.getCode(),
+                    ENode.confirm_archive);
         }
         cdbiz.setEnterLocation(enterLocation);
         cdbizBO.refreshLocation(cdbiz);
@@ -713,6 +716,9 @@ public class CdbizAOImpl implements ICdbizAO {
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER,
                 cdbiz.getCode(), preEnterNodeCode, null, operator);
+
+        bizTaskBO.handlePreBizTask(code, EBizLogType.enter.getCode(), code,
+                ENode.confirm_archive.getCode(), operator);
     }
 
     @Override
