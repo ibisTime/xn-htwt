@@ -71,4 +71,9 @@ public class CarPledgeDAOImpl extends AMybatisTemplate
     public void updateSupplementNote(CarPledge carPledge) {
         super.update(NAMESPACE.concat("update_supplementNote"), carPledge);
     }
+
+    @Override
+    public void updateCarPledge(CarPledge carPledge) {
+        super.update(NAMESPACE.concat("update_carPledge"), carPledge);
+    }
 }

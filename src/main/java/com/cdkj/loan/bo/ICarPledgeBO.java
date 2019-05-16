@@ -1,11 +1,10 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.dto.req.XN632124Req;
 import com.cdkj.loan.dto.req.XN632133Req;
+import java.util.List;
 
 public interface ICarPledgeBO extends IPaginableBO<CarPledge> {
 
@@ -39,4 +38,6 @@ public interface ICarPledgeBO extends IPaginableBO<CarPledge> {
     void removeCarpledge(String bizCode);
 
     void refreshSupplementNote(CarPledge condition);
+
+    void refreshCarPledge(CarPledge carPledge);
 }

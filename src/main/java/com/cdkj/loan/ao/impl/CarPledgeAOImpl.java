@@ -331,6 +331,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             String code = carPledge.getCode();
             EntityUtils.copyData(req, carPledge);
             carPledge.setCode(code);
+            carPledgeBO.refreshCarPledge(carPledge);
         }
 
         // 添加附件

@@ -1,14 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
@@ -24,6 +15,13 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
@@ -66,7 +64,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             data = list.get(0);
         } else {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前还款业务没有" + repayPlanNode.getValue() + "的记录");
+                    "当前还款业务没有" + repayPlanNode.getValue() + "的记录");
         }
         return data;
     }
@@ -126,7 +124,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             int curPeriod = i + 1;
 
             String code = OrderNoGenerater
-                .generate(EGeneratePrefix.REPAY_PLAN.getCode()) + curPeriod;
+                    .generate(EGeneratePrefix.REPAY_PLAN.getCode()) + curPeriod;
 
             Long repayCapital = repayBiz.getMonthAmount();
             if (i == 0) {
@@ -134,8 +132,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             }
 
             Date repayDatetime = getRepayDatetime(
-                repayBiz.getFirstRepayDatetime(), repayBiz.getMonthDatetime(),
-                curPeriod);
+                    repayBiz.getFirstRepayDatetime(), repayBiz.getMonthDatetime(),
+                    curPeriod);
 
             repayPlan.setCode(code);
             repayPlan.setRefType(repayBiz.getRefType());
@@ -148,7 +146,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             repayPlan.setRepayCapital(repayCapital);
             repayPlan.setRepayInterest(0L);
             repayPlan.setRepayAmount(
-                repayPlan.getRepayCapital() + repayPlan.getRepayInterest());
+                    repayPlan.getRepayCapital() + repayPlan.getRepayInterest());
             repayPlan.setPayedAmount(0L);
 
             // 每期应还金额
@@ -160,7 +158,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
             } else if (ERepayBizType.PRODUCT.getCode()
-                .equals(repayBiz.getRefType())) {
+                    .equals(repayBiz.getRefType())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.PRD_TO_REPAY.getCode());
             }
             repayPlan.setTotalFee(0L);
@@ -180,10 +178,10 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
         repayPlan
-            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
+                .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
 
         repayPlan.setOverplusAmount(
-            repayPlan.getOverplusAmount() - realWithholdAmount);
+                repayPlan.getOverplusAmount() - realWithholdAmount);
 
         repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
 
@@ -204,10 +202,10 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
         repayPlan
-            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
+                .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
 
         repayPlan.setOverplusAmount(
-            repayPlan.getOverplusAmount() - realWithholdAmount);
+                repayPlan.getOverplusAmount() - realWithholdAmount);
 
         repayPlanDAO.repayPartSuccess(repayPlan);
     }
@@ -222,13 +220,13 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         Date repayDatetime = null;
         if (curPeriod < 1) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "计算每月还款日期发送错误，还款期数必须大于0");
+                    "计算每月还款日期发送错误，还款期数必须大于0");
         }
         if (curPeriod == 1) {
             repayDatetime = firstRepayDatetime;
         } else {
             repayDatetime = DateUtil.getIntervalDate(firstRepayDatetime,
-                curPeriod - 1, monthDatetime);
+                    curPeriod - 1, monthDatetime);
         }
         return repayDatetime;
     }
@@ -285,7 +283,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         long totalCount = repayPlanDAO.selectTotalCountByRoleCode(condition);
         Page<RepayPlan> page = new Page<RepayPlan>(start, limit, totalCount);
         List<RepayPlan> dataList = repayPlanDAO.selectRepayPlanByRoleCode(
-            condition, page.getStart(), page.getPageSize());
+                condition, page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
     }
@@ -320,9 +318,14 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     @Override
     public void refreshSettleDaily(RepayPlan data, Long repayAmount) {
         data.setRealRepayAmount(repayAmount);
-        data.setOverplusAmount(0l);
+        data.setOverplusAmount(0L);
         data.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
         repayPlanDAO.updateSettleDaily(data);
+    }
+
+    @Override
+    public void alreadyRepay(RepayPlan repayPlan) {
+        repayPlanDAO.updateRepayPlan(repayPlan);
     }
 
 }
