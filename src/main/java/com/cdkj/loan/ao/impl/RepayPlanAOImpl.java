@@ -178,8 +178,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public Object queryCurrentMonthRepayPage(int start, int limit,
             RepayPlan condition) {
-        condition.setRepayStartDatetime(DateUtil.getFirstDay());
-        condition.setRepayEndDatetime(DateUtil.getLastDay());
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
                 condition);
         for (RepayPlan repayPlan : results.getList()) {

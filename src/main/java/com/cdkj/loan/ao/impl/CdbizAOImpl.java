@@ -707,6 +707,14 @@ public class CdbizAOImpl implements ICdbizAO {
         repayBiz.setLoanEndDatetime(addMonths);
         repayBiz.setFxDeposit(0L);
         repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
+
+        if (repayBiz.getFirstRepayDatetime() == null) {
+            Date date = DateUtil.getTomorrowStart(DateUtil.getTodayStart());
+            repayBiz.setFirstRepayDatetime(date);
+        }
+
+        SYSUser user = sysUserBO.getUser(cdbiz.getSaleUserId());
+        repayBiz.setTeamCode(user.getTeamCode());
         repayBizBO.refreshRepayBiz(repayBiz);
 
         // 自动生成还款业务
