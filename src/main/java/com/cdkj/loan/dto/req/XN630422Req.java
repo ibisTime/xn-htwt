@@ -48,7 +48,6 @@ public class XN630422Req {
     @NotBlank
     private String jsqSybx;
 
-    @NotBlank(message = "广告语不能为空")
     private String slogan; // 广告语
 
     @NotBlank(message = "广告图不能为空")
@@ -75,6 +74,8 @@ public class XN630422Req {
     private String remark; // 备注
 
     private String fwAmount;
+
+    private String seriesCode;
 
     private List<String> configList;
 
@@ -276,6 +277,14 @@ public class XN630422Req {
 
     public void setPicNumber(String picNumber) {
         this.picNumber = picNumber;
+    }
+
+    public String getSeriesCode() {
+        return seriesCode;
+    }
+
+    public void setSeriesCode(String seriesCode) {
+        this.seriesCode = seriesCode;
     }
 
 }

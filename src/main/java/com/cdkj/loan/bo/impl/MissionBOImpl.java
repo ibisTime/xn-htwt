@@ -96,7 +96,7 @@ public class MissionBOImpl extends PaginableBOImpl<Mission> implements
     public void refreshStatus(Mission mission) {
         mission.setStatus(EMissionStatus.handle.getCode());
         mission.setFinishDatetime(new Date());
-        missionDAO.updateStatus(mission);
+        missionDAO.updateFinish(mission);
     }
 
     @Override

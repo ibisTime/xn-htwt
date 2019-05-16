@@ -45,7 +45,6 @@ public class XN630420Req {
     @NotBlank(message = "首付金额不能为空")
     private String sfAmount; // 首付金额
 
-    @NotBlank
     private String fwAmount;// 服务费
 
     @NotBlank
@@ -54,7 +53,6 @@ public class XN630420Req {
     @NotBlank
     private String jsqSybx;
 
-    @NotBlank(message = "广告语不能为空")
     private String slogan; // 广告语
 
     @NotBlank(message = "广告图不能为空")

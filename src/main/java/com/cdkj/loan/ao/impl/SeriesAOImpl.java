@@ -131,4 +131,10 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setCars(cars);
         series.setCarNumber(Long.valueOf(cars.size()));
     }
+
+    @Override
+    public void dropSeries(String code) {
+        Series series = seriesBO.getSeries(code);
+        seriesBO.removeSeries(series);
+    }
 }
