@@ -80,6 +80,7 @@ import com.cdkj.loan.enums.ELogisticsCurNodeType;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
@@ -664,6 +665,9 @@ public class CdbizAOImpl implements ICdbizAO {
             // 更新业务状态
             cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
                     ENode.second_archive.getCode());
+
+            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter, cdbiz.getCode(),
+                    ENode.confirm_archive);
         }
         cdbiz.setEnterLocation(enterLocation);
         cdbizBO.refreshLocation(cdbiz);
@@ -679,10 +683,10 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void confirmArchive(String code, String operator,
             String enterLocation) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        String preEnterNodeCode = cdbiz.getEnterNodeCode();
         if (!ENode.second_archive.getCode().equals(cdbiz.getEnterNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前状态不是已入档状态，不能确认入档");
@@ -692,11 +696,17 @@ public class CdbizAOImpl implements ICdbizAO {
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
         repayBiz.setBankcardCode(cdbiz.getRepayCardNumber());
         repayBiz.setRestPeriods(repayBiz.getPeriods());
+        repayBiz.setRestAmount(repayBiz.getLoanAmount());
+        repayBiz.setRestTotalCost(0L);
+        repayBiz.setOverdueAmount(0L);
+        repayBiz.setTotalOverdueCount(0);
+        repayBiz.setCurOverdueCount(0);
         Date loanDate = DateUtil.getTodayStart();
         repayBiz.setLoanStartDatetime(loanDate);
         Date addMonths = DateUtils.addMonths(loanDate, repayBiz.getPeriods());
         repayBiz.setLoanEndDatetime(addMonths);
         repayBiz.setFxDeposit(0L);
+        repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
         repayBizBO.refreshRepayBiz(repayBiz);
 
         // 自动生成还款业务
@@ -704,7 +714,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // budgetOrder, userId, bankcardCode, operator);
 
         // 自动生成还款计划
-//        repayPlanBO.genereateNewRepayPlan(repayBiz);
+        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 更新业务状态
         cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),
@@ -712,7 +722,10 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER,
-                cdbiz.getCode(), preEnterNodeCode, null, operator);
+                cdbiz.getCode(), ENode.confirm_archive.getCode(), null, operator);
+
+        bizTaskBO.handlePreBizTask(code, EBizLogType.enter.getCode(), code,
+                ENode.confirm_archive.getCode(), operator);
     }
 
     @Override

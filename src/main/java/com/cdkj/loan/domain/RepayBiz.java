@@ -101,7 +101,7 @@ public class RepayBiz extends ABaseDO {
     // 首期月供金额
     private Long firstRepayAmount;
 
-    // 每期还款日期
+    // 每期还款日期(银行还款日)
     private Integer monthDatetime;
 
     // 每期月供金额
