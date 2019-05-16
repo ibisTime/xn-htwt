@@ -166,9 +166,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 //                            ENode.receive_6);
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_2.getCode())) {
-                    cdbiz.setEnterStatus(ECdbizStatus.D1.getCode());
-                    cdbiz.setEnterNodeCode(ENode.receive_2.getCode());
-                    cdbizBO.refreshCurNodeStatus(cdbiz);
+
+                    cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.D1.getCode(),
+                            ENode.receive_2.getCode());
 
                     // 日志记录
                     sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.LOGISTICS,
