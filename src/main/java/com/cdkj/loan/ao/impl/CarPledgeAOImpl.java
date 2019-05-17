@@ -180,7 +180,9 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
 
         // 修改车辆信息
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
-        EntityUtils.copyData(req, carInfo);
+        carInfo.setCarNumber(req.getCarNumber());
+        carInfo.setCarSettleDatetime(req.getCarSettleDatetime());
+        carInfo.setSettleAddress(req.getSettleAddress());
         carInfoBO.refreshCarInfo(carInfo);
 
         // 添加附件
@@ -196,7 +198,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
                 req.getCarPd());
         attachmentBO.saveAttachment(cdbiz.getCode(), "car_key", null,
                 req.getCarKey());
-        attachmentBO.saveAttachment(cdbiz.getCode(), "green_big_smj", null,
+        attachmentBO.saveAttachment(cdbiz.getCode(), "car_big_smj", null,
                 req.getCarBigSmj());
         attachmentBO.saveAttachment(cdbiz.getCode(), "car_xsz_smj", null,
                 req.getCarXszSmj());

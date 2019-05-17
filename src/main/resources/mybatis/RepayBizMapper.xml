@@ -697,6 +697,7 @@
         ,first_repay_amount = #{firstRepayAmount}
         ,sf_rate = #{sfRate}
         ,ly_deposit = #{lyDeposit}
+        ,cur_node_code = #{curNodeCode}
         WHERE code = #{code}
     </update>
 </mapper>
