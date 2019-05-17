@@ -135,7 +135,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                 if (logistics.getFromNodeCode().equals(ENode.submit_1.getCode())
                         && logistics.getToNodeCode().equals(ENode.receive_approve_1.getCode())) {
-                    if (!ENode.submit_1.getCode().equals(cdbiz.getCurNodeCode())) {
+                    if (!ENode.submit_1.getCode().equals(cdbiz.getCurNodeCode())
+                            && !ENode.re_submit_1.getCode().equals(cdbiz.getCurNodeCode())) {
                         throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                                 "未到银行放款环节，不能发件");
                     }
