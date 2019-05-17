@@ -55,7 +55,7 @@
     </sql>
 
     <sql id="cur_node_condition">
-        <if test="curNodeCodeList != null and curNodeCodeList.size()>0  ">
+        <if test="curNodeCodeList != null and curNodeCodeList.size()>0 ">
             inner join tsys_role_node trn on t.cur_node_code=trn.node_code
         </if>
     </sql>
@@ -218,7 +218,7 @@
             </if>
 
             <if test="userName != null and userName != '' ">
-                AND tcu.user_name like "%"#{userName}"#"
+                AND tcu.user_name like "%"#{userName}"%"
             </if>
             
         </trim>
