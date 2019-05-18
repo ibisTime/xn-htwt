@@ -84,10 +84,11 @@ public class BizTeamAOImpl implements IBizTeamAO {
         if (!req.getCaptain().equals(data.getCaptain())) {
             SYSUser sysUser = sysUserBO.getUser(req.getCaptain());
             // 新团队长不为其他团队成员
-            if (null != sysUser.getTeamCode()
-                    || !req.getCode().equals(sysUser.getTeamCode())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "该用户已入选其他团队");
+            if (null != sysUser.getTeamCode()) {
+                if (!req.getCode().equals(sysUser.getTeamCode())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "该用户已入选其他团队");
+                }
             }
         }
         SYSUser captain = sysUserBO.getUser(req.getCaptain());
