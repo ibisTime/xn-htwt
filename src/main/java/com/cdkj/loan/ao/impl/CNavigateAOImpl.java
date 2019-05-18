@@ -88,22 +88,35 @@ public class CNavigateAOImpl implements ICNavigateAO {
     @Override
     public Paginable<CNavigate> queryCNavigatePage(int start, int limit,
             CNavigate condition) {
+        Paginable<CNavigate> page = cNavigateBO.getPaginable(start, limit,
+            condition);
+        for (CNavigate cNavigate : page.getList()) {
+            init(cNavigate);
+        }
         return cNavigateBO.getPaginable(start, limit, condition);
     }
 
     @Override
     public List<CNavigate> queryCNavigateList(CNavigate condition) {
-        return cNavigateBO.queryCNavigateList(condition);
+        List<CNavigate> cNavigates = cNavigateBO.queryCNavigateList(condition);
+        for (CNavigate cNavigate : cNavigates) {
+            init(cNavigate);
+        }
+        return cNavigates;
     }
 
     @Override
     public CNavigate getCNavigate(String code) {
         CNavigate cNavigate = cNavigateBO.getCNavigate(code);
+        init(cNavigate);
+        return cNavigate;
+    }
+
+    private void init(CNavigate cNavigate) {
         if ("2".equals(cNavigate.getContentType())) {
             Car car = carBO.getCar(cNavigate.getParentCode());
             cNavigate.setBrandCode(car.getBrandCode());
             cNavigate.setSeriesCode(car.getSeriesCode());
         }
-        return cNavigate;
     }
 }

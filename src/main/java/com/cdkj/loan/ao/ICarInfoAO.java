@@ -1,12 +1,13 @@
 package com.cdkj.loan.ao;
 
+import org.springframework.stereotype.Component;
+
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
 import com.cdkj.loan.dto.req.XN632537Req;
-import org.springframework.stereotype.Component;
 
 //CHECK ��鲢��ע�� 
 @Component
@@ -45,6 +46,9 @@ public interface ICarInfoAO {
             String approveNote);
 
     public void financeAudit(XN632143Req req);
+
+    public void headCompanyApprove(String code, String approveResult,
+            String approveNote, String operator);
 
     /**
      * 准入单-贷款信息
