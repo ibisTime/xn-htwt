@@ -2227,6 +2227,7 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('interview','company_contract','公司合同','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('interview','other_video','其他视频','视频',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('interview','advance_fund_amount_pdf','资金划转授权书','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('advance', 'advance_bill_pdf', '垫资水单', '图片', '1','USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('interview','interview_other_pdf','面签其他资料','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua','担保人身份证正面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gua','担保人身份证反面','图片',1,'USYS201800000000001',now());
