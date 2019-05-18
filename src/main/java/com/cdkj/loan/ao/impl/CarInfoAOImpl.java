@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.ICreditUserExtBO;
 import com.cdkj.loan.bo.ILoanProductBO;
+import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepointBO;
@@ -34,6 +35,7 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.CreditUserExt;
 import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.domain.LoanProduct;
+import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
@@ -118,6 +120,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
     @Autowired
     private InvestigateReportBOImpl investigateReportBO;
+
+    @Autowired
+    private INodeBO nodeBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -263,9 +268,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
 
-        if (!ECdbizStatus.A4.getCode().equals(cdbiz.getStatus())) {
+        Node node = nodeBO.getNode(cdbiz.getCurNodeCode());
+
+        if (!ENode.area_approve_budget.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点不是区域经理审核节点，不能操作");
+                    "当前节点不是" + node.getName() + "节点，不能操作");
         }
         if (!ECdbizStatus.B03.getCode().equals(cdbiz.getIntevStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -315,10 +322,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
             String approveNote, String operator) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-
+        Node node = nodeBO.getNode(cdbiz.getCurNodeCode());
         if (!ENode.fk_fir_approve.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "该业务当前状态不是风控一审状态，不能操作");
+                    "该业务当前状态不是" + node.getName() + "状态，不能操作");
         }
 
         // 当前节点
@@ -355,10 +362,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
             String housePicture, String approveResult, String approveNote,
             String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-
+        Node node = nodeBO.getNode(cdbiz.getCurNodeCode());
         if (!ENode.fk_sec_approve.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点不是风控二审节点，不能操作");
+                    "当前节点不是" + node.getName() + "节点，不能操作");
         }
 
         // 当前节点
@@ -404,10 +411,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
     public void riskChargeApprove(String code, String operator,
             String approveResult, String approveNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-
+        Node node = nodeBO.getNode(cdbiz.getCurNodeCode());
         if (!ENode.fk_finish_approve.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点不是风控终审节点，不能操作");
+                    "当前节点不是" + node.getName() + "节点，不能操作");
         }
 
         // 当前节点
@@ -441,9 +448,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
     public void yBizChargeApprove(String code, String operator,
             String approveResult, String approveNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        Node node = nodeBO.getNode(cdbiz.getCurNodeCode());
         if (!ENode.yw_approve_budget.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点不是业务总监审核节点，不能操作");
+                    "当前节点不是" + node.getName() + "节点，不能操作");
         }
         // 之前节点
         String preCurrentNode = cdbiz.getCurNodeCode();
@@ -476,6 +484,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
     @Transactional(rollbackFor = Exception.class)
     public void financeAudit(XN632143Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
+        Node curNode = nodeBO.getNode(cdbiz.getCurNodeCode());
         // 之前节点
         String preCurrentNode = cdbiz.getCurNodeCode();
         String status = null;
@@ -483,7 +492,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
         if (!ENode.cw_approve_budget.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点不是财务审核节点，不能操作");
+                    "当前节点不是" + curNode.getName() + "节点，不能操作");
         }
 
         if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
