@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.bo.IActionBO;
@@ -62,6 +63,7 @@ public class CarAOImpl implements ICarAO {
     @Autowired
     private ICarCarconfigBO carCarconfigBO;
 
+    @Transactional
     @Override
     public String addCar(XN630420Req req) {
         Car car = new Car();
@@ -117,8 +119,10 @@ public class CarAOImpl implements ICarAO {
         String code = carBO.saveCar(car);
 
         // 车型配置
-        for (String configCode : req.getConfigList()) {
-            carCarconfigBO.saveCarCarconfig(code, configCode);
+        if (!req.getConfigList().isEmpty()) {
+            for (String configCode : req.getConfigList()) {
+                carCarconfigBO.saveCarCarconfig(code, configCode);
+            }
         }
         return code;
     }

@@ -116,7 +116,13 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+		UPDATE tht_series SET
+		brand_name=#{name}
+		WHERE brand_code=#{code};
+		UPDATE tht_car SET
+		brand_name=#{name}
+		WHERE brand_code=#{code};
 	</update>
 	
 	<update id="update_brand_up" parameterType="brand">
@@ -138,11 +144,11 @@
 	</update>
 	
 	<delete id="delete_brand" parameterType="brand">
-		DELETE FROM tht_car_carconfig WHERE car_code in (SELECT code FROM tht_car WHERE brand_code={code});
+		DELETE FROM tht_car_carconfig WHERE car_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
 		DELETE FROM tht_car_order WHERE car_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
 		DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
-		DELETE FROM tht_car WHERE code in (SELECT code FROM tht_car WHERE brand_code=#{code}));
-		DELETE FROM tht_series WHERE code in (SELECT code FROM tht_series WHERE brand_code=#{code}));
+		DELETE FROM tht_car WHERE brand_code=#{code};
+		DELETE FROM tht_series WHERE brand_code=#{code};
 		DELETE FROM tht_brand WHERE code=#{code};
 	</delete>
 	

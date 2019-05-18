@@ -3,12 +3,12 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 总公司审核
+ * 预算单-风控专员审核
  * @author: xieyj 
  * @since: 2018年5月29日 下午10:17:30 
  * @history:
  */
-public class XN632121Req {
+public class XN632540Req {
 
     @NotBlank
     private String code;// 预算单编号
