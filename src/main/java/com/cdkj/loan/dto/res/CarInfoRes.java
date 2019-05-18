@@ -56,6 +56,9 @@ public class CarInfoRes {
     // 落户地点
     private String settleAddress;// carInfo
 
+    // 车牌号
+    private String carNumber;
+
     // 车辆落户日期
     private String carSettleDatetime;// carInfo
 
