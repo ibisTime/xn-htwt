@@ -100,48 +100,6 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
-    public String saveBizTaskFirst(String bizCode, EBizLogType bizLogType,
-            String refOrder, ENode preCurNode, ENode curNode) {
-        BizTask data = new BizTask();
-
-        data.setBizCode(bizCode);
-        data.setRefType(bizLogType.getCode());
-        data.setRefOrder(refOrder);
-        data.setRefNode(preCurNode.getCode());
-        data.setStatus(EBizTaskStatus.DONE.getCode());
-
-        String content = "你有新的待" + curNode.getValue() + "(" + bizLogType.getValue() + ")";
-
-        data.setContent(content);
-        data.setCreateDatetime(new Date());
-        data.setFinishDatetime(new Date());
-
-        String code = OrderNoGenerater.generate(EGeneratePrefix.BIZ_TASK
-                .getCode());
-        data.setCode(code);
-        bizTaskDAO.insert(data);
-
-        BizTask bizTask = new BizTask();
-
-        bizTask.setBizCode(bizCode);
-        bizTask.setRefType(bizLogType.getCode());
-        bizTask.setRefOrder(refOrder);
-        bizTask.setRefNode(curNode.getCode());
-        bizTask.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
-
-        String bizTaskContent = "你有新的待" + curNode.getValue() + "(" + bizLogType.getValue() + ")";
-
-        bizTask.setContent(bizTaskContent);
-        bizTask.setCreateDatetime(new Date());
-
-        String bizTaskCode = OrderNoGenerater.generate(EGeneratePrefix.BIZ_TASK
-                .getCode());
-        bizTask.setCode(bizTaskCode);
-        bizTaskDAO.insert(bizTask);
-        return code;
-    }
-
-    @Override
     public void handlePreAndAdd(EBizLogType bizLogType, String refOrder,
             String bizCode, String preNode, String curNode, String userId) {
         handlePreBizTask(bizCode, bizLogType.getCode(), refOrder,

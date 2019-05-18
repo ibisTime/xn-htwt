@@ -1,9 +1,8 @@
 package com.cdkj.loan.enums;
 
+import com.cdkj.loan.exception.BizException;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.cdkj.loan.exception.BizException;
 
 /**
  * 征信节点
@@ -16,7 +15,8 @@ public enum ENode {
 
     // 征信节点
     new_credit("a1", "新录征信资料"), input_credit("a2", "录入征信结果"), approve_credit(
-            "a3", "审核征信"), renew_credit("a1x", "重录征信资料"),
+            "a3", "审核征信"), renew_credit("a1x", "重录征信资料"), assign(
+            "a4", "派单"),
 
     // 准入单节点
     input_budget("b1", "录入准入单资料"), area_approve_budget("b2", "区域总审核准入单"), fk_fir_approve(

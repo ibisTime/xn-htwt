@@ -82,7 +82,6 @@
         ,t.deal_note
         ,t.operate_role
         ,t.operator
-        ,t.operator_name
         ,t.operator_mobile
 
         ,t.start_datetime
