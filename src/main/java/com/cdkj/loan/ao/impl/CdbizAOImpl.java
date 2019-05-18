@@ -628,8 +628,8 @@ public class CdbizAOImpl implements ICdbizAO {
                     approveNote, operator);
 
             // 添加待办事项
-            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
-                    cdbiz.getCode(), ENode.reinput_interview);
+            bizTaskBO.handlePreAndAdd(EBizLogType.INTERVIEW, cdbiz.getCode(), cdbiz.getCode(),
+                    preCurrentNode, ENode.reinput_interview.getCode(), operator);
         }
         cdbiz.setRemark(approveNote);
 
