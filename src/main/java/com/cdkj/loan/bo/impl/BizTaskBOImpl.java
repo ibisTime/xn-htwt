@@ -1,6 +1,7 @@
 package com.cdkj.loan.bo.impl;
 
 import com.cdkj.loan.bo.IBizTaskBO;
+import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.IRoleNodeBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Page;
@@ -9,6 +10,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBizTaskDAO;
 import com.cdkj.loan.domain.BizTask;
+import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.RoleNode;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -36,6 +38,9 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private INodeBO nodeBO;
 
     @Override
     public String saveBizTask(String bizCode, EBizLogType bizLogType,
@@ -87,7 +92,8 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         data.setRefNode(curNode.getCode());
         data.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
 
-        String content = "你有新的待" + curNode.getValue() + "(" + bizLogType.getValue() + ")";
+        Node node = nodeBO.getNode(curNode.getCode());
+        String content = "你有新的待" + node.getName() + "(" + bizLogType.getValue() + ")";
 
         data.setContent(content);
         data.setCreateDatetime(new Date());
@@ -96,48 +102,6 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
                 .getCode());
         data.setCode(code);
         bizTaskDAO.insert(data);
-        return code;
-    }
-
-    @Override
-    public String saveBizTaskFirst(String bizCode, EBizLogType bizLogType,
-            String refOrder, ENode preCurNode, ENode curNode) {
-        BizTask data = new BizTask();
-
-        data.setBizCode(bizCode);
-        data.setRefType(bizLogType.getCode());
-        data.setRefOrder(refOrder);
-        data.setRefNode(preCurNode.getCode());
-        data.setStatus(EBizTaskStatus.DONE.getCode());
-
-        String content = "你有新的待" + curNode.getValue() + "(" + bizLogType.getValue() + ")";
-
-        data.setContent(content);
-        data.setCreateDatetime(new Date());
-        data.setFinishDatetime(new Date());
-
-        String code = OrderNoGenerater.generate(EGeneratePrefix.BIZ_TASK
-                .getCode());
-        data.setCode(code);
-        bizTaskDAO.insert(data);
-
-        BizTask bizTask = new BizTask();
-
-        bizTask.setBizCode(bizCode);
-        bizTask.setRefType(bizLogType.getCode());
-        bizTask.setRefOrder(refOrder);
-        bizTask.setRefNode(curNode.getCode());
-        bizTask.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
-
-        String bizTaskContent = "你有新的待" + curNode.getValue() + "(" + bizLogType.getValue() + ")";
-
-        bizTask.setContent(bizTaskContent);
-        bizTask.setCreateDatetime(new Date());
-
-        String bizTaskCode = OrderNoGenerater.generate(EGeneratePrefix.BIZ_TASK
-                .getCode());
-        bizTask.setCode(bizTaskCode);
-        bizTaskDAO.insert(bizTask);
         return code;
     }
 
@@ -146,6 +110,7 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
             String bizCode, String preNode, String curNode, String userId) {
         handlePreBizTask(bizCode, bizLogType.getCode(), refOrder,
                 preNode, userId);
+
         saveBizTaskNew(bizCode, bizLogType, refOrder, ENode.matchCode(curNode));
 
     }

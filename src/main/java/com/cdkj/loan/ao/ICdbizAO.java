@@ -1,7 +1,5 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632110Req;
@@ -12,9 +10,11 @@ import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
+import com.cdkj.loan.dto.req.XN632134Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
+import java.util.List;
 
 public interface ICdbizAO {
 
@@ -60,7 +60,7 @@ public interface ICdbizAO {
             String approveNote);
 
     // 第一/二次存档
-    void archive(String code, String operator, String enterLocation);
+    void archive(XN632134Req req);
 
     // 制卡申请
     void makeCardApply(String code, String operator, String cardPostAddress,
