@@ -24,7 +24,7 @@ public class XN632510 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         cdbizAO.makeCardApply(req.getCode(), req.getOperator(),
-            req.getCardPostAddress());
+            req.getCardPostAddress(), req.getRedCardPic());
         return new BooleanRes(true);
     }
 

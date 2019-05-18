@@ -63,7 +63,8 @@ public interface ICdbizAO {
     void archive(String code, String operator, String enterLocation);
 
     // 制卡申请
-    void makeCardApply(String code, String operator, String cardPostAddress);
+    void makeCardApply(String code, String operator, String cardPostAddress,
+            String redCardPic);
 
     // 卡号回录
     void inputCardNumber(String code, String cardNumber, String operator);

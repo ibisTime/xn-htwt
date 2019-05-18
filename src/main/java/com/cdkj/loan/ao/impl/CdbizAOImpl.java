@@ -917,7 +917,7 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void makeCardApply(String code, String operator,
-            String cardPostAddress) {
+            String cardPostAddress, String redCardPic) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ECdbizStatus.H1.getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -925,6 +925,8 @@ public class CdbizAOImpl implements ICdbizAO {
         }
         // 录入卡邮寄地址
         cdbizBO.refreshCardAddress(cdbiz, cardPostAddress);
+        // 附件
+        attachmentBO.saveAttachment(code, "red_card_pic", null, redCardPic);
         // 制卡节点
         cdbizBO.refreshMakeCardNode(cdbiz, ENode.input_card_number.getCode());
         // 制卡状态

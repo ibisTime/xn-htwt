@@ -30,6 +30,17 @@ public class XN632510Req {
     @NotBlank
     private String cardPostAddress;
 
+    // 红卡地址
+    private String redCardPic;
+
+    public String getRedCardPic() {
+        return redCardPic;
+    }
+
+    public void setRedCardPic(String redCardPic) {
+        this.redCardPic = redCardPic;
+    }
+
     public String getCode() {
         return code;
     }

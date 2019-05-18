@@ -87,4 +87,5 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
      * 修改入档位置
      */
     void refreshLocation(Cdbiz cdbiz);
+
 }
