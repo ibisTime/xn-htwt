@@ -61,6 +61,28 @@ public class CNavigate extends ABaseDO {
     // 是否前端查询
     private String isFront;
 
+    // 车系编号
+    private String seriesCode;
+
+    // 品牌编号
+    private String brandCode;
+
+    public String getSeriesCode() {
+        return seriesCode;
+    }
+
+    public void setSeriesCode(String seriesCode) {
+        this.seriesCode = seriesCode;
+    }
+
+    public String getBrandCode() {
+        return brandCode;
+    }
+
+    public void setBrandCode(String brandCode) {
+        this.brandCode = brandCode;
+    }
+
     public String getSystemCode() {
         return systemCode;
     }
