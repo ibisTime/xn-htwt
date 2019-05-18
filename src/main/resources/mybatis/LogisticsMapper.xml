@@ -99,8 +99,9 @@
         ,t.filelist
         ,t.status
         ,t.remark
-        FROM
-        tdq_logistics t
+        FROM tdq_logistics t
+        left join tsys_user u on u.user_id = t.user_id
+        inner join tsys_role_node rn on rn.role_code = u.role_code
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">

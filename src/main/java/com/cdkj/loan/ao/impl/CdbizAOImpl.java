@@ -44,6 +44,7 @@ import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.EnterFileList;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
@@ -60,6 +61,7 @@ import com.cdkj.loan.dto.req.XN632119Req;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632131Req;
+import com.cdkj.loan.dto.req.XN632134Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
@@ -637,9 +639,9 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void archive(String code, String operator, String enterLocation) {
+    public void archive(XN632134Req req) {
 
-        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         String preEnterNodeCode = cdbiz.getEnterNodeCode();
         if (!ENode.first_receive_archive.getCode().equals(preEnterNodeCode)
                 && !ENode.second_received_archive.getCode().equals(
@@ -665,17 +667,20 @@ public class CdbizAOImpl implements ICdbizAO {
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
                     cdbiz.getCode(), ENode.confirm_archive);
         }
-        cdbiz.setEnterLocation(enterLocation);
+        cdbiz.setEnterLocation(req.getEnterLocation());
         cdbizBO.refreshLocation(cdbiz);
+
+        // TODO 保存材料清单
+        List<EnterFileList> fileList = req.getFileList();
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(cdbiz.getCode(), EBizLogType.enter,
-                cdbiz.getCode(), preEnterNodeCode, null, operator);
+                cdbiz.getCode(), preEnterNodeCode, null, req.getOperator());
 
         // 处理未处理的待办
         bizTaskBO.handlePreBizTask(cdbiz.getCode(),
                 EBizLogType.enter.getCode(), cdbiz.getCode(), preEnterNodeCode,
-                operator);
+                req.getOperator());
     }
 
     @Override

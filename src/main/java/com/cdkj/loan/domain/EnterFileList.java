@@ -22,7 +22,7 @@ public class EnterFileList extends ABaseDO {
     // 业务编号
     private String bizCode;
 
-    // 内容
+    // 内容（清单编号）
     private String content;
 
     // 份数
