@@ -547,6 +547,20 @@ public class CarInfoAOImpl implements ICarInfoAO {
     public void headCompanyApprove(String code, String approveResult,
             String approveNote, String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ENode.area_approve_budget.getCode().equals(cdbiz.getCurNodeCode())
+                && !ENode.fk_fir_approve.getCode().equals(
+                    cdbiz.getCurNodeCode())
+                && !ENode.fk_sec_approve.getCode().equals(
+                    cdbiz.getCurNodeCode())
+                && !ENode.fk_finish_approve.getCode().equals(
+                    cdbiz.getCurNodeCode())
+                && !ENode.yw_approve_budget.getCode().equals(
+                    cdbiz.getCurNodeCode())
+                && !ENode.cw_approve_budget.getCode().equals(
+                    cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是审核节点，不能操作");
+        }
         // 之前节点
         String preCurrentNode = cdbiz.getCurNodeCode();
         String status = null;
