@@ -99,7 +99,7 @@ public class CNavigateAOImpl implements ICNavigateAO {
     @Override
     public CNavigate getCNavigate(String code) {
         CNavigate cNavigate = cNavigateBO.getCNavigate(code);
-        if ("2" == cNavigate.getContentType()) {
+        if ("2".equals(cNavigate.getContentType())) {
             Car car = carBO.getCar(cNavigate.getParentCode());
             cNavigate.setBrandCode(car.getBrandCode());
             cNavigate.setSeriesCode(car.getSeriesCode());
