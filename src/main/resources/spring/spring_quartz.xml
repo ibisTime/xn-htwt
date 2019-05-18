@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 
-	<context:component-scan base-package="com.cdkj.loan">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-	
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
-       <property name="triggers">  
-           <list>
-           	  <ref bean="doSettleDailyTrigger"/>
-           	  <ref bean="doSettleDailyPuoduct"/>
- 		   </list>  
-       </property>  
-       <property name="autoStartup" value="true"/>  
-    </bean> 
-		
-	<bean id="doSettleDailyTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
-       <property name="jobDetail" ref="doSettleDaily"/>  
-       <property name="cronExpression" value="0 0 00 * * ?"/><!-- 0 0 00 * * ?  每一天0点执行 -->
-	</bean>
-	
-	<bean id="doSettleDaily" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">   
-	        <property name="targetObject" ref="repayPlanAOImpl"/>  
-	        <property name="targetMethod" value="doSettleDaily"/>  
-	        <property name="concurrent" value="true"/>  <!--  是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程-->  
-	</bean>
-	
-	<bean id="doSettleDailyPuoduct" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
-       <property name="jobDetail" ref="doSettleDailyP"/>  
-       <property name="cronExpression" value="0 0 00 * * ?"/><!-- 0 0 00 * * ?  每一天0点执行 -->
-	</bean>
-	
-	<bean id="doSettleDailyP" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">   
-	        <property name="targetObject" ref="repayPlanAOImpl"/>  
-	        <property name="targetMethod" value="doSettleDailyProduct"/>  
-	        <property name="concurrent" value="true"/>  <!--  是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程-->  
-	</bean>
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:component-scan base-package="com.cdkj.loan">
+        <context:exclude-filter type="annotation"
+                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="doSettleDailyTrigger"/>-->
+                <ref bean="doSettleDailyPuoduct"/>
+            </list>
+        </property>
+        <property name="autoStartup" value="true"/>
+    </bean>
+
+    <!--<bean id="doSettleDailyTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  -->
+    <!--<property name="jobDetail" ref="doSettleDaily"/>  -->
+    <!--<property name="cronExpression" value="0 0 00 * * ?"/>&lt;!&ndash; 0 0 00 * * ?  每一天0点执行 &ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="doSettleDaily" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">   -->
+    <!--<property name="targetObject" ref="repayPlanAOImpl"/>  -->
+    <!--<property name="targetMethod" value="doSettleDaily"/>  -->
+    <!--<property name="concurrent" value="true"/>  &lt;!&ndash;  是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程&ndash;&gt;  -->
+    <!--</bean>-->
+
+    <bean id="doSettleDailyPuoduct"
+            class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="doSettleDailyP"/>
+        <property name="cronExpression" value="0 0 00 * * ?"/><!-- 0 0 00 * * ?  每一天0点执行 -->
+    </bean>
+
+    <bean id="doSettleDailyP"
+            class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="repayPlanAOImpl"/>
+        <property name="targetMethod" value="doSettleDailyProduct"/>
+        <property name="concurrent"
+                value="true"/>  <!--  是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程-->
+    </bean>
 </beans>

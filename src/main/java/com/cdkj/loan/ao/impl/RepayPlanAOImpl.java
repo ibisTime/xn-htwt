@@ -403,12 +403,19 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public void alreadyRepay(XN630530Req req) {
         for (String code : req.getCodeList()) {
+            //更新还款计划
             RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
             repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
             repayPlan.setOverdueAmount(0L);
             repayPlan.setOverplusAmount(0L);
             repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
             repayPlanBO.alreadyRepay(repayPlan);
+
+            //更新还款业务
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+            repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
+            repayBiz.setRestAmount(repayBiz.getRestAmount() - repayBiz.getMonthAmount());
+            repayBizBO.refreshRepayBiz(repayBiz);
         }
     }
 
