@@ -1,15 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
 import com.cdkj.loan.ao.ICarInfoAO;
 import com.cdkj.loan.bo.IAdvanceBO;
 import com.cdkj.loan.bo.IAttachmentBO;
@@ -68,6 +58,14 @@ import com.cdkj.loan.enums.EInvestigateReportNode;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class CarInfoAOImpl implements ICarInfoAO {
@@ -133,7 +131,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (!ECdbizStatus.A3.getCode().equals(cdbiz.getStatus())
                 && !ECdbizStatus.A3x.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该业务不处于录入准入单状态，无法录入");
+                    "该业务不处于录入准入单状态，无法录入");
         }
         // 业务信息更新
         cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
@@ -158,9 +156,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // 征信人信息录入
         creditUserExtBO.removeBizUserExt(req.getCode());
         CreditUserExt creditUserExt = EntityUtils.copyData(req,
-            CreditUserExt.class);
+                CreditUserExt.class);
         creditUserExt.setMonthIncome(StringValidater.toLong(req
-            .getMonthIncome()));
+                .getMonthIncome()));
         creditUserExt.setIsSiteProve(req.getIsSelfCompany());
         creditUserExt.setCarType(req.getCarTypeNow());
         creditUserExtBO.saveCreditUserExt(creditUserExt, cdbiz.getCode());
@@ -171,11 +169,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // 抵押
         carPledgeBO.removeCarpledge(req.getCode());
         carPledgeBO.saveCarPledge(req.getCode(), req.getPledgeUser(),
-            req.getPledgeUserIdCard(), req.getPledgeAddress());
+                req.getPledgeUserIdCard(), req.getPledgeAddress());
 
         // 征信人
         List<CreditUser> creditUsers = creditUserBO.queryCreditUserList(req
-            .getCode());
+                .getCode());
         creditUserBO.refreshCreditUsers(creditUsers, req);
 
         String preNodeCode = cdbiz.getCurNodeCode(); // 当前节点
@@ -183,19 +181,19 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
             // 日志记录
             sysBizLogBO.recordCurOperate(req.getCode(),
-                EBizLogType.BUDGET_ORDER, req.getCode(), preNodeCode, null,
-                req.getOperator());
+                    EBizLogType.BUDGET_ORDER, req.getCode(), preNodeCode, null,
+                    req.getOperator());
             // 下一个节点
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
-                .getNextNode();
+                    .getNextNode();
 
             cdbizBO.refreshCurNodeCode(cdbiz, curNodeCode);
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
             // 处理待办事项
             bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER,
-                cdbiz.getCode(), cdbiz.getCode(), preNodeCode, curNodeCode,
-                req.getOperator());
+                    cdbiz.getCode(), cdbiz.getCode(), preNodeCode, curNodeCode,
+                    req.getOperator());
         }
     }
 
@@ -206,7 +204,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (!ECdbizStatus.A3.getCode().equals(cdbiz.getStatus())
                 && !ECdbizStatus.A3x.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该业务不处于录入准入单状态，无法录入");
+                    "该业务不处于录入准入单状态，无法录入");
         }
         // 业务信息更新
         cdbiz.setIsAdvanceFund(req.getIsAdvanceFund());
@@ -222,7 +220,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // 征信人信息录入
         creditUserExtBO.removeBizUserExt(req.getCode());
         CreditUserExt creditUserExt = EntityUtils.copyData(req,
-            CreditUserExt.class);
+                CreditUserExt.class);
 
         creditUserExtBO.saveCreditUserExt(creditUserExt, cdbiz.getCode());
         // 流水录入
@@ -241,25 +239,25 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (EDealType.SEND.getCode().equals(req.getDealType())) {
             // 日志记录
             sysBizLogBO.recordCurOperate(req.getCode(),
-                EBizLogType.BUDGET_ORDER, req.getCode(), preNodeCode, null,
-                req.getOperator());
+                    EBizLogType.BUDGET_ORDER, req.getCode(), preNodeCode, null,
+                    req.getOperator());
             // 下一个节点
             preNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
-                .getNextNode();
+                    .getNextNode();
 
             cdbizBO.refreshCurNodeCode(cdbiz, preNodeCode);
             // 业务状态变化
             cdbizBO.refreshStatus(cdbiz, ECdbizStatus.A4.getCode());
             // 处理待办事项
             bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER,
-                cdbiz.getCode(), cdbiz.getCode(), preNodeCode, preNodeCode,
-                req.getOperator());
+                    cdbiz.getCode(), cdbiz.getCode(), preNodeCode, preNodeCode,
+                    req.getOperator());
         }
         ENode node = ENode.getMap().get(preNodeCode);
 
         // 待办事项
         bizTaskBO.saveBizTask(req.getCode(), EBizLogType.BUDGET_ORDER,
-            req.getCode(), node, null);
+                req.getCode(), node, null);
         return 0;
     }
 
@@ -278,7 +276,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         }
         if (!ECdbizStatus.B03.getCode().equals(cdbiz.getIntevStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "面签流程未走完，不能操作");
+                    "面签流程未走完，不能操作");
         }
 
         // 当前节点
@@ -289,21 +287,21 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A5.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+                    .getNextNode();
         } else {
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+                    .getBackNode();
         }
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(),
-            EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
-            operator);
+                EBizLogType.BUDGET_ORDER, code, preCurrentNode, approveNote,
+                operator);
 
         // 处理前并产生后面的待办事项
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
-            preCurrentNode, curNodeCode, operator);
+                preCurrentNode, curNodeCode, operator);
 
         // 状态更新节点
         cdbiz.setCurNodeCode(curNodeCode);
@@ -337,19 +335,19 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A6.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+                    .getNextNode();
         } else {
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+                    .getBackNode();
         }
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-            preCurrentNode, approveNote, operator);
+                preCurrentNode, approveNote, operator);
         // 完成待办事项并产生下一条
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
-            preCurrentNode, curNodeCode, operator);
+                preCurrentNode, curNodeCode, operator);
 
         // 业务更新状态节点
         cdbiz.setStatus(status);
@@ -377,11 +375,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A7.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+                    .getNextNode();
         } else {
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+                    .getBackNode();
         }
         // 状态节点改变
         cdbiz.setStatus(status);
@@ -391,20 +389,20 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (StringUtils.isNotBlank(carPriceCheckReport)) {
             EAttachName attachName = EAttachName.car_check_reprot;
             attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-                attachName.getValue(), carPriceCheckReport);
+                    attachName.getValue(), carPriceCheckReport);
         }
         if (StringUtils.isNotBlank(housePicture)) {
             EAttachName attachName = EAttachName.house_pic;
             attachmentBO.saveAttachment(cdbiz.getCode(), attachName.getCode(),
-                attachName.getValue(), housePicture);
+                    attachName.getValue(), housePicture);
         }
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-            preCurrentNode, approveNote, operator);
+                preCurrentNode, approveNote, operator);
         // 完成待办事项
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
-            preCurrentNode, curNodeCode, operator);
+                preCurrentNode, curNodeCode, operator);
 
     }
 
@@ -426,11 +424,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A8.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+                    .getNextNode();
         } else {
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+                    .getBackNode();
         }
 
         cdbiz.setStatus(status);
@@ -439,10 +437,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-            preCurrentNode, approveNote, operator);
+                preCurrentNode, approveNote, operator);
         // 完成待办事项并产生下一条
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
-            preCurrentNode, curNodeCode, operator);
+                preCurrentNode, curNodeCode, operator);
     }
 
     @Override
@@ -462,12 +460,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             status = ECdbizStatus.A9.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getNextNode();
+                    .getNextNode();
 
         } else {
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
-                .getBackNode();
+                    .getBackNode();
         }
         cdbiz.setStatus(status);
         cdbiz.setCurNodeCode(curNodeCode);
@@ -475,10 +473,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-            preCurrentNode, approveNote, operator);
+                preCurrentNode, approveNote, operator);
         // 完成待办并产生下一条
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, code, code,
-            preCurrentNode, curNodeCode, operator);
+                preCurrentNode, curNodeCode, operator);
 
     }
 
@@ -499,7 +497,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "制卡流程未走完，不能操作");
+                    "制卡流程未走完，不能操作");
         }
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
 
@@ -518,7 +516,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             }
             // 待办事项
             bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.fbh,
-                req.getCode(), node);
+                    req.getCode(), node);
 
             // 发保合状态节点更新
             cdbiz.setFbhgpsStatus(fbhgpsStatus);
@@ -534,7 +532,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
             bizTaskBO.saveBizTask(req.getCode(), EBizLogType.BUDGET_ORDER,
-                req.getCode(), ENode.getMap().get(preCurrentNode), null);
+                    req.getCode(), ENode.getMap().get(preCurrentNode), null);
         }
 
         cdbiz.setStatus(status);
@@ -543,11 +541,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.BUDGET_ORDER,
-            req.getCode(), preCurrentNode, req.getApproveNote(),
-            req.getOperator());
+                req.getCode(), preCurrentNode, req.getApproveNote(),
+                req.getOperator());
         // 完成待办事项主流程待办
         bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, req.getCode(),
-            req.getCode(), preCurrentNode, curNodeCode, req.getOperator());
+                req.getCode(), preCurrentNode, curNodeCode, req.getOperator());
 
     }
 
@@ -558,27 +556,28 @@ public class CarInfoAOImpl implements ICarInfoAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ENode.headCompanyApprove.getCode().equals(cdbiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是审核节点，不能操作");
+                    "当前节点不是审核节点，不能操作");
         }
         // 之前节点
         String preCurrentNode = cdbiz.getCurNodeCode();
         String status = null;
         String curNodeCode = null;
-        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getIntevStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "面签流程未走完，不能操作");
-        }
-        if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "制卡流程未走完，不能操作");
-        }
 
         // 查找当前节点的最新待办
         BizTask bizTask = bizTaskBO.queryLastBizTask(cdbiz.getCode(), null,
-            null, preCurrentNode);
+                null, preCurrentNode);
         bizTaskBO.handleBizTask(bizTask.getCode(), operator);
 
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
+
+            if (!ECdbizStatus.B03.getCode().equals(cdbiz.getIntevStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "面签流程未走完，不能操作");
+            }
+            if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "制卡流程未走完，不能操作");
+            }
 
             // 主状态
             status = ECdbizStatus.A10.getCode();
@@ -610,7 +609,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
             bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, ENode
-                .getMap().get(preCurrentNode), null);
+                    .getMap().get(preCurrentNode), null);
         }
 
         cdbiz.setStatus(status);
@@ -619,7 +618,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-            preCurrentNode, approveNote, operator);
+                preCurrentNode, approveNote, operator);
     }
 
     @Override
@@ -628,7 +627,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
         if (!ECdbizStatus.A3.getCode().equals(cdbiz.getStatus())
                 && !ECdbizStatus.A3x.getCode().equals(cdbiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该业务不处于录入准入单状态，无法录入");
+                    "该业务不处于录入准入单状态，无法录入");
         }
 
         // 判断主表对应的还款业务是否存在，存在则修改，不存在则新增
@@ -647,22 +646,22 @@ public class CarInfoAOImpl implements ICarInfoAO {
         // 2、非前置产品：(贷款额*(年化利率*3-9)/100)/(1+前置利率)）
         // 公司服务费
         LoanProduct loanProduct = loanProductBO.getLoanProduct(req
-            .getLoanProductCode());
+                .getLoanProductCode());
         Long companyFee;
         if (EBoolean.YES.getCode().equals(loanProduct.getIsPre())) {
             companyFee = AmountUtil.mul(
-                StringValidater.toLong(req.getLoanAmount()),
-                loanProduct.getPreRate());
+                    StringValidater.toLong(req.getLoanAmount()),
+                    loanProduct.getPreRate());
         } else {
             double rate = (loanProduct.getPreRate() * 3 - 9) / 100;
             companyFee = AmountUtil.div(AmountUtil.mul(
-                StringValidater.toLong(req.getLoanAmount()), rate), loanProduct
-                .getPreRate() + 1);
+                    StringValidater.toLong(req.getLoanAmount()), rate), loanProduct
+                    .getPreRate() + 1);
         }
 
         // 银行服务费=贷款金额 * 贷款产品前置利率/ (1 +贷款产品前置利率)；
         Long bankFee = AmountUtil.div(cdbiz.getLoanAmount(),
-            (1.0 + loanProduct.getPreRate()));
+                (1.0 + loanProduct.getPreRate()));
 
         // 判断车辆信息是否存在，存在则修改，不存在则新增
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
@@ -694,13 +693,13 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         attachmentBO.removeByKname(req.getCode(), EAttachName.carPic.getCode());
         attachmentBO.saveAttachment(req.getCode(),
-            EAttachName.carPic.getCode(), EAttachName.carPic.getValue(),
-            req.getCarPic());
+                EAttachName.carPic.getCode(), EAttachName.carPic.getValue(),
+                req.getCarPic());
         attachmentBO.removeByKname(req.getCode(),
-            EAttachName.carHgzPic.getCode());
+                EAttachName.carHgzPic.getCode());
         attachmentBO.saveAttachment(req.getCode(),
-            EAttachName.carHgzPic.getCode(), EAttachName.carHgzPic.getValue(),
-            req.getCarHgzPic());
+                EAttachName.carHgzPic.getCode(), EAttachName.carHgzPic.getValue(),
+                req.getCarHgzPic());
 
         cdbizBO.refreshCdbiz(cdbiz, req);
     }
@@ -718,9 +717,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 creditJour.setCode(OrderNoGenerater.generate("CJ"));
                 EntityUtils.copyData(res, creditJour);
                 creditJour.setDatetimeStart(DateUtil.strToDate(
-                    res.getDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+                        res.getDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
-                    res.getDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+                        res.getDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
                 jourList.add(creditJour);
             }
             creditJourBO.saveCreditJourList(jourList);
@@ -730,7 +729,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
     private void lastApprove(Cdbiz cdbiz, String operator) {
         /**************生成 手续费************/
         BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
-            .getBudgetOrderFeeByBudget(cdbiz.getCode());
+                .getBudgetOrderFeeByBudget(cdbiz.getCode());
         if (budgetOrderFee == null) {
             budgetOrderFeeBO.saveBudgetOrderFee(cdbiz, operator);
         }
@@ -742,7 +741,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
         LoanProduct loanProduct = loanProductBO.getLoanProduct(repayBiz
-            .getLoanProductCode());
+                .getLoanProductCode());
         if (StringUtils.isNotBlank(cdbiz.getTeamCode())) {
             /**************生成返点数据***************/
             Repoint repoint = new Repoint();
@@ -770,12 +769,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
             InvestigateReport report = new InvestigateReport();
             report.setBudgetOrderCode(cdbiz.getCode());
             List<InvestigateReport> reportList = investigateReportBO
-                .queryInvestigateReportList(report);
+                    .queryInvestigateReportList(report);
             if (CollectionUtils.isEmpty(reportList)) {
 
                 // 申请人
                 CreditUser applyUser = creditUserBO.getCreditUserByBizCode(
-                    cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
+                        cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
 
                 InvestigateReport investigateReport = new InvestigateReport();
                 investigateReport.setBudgetOrderCode(cdbiz.getCode());
@@ -788,7 +787,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 investigateReport.setLoanBank(cdbiz.getLoanBank());
                 investigateReport.setLoanAmount(cdbiz.getLoanAmount());
                 investigateReport.setLoanPeriod(repayBiz.getPeriods()
-                    .toString());
+                        .toString());
                 investigateReport.setIsAdvanceFund(cdbiz.getIsAdvanceFund());
                 investigateReport.setSaleUserId(cdbiz.getSaleUserId());
                 String gender = applyUser.getGender();
@@ -838,69 +837,69 @@ public class CarInfoAOImpl implements ICarInfoAO {
                         + applyUser.getNowPostCode() + ", " + "借款人无重大疾病，身体健康";
                 investigateReport.setCustomerInformation(customerInformation);
                 investigateReport.setBankCreditResultRemark(applyUser
-                    .getBankCreditResultRemark());
+                        .getBankCreditResultRemark());
 
                 // 流水
                 CreditJour creditJour = creditJourBO.getCreditJourByCondition(
-                    cdbiz.getCode(), applyUser.getCode());
+                        cdbiz.getCode(), applyUser.getCode());
 
                 if (creditJour != null) {
                     investigateReport.setJourDatetimeStart(creditJour
-                        .getDatetimeStart());
+                            .getDatetimeStart());
                     investigateReport.setJourDatetimeEnd(creditJour
-                        .getDatetimeEnd());
+                            .getDatetimeEnd());
 
                     investigateReport.setJourInterest1(creditJour
-                        .getJourInterest1().toString());
+                            .getJourInterest1().toString());
                     investigateReport.setJourInterest2(creditJour
-                        .getJourInterest2().toString());
+                            .getJourInterest2().toString());
                     investigateReport.setInterest1(creditJour.getInterest1()
-                        .longValue());
+                            .longValue());
                     investigateReport.setInterest2(creditJour.getInterest2()
-                        .longValue());
+                            .longValue());
                     investigateReport.setJourInterest1(creditJour
-                        .getJourInterest1().toString());
+                            .getJourInterest1().toString());
                     investigateReport.setJourInterest2(creditJour
-                        .getJourInterest2().toString());
+                            .getJourInterest2().toString());
                     investigateReport.setInterest1(creditJour.getInterest1()
-                        .longValue());
+                            .longValue());
                     investigateReport.setInterest2(creditJour.getInterest2()
-                        .longValue());
+                            .longValue());
 
                     investigateReport.setJourIncome(creditJour.getIncome()
-                        .longValue());
+                            .longValue());
                     investigateReport.setJourExpend(creditJour.getExpend()
-                        .longValue());
+                            .longValue());
                     investigateReport.setJourBalance(creditJour.getBalance()
-                        .longValue());
+                            .longValue());
                     investigateReport.setJourMonthIncome(creditJour
-                        .getMonthIncome().longValue());
+                            .getMonthIncome().longValue());
                     investigateReport.setJourMonthExpend(creditJour
-                        .getMonthExpend().longValue());
+                            .getMonthExpend().longValue());
                     investigateReport.setJourPic(creditJour.getPic());
                     investigateReport.setJourRemark(creditJour.getRemark());
 
                     investigateReport.setJourIncome(creditJour.getIncome()
-                        .longValue());
+                            .longValue());
                     investigateReport.setJourExpend(creditJour.getExpend()
-                        .longValue());
+                            .longValue());
                     investigateReport.setJourBalance(creditJour.getBalance()
-                        .longValue());
+                            .longValue());
                     investigateReport.setJourMonthIncome(creditJour
-                        .getMonthIncome().longValue());
+                            .getMonthIncome().longValue());
                     investigateReport.setJourMonthExpend(creditJour
-                        .getMonthExpend().longValue());
+                            .getMonthExpend().longValue());
                     investigateReport.setJourPic(creditJour.getPic());
                     investigateReport.setJourRemark(creditJour.getRemark());
                 }
                 // 家纺照片
                 Attachment housePicture = attachmentBO.getAttachment(
-                    cdbiz.getCode(), "credit_user_ext", "house_picture_apply");
+                        cdbiz.getCode(), "credit_user_ext", "house_picture_apply");
                 investigateReport.setHousePicture(housePicture.getUrl());
 
                 // 车辆信息
                 CarInfo carInfo = carInfoBO
-                    .getCarInfoByBizCode(cdbiz.getCode());
+                        .getCarInfoByBizCode(cdbiz.getCode());
 
                 String basicsInformation = "品牌：" + carInfo.getCarBrand()
                         + ",车系：" + carInfo.getCarSeries() + ",车型："
@@ -909,14 +908,14 @@ public class CarInfoAOImpl implements ICarInfoAO {
                         / 1000 + "," + "落户地点：" + carInfo.getSettleAddress();
                 investigateReport.setBasicsInformation(basicsInformation);
                 investigateReport
-                    .setCurNodeCode(EInvestigateReportNode.COMMIT_APPLY
-                        .getCode());
+                        .setCurNodeCode(EInvestigateReportNode.COMMIT_APPLY
+                                .getCode());
                 String irCode = investigateReportBO
-                    .saveInvestigateReport(investigateReport);
+                        .saveInvestigateReport(investigateReport);
                 // 日志记录
                 sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(),
-                    EBizLogType.INVESTIGATEREPORT, irCode,
-                    investigateReport.getCurNodeCode(), null, operator);
+                        EBizLogType.INVESTIGATEREPORT, irCode,
+                        investigateReport.getCurNodeCode(), null, operator);
             }
             /*************生成调查报告****************/
         }
