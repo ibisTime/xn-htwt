@@ -1,7 +1,9 @@
 package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 车辆信息
@@ -64,10 +66,10 @@ public class CarInfo extends ABaseDO {
     private String evaluateColumn;
 
     // 保单日期
-    private String policyDatetime;
+    private Date policyDatetime;
 
     // 保单到期日
-    private String policyDueDate;
+    private Date policyDueDate;
 
     // 汽车经销商编号
     private String carDealerCode;
@@ -127,7 +129,8 @@ public class CarInfo extends ABaseDO {
     private String carNumber;
 
     // 车辆落户日期
-    private String carSettleDatetime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date carSettleDatetime;
 
     // 落户地点
     private String settleAddress;

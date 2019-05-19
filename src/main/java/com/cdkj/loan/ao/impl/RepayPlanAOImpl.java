@@ -414,7 +414,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             //更新还款业务
             RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
             repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
-            repayBiz.setRestAmount(repayBiz.getRestAmount() - repayBiz.getMonthAmount());
+            //如果是第一期，减去首期月供
+            if (repayPlan.getCurPeriods() == 1) {
+                repayBiz.setRestAmount(repayBiz.getRestAmount() - repayBiz.getFirstRepayAmount());
+            } else {
+                repayBiz.setRestAmount(repayBiz.getRestAmount() - repayBiz.getMonthAmount());
+            }
             repayBizBO.refreshRepayBiz(repayBiz);
         }
     }

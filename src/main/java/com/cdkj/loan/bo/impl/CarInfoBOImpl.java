@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICarInfoDAO;
@@ -181,8 +182,8 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         CarInfo carInfo = new CarInfo();
 
         carInfo.setBizCode(bizCode);
-        carInfo.setPolicyDatetime(policyDatetime);
-        carInfo.setPolicyDueDate(policyDueDate);
+        carInfo.setPolicyDatetime(DateUtil.strToDate(policyDatetime, DateUtil.DATA_TIME_PATTERN_1));
+        carInfo.setPolicyDueDate(DateUtil.strToDate(policyDueDate, DateUtil.DATA_TIME_PATTERN_1));
 
         carInfoDAO.updateEntryFbhInfo(carInfo);
     }

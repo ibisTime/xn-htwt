@@ -1,5 +1,6 @@
 package com.cdkj.loan.dto.res;
 
+import java.util.Date;
 import lombok.Data;
 
 /**
@@ -60,13 +61,13 @@ public class CarInfoRes {
     private String carNumber;
 
     // 车辆落户日期
-    private String carSettleDatetime;// carInfo
+    private Date carSettleDatetime;// carInfo
 
     // 保单日期
-    private String policyDatetime;
+    private Date policyDatetime;
 
     // 保单到期日
-    private String policyDueDate;
+    private Date policyDueDate;
 
     // 车辆照片
     private String carPic;

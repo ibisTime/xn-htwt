@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.CarPledge;
@@ -181,7 +182,8 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         // 修改车辆信息
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
         carInfo.setCarNumber(req.getCarNumber());
-        carInfo.setCarSettleDatetime(req.getCarSettleDatetime());
+        carInfo.setCarSettleDatetime(
+                DateUtil.strToDate(req.getCarSettleDatetime(), DateUtil.DATA_TIME_PATTERN_1));
         carInfo.setSettleAddress(req.getSettleAddress());
         carInfoBO.refreshCarInfo(carInfo);
 
