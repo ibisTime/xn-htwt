@@ -135,6 +135,46 @@ SET `name`='确认还款管理'
 WHERE `code` = 'SM201805081056379762242';
 
 
+UPDATE `test_xn_htwt`.`tsys_dict`
+SET `dkey`='a'
+WHERE `id` = '860';
+UPDATE `tsys_dict`
+SET `dkey`='b'
+WHERE `id` = '861';
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`) VALUES ('1', 'node_type', 'b0', '面签',
+                                                                'admin', '2019-05-04 13:58:44',
+                                                                'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`) VALUES ('1', 'node_type', 'c', '发保合',
+                                                                'admin', '2019-05-04 13:58:44',
+                                                                'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`) VALUES ('1', 'node_type', 'd', 'gps安装',
+                                                                'admin', '2019-05-04 13:58:44',
+                                                                'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`) VALUES ('1', 'node_type', 'e', '银行放款',
+                                                                'admin', '2019-05-04 13:58:44',
+                                                                'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`) VALUES ('1', 'node_type', 'f', '车辆抵押',
+                                                                'admin', '2019-05-04 13:58:44',
+                                                                'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`) VALUES ('1', 'node_type', 'g', '财务垫资',
+                                                                'admin', '2019-05-04 13:58:44',
+                                                                'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`) VALUES ('1', 'node_type', 'h', '制卡',
+                                                                'admin', '2019-05-04 13:58:44',
+                                                                'CD-HTWT000020', 'CD-HTWT000020');
+UPDATE `tsys_dict`
+SET `company_code`='CD-HTWT000020',
+    `system_code`='CD-HTWT000020'
+WHERE `id` = '953';
+
+
 
 INSERT INTO `tdq_file_list` (`category`, `kname`, `vname`, `attach_type`, `number`, `updater`,
                              `update_datetime`)

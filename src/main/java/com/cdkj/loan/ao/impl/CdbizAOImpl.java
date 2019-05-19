@@ -695,6 +695,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 绑定用户银行卡
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
+        repayBiz.setLoanBank(cdbiz.getLoanBank());
         repayBiz.setBankcardCode(cdbiz.getRepayCardNumber());
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         repayBiz.setRestAmount(repayBiz.getLoanAmount());
