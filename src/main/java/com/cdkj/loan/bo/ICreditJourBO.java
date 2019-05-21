@@ -25,7 +25,7 @@ public interface ICreditJourBO extends IPaginableBO<CreditJour> {
 
     List<CreditJour> querCreditJoursByBizCode(String bizCode);
 
-    CreditJour getCreditJourByCondition(String bizCode, String creditUserCode);
+    List<CreditJour> getCreditJourByCondition(String bizCode, String creditUserCode);
 
     /**
      * 批量新增

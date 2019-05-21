@@ -213,10 +213,16 @@
                     #{item}
                 </foreach>)
             </if>
-            <if test="roleCode != null and roleCode != '' ">
+            <if test="roleCode != null and roleCode != '' and
+            ((curNodeCodeList != null and curNodeCodeList.size() > 0 )
+             or (intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0)
+             or (makeCardNodeList != null and makeCardNodeList.size() > 0)
+             or (fbhgpsNodeList != null and fbhgpsNodeList.size() > 0)
+             or (enterNodeCodeList != null and enterNodeCodeList.size() > 0)
+             or (cundangStatusList != null and cundangStatusList.size() > 0)
+             or (cancelNodeCodeList != null and cancelNodeCodeList.size() > 0))">
                 AND trn.role_code = #{roleCode}
             </if>
-
             <if test="userName != null and userName != '' ">
                 AND tcu.user_name like "%"#{userName}"%"
             </if>

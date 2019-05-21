@@ -33,3 +33,35 @@ CREATE TABLE `tb_insurance_company`
 
 INSERT INTO `tb_insurance_company`
 VALUES ('IC201809191430007283689', '太平洋保险', '赵菊', '15122222223', '测试');
+
+
+UPDATE `tsys_menu`
+SET `order_no`='3'
+WHERE `code` = 'SM201805291034405409203';
+UPDATE `tsys_menu`
+SET `order_no`='4'
+WHERE `code` = 'SM201805291035342036590';
+UPDATE `tsys_menu`
+SET `order_no`='5'
+WHERE `code` = 'SM201804271806010518814';
+UPDATE `tsys_menu`
+SET `order_no`='6'
+WHERE `code` = 'SM201804271806335389896';
+UPDATE `tsys_menu`
+SET `order_no`='7'
+WHERE `code` = 'SM201806092050389193535';
+UPDATE `tsys_menu`
+SET `order_no`='8'
+WHERE `code` = 'SM201805291030239333610';
+UPDATE `tsys_menu`
+SET `order_no`='11'
+WHERE `code` = 'SM201806092144096223377';
+UPDATE `tsys_menu`
+SET `order_no`='10'
+WHERE `code` = 'SM201805291032194718466';
+UPDATE `tsys_menu`
+SET `order_no`='12'
+WHERE `code` = 'SM201805291033129682833';
+UPDATE `tsys_menu`
+SET `order_no`='13'
+WHERE `code` = 'SM201805291037383171866';

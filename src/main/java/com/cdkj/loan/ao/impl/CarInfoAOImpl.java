@@ -54,6 +54,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.ECreditJourType;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EInvestigateReportNode;
@@ -852,57 +853,95 @@ public class CarInfoAOImpl implements ICarInfoAO {
                         .getBankCreditResultRemark());
 
                 // 流水
-                CreditJour creditJour = creditJourBO.getCreditJourByCondition(
+                List<CreditJour> creditJourList = creditJourBO.getCreditJourByCondition(
                         cdbiz.getCode(), applyUser.getCode());
 
-                if (creditJour != null) {
-                    investigateReport.setJourDatetimeStart(creditJour
-                            .getDatetimeStart());
-                    investigateReport.setJourDatetimeEnd(creditJour
-                            .getDatetimeEnd());
+                if (!CollectionUtils.isEmpty(creditJourList)) {
+                    for (CreditJour creditJour : creditJourList) {
+                        if (ECreditJourType.wx.getCode().equals(creditJour.getType())) {
+                            investigateReport.setWxJourDatetimeStart(creditJour
+                                    .getDatetimeStart());
+                            investigateReport.setWxJourDatetimeEnd(creditJour
+                                    .getDatetimeEnd());
 
-                    investigateReport.setJourInterest1(creditJour
-                            .getJourInterest1().toString());
-                    investigateReport.setJourInterest2(creditJour
-                            .getJourInterest2().toString());
-                    investigateReport.setInterest1(creditJour.getInterest1()
-                            .longValue());
-                    investigateReport.setInterest2(creditJour.getInterest2()
-                            .longValue());
-                    investigateReport.setJourInterest1(creditJour
-                            .getJourInterest1().toString());
-                    investigateReport.setJourInterest2(creditJour
-                            .getJourInterest2().toString());
-                    investigateReport.setInterest1(creditJour.getInterest1()
-                            .longValue());
-                    investigateReport.setInterest2(creditJour.getInterest2()
-                            .longValue());
+                            investigateReport.setWxJourInterest1(creditJour
+                                    .getJourInterest1().toString());
+                            investigateReport.setWxJourInterest2(creditJour
+                                    .getJourInterest2().toString());
+                            investigateReport.setWxInterest1(creditJour.getInterest1()
+                                    .longValue());
+                            investigateReport.setWxInterest2(creditJour.getInterest2()
+                                    .longValue());
 
-                    investigateReport.setJourIncome(creditJour.getIncome()
-                            .longValue());
-                    investigateReport.setJourExpend(creditJour.getExpend()
-                            .longValue());
-                    investigateReport.setJourBalance(creditJour.getBalance()
-                            .longValue());
-                    investigateReport.setJourMonthIncome(creditJour
-                            .getMonthIncome().longValue());
-                    investigateReport.setJourMonthExpend(creditJour
-                            .getMonthExpend().longValue());
-                    investigateReport.setJourPic(creditJour.getPic());
-                    investigateReport.setJourRemark(creditJour.getRemark());
+                            investigateReport.setWxJourIncome(creditJour.getIncome()
+                                    .longValue());
+                            investigateReport.setWxJourExpend(creditJour.getExpend()
+                                    .longValue());
+                            investigateReport.setWxJourBalance(creditJour.getBalance()
+                                    .longValue());
+                            investigateReport.setWxJourMonthIncome(creditJour
+                                    .getMonthIncome().longValue());
+                            investigateReport.setWxJourMonthExpend(creditJour
+                                    .getMonthExpend().longValue());
+                            investigateReport.setWxJourPic(creditJour.getPic());
+                            investigateReport.setWxJourRemark(creditJour.getRemark());
+                        } else if (ECreditJourType.zfb.getCode().equals(creditJour.getType())) {
+                            investigateReport.setZfbJourDatetimeStart(creditJour
+                                    .getDatetimeStart());
+                            investigateReport.setZfbJourDatetimeEnd(creditJour
+                                    .getDatetimeEnd());
 
-                    investigateReport.setJourIncome(creditJour.getIncome()
-                            .longValue());
-                    investigateReport.setJourExpend(creditJour.getExpend()
-                            .longValue());
-                    investigateReport.setJourBalance(creditJour.getBalance()
-                            .longValue());
-                    investigateReport.setJourMonthIncome(creditJour
-                            .getMonthIncome().longValue());
-                    investigateReport.setJourMonthExpend(creditJour
-                            .getMonthExpend().longValue());
-                    investigateReport.setJourPic(creditJour.getPic());
-                    investigateReport.setJourRemark(creditJour.getRemark());
+                            investigateReport.setZfbJourInterest1(creditJour
+                                    .getJourInterest1().toString());
+                            investigateReport.setZfbJourInterest2(creditJour
+                                    .getJourInterest2().toString());
+                            investigateReport.setZfbInterest1(creditJour.getInterest1()
+                                    .longValue());
+                            investigateReport.setZfbInterest2(creditJour.getInterest2()
+                                    .longValue());
+
+                            investigateReport.setZfbJourIncome(creditJour.getIncome()
+                                    .longValue());
+                            investigateReport.setZfbJourExpend(creditJour.getExpend()
+                                    .longValue());
+                            investigateReport.setZfbJourBalance(creditJour.getBalance()
+                                    .longValue());
+                            investigateReport.setZfbJourMonthIncome(creditJour
+                                    .getMonthIncome().longValue());
+                            investigateReport.setZfbJourMonthExpend(creditJour
+                                    .getMonthExpend().longValue());
+                            investigateReport.setZfbJourPic(creditJour.getPic());
+                            investigateReport.setZfbJourRemark(creditJour.getRemark());
+                        } else {
+                            investigateReport.setJourDatetimeStart(creditJour
+                                    .getDatetimeStart());
+                            investigateReport.setJourDatetimeEnd(creditJour
+                                    .getDatetimeEnd());
+
+                            investigateReport.setJourInterest1(creditJour
+                                    .getJourInterest1().toString());
+                            investigateReport.setJourInterest2(creditJour
+                                    .getJourInterest2().toString());
+                            investigateReport.setInterest1(creditJour.getInterest1()
+                                    .longValue());
+                            investigateReport.setInterest2(creditJour.getInterest2()
+                                    .longValue());
+
+                            investigateReport.setJourIncome(creditJour.getIncome()
+                                    .longValue());
+                            investigateReport.setJourExpend(creditJour.getExpend()
+                                    .longValue());
+                            investigateReport.setJourBalance(creditJour.getBalance()
+                                    .longValue());
+                            investigateReport.setJourMonthIncome(creditJour
+                                    .getMonthIncome().longValue());
+                            investigateReport.setJourMonthExpend(creditJour
+                                    .getMonthExpend().longValue());
+                            investigateReport.setJourPic(creditJour.getPic());
+                            investigateReport.setJourRemark(creditJour.getRemark());
+
+                        }
+                    }
                 }
                 // 家纺照片
                 Attachment housePicture = attachmentBO.getAttachment(

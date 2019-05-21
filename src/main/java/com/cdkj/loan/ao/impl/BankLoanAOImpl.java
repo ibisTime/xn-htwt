@@ -54,7 +54,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
             String bankCommitDatetime, String bankCommitNote) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(bizCode);
         String preCurNodeCode = cdbiz.getCurNodeCode();
-        if (EBoolean.YES.getCode().equals(cdbiz.getCancelStatus())) {
+        if (ECdbizStatus.G4.getCode().equals(cdbiz.getCancelStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前预算单已作废，不能操作");
         }
