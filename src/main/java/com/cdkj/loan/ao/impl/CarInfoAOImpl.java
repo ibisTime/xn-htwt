@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.impl.InvestigateReportBOImpl;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
@@ -39,6 +40,7 @@ import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632500Req;
@@ -123,6 +125,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
     @Autowired
     private INodeBO nodeBO;
+
+    @Autowired
+    private ISYSDictBO sysDictBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -274,10 +279,6 @@ public class CarInfoAOImpl implements ICarInfoAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前节点不是"
                     + node.getName() + "节点，不能操作");
         }
-        if (!ECdbizStatus.B03.getCode().equals(cdbiz.getIntevStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "面签流程未走完，不能操作");
-        }
 
         // 当前节点
         String preCurrentNode = cdbiz.getCurNodeCode();
@@ -285,6 +286,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
         String status;
         String curNodeCode;
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
+
+            if (!ECdbizStatus.B03.getCode().equals(cdbiz.getIntevStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "面签流程未走完，不能操作");
+            }
+
             status = ECdbizStatus.A5.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getNextNode();
@@ -796,34 +803,39 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 } else {
                     gender = "女";
                 }
-                String education = applyUser.getEducation();
-                if (education.equals("1")) {
-                    education = "博士及以上";
-                } else if (education.equals("2")) {
-                    education = "硕士";
-                } else if (education.equals("3")) {
-                    education = "大学本科";
-                } else if (education.equals("4")) {
-                    education = "大学专科";
+                // 学历
+                String education;
+                SYSDict educationDict = sysDictBO
+                        .getSYSDictByParentKeyAndDkey("education", applyUser.getEducation());
+                if (educationDict != null) {
+                    education = educationDict.getDvalue();
                 } else {
-                    education = "高中及以下";
+                    education = "无";
                 }
-                String marryState = applyUser.getMarryState();
-                if (marryState.equals("1")) {
-                    marryState = "未婚";
-                } else if (marryState.equals("2")) {
-                    marryState = "已婚";
-                } else if (marryState.equals("3")) {
-                    marryState = "离异";
+                // 婚姻状况
+                String marryState;
+                SYSDict marryStateDict = sysDictBO
+                        .getSYSDictByParentKeyAndDkey("marry_state", applyUser.getMarryState());
+                if (educationDict != null) {
+                    marryState = marryStateDict.getDvalue();
                 } else {
-                    marryState = "丧偶";
+                    marryState = "无";
+                }
+                // 政治面貌
+                String politics;
+                SYSDict politicsDict = sysDictBO
+                        .getSYSDictByParentKeyAndDkey("politics", applyUser.getMarryState());
+                if (politicsDict != null) {
+                    politics = politicsDict.getDvalue();
+                } else {
+                    politics = "无";
                 }
                 String customerInformation = "借款人:" + applyUser.getUserName()
                         + ", " + applyUser.getAge() + "岁, " + marryState + ", "
                         + "性别：" + gender + ", " + "学历：" + education + ", "
                         + "民族：" + applyUser.getNation() + ", " + "身份证号："
                         + applyUser.getIdNo() + ", " + "政治面貌："
-                        + applyUser.getPolitical() + ", " + "户口所在地："
+                        + politics + ", " + "户口所在地："
                         + applyUser.getBirthAddressProvince()
                         + applyUser.getBirthAddressCity()
                         + applyUser.getBirthAddressArea()
@@ -902,10 +914,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
                         .getCarInfoByBizCode(cdbiz.getCode());
 
                 String basicsInformation = "品牌：" + carInfo.getCarBrand()
-                        + ",车系：" + carInfo.getCarSeries() + ",车型："
-                        + carInfo.getCarModel() + "," + "新手指导价"
+                        + ", 车系：" + carInfo.getCarSeries() + ", 车型："
+                        + carInfo.getCarModel() + ", 新手指导价:"
                         + StringValidater.toLong(carInfo.getOriginalPrice())
-                        / 1000 + "," + "落户地点：" + carInfo.getSettleAddress();
+                        / 1000 + ", 落户地点：" + carInfo.getSettleAddress();
                 investigateReport.setBasicsInformation(basicsInformation);
                 investigateReport
                         .setCurNodeCode(EInvestigateReportNode.COMMIT_APPLY

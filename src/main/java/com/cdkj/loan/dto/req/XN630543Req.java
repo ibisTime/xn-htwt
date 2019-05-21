@@ -8,6 +8,8 @@ public class XN630543Req extends APageReq {
 
     private static final long serialVersionUID = 5066181160930283667L;
 
+    private String repayBizCode;// 还款业务编号
+
     private String userId;// 用户编号
 
     @NotBlank

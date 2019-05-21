@@ -31,6 +31,7 @@ public class XN630543 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(req.getRepayBizCode());
         condition.setUserId(req.getUserId());
         condition.setRefType(req.getRefType());
         if (EBoolean.YES.getCode().equals(req.getRefType())) {

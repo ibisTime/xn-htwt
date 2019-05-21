@@ -93,7 +93,7 @@
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="code != null and code != '' ">
-                AND t.code = #{code}
+                AND t.code like "%"#{code}"%"
             </if>
             <if test="bizCode != null and bizCode != '' ">
                 AND t.biz_code = #{bizCode}
@@ -220,7 +220,7 @@
             <if test="userName != null and userName != '' ">
                 AND tcu.user_name like "%"#{userName}"%"
             </if>
-            
+
         </trim>
     </sql>
 
