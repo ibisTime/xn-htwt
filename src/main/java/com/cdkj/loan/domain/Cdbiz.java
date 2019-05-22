@@ -72,8 +72,20 @@ public class Cdbiz extends ABaseDO {
     // 还款卡号
     private String repayCardNumber;
 
+    // 卡邮寄地址省
+    private String cardPostProvince;
+
+    // 卡邮寄地址市
+    private String cardPostCity;
+
+    // 卡邮寄地址区
+    private String cardPostArea;
+
     // 卡邮寄地址
     private String cardPostAddress;
+
+    // 卡邮寄地址邮编
+    private String cardPostCode;
 
     // 主线状态
     private String status;
@@ -263,5 +275,8 @@ public class Cdbiz extends ABaseDO {
 
     // 手续费
     private BudgetOrderFee budgetOrderFee;
+
+    // 业务是否经办
+    private String isMy;
 
 }

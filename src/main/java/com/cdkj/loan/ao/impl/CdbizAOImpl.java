@@ -33,6 +33,7 @@ import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
 import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
@@ -74,6 +75,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
+import com.cdkj.loan.enums.EChannelType;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
 import com.cdkj.loan.enums.ECurrency;
@@ -917,16 +919,28 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void makeCardApply(String code, String operator,
-            String cardPostAddress, String redCardPic) {
+            String cardPostAddress, String redCardPic, String specialQuatoPic,
+            String redCardPicWithIdPic) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
-        if (!ECdbizStatus.H1.getCode().equals(cdbiz.getMakeCardStatus())) {
+        Bank bank = bankBO.getBank(cdbiz.getLoanBank());
+        if (!ECdbizStatus.H1.getCode().equals(cdbiz.getMakeCardStatus()) && !ECdbizStatus.H1
+                .getCode().equals(cdbiz.getMakeCardStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前不是待制卡申请状态，无法申请");
+                    "当前不是制卡状态，录入制卡信息");
         }
         // 录入卡邮寄地址
         cdbizBO.refreshCardAddress(cdbiz, cardPostAddress);
         // 附件
-        attachmentBO.saveAttachment(code, "red_card_pic", null, redCardPic);
+        if (StringUtils.isNotBlank(redCardPic)) {
+            attachmentBO.saveAttachment(code, "red_card_pic", null, redCardPic);
+        }
+        if (StringUtils.isNotBlank(specialQuatoPic)) {
+            attachmentBO.saveAttachment(code, "special_quato_pic", null, specialQuatoPic);
+        }
+        if (StringUtils.isNotBlank(redCardPicWithIdPic)) {
+            attachmentBO
+                    .saveAttachment(code, "red_card_pic_with_id_pic", null, redCardPicWithIdPic);
+        }
         // 制卡节点
         cdbizBO.refreshMakeCardNode(cdbiz, ENode.input_card_number.getCode());
         // 制卡状态
@@ -939,6 +953,23 @@ public class CdbizAOImpl implements ICdbizAO {
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.makeCard, code,
                 ENode.make_card_apply.getCode(), ENode.make_card_apply.getValue(),
                 operator);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void makeIcbankCard(String code) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前不是回录卡号状态，无法工行制卡");
+        }
+        if (ENode.input_budget.getCode().equals(cdbiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "请先录入准入单再进行工行制卡");
+        }
+        cdbizBO.icbankMakeCard(code);
+
+        cdbizBO.refreshMakeCardStatus(cdbiz, ECdbizStatus.H4.getCode());
     }
 
     @Override
@@ -1250,6 +1281,14 @@ public class CdbizAOImpl implements ICdbizAO {
         // 操作日志
         sysBizLogBO.saveFirstSYSBizLog(req.getCode(), EBizLogType.cancel,
                 req.getCode(), cancelNode, req.getApproveNote(), req.getOperator());
+    }
+
+    @Override
+    public void editRemark(String code, String remark) {
+        Cdbiz cdbiz = cdbizBO.getCdbiz(code);
+        cdbiz.setMakeCardStatus(ECdbizStatus.H4.getCode());
+        cdbiz.setRemark(remark);
+        cdbizBO.refreshCdbiz(cdbiz);
     }
 
 }

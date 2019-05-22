@@ -183,4 +183,6 @@ public class XN632515Req extends APageReq {
 
     private String userName;
 
+    private String isMy;
+
 }

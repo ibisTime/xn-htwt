@@ -30,8 +30,14 @@ public class XN632510Req {
     @NotBlank
     private String cardPostAddress;
 
-    // 红卡地址
+    // 红卡照片
     private String redCardPic;
+
+    //专项额度核定申请表
+    private String specialQuatoPic;
+
+    //红卡照片与身份证正反面拼接图片
+    private String redCardPicWithIdPic;
 
     public String getRedCardPic() {
         return redCardPic;
@@ -65,4 +71,19 @@ public class XN632510Req {
         this.cardPostAddress = cardPostAddress;
     }
 
+    public String getSpecialQuatoPic() {
+        return specialQuatoPic;
+    }
+
+    public void setSpecialQuatoPic(String specialQuatoPic) {
+        this.specialQuatoPic = specialQuatoPic;
+    }
+
+    public String getRedCardPicWithIdPic() {
+        return redCardPicWithIdPic;
+    }
+
+    public void setRedCardPicWithIdPic(String redCardPicWithIdPic) {
+        this.redCardPicWithIdPic = redCardPicWithIdPic;
+    }
 }

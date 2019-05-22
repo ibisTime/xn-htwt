@@ -42,6 +42,11 @@ public class CreditUser extends ABaseDO {
     private String userName;
 
     /**
+     * 英文名
+     */
+    private String engilshName;
+
+    /**
      * 手机号
      */
     private String mobile;
@@ -55,6 +60,16 @@ public class CreditUser extends ABaseDO {
      * 证件号码
      */
     private String idNo;
+
+    /**
+     * 发证机关
+     */
+    private String authref;
+
+    /**
+     * 证件有效期（yyyymmdd）
+     */
+    private String statdate;
 
     /**
      * 信用卡占比
@@ -146,6 +161,11 @@ public class CreditUser extends ABaseDO {
     private String emergencyName1;
 
     /**
+     * 联系人1性别
+     */
+    private String emergencySex1;
+
+    /**
      * 联系人1与申请人关系
      */
     private String emergencyRelation1;
@@ -159,6 +179,11 @@ public class CreditUser extends ABaseDO {
      * 联系人2姓名
      */
     private String emergencyName2;
+
+    /**
+     * 联系人2性别
+     */
+    private String emergencySex2;
 
     /**
      * 联系人2与申请人关系
@@ -186,6 +211,21 @@ public class CreditUser extends ABaseDO {
      * 工作单位名称
      */
     private String companyName;
+
+    /**
+     * 工作单位所在省
+     */
+    private String companyProvince;
+
+    /**
+     * 工作单位所在市
+     */
+    private String companyCity;
+
+    /**
+     * 工作单位所在区
+     */
+    private String companyArea;
 
     /**
      * 工作单位地址
@@ -303,6 +343,11 @@ public class CreditUser extends ABaseDO {
      * 现居住地址
      */
     private String nowAddress;
+
+    /**
+     * 何时入住现居住地址
+     */
+    private String nowAddressDate;
 
     /**
      * 现居住地址邮编

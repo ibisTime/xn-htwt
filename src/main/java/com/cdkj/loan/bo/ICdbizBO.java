@@ -88,4 +88,5 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
      */
     void refreshLocation(Cdbiz cdbiz);
 
+    void icbankMakeCard(String code);
 }

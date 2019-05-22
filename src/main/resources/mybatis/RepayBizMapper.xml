@@ -701,6 +701,7 @@
         ,sf_rate = #{sfRate}
         ,ly_deposit = #{lyDeposit}
         ,cur_node_code = #{curNodeCode}
+        ,loan_bank = #{loanBank}
         WHERE code = #{code}
     </update>
 </mapper>

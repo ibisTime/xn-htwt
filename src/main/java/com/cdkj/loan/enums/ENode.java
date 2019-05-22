@@ -26,7 +26,7 @@ public enum ENode {
             "b8", "总公司审核"),
 
     // 制卡节点
-    make_card_apply("h1", "制卡申请"), input_card_number("h2", "回录卡号"), make_card_finish(
+    make_card_apply("h1", "制卡申请"), input_card_number("h2", "回录卡号"),icbank_make_card("h2x","工行制卡"), make_card_finish(
             "h3", "制卡完成"),
 
     // 面签节点
