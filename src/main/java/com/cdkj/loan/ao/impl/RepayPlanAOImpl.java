@@ -431,13 +431,38 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         for (String code : req.getCodeList()) {
             //更新还款计划
             RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
             if (!ERepayPlanNode.OVERDUE_TO_TRUE.getCode().equals(repayPlan.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "编号为：" + code + "的还款计划不是逾期待处理状态");
             }
             repayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
             repayPlanBO.alreadyRepay(repayPlan);
+
+            // 更新还款业务逾期金额
+            repayBiz.setOverdueAmount(
+                    repayBiz.getOverdueAmount() + repayPlan.getOverdueAmount());
+            Long restAmount = 0L;
+
+            //剩余欠款 = 总欠款-本期已还金额
+            restAmount = repayBiz.getRestAmount() - (
+                    repayPlan.getRepayCapital() + repayPlan.getRepayInterest() - repayPlan
+                            .getOverdueAmount());
+            repayBiz.setRestAmount(restAmount);
+            // 总期数-当前期数+1 = 剩余期数 说明当月还款计划没逾过期（当前还款计划逾过期并处理过的不用加逾期次数）
+            repayBiz.setTotalOverdueCount(repayBiz.getTotalOverdueCount() + 1);
+            repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() + 1);
+            //判断是否是当前期数，是的话剩余期数不变，不是；说明是导的前几期逾期，剩余期数+1
+            if (repayPlan.getRepayDatetime().getTime() >=
+                    DateUtil.getCurrentMonthFirstDay().getTime()
+                    && repayPlan.getRepayDatetime().getTime() <=
+                    DateUtil.getCurrentMonthLastDay().getTime()) {
+                repayBiz.setRestPeriods(repayBiz.getRestPeriods() + 1);
+            }
+            repayBizBO.repayOverdue(repayBiz);
         }
+
+
     }
 
     @Override

@@ -230,36 +230,6 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
         }
         overDueRepayPlan.setOverdueAmount(overdueAmount);
         repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新当月期的还款计划逾期金额
-
-        // 更新还款业务逾期金额
-        repayBiz.setOverdueAmount(
-                repayBiz.getOverdueAmount() + overdueMenu.getOverdueAmount());
-        Long restAmount = 0L;
-        // 判断逾期金额是否有超出这一期
-        if (overdueMenu.getOverdueAmount() > overDueRepayPlan
-                .getRepayAmount()) {
-            // 是：剩余欠款 = 剩余欠款+逾期金额
-            restAmount = repayBiz.getRestAmount()
-                    + overdueMenu.getOverdueAmount();
-        } else {
-            // 否：剩余欠款 = 剩余欠款+逾期金额-当月月供
-            restAmount = repayBiz.getRestAmount()
-                    + overdueMenu.getOverdueAmount()
-                    + overDueRepayPlan.getRepayAmount();
-        }
-        repayBiz.setRestAmount(restAmount);
-        // 总期数-当前期数+1 = 剩余期数 说明当月还款计划没逾过期（当前还款计划逾过期并处理过的不用加逾期次数）
-        if (!ERepayPlanNode.OVERDUE.getCode().equals(preCurNodeCode)) {
-            repayBiz.setTotalOverdueCount(repayBiz.getTotalOverdueCount() + j);
-            repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() + j);
-        }
-        // 判断当前还款计划是否已还款
-        if (ERepayPlanNode.REPAY_YES.getCode().equals(preCurNodeCode)) {
-            repayBiz.setRestPeriods(repayBiz.getRestPeriods() + j);
-        } else {
-            repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1 + j);
-        }
-        repayBizBO.repayOverdue(repayBiz);
     }
 
     // 处理逻辑
@@ -271,7 +241,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
     public void handleOverdueMenu(String code, String repayBizCode,
             String operator) {
         OverdueMenu overdueMenu = overdueMenuBO.getOverdueMenu(code);
-        if (EOverdueMenuStatus.YCL.getCode().equals(overdueMenu.getStatus())) {
+        if (EOverdueMenuStatus.YCL.getCode().equals(overdueMenu.getStatus())
+                || EOverdueMenuStatus.YSDCL.getCode().equals(overdueMenu.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前逾期名单已处理");
         }
@@ -312,7 +283,7 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
         refreshRepayInfo(overdueMenu, repayBiz, overDueRepayPlan,
                 preCurNodeCode);
 
-        overdueMenu.setStatus(EOverdueMenuStatus.YCL.getCode());
+        overdueMenu.setStatus(EOverdueMenuStatus.YSDCL.getCode());
         overdueMenu.setRepayBizCode(overDueRepayPlan.getRepayBizCode());
         overdueMenu.setRepayPlanCode(overDueRepayPlan.getCode());
 
