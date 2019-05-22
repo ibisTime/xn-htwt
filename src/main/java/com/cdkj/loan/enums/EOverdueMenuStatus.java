@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EOverdueMenuStatus {
-    DCL("0", "信息不匹配待处理"), YCL("1", "已匹配"), YSDCL("1", "已手动处理");
+    DCL("0", "信息不匹配待处理"), YCL("1", "已匹配"), YSDCL("2", "已手动匹配");
 
     EOverdueMenuStatus(String code, String value) {
         this.code = code;

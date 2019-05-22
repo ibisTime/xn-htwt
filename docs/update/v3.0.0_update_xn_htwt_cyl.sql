@@ -65,3 +65,22 @@ WHERE `code` = 'SM201805291033129682833';
 UPDATE `tsys_menu`
 SET `order_no`='13'
 WHERE `code` = 'SM201805291037383171866';
+
+
+
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`,
+                         `system_code`)
+VALUES ('0', 'overdue_menu_status', '逾期名单状态', 'admin', '2019-05-18 13:04:24', 'CD-HTWT000020',
+        'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`)
+VALUES ('1', 'overdue_menu_status', '0', '信息不匹配待处理', 'admin', '2019-05-18 13:04:24',
+        'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`)
+VALUES ('1', 'overdue_menu_status', '1', '已匹配', 'admin', '2019-05-18 13:04:24', 'CD-HTWT000020',
+        'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`)
+VALUES ('1', 'overdue_menu_status', '2', '已手动匹配', 'admin', '2019-05-18 13:04:24', 'CD-HTWT000020',
+        'CD-HTWT000020');

@@ -47,6 +47,7 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.EnterFileList;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
@@ -1093,6 +1094,11 @@ public class CdbizAOImpl implements ICdbizAO {
         List<CreditJour> creditJourList = creditJourBO
                 .querCreditJoursByBizCode(cdbiz.getCode());
         cdbiz.setCreditJours(creditJourList);
+
+        //还款计划
+        List<RepayPlan> repayPlanList = repayPlanBO
+                .queryRepayPlanListByRepayBizCode(cdbiz.getRepayBizCode());
+        cdbiz.setRepayPlanList(repayPlanList);
 
         // 待办事项
         List<BizTask> bizTaskList = bizTaskBO.queryBizTaskByBizCode(cdbiz
