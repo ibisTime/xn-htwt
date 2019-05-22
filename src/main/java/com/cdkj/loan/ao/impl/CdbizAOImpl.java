@@ -1096,10 +1096,11 @@ public class CdbizAOImpl implements ICdbizAO {
         cdbiz.setCreditJours(creditJourList);
 
         //还款计划
-        List<RepayPlan> repayPlanList = repayPlanBO
-                .queryRepayPlanListByRepayBizCode(cdbiz.getRepayBizCode());
-        cdbiz.setRepayPlanList(repayPlanList);
-
+        if (StringUtils.isNotBlank(cdbiz.getRepayBizCode())) {
+            List<RepayPlan> repayPlanList = repayPlanBO
+                    .queryRepayPlanListByRepayBizCode(cdbiz.getRepayBizCode());
+            cdbiz.setRepayPlanList(repayPlanList);
+        }
         // 待办事项
         List<BizTask> bizTaskList = bizTaskBO.queryBizTaskByBizCode(cdbiz
                 .getCode());

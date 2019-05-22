@@ -453,9 +453,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayBiz.setTotalOverdueCount(repayBiz.getTotalOverdueCount() + 1);
             repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() + 1);
             //判断是否是当前期数，是的话剩余期数不变，不是；说明是导的前几期逾期，剩余期数+1
-            if (repayPlan.getRepayDatetime().getTime() >=
+            if (repayPlan.getRepayDatetime().getTime() <
                     DateUtil.getCurrentMonthFirstDay().getTime()
-                    && repayPlan.getRepayDatetime().getTime() <=
+                    || repayPlan.getRepayDatetime().getTime() >
                     DateUtil.getCurrentMonthLastDay().getTime()) {
                 repayBiz.setRestPeriods(repayBiz.getRestPeriods() + 1);
             }
