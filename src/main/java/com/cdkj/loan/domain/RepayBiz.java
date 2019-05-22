@@ -41,7 +41,7 @@ public class RepayBiz extends ABaseDO {
     // 申请人证件号
     private String idNo;
 
-    // 还款卡编号
+    // 还款卡编号(现存卡号)
     private String bankcardCode;
 
     // 关联类型

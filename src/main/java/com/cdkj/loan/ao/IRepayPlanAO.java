@@ -4,6 +4,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630530Req;
 import com.cdkj.loan.dto.req.XN630532Req;
+import com.cdkj.loan.dto.req.XN630537Req;
 import com.cdkj.loan.dto.req.XN630544Req;
 import com.cdkj.loan.dto.req.XN630545Req;
 import java.util.List;
@@ -58,4 +59,9 @@ public interface IRepayPlanAO {
      * 人工确认还款
      */
     void alreadyRepay(XN630530Req req);
+
+    /**
+     * 人工确认逾期
+     */
+    void alreadyOverDue(XN630537Req req);
 }

@@ -677,6 +677,7 @@
         SET
         biz_code = #{bizCode}
         ,periods = #{periods}
+        ,loan_bank = #{loanBank}
         ,rest_periods = #{restPeriods}
         ,rest_total_cost = #{restTotalCost}
         ,rest_amount = #{restAmount}
@@ -684,6 +685,7 @@
         ,total_overdue_count = #{totalOverdueCount}
         ,cur_overdue_count = #{curOverdueCount}
         ,bank_rate = #{bankRate}
+        ,bankcard_code = #{bankcardCode}
         ,loan_product_code = #{loanProductCode}
         ,sf_amount = #{sfAmount}
         ,sf_rate = #{sfRate}
