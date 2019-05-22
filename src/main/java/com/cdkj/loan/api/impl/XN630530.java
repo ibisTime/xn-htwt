@@ -31,18 +31,12 @@ public class XN630530 extends AProcessor {
 
     private XN630530Req req = null;
 
-    /**
-     * @see com.cdkj.loan.api.IProcessor#doBusiness()
-     */
     @Override
     public Object doBusiness() throws BizException {
         repayPlanAO.alreadyRepay(req);
         return new BooleanRes(true);
     }
 
-    /**
-     * @see com.cdkj.loan.api.IProcessor#doCheck(String, String)
-     */
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
