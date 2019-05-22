@@ -77,6 +77,8 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
     public void entryPledgeInfo(String code, String nextNodeCode,
             XN632133Req req) {
         CarPledge carPledge = EntityUtils.copyData(req, CarPledge.class);
+        carPledge.setPledgeDatetime(
+                DateUtil.strToDate(req.getPledgeDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         carPledge.setCode(code);
         carPledge.setCurNodeCode(nextNodeCode);
 
