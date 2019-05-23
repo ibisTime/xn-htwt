@@ -537,7 +537,7 @@ public class CdbizAOImpl implements ICdbizAO {
         if (StringUtils.isBlank(carInfo.getVehicleCompanyName())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "车辆信息未填写完整，请补充完整再提交");
         }
-        if (StringUtils.isBlank(applyUser.getEngilshName())) {
+        if (StringUtils.isBlank(applyUser.getEnglishName())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "客户信息未填写完整，请补充完整再提交");
         }
         if (StringUtils.isBlank(applyUser.getMarryState())) {
