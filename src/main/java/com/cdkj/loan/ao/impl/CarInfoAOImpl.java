@@ -557,8 +557,8 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void headCompanyApprove(String code, String approveResult,
             String approveNote, String operator) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
@@ -616,8 +616,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             curNodeCode = ENode.input_budget.getCode();
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
-            bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, ENode
-                    .getMap().get(preCurrentNode), null);
+            bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, ENode.renew_budget, null);
         }
 
         cdbiz.setStatus(status);
