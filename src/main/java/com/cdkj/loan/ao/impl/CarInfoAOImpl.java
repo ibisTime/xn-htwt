@@ -26,7 +26,6 @@ import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Attachment;
-import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.CarInfo;
@@ -572,9 +571,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
         String curNodeCode = null;
 
         // 查找当前节点的最新待办
-        BizTask bizTask = bizTaskBO.queryLastBizTask(cdbiz.getCode(), null,
-                null, preCurrentNode);
-        bizTaskBO.handleBizTask(bizTask.getCode(), operator);
+//        BizTask bizTask = bizTaskBO.queryLastBizTask(cdbiz.getCode(), null,
+//                null, preCurrentNode);
+//        bizTaskBO.handleBizTask(bizTask.getCode(), operator);
+        bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.BUDGET_ORDER.getCode(),
+                cdbiz.getCode(), preCurrentNode, operator);
 
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
 
@@ -613,10 +614,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // 生成报告、返点、费用
             lastApprove(cdbiz, operator);
         } else {
-            curNodeCode = ENode.input_budget.getCode();
+            curNodeCode = ENode.renew_budget.getCode();
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
-            bizTaskBO.saveBizTask(code, EBizLogType.BUDGET_ORDER, code, ENode.renew_budget, null);
+            bizTaskBO.saveBizTaskNew(code, EBizLogType.BUDGET_ORDER, code, ENode.renew_budget);
         }
 
         cdbiz.setStatus(status);
