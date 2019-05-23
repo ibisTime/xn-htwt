@@ -12,11 +12,13 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 制卡申请
- * @author: taojian 
- * @since: 2019年4月2日 下午7:47:52 
+ *
+ * @author: taojian
+ * @since: 2019年4月2日 下午7:47:52
  * @history:
  */
 public class XN632510 extends AProcessor {
+
     private ICdbizAO cdbizAO = SpringContextHolder.getBean(ICdbizAO.class);
 
     private XN632510Req req = null;
@@ -24,7 +26,9 @@ public class XN632510 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         cdbizAO.makeCardApply(req.getCode(), req.getOperator(),
-            req.getCardPostAddress(), req.getRedCardPic(),req.getSpecialQuatoPic(),req.getRedCardPicWithIdPic());
+                req.getCardPostAddress(), req.getCardPostProvince(), req.getCardPostCity(),
+                req.getCardPostArea(),req.getCardPostCode(), req.getRedCardPic(), req.getSpecialQuatoPic(),
+                req.getRedCardPicWithIdPic());
         return new BooleanRes(true);
     }
 

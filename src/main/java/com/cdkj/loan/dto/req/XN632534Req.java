@@ -31,6 +31,15 @@ public class XN632534Req {
     // 工作单位名称
     private String companyName; // creditUser
 
+    // 工作单位地址省
+    private String companyProvince;
+
+    // 工作单位地址市
+    private String companyCity;
+
+    // 工作单位地址区
+    private String companyArea;
+
     // 工作单位地址
     private String companyAddress; // creditUser
 
@@ -208,5 +217,29 @@ public class XN632534Req {
 
     public void setOtherWorkNote(String otherWorkNote) {
         this.otherWorkNote = otherWorkNote;
+    }
+
+    public String getCompanyProvince() {
+        return companyProvince;
+    }
+
+    public void setCompanyProvince(String companyProvince) {
+        this.companyProvince = companyProvince;
+    }
+
+    public String getCompanyCity() {
+        return companyCity;
+    }
+
+    public void setCompanyCity(String companyCity) {
+        this.companyCity = companyCity;
+    }
+
+    public String getCompanyArea() {
+        return companyArea;
+    }
+
+    public void setCompanyArea(String companyArea) {
+        this.companyArea = companyArea;
     }
 }

@@ -26,9 +26,25 @@ public class XN632510Req {
     @NotBlank
     private String operator;
 
+    // 卡邮寄地址省
+    @NotBlank
+    private String cardPostProvince;
+
+    // 卡邮寄地址市
+    @NotBlank
+    private String cardPostCity;
+
+    // 卡邮寄地址区
+    @NotBlank
+    private String cardPostArea;
+
     // 卡邮寄地址
     @NotBlank
     private String cardPostAddress;
+
+    // 卡邮寄地址邮编
+    @NotBlank
+    private String cardPostCode;
 
     // 红卡照片
     private String redCardPic;
@@ -85,5 +101,37 @@ public class XN632510Req {
 
     public void setRedCardPicWithIdPic(String redCardPicWithIdPic) {
         this.redCardPicWithIdPic = redCardPicWithIdPic;
+    }
+
+    public String getCardPostProvince() {
+        return cardPostProvince;
+    }
+
+    public void setCardPostProvince(String cardPostProvince) {
+        this.cardPostProvince = cardPostProvince;
+    }
+
+    public String getCardPostCity() {
+        return cardPostCity;
+    }
+
+    public void setCardPostCity(String cardPostCity) {
+        this.cardPostCity = cardPostCity;
+    }
+
+    public String getCardPostArea() {
+        return cardPostArea;
+    }
+
+    public void setCardPostArea(String cardPostArea) {
+        this.cardPostArea = cardPostArea;
+    }
+
+    public String getCardPostCode() {
+        return cardPostCode;
+    }
+
+    public void setCardPostCode(String cardPostCode) {
+        this.cardPostCode = cardPostCode;
     }
 }

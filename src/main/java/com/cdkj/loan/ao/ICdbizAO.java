@@ -64,7 +64,8 @@ public interface ICdbizAO {
 
     // 制卡申请
     void makeCardApply(String code, String operator, String cardPostAddress,
-            String redCardPic,String specialQuatoPic,String redCardPicWithIdPic);
+            String cardPostProvince, String cardPostCity, String cardPostArea,String cardPostCode,
+            String redCardPic, String specialQuatoPic, String redCardPicWithIdPic);
 
     //工行制卡
     void makeIcbankCard(String code);
@@ -96,6 +97,6 @@ public interface ICdbizAO {
     // 财务总监审核作废申请
     public void cancelFinanceAudit(XN632192Req req);
 
-    public void editRemark(String code,String remark);
+    public void editRemark(String code, String remark);
 
 }

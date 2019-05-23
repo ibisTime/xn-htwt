@@ -24,6 +24,15 @@ public class XN632532Req {
     // 性别
     private String gender;
 
+    // 英文名
+    private String englishName;
+
+    //发证机关
+    private String authref;
+
+    //证件有效期
+    private String statdate;
+
     // 年龄
     private String age;
 
@@ -64,6 +73,9 @@ public class XN632532Req {
     // 家庭紧急联系人信息1 姓名
     private String emergencyName1;
 
+    // 家庭紧急联系人信息1 性别
+    private String emergencysex1;
+
     // 家庭紧急联系人信息1 与申请人关系
     private String emergencyRelation1;
 
@@ -72,6 +84,9 @@ public class XN632532Req {
 
     // 家庭紧急联系人信息2 姓名
     private String emergencyName2;
+
+    // 家庭紧急联系人信息2 性别
+    private String emergencysex2;
 
     // 家庭紧急联系人信息2 与申请人关系
     private String emergencyRelation2;
@@ -240,5 +255,45 @@ public class XN632532Req {
 
     public void setEmergencyMobile2(String emergencyMobile2) {
         this.emergencyMobile2 = emergencyMobile2;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
+
+    public String getAuthref() {
+        return authref;
+    }
+
+    public void setAuthref(String authref) {
+        this.authref = authref;
+    }
+
+    public String getStatdate() {
+        return statdate;
+    }
+
+    public void setStatdate(String statdate) {
+        this.statdate = statdate;
+    }
+
+    public String getEmergencysex1() {
+        return emergencysex1;
+    }
+
+    public void setEmergencysex1(String emergencysex1) {
+        this.emergencysex1 = emergencysex1;
+    }
+
+    public String getEmergencysex2() {
+        return emergencysex2;
+    }
+
+    public void setEmergencysex2(String emergencysex2) {
+        this.emergencysex2 = emergencysex2;
     }
 }

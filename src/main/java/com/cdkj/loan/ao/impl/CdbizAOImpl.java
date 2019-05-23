@@ -920,7 +920,8 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void makeCardApply(String code, String operator,
-            String cardPostAddress, String redCardPic, String specialQuatoPic,
+            String cardPostAddress, String cardPostProvince, String cardPostCity,
+            String cardPostArea,String cardPostCode, String redCardPic, String specialQuatoPic,
             String redCardPicWithIdPic) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         Bank bank = bankBO.getBank(cdbiz.getLoanBank());
@@ -930,7 +931,7 @@ public class CdbizAOImpl implements ICdbizAO {
                     "当前不是制卡状态，录入制卡信息");
         }
         // 录入卡邮寄地址
-        cdbizBO.refreshCardAddress(cdbiz, cardPostAddress);
+        cdbizBO.refreshCardAddress(cdbiz, cardPostAddress,cardPostProvince,cardPostCity,cardPostArea,cardPostCode);
         // 附件
         if (StringUtils.isNotBlank(redCardPic)) {
             attachmentBO.saveAttachment(code, "red_card_pic", null, redCardPic);
@@ -1154,6 +1155,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional
     public void creditBank(String code) {
 
         CreditUser creditUser = creditUserBO.getCreditUser(code);
