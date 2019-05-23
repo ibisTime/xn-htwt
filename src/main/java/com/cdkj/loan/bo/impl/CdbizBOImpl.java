@@ -311,8 +311,13 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress) {
+    public void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress, String cardPostProvince,
+            String cardPostCity, String cardPostArea,String cardPostCode) {
         cdbiz.setCardPostAddress(cardPostAddress);
+        cdbiz.setCardPostProvince(cardPostProvince);
+        cdbiz.setCardPostCity(cardPostCity);
+        cdbiz.setCardPostArea(cardPostArea);
+        cdbiz.setCardPostCode(cardPostCode);
         cdbizDAO.updateCdbiz(cdbiz);
     }
 
@@ -402,7 +407,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(code);
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(code);
         LoanProduct loanProduct = loanProductBO.getLoanProduct(repayBiz.getLoanProductCode());
-        CreditUser creditUser=creditUserBO.getCreditUserByBizCode(code,ECreditUserLoanRole.APPLY_USER);
+        CreditUser creditUser = creditUserBO
+                .getCreditUserByBizCode(code, ECreditUserLoanRole.APPLY_USER);
         try {
 
             XN798703Req req = new XN798703Req();
@@ -449,9 +455,9 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setCustcode(creditUser.getIdNo());
             req.setChnsname(creditUser.getUserName());
             req.setEngname(creditUser.getEngilshName());
-            String gender="1";
-            if("女".equals(creditUser.getGender())){
-                gender="2";
+            String gender = "1";
+            if ("女".equals(creditUser.getGender())) {
+                gender = "2";
             }
             req.setSex(gender);
             req.setMrtlstat(creditUser.getMarryState());
@@ -474,6 +480,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setCcity(creditUser.getCompanyCity());
             req.setCcounty(creditUser.getCompanyArea());
             req.setCaddress(creditUser.getCompanyAddress());
+            req.setCorpzip("0");
             req.setModelcode(creditUser.getWorkCompanyProperty());
             req.setOccptn(creditUser.getWorkProfession());
             //通讯地址（卡邮寄地址）
@@ -498,7 +505,13 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setMamobile(creditUser.getMobile());
             req.setSmsphone(creditUser.getMobile());
             req.setAuthref(creditUser.getAuthref());
-            req.setStatdate(creditUser.getStatdate());
+            //日期格式修改
+            String[] date=creditUser.getStatdate().split("-");
+            String statdate="";
+            for(String dateString:date){
+                statdate+=dateString;
+            }
+            req.setStatdate(statdate);
             req.setIndate(creditUser.getNowAddressDate());
             req.setJoindate(creditUser.getWorkDatetime());
             req.setDrawmode("2");

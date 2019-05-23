@@ -71,7 +71,7 @@ public class CarAOImpl implements ICarAO {
         Series series = seriesBO.getSeries(req.getSeriesCode());
         Long price = StringValidater.toLong(req.getSalePrice());
         // 车系价格区间更改
-        if (null == series.getHighest() && null == series.getLowest()) {
+        if (0 == series.getHighest() && 0 == series.getLowest()) {
             seriesBO.refreshHighest(series, price);
             seriesBO.refreshLowest(series, price);
         } else if (price < series.getLowest()) {

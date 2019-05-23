@@ -67,7 +67,8 @@ public interface ICdbizBO extends IPaginableBO<Cdbiz> {
 
     void interview(Cdbiz cdbiz, XN632123Req req);
 
-    void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress);
+    void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress, String cardPostProvince,
+            String cardPostCity, String cardPostArea,String cardPostCode);
 
     void refreshRepayCard(Cdbiz cdbiz, String repayCardNumber);
 

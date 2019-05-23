@@ -19,7 +19,11 @@
         <result column="enter_datetime" property="enterDatetime"/>
         <result column="enter_filelist" property="enterFilelist"/>
         <result column="repay_card_number" property="repayCardNumber"/>
+        <result column="card_post_province" property="cardPostProvince"/>
+        <result column="card_post_city" property="cardPostCity"/>
+        <result column="card_post_area" property="cardPostArea"/>
         <result column="card_post_address" property="cardPostAddress"/>
+        <result column="card_post_code" property="cardPostCode"/>
         <result column="status" property="status"/>
         <result column="intev_status" property="intevStatus"/>
         <result column="make_card_status" property="makeCardStatus"/>
@@ -252,7 +256,11 @@
         ,t.enter_datetime
         ,t.enter_filelist
         ,t.repay_card_number
+        ,t.card_post_province
+        ,t.card_post_city
+        ,t.card_post_area
         ,t.card_post_address
+        ,t.card_post_code
         ,t.status
         ,t.intev_status
         ,t.make_card_status
@@ -308,7 +316,11 @@
         ,t.enter_datetime
         ,t.enter_filelist
         ,t.repay_card_number
+        ,t.card_post_province
+        ,t.card_post_city
+        ,t.card_post_area
         ,t.card_post_address
+        ,t.card_post_code
         ,t.status
         ,t.intev_status
         ,t.make_card_status
@@ -354,7 +366,11 @@
         ,t.enter_datetime
         ,t.enter_filelist
         ,t.repay_card_number
+        ,t.card_post_province
+        ,t.card_post_city
+        ,t.card_post_area
         ,t.card_post_address
+        ,t.card_post_code
         ,t.status
         ,t.intev_status
         ,t.make_card_status
@@ -518,6 +534,10 @@
 		,enter_datetime = #{enterDatetime}
 		,enter_filelist = #{enterFilelist}
 		,card_post_address=#{cardPostAddress}
+		,card_post_province=#{cardPostProvince}
+		,card_post_city=#{cardPostCity}
+		,card_post_area=#{cardPostArea}
+		,card_post_code=#{cardPostCode}
 		,status = #{status}
 		,intev_status = #{intevStatus}
 		,repay_card_number=#{repayCardNumber}

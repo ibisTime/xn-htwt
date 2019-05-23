@@ -83,6 +83,10 @@ public class FileListBOImpl extends PaginableBOImpl<FileList>
         FileList condition = new FileList();
         condition.setKname(kname);
         FileList filelist = fileListDAO.select(condition);
+        if(null==filelist){
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    kname+"材料清单不存在！");
+        }
         return filelist;
     }
 }

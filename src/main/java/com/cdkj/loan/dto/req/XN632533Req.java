@@ -89,6 +89,11 @@ public class XN632533Req {
     private String nowAddress;
 
     /**
+     * 何时入住现居住地址
+     */
+    private String nowAddressDate;
+
+    /**
      * 现居住地址邮编
      */
     private String nowPostCode;
@@ -312,5 +317,13 @@ public class XN632533Req {
 
     public void setHousePictureApply(String housePictureApply) {
         this.housePictureApply = housePictureApply;
+    }
+
+    public String getNowAddressDate() {
+        return nowAddressDate;
+    }
+
+    public void setNowAddressDate(String nowAddressDate) {
+        this.nowAddressDate = nowAddressDate;
     }
 }
