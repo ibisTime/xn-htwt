@@ -32,7 +32,7 @@ CREATE TABLE `tb_insurance_company`
   DEFAULT CHARSET = utf8 COMMENT ='保险公司信息表';
 
 INSERT INTO `tb_insurance_company`
-VALUES ('IC201809191430007283689', '太平洋保险', '赵菊', '15122222223', '测试');
+VALUES ('IC201809191430007283689', '太平洋保险', 'XXX', '15122222223', '测试');
 
 
 UPDATE `tsys_menu`

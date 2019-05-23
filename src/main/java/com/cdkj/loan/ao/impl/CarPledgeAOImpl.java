@@ -257,8 +257,8 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
                 cdbiz.getCode(), preCurNodeCode, null, operator);
 
         // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, cdbiz.getCode(), code,
-                preCurNodeCode, nextNodeCode, operator);
+        bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.Pledge.getCode(), code,
+                preCurNodeCode, operator);
 
     }
 

@@ -134,8 +134,8 @@
 	</update>
 
     <delete id="delete_carNews" parameterType="carNews">
-		DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_carNews WHERE code=#{code});
-		DELETE FROM tht_carNews WHERE code=#{code};
+		DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_car_news WHERE code=#{code});
+		DELETE FROM tht_car_news WHERE code=#{code};
 	</delete>
 
 
