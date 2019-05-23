@@ -44,7 +44,7 @@ public class CreditUser extends ABaseDO {
     /**
      * 英文名
      */
-    private String engilshName;
+    private String englishName;
 
     /**
      * 手机号

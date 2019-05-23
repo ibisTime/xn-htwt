@@ -74,7 +74,7 @@ public class XN632532Req {
     private String emergencyName1;
 
     // 家庭紧急联系人信息1 性别
-    private String emergencysex1;
+    private String emergencySex1;
 
     // 家庭紧急联系人信息1 与申请人关系
     private String emergencyRelation1;
@@ -86,7 +86,7 @@ public class XN632532Req {
     private String emergencyName2;
 
     // 家庭紧急联系人信息2 性别
-    private String emergencysex2;
+    private String emergencySex2;
 
     // 家庭紧急联系人信息2 与申请人关系
     private String emergencyRelation2;
@@ -281,19 +281,19 @@ public class XN632532Req {
         this.statdate = statdate;
     }
 
-    public String getEmergencysex1() {
-        return emergencysex1;
+    public String getEmergencySex1() {
+        return emergencySex1;
     }
 
-    public void setEmergencysex1(String emergencysex1) {
-        this.emergencysex1 = emergencysex1;
+    public void setEmergencySex1(String emergencySex1) {
+        this.emergencySex1 = emergencySex1;
     }
 
-    public String getEmergencysex2() {
-        return emergencysex2;
+    public String getEmergencySex2() {
+        return emergencySex2;
     }
 
-    public void setEmergencysex2(String emergencysex2) {
-        this.emergencysex2 = emergencysex2;
+    public void setEmergencySex2(String emergencySex2) {
+        this.emergencySex2 = emergencySex2;
     }
 }

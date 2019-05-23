@@ -16,7 +16,7 @@ ALTER TABLE `tdq_credit_user`
   ADD COLUMN `authref` VARCHAR(64) NULL COMMENT '发证机关' AFTER `id_no`,
   ADD COLUMN `statdate` VARCHAR(64) NULL COMMENT '证件有效期' AFTER `authref`,
   ADD COLUMN `emergency_sex1` VARCHAR(8) NULL COMMENT '联系人1性别' AFTER `emergency_name1`,
-  ADD COLUMN `emergencySex2` VARCHAR(8) NULL COMMENT '联系人2性别' AFTER `emergency_name2`,
+  ADD COLUMN `emergency_sex2` VARCHAR(8) NULL COMMENT '联系人2性别' AFTER `emergency_name2`,
   ADD COLUMN `company_province` VARCHAR(255) NULL COMMENT '单位所在省' AFTER `company_name`,
   ADD COLUMN `company_city` VARCHAR(255) NULL COMMENT '单位所在市' AFTER `company_province`,
   ADD COLUMN `company_area` VARCHAR(255) NULL COMMENT '单位所在区域' AFTER `company_city`,

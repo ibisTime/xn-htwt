@@ -17,6 +17,9 @@
 		<result column="content_type" property="contentType" />
 		<result column="company_code" property="companyCode" />
 		<result column="system_code" property="systemCode" />
+		<result column="brand_code" property="brandCode" />
+		<result column="series_code" property="seriesCode" />
+
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -81,8 +84,11 @@
 		,t.content_type
 		,t.company_code
 		,t.system_code
+		,c.brand_code as brand_code
+		,c.series_code as series_code
 		FROM
-		tstd_cnavigate t 
+		tstd_cnavigate t
+		left join tht_car c ON t.parent_code=c.code
 		<include refid="where_condition" />
 		ORDER BY t.type,order_no
 	</select>

@@ -454,7 +454,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setCustsort("000");
             req.setCustcode(creditUser.getIdNo());
             req.setChnsname(creditUser.getUserName());
-            req.setEngname(creditUser.getEngilshName());
+            req.setEngname(creditUser.getEnglishName());
             String gender = "1";
             if ("女".equals(creditUser.getGender())) {
                 gender = "2";
