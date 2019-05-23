@@ -76,7 +76,6 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
-import com.cdkj.loan.enums.EChannelType;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
 import com.cdkj.loan.enums.ECurrency;
@@ -528,7 +527,25 @@ public class CdbizAOImpl implements ICdbizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是录入准入单资料节点，不能操作");
         }
-
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(code);
+        CreditUser applyUser = creditUserBO
+                .getCreditUserByBizCode(code, ECreditUserLoanRole.APPLY_USER);
+        CarInfo carInfo = carInfoBO.getCarInfoByBizCode(code);
+        if (repayBiz.getPeriods() == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "贷款信息未填写完整，请补充完整再提交");
+        }
+        if (StringUtils.isBlank(carInfo.getVehicleCompanyName())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "车辆信息未填写完整，请补充完整再提交");
+        }
+        if (StringUtils.isBlank(applyUser.getEngilshName())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "客户信息未填写完整，请补充完整再提交");
+        }
+        if (StringUtils.isBlank(applyUser.getMarryState())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "家庭信息未填写完整，请补充完整再提交");
+        }
+        if (StringUtils.isBlank(applyUser.getCompanyName())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "工作信息未填写完整，请补充完整再提交");
+        }
         String preNodeCode = cdbiz.getCurNodeCode(); // 当前节点
 
         // 日志记录
@@ -921,7 +938,7 @@ public class CdbizAOImpl implements ICdbizAO {
     @Transactional(rollbackFor = Exception.class)
     public void makeCardApply(String code, String operator,
             String cardPostAddress, String cardPostProvince, String cardPostCity,
-            String cardPostArea,String cardPostCode, String redCardPic, String specialQuatoPic,
+            String cardPostArea, String cardPostCode, String redCardPic, String specialQuatoPic,
             String redCardPicWithIdPic) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         Bank bank = bankBO.getBank(cdbiz.getLoanBank());
@@ -931,7 +948,8 @@ public class CdbizAOImpl implements ICdbizAO {
                     "当前不是制卡状态，录入制卡信息");
         }
         // 录入卡邮寄地址
-        cdbizBO.refreshCardAddress(cdbiz, cardPostAddress,cardPostProvince,cardPostCity,cardPostArea,cardPostCode);
+        cdbizBO.refreshCardAddress(cdbiz, cardPostAddress, cardPostProvince, cardPostCity,
+                cardPostArea, cardPostCode);
         // 附件
         if (StringUtils.isNotBlank(redCardPic)) {
             attachmentBO.saveAttachment(code, "red_card_pic", null, redCardPic);
