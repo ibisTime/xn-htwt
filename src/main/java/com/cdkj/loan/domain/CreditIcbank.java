@@ -56,6 +56,9 @@ public class CreditIcbank extends ABaseDO {
     // 备注系统编号
     private String note;
 
+    //工行制卡退回说明
+    private String backNote;
+
     // 系统编号
     private String systemCode;
 
@@ -190,4 +193,11 @@ public class CreditIcbank extends ABaseDO {
         this.bizCode = bizCode;
     }
 
+    public String getBackNote() {
+        return backNote;
+    }
+
+    public void setBackNote(String backNote) {
+        this.backNote = backNote;
+    }
 }

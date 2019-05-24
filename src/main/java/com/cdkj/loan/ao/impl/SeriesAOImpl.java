@@ -108,7 +108,7 @@ public class SeriesAOImpl implements ISeriesAO {
     public Paginable<Series> querySeriesPage(int start, int limit,
             Series condition) {
         Paginable<Series> paginable = seriesBO.getPaginable(start, limit,
-            condition);
+                condition);
         for (Series series : paginable.getList()) {
             init(series);
         }
@@ -139,29 +139,44 @@ public class SeriesAOImpl implements ISeriesAO {
         condition.setSeriesCode(series.getCode());
         condition.setStatus(EBrandStatus.UP.getCode());
         List<Car> cars = carBO.queryCar(condition);
-        for (Car car : cars) {
-            // 车型下配置列表
-            List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
-                .getCode());
-            // 所有配置
-            List<Carconfig> configs = carconfigBO.queryCarconfigList(null);
-            for (CarCarconfig carCarconfig : configList) {
-                for (Carconfig carconfig : configs) {
-                    if (carconfig.getCode()
-                        .equals(carCarconfig.getConfigCode())) {
-                        carconfig.setIsConfig(EBoolean.YES.getCode());
-                    } else if (null == carconfig.getIsConfig()) {
-                        carconfig.setIsConfig(EBoolean.NO.getCode());
-                    }
+        //最高价，最低价
+        long highest=0;
+        long lowest=0;
+        if (!cars.isEmpty()) {
+            for (Car car : cars) {
+                //最高价最低价判断
+                if (highest==0&&lowest==0){
+                    highest=car.getSalePrice();
+                    lowest=car.getSalePrice();
+                }else if (car.getSalePrice()>highest){
+                    highest=car.getSalePrice();
+                }else if(car.getSalePrice()<lowest){
+                    lowest=car.getSalePrice();
                 }
-                carCarconfig.setConfig(carconfigBO.getCarconfig(carCarconfig
-                    .getConfigCode()));
+                // 车型下配置列表
+                List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
+                        .getCode());
+                // 所有配置
+                List<Carconfig> configs = carconfigBO.queryCarconfigList(null);
+                for (CarCarconfig carCarconfig : configList) {
+                    for (Carconfig carconfig : configs) {
+                        if (carconfig.getCode()
+                                .equals(carCarconfig.getConfigCode())) {
+                            carconfig.setIsConfig(EBoolean.YES.getCode());
+                        } else if (null == carconfig.getIsConfig()) {
+                            carconfig.setIsConfig(EBoolean.NO.getCode());
+                        }
+                    }
+                    carCarconfig.setConfig(carconfigBO.getCarconfig(carCarconfig
+                            .getConfigCode()));
+                }
+
+                car.setCaonfigList(configList);
+                car.setConfigs(configs);
             }
-
-            car.setCaonfigList(configList);
-            car.setConfigs(configs);
-
         }
+        series.setHighest(highest);
+        series.setLowest(lowest);
         series.setCars(cars);
         series.setCarNumber(Long.valueOf(cars.size()));
 
