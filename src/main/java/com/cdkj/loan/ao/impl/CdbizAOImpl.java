@@ -1025,19 +1025,22 @@ public class CdbizAOImpl implements ICdbizAO {
         //不传isMy是在业务中查询
         if (StringUtils.isBlank(condition.getIsMy())) {
 
-            if(ESysRole.SALE.getCode().equals(sysUser.getRoleCode())){
+            if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
                 condition.setSaleUserId(condition.getUserId());
             }
-            if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())){
+            if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())) {
                 condition.setInsideJob(condition.getUserId());
             }
             condition.setRoleCode(sysUser.getRoleCode());
             page = cdbizBO.getPaginableByRoleCode(condition, start, limit);
             //传isMy是在报表中心查询
         } else {
-            BizTeam bizTeam=bizTeamBO.getBizTeam(sysUser.getTeamCode());
-            if(sysUser.getUserId().equals(bizTeam.getCaptain())){
-                condition.setTeamCode(sysUser.getTeamCode());
+            BizTeam bizTeam = bizTeamBO.getBizTeam(sysUser.getTeamCode());
+            //判断是否是团队长
+            if (null != bizTeam) {
+                if (sysUser.getUserId().equals(bizTeam.getCaptain())) {
+                    condition.setTeamCode(sysUser.getTeamCode());
+                }
             }
             page = cdbizBO.getPaginable(start, limit, condition);
         }
