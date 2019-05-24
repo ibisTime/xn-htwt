@@ -1,5 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EMissionStatus;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +77,18 @@ public class MissionAOImpl implements IMissionAO {
     @Override
     public void finish(String code) {
         Mission mission = missionBO.getMission(code);
+        if(!EMissionStatus.to_handle.getCode().equals(mission.getStatus())){
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该任务不是待完成状态无法完成");
+        }
         missionBO.refreshStatus(mission);
     }
 
     @Override
     public void valid(String code) {
         Mission mission = missionBO.getMission(code);
+        if(!EMissionStatus.to_handle.getCode().equals(mission.getStatus())){
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该任务不是待完成状态无法作废");
+        }
         missionBO.refreshFinish(mission);
     }
 
