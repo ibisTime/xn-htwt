@@ -505,7 +505,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setMamobile(creditUser.getMobile());
             req.setSmsphone(creditUser.getMobile());
             req.setAuthref(creditUser.getAuthref());
-            //日期格式修改
+            //日期格式修改(yyyymmdd)
             String[] date=creditUser.getStatdate().split("-");
             String statdate="";
             for(String dateString:date){
@@ -513,7 +513,12 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             }
             req.setStatdate(statdate);
             req.setIndate(creditUser.getNowAddressDate());
-            req.setJoindate(creditUser.getWorkDatetime());
+            date=creditUser.getWorkDatetime().split("-");
+            String workDatetime="";
+            for(String dateString :date){
+                workDatetime+=dateString;
+            }
+            req.setJoindate(workDatetime);
             req.setDrawmode("2");
 
             req.setMachgf("0");
