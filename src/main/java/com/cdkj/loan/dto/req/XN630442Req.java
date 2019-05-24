@@ -1,74 +1,43 @@
 /**
- * @Title XN630440Req.java 
- * @Package com.cdkj.loan.dto.req 
- * @Description 
- * @author taojian  
- * @date 2019年3月12日 下午5:10:03 
- * @version V1.0   
+ * @Title XN630440Req.java
+ * @Package com.cdkj.loan.dto.req
+ * @Description
+ * @author taojian
+ * @date 2019年3月12日 下午5:10:03
+ * @version V1.0
  */
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
-/** 
+/**
  * 修改配置
- * @author: taojian 
- * @since: 2019年3月12日 下午5:10:03 
+ *
+ * @author: taojian
+ * @since: 2019年3月12日 下午5:10:03
  * @history:
  */
+@Data
 public class XN630442Req {
 
-    @NotBlank
-    private String code;// 编号
+    @NotBlank(message = "编号不能为空")
+    private String code;
 
-    @NotBlank
-    private String name;// 名称
+    @NotBlank(message = "名称不能为空")
+    private String name;
 
-    @NotBlank
-    private String pic;// 图片
+    /**
+     * 图片
+     */
+    private String pic;
 
-    @NotBlank
-    private String updater;// 更新人
+    @NotBlank(message = "更新人不能为空")
+    private String updater;
 
-    private String remark;// 备注
+    /**
+     * 备注
+     */
+    private String remark;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }
