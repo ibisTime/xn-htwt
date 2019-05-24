@@ -115,7 +115,7 @@
                 AND t.company_code = #{companyCode}
             </if>
             <if test="teamCode != null and teamCode != '' ">
-                AND (t.team_code = #{teamCode} OR t.code in (select biz_code from tsys_biz_log where operator=#{userId})
+                AND (t.team_code = #{teamCode} OR t.code in (select biz_code from tsys_biz_log where operator=#{userId}))
             </if>
             <if test="captainCode != null and captainCode != '' ">
                 AND t.captain_code = #{captainCode}
