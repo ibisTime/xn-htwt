@@ -330,7 +330,7 @@
         FROM tdh_repay_biz t
         inner join tqj_cdbiz c on c.code = t.biz_code
         inner join tsys_role_node r on t.cur_node_code = r.node_code
-        left join tb_bank b on b.code = t.loan_ban
+        left join tb_bank b on b.code = t.loan_bank
         <include refid="where_condition_by_role"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">
