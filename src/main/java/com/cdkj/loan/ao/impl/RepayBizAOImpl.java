@@ -43,6 +43,7 @@ import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.enums.ERepayPlanSuggest;
+import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.enums.EtrailerManageResult;
 import com.cdkj.loan.exception.BizException;
 import java.util.Date;
@@ -477,7 +478,22 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Override
     public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
-            RepayBiz condition) {
+            RepayBiz condition, String userId) {
+        SYSUser user = sysUserBO.getUser(userId);
+        BizTeam bizTeam = bizTeamBO.getBizTeam(user.getTeamCode());
+        //判断是否是团队长
+        if (user.getUserId().equals(bizTeam.getCaptain())) {
+            condition.setTeamCode(user.getTeamCode());
+        } else {
+            if (ESysRole.SALE.getCode().equals(user.getRoleCode())) {
+                condition.setSaleUserId(condition.getUserId());
+            }
+            if (ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
+                condition.setInsideJob(condition.getUserId());
+            }
+        }
+        condition.setRoleCode(user.getRoleCode());
+
         Paginable<RepayBiz> paginable = repayBizBO.getPaginableByRoleCode(start,
                 limit, condition);
         for (RepayBiz repayBiz : paginable.getList()) {

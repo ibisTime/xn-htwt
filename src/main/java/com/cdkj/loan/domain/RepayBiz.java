@@ -227,4 +227,10 @@ public class RepayBiz extends ABaseDO {
 
     private Long retreatDeposit;// 可退押金金额
 
+    // 业务员编号
+    private String saleUserId;
+
+    // 内勤编号
+    private String insideJob;
+
 }

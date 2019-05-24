@@ -69,7 +69,7 @@
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="code != null and code != '' ">
-                AND t.code = #{code}
+                AND t.code like "%"#{code}"%"
             </if>
             <if test="bizCode != null and bizCode != '' ">
                 AND t.biz_code = #{bizCode}
@@ -123,6 +123,72 @@
             </if>
             <if test="teamCode != null and teamCode != '' ">
                 AND t.team_code = #{teamCode}
+            </if>
+        </trim>
+    </sql>
+    <sql id="where_condition_by_role">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code like "%"#{code}"%"
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="refType != null and refType != '' ">
+                AND t.ref_type = #{refType}
+            </if>
+            <if test="userId != null and userId != '' ">
+                AND t.user_id = #{userId}
+            </if>
+            <if test="realNameQuery != null and realNameQuery != '' ">
+                AND t.real_name like "%"#{realNameQuery}"%"
+            </if>
+            <if test="idNo != null and idNo != '' ">
+                AND t.id_no = #{idNo}
+            </if>
+            <if test="keyword != null and keyword != '' ">
+                AND (t.real_name like "%"#{keyword}"%" OR t.id_no like "%"#{keyword}"%")
+            </if>
+            <if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
+                AND t.cur_node_code in
+                <foreach item="item" index="index" collection="curNodeCodeList" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="curNodeCode != null and curNodeCode != '' ">
+                AND t.cur_node_code = #{curNodeCode}
+            </if>
+            <if test="roleCode != null and roleCode != '' ">
+                AND r.role_code = #{roleCode}
+            </if>
+
+            <if test="isAdvanceSettled != null and isAdvanceSettled != '' ">
+                AND t.is_advance_settled = #{isAdvanceSettled}
+            </if>
+            <if test="loanBank != null and loanBank != '' ">
+                AND t.loan_bank = #{loanBank}
+            </if>
+            <if test="loanAmount != null and loanAmount != '' ">
+                AND t.loan_amount = #{loanAmount}
+            </if>
+            <if test="periods != null and periods != '' ">
+                AND t.periods = #{periods}
+            </if>
+            <if test="bankFkDatetimeStart != null and bankFkDatetimeStart != '' ">
+                <![CDATA[AND t.bank_fk_datetime >= #{bankFkDatetimeStart}]]>
+            </if>
+            <if test="bankFkDatetimeEnd != null and bankFkDatetimeEnd != '' ">
+                <![CDATA[AND t.bank_fk_datetime <= #{bankFkDatetimeEnd}]]>
+            </if>
+            <if test="teamCode != null and teamCode != '' ">
+                AND t.team_code = #{teamCode}
+            </if>
+            <if test="saleUserId != null and saleUserId != '' ">
+                AND c.sale_user_id = #{saleUserId}
+            </if>
+            <if test="insideJob != null and insideJob != '' ">
+                AND c.inside_job = #{insideJob}
             </if>
         </trim>
     </sql>
@@ -262,9 +328,10 @@
         ,t.team_code
         ,b.bank_name as loan_bank_name
         FROM tdh_repay_biz t
+        inner join tqj_cdbiz c on c.code = t.biz_code
         inner join tsys_role_node r on t.cur_node_code = r.node_code
-        left join tb_bank b on b.code = t.loan_bank
-        <include refid="where_condition"/>
+        left join tb_bank b on b.code = t.loan_ban
+        <include refid="where_condition_by_role"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">
                 t.${order}
@@ -706,6 +773,7 @@
         ,ly_deposit = #{lyDeposit}
         ,cur_node_code = #{curNodeCode}
         ,loan_bank = #{loanBank}
+        ,team_code = #{teamCode}
         WHERE code = #{code}
     </update>
 </mapper>

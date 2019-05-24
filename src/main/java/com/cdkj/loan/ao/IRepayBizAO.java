@@ -1,8 +1,5 @@
 package com.cdkj.loan.ao;
 
-import java.util.Date;
-import java.util.List;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN630510Req;
@@ -16,8 +13,11 @@ import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.dto.req.XN630563Req;
+import java.util.Date;
+import java.util.List;
 
 public interface IRepayBizAO {
+
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     public void editBankcardNew(XN630510Req req);
@@ -99,6 +99,6 @@ public interface IRepayBizAO {
     public RepayBiz getRepayBiz(String code);
 
     public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
-            RepayBiz condition);
+            RepayBiz condition, String userId);
 
 }
