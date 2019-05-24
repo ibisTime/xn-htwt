@@ -1170,6 +1170,17 @@ public class CdbizAOImpl implements ICdbizAO {
         List<Attachment> attachmentList = attachmentBO
                 .queryBizAttachments(cdbiz.getCode());
         cdbiz.setAttachments(attachmentList);
+
+        //作废原因
+        SYSBizLog condition = new SYSBizLog();
+        condition.setBizCode(cdbiz.getCode());
+        condition.setDealNode(ENode.cancel_apply.getCode());
+        List<SYSBizLog> sysBizLogList = sysBizLogBO.querySYSBizLogList(condition);
+        if (CollectionUtils.isNotEmpty(sysBizLogList)) {
+            SYSBizLog sysBizLog = sysBizLogList.get(sysBizLogList.size() - 1);
+            cdbiz.setCancelReason(sysBizLog.getDealNote());
+        }
+
     }
 
     @Override
