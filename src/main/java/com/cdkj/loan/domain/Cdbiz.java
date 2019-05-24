@@ -280,4 +280,7 @@ public class Cdbiz extends ABaseDO {
     // 业务是否经办
     private String isMy;
 
+    // 作废原因
+    private String cancelReason;
+
 }

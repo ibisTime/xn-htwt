@@ -1,8 +1,8 @@
 package com.cdkj.loan.dto.req;
 
 import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN630420Req {
 
@@ -78,6 +78,7 @@ public class XN630420Req {
 
     private String remark; // 备注
 
+    @NotEmpty(message = "车辆配置不能为空")
     private List<String> configList;
 
     public List<String> getConfigList() {

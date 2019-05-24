@@ -158,6 +158,23 @@ CREATE TABLE `tb_gps_apply` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `tb_insurance_company`
+--
+
+DROP TABLE IF EXISTS `tb_insurance_company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_insurance_company` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `contact` varchar(255) DEFAULT NULL COMMENT '联系人',
+  `mobile` varchar(32) DEFAULT NULL COMMENT '联系电话',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='保险公司信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `tbf_withhold`
 --
 
@@ -1040,9 +1057,12 @@ CREATE TABLE `tdq_credit_user` (
   `relation` varchar(255) DEFAULT NULL COMMENT '与借款人关系',
   `loan_role` varchar(255) DEFAULT NULL COMMENT '贷款角色',
   `user_name` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `english_name` varchar(32) DEFAULT NULL COMMENT '英文名',
   `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
   `id_kind` varchar(4) DEFAULT NULL COMMENT '证件类型',
   `id_no` varchar(32) DEFAULT NULL COMMENT '身份证号',
+  `authref` varchar(64) DEFAULT NULL COMMENT '发证机关',
+  `statdate` varchar(64) DEFAULT NULL COMMENT '证件有效期',
   `credit_card_occupation` double DEFAULT NULL COMMENT '信用卡占比',
   `bank_credit_result` varchar(4) DEFAULT NULL COMMENT '银行征信结果说明',
   `bank_credit_result_remark` varchar(255) DEFAULT NULL,
@@ -1060,14 +1080,19 @@ CREATE TABLE `tdq_credit_user` (
   `other_income_note` varchar(255) DEFAULT NULL COMMENT '其他收入说明',
   `is_house_property` varchar(4) DEFAULT NULL COMMENT '房产证情况',
   `emergency_name1` varchar(32) DEFAULT NULL COMMENT '联系人1姓名',
+  `emergency_sex1` varchar(8) DEFAULT NULL COMMENT '联系人1性别',
   `emergency_relation1` varchar(4) DEFAULT NULL COMMENT '联系人1与申请人关系',
   `emergency_mobile1` varchar(32) DEFAULT NULL COMMENT '联系人1手机号码',
   `emergency_name2` varchar(32) DEFAULT NULL COMMENT '联系人2姓名',
+  `emergency_sex2` varchar(8) DEFAULT NULL COMMENT '联系人2性别',
   `emergency_relation2` varchar(4) DEFAULT NULL COMMENT '联系人2与申请人关系',
   `emergency_mobile2` varchar(32) DEFAULT NULL COMMENT '联系人2手机号码',
   `work_belong_industry` varchar(32) DEFAULT NULL COMMENT '所属行业',
   `work_company_property` varchar(32) DEFAULT NULL COMMENT '单位性质',
   `company_name` varchar(255) DEFAULT NULL COMMENT '工作单位名称',
+  `company_province` varchar(255) DEFAULT NULL COMMENT '单位所在省',
+  `company_city` varchar(255) DEFAULT NULL COMMENT '单位所在市',
+  `company_area` varchar(255) DEFAULT NULL COMMENT '单位所在区域',
   `company_address` varchar(255) DEFAULT NULL COMMENT '工作单位地址',
   `company_contact_no` varchar(32) DEFAULT NULL COMMENT '工作单位联系电话',
   `work_datetime` varchar(32) DEFAULT NULL COMMENT '何时进入现单位工作',
@@ -1091,6 +1116,7 @@ CREATE TABLE `tdq_credit_user` (
   `now_address_city` varchar(32) DEFAULT NULL COMMENT '现住地址市',
   `now_address_area` varchar(32) DEFAULT NULL COMMENT '现住地址区',
   `now_address` varchar(255) DEFAULT NULL COMMENT '现居住地址',
+  `now_address_date` varchar(64) DEFAULT NULL,
   `now_post_code` varchar(32) DEFAULT NULL COMMENT '现居住地址邮编',
   `icbank_code` varchar(32) DEFAULT NULL COMMENT '工行征信编号',
   `result` varchar(50) DEFAULT NULL,
@@ -1253,7 +1279,7 @@ CREATE TABLE `tdq_file_list` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1274,7 +1300,7 @@ CREATE TABLE `tdq_interview_video` (
   `end_time` datetime DEFAULT NULL COMMENT '结束时间',
   `file_format` varchar(32) DEFAULT NULL COMMENT '文件格式',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1421,7 +1447,7 @@ CREATE TABLE `tdq_limu_credit` (
   `result` longtext COMMENT '查询结果',
   `callback_datetime` datetime DEFAULT NULL COMMENT '回调时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2885,14 +2911,18 @@ CREATE TABLE `tqj_cdbiz` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
   `repay_card_number` varchar(64) DEFAULT NULL COMMENT '还款卡号',
+  `card_post_province` varchar(64) DEFAULT NULL COMMENT '卡邮寄地址省',
+  `card_post_city` varchar(64) DEFAULT NULL COMMENT '卡邮寄地址市',
+  `card_post_area` varchar(64) DEFAULT NULL COMMENT '卡邮寄地址区',
   `card_post_address` varchar(255) DEFAULT NULL COMMENT '卡邮寄地址',
+  `card_post_code` varchar(64) DEFAULT NULL,
   `status` varchar(4) DEFAULT NULL COMMENT '主状态',
   `make_card_status` varchar(4) DEFAULT NULL COMMENT '制卡状态',
   `intev_status` varchar(4) DEFAULT NULL COMMENT '面签状态',
   `fbhgps_status` varchar(4) DEFAULT NULL COMMENT '发保合gps状态',
   `enter_status` varchar(4) DEFAULT NULL COMMENT '第一次入档状态',
   `cancel_status` varchar(4) DEFAULT NULL COMMENT '作废状态',
-  `cur_node_code` varchar(5) DEFAULT NULL COMMENT '主流程节点',
+  `cur_node_code` varchar(8) DEFAULT NULL COMMENT '主流程节点',
   `intev_cur_node_code` varchar(5) DEFAULT NULL COMMENT '面签节点',
   `make_card_node` varchar(5) DEFAULT NULL COMMENT '制卡节点',
   `fbhgps_node` varchar(5) DEFAULT NULL COMMENT '发保合gps节点',
@@ -3245,7 +3275,7 @@ CREATE TABLE `tsys_biz_log` (
   `end_datetime` datetime DEFAULT NULL COMMENT '操作结束时间',
   `speed_time` varchar(255) DEFAULT NULL COMMENT '花费时间(单位：秒)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=356 DEFAULT CHARSET=utf8 COMMENT='操作日志表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3291,7 +3321,7 @@ CREATE TABLE `tsys_config` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3335,7 +3365,7 @@ CREATE TABLE `tsys_dict` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1390 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2432 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3374,7 +3404,7 @@ CREATE TABLE `tsys_menu_role` (
   `update_datetime` datetime DEFAULT NULL,
   `remark` varchar(765) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36412 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7191 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3409,7 +3439,7 @@ CREATE TABLE `tsys_node_flow` (
   `file_list` text,
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) COMMENT '节点流程配置'
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3442,7 +3472,7 @@ CREATE TABLE `tsys_role_node` (
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
   PRIMARY KEY (`id`) COMMENT '角色节点'
-) ENGINE=InnoDB AUTO_INCREMENT=2771 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=569 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
