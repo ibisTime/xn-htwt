@@ -260,8 +260,10 @@
 
         ,t.remark
         ,t.team_code
-        FROM
-        tdh_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
+        ,b.bank_name as loan_bank_name
+        FROM tdh_repay_biz t
+        inner join tsys_role_node r on t.cur_node_code = r.node_code
+        left join tb_bank b on b.code = t.loan_bank
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">
