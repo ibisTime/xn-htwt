@@ -158,6 +158,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbiz.setInsideJob(sysUser.getUserId());
         cdbiz.setLoanBank(bankCode);
         cdbiz.setCreditLoanAmount(creditLoanAmount);
+        cdbiz.setLoanAmount(creditLoanAmount);
         cdbiz.setApplyDatetime(new Date());
         String intevCurNodeCode = null;
         String status = null;

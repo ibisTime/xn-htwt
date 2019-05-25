@@ -245,6 +245,7 @@ public class CdbizAOImpl implements ICdbizAO {
         }
         // 修改业务
         EntityUtils.copyData(req, cdbiz);
+        cdbiz.setLoanAmount(StringValidater.toLong(req.getCreditLoanAmount()));
         cdbizBO.refreshCdbiz(cdbiz);
 
         // 修改征信人员
