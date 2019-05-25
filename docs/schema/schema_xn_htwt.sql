@@ -475,6 +475,7 @@ CREATE TABLE `tdq_advance` (
   `pay_back_datetime` datetime DEFAULT NULL COMMENT '付款时间',
   `pay_back_bankcard_code` varchar(255) DEFAULT NULL COMMENT '付款银行',
   `pay_back_bill_pdf` varchar(255) DEFAULT NULL COMMENT '付款凭证',
+  `advance_card_code` varchar(32) DEFAULT NULL COMMENT '垫资账号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='财务垫资';
 /*!40101 SET character_set_client = @saved_cs_client */;

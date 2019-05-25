@@ -1192,7 +1192,7 @@ public class CdbizAOImpl implements ICdbizAO {
         //面签生成时间
         if (CollectionUtils.isNotEmpty(bizLogList)) {
             for (SYSBizLog bizLog : bizLogList) {
-                if (bizLog.getRefOrder().equals(ENode.input_interview.getCode())) {
+                if (bizLog.getDealNode().equals(ENode.input_interview.getCode())) {
                     cdbiz.setIntevDateTime(bizLog.getEndDatetime());
                 }
             }
