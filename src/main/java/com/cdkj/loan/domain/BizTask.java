@@ -5,11 +5,12 @@ import java.util.Date;
 import lombok.Data;
 
 /**
-* 待办事项表
-* @author: silver 
-* @since: 2019-04-03 11:39:28
-* @history:
-*/
+ * 待办事项表
+ *
+ * @author: silver
+ * @since: 2019-04-03 11:39:28
+ * @history:
+ */
 @Data
 public class BizTask extends ABaseDO {
 
@@ -62,5 +63,8 @@ public class BizTask extends ABaseDO {
 
     // 操作角色名称
     private String operateRoleName;
+
+    // 客户姓名
+    private String userName;
 
 }

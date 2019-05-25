@@ -4,8 +4,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 增加角色
- * @author: xieyj 
- * @since: 2016年5月16日 下午10:53:50 
+ *
+ * @author: xieyj
+ * @since: 2016年5月16日 下午10:53:50
  * @history:
  */
 public class XN630000Req {
@@ -14,8 +15,7 @@ public class XN630000Req {
     @NotBlank(message = "角色名称不能为空")
     private String name;
 
-    // 角色等级(必填)
-    @NotBlank(message = "角色等级不能为空")
+    // 角色等级
     private String level;
 
     // 更新人(必填)

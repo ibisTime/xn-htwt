@@ -64,7 +64,7 @@ public interface ICdbizAO {
 
     // 制卡申请
     void makeCardApply(String code, String operator, String cardPostAddress,
-            String cardPostProvince, String cardPostCity, String cardPostArea,String cardPostCode,
+            String cardPostProvince, String cardPostCity, String cardPostArea, String cardPostCode,
             String redCardPic, String specialQuatoPic, String redCardPicWithIdPic);
 
     //工行制卡
@@ -74,6 +74,8 @@ public interface ICdbizAO {
     void inputCardNumber(String code, String cardNumber, String operator);
 
     Paginable<Cdbiz> queryCdbizPage(int start, int limit, Cdbiz condition);
+
+    Paginable<Cdbiz> queryCdbizPageAll(int start, int limit, Cdbiz condition);
 
     List<Cdbiz> queryCdbizList(Cdbiz condition);
 

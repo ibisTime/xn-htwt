@@ -64,6 +64,9 @@
             <if test="bizCode != null and bizCode != '' ">
                 AND t.biz_code = #{bizCode}
             </if>
+            <if test="userName != null and userName != '' ">
+                AND u.user_name like "%"#{userName}"%"
+            </if>
             <if test="refOrder != null and refOrder != '' ">
                 AND t.ref_order = #{refOrder}
             </if>
@@ -153,6 +156,7 @@
         FROM tqj_biz_task t
         inner join tsys_role_node rn on t.ref_node = rn.node_code
         inner join tqj_cdbiz cd on t.biz_code = cd.code
+        left join tdq_credit_user u on u.biz_code = t.biz_code and u.loan_role = '1'
         <include refid="where_condition_byRole"/>
     </select>
 

@@ -1,86 +1,160 @@
-INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
-                         `company_code`, `system_code`)
-VALUES ('0', NULL, 'guarant_print_template_id', '套打模板', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '1', '工行', 'USYS201800000000001', '2018-08-15 17:32:12',
-        'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '2', '中行总对总-手续费分期', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '3', '中行总对总 手续费一次性', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '5', '中行 传统', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '8', '中行总对总-附加费', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '10', '建设银行-服务费', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '11', '建设银行-附加贷', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020'),
-       ('1', 'guarant_print_template_id', '13', '建设银行-信用+担保', 'USYS201800000000001',
-        '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+UPDATE `tsys_node`
+SET `code`='j1',
+    `type`='j'
+WHERE `code` = '003_01';
+UPDATE `tsys_node`
+SET `code`='j2',
+    `type`='j'
+WHERE `code` = '003_02';
+UPDATE `tsys_node`
+SET `code`='j3',
+    `type`='j'
+WHERE `code` = '003_03';
+UPDATE `tsys_node`
+SET `code`='j4',
+    `type`='j'
+WHERE `code` = '003_04';
+UPDATE `tsys_node`
+SET `code`='j5',
+    `type`='j'
+WHERE `code` = '003_05';
+UPDATE `tsys_node`
+SET `code`='j6',
+    `type`='j'
+WHERE `code` = '003_06';
+UPDATE `tsys_node`
+SET `code`='j7',
+    `type`='j'
+WHERE `code` = '003_07';
+UPDATE `tsys_node`
+SET `code`='j8',
+    `type`='j'
+WHERE `code` = '003_08';
+UPDATE `tsys_node`
+SET `code`='j9',
+    `type`='j'
+WHERE `code` = '003_09';
+UPDATE `tsys_node`
+SET `code`='j10',
+    `type`='j'
+WHERE `code` = '003_10';
+UPDATE `tsys_node`
+SET `code`='j11',
+    `type`='j'
+WHERE `code` = '003_11';
+UPDATE `tsys_node`
+SET `code`='j12',
+    `type`='j'
+WHERE `code` = '003_12';
+UPDATE `tsys_node`
+SET `code`='j13',
+    `type`='j'
+WHERE `code` = '003_13';
+UPDATE `tsys_node`
+SET `code`='j14',
+    `type`='j'
+WHERE `code` = '003_14';
+UPDATE `tsys_node`
+SET `code`='j15',
+    `type`='j'
+WHERE `code` = '003_15';
+UPDATE `tsys_node`
+SET `code`='j16',
+    `type`='j'
+WHERE `code` = '003_16';
+UPDATE `tsys_node`
+SET `code`='j17',
+    `type`='j'
+WHERE `code` = '003_17';
+UPDATE `tsys_node`
+SET `code`='j18',
+    `type`='j'
+WHERE `code` = '003_18';
+UPDATE `tsys_node`
+SET `code`='j19',
+    `type`='j'
+WHERE `code` = '003_19';
+UPDATE `tsys_node`
+SET `code`='j20',
+    `type`='j'
+WHERE `code` = '003_20';
 
 
-CREATE TABLE `tb_insurance_company`
-(
-  `code`    varchar(32) NOT NULL COMMENT '编号',
-  `name`    varchar(255) DEFAULT NULL COMMENT '名称',
-  `contact` varchar(255) DEFAULT NULL COMMENT '联系人',
-  `mobile`  varchar(32)  DEFAULT NULL COMMENT '联系电话',
-  `remark`  varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8 COMMENT ='保险公司信息表';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j2',
+    `next_node`='j3'
+WHERE `id` = '119';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j3',
+    `next_node`='j4',
+    `back_node`='j2'
+WHERE `id` = '120';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j4',
+    `next_node`='j5',
+    `back_node`='j2'
+WHERE `id` = '121';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j5',
+    `next_node`='j6',
+    `back_node`='j2'
+WHERE `id` = '122';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j6',
+    `next_node`='j7'
+WHERE `id` = '123';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j8',
+    `next_node`='j9'
+WHERE `id` = '124';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j9',
+    `next_node`='j10'
+WHERE `id` = '125';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j10',
+    `next_node`='j11'
+WHERE `id` = '126';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j11',
+    `next_node`='j17',
+    `back_node`='j13'
+WHERE `id` = '127';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j17',
+    `next_node`='j18'
+WHERE `id` = '128';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j18',
+    `next_node`='j19',
+    `back_node`='j17'
+WHERE `id` = '129';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j19',
+    `back_node`='j18'
+WHERE `id` = '130';
+UPDATE `tsys_node_flow`
+SET `type`='j',
+    `current_node`='j20',
+    `next_node`='j2',
+    `back_node`='j1'
+WHERE `id` = '134';
 
-INSERT INTO `tb_insurance_company`
-VALUES ('IC201809191430007283689', '太平洋保险', 'XXX', '15122222223', '测试');
 
-
-UPDATE `tsys_menu`
-SET `order_no`='3'
-WHERE `code` = 'SM201805291034405409203';
-UPDATE `tsys_menu`
-SET `order_no`='4'
-WHERE `code` = 'SM201805291035342036590';
-UPDATE `tsys_menu`
-SET `order_no`='5'
-WHERE `code` = 'SM201804271806010518814';
-UPDATE `tsys_menu`
-SET `order_no`='6'
-WHERE `code` = 'SM201804271806335389896';
-UPDATE `tsys_menu`
-SET `order_no`='7'
-WHERE `code` = 'SM201806092050389193535';
-UPDATE `tsys_menu`
-SET `order_no`='8'
-WHERE `code` = 'SM201805291030239333610';
-UPDATE `tsys_menu`
-SET `order_no`='11'
-WHERE `code` = 'SM201806092144096223377';
-UPDATE `tsys_menu`
-SET `order_no`='10'
-WHERE `code` = 'SM201805291032194718466';
-UPDATE `tsys_menu`
-SET `order_no`='12'
-WHERE `code` = 'SM201805291033129682833';
-UPDATE `tsys_menu`
-SET `order_no`='13'
-WHERE `code` = 'SM201805291037383171866';
-
-
-
-INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`,
-                         `system_code`)
-VALUES ('0', 'overdue_menu_status', '逾期名单状态', 'admin', '2019-05-18 13:04:24', 'CD-HTWT000020',
-        'CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
-                         `company_code`, `system_code`)
-VALUES ('1', 'overdue_menu_status', '0', '信息不匹配待处理', 'admin', '2019-05-18 13:04:24',
-        'CD-HTWT000020', 'CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
-                         `company_code`, `system_code`)
-VALUES ('1', 'overdue_menu_status', '1', '已匹配', 'admin', '2019-05-18 13:04:24', 'CD-HTWT000020',
-        'CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
-                         `company_code`, `system_code`)
-VALUES ('1', 'overdue_menu_status', '2', '已手动匹配', 'admin', '2019-05-18 13:04:24', 'CD-HTWT000020',
-        'CD-HTWT000020');
+ALTER TABLE `tb_bank`
+  CHANGE COLUMN `client_valid_date` `client_valid_date` VARCHAR(255) NULL DEFAULT NULL COMMENT '委托有效期',
+  ADD COLUMN `mechanism_abb` VARCHAR(255) NULL COMMENT '贷款机构简称' AFTER `bank_name`,
+  ADD COLUMN `bank_full_name` VARCHAR(255) NULL COMMENT '银行全称' AFTER `mechanism_abb`,
+  ADD COLUMN `mobile` VARCHAR(32) NULL COMMENT '电话' AFTER `subbranch`;

@@ -6,15 +6,16 @@ import lombok.Data;
 
 /**
  * 银行信息
- * @author: silver 
- * @since: 2018年5月27日 下午3:43:43 
+ *
+ * @author: silver
+ * @since: 2018年5月27日 下午3:43:43
  * @history:
  */
 @Data
 public class Bank extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = 7671886097276757226L;
 
@@ -27,8 +28,17 @@ public class Bank extends ABaseDO {
     // 银行名称
     private String bankName;
 
+    // 贷款机构简称
+    private String mechanismAbb;
+
+    // 银行全称
+    private String bankFullName;
+
     // 开户支行名称
     private String subbranch;
+
+    // 电话
+    private String mobile;
 
     // 12期
     private Double rate12;
@@ -67,7 +77,7 @@ public class Bank extends ABaseDO {
     private String bankClient;
 
     // 委托有效期
-    private Date clientValidDate;
+    private Integer clientValidDate;
 
     // 授权人姓名
     private String autherName;

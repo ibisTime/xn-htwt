@@ -4,8 +4,7 @@ import com.cdkj.loan.ao.IBankAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.creditCommon.StringUtils;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.SYSUser;
@@ -17,15 +16,15 @@ import com.cdkj.loan.exception.BizException;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 银行信息
- * @author: silver 
- * @since: 2018年5月27日 下午4:51:22 
+ *
+ * @author: silver
+ * @since: 2018年5月27日 下午4:51:22
  * @history:
  */
 @Service
@@ -45,25 +44,11 @@ public class BankAOImpl implements IBankAO {
         List<Bank> bankList = bankBO.queryBankList(condition);
         if (CollectionUtils.isNotEmpty(bankList)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "银行信息已存在，请勿重复添加!");
+                    "银行信息已存在，请勿重复添加!");
         }
 
         Bank data = new Bank();
-        BeanUtils.copyProperties(req, data);
-        data.setRate12(StringValidater.toDouble(req.getRate12()));
-        data.setRate18(StringValidater.toDouble(req.getRate18()));
-        data.setRate24(StringValidater.toDouble(req.getRate24()));
-
-        data.setRate36(StringValidater.toDouble(req.getRate36()));
-
-        data.setZkRate12(StringValidater.toDouble(req.getZkRate12()));
-        data.setZkRate18(StringValidater.toDouble(req.getZkRate18()));
-        data.setZkRate24(StringValidater.toDouble(req.getZkRate24()));
-
-        data.setZkRate36(StringValidater.toDouble(req.getZkRate36()));
-
-        data.setClientValidDate(
-                DateUtil.strToDate(req.getClientValidDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        EntityUtils.copyData(req, data);
         data.setStatus(EBankStatus.Shelf_YES.getCode());
         data.setUpdateDatetime(new Date());
         return bankBO.saveBank(data);
@@ -76,26 +61,15 @@ public class BankAOImpl implements IBankAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "已删除，请不要提交");
         }
 
-        bankBO.dropBank(code);
+        bank.setStatus(EBankStatus.Shelf_NO.getCode());
+        bankBO.editBank(bank);
     }
 
     @Override
     public void editBank(XN632032Req req) {
         // 编辑银行信息
         Bank data = bankBO.getBank(req.getCode());
-        BeanUtils.copyProperties(req, data);
-        data.setRate12(StringValidater.toDouble(req.getRate12()));
-        data.setRate18(StringValidater.toDouble(req.getRate18()));
-        data.setRate24(StringValidater.toDouble(req.getRate24()));
-        data.setRate36(StringValidater.toDouble(req.getRate36()));
-
-        data.setZkRate12(StringValidater.toDouble(req.getZkRate12()));
-        data.setZkRate18(StringValidater.toDouble(req.getZkRate18()));
-        data.setZkRate24(StringValidater.toDouble(req.getZkRate24()));
-
-        data.setZkRate36(StringValidater.toDouble(req.getZkRate36()));
-        data.setClientValidDate(
-                DateUtil.strToDate(req.getClientValidDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        EntityUtils.copyData(req, data);
 
         data.setUpdateDatetime(new Date());
         bankBO.editBank(data);

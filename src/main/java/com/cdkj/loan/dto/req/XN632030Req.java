@@ -5,8 +5,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 新增银行信息
- * @author: silver 
- * @since: 2018年5月27日 下午4:46:11 
+ *
+ * @author: silver
+ * @since: 2018年5月27日 下午4:46:11
  * @history:
  */
 @Data
@@ -20,8 +21,16 @@ public class XN632030Req {
     @NotBlank
     private String bankName;
 
+    // 贷款机构简称
+    private String mechanismAbb;
+
+    // 银行全称
+    private String bankFullName;
+
     @NotBlank
     private String subbranch;
+
+    private String mobile;
 
     // 12期
     private String rate12;

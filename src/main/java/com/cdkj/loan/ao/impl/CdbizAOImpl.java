@@ -1052,6 +1052,17 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    public Paginable<Cdbiz> queryCdbizPageAll(int start, int limit, Cdbiz condition) {
+        Paginable<Cdbiz> page = cdbizBO.getPaginable(start, limit, condition);
+        if (page != null) {
+            for (Cdbiz cdbiz : page.getList()) {
+                init(cdbiz);
+            }
+        }
+        return page;
+    }
+
+    @Override
     public List<Cdbiz> queryCdbizList(Cdbiz condition) {
         List<Cdbiz> list = cdbizBO.queryCdbizList(condition);
         for (Cdbiz cdbiz : list) {
@@ -1200,7 +1211,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void creditBank(String code) {
 
         CreditUser creditUser = creditUserBO.getCreditUser(code);
@@ -1238,7 +1249,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void applyCancel(XN632190Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ECdbizStatus.G0.getCode().equals(cdbiz.getCancelStatus())) {
@@ -1264,7 +1275,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void cancelBizAudit(XN632191Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ENode.biz_approve.getCode().equals(cdbiz.getCancelNodeCode())) {
@@ -1308,7 +1319,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void cancelFinanceAudit(XN632192Req req) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ENode.money_approve.getCode().equals(cdbiz.getCancelNodeCode())) {

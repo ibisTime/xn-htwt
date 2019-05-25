@@ -24,6 +24,9 @@ public class XN632525Req extends APageReq {
     // 关联节点
     private String refNode;
 
+    // 客户姓名
+    private String userName;
+
     // 状态(0 待处理 1 已完成)
     private String status;
 
