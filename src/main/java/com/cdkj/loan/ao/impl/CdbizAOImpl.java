@@ -1189,6 +1189,15 @@ public class CdbizAOImpl implements ICdbizAO {
                 .getCode());
         cdbiz.setBizLogs(bizLogList);
 
+        //面签生成时间
+        if (CollectionUtils.isNotEmpty(bizLogList)) {
+            for (SYSBizLog bizLog : bizLogList) {
+                if (bizLog.getRefOrder().equals(ENode.input_interview.getCode())) {
+                    cdbiz.setIntevDateTime(bizLog.getEndDatetime());
+                }
+            }
+        }
+
         // GPS安装列表
         List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
                 .queryBudgetOrderGpsList(cdbiz.getCode());

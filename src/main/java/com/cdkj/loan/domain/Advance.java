@@ -88,4 +88,7 @@ public class Advance extends ABaseDO {
     // 付款凭证
     private String payBackBillPdf;
 
+    // 垫资账号
+    private String advanceCardCode;
+
 }

@@ -243,6 +243,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
                 .getAdvanceFundAmount()));
         advance.setAdvanceFundDatetime(DateUtil.strToDate(
                 req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        advance.setAdvanceCardCode(req.getAdvanceCardCode());
         advanceBO.advanceBackUp(advance);
 
         // 水单

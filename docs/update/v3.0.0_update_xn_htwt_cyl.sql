@@ -153,6 +153,42 @@ SET `type`='j',
 WHERE `id` = '134';
 
 
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`,
+                         `system_code`)
+VALUES ('0', 'collect_type', '收款账号类型', 'admin', '2019-05-25 13:31:57', 'CD-HTWT000020',
+        'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`)
+VALUES ('1', 'collect_type', '1', '分公司收款账号', 'admin', '2019-05-25 13:31:57', 'CD-HTWT000020',
+        'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`)
+VALUES ('1', 'collect_type', '2', '经销商收款账号', 'admin', '2019-05-25 13:31:57', 'CD-HTWT000020',
+        'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`)
+VALUES ('1', 'collect_type', '3', '经销商返点账号', 'admin', '2019-05-25 13:31:57', 'CD-HTWT000020',
+        'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`,
+                         `company_code`, `system_code`)
+VALUES ('1', 'collect_type', '4', '垫资账号', 'admin', '2019-05-25 13:31:57', 'CD-HTWT000020',
+        'CD-HTWT000020');
+
+
+# 删除"查看视频按钮"
+DELETE
+FROM `tsys_menu`
+WHERE `code` = 'SM201905132115149189944';
+
+DELETE
+FROM `tsys_menu_role`
+WHERE `id` = '8003';
+DELETE
+FROM `tsys_menu_role`
+WHERE `id` = '8301';
+
+
+
 ALTER TABLE `tb_bank`
   CHANGE COLUMN `client_valid_date` `client_valid_date` VARCHAR(255) NULL DEFAULT NULL COMMENT '委托有效期',
   ADD COLUMN `mechanism_abb` VARCHAR(255) NULL COMMENT '贷款机构简称' AFTER `bank_name`,
@@ -161,3 +197,6 @@ ALTER TABLE `tb_bank`
 
 ALTER TABLE `tqj_cdbiz`
   ADD COLUMN `credit_loan_amount` BIGINT(20) NULL COMMENT '征信贷款金额' AFTER `loan_bank`;
+
+ALTER TABLE `tdq_advance`
+  ADD COLUMN `advance_card_code` VARCHAR(32) NULL COMMENT '垫资账号' AFTER `pay_back_bill_pdf`;

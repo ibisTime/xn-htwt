@@ -31,6 +31,7 @@
         <result column="pay_back_datetime" property="payBackDatetime"/>
         <result column="pay_back_bankcard_code" property="payBackBankcardCode"/>
         <result column="pay_back_bill_pdf" property="payBackBillPdf"/>
+        <result column="advance_card_code" property="advanceCardCode"/>
     </resultMap>
 
     <sql id="where_condition">
@@ -89,6 +90,7 @@
         ,t.pay_back_datetime
         ,t.pay_back_bankcard_code
         ,t.pay_back_bill_pdf
+        ,t.advance_card_code
         FROM
         tdq_advance t
         <include refid="where_condition"/>
@@ -116,6 +118,7 @@
 		
 		,back_advance_status
 		,back_advance_fund_type
+		,advance_card_code
 		)
 		VALUES(
 		#{code}
@@ -126,6 +129,7 @@
 		
 		,#{backAdvanceStatus}
 		,#{backAdvanceFundType}
+		,#{advanceCardCode}
 		)
 	</insert>
 
@@ -166,6 +170,7 @@
 		SET
 		advance_fund_datetime = #{advanceFundDatetime}
 		,advance_fund_amount = #{advanceFundAmount}
+		,advance_card_code = #{advanceCardCode}
 		WHERE code = #{code}
 	</update>
 
@@ -195,6 +200,7 @@
 		,pay_back_datetime = #{payBackDatetime}
 		,pay_back_bankcard_code = #{payBackBankcardCode}
 		,pay_back_bill_pdf = #{payBackBillPdf}
+		,advance_card_code = #{advanceCardCode}
 		WHERE code = #{code}
 	</update>
 

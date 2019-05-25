@@ -31,4 +31,11 @@ public class XN632464Req {
     @NotBlank
     private String billPdf;
 
+    /**
+     * 垫资账号
+     */
+    @NotBlank(message = "垫资账号不能为空")
+    private String advanceCardCode;
+
+
 }

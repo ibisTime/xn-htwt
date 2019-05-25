@@ -286,4 +286,7 @@ public class Cdbiz extends ABaseDO {
     // 作废原因
     private String cancelReason;
 
+    // 面签生成时间
+    private Date intevDateTime;
+
 }
