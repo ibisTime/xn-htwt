@@ -481,16 +481,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
             RepayBiz condition, String userId) {
         SYSUser user = sysUserBO.getUser(userId);
         BizTeam bizTeam = bizTeamBO.getBizTeam(user.getTeamCode());
-        //判断是否是团队长
-        if (user.getUserId().equals(bizTeam.getCaptain())) {
-            condition.setTeamCode(user.getTeamCode());
-        } else {
-            if (ESysRole.SALE.getCode().equals(user.getRoleCode())) {
-                condition.setSaleUserId(condition.getUserId());
+        if (bizTeam != null) {
+            //判断是否是团队长
+            if (user.getUserId().equals(bizTeam.getCaptain())) {
+                condition.setTeamCode(user.getTeamCode());
+            } else {
+                if (ESysRole.SALE.getCode().equals(user.getRoleCode())) {
+                    condition.setSaleUserId(condition.getUserId());
+                }
             }
-            if (ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
-                condition.setInsideJob(condition.getUserId());
-            }
+        }
+        if (ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
+            condition.setInsideJob(condition.getUserId());
         }
         condition.setRoleCode(user.getRoleCode());
 
