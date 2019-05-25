@@ -2945,6 +2945,7 @@ CREATE TABLE `tqj_cdbiz` (
   `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员编号',
   `inside_job` varchar(32) DEFAULT NULL COMMENT '内勤编号',
   `loan_bank` varchar(32) DEFAULT NULL COMMENT '经办银行',
+  `credit_loan_amount` bigint(20) DEFAULT NULL COMMENT '征信贷款金额',
   `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
   `enter_location` varchar(32) DEFAULT NULL COMMENT '入档位置',
   `enter_datetime` datetime DEFAULT NULL COMMENT '入档时间',

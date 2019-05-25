@@ -14,6 +14,7 @@
         <result column="sale_user_id" property="saleUserId"/>
         <result column="inside_job" property="insideJob"/>
         <result column="loan_bank" property="loanBank"/>
+        <result column="credit_loan_amount" property="creditLoanAmount"/>
         <result column="loan_amount" property="loanAmount"/>
         <result column="enter_location" property="enterLocation"/>
         <result column="enter_datetime" property="enterDatetime"/>
@@ -253,6 +254,7 @@
         ,t.sale_user_id
         ,t.inside_job
         ,t.loan_bank
+        ,t.credit_loan_amount
         ,t.loan_amount
         ,t.enter_location
         ,t.enter_datetime
@@ -313,6 +315,7 @@
         ,t.sale_user_id
         ,t.inside_job
         ,t.loan_bank
+        ,t.credit_loan_amount
         ,t.loan_amount
         ,t.enter_location
         ,t.enter_datetime
@@ -363,6 +366,7 @@
         ,t.sale_user_id
         ,t.inside_job
         ,t.loan_bank
+        ,t.credit_loan_amount
         ,t.loan_amount
         ,t.enter_location
         ,t.enter_datetime
@@ -450,6 +454,7 @@
 		,sale_user_id
 		,inside_job
 		,loan_bank
+		,credit_loan_amount
 		,loan_amount
 		,enter_location
 		,enter_datetime
@@ -489,6 +494,7 @@
 		,#{saleUserId}
 		,#{insideJob}
 		,#{loanBank}
+		,#{creditLoanAmount}
 		,#{loanAmount}
 		,#{enterLocation}
 		,#{enterDatetime}
@@ -531,6 +537,7 @@
 		,sale_user_id = #{saleUserId}
 		,inside_job = #{insideJob}
 		,loan_bank = #{loanBank}
+		,credit_loan_amount = #{creditLoanAmount}
 		,loan_amount = #{loanAmount}
 		,enter_location = #{enterLocation}
 		,enter_datetime = #{enterDatetime}

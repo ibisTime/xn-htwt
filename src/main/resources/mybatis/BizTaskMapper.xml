@@ -21,6 +21,7 @@
 
         <result column="role_code" property="roleCode"/>
         <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
     </resultMap>
 
     <sql id="where_condition">
@@ -153,6 +154,7 @@
         ,t.operater
         ,t.operate_role
         ,t.finish_datetime
+        ,u.user_name as user_name
         FROM tqj_biz_task t
         inner join tsys_role_node rn on t.ref_node = rn.node_code
         inner join tqj_cdbiz cd on t.biz_code = cd.code
@@ -165,6 +167,7 @@
         SELECT count(1) FROM tqj_biz_task t
         inner join tsys_role_node rn on t.ref_node = rn.node_code
         inner join tqj_cdbiz cd on t.biz_code = cd.code
+        left join tdq_credit_user u on u.biz_code = t.biz_code and u.loan_role = '1'
         <include refid="where_condition_byRole"/>
     </select>
 

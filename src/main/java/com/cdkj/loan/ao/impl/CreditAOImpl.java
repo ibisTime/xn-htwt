@@ -281,7 +281,7 @@ public class CreditAOImpl implements ICreditAO {
         }
         // 修改征信单
         credit.setLoanBankCode(req.getLoanBankCode());
-        credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
+        credit.setLoanAmount(StringValidater.toLong(req.getCreditLoanAmount()));
         credit.setSecondCarReport(req.getSecondCarReport());
         credit.setXszFront(req.getXszFront());
         credit.setXszReverse(req.getXszReverse());

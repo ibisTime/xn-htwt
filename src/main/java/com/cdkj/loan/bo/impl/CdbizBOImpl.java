@@ -1,49 +1,36 @@
 package com.cdkj.loan.bo.impl;
 
-import com.cdkj.loan.bo.ICarInfoBO;
-import com.cdkj.loan.bo.ILoanProductBO;
-import com.cdkj.loan.bo.IProductBO;
-import com.cdkj.loan.bo.IRepayBizBO;
-import com.cdkj.loan.common.AmountUtil;
-import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.Attachment;
-import com.cdkj.loan.domain.CarInfo;
-import com.cdkj.loan.domain.LoanProduct;
-import com.cdkj.loan.domain.Product;
-import com.cdkj.loan.domain.RepayBiz;
-import com.cdkj.loan.dto.req.XN798703Req;
-import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBizType;
-import com.cdkj.loan.enums.EReqBudgetNode;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAttachmentBO;
+import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICdbizDAO;
 import com.cdkj.loan.dao.ICreditUserDAO;
+import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.LoanProduct;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632123Req;
 import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.dto.req.XN632531Req;
 import com.cdkj.loan.dto.req.XN798700Req;
+import com.cdkj.loan.dto.req.XN798703Req;
 import com.cdkj.loan.enums.EAttachName;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
@@ -54,6 +41,12 @@ import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.http.BizConnecter;
 import com.cdkj.loan.http.JsonUtils;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
@@ -149,7 +142,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     }
 
     @Override
-    public Cdbiz saveCdbiz(String bankCode, String bizType, Long dkAmount,
+    public Cdbiz saveCdbiz(String bankCode, String bizType, Long creditLoanAmount,
             SYSUser sysUser, BizTeam bizTeam, String node, String dealType,
             String remark) {
         String code = OrderNoGenerater
@@ -164,7 +157,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbiz.setSaleUserId(sysUser.getUserId());
         cdbiz.setInsideJob(sysUser.getUserId());
         cdbiz.setLoanBank(bankCode);
-        cdbiz.setLoanAmount(dkAmount);
+        cdbiz.setCreditLoanAmount(creditLoanAmount);
         cdbiz.setApplyDatetime(new Date());
         String intevCurNodeCode = null;
         String status = null;
@@ -312,7 +305,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
 
     @Override
     public void refreshCardAddress(Cdbiz cdbiz, String cardPostAddress, String cardPostProvince,
-            String cardPostCity, String cardPostArea,String cardPostCode) {
+            String cardPostCity, String cardPostArea, String cardPostCode) {
         cdbiz.setCardPostAddress(cardPostAddress);
         cdbiz.setCardPostProvince(cardPostProvince);
         cdbiz.setCardPostCity(cardPostCity);
@@ -506,17 +499,17 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             req.setSmsphone(creditUser.getMobile());
             req.setAuthref(creditUser.getAuthref());
             //日期格式修改(yyyymmdd)
-            String[] date=creditUser.getStatdate().split("-");
-            String statdate="";
-            for(String dateString:date){
-                statdate+=dateString;
+            String[] date = creditUser.getStatdate().split("-");
+            String statdate = "";
+            for (String dateString : date) {
+                statdate += dateString;
             }
             req.setStatdate(statdate);
             req.setIndate(creditUser.getNowAddressDate());
-            date=creditUser.getWorkDatetime().split("-");
-            String workDatetime="";
-            for(String dateString :date){
-                workDatetime+=dateString;
+            date = creditUser.getWorkDatetime().split("-");
+            String workDatetime = "";
+            for (String dateString : date) {
+                workDatetime += dateString;
             }
             req.setJoindate(workDatetime);
             req.setDrawmode("2");

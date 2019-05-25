@@ -202,7 +202,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 生成业务编号
         Cdbiz cdbiz = cdbizBO.saveCdbiz(req.getLoanBankCode(),
-                req.getBizType(), StringValidater.toLong(req.getLoanAmount()),
+                req.getBizType(), StringValidater.toLong(req.getCreditLoanAmount()),
                 sysUser, bizTeam, currentNode, req.getButtonCode(), req.getNote());
 
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {

@@ -158,3 +158,6 @@ ALTER TABLE `tb_bank`
   ADD COLUMN `mechanism_abb` VARCHAR(255) NULL COMMENT '贷款机构简称' AFTER `bank_name`,
   ADD COLUMN `bank_full_name` VARCHAR(255) NULL COMMENT '银行全称' AFTER `mechanism_abb`,
   ADD COLUMN `mobile` VARCHAR(32) NULL COMMENT '电话' AFTER `subbranch`;
+
+ALTER TABLE `tqj_cdbiz`
+  ADD COLUMN `credit_loan_amount` BIGINT(20) NULL COMMENT '征信贷款金额' AFTER `loan_bank`;
