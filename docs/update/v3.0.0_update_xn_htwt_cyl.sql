@@ -180,13 +180,6 @@ DELETE
 FROM `tsys_menu`
 WHERE `code` = 'SM201905132115149189944';
 
-DELETE
-FROM `tsys_menu_role`
-WHERE `id` = '8003';
-DELETE
-FROM `tsys_menu_role`
-WHERE `id` = '8301';
-
 
 
 ALTER TABLE `tb_bank`
