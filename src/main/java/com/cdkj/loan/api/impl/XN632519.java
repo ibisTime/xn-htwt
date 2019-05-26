@@ -7,7 +7,7 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Cdbiz;
-import com.cdkj.loan.dto.req.XN632515Req;
+import com.cdkj.loan.dto.req.XN632519Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -23,7 +23,7 @@ public class XN632519 extends AProcessor {
 
     private ICdbizAO cdbizAO = SpringContextHolder.getBean(ICdbizAO.class);
 
-    private XN632515Req req = null;
+    private XN632519Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
@@ -42,7 +42,7 @@ public class XN632519 extends AProcessor {
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632515Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632519Req.class);
         ObjValidater.validateReq(req);
     }
 }

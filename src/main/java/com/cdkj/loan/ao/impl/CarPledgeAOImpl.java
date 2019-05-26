@@ -91,7 +91,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             carPledge.setPledgeUser(req.getPledgeUser());
             carPledge.setPledgeUserIdCard(req.getPledgeUserIdCard());
             carPledge.setPledgeAddress(req.getPledgeAddress());
-            carPledgeBO.refreshSupplementNote(carPledge);
+            carPledgeBO.refreshCarPledge(carPledge);
         }
 
         // 更新业务状态
@@ -150,16 +150,16 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
                 cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
 
-        // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, req.getCode(),
-                cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
-
         // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.FK_SEND_CAR_PLEDGE.getCode(),
                 cdbiz.getCode(), cdbiz.getSaleUserId(), ENode.submit_3.getCode(),
                 ENode.receive_approve_3.getCode(), null);
+
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(),
+                logisticsCode, preCurNodeCode, nextNodeCode, req.getOperator());
     }
 
     @Override
@@ -216,16 +216,16 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
                 cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
 
-        // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, req.getCode(),
-                cdbiz.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
-
         // 生成资料传递
         String logisticsCode = logisticsBO.saveLogistics(
                 ELogisticsType.BUDGET.getCode(),
                 ELogisticsCurNodeType.SALE_SEND_CAR_PLEDGE.getCode(),
                 cdbiz.getCode(), cdbiz.getSaleUserId(), ENode.submit_4.getCode(),
                 ENode.receive_approve_4.getCode(), null);
+
+        // 待办事项
+        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(),
+                logisticsCode, preCurNodeCode, nextNodeCode, req.getOperator());
     }
 
     @Override

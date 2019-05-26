@@ -780,10 +780,16 @@ public class CdbizAOImpl implements ICdbizAO {
         carInfoBO.entryFbhInfoByBiz(req.getCode(), req.getPolicyDatetime(),
                 req.getPolicyDueDate());
 
-        // 删除附件
-        attachmentBO.removeByCategory(req.getCode(), "car_procedure");
         // 添加附件
-        attachmentBO.saveAttachment(req.getCode(), req);
+        attachmentBO
+                .saveAttachment(req.getCode(), "car_invoice", "car_procedure", req.getCarInvoice());
+        attachmentBO
+                .saveAttachment(req.getCode(), "car_jqx", "car_procedure", req.getCarJqx());
+        attachmentBO
+                .saveAttachment(req.getCode(), "car_syx", "car_procedure", req.getCarSyx());
+        attachmentBO
+                .saveAttachment(req.getCode(), "green_big_smj", "car_procedure",
+                        req.getGreenBigSmj());
 
         // 操作日志
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fbh,
@@ -1026,13 +1032,18 @@ public class CdbizAOImpl implements ICdbizAO {
         //不传isMy是在业务中查询
         if (StringUtils.isBlank(condition.getIsMy())) {
 
-            if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
-                condition.setSaleUserId(condition.getUserId());
+            // 如果传业务员，说明是查看业务员自己的
+            if (StringUtils.isBlank(condition.getSaleUserId())) {
+
+                if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
+                    condition.setSaleUserId(condition.getUserId());
+                }
+                if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())) {
+                    condition.setInsideJob(condition.getUserId());
+                }
+                condition.setRoleCode(sysUser.getRoleCode());
+
             }
-            if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())) {
-                condition.setInsideJob(condition.getUserId());
-            }
-            condition.setRoleCode(sysUser.getRoleCode());
             page = cdbizBO.getPaginableByRoleCode(condition, start, limit);
             //传isMy是在报表中心查询
         } else {
@@ -1290,7 +1301,7 @@ public class CdbizAOImpl implements ICdbizAO {
         Cdbiz cdbiz = cdbizBO.getCdbiz(req.getCode());
         if (!ENode.biz_approve.getCode().equals(cdbiz.getCancelNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "不是该业务业务员无法作废该业务");
+                    "当前状态不是业务总监审核，不能操作");
         }
         String cancelNode = cdbiz.getCancelNodeCode();
         String cancelStatus = cdbiz.getCancelStatus();

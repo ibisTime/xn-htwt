@@ -193,3 +193,17 @@ ALTER TABLE `tqj_cdbiz`
 
 ALTER TABLE `tdq_advance`
   ADD COLUMN `advance_card_code` VARCHAR(32) NULL COMMENT '垫资账号' AFTER `pay_back_bill_pdf`;
+
+
+INSERT INTO `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`,
+                         `remark`, `parent_code`)
+VALUES ('SM201905251632521624200', '我的业务', '1', '/loanarchives/businessMe.htm', '2',
+        'U201905251346180173501', '2019-05-25 16:32:52', '', 'SM201904151542045356328');
+INSERT INTO `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`,
+                         `remark`, `parent_code`)
+VALUES ('SM201905251634054947035', '详情', '2', '/detail', '9', 'U201905251346180173501',
+        '2019-05-25 16:34:05', '', 'SM201905251632521624200');
+INSERT INTO `tsys_menu` (`code`, `name`, `type`, `url`, `order_no`, `updater`, `update_datetime`,
+                         `remark`, `parent_code`)
+VALUES ('SM201908230006532272220', '人工确认逾期', '2', '/ManualConfirmationOverdue', '4',
+        'USYS201800000000001', '2019-05-25 13:31:36', '', 'SM201805081056379762242');

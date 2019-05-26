@@ -200,6 +200,12 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     @Override
     public void saveCarInfo(XN632531Req req) {
         CarInfo carInfo = new CarInfo();
+        if (StringUtils.isBlank(req.getOilSubsidy())) {
+            req.setOilSubsidy("0");
+        }
+        if (StringUtils.isBlank(req.getOilSubsidyKil())) {
+            req.setOilSubsidyKil("0");
+        }
         EntityUtils.copyData(req, carInfo);
         //重置code
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
@@ -219,6 +225,12 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
     @Override
     public int refreshCarInfo(CarInfo carInfo, XN632531Req req) {
         String code = carInfo.getCode();
+        if (StringUtils.isBlank(req.getOilSubsidy())) {
+            req.setOilSubsidy("0");
+        }
+        if (StringUtils.isBlank(req.getOilSubsidyKil())) {
+            req.setOilSubsidyKil("0");
+        }
         EntityUtils.copyData(req, carInfo);
         //重置code
         carInfo.setCode(code);
