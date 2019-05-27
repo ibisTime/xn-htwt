@@ -138,18 +138,21 @@
 	</insert>
 	
 	<update id="update_series" parameterType="series">
-		UPDATE tht_series SET
-		brand_code = #{brandCode}     
-		,name  = #{name}           
-		,slogan = #{slogan}         
-		,adv_pic  = #{advPic}  
-		,pic_number=#{picNumber}      
-		,price = #{price}
-		,level=#{level}
-		,updater = #{updater}        
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}         
-		WHERE code = #{code}
+		UPDATE tht_series ts SET
+		ts.brand_code = #{brandCode}
+		,ts.name  = #{name}
+		,ts.slogan = #{slogan}
+		,ts.adv_pic  = #{advPic}
+		,ts.pic_number=#{picNumber}
+		,ts.price = #{price}
+		,ts.level=#{level}
+		,ts.updater = #{updater}
+		,ts.update_datetime = #{updateDatetime}
+		,ts.remark = #{remark}
+		WHERE ts.code = #{code};
+		UPDATE tht_car tc SET
+		tc.series_name=#{name}
+		WHERE tc.series_code=#{code};
 	</update>
 	
 	<update id="update_series_up" parameterType="series">

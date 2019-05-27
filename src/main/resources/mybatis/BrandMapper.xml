@@ -117,9 +117,6 @@
 		,tb.update_datetime = #{updateDatetime}
 		,tb.remark = #{remark}
 		WHERE tb.code = #{code};
-		UPDATE tht_series ts SET
-		ts.brand_name=#{name}
-		WHERE ts.brand_code=#{code};
 		UPDATE tht_car tc SET
 		tc.brand_name=#{name}
 		WHERE tc.brand_code=#{code};
