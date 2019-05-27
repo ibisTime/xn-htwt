@@ -502,12 +502,11 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     + curNode.getName() + "节点，不能操作");
         }
 
-        if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "制卡流程未走完，不能操作");
-        }
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-
+            if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "制卡流程未走完，不能操作");
+            }
             // 主状态
             status = ECdbizStatus.A10.getCode();
             // 发保合gps状态
