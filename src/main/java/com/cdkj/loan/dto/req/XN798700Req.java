@@ -31,6 +31,8 @@ public class XN798700Req {
 
     private String authPdf;
 
+    private String interviewPic;
+
     private String systemCode;
 
     private String companyCode;

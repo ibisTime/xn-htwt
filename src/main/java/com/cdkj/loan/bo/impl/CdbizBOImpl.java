@@ -351,6 +351,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             String idFront = null;
             String idReverse = null;
             String authPdf = null;
+            String interviewPic=null;
             if (ECreditUserLoanRole.APPLY_USER.getCode().equals(
                     creditUser.getLoanRole())) {
                 relation = "本人";
@@ -360,6 +361,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                         EAttachName.mainLoaner_id_reverse.getCode()).getUrl();
                 authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.mainLoaner_auth_pdf.getCode()).getUrl();
+                interviewPic=attachmentBO.getAttachment(cdbiz.getCode(), null,
+                        EAttachName.mainloaner_interview_pic.getCode()).getUrl();
             } else if (ECreditUserLoanRole.GHR.getCode().equals(
                     creditUser.getLoanRole())) {
                 relation = "配偶";
@@ -369,6 +372,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                         EAttachName.replier_id_reverse.getCode()).getUrl();
                 authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.replier_auth_pdf.getCode()).getUrl();
+                interviewPic=attachmentBO.getAttachment(cdbiz.getCode(), null,
+                        EAttachName.replier_interview_pic.getCode()).getUrl();
             } else {
                 relation = "反担保";
                 idFront = attachmentBO.getAttachment(cdbiz.getCode(), null,
@@ -377,11 +382,14 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                         EAttachName.assurance_id_reverse.getCode()).getUrl();
                 authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.assurance_auth_pdf.getCode()).getUrl();
+                interviewPic=attachmentBO.getAttachment(cdbiz.getCode(), null,
+                        EAttachName.assurance_interview_pic.getCode()).getUrl();
             }
             req.setRelation(relation);
             req.setIdNoFront(idFront);
             req.setIdNoReverse(idReverse);
             req.setAuthPdf(authPdf);
+            req.setInterviewPic(interviewPic);
             req.setSystemCode(ESystemCode.HTWT.getCode());
             req.setCompanyCode(ESystemCode.HTWT.getCode());
             String icbankCode = BizConnecter.getBizData("798700",

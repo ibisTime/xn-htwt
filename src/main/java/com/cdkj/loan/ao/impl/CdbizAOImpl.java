@@ -1238,7 +1238,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         CreditUser creditUser = creditUserBO.getCreditUser(code);
         if (!ECreditUserStatus.to_icCredit.getCode().equals(
-                creditUser.getStatus())) {
+                creditUser.getStatus())&&!"099".equals(creditUser.getResult())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "该征信用户已发起工行征信，无需重复征信");
         }
