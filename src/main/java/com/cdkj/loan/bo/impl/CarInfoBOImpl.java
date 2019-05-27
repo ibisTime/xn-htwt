@@ -182,8 +182,8 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         CarInfo carInfo = new CarInfo();
 
         carInfo.setBizCode(bizCode);
-        carInfo.setPolicyDatetime(DateUtil.strToDate(policyDatetime, DateUtil.DATA_TIME_PATTERN_1));
-        carInfo.setPolicyDueDate(DateUtil.strToDate(policyDueDate, DateUtil.DATA_TIME_PATTERN_1));
+        carInfo.setPolicyDatetime(DateUtil.strToDate(policyDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
+        carInfo.setPolicyDueDate(DateUtil.strToDate(policyDueDate, DateUtil.FRONT_DATE_FORMAT_STRING));
 
         carInfoDAO.updateEntryFbhInfo(carInfo);
     }
