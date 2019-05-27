@@ -1,22 +1,18 @@
 /**
- * @Title XNlh5014Req.java 
- * @Package com.xnjr.moom.dto.req 
- * @Description 
- * @author haiqingzheng  
- * @date 2016年4月17日 下午8:07:53 
- * @version V1.0   
+ * @Title XNlh5014Req.java
+ * @Package com.xnjr.moom.dto.req
+ * @Description
+ * @author haiqingzheng
+ * @date 2016年4月17日 下午8:07:53
+ * @version V1.0
  */
 package com.cdkj.loan.dto.req;
 
 /**
- * 
- * @author: jiafr 
- * @since: 2018年6月9日 下午2:32:35 
- * @history:
+ * @author : cyl
+ * @since : 2019-05-27 16:40
  */
-public class XN632317Req extends APageReq {
-
-    private static final long serialVersionUID = 2796572107342038372L;
+public class XN632317Req {
 
     private String teamCode;
 

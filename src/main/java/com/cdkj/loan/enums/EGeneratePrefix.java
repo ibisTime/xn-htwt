@@ -55,8 +55,9 @@ public enum EGeneratePrefix {
     ASKFORAPPLY("AFA", "领导请示申请"), CAR_BREAK("CAB", "车辆违章处理"), WELFARE_APPLY(
             "WA", "福利发放"), WELFARE_USER("WU", "福利发放人员"), BIZ_TEAM("BT", "业务团队"), REPOINT(
 
-            "RE", "返点"), BUSINESS_TRIP_APPLY("BTA", "出差申请"), BUS("BUS", "公车"), BUSBORROW(
-            "BB", "公车借用"), XX("XX", "信息"),
+            "RE", "返点"), REPOINT_ACCOUNT("REA", "返点账号列表"), BUSINESS_TRIP_APPLY("BTA", "出差申请"), BUS(
+
+            "BUS", "公车"), BUSBORROW("BB", "公车借用"), XX("XX", "信息"),
 
     BIZ_ORDER("BO", "业务"), attachment("AT", "附件"), BIZ_LOG("BL", "操作日志"), Cdbiz(
             "CB", "车贷业务"), BIZ_TASK("BT", "待办事项"), FILE_POOL("FP", "资源池"), mission(

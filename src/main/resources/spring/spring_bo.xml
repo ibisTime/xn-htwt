@@ -372,6 +372,10 @@
         <property name="paginableDAO" ref="repointDAOImpl"/>
     </bean>
 
+    <bean id="repointAccountBO" class="com.cdkj.loan.bo.impl.RepointAccountBOImpl">
+        <property name="paginableDAO" ref="repointAccountDAOImpl"/>
+    </bean>
+
     <bean id="investigateReportBO" class="com.cdkj.loan.bo.impl.InvestigateReportBOImpl">
         <property name="paginableDAO" ref="investigateReportDAOImpl"/>
     </bean>

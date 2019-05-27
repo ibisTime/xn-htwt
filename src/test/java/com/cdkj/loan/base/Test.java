@@ -9,22 +9,22 @@ import java.io.IOException;
 public class Test {
 
     // 实体
-    private static String key = "enterFileList";
+    private static String key = "RepointAccount";
 
     // 实体名称
-    private static String keyName = "档案存放清单";
+    private static String keyName = "返点账号列表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_enter_file_list";
+    private static String dbname = "tdh_repoint_account";
 
-    private static String[] DBwords = {"code", "biz_code", "content",
-            "file_count", "deposit_location", "operator", "remark"};
+    private static String[] DBwords = {"code", "repoint_code", "repoint_card_code",
+            "actual_amount", "water_bill", "updater", "update_datetime", "remark"};
 
-    private static String[] DBwordsName = {"编号", "业务编号", "内容", "份数",
-            "存放位置", "存放人", "备注"};
+    private static String[] DBwordsName = {"编号", "返点编号", "返点账号编号", "实返金额", "水单",
+            "更新人", "更新时间", "备注"};
 
     private static String[] DOwords = getDOwords();
 
