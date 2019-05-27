@@ -699,12 +699,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
             carInfoBO.refreshCarInfo(carInfo, req);
         }
 
-        attachmentBO.removeByKname(req.getCode(), EAttachName.carPic.getCode());
         attachmentBO.saveAttachment(req.getCode(),
                 EAttachName.carPic.getCode(), EAttachName.carPic.getValue(),
                 req.getCarPic());
-        attachmentBO.removeByKname(req.getCode(),
-                EAttachName.carHgzPic.getCode());
         attachmentBO.saveAttachment(req.getCode(),
                 EAttachName.carHgzPic.getCode(), EAttachName.carHgzPic.getValue(),
                 req.getCarHgzPic());
