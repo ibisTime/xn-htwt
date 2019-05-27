@@ -105,24 +105,24 @@
 	</insert>
 	
 	<update id="update_brand" parameterType="brand">
-		UPDATE tht_brand SET
-		letter = #{letter}
-		,logo = #{logo}
-		,name = #{name}
-		,description = #{description}
-		,status = #{status}
-		,location=#{location}
-		,order_no=#{orderNo}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		WHERE code = #{code};
-		UPDATE tht_series SET
-		brand_name=#{name}
-		WHERE brand_code=#{code};
-		UPDATE tht_car SET
-		brand_name=#{name}
-		WHERE brand_code=#{code};
+		UPDATE tht_brand tb SET
+		tb.letter = #{letter}
+		,tb.logo = #{logo}
+		,tb.name = #{name}
+		,tb.description = #{description}
+		,tb.status = #{status}
+		,tb.location=#{location}
+		,tb.order_no=#{orderNo}
+		,tb.updater = #{updater}
+		,tb.update_datetime = #{updateDatetime}
+		,tb.remark = #{remark}
+		WHERE tb.code = #{code};
+		UPDATE tht_series ts SET
+		ts.brand_name=#{name}
+		WHERE ts.brand_code=#{code};
+		UPDATE tht_car tc SET
+		tc.brand_name=#{name}
+		WHERE tc.brand_code=#{code};
 	</update>
 	
 	<update id="update_brand_up" parameterType="brand">

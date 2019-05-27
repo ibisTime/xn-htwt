@@ -307,7 +307,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         XN632114Req req = new XN632114Req();
         req.setCode(icbankCode);
         try {
-            creditIcbank = BizConnecter.getBizData("",
+            creditIcbank = BizConnecter.getBizData("798701",
                 JsonUtils.object2Json(req), CreditIcbank.class);
 
         } catch (Exception e) {
