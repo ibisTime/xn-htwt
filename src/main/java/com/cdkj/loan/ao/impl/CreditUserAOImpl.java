@@ -1,9 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -19,6 +15,9 @@ import com.cdkj.loan.dto.req.XN632536Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author: jiafr
@@ -48,7 +47,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
     @Override
     public void saveSelfExtentInfo(XN632532Req req) {
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            req.getCode(), ECreditUserLoanRole.APPLY_USER);
+                req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
@@ -58,99 +57,99 @@ public class CreditUserAOImpl implements ICreditUserAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveSelfHomeInfo(XN632533Req req) {
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            req.getCode(), ECreditUserLoanRole.APPLY_USER);
+                req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.hkBookPdf,
-                req.getHkBookPdf());
+                    req.getHkBookPdf());
             saveAttachment(req.getCode(), EAttachName.marryPdf,
-                req.getMarryPdf());
+                    req.getMarryPdf());
             saveAttachment(req.getCode(), EAttachName.liveProvePdf,
-                req.getLiveProvePdf());
+                    req.getLiveProvePdf());
             saveAttachment(req.getCode(), EAttachName.buildProvePdf,
-                req.getBuildProvePdf());
+                    req.getBuildProvePdf());
             saveAttachment(req.getCode(), EAttachName.houseContract,
-                req.getHouseContract());
+                    req.getHouseContract());
             saveAttachment(req.getCode(), EAttachName.houseInvoice,
-                req.getHouseInvoice());
+                    req.getHouseInvoice());
             saveAttachment(req.getCode(), EAttachName.housePictureApply,
-                req.getHousePictureApply());
+                    req.getHousePictureApply());
         }
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveSelfWorkInfo(XN632534Req req) {
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            req.getCode(), ECreditUserLoanRole.APPLY_USER);
+                req.getCode(), ECreditUserLoanRole.APPLY_USER);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.improvePdf,
-                req.getImprovePdf());
+                    req.getImprovePdf());
             saveAttachment(req.getCode(), EAttachName.frontTablePic,
-                req.getFrontTablePic());
+                    req.getFrontTablePic());
             saveAttachment(req.getCode(), EAttachName.workPlacePic,
-                req.getWorkPlacePic());
+                    req.getWorkPlacePic());
             saveAttachment(req.getCode(), EAttachName.salerAndcustomer,
-                req.getSalerAndcustomer());
+                    req.getSalerAndcustomer());
         }
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveGhrInfo(XN632535Req req) {
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            req.getCode(), ECreditUserLoanRole.GHR);
+                req.getCode(), ECreditUserLoanRole.GHR);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.mateAssetPdf,
-                req.getMateAssetPdf());
+                    req.getMateAssetPdf());
         }
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveGuarantorInfo(XN632536Req req) {
         CreditUser creditUser = creditUserBO.getCreditUserByBizCode(
-            req.getCode(), ECreditUserLoanRole.GUARANTOR);
+                req.getCode(), ECreditUserLoanRole.GUARANTOR);
         if (creditUser != null) {
             String code = creditUser.getCode();
             EntityUtils.copyData(req, creditUser);
             creditUser.setCode(code);
             creditUserBO.refreshCreditUser(creditUser);
             saveAttachment(req.getCode(), EAttachName.guaAssetPdf,
-                req.getGuaAssetPdf());
+                    req.getGuaAssetPdf());
         }
     }
 
     public void saveAttachment(String bizCode, EAttachName attachName,
             String url) {
         attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-            attachName.getValue(), url);
+                attachName.getValue(), url);
     }
 
     @Override
     public Paginable<CreditUser> queryCreditUserPage(int start, int limit,
             CreditUser condition) {
         Paginable<CreditUser> page = creditUserBO.getPaginable(start, limit,
-            condition);
+                condition);
         for (CreditUser creditUser : page.getList()) {
             if (ECreditUserStatus.to_callback.getCode().equals(
-                creditUser.getStatus())) {
+                    creditUser.getStatus())) {
                 CreditIcbank creditIcbank = creditUserBO
-                    .getCreditIcbank(creditUser.getIcbankCode());
+                        .getCreditIcbank(creditUser.getIcbankCode());
                 if (null != creditIcbank.getResult()) {
                     creditUserBO.refreshIcbankCredit(creditUser, creditIcbank);
                 }
