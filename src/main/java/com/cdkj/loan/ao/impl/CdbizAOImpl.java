@@ -521,6 +521,7 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void accesssApplySubmit(String code, String operator) {
 
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
