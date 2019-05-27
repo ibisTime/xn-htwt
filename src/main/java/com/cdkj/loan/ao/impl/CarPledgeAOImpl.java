@@ -158,8 +158,8 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
                 ENode.receive_approve_3.getCode(), null);
 
         // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(),
-                logisticsCode, preCurNodeCode, nextNodeCode, req.getOperator());
+        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, logisticsCode,
+                req.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
     }
 
     @Override
@@ -224,8 +224,8 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
                 ENode.receive_approve_4.getCode(), null);
 
         // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, req.getCode(),
-                logisticsCode, preCurNodeCode, nextNodeCode, req.getOperator());
+        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS,logisticsCode ,
+                req.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
     }
 
     @Override
