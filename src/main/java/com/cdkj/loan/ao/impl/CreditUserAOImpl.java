@@ -151,7 +151,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
                 creditUser.getStatus())) {
                 CreditIcbank creditIcbank = creditUserBO
                     .getCreditIcbank(creditUser.getIcbankCode());
-                if (null != creditIcbank.getResult()) {
+                if (null!=creditIcbank && null != creditIcbank.getResult()) {
                     creditUserBO.refreshIcbankCredit(creditUser, creditIcbank);
                 }
             }
