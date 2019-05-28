@@ -119,6 +119,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
             nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                     preFbhgpsNode).getBackNode();
             nextStatus = ECdbizStatus.C01.getCode();
+            cdbiz.setIsAdvanceFund(EBoolean.NO.getCode());
         }
         Advance advance = advanceBO.getAdvanceByBizCode(code);
         advance.setAdvanceNote(approveNote);
@@ -174,6 +175,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
             nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                     preFbhgpsNode).getBackNode();
             nextStatus = ECdbizStatus.C01.getCode();
+            cdbiz.setIsAdvanceFund(EBoolean.NO.getCode());
         }
         advanceBO.provinceManageApprove(code, nextNodeCode, nextStatus);
 
