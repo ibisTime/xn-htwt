@@ -271,9 +271,11 @@ public class CdbizAOImpl implements ICdbizAO {
         bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.CREDIT,
                 cdbiz.getCode(), ENode.input_credit);
 
-        // 面签开始的待办事项
-        bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
-                cdbiz.getCode(), ENode.input_interview);
+        if (ENode.input_credit.getCode().equals(currentNode)) {
+            // 面签开始的待办事项
+            bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
+                    cdbiz.getCode(), ENode.input_interview);
+        }
 
         // 更新提交节点信息
         cdbizBO.refreshIntevNodeStatus(cdbiz, ENode.input_interview.getCode(),
@@ -1238,7 +1240,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
         CreditUser creditUser = creditUserBO.getCreditUser(code);
         if (!ECreditUserStatus.to_icCredit.getCode().equals(
-                creditUser.getStatus())&&!"099".equals(creditUser.getResult())) {
+                creditUser.getStatus()) && !"099".equals(creditUser.getResult())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "该征信用户已发起工行征信，无需重复征信");
         }

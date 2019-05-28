@@ -260,10 +260,10 @@ public class AdvanceAOImpl implements IAdvanceAO {
         cdbizBO.refreshFbhgpsNodeStatus(cdbiz);
 
         //查找当前节点的最新待办
-        BizTask bizTask = bizTaskBO
+        List<BizTask> bizTasks = bizTaskBO
                 .queryLastBizTask(cdbiz.getCode(), null, null, preFbhgpsNode);
         //找本次节点的待办，如果没有，说明走后门，记录日志并产生下一步待办
-        if (bizTask == null) {
+        if (CollectionUtils.isEmpty(bizTasks)) {
             sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(), EBizLogType.fund, req.getCode(),
                     preFbhgpsNode, null, req.getOperator());
 

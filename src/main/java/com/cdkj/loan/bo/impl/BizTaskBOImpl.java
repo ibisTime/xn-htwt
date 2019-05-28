@@ -118,8 +118,12 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     @Override
     public void handlePreBizTask(String bizCode, String refType, String refOrder, String preNode,
             String userId) {
-        BizTask bizTask = queryLastBizTask(bizCode, refType, refOrder, preNode);
-        handleBizTask(bizTask.getCode(), userId);
+        List<BizTask> bizTasks = queryLastBizTask(bizCode, refType, refOrder, preNode);
+        if (CollectionUtils.isNotEmpty(bizTasks)) {
+            for (BizTask bizTask : bizTasks) {
+                handleBizTask(bizTask.getCode(), userId);
+            }
+        }
     }
 
     @Override
@@ -154,7 +158,7 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
     }
 
     @Override
-    public BizTask queryLastBizTask(String bizCode, String refType, String refOrder,
+    public List<BizTask> queryLastBizTask(String bizCode, String refType, String refOrder,
             String curNode) {
         BizTask condition = new BizTask();
         condition.setBizCode(bizCode);
@@ -169,8 +173,7 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "未找到" + curNode + "对应的待处理待办");
         }
-        BizTask bizTask = bizTasks.get(0);
-        return bizTask;
+        return bizTasks;
     }
 
     @Override

@@ -1,13 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -21,6 +13,12 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
@@ -87,8 +85,9 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         data.setOperator(operator);
         data.setOperatorMobile(sysUser.getMobile());
         // 查找当前节点的最新待办
-        BizTask bizTask = bizTaskBO.queryLastBizTask(bizCode,
-            refType.getCode(), refOrder, dealNode);
+        List<BizTask> bizTasks = bizTaskBO.queryLastBizTask(bizCode,
+                refType.getCode(), refOrder, dealNode);
+        BizTask bizTask = bizTasks.get(0);
         data.setStartDatetime(bizTask.getCreateDatetime());
         data.setEndDatetime(new Date());
         // 计算花费时间
@@ -116,7 +115,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             String preDealNote, String operator) {
         // 处理之前节点
         refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode,
-            preDealNote, operator);
+                preDealNote, operator);
         // 保存新节点
         saveSYSBizLog(bizCode, refType, refOrder, nowDealNode);
     }
@@ -135,7 +134,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             data.setEndDatetime(new Date());
             // 计算花费时间
             String speedTime = getSpeedTime(data.getStartDatetime(),
-                data.getEndDatetime());
+                    data.getEndDatetime());
             data.setSpeedTime(speedTime);
             sysBizLogDAO.updateSysBizLog(data);
         }
@@ -177,7 +176,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             data = sysBizLogDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "日志不存在！");
+                        "日志不存在！");
             }
         }
         return data;
@@ -189,9 +188,9 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         prepare(condition);
         long totalCount = sysBizLogDAO.selectTotalCountByRoleCode(condition);
         Paginable<SYSBizLog> page = new Page<SYSBizLog>(start, limit,
-            totalCount);
+                totalCount);
         List<SYSBizLog> dataList = sysBizLogDAO.selectListByRoleCode(condition,
-            page.getStart(), page.getPageSize());
+                page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
     }
@@ -229,11 +228,11 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             int limit, SYSBizLog condition) {
         prepare(condition);
         long totalCount = sysBizLogDAO
-            .selectTotalCountByBizOrderType(condition);
+                .selectTotalCountByBizOrderType(condition);
         Paginable<SYSBizLog> page = new Page<SYSBizLog>(start, limit,
-            totalCount);
+                totalCount);
         List<SYSBizLog> dataList = sysBizLogDAO.selectListByBizOrderType(
-            condition, page.getStart(), page.getPageSize());
+                condition, page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
     }

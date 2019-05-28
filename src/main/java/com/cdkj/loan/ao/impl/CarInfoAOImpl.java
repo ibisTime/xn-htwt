@@ -537,8 +537,8 @@ public class CarInfoAOImpl implements ICarInfoAO {
             curNodeCode = nodeFlow.getBackNode();
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
-            bizTaskBO.saveBizTask(req.getCode(), EBizLogType.BUDGET_ORDER,
-                    req.getCode(), ENode.getMap().get(preCurrentNode), null);
+            bizTaskBO.handlePreAndAdd(EBizLogType.BUDGET_ORDER, req.getCode(),
+                    req.getCode(), preCurrentNode, curNodeCode, req.getOperator());
         }
 
         cdbiz.setStatus(status);

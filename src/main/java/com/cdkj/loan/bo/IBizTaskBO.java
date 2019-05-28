@@ -31,7 +31,7 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
     BizTask getBizTask(String code);
 
-    BizTask queryLastBizTask(String bizCode, String refType, String refOrder,
+    List<BizTask> queryLastBizTask(String bizCode, String refType, String refOrder,
             String curNode);
 
     void removeUnhandleBizTask(String bizCode, String node, String operater);
