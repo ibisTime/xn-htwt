@@ -3,6 +3,7 @@ package com.cdkj.loan.domain;
 import java.util.Date;
 
 import com.cdkj.loan.dao.base.ABaseDO;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
 * 银行放款
@@ -86,6 +87,15 @@ public class BankLoan extends ABaseDO {
     // 月还款额
     private Integer monthAmount;
 
+    private String repayFirstMonthDatetime; // 首期还款日期
+
+    private String repayFirstMonthAmount;// 首期月供金额
+
+    private String repayMonthAmount;// 每期月供金额
+
+    private String bankFkDate;// 放款日期
+
+
     public String getCode() {
         return code;
     }
@@ -100,6 +110,22 @@ public class BankLoan extends ABaseDO {
 
     public void setBizCode(String bizCode) {
         this.bizCode = bizCode;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
     public String getRepayBankCode() {
@@ -262,20 +288,35 @@ public class BankLoan extends ABaseDO {
         this.monthAmount = monthAmount;
     }
 
-    public String getStatus() {
-        return status;
+    public String getRepayFirstMonthDatetime() {
+        return repayFirstMonthDatetime;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setRepayFirstMonthDatetime(String repayFirstMonthDatetime) {
+        this.repayFirstMonthDatetime = repayFirstMonthDatetime;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
+    public String getRepayFirstMonthAmount() {
+        return repayFirstMonthAmount;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setRepayFirstMonthAmount(String repayFirstMonthAmount) {
+        this.repayFirstMonthAmount = repayFirstMonthAmount;
     }
 
+    public String getRepayMonthAmount() {
+        return repayMonthAmount;
+    }
+
+    public void setRepayMonthAmount(String repayMonthAmount) {
+        this.repayMonthAmount = repayMonthAmount;
+    }
+
+    public String getBankFkDate() {
+        return bankFkDate;
+    }
+
+    public void setBankFkDate(String bankFkDate) {
+        this.bankFkDate = bankFkDate;
+    }
 }
