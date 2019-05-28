@@ -271,7 +271,7 @@ public class CdbizAOImpl implements ICdbizAO {
         bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.CREDIT,
                 cdbiz.getCode(), ENode.input_credit);
 
-        if (ENode.input_credit.getCode().equals(currentNode)) {
+        if (ENode.new_credit.getCode().equals(currentNode)) {
             // 面签开始的待办事项
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
                     cdbiz.getCode(), ENode.input_interview);
