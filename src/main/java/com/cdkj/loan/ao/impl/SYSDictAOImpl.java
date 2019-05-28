@@ -49,6 +49,10 @@ public class SYSDictAOImpl implements ISYSDictAO {
                 result.add(regionBelong);
             }
         }
+        if(result.isEmpty()){
+            SYSDict dict=sysDictBO.getSYSDictByParentKeyAndDkey("belong",key);
+            result.add(dict);
+        }
         return result;
     }
 
