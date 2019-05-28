@@ -608,6 +608,7 @@
 		SET
 		fbhgps_status=#{fbhgpsStatus}
 		,fbhgps_node = #{fbhgpsNode}
+		,is_advance_fund = #{isAdvanceFund}
 		WHERE code=#{code}
 	</update>
 
