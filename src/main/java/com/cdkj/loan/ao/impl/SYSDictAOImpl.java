@@ -8,6 +8,7 @@
  */
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,20 @@ public class SYSDictAOImpl implements ISYSDictAO {
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Override
+    public List<SYSDict> queryRegionBelongList(String key) {
+        SYSDict condition=new SYSDict();
+        condition.setParentKey("region_belong");
+        List<SYSDict> regionBelongs=sysDictBO.querySYSDictList(condition);
+        List<SYSDict> result=new ArrayList<SYSDict>();
+        for (SYSDict regionBelong : regionBelongs){
+            if(regionBelong.getDkey().startsWith(key)){
+                result.add(regionBelong);
+            }
+        }
+        return result;
+    }
 
     @Override
     public Long addSecondDict(XN630030Req req) {

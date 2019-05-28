@@ -1140,7 +1140,7 @@ public class CdbizAOImpl implements ICdbizAO {
             BeanUtils.copyProperties(carInfo, loanInfoRes);
             BeanUtils.copyProperties(carInfo, carInfoRes);
             carInfoRes.setCarSettleDatetime(carInfo.getCarSettleDatetime());
-            carInfoRes.setPolicyDueDate(carInfo.getPolicyDatetime());
+            carInfoRes.setPolicyDueDate(carInfo.getPolicyDueDate());
             carInfoRes.setCarSettleDatetime(carInfo.getCarSettleDatetime());
         }
 
