@@ -1,249 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.IInvestigateReportDAO">
-	<resultMap id="investigateReport_DB_Result" type="investigateReport">
-		<result column="code" property="code" />
-		<result column="budget_order_code" property="budgetOrderCode" />
-		<result column="repay_biz_code" property="repayBizCode" />
-		<result column="team_code" property="teamCode" />
-		<result column="company_code" property="companyCode" />
-		<result column="biz_type" property="bizType" />
-		<result column="apply_user_name" property="applyUserName" />
-		<result column="apply_datetime" property="applyDatetime" />
-		<result column="loan_bank" property="loanBank" />
-		<result column="loan_amount" property="loanAmount" />
-		<result column="loan_period" property="loanPeriod" />
-		<result column="is_advance_fund" property="isAdvanceFund" />
-		<result column="sale_user_id" property="saleUserId" />
-		<result column="gua_mode" property="guaMode" />
-		<result column="customer_information" property="customerInformation" />
-		<result column="bank_credit_result_remark" property="bankCreditResultRemark" />
-		<result column="price_approval_pdf" property="priceApprovalPdf" />
-		<result column="car_168_price" property="car168Price" />
-		<result column="apply_work_and_jour" property="applyWorkAndJour" />
-		<result column="jour_datetime_start" property="jourDatetimeStart" />
-		<result column="jour_datetime_end" property="jourDatetimeEnd" />
-		<result column="jour_interest1" property="jourInterest1" />
-		<result column="jour_interest2" property="jourInterest2" />
-		<result column="interest1" property="interest1" />
-		<result column="interest2" property="interest2" />
-		<result column="jour_income" property="jourIncome" />
-		<result column="jour_expend" property="jourExpend" />
-		<result column="jour_balance" property="jourBalance" />
-		<result column="jour_month_income" property="jourMonthIncome" />
-		<result column="jour_month_expend" property="jourMonthExpend" />
-		<result column="jour_pic" property="jourPic" />
-		<result column="jour_remark" property="jourRemark" />
-		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
-		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
-		<result column="zfb_jour_interest1" property="zfbJourInterest1" />
-		<result column="zfb_jour_interest2" property="zfbJourInterest2" />
-		<result column="zfb_interest1" property="zfbInterest1" />
-		<result column="zfb_interest2" property="zfbInterest2" />
-		<result column="zfb_jour_income" property="zfbJourIncome" />
-		<result column="zfb_jour_expend" property="zfbJourExpend" />
-		<result column="zfb_jour_balance" property="zfbJourBalance" />
-		<result column="zfb_jour_month_income" property="zfbJourMonthIncome" />
-		<result column="zfb_jour_month_expend" property="zfbJourMonthExpend" />
-		<result column="zfb_jour_pic" property="zfbJourPic" />
-		<result column="zfb_jour_remark" property="zfbJourRemark" />
-		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
-		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
-		<result column="wx_jour_interest1" property="wxJourInterest1" />
-		<result column="wx_jour_interest2" property="wxJourInterest2" />
-		<result column="wx_interest1" property="wxInterest1" />
-		<result column="wx_interest2" property="wxInterest2" />
-		<result column="wx_jour_income" property="wxJourIncome" />
-		<result column="wx_jour_expend" property="wxJourExpend" />
-		<result column="wx_jour_balance" property="wxJourBalance" />
-		<result column="wx_jour_month_income" property="wxJourMonthIncome" />
-		<result column="wx_jour_month_expend" property="wxJourMonthExpend" />
-		<result column="wx_jour_pic" property="wxJourPic" />
-		<result column="wx_jour_remark" property="wxJourRemark" />
-		<result column="house_contract" property="houseContract" />
-		<result column="home_visit" property="homeVisit" />
-		<result column="house_picture" property="housePicture" />
-		<result column="basics_information" property="basicsInformation" />
-		<result column="xsz_pdf" property="xszPdf" />
-		<result column="xsz_car_pdf" property="xszCarPdf" />
-		<result column="frame_no" property="frameNo" />
-		<result column="nameplate" property="nameplate" />
-		<result column="forward_pdf" property="forwardPdf" />
-		<result column="queen_pdf" property="queenPdf" />
-		<result column="left_pdf" property="leftPdf" />
-		<result column="right_pdf" property="rightPdf" />
-		<result column="lf45_pdf" property="lf45Pdf" />
-		<result column="rf45_pdf" property="rf45Pdf" />
-		<result column="lg45_pdf" property="lg45Pdf" />
-		<result column="rr45_pdf" property="rr45Pdf" />
-		<result column="engine_pdf" property="enginePdf" />
-		<result column="szm_pdf" property="szmPdf" />
-		<result column="gears_pdf" property="gearsPdf" />
-		<result column="functional_zone_pdf" property="functionalZonePdf" />
-		<result column="odometer_pdf" property="odometerPdf" />
-		<result column="front_row_pdf" property="frontRowPdf" />
-		<result column="rock_row_pdf" property="rockRowPdf" />
-		<result column="trunk_pdf" property="trunkPdf" />
-		<result column="louver_pdf" property="louverPdf" />
-		<result column="bank_row_pdf" property="bankRowPdf" />
-		<result column="check_approve_pdf" property="checkApprovePdf" />
-		<result column="check_approve_link" property="checkApproveLink" />
-		<result column="third_valuation_pdf" property="thirdValuationPdf" />
-		<result column="check_approve_software" property="checkApproveSoftware" />
-		<result column="used_car_current_rate" property="usedCarCurrentRate" />
-		<result column="information_source" property="informationSource" />
-		<result column="valuation" property="valuation" />
-		<result column="cur_node_code" property="curNodeCode" />
-		<result column="updater" property="updater" />
-		<result column="update_datetime" property="updateDatetime" />
-		<result column="remark" property="remark" />
-	</resultMap>
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="applyUserName != null and applyUserName != '' ">
-				AND t.apply_user_name = #{applyUserName}
-			</if>
-			<if test="saleUserId != null and saleUserId != '' ">
-				AND t.sale_user_id = #{saleUserId}
-			</if>
-			<if test="repayBizCode != null and repayBizCode != '' ">
-				AND t.repay_biz_code = #{repayBizCode}
-			</if>
-			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
-				AND t.is_advance_fund = #{isAdvanceFund}
-			</if>
-			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
-				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
-			</if>
-			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
-				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
-			</if>
-			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
-			</if>
-			<if test="budgetOrderCode != null and budgetOrderCode != '' ">
-				AND t.budget_order_code = #{budgetOrderCode}
-			</if>
-		</trim>
-	</sql>
-	<select id="select_investigateReport" parameterType="investigateReport" resultMap="investigateReport_DB_Result">
-		SELECT
-		t.code
-		,t.budget_order_code
-		,t.repay_biz_code
-		,t.team_code
-		,t.company_code
-		,t.biz_type
-		,t.apply_user_name
-		,t.apply_datetime
-		,t.loan_bank
-		,t.loan_amount
-		,t.loan_period
-		,t.is_advance_fund
-		,t.sale_user_id
-		,t.gua_mode
-		,t.customer_information
-		,t.bank_credit_result_remark
-		,t.price_approval_pdf
-		,t.car_168_price
-		,t.apply_work_and_jour
-		,t.jour_datetime_start
-		,t.jour_datetime_end
-		,t.jour_interest1
-		,t.jour_interest2
-		,t.interest1
-		,t.interest2
-		,t.jour_income
-		,t.jour_expend
-		,t.jour_balance
-		,t.jour_month_income
-		,t.jour_month_expend
-		,t.jour_pic
-		,t.jour_remark
-		,t.zfb_jour_datetime_start
-		,t.zfb_jour_datetime_end
-		,t.zfb_jour_interest1
-		,t.zfb_jour_interest2
-		,t.zfb_interest1
-		,t.zfb_interest2
-		,t.zfb_jour_income
-		,t.zfb_jour_expend
-		,t.zfb_jour_balance
-		,t.zfb_jour_month_income
-		,t.zfb_jour_month_expend
-		,t.zfb_jour_pic
-		,t.zfb_jour_remark
-		,t.wx_jour_datetime_start
-		,t.wx_jour_datetime_end
-		,t.wx_jour_interest1
-		,t.wx_jour_interest2
-		,t.wx_interest1
-		,t.wx_interest2
-		,t.wx_jour_income
-		,t.wx_jour_expend
-		,t.wx_jour_balance
-		,t.wx_jour_month_income
-		,t.wx_jour_month_expend
-		,t.wx_jour_pic
-		,t.wx_jour_remark
-		,t.house_contract
-		,t.home_visit
-		,t.house_picture
-		,t.basics_information
-		,t.xsz_pdf
-		,t.xsz_car_pdf
-		,t.frame_no
-		,t.nameplate
-		,t.forward_pdf
-		,t.queen_pdf
-		,t.left_pdf
-		,t.right_pdf
-		,t.lf45_pdf
-		,t.rf45_pdf
-		,t.lg45_pdf
-		,t.rr45_pdf
-		,t.engine_pdf
-		,t.szm_pdf
-		,t.gears_pdf
-		,t.functional_zone_pdf
-		,t.odometer_pdf
-		,t.front_row_pdf
-		,t.rock_row_pdf
-		,t.trunk_pdf
-		,t.louver_pdf
-		,t.bank_row_pdf
-		,t.check_approve_pdf
-		,t.check_approve_link
-		,t.third_valuation_pdf
-		,t.check_approve_software
-		,t.used_car_current_rate
-		,t.information_source
-		,t.valuation
-		,t.cur_node_code
-		,t.updater
-		,t.update_datetime
-		,t.remark
-		FROM
-		tdq_investigate_report t
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
+    <resultMap id="investigateReport_DB_Result" type="investigateReport">
+        <result column="code" property="code"/>
+        <result column="budget_order_code" property="budgetOrderCode"/>
+        <result column="repay_biz_code" property="repayBizCode"/>
+        <result column="team_code" property="teamCode"/>
+        <result column="company_code" property="companyCode"/>
+        <result column="biz_type" property="bizType"/>
+        <result column="apply_user_name" property="applyUserName"/>
+        <result column="apply_datetime" property="applyDatetime"/>
+        <result column="loan_bank" property="loanBank"/>
+        <result column="loan_amount" property="loanAmount"/>
+        <result column="loan_period" property="loanPeriod"/>
+        <result column="is_advance_fund" property="isAdvanceFund"/>
+        <result column="sale_user_id" property="saleUserId"/>
+        <result column="gua_mode" property="guaMode"/>
+        <result column="customer_information" property="customerInformation"/>
+        <result column="bank_credit_result_remark" property="bankCreditResultRemark"/>
+        <result column="price_approval_pdf" property="priceApprovalPdf"/>
+        <result column="car_168_price" property="car168Price"/>
+        <result column="apply_work_and_jour" property="applyWorkAndJour"/>
+        <result column="jour_datetime_start" property="jourDatetimeStart"/>
+        <result column="jour_datetime_end" property="jourDatetimeEnd"/>
+        <result column="jour_interest1" property="jourInterest1"/>
+        <result column="jour_interest2" property="jourInterest2"/>
+        <result column="interest1" property="interest1"/>
+        <result column="interest2" property="interest2"/>
+        <result column="jour_income" property="jourIncome"/>
+        <result column="jour_expend" property="jourExpend"/>
+        <result column="jour_balance" property="jourBalance"/>
+        <result column="jour_month_income" property="jourMonthIncome"/>
+        <result column="jour_month_expend" property="jourMonthExpend"/>
+        <result column="jour_pic" property="jourPic"/>
+        <result column="jour_remark" property="jourRemark"/>
+        <result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart"/>
+        <result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd"/>
+        <result column="zfb_jour_interest1" property="zfbJourInterest1"/>
+        <result column="zfb_jour_interest2" property="zfbJourInterest2"/>
+        <result column="zfb_interest1" property="zfbInterest1"/>
+        <result column="zfb_interest2" property="zfbInterest2"/>
+        <result column="zfb_jour_income" property="zfbJourIncome"/>
+        <result column="zfb_jour_expend" property="zfbJourExpend"/>
+        <result column="zfb_jour_balance" property="zfbJourBalance"/>
+        <result column="zfb_jour_month_income" property="zfbJourMonthIncome"/>
+        <result column="zfb_jour_month_expend" property="zfbJourMonthExpend"/>
+        <result column="zfb_jour_pic" property="zfbJourPic"/>
+        <result column="zfb_jour_remark" property="zfbJourRemark"/>
+        <result column="wx_jour_datetime_start" property="wxJourDatetimeStart"/>
+        <result column="wx_jour_datetime_end" property="wxJourDatetimeEnd"/>
+        <result column="wx_jour_interest1" property="wxJourInterest1"/>
+        <result column="wx_jour_interest2" property="wxJourInterest2"/>
+        <result column="wx_interest1" property="wxInterest1"/>
+        <result column="wx_interest2" property="wxInterest2"/>
+        <result column="wx_jour_income" property="wxJourIncome"/>
+        <result column="wx_jour_expend" property="wxJourExpend"/>
+        <result column="wx_jour_balance" property="wxJourBalance"/>
+        <result column="wx_jour_month_income" property="wxJourMonthIncome"/>
+        <result column="wx_jour_month_expend" property="wxJourMonthExpend"/>
+        <result column="wx_jour_pic" property="wxJourPic"/>
+        <result column="wx_jour_remark" property="wxJourRemark"/>
+        <result column="house_contract" property="houseContract"/>
+        <result column="home_visit" property="homeVisit"/>
+        <result column="house_picture" property="housePicture"/>
+        <result column="basics_information" property="basicsInformation"/>
+        <result column="xsz_pdf" property="xszPdf"/>
+        <result column="xsz_car_pdf" property="xszCarPdf"/>
+        <result column="frame_no" property="frameNo"/>
+        <result column="nameplate" property="nameplate"/>
+        <result column="forward_pdf" property="forwardPdf"/>
+        <result column="queen_pdf" property="queenPdf"/>
+        <result column="left_pdf" property="leftPdf"/>
+        <result column="right_pdf" property="rightPdf"/>
+        <result column="lf45_pdf" property="lf45Pdf"/>
+        <result column="rf45_pdf" property="rf45Pdf"/>
+        <result column="lg45_pdf" property="lg45Pdf"/>
+        <result column="rr45_pdf" property="rr45Pdf"/>
+        <result column="engine_pdf" property="enginePdf"/>
+        <result column="szm_pdf" property="szmPdf"/>
+        <result column="gears_pdf" property="gearsPdf"/>
+        <result column="functional_zone_pdf" property="functionalZonePdf"/>
+        <result column="odometer_pdf" property="odometerPdf"/>
+        <result column="front_row_pdf" property="frontRowPdf"/>
+        <result column="rock_row_pdf" property="rockRowPdf"/>
+        <result column="trunk_pdf" property="trunkPdf"/>
+        <result column="louver_pdf" property="louverPdf"/>
+        <result column="bank_row_pdf" property="bankRowPdf"/>
+        <result column="check_approve_pdf" property="checkApprovePdf"/>
+        <result column="check_approve_link" property="checkApproveLink"/>
+        <result column="third_valuation_pdf" property="thirdValuationPdf"/>
+        <result column="check_approve_software" property="checkApproveSoftware"/>
+        <result column="used_car_current_rate" property="usedCarCurrentRate"/>
+        <result column="information_source" property="informationSource"/>
+        <result column="valuation" property="valuation"/>
+        <result column="cur_node_code" property="curNodeCode"/>
+        <result column="updater" property="updater"/>
+        <result column="update_datetime" property="updateDatetime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="applyUserName != null and applyUserName != '' ">
+                AND t.apply_user_name = #{applyUserName}
+            </if>
+            <if test="saleUserId != null and saleUserId != '' ">
+                AND t.sale_user_id = #{saleUserId}
+            </if>
+            <if test="repayBizCode != null and repayBizCode != '' ">
+                AND t.repay_biz_code = #{repayBizCode}
+            </if>
+            <if test="isAdvanceFund != null and isAdvanceFund != '' ">
+                AND t.is_advance_fund = #{isAdvanceFund}
+            </if>
+            <if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+                <![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+            </if>
+            <if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+                <![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
+            </if>
+            <if test="curNodeCode != null and curNodeCode != '' ">
+                AND t.cur_node_code = #{curNodeCode}
+            </if>
+            <if test="budgetOrderCode != null and budgetOrderCode != '' ">
+                AND t.budget_order_code = #{budgetOrderCode}
+            </if>
+            <if test="roleCode != null and roleCode != '' ">
+                AND r.role_code = #{roleCode}
+            </if>
+            <if test="insideJob != null and insideJob != '' ">
+                AND c.inside_job = #{insideJob}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_investigateReport" parameterType="investigateReport"
+            resultMap="investigateReport_DB_Result">
+        SELECT
+        t.code
+        ,t.budget_order_code
+        ,t.repay_biz_code
+        ,t.team_code
+        ,t.company_code
+        ,t.biz_type
+        ,t.apply_user_name
+        ,t.apply_datetime
+        ,t.loan_bank
+        ,t.loan_amount
+        ,t.loan_period
+        ,t.is_advance_fund
+        ,t.sale_user_id
+        ,t.gua_mode
+        ,t.customer_information
+        ,t.bank_credit_result_remark
+        ,t.price_approval_pdf
+        ,t.car_168_price
+        ,t.apply_work_and_jour
+        ,t.jour_datetime_start
+        ,t.jour_datetime_end
+        ,t.jour_interest1
+        ,t.jour_interest2
+        ,t.interest1
+        ,t.interest2
+        ,t.jour_income
+        ,t.jour_expend
+        ,t.jour_balance
+        ,t.jour_month_income
+        ,t.jour_month_expend
+        ,t.jour_pic
+        ,t.jour_remark
+        ,t.zfb_jour_datetime_start
+        ,t.zfb_jour_datetime_end
+        ,t.zfb_jour_interest1
+        ,t.zfb_jour_interest2
+        ,t.zfb_interest1
+        ,t.zfb_interest2
+        ,t.zfb_jour_income
+        ,t.zfb_jour_expend
+        ,t.zfb_jour_balance
+        ,t.zfb_jour_month_income
+        ,t.zfb_jour_month_expend
+        ,t.zfb_jour_pic
+        ,t.zfb_jour_remark
+        ,t.wx_jour_datetime_start
+        ,t.wx_jour_datetime_end
+        ,t.wx_jour_interest1
+        ,t.wx_jour_interest2
+        ,t.wx_interest1
+        ,t.wx_interest2
+        ,t.wx_jour_income
+        ,t.wx_jour_expend
+        ,t.wx_jour_balance
+        ,t.wx_jour_month_income
+        ,t.wx_jour_month_expend
+        ,t.wx_jour_pic
+        ,t.wx_jour_remark
+        ,t.house_contract
+        ,t.home_visit
+        ,t.house_picture
+        ,t.basics_information
+        ,t.xsz_pdf
+        ,t.xsz_car_pdf
+        ,t.frame_no
+        ,t.nameplate
+        ,t.forward_pdf
+        ,t.queen_pdf
+        ,t.left_pdf
+        ,t.right_pdf
+        ,t.lf45_pdf
+        ,t.rf45_pdf
+        ,t.lg45_pdf
+        ,t.rr45_pdf
+        ,t.engine_pdf
+        ,t.szm_pdf
+        ,t.gears_pdf
+        ,t.functional_zone_pdf
+        ,t.odometer_pdf
+        ,t.front_row_pdf
+        ,t.rock_row_pdf
+        ,t.trunk_pdf
+        ,t.louver_pdf
+        ,t.bank_row_pdf
+        ,t.check_approve_pdf
+        ,t.check_approve_link
+        ,t.third_valuation_pdf
+        ,t.check_approve_software
+        ,t.used_car_current_rate
+        ,t.information_source
+        ,t.valuation
+        ,t.cur_node_code
+        ,t.updater
+        ,t.update_datetime
+        ,t.remark
+        FROM tdq_investigate_report t
+        inner join tqj_cdbiz c on t.budget_order_code = c.code
+        inner join tsys_role_node r on t.cur_node_code = r.node_code
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
 
-	<select id="select_investigateReport_count" parameterType="investigateReport"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_investigate_report t
-		<include refid="where_condition" />
-	</select>
+    <select id="select_investigateReport_count" parameterType="investigateReport"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tdq_investigate_report t
+        <include refid="where_condition"/>
+    </select>
 
-	<insert id="insert_investigateReport" parameterType="investigateReport">
+    <insert id="insert_investigateReport" parameterType="investigateReport">
 		INSERT INTO
 		tdq_investigate_report(
 		code
@@ -441,7 +449,7 @@
 		)
 	</insert>
 
-	<update id="update_investigateReport" parameterType="investigateReport">
+    <update id="update_investigateReport" parameterType="investigateReport">
 		UPDATE tdq_investigate_report
 		SET
 		gua_mode = #{guaMode}
@@ -484,7 +492,7 @@
 		WHERE code = #{code}
 	</update>
 
-	<update id="update_riskApprove" parameterType="investigateReport">
+    <update id="update_riskApprove" parameterType="investigateReport">
 		UPDATE tdq_investigate_report
 		SET
 		cur_node_code = #{curNodeCode}

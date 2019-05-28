@@ -321,4 +321,9 @@ public class InvestigateReport extends ABaseDO {
     // 业务员姓名
     private String saleUserName;
 
+    // 内勤编号
+    private String insideJob;
+
+    private String roleCode;
+
 }

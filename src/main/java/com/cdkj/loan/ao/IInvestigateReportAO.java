@@ -1,15 +1,14 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.dto.req.XN632200Req;
+import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public interface IInvestigateReportAO {
+
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     public String addInvestigateReport(InvestigateReport data);
@@ -18,7 +17,7 @@ public interface IInvestigateReportAO {
     public void approveInvestigateReport(XN632200Req req);
 
     public Paginable<InvestigateReport> queryInvestigateReportPage(int start,
-            int limit, InvestigateReport condition);
+            int limit, InvestigateReport condition, String userId);
 
     public List<InvestigateReport> queryInvestigateReportList(
             InvestigateReport condition);
