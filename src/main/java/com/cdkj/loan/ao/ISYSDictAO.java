@@ -35,4 +35,6 @@ public interface ISYSDictAO {
     public List<SYSDict> querySysDictList(SYSDict condition);
 
     public SYSDict getSYSDict(Long id);
+
+    public List<SYSDict> queryRegionBelongList(String key);
 }
