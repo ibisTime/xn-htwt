@@ -183,7 +183,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getCode());
         carInfo.setCarNumber(req.getCarNumber());
         carInfo.setCarSettleDatetime(
-                DateUtil.strToDate(req.getCarSettleDatetime(), DateUtil.DATA_TIME_PATTERN_1));
+                DateUtil.strToDate(req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         carInfo.setSettleAddress(req.getSettleAddress());
         carInfoBO.refreshCarInfo(carInfo);
 

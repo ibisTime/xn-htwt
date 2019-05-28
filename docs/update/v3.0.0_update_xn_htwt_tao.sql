@@ -21,3 +21,10 @@ ALTER TABLE `tdq_credit_user`
   ADD COLUMN `company_city` VARCHAR(255) NULL COMMENT '单位所在市' AFTER `company_province`,
   ADD COLUMN `company_area` VARCHAR(255) NULL COMMENT '单位所在区域' AFTER `company_city`,
   ADD COLUMN `now_address_date` VARCHAR(64) NULL COMMENT '何时入住现住地' AFTER `now_address`;
+
+
+ALTER TABLE `tdq_bank_loan`
+  ADD COLUMN `repay_first_month_datetime` VARCHAR(255) NULL AFTER `month_amount`,
+  ADD COLUMN `repay_first_month_amount` VARCHAR(255) NULL AFTER `repay_first_month_datetime`,
+  ADD COLUMN `repay_month_amount` VARCHAR(255) NULL AFTER `repay_first_month_amount`,
+  ADD COLUMN `bank_fk_date` VARCHAR(255) NULL AFTER `repay_month_amount`;

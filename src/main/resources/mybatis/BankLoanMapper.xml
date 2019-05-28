@@ -31,6 +31,11 @@
 		<result column="has_loan_list_pic" property="hasLoanListPic" />
 		<result column="bank_fk_amount" property="bankFkAmount" />
 		<result column="month_amount" property="monthAmount" />
+		<result column="repay_first_month_datetime" property="repayFirstMonthDatetime" />
+
+		<result column="repay_first_month_amount" property="repayFirstMonthAmount" />
+		<result column="repay_month_amount" property="repayMonthAmount" />
+		<result column="bank_fk_date" property="bankFkDate" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -86,6 +91,10 @@
 		,t.has_loan_list_pic
 		,t.bank_fk_amount
 		,t.month_amount
+		,t.repay_first_month_datetime
+		,t.repay_first_month_amount
+		,t.repay_month_amount
+		,t.bank_fk_date
 		FROM
 		tdq_bank_loan t
 		<include refid="where_condition" />
@@ -192,9 +201,13 @@
 		,repay_bank_date = #{repayBankDate}
 		,repay_company_date = #{repayCompanyDate}
 		,cur_node_code = #{curNodeCode}
+		,repay_first_month_datetime=#{repayFirstMonthDatetime}
+		,repay_first_month_amount=#{repayFirstMonthAmount}
+		,repay_month_amount=#{repayMonthAmount}
+		,bank_fk_date=#{bankFkDate}
 		WHERE code = #{code}
 	</update>
-	
+
 	<update id="update_confirmSk" parameterType="bankLoan">
 		UPDATE tdq_bank_loan
 		SET
