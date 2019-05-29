@@ -39,7 +39,7 @@ public class XN630543 extends AProcessor {
             //当月
             condition.setRepayStartDatetime(DateUtil.getFirstDay());
         } else {
-            condition.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
+            condition.setCurNodeCodeList(req.getCurNodeCodeList());
         }
         condition.setRepayEndDatetime(DateUtil.getLastDay());
         condition.setOrder("cur_periods", true);

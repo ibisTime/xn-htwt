@@ -1,5 +1,6 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -15,5 +16,6 @@ public class XN630543Req extends APageReq {
     @NotBlank
     private String refType;// 类型，1=商品，0=车贷
 
-
+    // 状态list
+    private List<String> curNodeCodeList;
 }
