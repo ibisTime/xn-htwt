@@ -224,7 +224,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
                 ENode.receive_approve_4.getCode(), null);
 
         // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS,logisticsCode ,
+        bizTaskBO.handlePreAndAdd(EBizLogType.LOGISTICS, logisticsCode,
                 req.getCode(), preCurNodeCode, nextNodeCode, req.getOperator());
     }
 
@@ -244,7 +244,7 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
                 cdbiz.getCurNodeCode()).getNextNode();
 
         // 抵押提交银行
-        carPledgeBO.pledgeCommitBank(code, nextNodeCode, operator,
+        carPledgeBO.pledgeCommitBank(carPledge.getCode(), nextNodeCode, operator,
                 pledgeBankCommitDatetime, pledgeBankCommitNote);
 
         // 更新业务状态

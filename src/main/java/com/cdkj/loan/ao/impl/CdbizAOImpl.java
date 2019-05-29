@@ -1151,6 +1151,13 @@ public class CdbizAOImpl implements ICdbizAO {
         if (repayBiz != null) {
             BeanUtils.copyProperties(repayBiz, loanInfoRes);
             BeanUtils.copyProperties(repayBiz, carInfoRes);
+
+            //还款计划
+            if (StringUtils.isNotBlank(repayBiz.getCode())) {
+                List<RepayPlan> repayPlanList = repayPlanBO
+                        .queryRepayPlanListByRepayBizCode(repayBiz.getCode());
+                cdbiz.setRepayPlanList(repayPlanList);
+            }
         }
 
         BeanUtils.copyProperties(cdbiz, loanInfoRes);
@@ -1187,12 +1194,6 @@ public class CdbizAOImpl implements ICdbizAO {
                 .querCreditJoursByBizCode(cdbiz.getCode());
         cdbiz.setCreditJours(creditJourList);
 
-        //还款计划
-        if (StringUtils.isNotBlank(cdbiz.getRepayBizCode())) {
-            List<RepayPlan> repayPlanList = repayPlanBO
-                    .queryRepayPlanListByRepayBizCode(cdbiz.getRepayBizCode());
-            cdbiz.setRepayPlanList(repayPlanList);
-        }
         // 待办事项
         List<BizTask> bizTaskList = bizTaskBO.queryBizTaskByBizCode(cdbiz
                 .getCode());

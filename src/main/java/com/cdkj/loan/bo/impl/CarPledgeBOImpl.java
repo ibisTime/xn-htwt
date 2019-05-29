@@ -94,7 +94,7 @@ public class CarPledgeBOImpl extends PaginableBOImpl<CarPledge> implements
         carPledge.setCode(code);
         carPledge.setCurNodeCode(nextNodeCode);
         carPledge.setPledgeBankCommitDatetime(DateUtil.strToDate(
-                pledgeBankCommitDatetime, DateUtil.DATA_TIME_PATTERN_1));
+                pledgeBankCommitDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
         carPledge.setPledgeBankCommitNote(pledgeBankCommitNote);
 
         carPledgeDAO.updateCommitBank(carPledge);
