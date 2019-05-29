@@ -418,7 +418,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             //新车
             String type = "1";
             //二手车
-            if (cdbiz.getType().equals("1")) {
+            if (cdbiz.getBizType().equals("1")) {
                 type = "907";
             }
             req.setBusitype(type);
@@ -529,8 +529,8 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                     JsonUtils.object2Json(req), String.class);
 
         } catch (Exception e) {
-            logger.error("调用工行制卡服务异常");
-            throw new BizException("xn0000", "调用工行制卡服务异常");
+            logger.error(e.getMessage());
+            throw new BizException("xn0000", e.getMessage());
         }
     }
 

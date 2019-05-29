@@ -8,6 +8,8 @@
  */
 package com.cdkj.loan.ao.impl;
 
+import com.cdkj.loan.dto.res.CityRes;
+import com.cdkj.loan.dto.res.ProvinceRes;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -113,5 +115,34 @@ public class SYSDictAOImpl implements ISYSDictAO {
     @Override
     public SYSDict getSYSDict(Long id) {
         return sysDictBO.getSYSDict(id);
+    }
+
+    @Override
+    public List<ProvinceRes> queryRegionDate() {
+        SYSDict condition=new SYSDict();
+        condition.setParentKey("region_belong");
+        List<SYSDict> regionBelongs=sysDictBO.querySYSDictList(condition);
+        condition.setParentKey("belong");
+        List<SYSDict> belongs=sysDictBO.querySYSDictList(condition);
+        List<ProvinceRes> provinceResList=new ArrayList<ProvinceRes>();
+        for(SYSDict belong: belongs){
+            ProvinceRes pRes=new ProvinceRes();
+            pRes.setKey(belong.getDkey());
+            pRes.setValue(belong.getDvalue());
+            List<CityRes> cityResList=new ArrayList<CityRes>();
+            for(SYSDict regionBelong: regionBelongs){
+
+                if (regionBelong.getDkey().startsWith(belong.getDkey())&&!regionBelong.getDkey().equals(belong.getDkey())){
+                    CityRes cRes=new CityRes();
+                    cRes.setKey(regionBelong.getDkey());
+                    cRes.setValue(regionBelong.getDvalue());
+                    cityResList.add(cRes);
+                }
+
+            }
+            pRes.setCityResList(cityResList);
+            provinceResList.add(pRes);
+        }
+        return provinceResList;
     }
 }

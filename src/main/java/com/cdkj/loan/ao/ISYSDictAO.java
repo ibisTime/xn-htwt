@@ -8,6 +8,7 @@
  */
 package com.cdkj.loan.ao;
 
+import com.cdkj.loan.dto.res.ProvinceRes;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
@@ -37,4 +38,6 @@ public interface ISYSDictAO {
     public SYSDict getSYSDict(Long id);
 
     public List<SYSDict> queryRegionBelongList(String key);
+
+    public List<ProvinceRes> queryRegionDate();
 }
