@@ -1,11 +1,13 @@
 package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;
+import lombok.Data;
 
+@Data
 public class CollectBankcard extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = 1L;
 
@@ -37,108 +39,5 @@ public class CollectBankcard extends ABaseDO {
 
     private String companyName;// 公司名称
 
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
-    }
-
-    public String getBelongBank() {
-        return belongBank;
-    }
-
-    public void setBelongBank(String belongBank) {
-        this.belongBank = belongBank;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public Double getPointRate() {
-        return pointRate;
-    }
-
-    public void setPointRate(Double pointRate) {
-        this.pointRate = pointRate;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getBankcardNumber() {
-        return bankcardNumber;
-    }
-
-    public void setBankcardNumber(String bankcardNumber) {
-        this.bankcardNumber = bankcardNumber;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 
 }

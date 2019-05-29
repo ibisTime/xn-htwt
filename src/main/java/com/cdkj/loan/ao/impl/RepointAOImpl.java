@@ -79,22 +79,7 @@ public class RepointAOImpl implements IRepointAO {
     public List<Repoint> queryRepointList(Repoint condition) {
         List<Repoint> repointList = repointBO.queryRepointList(condition);
         for (Repoint repoint : repointList) {
-            Long actualAmount = 0L;
-            SYSUser user = sysUserBO.getUser(repoint.getCaptain());
-            repoint.setUser(user);
-
-            //实返金额
-            RepointAccount repointAccount = new RepointAccount();
-            repointAccount.setRepointCode(repoint.getCode());
-            List<RepointAccount> repointAccountList = repointAccountBO
-                    .queryRepointAccountList(repointAccount);
-            if (CollectionUtils.isNotEmpty(repointAccountList)) {
-                for (RepointAccount data : repointAccountList) {
-                    actualAmount += data.getActualAmount();
-                }
-
-            }
-            repoint.setActualAmount(actualAmount);
+            setRepoint(repoint);
         }
         return repointList;
     }
@@ -102,8 +87,26 @@ public class RepointAOImpl implements IRepointAO {
     @Override
     public Repoint getRepoint(String code) {
         Repoint repoint = repointBO.getRepoint(code);
+        setRepoint(repoint);
+        return repoint;
+    }
+
+    private void setRepoint(Repoint repoint) {
+        Long actualAmount = 0L;
         SYSUser user = sysUserBO.getUser(repoint.getCaptain());
         repoint.setUser(user);
-        return repoint;
+
+        //实返金额
+        RepointAccount repointAccount = new RepointAccount();
+        repointAccount.setRepointCode(repoint.getCode());
+        List<RepointAccount> repointAccountList = repointAccountBO
+                .queryRepointAccountList(repointAccount);
+        if (CollectionUtils.isNotEmpty(repointAccountList)) {
+            for (RepointAccount data : repointAccountList) {
+                actualAmount += data.getActualAmount();
+            }
+
+        }
+        repoint.setActualAmount(actualAmount);
     }
 }

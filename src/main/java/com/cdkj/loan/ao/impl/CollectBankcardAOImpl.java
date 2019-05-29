@@ -1,14 +1,19 @@
 package com.cdkj.loan.ao.impl;
 
 import com.cdkj.loan.ao.ICollectBankcardAO;
+import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.ChannelBank;
 import com.cdkj.loan.domain.CollectBankcard;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.dto.req.XN632000Req;
 import com.cdkj.loan.dto.req.XN632002Req;
+import com.cdkj.loan.enums.ECollectBankcardType;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +27,12 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
 
     @Autowired
     private IChannelBankBO channelBankBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
+
+    @Autowired
+    private ICarDealerBO carDealerBO;
 
     @Override
     public String addCollectBankcard(XN632000Req req) {
@@ -38,7 +49,7 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
     @Override
     public int editCollectBankcard(XN632002Req req) {
         CollectBankcard data = collectBankcardBO
-            .getCollectBankcard(req.getCode());
+                .getCollectBankcard(req.getCode());
         BeanUtils.copyProperties(req, data);
 
         // 获取银行名称
@@ -57,7 +68,25 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
     @Override
     public Paginable<CollectBankcard> queryCollectBankcardPage(int start,
             int limit, CollectBankcard condition) {
-        return collectBankcardBO.getPaginable(start, limit, condition);
+        Paginable<CollectBankcard> paginable = collectBankcardBO
+                .getPaginable(start, limit, condition);
+        if (paginable != null) {
+            for (CollectBankcard collectBankcard : paginable.getList()) {
+                if (ECollectBankcardType.PLATFORM.getCode()
+                        .equals(collectBankcard.getBelongBank())
+                        || ECollectBankcardType.ADVANCD_COLLECT.getCode()
+                        .equals(collectBankcard.getBelongBank())) {
+                    Department department = departmentBO
+                            .getDepartment(collectBankcard.getCompanyCode());
+                    collectBankcard.setCompanyName(department.getName());
+                } else {
+                    CarDealer carDealer = carDealerBO
+                            .getCarDealer(collectBankcard.getCompanyCode());
+                    collectBankcard.setCompanyName(carDealer.getFullName());
+                }
+            }
+        }
+        return paginable;
     }
 
     @Override

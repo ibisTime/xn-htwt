@@ -1408,6 +1408,17 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('j6','解除抵�
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('j7','已完成','j',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('j8','清欠催收部申请拖车','j',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('j9','财务打款','j',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l1', '待还款', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l2', '已还款', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l3', '已逾期待处理', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l4', '缴纳违约押金，进绿名单', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l5', '已代偿，进黄名单', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l6', '催收失败，进红名单处理', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l7', '红名单处理中', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l8', '坏账', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l9', '业务团队买断', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l10', '业务团队租赁', 'l',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('l11', '逾期待确认', 'l',NULL);
 
 /*
 -- Query: SELECT `type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark` FROM tsys_node_flow
