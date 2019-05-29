@@ -49,9 +49,18 @@
         <result column="apply_datetime" property="applyDatetime"/>
         <result column="remark" property="remark"/>
 
+        <result column="periods" property="periods"/>
         <result column="loan_bank_name" property="loanBankName"/>
         <result column="team_name" property="teamName"/>
         <result column="company_name" property="companyName"/>
+        <result column="sale_user_name" property="saleUserName"/>
+        <result column="sale_user_company_name" property="saleUserCompanyName"/>
+        <result column="sale_user_depart_ment_name" property="saleUserDepartMentName"/>
+        <result column="sale_user_post_name" property="saleUserPostName"/>
+        <result column="inside_job_name" property="insideJobName"/>
+        <result column="inside_job_company_name" property="insideJobCompanyName"/>
+        <result column="inside_job_depart_ment_name" property="insideJobDepartMentName"/>
+        <result column="inside_job_post_name" property="insideJobPostName"/>
     </resultMap>
 
     <sql id="join_condition">
@@ -289,10 +298,27 @@
         ,t.remark
         ,b.bank_name as loan_bank_name
         ,bt.name as team_name
+        ,su.real_name as sale_user_name
+        ,sc.name as sale_user_company_name
+        ,sd.name as sale_user_department_name
+        ,sp.name as sale_user_post_name
+        ,iu.real_name as inside_job_name
+        ,ic.name as inside_job_company_name
+        ,id.name as inside_job_department_name
+        ,ip.name as inside_job_post_name
+        ,rb.periods as periods
         FROM
-        tqj_cdbiz t
+        tqj_cdbiz t left join tsys_user su on t.sale_user_id=su.user_id
+        left join tsys_user iu on t.inside_job=iu.user_id
         left join tb_bank b on b.code = t.loan_bank
         left join tsys_biz_team bt on bt.code = t.team_code
+        left join tsys_department sc on su.company_code=sc.code
+        left join tsys_department sd on su.department_code=sd.code
+        left join tsys_department sp on su.post_code=sp.code
+        left join tsys_department ic on iu.company_code=ic.code
+        left join tsys_department id on iu.department_code=id.code
+        left join tsys_department ip on iu.post_code=ip.code
+        left join tdh_repay_biz rb on rb.biz_code = t.code
         <include refid="join_condition"/>
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
@@ -401,10 +427,27 @@
         ,t.remark
         ,b.bank_name as loan_bank_name
         ,bt.name as team_name
+        ,su.real_name as sale_user_name
+        ,sc.name as sale_user_company_name
+        ,sd.name as sale_user_department_name
+        ,sp.name as sale_user_post_name
+        ,iu.real_name as inside_job_name
+        ,ic.name as inside_job_company_name
+        ,id.name as inside_job_department_name
+        ,ip.name as inside_job_post_name
+        ,rb.periods as periods
         FROM
-        tqj_cdbiz t
+        tqj_cdbiz t left join tsys_user su on t.sale_user_id=su.user_id
+        left join tsys_user iu on t.inside_job=iu.user_id
         left join tb_bank b on b.code = t.loan_bank
         left join tsys_biz_team bt on bt.code = t.team_code
+        left join tsys_department sc on su.company_code=sc.code
+        left join tsys_department sd on su.department_code=sd.code
+        left join tsys_department sp on su.post_code=sp.code
+        left join tsys_department ic on iu.company_code=ic.code
+        left join tsys_department id on iu.department_code=id.code
+        left join tsys_department ip on iu.post_code=ip.code
+        left join tdh_repay_biz rb on rb.biz_code = t.code
         <include refid="join_condition"/>
         <include refid="cur_node_condition"/>
         <include refid="intev_node_condition"/>

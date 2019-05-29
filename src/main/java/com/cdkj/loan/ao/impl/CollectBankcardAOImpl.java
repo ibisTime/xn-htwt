@@ -73,9 +73,9 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         if (paginable != null) {
             for (CollectBankcard collectBankcard : paginable.getList()) {
                 if (ECollectBankcardType.PLATFORM.getCode()
-                        .equals(collectBankcard.getBelongBank())
+                        .equals(collectBankcard.getType())
                         || ECollectBankcardType.ADVANCD_COLLECT.getCode()
-                        .equals(collectBankcard.getBelongBank())) {
+                        .equals(collectBankcard.getType())) {
                     Department department = departmentBO
                             .getDepartment(collectBankcard.getCompanyCode());
                     collectBankcard.setCompanyName(department.getName());

@@ -280,6 +280,9 @@ public class Cdbiz extends ABaseDO {
     // 手续费
     private BudgetOrderFee budgetOrderFee;
 
+    // 贷款期数
+    private Integer periods;
+
     // 业务是否经办
     private String isMy;
 

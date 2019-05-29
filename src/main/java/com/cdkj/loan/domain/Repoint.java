@@ -1,15 +1,18 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
+import java.util.List;
+import lombok.Data;
 
 /**
-* 返点表
-* @author: jiafr 
-* @since: 2018-06-08 21:35:51
-* @history:
-*/
+ * 返点表
+ *
+ * @author: jiafr
+ * @since: 2018-06-08 21:35:51
+ * @history:
+ */
+@Data
 public class Repoint extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -60,124 +63,5 @@ public class Repoint extends ABaseDO {
 
     private SYSUser user;// 用户
 
-    public SYSUser getUser() {
-        return user;
-    }
-
-    public void setUser(SYSUser user) {
-        this.user = user;
-    }
-
-    public String getAccountNo() {
-        return accountNo;
-    }
-
-    public void setAccountNo(String accountNo) {
-        this.accountNo = accountNo;
-    }
-
-    public String getCaptain() {
-        return captain;
-    }
-
-    public void setCaptain(String captain) {
-        this.captain = captain;
-    }
-
-    public String getBank() {
-        return bank;
-    }
-
-    public void setBank(String bank) {
-        this.bank = bank;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
-    }
-
-    public String getTeamCode() {
-        return teamCode;
-    }
-
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
-    }
-
-    public String getBizCode() {
-        return bizCode;
-    }
-
-    public void setWaterBill(String waterBill) {
-        this.waterBill = waterBill;
-    }
-
-    public String getWaterBill() {
-        return waterBill;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public Long getShouldAmount() {
-        return shouldAmount;
-    }
-
-    public void setShouldAmount(Long shouldAmount) {
-        this.shouldAmount = shouldAmount;
-    }
-
-    public Long getActualAmount() {
-        return actualAmount;
-    }
-
-    public void setActualAmount(Long actualAmount) {
-        this.actualAmount = actualAmount;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
-
+    private List<RepointAccount> repointAccountList;
 }

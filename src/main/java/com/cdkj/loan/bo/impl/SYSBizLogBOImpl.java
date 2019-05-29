@@ -267,7 +267,12 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         SYSBizLog condition = new SYSBizLog();
         condition.setDealNode(node);
         condition.setBizCode(bizCode);
-        return sysBizLogDAO.select(condition);
+        List<SYSBizLog> sysBizLogList = sysBizLogDAO.selectList(condition);
+        SYSBizLog log = null;
+        if (CollectionUtils.isNotEmpty(sysBizLogList)) {
+            log = sysBizLogList.get(sysBizLogList.size() - 1);
+        }
+        return log;
     }
 
     @Override

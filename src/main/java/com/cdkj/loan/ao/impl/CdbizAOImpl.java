@@ -1061,7 +1061,7 @@ public class CdbizAOImpl implements ICdbizAO {
         }
 
         for (Cdbiz cdbiz : page.getList()) {
-            init(cdbiz);
+            pageInit(cdbiz);
         }
         return page;
     }
@@ -1071,11 +1071,12 @@ public class CdbizAOImpl implements ICdbizAO {
         Paginable<Cdbiz> page = cdbizBO.getPaginable(start, limit, condition);
         if (page != null) {
             for (Cdbiz cdbiz : page.getList()) {
-                init(cdbiz);
+                pageInit(cdbiz);
             }
         }
         return page;
     }
+
 
     @Override
     public List<Cdbiz> queryCdbizList(Cdbiz condition) {
@@ -1233,6 +1234,31 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbiz.setCancelReason(sysBizLog.getDealNote());
         }
 
+    }
+
+    private void pageInit(Cdbiz cdbiz) {
+        // 主贷人信息
+        CreditUser mainCreditUser = creditUserBO
+                .getCreditUserByBizCode(cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
+        cdbiz.setCreditUser(mainCreditUser);
+
+        LoanInfoRes loanInfoRes = new LoanInfoRes();
+        loanInfoRes.setPeriods(cdbiz.getPeriods());
+        cdbiz.setLoanInfo(loanInfoRes);
+
+        //面签时间
+        SYSBizLog intevBizLog = sysBizLogBO
+                .getLogByNode(ENode.input_interview.getCode(), cdbiz.getCode());
+        if (intevBizLog != null) {
+            cdbiz.setIntevDateTime(intevBizLog.getEndDatetime());
+        }
+
+        //作废原因
+        SYSBizLog cancelBizLog = sysBizLogBO
+                .getLogByNode(ENode.cancel_apply.getCode(), cdbiz.getCode());
+        if (cancelBizLog != null) {
+            cdbiz.setCancelReason(cancelBizLog.getDealNote());
+        }
     }
 
     @Override

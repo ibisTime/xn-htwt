@@ -1,11 +1,13 @@
 package com.cdkj.loan.ao.impl;
 
 import com.cdkj.loan.ao.IRepointAO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.IRepointAccountBO;
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.RepointAccount;
 import com.cdkj.loan.domain.SYSUser;
@@ -36,6 +38,9 @@ public class RepointAOImpl implements IRepointAO {
 
     @Autowired
     private IRepointAccountBO repointAccountBO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Override
     @Transactional(rollbackFor = BizException.class)
@@ -88,6 +93,11 @@ public class RepointAOImpl implements IRepointAO {
     public Repoint getRepoint(String code) {
         Repoint repoint = repointBO.getRepoint(code);
         setRepoint(repoint);
+        for (RepointAccount repointAccount : repoint.getRepointAccountList()) {
+            CollectBankcard collectBankcard = collectBankcardBO
+                    .getCollectBankcard(repointAccount.getRepointCardCode());
+            repointAccount.setCollectBankcard(collectBankcard);
+        }
         return repoint;
     }
 
@@ -107,6 +117,7 @@ public class RepointAOImpl implements IRepointAO {
             }
 
         }
+        repoint.setRepointAccountList(repointAccountList);
         repoint.setActualAmount(actualAmount);
     }
 }
