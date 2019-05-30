@@ -48,6 +48,10 @@ public class BankAOImpl implements IBankAO {
         }
 
         Bank data = new Bank();
+        //Integer类型判定
+        if(null!=req.getClientValidDate()&&req.getClientValidDate().length()==0){
+            req.setClientValidDate(null);
+        }
         EntityUtils.copyData(req, data);
         data.setStatus(EBankStatus.Shelf_YES.getCode());
         data.setUpdateDatetime(new Date());

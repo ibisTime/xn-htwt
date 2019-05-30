@@ -13,7 +13,6 @@ public class XN630412Req {
     @NotBlank(message = "名称不能为空")
     private String name; // 名称
 
-    @NotBlank(message = "广告语不能为空")
     private String slogan;// 广告语
 
     @NotBlank(message = "广告图不能为空")
