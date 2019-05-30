@@ -55,11 +55,11 @@
         <result column="company_name" property="companyName"/>
         <result column="sale_user_name" property="saleUserName"/>
         <result column="sale_user_company_name" property="saleUserCompanyName"/>
-        <result column="sale_user_depart_ment_name" property="saleUserDepartMentName"/>
+        <result column="sale_user_department_name" property="saleUserDepartMentName"/>
         <result column="sale_user_post_name" property="saleUserPostName"/>
         <result column="inside_job_name" property="insideJobName"/>
         <result column="inside_job_company_name" property="insideJobCompanyName"/>
-        <result column="inside_job_depart_ment_name" property="insideJobDepartMentName"/>
+        <result column="inside_job_department_name" property="insideJobDepartMentName"/>
         <result column="inside_job_post_name" property="insideJobPostName"/>
     </resultMap>
 

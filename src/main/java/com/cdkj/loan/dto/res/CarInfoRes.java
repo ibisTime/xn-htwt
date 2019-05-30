@@ -78,4 +78,7 @@ public class CarInfoRes {
     // 开票价
     private String invoicePrice;// carInfo
 
+    // 银行服务费
+    private Long bankFee;// carInfo
+
 }

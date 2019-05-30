@@ -267,6 +267,12 @@ public class CdbizAOImpl implements ICdbizAO {
         sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(), EBizLogType.CREDIT,
                 cdbiz.getCode(), currentNode, null, operator);
 
+        // 如果是重录，处理重录的待办
+        if (ENode.renew_credit.getCode().equals(currentNode)) {
+            bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.CREDIT.getCode(),
+                    cdbiz.getCode(), currentNode, operator);
+        }
+
         // 第一步录入征信的待办事项
         bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.CREDIT,
                 cdbiz.getCode(), ENode.input_credit);
@@ -370,6 +376,15 @@ public class CdbizAOImpl implements ICdbizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是录入银行征信结果节点，不能操作");
         }
+        for (XN632111ReqCreditUser reqCreditUser : req.getCreditList()) {
+            if (StringUtils.isBlank(reqCreditUser.getBankCreditReport())) {
+                CreditUser creditUser = creditUserBO
+                        .getCreditUser(reqCreditUser.getCreditUserCode());
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        creditUser.getUserName() + "的征信结果未录入，不能操作");
+            }
+        }
+
         // 当前节点
         String preCurNodeCode = cdbiz.getCurNodeCode();
         String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode)
@@ -1088,6 +1103,53 @@ public class CdbizAOImpl implements ICdbizAO {
     }
 
     @Override
+    public Paginable<Cdbiz> queryIntevVideo(int start, int limit, Cdbiz condition) {
+        Paginable<Cdbiz> page = null;
+        SYSUser sysUser = sysUserBO.getUser(condition.getUserId());
+
+        // 如果传业务员，说明是查看业务员自己的
+        if (StringUtils.isBlank(condition.getSaleUserId())) {
+            if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
+                condition.setSaleUserId(condition.getUserId());
+            }
+            if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())) {
+                condition.setInsideJob(condition.getUserId());
+            }
+            condition.setRoleCode(sysUser.getRoleCode());
+        }
+        page = cdbizBO.getPaginableByRoleCode(condition, start, limit);
+
+        if (page != null) {
+            for (Cdbiz cdbiz : page.getList()) {
+                // 附件
+                List<Attachment> attachmentList = attachmentBO
+                        .queryBizAttachments(cdbiz.getCode());
+                cdbiz.setAttachments(attachmentList);
+
+                // 主贷人信息
+                CreditUser mainCreditUser = creditUserBO
+                        .getCreditUserByBizCode(cdbiz.getCode(), ECreditUserLoanRole.APPLY_USER);
+                cdbiz.setCreditUser(mainCreditUser);
+
+                //车辆信息
+                CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());
+                CarInfoRes carInfoRes = new CarInfoRes();
+                if (null != carInfo) {
+                    BeanUtils.copyProperties(carInfo, carInfoRes);
+                }
+                cdbiz.setCarInfoRes(carInfoRes);
+                //面签时间
+                SYSBizLog intevBizLog = sysBizLogBO
+                        .getLogByNode(ENode.input_interview.getCode(), cdbiz.getCode());
+                if (intevBizLog != null) {
+                    cdbiz.setIntevDateTime(intevBizLog.getEndDatetime());
+                }
+            }
+        }
+        return page;
+    }
+
+    @Override
     public Cdbiz getCdbiz(String code) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         init(cdbiz);
@@ -1115,25 +1177,6 @@ public class CdbizAOImpl implements ICdbizAO {
 
         }
         cdbiz.setCreditUser(mainCreditUser);
-
-        // 业务员名称
-        if (StringUtils.isNotBlank(cdbiz.getSaleUserId())) {
-            SYSUser saleUser = sysUserBO.getUser(cdbiz.getSaleUserId());
-            cdbiz.setSaleUserName(saleUser.getRealName());
-            cdbiz.setSaleUserCompanyName(saleUser.getCompanyName());
-            cdbiz.setSaleUserDepartMentName(saleUser.getDepartmentName());
-            cdbiz.setSaleUserPostName(saleUser.getPostName());
-        }
-
-        // 内勤名称
-        if (StringUtils.isNotBlank(cdbiz.getInsideJob())) {
-
-            SYSUser insideJob = sysUserBO.getUser(cdbiz.getInsideJob());
-            cdbiz.setInsideJobName(insideJob.getRealName());
-            cdbiz.setInsideJobCompanyName(insideJob.getCompanyName());
-            cdbiz.setInsideJobDepartMentName(insideJob.getDepartmentName());
-            cdbiz.setInsideJobPostName(insideJob.getPostName());
-        }
 
         // 车辆信息
         CarInfo carInfo = carInfoBO.getCarInfoByBizCode(cdbiz.getCode());

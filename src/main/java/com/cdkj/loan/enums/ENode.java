@@ -1,9 +1,8 @@
 package com.cdkj.loan.enums;
 
+import com.cdkj.loan.exception.BizException;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.cdkj.loan.exception.BizException;
 
 /**
  * 征信节点
@@ -26,7 +25,8 @@ public enum ENode {
             "b8", "总公司审核"),
 
     // 制卡节点
-    make_card_apply("h1", "制卡申请"), input_card_number("h2", "回录卡号"),icbank_make_card("h2x","工行制卡"), make_card_finish(
+    make_card_apply("h1", "制卡申请"), input_card_number("h2", "回录卡号"), icbank_make_card("h2x",
+            "工行制卡"), make_card_finish(
             "h3", "制卡完成"),
 
     // 面签节点
@@ -58,7 +58,7 @@ public enum ENode {
 
     fk_input("e4", "风控录入银行放款信息"), cw_confirm_receipt("e5", "财务确认银行收款"),
 
-    bank_receipt("e6", "待抵押申请"),
+    bank_receipt("e6", "抵押申请"),
 
     submit_2("e7", "风控寄送银行放款材料"), receive_2("e8", "贷后收件（银行放款）"),
 
@@ -78,7 +78,7 @@ public enum ENode {
 
     to_commit_bank("f9", "提交银行"), dy_info_confirm_submit("f10", "抵押材料已确认提交"),
 
-    submit_6("f11", "待风控寄件（车辆抵押）"), receive_6("f12", "待担保公司收件（车辆抵押）"),
+    submit_6("f11", "风控寄件（车辆抵押）"), receive_6("f12", "担保公司收件（车辆抵押）"),
 
     second_received_archive("f13", "第二次已收件待存档"), second_archive("f14", "第二次已存档"),
 

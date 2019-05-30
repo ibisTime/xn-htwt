@@ -795,11 +795,6 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 investigateReport.setIsAdvanceFund(cdbiz.getIsAdvanceFund());
                 investigateReport.setSaleUserId(cdbiz.getSaleUserId());
                 String gender = applyUser.getGender();
-                if (gender.equals("1")) {
-                    gender = "男";
-                } else {
-                    gender = "女";
-                }
                 // 学历
                 String education;
                 SYSDict educationDict = sysDictBO
