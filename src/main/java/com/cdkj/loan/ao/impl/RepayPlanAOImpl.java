@@ -192,7 +192,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void prepayPhoto(XN630544Req req) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
         String preCurNodeCode = repayPlan.getCurNodeCode();
@@ -209,7 +209,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void prepayPhotoApprove(XN630545Req req) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
         String preCurNodeCode = repayPlan.getCurNodeCode();
@@ -239,7 +239,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     // 逾期处理
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void overdueHandle(XN630532Req req) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
         if (!ERepayPlanNode.OVERDUE.getCode()
@@ -331,7 +331,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void payFee(String code, List<String> costList, String payType,
             String operator) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
@@ -403,9 +403,11 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         for (String code : req.getCodeList()) {
             //更新还款计划
             RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
             if (!ERepayPlanNode.TO_REPAY.getCode().equals(repayPlan.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "编号为：" + code + "的还款计划不是还款待处理状态");
+                        repayBiz.getRealName() + "的第" + repayPlan.getCurPeriods()
+                                + "期还款计划不是还款待处理状态");
             }
             repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
             repayPlan.setOverdueAmount(0L);
@@ -414,7 +416,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlanBO.alreadyRepay(repayPlan);
 
             //更新还款业务
-            RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
             repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
             //如果是第一期，减去首期月供
             if (repayPlan.getCurPeriods() == 1) {
@@ -434,7 +435,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
             if (!ERepayPlanNode.OVERDUE_TO_TRUE.getCode().equals(repayPlan.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "编号为：" + code + "的还款计划不是逾期待处理状态");
+                        repayBiz.getRealName() + "的第" + repayPlan.getCurPeriods()
+                                + "期还款计划不是逾期待处理状态");
             }
             repayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
             repayPlanBO.alreadyRepay(repayPlan);

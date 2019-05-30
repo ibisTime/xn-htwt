@@ -129,6 +129,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 //        Long deposit = repayBiz.getLyDeposit() - repayBiz.getCutLyDeposit();
         Long amount = 0L;
         Long retreatDeposit = repayBiz.getLyDeposit();
+        int curOverdueCount = 0;
         for (RepayPlan repayPlan : repayPlanList) {
             // 实际退款金额
             Long shouldDeposit = repayPlan.getShouldDeposit();
@@ -139,7 +140,13 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
             // 可退押金金额
             retreatDeposit += repayPlan.getOverdueDeposit();
+
+            //实际逾期期数
+            if (ERepayPlanNode.OVERDUE.getCode().equals(repayPlan.getCurNodeCode())) {
+                curOverdueCount += 1;
+            }
         }
+        repayBiz.setCurOverdueCount(curOverdueCount);
         repayBiz.setRetreatDeposit(retreatDeposit);
 //        repayBiz.setActualRefunds(deposit);
         repayBiz.setLoanBalance(amount);
@@ -157,7 +164,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     // 提前还款
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void advanceRepay(String code, String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
@@ -168,7 +175,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void prepaymentApply(XN630515Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.TO_REPAY.getCode()
@@ -206,7 +213,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void prepaymentApprove(XN630516Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.PREPAYMENT_APPROVE.getCode()
@@ -346,7 +353,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void confirmSettledProduct(XN630513Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.PRO_SETTLED.getCode()
@@ -365,7 +372,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void approveByQkcsDepartment(String code, Long cutLyDeposit,
             String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
@@ -388,6 +395,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void approveByBankCheck(XN630551Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         String preCurNodeCode = repayBiz.getCurNodeCode();
@@ -410,6 +418,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void approveByManager(String code, String approveResult,
             String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
@@ -428,6 +437,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void approveByFinance(String code, String approveResult,
             String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
@@ -446,6 +456,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void releaseMortgage(String code, Date releaseDatetime,
             String updater) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
@@ -520,7 +531,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // 申请拖车逻辑：
     // 1、前提条件：还款计划是“催收失败，进红名单处理”；再更改还款业务状态
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void applyTrailer(XN630555Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         String preCurNodeCode = repayBiz.getCurNodeCode();// 划款业务当前节点
@@ -721,7 +732,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void financeApprove(XN630562Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         String preCurNodeCode = repayBiz.getCurNodeCode();

@@ -267,6 +267,12 @@ public class CdbizAOImpl implements ICdbizAO {
         sysBizLogBO.saveFirstSYSBizLog(cdbiz.getCode(), EBizLogType.CREDIT,
                 cdbiz.getCode(), currentNode, null, operator);
 
+        // 如果是重录，处理重录的待办
+        if (ENode.renew_credit.getCode().equals(currentNode)) {
+            bizTaskBO.handlePreBizTask(cdbiz.getCode(), EBizLogType.CREDIT.getCode(),
+                    cdbiz.getCode(), currentNode, operator);
+        }
+
         // 第一步录入征信的待办事项
         bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.CREDIT,
                 cdbiz.getCode(), ENode.input_credit);

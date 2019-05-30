@@ -411,3 +411,8 @@ INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('l11', '逾期待确认
 UPDATE `tdq_file_list` SET `vname`='申请人手持授权书照片' WHERE `id`='58';
 UPDATE `tdq_file_list` SET `vname`='共还人手持授权书照片' WHERE `id`='67';
 UPDATE `tdq_file_list` SET `vname`='担保人手持授权书照片' WHERE `id`='49';
+
+UPDATE `tsys_node` SET `name`='财务确认银行收款' WHERE `code`='e5';
+UPDATE `tsys_node` SET `name`='风控寄件（车辆抵押）' WHERE `code`='f11';
+UPDATE `tsys_node` SET `name`='担保公司收件（车辆抵押）' WHERE `code`='f12';
+UPDATE `tsys_node` SET `name`='用户赎回' WHERE `code`='j12';
