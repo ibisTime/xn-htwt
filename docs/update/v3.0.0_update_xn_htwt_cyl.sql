@@ -406,3 +406,8 @@ INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('l8', '坏账', 'l');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('l9', '业务团队买断', 'l');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('l10', '业务团队租赁', 'l');
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('l11', '逾期待确认', 'l');
+
+
+UPDATE `tdq_file_list` SET `vname`='申请人手持授权书照片' WHERE `id`='58';
+UPDATE `tdq_file_list` SET `vname`='共还人手持授权书照片' WHERE `id`='67';
+UPDATE `tdq_file_list` SET `vname`='担保人手持授权书照片' WHERE `id`='49';

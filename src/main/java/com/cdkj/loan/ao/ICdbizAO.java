@@ -101,4 +101,8 @@ public interface ICdbizAO {
 
     public void editRemark(String code, String remark);
 
+    /**
+     * 工具：面签视频
+     */
+    Paginable<Cdbiz> queryIntevVideo(int start, int limit, Cdbiz condition);
 }
