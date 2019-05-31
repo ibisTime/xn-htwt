@@ -34,7 +34,7 @@ public class XN632525 extends AProcessor {
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IBizTaskAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = "create_datetime";
         }
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());

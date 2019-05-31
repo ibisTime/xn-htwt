@@ -1624,9 +1624,10 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','gender','1','男','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','gender','2','女','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'loan_period','贷款期限','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_period','12','一年','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_period','24','两年','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_period','36','三年','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_period','12','12期','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_period','18','18期','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_period','24','24期','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_period','36','36期','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'loan_product_status','贷款商品状态','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_product_status','1','待上架','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','loan_product_status','2','已上架','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
@@ -2821,7 +2822,7 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_apply','申请人身份证正面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_apply','申请人身份证反面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_apply','申请人征信查询授权书','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_apply','申请人面签照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_apply','申请人手持授权书照片','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_apply','申请人银行征信报告','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_apply','申请人大数据报告','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','hkb_apply','申请人户口本','图片',1,'USYS201800000000001',now());
@@ -2829,7 +2830,7 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gh','共还人身份证正面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gh','共还人身份证反面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_gh','共还人征信查询授权书','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gh','共还人面签照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gh','共还人手持授权书照片','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','house_picture_gh','共还人家访照片','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_gh','共还人银行征信报告','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gh','共还人大数据报告','图片',1,'USYS201800000000001',now());

@@ -160,6 +160,11 @@
         inner join tqj_cdbiz cd on t.biz_code = cd.code
         left join tdq_credit_user u on u.biz_code = t.biz_code and u.loan_role = '1'
         <include refid="where_condition_byRole"/>
+        <trim prefix="ORDER BY ">
+          <if test="order != null and order != '' ">
+            t.${order}
+          </if>
+        </trim>
     </select>
 
     <select id="select_count_byRole" parameterType="bizTask"
