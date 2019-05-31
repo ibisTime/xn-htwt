@@ -1,7 +1,5 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditUser;
@@ -9,11 +7,12 @@ import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
+import java.util.List;
 
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     // 新增征信人员
-    void saveCreditUser(XN632110ReqCreditUser child, String bizCode);
+    void saveCreditUser(XN632110ReqCreditUser child, String bizCode, int guaUserCount);
 
     // 删除征信人员
     void removeCreditUserByBizCode(String bizCode);

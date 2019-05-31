@@ -35,12 +35,19 @@ public enum EAttachName {
     replier_interview_pic("interview_pic_gh", "图片"),
 
     // 担保人资源
-    assurance_bank("bank_report_gua", "图片"),
-    assurance_data("data_report_gua", "图片"),
-    assurance_id_front("id_no_front_gua", "图片"),
-    assurance_id_reverse("id_no_reverse_gua", "图片"),
-    assurance_auth_pdf("auth_pdf_gua", "图片"),
-    assurance_interview_pic("interview_pic_gua", "图片"),
+    assurance_bank("bank_report_gua0", "图片"),
+    assurance_data("data_report_gua0", "图片"),
+    assurance_id_front("id_no_front_gua0", "图片"),
+    assurance_id_reverse("id_no_reverse_gua0", "图片"),
+    assurance_auth_pdf("auth_pdf_gua0", "图片"),
+    assurance_interview_pic("interview_pic_gua0", "图片"),
+
+    assurance_bank1("bank_report_gua1", "图片"),
+    assurance_data1("data_report_gua1", "图片"),
+    assurance_id_front1("id_no_front_gua1", "图片"),
+    assurance_id_reverse1("id_no_reverse_gua1", "图片"),
+    assurance_auth_pdf1("auth_pdf_gua1", "图片"),
+    assurance_interview_pic1("interview_pic_gua1", "图片"),
 
     // 房屋信息
     house_pic("house_picture_apply", "图片"),

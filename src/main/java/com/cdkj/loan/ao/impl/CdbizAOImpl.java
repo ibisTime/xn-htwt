@@ -236,6 +236,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // 之前节点
         String preCurNodeCode = cdbiz.getCurNodeCode();
 
+        EntityUtils.copyData(req, cdbiz);
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
             // 删除附件
             // attachmentBO.removeBizAttachments(bizCode);
@@ -244,8 +245,10 @@ public class CdbizAOImpl implements ICdbizAO {
                     req.getXszFront(), req.getXszReverse());
         }
         // 修改业务
-        EntityUtils.copyData(req, cdbiz);
         cdbiz.setLoanAmount(StringValidater.toLong(req.getCreditLoanAmount()));
+        if (StringUtils.isNotBlank(req.getLoanBankCode())) {
+            cdbiz.setLoanBank(req.getLoanBankCode());
+        }
         cdbizBO.refreshCdbiz(cdbiz);
 
         // 修改征信人员
@@ -281,11 +284,11 @@ public class CdbizAOImpl implements ICdbizAO {
             // 面签开始的待办事项
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
                     cdbiz.getCode(), ENode.input_interview);
-        }
 
-        // 更新提交节点信息
-        cdbizBO.refreshIntevNodeStatus(cdbiz, ENode.input_interview.getCode(),
-                ECdbizStatus.B00.getCode());
+            // 更新提交节点信息
+            cdbizBO.refreshIntevNodeStatus(cdbiz, ENode.input_interview.getCode(),
+                    ECdbizStatus.B00.getCode());
+        }
 
         // 修改业务主节点状态
         cdbiz.setCurNodeCode(nodeFlow.getNextNode());
@@ -306,6 +309,7 @@ public class CdbizAOImpl implements ICdbizAO {
         // 申请人条数验证
         int applyUserCount = 0;
         if (CollectionUtils.isNotEmpty(childList)) {
+            int guaUserCount = 0;
             for (XN632110ReqCreditUser child : childList) {
                 if (ECreditUserLoanRole.APPLY_USER.getCode().equals(
                         child.getLoanRole())) {
@@ -317,7 +321,12 @@ public class CdbizAOImpl implements ICdbizAO {
                             "征信申请人只能填写一条数据");
                 }
 
-                creditUserBO.saveCreditUser(child, bizCode);
+                creditUserBO.saveCreditUser(child, bizCode, guaUserCount);
+
+                if (ECreditUserLoanRole.GUARANTOR.getCode().equals(
+                        child.getLoanRole())) {
+                    guaUserCount += 1;
+                }
             }
 
             if (applyUserCount <= 0) {
