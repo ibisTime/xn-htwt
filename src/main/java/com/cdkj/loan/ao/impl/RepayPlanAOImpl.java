@@ -282,7 +282,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         // 删除原来费用清单
         costAO.dropCost(req.getCode());
         // 添加费用清单
-        costAO.addCost(req.getCode(), req.getCostList());
+        if (CollectionUtils.isNotEmpty(req.getCostList())) {
+            costAO.addCost(req.getCode(), req.getCostList());
+        }
         long totalFee = 0;
         for (XN630535Req xn630535Req : req.getCostList()) {
             totalFee += StringValidater.toLong(xn630535Req.getAmount());
@@ -302,7 +304,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
             RepayPlan curMonth = repayPlanBO
                     .getRepayPlanCurMonth(repayPlan.getRepayBizCode());
-            if (curMonth.getCode().equals(repayPlan.getCode())) {
+            if (curMonth != null && curMonth.getCode().equals(repayPlan.getCode())) {
                 repayBiz.setCurOverdueCount(0);
                 repayBiz.setOverdueAmount(0L);
             } else {
@@ -447,9 +449,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             Long restAmount = 0L;
 
             //剩余欠款 = 总欠款-本期已还金额
-            restAmount = repayBiz.getRestAmount() - (
-                    repayPlan.getRepayCapital() + repayPlan.getRepayInterest() - repayPlan
-                            .getOverdueAmount());
+            restAmount = repayBiz.getRestAmount() - (repayPlan.getRealRepayAmount());
             repayBiz.setRestAmount(restAmount);
             // 总期数-当前期数+1 = 剩余期数 说明当月还款计划没逾过期（当前还款计划逾过期并处理过的不用加逾期次数）
             repayBiz.setTotalOverdueCount(repayBiz.getTotalOverdueCount() + 1);
