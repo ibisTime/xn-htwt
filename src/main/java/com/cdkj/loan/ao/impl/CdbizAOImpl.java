@@ -412,6 +412,7 @@ public class CdbizAOImpl implements ICdbizAO {
                 cdbiz.getCode(), preCurNodeCode, nextNode, req.getOperator());
 
         List<XN632111ReqCreditUser> creditResult = req.getCreditList();
+        int guaUserCount = 0;
         for (XN632111ReqCreditUser reqCreditUser : creditResult) {
             // 录入结果与说明
             CreditUser creditUser = creditUserBO.getCreditUser(reqCreditUser
@@ -437,10 +438,18 @@ public class CdbizAOImpl implements ICdbizAO {
 
             } else if (ECreditUserLoanRole.GUARANTOR.getCode().equals(
                     creditUser.getLoanRole())) {
-                attachNameBank = EAttachName.getMap().get(
-                        EAttachName.assurance_bank.getCode());
-                attachNameData = EAttachName.getMap().get(
-                        EAttachName.assurance_data.getCode());
+                if (guaUserCount > 0) {
+                    attachNameBank = EAttachName.getMap().get(
+                            EAttachName.assurance_bank1.getCode());
+                    attachNameData = EAttachName.getMap().get(
+                            EAttachName.assurance_data1.getCode());
+                } else {
+                    attachNameBank = EAttachName.getMap().get(
+                            EAttachName.assurance_bank.getCode());
+                    attachNameData = EAttachName.getMap().get(
+                            EAttachName.assurance_data.getCode());
+                    guaUserCount += 1;
+                }
             }
 
             attachmentBO.saveAttachment(cdbiz.getCode(),
