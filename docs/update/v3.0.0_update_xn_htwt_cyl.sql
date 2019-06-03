@@ -421,7 +421,7 @@ UPDATE `tsys_node` SET `name`='用户赎回' WHERE `code`='j12';
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua0','担保人身份证正面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gua0','担保人身份证反面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_gua0','担保人征信查询授权书','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua0','担保人面签照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua0','担保人手持授权书照片','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','house_picture_gua0','担保人家访照片','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_gua0','担保人银行征信报告','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gua0','担保人大数据报告','图片',1,'USYS201800000000001',now());
@@ -430,7 +430,7 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua1','担保人身份证正面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gua1','担保人身份证反面','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_gua1','担保人征信查询授权书','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua1','担保人面签照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua1','担保人手持授权书照片','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','house_picture_gua1','担保人家访照片','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_gua1','担保人银行征信报告','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gua1','担保人大数据报告','图片',1,'USYS201800000000001',now());
@@ -440,3 +440,6 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 
 ALTER TABLE `tdq_credit_user`
 ADD COLUMN `is_first_gua` VARCHAR(4) NULL COMMENT '是否为第一担保人' AFTER `status`;
+
+ALTER TABLE `tqj_attachment`
+CHANGE COLUMN `url` `url` LONGTEXT NULL DEFAULT NULL COMMENT 'url' ;

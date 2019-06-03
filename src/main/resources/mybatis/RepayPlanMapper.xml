@@ -503,6 +503,8 @@
 		UPDATE tdh_repay_plan
 		SET
 		payed_amount = #{payedAmount}
+		,overplus_amount = #{overplusAmount}
+		,real_repay_amount = #{realRepayAmount}
 		,is_repay = #{isRepay}
 		WHERE code = #{code}
 	</update>

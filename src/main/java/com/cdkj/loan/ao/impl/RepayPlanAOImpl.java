@@ -370,9 +370,16 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             String payType) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setPayedAmount(repayPlan.getOverdueAmount());
+        repayPlan.setOverplusAmount(0L);
+        repayPlan.setRealRepayAmount(repayPlan.getRepayCapital());
         repayPlan.setIsRepay(EResultStatus.YES.getCode());
         // TODO 支付方式
         repayPlanBO.repayAmount(repayPlan);
+
+        // 更新还款业务
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+        repayBiz.setRestAmount(repayBiz.getRestAmount() - repayPlan.getOverdueAmount());
+        repayBizBO.repayOverdue(repayBiz);
     }
 
     @Override
