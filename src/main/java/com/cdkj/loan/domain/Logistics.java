@@ -119,4 +119,7 @@ public class Logistics extends ABaseDO {
 
     //收节点列表
     private List<String> toNodeList;
+
+    //角色编号
+    private String roleCode;
 }

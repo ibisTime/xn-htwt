@@ -1074,13 +1074,16 @@ public class CdbizAOImpl implements ICdbizAO {
             // 如果传业务员，说明是查看业务员自己的
             if (StringUtils.isBlank(condition.getSaleUserId())) {
 
-                if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
-                    condition.setSaleUserId(condition.getUserId());
+                if(null!=sysUser){
+                    if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
+                        condition.setSaleUserId(condition.getUserId());
+                    }
+                    if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())) {
+                        condition.setInsideJob(condition.getUserId());
+                    }
+
+                    condition.setRoleCode(sysUser.getRoleCode());
                 }
-                if (ESysRole.YWNQ.getCode().equals(sysUser.getRoleCode())) {
-                    condition.setInsideJob(condition.getUserId());
-                }
-                condition.setRoleCode(sysUser.getRoleCode());
 
             }
             page = cdbizBO.getPaginableByRoleCode(condition, start, limit);

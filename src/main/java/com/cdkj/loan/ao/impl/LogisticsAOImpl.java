@@ -591,6 +591,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 condition.setTeamCode(sysUser.getTeamCode());
             }
             condition.setUserId(null);
+            condition.setRoleCode(sysUser.getRoleCode());
         }
 
         Paginable<Logistics> page = logisticsBO.getPaginable(start, limit,
