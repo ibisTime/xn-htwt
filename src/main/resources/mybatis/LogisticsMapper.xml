@@ -73,7 +73,30 @@
                     #{item}
                 </foreach>
             </if>
+            <if test="fromNodeList != null and fromNodeList != '' ">
+              AND t.from_node_code in
+              <foreach collection="fromNodeList" index="index" item="item" open="(" separator=","
+                close=")">
+                #{item}
+              </foreach>
+            </if>
+            <if test="toNodeList != null and toNodeList != '' ">
+              AND t.to_node_code in
+              <foreach collection="toNodeList" index="index" item="item" open="(" separator=","
+                close=")">
+                #{item}
+              </foreach>
+            </if>
         </trim>
+    </sql>
+
+    <sql id="join_condition">
+      <if test="fromNodeCode != null and fromNodeCode != '' ">
+        inner join tsys_role_node trn on t.from_node_code=trn.node_code
+      </if>
+      <if test="toNodeCode != null and toNodeCode != '' ">
+        inner join tsys_role_node trn on t.to_node_code=trn.node_code
+      </if>
     </sql>
 
     <select id="select_logistics" parameterType="logistics" resultMap="logistics_DB_result">

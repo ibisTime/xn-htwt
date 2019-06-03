@@ -113,4 +113,10 @@ public class Logistics extends ABaseDO {
 
     // 业务编号模糊查
     private String bizCodeForQuery;
+
+    //发节点列表
+    private List<String> fromNodeList;
+
+    //收节点列表
+    private List<String> toNodeList;
 }

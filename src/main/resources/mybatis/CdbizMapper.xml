@@ -127,7 +127,7 @@
             </if>
             <if test="teamCode != null and teamCode != '' ">
                 AND (t.team_code = #{teamCode} OR t.code in (select biz_code from tsys_biz_log where
-                operator=#{userId}))
+                operator=#{userId}  group by biz_code))
             </if>
             <if test="captainCode != null and captainCode != '' ">
                 AND t.captain_code = #{captainCode}
@@ -180,8 +180,8 @@
             <if test="guaMode != null and guaMode != '' ">
                 AND t.gua_mode = #{guaMode}
             </if>
-            <if test="isMy == '1' and userId != '' and userId != null">
-                AND t.code in (select biz_code from tsys_biz_log where operator=#{userId})
+            <if test="isMy != null and userId != '' and userId != null">
+                AND t.code in (select biz_code from tsys_biz_log where operator=#{userId} group by biz_code)
             </if>
             <if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
                 AND t.cur_node_code in

@@ -47,8 +47,6 @@ public class XN632515Req extends APageReq {
     // 业务公司编号
     private String companyCode;
 
-    // 团队编号
-    private String teamCode;
 
     // 团队队长
     private String captainCode;
