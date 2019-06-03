@@ -933,7 +933,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 // 家纺照片
                 Attachment housePicture = attachmentBO.getAttachment(
                         cdbiz.getCode(), "credit_user_ext", "house_picture_apply");
-                investigateReport.setHousePicture(housePicture.getUrl());
+                if (housePicture != null) {
+                    investigateReport.setHousePicture(housePicture.getUrl());
+                }
 
                 // 车辆信息
                 CarInfo carInfo = carInfoBO

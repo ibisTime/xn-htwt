@@ -53,4 +53,9 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
      * 人工确认还款
      */
     void updateRepayPlan(RepayPlan repayPlan);
+
+    /**
+     * 查询之前的还款计划
+     */
+    List<RepayPlan> selectBeforePlanList(RepayPlan condition);
 }

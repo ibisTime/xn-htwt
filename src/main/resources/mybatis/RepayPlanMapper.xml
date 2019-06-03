@@ -361,6 +361,18 @@
         </foreach>
     </insert>
 
+    <select id="select_beforePlanList" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
+        select * from tdh_repay_plan t
+        <include refid="where_condition"/>
+        and t.cur_periods &lt;= #{curPeriods}
+        and t.repay_capital != t.overdue_amount
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
     <update id="update_paySuccess" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
@@ -503,6 +515,8 @@
 		UPDATE tdh_repay_plan
 		SET
 		payed_amount = #{payedAmount}
+		,overplus_amount = #{overplusAmount}
+		,real_repay_amount = #{realRepayAmount}
 		,is_repay = #{isRepay}
 		WHERE code = #{code}
 	</update>

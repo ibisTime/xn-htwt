@@ -1170,10 +1170,11 @@ CREATE TABLE `tdq_credit_user`
   `result`                    varchar(50)  DEFAULT NULL,
   `loan_crdt`                 varchar(255) DEFAULT NULL,
   `card_crdt`                 varchar(255) DEFAULT NULL,
-  `left_num`                  bigint(20) DEFAULT NULL,
-  `left_amount`               bigint(20) DEFAULT NULL,
+  `left_num`                  bigint(20)   DEFAULT NULL,
+  `left_amount`               bigint(20)   DEFAULT NULL,
   `note`                      varchar(255) DEFAULT NULL,
   `status`                    varchar(4)   DEFAULT NULL,
+  `is_first_gua`              varchar(4)   DEFAULT NULL COMMENT '是否为第一担保人',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
