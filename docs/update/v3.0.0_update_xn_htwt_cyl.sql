@@ -436,3 +436,7 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gua1','担保人大数据报告','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','hkb_gua1','担保人户口本','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','asset_pdf_gua1','担保人资产资料pdf','图片',1,'USYS201800000000001',now());
+
+
+ALTER TABLE `tdq_credit_user`
+ADD COLUMN `is_first_gua` VARCHAR(4) NULL COMMENT '是否为第一担保人' AFTER `status`;

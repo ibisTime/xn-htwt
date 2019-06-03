@@ -355,6 +355,11 @@ public class CreditUser extends ABaseDO {
     private String nowPostCode;
 
     /**
+     * 是否为第一担保人
+     */
+    private String isFirstGua;
+
+    /**
      * ******************* 辅助字段 ************************
      */
 

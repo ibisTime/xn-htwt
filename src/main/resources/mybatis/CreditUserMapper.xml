@@ -92,6 +92,7 @@
         <result column="left_num" property="leftNum"/>
         <result column="left_amount" property="leftAmount"/>
         <result column="note" property="note"/>
+        <result column="is_first_gua" property="isFirstGua"/>
 
     </resultMap>
     <sql id="where_condition">
@@ -206,6 +207,7 @@
         ,t.left_num
         ,t.left_amount
         ,note
+        ,is_first_gua
         from tdq_credit_user t
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
@@ -279,7 +281,8 @@
                                    , now_address_area
                                    , now_address
                                    , now_post_code
-                                   , status)
+                                   , status
+                                   , is_first_gua)
         VALUES ( #{code}
                , #{bizCode}
                , #{relation}
@@ -337,7 +340,8 @@
                , #{nowAddressArea}
                , #{nowAddress}
                , #{nowPostCode}
-               , #{status})
+               , #{status}
+               , #{isFirstGua})
     </insert>
 
     <insert id="insert_creditUserList" parameterType="List">
@@ -401,6 +405,7 @@
         , now_address
         , now_post_code
         , status
+        , is_first_gua
         )
         VALUES(
         <foreach collection="list" item="creditUser" separator=",">
@@ -462,6 +467,7 @@
             , #{nowAddress}
             , #{nowPostCode}
             , #{status}
+            , #{isFirstGua}
         </foreach>
         )
     </insert>
