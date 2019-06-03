@@ -30,4 +30,5 @@ TRUNCATE `tdq_logistics`;
 TRUNCATE `tqj_attachment`;
 TRUNCATE `tqj_biz_task`;
 TRUNCATE `tqj_cdbiz`;
+TRUNCATE `tqj_mission`;
 TRUNCATE `tsys_biz_log`;
