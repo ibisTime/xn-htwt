@@ -65,6 +65,7 @@
         <result column="team_code" property="teamCode"/>
 
         <result column="loan_bank_name" property="loanBankName"/>
+        <result column="subbranch_bank_name" property="subbranchBankName"/>
     </resultMap>
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -254,6 +255,7 @@
         ,t.remark
         ,t.team_code
         ,b.bank_name as loan_bank_name
+        ,b.subbranch as subbranch_bank_name
         FROM
         tdh_repay_biz t
         left join tb_bank b on b.code = t.loan_bank
@@ -327,6 +329,7 @@
         ,t.remark
         ,t.team_code
         ,b.bank_name as loan_bank_name
+        ,b.subbranch as subbranch_bank_name
         FROM tdh_repay_biz t
         inner join tqj_cdbiz c on c.code = t.biz_code
         inner join tsys_role_node r on t.cur_node_code = r.node_code
