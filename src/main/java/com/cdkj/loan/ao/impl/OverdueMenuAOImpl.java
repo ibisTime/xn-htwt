@@ -21,7 +21,6 @@ import com.cdkj.loan.enums.EOverdueMenuStatus;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
@@ -267,26 +266,12 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
                 || ERepayPlanNode.OVERDUE_TO_TRUE.getCode()
                 .equals(curMonthRepayPlan.getCurNodeCode())) {
             RepayPlan condition = new RepayPlan();
-            List<String> nodeList = new ArrayList<>();
-            nodeList.add(ERepayPlanNode.REPAY_YES.getCode());
-            nodeList.add(ERepayPlanNode.OVERDUE.getCode());
-            nodeList.add(ERepayPlanNode.OVERDUE_TO_TRUE.getCode());
-            nodeList.add(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
-            nodeList.add(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
-            condition.setCurNodeCodeList(nodeList);
             condition.setRepayBizCode(repayBizCode);
+            condition.setCurPeriods(curMonthRepayPlan.getCurPeriods());
             condition.setOrder("cur_periods", "desc");
-            RepayPlan firstPlan = null;
-            List<RepayPlan> repayPlanList = repayPlanBO.queryRepayPlanList(condition);
+            List<RepayPlan> repayPlanList = repayPlanBO.queryBeforePlanList(condition);
             if (CollectionUtils.isNotEmpty(repayPlanList)) {
-                for (RepayPlan repayPlan : repayPlanList) {
-                    if (!repayPlan.getRepayCapital().equals(repayPlan.getOverdueAmount())) {
-                        firstPlan = repayPlan;
-                        break;
-                    }
-                }
-            }
-            if (firstPlan != null) {
+                RepayPlan firstPlan = repayPlanList.get(0);
                 if (overdueMenu.getOverdueAmount() > firstPlan.getRealRepayAmount()) {
                     overdueMenu.setOverdueAmount(
                             overdueMenu.getOverdueAmount() - firstPlan.getRealRepayAmount());

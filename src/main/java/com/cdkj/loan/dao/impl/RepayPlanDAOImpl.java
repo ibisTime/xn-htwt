@@ -151,4 +151,10 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_repayPlan"), data);
     }
 
+    @Override
+    public List<RepayPlan> selectBeforePlanList(RepayPlan condition) {
+        return super.selectList(NAMESPACE.concat("select_beforePlanList"), condition,
+                RepayPlan.class);
+    }
+
 }

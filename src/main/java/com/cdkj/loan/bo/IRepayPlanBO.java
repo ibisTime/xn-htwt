@@ -95,4 +95,9 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
      * 人工确认还款
      */
     void alreadyRepay(RepayPlan repayPlan);
+
+    /**
+     * 查询之前的还款计划
+     */
+    List<RepayPlan> queryBeforePlanList(RepayPlan condition);
 }

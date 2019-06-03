@@ -1,16 +1,14 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.IAttachmentAO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.dto.req.XN623540Req;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AttachmentAOImpl implements IAttachmentAO {
@@ -21,13 +19,8 @@ public class AttachmentAOImpl implements IAttachmentAO {
     @Override
     @Transactional
     public String addAttachment(XN623540Req req) {
-
-        // 删除之前的附件
-        attachmentBO.removeAttachmentByBiz(req.getBizCode(),
-            req.getAttachType());
-
         return attachmentBO.saveAttachment(req.getBizCode(), null,
-            req.getAttachType(), req.getUrl());
+                req.getAttachType(), req.getUrl());
     }
 
     @Override

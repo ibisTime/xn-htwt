@@ -329,4 +329,9 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         repayPlanDAO.updateRepayPlan(repayPlan);
     }
 
+    @Override
+    public List<RepayPlan> queryBeforePlanList(RepayPlan condition) {
+        return repayPlanDAO.selectBeforePlanList(condition);
+    }
+
 }
