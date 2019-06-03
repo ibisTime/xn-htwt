@@ -738,10 +738,6 @@ public class CarInfoAOImpl implements ICarInfoAO {
             budgetOrderFeeBO.saveBudgetOrderFee(cdbiz, operator);
         }
         /**************生成 手续费************/
-        // // 征信单回写准入单编号
-        // Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
-        // credit.setBudgetCode(budgetOrder.getCode());
-        // creditBO.refreshCredit(credit);
 
         RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
         LoanProduct loanProduct = loanProductBO.getLoanProduct(repayBiz

@@ -40,21 +40,24 @@ public class AttachmentBOImpl extends PaginableBOImpl<Attachment>
     public String saveAttachment(String bizCode, String name, String attachType,
             String url) {
         String code = null;
-        if (isAttachmentExist(bizCode, name)) {
-            Attachment attachment = refreshAttachment(bizCode, name, url);
-            code = attachment.getCode();
-        } else {
-            Attachment data = new Attachment();
-            FileList fileList = fileListBO.getFileListByKname(name);
-            code = OrderNoGenerater
-                    .generate(EGeneratePrefix.attachment.getCode());
-            data.setCode(code);
-            data.setBizCode(bizCode);
+        if(StringUtils.isNotBlank(url)) {
 
-            EntityUtils.copyData(fileList, data);
-            data.setUrl(url);
+            if (isAttachmentExist(bizCode, name)) {
+                Attachment attachment = refreshAttachment(bizCode, name, url);
+                code = attachment.getCode();
+            } else {
+                Attachment data = new Attachment();
+                FileList fileList = fileListBO.getFileListByKname(name);
+                code = OrderNoGenerater
+                        .generate(EGeneratePrefix.attachment.getCode());
+                data.setCode(code);
+                data.setBizCode(bizCode);
 
-            attachmentDAO.insert(data);
+                EntityUtils.copyData(fileList, data);
+                data.setUrl(url);
+
+                attachmentDAO.insert(data);
+            }
         }
 
         return code;
