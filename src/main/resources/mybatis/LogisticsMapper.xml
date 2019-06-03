@@ -30,7 +30,7 @@
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             1=1
-            AND (((t.status = '0' or t.status = '3') AND frn.role_code=#{roleCode}) OR ((t.status = '1' or t.status = '4') AND trn.role_code=#{roleCode}))
+            AND (((t.status = '0' or t.status = '3') AND frn.role_code=#{roleCode}) OR ((t.status = '1' or t.status = '2') AND trn.role_code=#{roleCode}))
             <if test="code != null and code != '' ">
                 AND t.code = #{code}
             </if>
@@ -116,6 +116,8 @@
 
     <select id="select_logistics_count" parameterType="logistics" resultType="java.lang.Long">
         SELECT count(1) FROM tdq_logistics t
+        left join tsys_role_node frn on t.from_node_code=frn.node_code
+        left join tsys_role_node trn on t.to_node_code=trn.node_code
         <include refid="where_condition"/>
     </select>
 
