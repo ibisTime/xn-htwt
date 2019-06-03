@@ -16,6 +16,7 @@ import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.dto.req.XN632500Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -164,6 +165,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
                         EAttachName.assurance_interview_pic.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
                         attachName.getValue(), child.getInterviewPic());
+
+                creditUser.setIsFirstGua(EBoolean.YES.getCode());
             }
         }
 

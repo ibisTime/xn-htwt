@@ -263,6 +263,13 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
                     repayBiz.getRealName() + "的当月还款计划已逾期处理，不能重复操作！");
         }
 
+        //如果当月还款计划是已逾期，说明是多次导入逾期名单，逾期往上加
+        if (ERepayPlanNode.OVERDUE.getCode().equals(overDueRepayPlan.getCurNodeCode())
+                || ERepayPlanNode.OVERDUE_TO_TRUE.getCode()
+                .equals(overDueRepayPlan.getCurNodeCode())) {
+
+        }
+
         // 还款计划状态是否更新
         overDueRepayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE_TO_TRUE.getCode());
         long totalRepayAmount = overDueRepayPlan.getRepayCapital()

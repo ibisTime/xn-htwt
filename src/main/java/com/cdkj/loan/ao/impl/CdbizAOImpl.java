@@ -327,6 +327,9 @@ public class CdbizAOImpl implements ICdbizAO {
                         child.getLoanRole())) {
                     guaUserCount += 1;
                 }
+                if (guaUserCount > 2) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(), "共还人不能超过两个");
+                }
             }
 
             if (applyUserCount <= 0) {
