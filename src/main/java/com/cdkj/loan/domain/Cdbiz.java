@@ -223,6 +223,9 @@ public class Cdbiz extends ABaseDO {
     // 贷款银行
     private String loanBankName;
 
+    //支行名称
+    private String subbranchBankName;
+
     // 申请时间起
     private Date applyDatetimeStart;
 

@@ -51,6 +51,7 @@
 
         <result column="periods" property="periods"/>
         <result column="loan_bank_name" property="loanBankName"/>
+        <result column="subbranch_bank_name" property="subbranchBankName"/>
         <result column="team_name" property="teamName"/>
         <result column="company_name" property="companyName"/>
         <result column="sale_user_name" property="saleUserName"/>
@@ -297,6 +298,7 @@
         ,t.apply_datetime
         ,t.remark
         ,b.bank_name as loan_bank_name
+        ,b.subbranch as subbranch_bank_name
         ,bt.name as team_name
         ,su.real_name as sale_user_name
         ,sc.name as sale_user_company_name
@@ -426,6 +428,7 @@
         ,t.apply_datetime
         ,t.remark
         ,b.bank_name as loan_bank_name
+        ,b.subbranch as subbranch_bank_name
         ,bt.name as team_name
         ,su.real_name as sale_user_name
         ,sc.name as sale_user_company_name
