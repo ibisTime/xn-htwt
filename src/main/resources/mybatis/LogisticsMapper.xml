@@ -32,7 +32,7 @@
             <if test="code != null and code != '' ">
                 AND t.code = #{code}
             </if>
-            <if test="code == null or code == '' ">
+            <if test="（code == null or code == ''）and type=='1' ">
               AND (((t.status = '0' or t.status = '3') AND frn.role_code=#{roleCode}) OR ((t.status = '1' or t.status = '2') AND trn.role_code=#{roleCode}))
             </if>
             <if test="type != null and type != '' ">
