@@ -233,4 +233,7 @@ public class RepayBiz extends ABaseDO {
     // 内勤编号
     private String insideJob;
 
+    //支行
+    private String subbranchBankName;
+
 }
