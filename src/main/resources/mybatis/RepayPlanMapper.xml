@@ -363,7 +363,7 @@
 
     <select id="select_beforePlanList" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
         select * from tdh_repay_plan t
-        <include refid="where_condition"/>
+        where t.repay_biz_code = #{repayBizCode}
         and t.cur_periods &lt;= #{curPeriods}
         and t.repay_capital != t.overdue_amount
         <trim prefix="ORDER BY ">
