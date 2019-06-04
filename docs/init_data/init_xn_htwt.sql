@@ -2842,7 +2842,7 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','license','营业执照','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','site_prove','场地证明','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','drice_license','驾照','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','marry_pdf','结婚证资料','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','marry_pdf','结婚证／离婚证资料','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','other_pdf','其他资料','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','work_asset_pdf','工作资料上传','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user_ext','single_prove_pdf','单身证明','图片',1,'USYS201800000000001',now());

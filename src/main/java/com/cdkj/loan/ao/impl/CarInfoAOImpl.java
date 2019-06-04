@@ -660,7 +660,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     StringValidater.toLong(req.getLoanAmount()),
                     loanProduct.getPreRate());
         } else {
-            double rate = (loanProduct.getPreRate() * 100 * 3 - 9) / 100;
+            double rate = (loanProduct.getYearRate() * 100 * 3 - 9) / 100;
             companyFee = AmountUtil.div(AmountUtil.mul(
                     StringValidater.toLong(req.getLoanAmount()), rate), loanProduct
                     .getPreRate() + 1);
