@@ -1074,7 +1074,7 @@ public class CdbizAOImpl implements ICdbizAO {
             // 如果传业务员，说明是查看业务员自己的
             if (StringUtils.isBlank(condition.getSaleUserId())) {
 
-                if(null!=sysUser){
+                if (null != sysUser) {
                     if (ESysRole.SALE.getCode().equals(sysUser.getRoleCode())) {
                         condition.setSaleUserId(condition.getUserId());
                     }
@@ -1226,6 +1226,7 @@ public class CdbizAOImpl implements ICdbizAO {
                         .queryRepayPlanListByRepayBizCode(repayBiz.getCode());
                 cdbiz.setRepayPlanList(repayPlanList);
             }
+            cdbiz.setRestAmount(repayBiz.getRestAmount());
         }
 
         BeanUtils.copyProperties(cdbiz, loanInfoRes);

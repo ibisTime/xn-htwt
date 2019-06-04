@@ -295,4 +295,7 @@ public class Cdbiz extends ABaseDO {
     // 面签生成时间
     private Date intevDateTime;
 
+    // 剩余欠款
+    private Long restAmount;
+
 }
