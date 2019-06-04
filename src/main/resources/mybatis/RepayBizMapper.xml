@@ -495,7 +495,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+    cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_repayBiz_restAmount" parameterType="repayBiz">
@@ -516,7 +520,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_repayAll" parameterType="repayBiz">
@@ -528,7 +536,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="confirm_settleProduct" parameterType="repayBiz">
@@ -539,7 +551,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_approveByQkcsDepartment" parameterType="repayBiz">
@@ -550,7 +566,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_approveByBankCheck" parameterType="repayBiz">
@@ -562,7 +582,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_approveByManager" parameterType="repayBiz">
@@ -572,7 +596,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_approveByFinance" parameterType="repayBiz">
@@ -582,7 +610,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_releaseMortgage" parameterType="repayBiz">
@@ -594,14 +626,22 @@
 		,update_datetime = #{updateDatetime}
 		,release_datetime = #{releaseDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_overdueRedHandle" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_applyTrailer" parameterType="repayBiz">
@@ -611,7 +651,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_financialMoney" parameterType="repayBiz">
@@ -621,7 +665,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_trailerEntry" parameterType="repayBiz">
@@ -631,7 +679,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_judicialLitigationEntry" parameterType="repayBiz">
@@ -641,7 +693,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_trailerManage" parameterType="repayBiz">
@@ -651,7 +707,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_qkcsbRedeemApply" parameterType="repayBiz">
@@ -661,7 +721,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_riskManagerCheck" parameterType="repayBiz">
@@ -671,7 +735,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_financeApprove" parameterType="repayBiz">
@@ -684,7 +752,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_prepaymentApply" parameterType="repayBiz">
@@ -696,7 +768,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_prepaymentApprove" parameterType="repayBiz">
@@ -707,7 +783,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+    UPDATE tqj_cdbiz
+    SET
+      cur_node_code = #{curNodeCode}
+    WHERE code=#{bizCode}
 	</update>
 
     <update id="update_repay_overdue" parameterType="repayBiz">
@@ -777,6 +857,10 @@
         ,cur_node_code = #{curNodeCode}
         ,loan_bank = #{loanBank}
         ,team_code = #{teamCode}
-        WHERE code = #{code}
+        WHERE code = #{code};
+        UPDATE tqj_cdbiz
+        SET
+          cur_node_code = #{curNodeCode}
+        WHERE code=#{bizCode}
     </update>
 </mapper>

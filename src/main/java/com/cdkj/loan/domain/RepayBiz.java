@@ -236,4 +236,6 @@ public class RepayBiz extends ABaseDO {
     //支行
     private String subbranchBankName;
 
+
+
 }
