@@ -24,6 +24,10 @@ public class XN632144Req {
 
     private String pledgeAddress;
 
+    private String pledgeUserIdCardFront;
+
+    private String pledgeUserIdCardReverse;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -76,4 +80,19 @@ public class XN632144Req {
         this.pledgeAddress = pledgeAddress;
     }
 
+    public String getPledgeUserIdCardFront() {
+        return pledgeUserIdCardFront;
+    }
+
+    public void setPledgeUserIdCardFront(String pledgeUserIdCardFront) {
+        this.pledgeUserIdCardFront = pledgeUserIdCardFront;
+    }
+
+    public String getPledgeUserIdCardReverse() {
+        return pledgeUserIdCardReverse;
+    }
+
+    public void setPledgeUserIdCardReverse(String pledgeUserIdCardReverse) {
+        this.pledgeUserIdCardReverse = pledgeUserIdCardReverse;
+    }
 }

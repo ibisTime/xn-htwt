@@ -22,6 +22,7 @@ import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632144Req;
 import com.cdkj.loan.dto.req.XN632539Req;
 import com.cdkj.loan.enums.EAttachName;
+import com.cdkj.loan.enums.EAttachmentType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ECdbizStatus;
@@ -93,6 +94,11 @@ public class CarPledgeAOImpl implements ICarPledgeAO {
             carPledge.setPledgeAddress(req.getPledgeAddress());
             carPledgeBO.refreshCarPledge(carPledge);
         }
+
+        //身份证正面反面落地
+        attachmentBO.saveAttachment(req.getCode(),"pledge_user_id_card_front", "图片",req.getPledgeUserIdCardFront());
+        attachmentBO.saveAttachment(req.getCode(),"pledge_user_id_card_reverse", "图片",req.getPledgeUserIdCardReverse());
+
 
         // 更新业务状态
         cdbiz.setStatus(ECdbizStatus.A17.getCode());
