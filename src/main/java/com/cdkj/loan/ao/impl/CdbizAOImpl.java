@@ -721,6 +721,9 @@ public class CdbizAOImpl implements ICdbizAO {
         // 第二次存档
         if (ENode.second_received_archive.getCode().equals(
                 cdbiz.getEnterNodeCode())) {
+            if (!ENode.dy_info_confirm_submit.getCode().equals(cdbiz.getCurNodeCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "抵押材料未提交银行，不能第二次入档");
+            }
             // 更新业务状态
             cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E3.getCode(),
                     ENode.second_archive.getCode());
