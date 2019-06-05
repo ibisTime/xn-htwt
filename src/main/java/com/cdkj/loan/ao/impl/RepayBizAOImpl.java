@@ -523,12 +523,12 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 if (user.getUserId().equals(bizTeam.getCaptain())) {
                     condition.setTeamCode(user.getTeamCode());
                 } else {
-                    condition.setSaleUserId(condition.getUserId());
+                    condition.setSaleUserId(userId);
                 }
             }
         }
         if (ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
-            condition.setInsideJob(condition.getUserId());
+            condition.setInsideJob(userId);
         }
         condition.setRoleCode(user.getRoleCode());
 
