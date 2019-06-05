@@ -111,6 +111,12 @@
             <if test="code != null and code != '' ">
                 AND t.code like "%"#{code}"%"
             </if>
+            <if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+                <![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+            </if>
+            <if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+                <![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
+            </if>
             <if test="bizCode != null and bizCode != '' ">
                 AND t.biz_code = #{bizCode}
             </if>

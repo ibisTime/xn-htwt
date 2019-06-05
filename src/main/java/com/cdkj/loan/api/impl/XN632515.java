@@ -1,5 +1,6 @@
 package com.cdkj.loan.api.impl;
 
+import com.cdkj.loan.common.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.ICdbizAO;
@@ -28,7 +29,11 @@ public class XN632515 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Cdbiz condition = new Cdbiz();
+
         EntityUtils.copyData(req, condition);
+        condition.setApplyDatetimeStart(DateUtil.strToDate(req.getApplyDatetimeStart(),DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setApplyDatetimeEnd(DateUtil.strToDate(req.getApplyDatetimeEnd(),DateUtil.FRONT_DATE_FORMAT_STRING));
+
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = ICdbizAO.DEFAULT_ORDER_COLUMN;

@@ -172,10 +172,10 @@ public class XN632515Req extends APageReq {
     private String loanBankName;
 
     // 申请时间起
-    private Date applyDatetimeStart;
+    private String applyDatetimeStart;
 
     // 申请时间止
-    private Date applyDatetimeEnd;
+    private String applyDatetimeEnd;
 
     private String userName;
 
