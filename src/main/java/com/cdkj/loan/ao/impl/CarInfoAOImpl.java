@@ -522,7 +522,7 @@ public class CarInfoAOImpl implements ICarInfoAO {
             }
             // 待办事项
             bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.fbh,
-                    req.getCode(), node);
+                    req.getCode(), node.getCode());
 
             // 发保合状态节点更新
             cdbiz.setFbhgpsStatus(fbhgpsStatus);
@@ -597,11 +597,12 @@ public class CarInfoAOImpl implements ICarInfoAO {
             if (EBoolean.NO.getCode().equals(cdbiz.getIsAdvanceFund())) {
                 fbhgpsStatus = ECdbizStatus.C01.getCode();
                 node = ENode.input_fbh;
+                bizTaskBO.saveBizTaskNew(code, EBizLogType.fbh, code, node.getCode());
             } else {
                 advanceBO.saveAdvance(code);
+                bizTaskBO.saveBizTaskNew(code, EBizLogType.fund, code, node.getCode());
             }
             // 待办事项
-            bizTaskBO.saveBizTaskNew(code, EBizLogType.fbh, code, node);
 
             // 发保合状态节点更新
             cdbiz.setFbhgpsStatus(fbhgpsStatus);
@@ -616,7 +617,8 @@ public class CarInfoAOImpl implements ICarInfoAO {
             curNodeCode = ENode.renew_budget.getCode();
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
-            bizTaskBO.saveBizTaskNew(code, EBizLogType.BUDGET_ORDER, code, ENode.renew_budget);
+            bizTaskBO.saveBizTaskNew(code, EBizLogType.BUDGET_ORDER, code,
+                    ENode.renew_budget.getCode());
         }
 
         cdbiz.setStatus(status);

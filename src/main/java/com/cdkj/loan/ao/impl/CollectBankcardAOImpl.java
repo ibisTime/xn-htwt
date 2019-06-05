@@ -97,6 +97,7 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
 
     @Override
     public CollectBankcard getCollectBankcard(String code) {
-        return collectBankcardBO.getCollectBankcard(code);
+        CollectBankcard collectBankcard = collectBankcardBO.getCollectBankcard(code);
+        return collectBankcard;
     }
 }

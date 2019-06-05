@@ -4,6 +4,7 @@ import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -91,6 +92,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IBizTaskBO bizTaskBO;
 
     // 变更银行卡
     @Override
@@ -205,11 +209,13 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.prepaymentApply(repayBiz);
 
         // 日志记录
-        sysBizLogBO.recordCurOperate(repayBiz.getRefCode(),
-                EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
-                req.getRemark(), req.getUpdater());
-        sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(), EBizLogType.REPAY_BIZ,
-                req.getCode(), repayBiz.getCurNodeCode());
+        sysBizLogBO.saveFirstSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getBizCode(), ERepayBizNode.TO_REPAY.getCode(), "提前还款申请",
+                req.getUpdater());
+
+        //待办事项
+        bizTaskBO.saveBizTaskNew(repayBiz.getCode(), EBizLogType.REPAY_BIZ, repayBiz.getRefCode(),
+                ERepayBizNode.PREPAYMENT_APPROVE.getCode());
     }
 
     @Override
@@ -226,6 +232,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
         if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
             repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+
+            // 审核通过待办，不通过是待还款
+            bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getBizCode(),
+                    repayBiz.getCode(), preCurNodeCode, repayBiz.getCurNodeCode(),
+                    req.getUpdater());
         } else {
             repayBiz.setCurNodeCode(nodeFlow.getBackNode());
             repayBiz.setIsAdvanceSettled(EBoolean.NO.getCode());
@@ -238,6 +249,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
                 EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
                 repayBiz.getCurNodeCode(), req.getApproveNote(), req.getUpdater());
+        // 日志记录
+        sysBizLogBO.saveNewSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getBizCode(), preCurNodeCode, req.getApproveNote(), req.getUpdater());
+
     }
 
     // 车贷订单提前还款
@@ -388,10 +403,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.approveByQkcsDepartment(repayBiz, nextNodeCode, cutLyDeposit,
                 updater, remark);
         // 日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
-                EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
-                nextNodeCode, remark, updater);
-
+        sysBizLogBO.saveNewSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getBizCode(), preCurNodeCode, remark, updater);
+        //待办
+        bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getBizCode(), repayBiz.getCode(),
+                preCurNodeCode, nextNodeCode, updater);
     }
 
     @Override
@@ -412,9 +428,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
                         DateUtil.FRONT_DATE_FORMAT_STRING),
                 req.getSettleAttach(), req.getOperator(), req.getRemark());
         // 日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
-                EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
-                nextNodeCode, req.getRemark(), req.getOperator());
+        sysBizLogBO.saveNewSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getBizCode(), preCurNodeCode, req.getRemark(), req.getOperator());
+        //待办
+        bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getBizCode(), repayBiz.getCode(),
+                preCurNodeCode, nextNodeCode, req.getOperator());
     }
 
     @Override
@@ -430,10 +448,13 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
         repayBizBO.approveByManager(code, nextNodeCode, updater, remark);
+
         // 日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
-                EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
-                nextNodeCode, remark, updater);
+        sysBizLogBO.saveNewSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getBizCode(), preCurNodeCode, remark, updater);
+        //待办
+        bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getBizCode(), repayBiz.getCode(),
+                preCurNodeCode, nextNodeCode, updater);
     }
 
     @Override
@@ -450,9 +471,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
         repayBizBO.approveByFinance(code, nextNodeCode, updater, remark);
         // 日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
-                EBizLogType.REPAY_BIZ, repayBiz.getCode(), preCurNodeCode,
-                nextNodeCode, remark, updater);
+        sysBizLogBO.saveNewSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getBizCode(), preCurNodeCode, remark, updater);
+        //待办
+        bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getBizCode(), repayBiz.getCode(),
+                preCurNodeCode, nextNodeCode, updater);
     }
 
     @Override
@@ -471,9 +494,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.releaseMortgage(code, nextNodeCode, releaseDatetime,
                 updater);
         // 日志
-        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ.getCode(),
-                repayBiz.getCode(), preCurNodeCode, null, updater);
-
+        sysBizLogBO.saveNewSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getBizCode(), preCurNodeCode, null, updater);
+        //待办
+        bizTaskBO.handlePreBizTask(repayBiz.getCode(), EBizLogType.REPAY_BIZ.getCode(),
+                repayBiz.getBizCode(), preCurNodeCode, updater);
     }
 
     @Override

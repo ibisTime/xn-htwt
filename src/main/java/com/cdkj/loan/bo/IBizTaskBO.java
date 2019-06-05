@@ -15,7 +15,7 @@ public interface IBizTaskBO extends IPaginableBO<BizTask> {
 
     //新增待处理待办
     String saveBizTaskNew(String bizCode, EBizLogType bizLogType,
-            String refOrder, ENode curNode);
+            String refOrder, String curNode);
 
     // 处理前并产生后面的待办事项
     void handlePreAndAdd(EBizLogType bizLogType,

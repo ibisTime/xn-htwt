@@ -268,7 +268,7 @@ public class AdvanceAOImpl implements IAdvanceAO {
                     preFbhgpsNode, null, req.getOperator());
 
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.fbh, req.getCode(),
-                    ENode.input_fbh);
+                    ENode.input_fbh.getCode());
         } else {
             // 操作日志
             sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fund,

@@ -83,16 +83,16 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
 
     @Override
     public String saveBizTaskNew(String bizCode, EBizLogType bizLogType,
-            String refOrder, ENode curNode) {
+            String refOrder, String curNode) {
         BizTask data = new BizTask();
 
         data.setBizCode(bizCode);
         data.setRefType(bizLogType.getCode());
         data.setRefOrder(refOrder);
-        data.setRefNode(curNode.getCode());
+        data.setRefNode(curNode);
         data.setStatus(EBizTaskStatus.TO_HANDLE.getCode());
 
-        Node node = nodeBO.getNode(curNode.getCode());
+        Node node = nodeBO.getNode(curNode);
         String content = "你有新的待" + node.getName() + "(" + bizLogType.getValue() + ")";
 
         data.setContent(content);
@@ -111,7 +111,7 @@ public class BizTaskBOImpl extends PaginableBOImpl<BizTask> implements
         handlePreBizTask(bizCode, bizLogType.getCode(), refOrder,
                 preNode, userId);
 
-        saveBizTaskNew(bizCode, bizLogType, refOrder, ENode.matchCode(curNode));
+        saveBizTaskNew(bizCode, bizLogType, refOrder, curNode);
 
     }
 

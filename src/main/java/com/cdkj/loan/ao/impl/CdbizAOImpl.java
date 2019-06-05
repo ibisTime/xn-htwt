@@ -278,12 +278,12 @@ public class CdbizAOImpl implements ICdbizAO {
 
         // 第一步录入征信的待办事项
         bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.CREDIT,
-                cdbiz.getCode(), ENode.input_credit);
+                cdbiz.getCode(), ENode.input_credit.getCode());
 
         if (ENode.new_credit.getCode().equals(currentNode)) {
             // 面签开始的待办事项
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.INTERVIEW,
-                    cdbiz.getCode(), ENode.input_interview);
+                    cdbiz.getCode(), ENode.input_interview.getCode());
 
             // 更新提交节点信息
             cdbizBO.refreshIntevNodeStatus(cdbiz, ENode.input_interview.getCode(),
@@ -501,11 +501,11 @@ public class CdbizAOImpl implements ICdbizAO {
 
             // 制卡待办事项
             bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.makeCard,
-                    req.getCode(), ENode.make_card_apply);
+                    req.getCode(), ENode.make_card_apply.getCode());
 
             // 准入单开始的待办事项
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.BUDGET_ORDER,
-                    req.getCode(), ENode.input_budget);
+                    req.getCode(), ENode.input_budget.getCode());
 
             // 生成用户
             CreditUser applyUser = creditUserBO.getCreditUserByBizCode(
@@ -544,7 +544,7 @@ public class CdbizAOImpl implements ICdbizAO {
             cdbizBO.refreshCurNodeStatus(cdbiz);
             // 重录征信单待办事项
             bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.CREDIT,
-                    req.getCode(), ENode.renew_credit);
+                    req.getCode(), ENode.renew_credit.getCode());
         }
 
         // 日志记录
@@ -669,7 +669,7 @@ public class CdbizAOImpl implements ICdbizAO {
                     ENode.receive_approve_1.getCode(), operator);
             // 资料传递待办
             bizTaskBO.saveBizTaskNew(code, EBizLogType.LOGISTICS,
-                    logisticsCode, ENode.submit_1);
+                    logisticsCode, ENode.submit_1.getCode());
 
             // 面签最后一步操作日志
             sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(),
@@ -726,7 +726,7 @@ public class CdbizAOImpl implements ICdbizAO {
                     ENode.second_archive.getCode());
 
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
-                    cdbiz.getCode(), ENode.confirm_archive);
+                    cdbiz.getCode(), ENode.confirm_archive.getCode());
         }
         cdbiz.setEnterLocation(req.getEnterLocation());
         cdbizBO.refreshLocation(cdbiz);
@@ -1390,7 +1390,7 @@ public class CdbizAOImpl implements ICdbizAO {
         node = ENode.biz_approve;
         // 待办事项
         bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.cancel,
-                req.getCode(), node);
+                req.getCode(), node.getCode());
     }
 
     @Override
@@ -1419,7 +1419,7 @@ public class CdbizAOImpl implements ICdbizAO {
 
                 // 待办事项
                 bizTaskBO.saveBizTaskNew(req.getCode(), EBizLogType.cancel,
-                        req.getCode(), node);
+                        req.getCode(), node.getCode());
             } else {// 没垫资情况
                 node = ENode.cancel_end;
                 cancelStatus = ECdbizStatus.G4.getCode();

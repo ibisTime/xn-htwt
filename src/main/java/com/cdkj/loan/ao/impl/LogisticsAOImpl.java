@@ -405,7 +405,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                                 // 入档资料传递待办事项
                                 bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
-                                        logisticsCode, ENode.submit_2);
+                                        logisticsCode, ENode.submit_2.getCode());
                             } else {
 
                                 cdbizBO.refreshStatus(cdbiz,
@@ -458,7 +458,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
                                 // 资料传递待办事项
                                 bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
-                                        fkSendlogisticsCode, ENode.submit_6);
+                                        fkSendlogisticsCode, ENode.submit_6.getCode());
 
                                 // 生成【风控审核通过】资料传递
                                 String fkApprovelogisticsCode = logisticsBO
@@ -592,7 +592,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             }
             condition.setUserId(null);
             condition.setRoleCode(sysUser.getRoleCode());
-        }else {
+        } else {
             condition.setRoleCode("RO201800000000000001");
         }
 

@@ -1,12 +1,14 @@
 package com.cdkj.loan.bo.impl;
 
 import com.cdkj.loan.bo.IBankLoanBO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankLoanDAO;
 import com.cdkj.loan.domain.BankLoan;
+import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -23,6 +25,9 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
 
     @Autowired
     private IBankLoanDAO bankLoanDAO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Override
     public String saveBankLoan(BankLoan data) {
@@ -57,7 +62,7 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
         bankLoan.setCode(code);
         bankLoan.setCurNodeCode(nextNodeCode);
         bankLoan.setBankCommitDatetime(DateUtil.strToDate(bankCommitDatetime,
-                DateUtil.DATA_TIME_PATTERN_1));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         bankLoan.setBankCommitNote(bankCommitNote);
 
         bankLoanDAO.updateCommitBank(bankLoan);
@@ -74,8 +79,12 @@ public class BankLoanBOImpl extends PaginableBOImpl<BankLoan>
 
     @Override
     public void confirmSk(String code, String nextNodeCode, XN632130Req req) {
+        CollectBankcard collectBankcard = collectBankcardBO
+                .getCollectBankcard(req.getReceiptBankCode());
         BankLoan bankLoan = EntityUtils.copyData(req, BankLoan.class);
         bankLoan.setCode(code);
+        bankLoan.setReceiptBankName(collectBankcard.getBankName());
+        bankLoan.setReceiptSubbranch(collectBankcard.getSubbranch());
         bankLoan.setCurNodeCode(nextNodeCode);
 
         bankLoanDAO.confirmSk(bankLoan);
