@@ -290,32 +290,18 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             totalFee += StringValidater.toLong(xn630535Req.getAmount());
         }
 
-        // 更新还款计划
-        repayPlan
-                .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
-        repayPlan.setOverdueAmount(0L);
-        repayPlan.setDepositWay(req.getOverdueDepositWay());
-        repayPlan.setOverdueHandleNote(req.getRemark());
-        repayPlan.setTotalFee(totalFee);
         if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {
-            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
-            repayPlan.setOverplusAmount(0L);
-            repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
-
-            RepayPlan curMonth = repayPlanBO
-                    .getRepayPlanCurMonth(repayPlan.getRepayBizCode());
-            if (curMonth != null && curMonth.getCode().equals(repayPlan.getCode())) {
-                repayBiz.setCurOverdueCount(0);
-                repayBiz.setOverdueAmount(0L);
-            } else {
-                repayBiz.setOverdueAmount(
-                        repayBiz.getOverdueAmount() - repayPlan.getOverdueAmount());
-            }
+            repayBiz.setOverdueAmount(
+                    repayBiz.getOverdueAmount() - repayPlan.getOverdueAmount());
             repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
+            repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() - 1);
             repayBiz.setRestAmount(
                     repayBiz.getRestAmount() - repayPlan.getOverdueAmount());
             repayBizBO.refreshBizByPayFee(repayBiz);
 
+            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
+            repayPlan.setOverplusAmount(0L);
+            repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
         } else if (EDealResult.RED.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
             // 更新还款业务未申请拖车节点
@@ -326,9 +312,20 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                     EBizLogType.REPAY_BIZ, repayBiz.getCode(),
                     repayBiz.getCurNodeCode());
         } else if (EDealResult.YELLOW.getCode().equals(req.getDealResult())) {
+            repayBiz.setOverdueAmount(repayBiz.getOverdueAmount() - repayPlan.getOverdueAmount());
+            repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
+            repayBizBO.refreshBizByPayFee(repayBiz);
             repayPlan
                     .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
+            repayPlan.setPayedAmount(repayPlan.getOverdueAmount());
         }
+        // 更新还款计划
+        repayPlan
+                .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
+        repayPlan.setOverdueAmount(0L);
+        repayPlan.setDepositWay(req.getOverdueDepositWay());
+        repayPlan.setOverdueHandleNote(req.getRemark());
+        repayPlan.setTotalFee(totalFee);
         repayPlanBO.refreshRepayPlanOverdueHandle(repayPlan);
     }
 
@@ -369,6 +366,11 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     public void chargeRepayAmount(String code, String operator,
             String payType) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+        // 更新还款业务
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+        repayBiz.setRestAmount(repayBiz.getRestAmount() - repayPlan.getOverplusAmount());
+        repayBizBO.repayOverdue(repayBiz);
+
         repayPlan.setPayedAmount(repayPlan.getOverdueAmount());
         repayPlan.setOverplusAmount(0L);
         repayPlan.setRealRepayAmount(repayPlan.getRepayCapital());
@@ -376,10 +378,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         // TODO 支付方式
         repayPlanBO.repayAmount(repayPlan);
 
-        // 更新还款业务
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
-        repayBiz.setRestAmount(repayBiz.getRestAmount() - repayPlan.getOverdueAmount());
-        repayBizBO.repayOverdue(repayBiz);
     }
 
     @Override
@@ -462,12 +460,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayBiz.setTotalOverdueCount(repayBiz.getTotalOverdueCount() + 1);
             repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() + 1);
             //判断是否是当前期数，是的话剩余期数不变，不是；说明是导的前几期逾期，剩余期数+1
-            if (repayPlan.getRepayDatetime().getTime() <
-                    DateUtil.getCurrentMonthFirstDay().getTime()
-                    || repayPlan.getRepayDatetime().getTime() >
-                    DateUtil.getCurrentMonthLastDay().getTime()) {
-                repayBiz.setRestPeriods(repayBiz.getRestPeriods() + 1);
-            }
+//            if (repayPlan.getRepayDatetime().getTime() <
+//                    DateUtil.getCurrentMonthFirstDay().getTime()
+//                    || repayPlan.getRepayDatetime().getTime() >
+//                    DateUtil.getCurrentMonthLastDay().getTime()) {
+//                repayBiz.setRestPeriods(repayBiz.getRestPeriods() + 1);
+//            }
             repayBizBO.repayOverdue(repayBiz);
         }
 

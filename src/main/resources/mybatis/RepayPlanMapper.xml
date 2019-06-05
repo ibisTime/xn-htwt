@@ -429,6 +429,7 @@
 		,overdue_handle_note = #{overdueHandleNote}
 		,real_repay_amount = #{realRepayAmount}
 		,overplus_amount = #{overplusAmount}
+		,payed_amount = #{payedAmount}
 		WHERE code = #{code}
 	</update>
 
