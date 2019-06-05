@@ -1,13 +1,16 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 预算单-录入抵押信息
- * @author: xieyj 
- * @since: 2018年5月29日 下午10:31:16 
+ *
+ * @author: xieyj
+ * @since: 2018年5月29日 下午10:31:16
  * @history:
  */
+@Data
 public class XN632131Req {
 
     @NotBlank
@@ -18,6 +21,9 @@ public class XN632131Req {
 
     // 绿大本扫描件
     private String greenBigSmj;
+
+    // 合格证
+    private String carHgzPic;
 
     // 发票
     private String carInvoice;
@@ -36,76 +42,4 @@ public class XN632131Req {
 
     // 其他资料
     private String carSettleOtherPdf;
-
-    public String getCarInvoice() {
-        return carInvoice;
-    }
-
-    public void setCarInvoice(String carInvoice) {
-        this.carInvoice = carInvoice;
-    }
-
-    public String getCarJqx() {
-        return carJqx;
-    }
-
-    public void setCarJqx(String carJqx) {
-        this.carJqx = carJqx;
-    }
-
-    public String getCarSyx() {
-        return carSyx;
-    }
-
-    public void setCarSyx(String carSyx) {
-        this.carSyx = carSyx;
-    }
-
-    public String getPolicyDatetime() {
-        return policyDatetime;
-    }
-
-    public void setPolicyDatetime(String policyDatetime) {
-        this.policyDatetime = policyDatetime;
-    }
-
-    public String getPolicyDueDate() {
-        return policyDueDate;
-    }
-
-    public void setPolicyDueDate(String policyDueDate) {
-        this.policyDueDate = policyDueDate;
-    }
-
-    public String getCarSettleOtherPdf() {
-        return carSettleOtherPdf;
-    }
-
-    public void setCarSettleOtherPdf(String carSettleOtherPdf) {
-        this.carSettleOtherPdf = carSettleOtherPdf;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public String getGreenBigSmj() {
-        return greenBigSmj;
-    }
-
-    public void setGreenBigSmj(String greenBigSmj) {
-        this.greenBigSmj = greenBigSmj;
-    }
 }

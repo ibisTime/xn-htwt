@@ -826,9 +826,15 @@ public class CdbizAOImpl implements ICdbizAO {
                 .saveAttachment(req.getCode(), "car_jqx", "car_procedure", req.getCarJqx());
         attachmentBO
                 .saveAttachment(req.getCode(), "car_syx", "car_procedure", req.getCarSyx());
-        attachmentBO
-                .saveAttachment(req.getCode(), "green_big_smj", "car_procedure",
-                        req.getGreenBigSmj());
+        if (EBoolean.YES.getCode().equals(cdbiz.getBizType())) {
+            attachmentBO
+                    .saveAttachment(req.getCode(), "green_big_smj", "car_procedure",
+                            req.getGreenBigSmj());
+        } else {
+            attachmentBO
+                    .saveAttachment(req.getCode(), "car_hgz_pic", "car_procedure",
+                            req.getCarHgzPic());
+        }
 
         // 操作日志
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.fbh,

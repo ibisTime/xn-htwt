@@ -467,6 +467,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
                 repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
                 repayPlan.setOverplusAmount(0L);
+                repayPlan.setOverdueAmount(0L);
                 repayPlanBO.refreshRepayPlanOverdue(repayPlan);
             }
         }
