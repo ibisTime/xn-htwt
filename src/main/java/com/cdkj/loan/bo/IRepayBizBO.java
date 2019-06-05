@@ -58,20 +58,20 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             Long cutLyDeposit, String updater, String remark);
 
     // 驻行人员审核
-    public void approveByBankCheck(String code, String curNodeCode,
+    public void approveByBankCheck(RepayBiz repayBiz, String curNodeCode,
             Date settleDatetime, String settleAttach, String updater,
             String remark);
 
     // 总经理审核
-    public void approveByManager(String code, String curNodeCode,
+    public void approveByManager(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark);
 
     // 财务审核
-    public void approveByFinance(String code, String curNodeCode,
+    public void approveByFinance(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark);
 
     // 业务团队解除抵押
-    public void releaseMortgage(String code, String curNodeCode,
+    public void releaseMortgage(RepayBiz repayBiz, String curNodeCode,
             Date releaseDatetime, String updater);
 
     // 拖车申请

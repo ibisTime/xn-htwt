@@ -250,8 +250,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
                 repayBiz.getCurNodeCode(), req.getApproveNote(), req.getUpdater());
         // 日志记录
-        sysBizLogBO.saveNewSYSBizLog(repayBiz.getCode(), EBizLogType.REPAY_BIZ,
-                repayBiz.getBizCode(), preCurNodeCode, req.getApproveNote(), req.getUpdater());
+        sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,
+                repayBiz.getCode(), preCurNodeCode, req.getApproveNote(), req.getUpdater());
 
     }
 
@@ -423,7 +423,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String nextNodeCode = getNextNodeCode(preCurNodeCode,
                 req.getApproveResult());
 
-        repayBizBO.approveByBankCheck(req.getCode(), nextNodeCode,
+        repayBizBO.approveByBankCheck(repayBiz, nextNodeCode,
                 DateUtil.strToDate(req.getSettleDatetime(),
                         DateUtil.FRONT_DATE_FORMAT_STRING),
                 req.getSettleAttach(), req.getOperator(), req.getRemark());
@@ -447,7 +447,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
-        repayBizBO.approveByManager(code, nextNodeCode, updater, remark);
+        repayBizBO.approveByManager(repayBiz, nextNodeCode, updater, remark);
 
         // 日志
         sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,
@@ -469,7 +469,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
-        repayBizBO.approveByFinance(code, nextNodeCode, updater, remark);
+        repayBizBO.approveByFinance(repayBiz, nextNodeCode, updater, remark);
         // 日志
         sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,
                 repayBiz.getCode(), preCurNodeCode, remark, updater);
@@ -491,7 +491,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         String nextNodeCode = getNextNodeCode(preCurNodeCode,
                 EBoolean.YES.getCode());
-        repayBizBO.releaseMortgage(code, nextNodeCode, releaseDatetime,
+        repayBizBO.releaseMortgage(repayBiz, nextNodeCode, releaseDatetime,
                 updater);
         // 日志
         sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,

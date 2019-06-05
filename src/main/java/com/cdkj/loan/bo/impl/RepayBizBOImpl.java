@@ -407,11 +407,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void approveByBankCheck(String code, String curNodeCode,
+    public void approveByBankCheck(RepayBiz repayBiz, String curNodeCode,
             Date settleDatetime, String settleAttach, String updater,
             String remark) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setSettleDatetime(settleDatetime);
         repayBiz.setSettleAttach(settleAttach);
@@ -423,10 +421,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void approveByManager(String code, String curNodeCode,
+    public void approveByManager(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
@@ -436,10 +432,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void approveByFinance(String code, String curNodeCode,
+    public void approveByFinance(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
@@ -449,10 +443,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void releaseMortgage(String code, String curNodeCode,
+    public void releaseMortgage(RepayBiz repayBiz, String curNodeCode,
             Date releaseDatetime, String updater) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setReleaseDatetime(releaseDatetime);
         repayBiz.setRestAmount(0L);
@@ -461,7 +453,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
 
         // 更新还款计划
         List<RepayPlan> planList = repayPlanBO
-                .queryRepayPlanListByRepayBizCode(code);
+                .queryRepayPlanListByRepayBizCode(repayBiz.getCode());
         if (CollectionUtils.isNotEmpty(planList)) {
             for (RepayPlan repayPlan : planList) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
