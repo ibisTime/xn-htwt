@@ -1,13 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.IGpsApplyAO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
@@ -36,15 +28,23 @@ import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * GPS申领
- * @author: silver 
- * @since: 2018年5月30日 下午11:19:42 
+ *
+ * @author: silver
+ * @since: 2018年5月30日 下午11:19:42
  * @history:
  */
 @Service
 public class GpsApplyAOImpl implements IGpsApplyAO {
+
     @Autowired
     private IGpsApplyBO gpsApplyBO;
 
@@ -82,17 +82,17 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
         if (StringUtils.isBlank(sysUser.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "申请人岗位为空，请先设置岗位");
+                    "申请人岗位为空，请先设置岗位");
         }
         data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
         data.setApplyReason(req.getApplyReason());
 
         Integer wiredCount = StringValidater
-            .toInteger(req.getApplyWiredCount());
+                .toInteger(req.getApplyWiredCount());
         wiredCount = wiredCount == null ? 0 : wiredCount;
         Integer wirelessCount = StringValidater
-            .toInteger(req.getApplyWirelessCount());
+                .toInteger(req.getApplyWirelessCount());
         wirelessCount = wirelessCount == null ? 0 : wirelessCount;
 
         data.setApplyWiredCount(wiredCount);
@@ -107,7 +107,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             BudgetOrder domain = budgetOrderDAO.select(budgetOrder);
             if (domain == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "请检查客户姓名是否从下拉框中选择!");
+                        "请检查客户姓名是否从下拉框中选择!");
             }
             data.setBudgetOrderCode(req.getBudgetOrderCode());
             data.setTeamCode(domain.getTeamCode());
@@ -135,17 +135,17 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
         if (StringUtils.isBlank(sysUser.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "申请人岗位为空，请先设置岗位");
+                    "申请人岗位为空，请先设置岗位");
         }
         data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
         data.setApplyReason(req.getApplyReason());
         data.setApplyWiredCount(
-            StringValidater.toInteger(req.getApplyWiredCount()));
+                StringValidater.toInteger(req.getApplyWiredCount()));
         data.setApplyWirelessCount(
-            StringValidater.toInteger(req.getApplyWirelessCount()));
+                StringValidater.toInteger(req.getApplyWirelessCount()));
         data.setApplyCount(
-            data.getApplyWiredCount() + data.getApplyWirelessCount());
+                data.getApplyWiredCount() + data.getApplyWirelessCount());
         if (StringUtils.isNotBlank(req.getBudgetOrderCode())) {
             // 验证预算单编号存不存在
             BudgetOrder budgetOrder = new BudgetOrder();
@@ -153,7 +153,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             BudgetOrder domain = budgetOrderDAO.select(budgetOrder);
             if (domain == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "请检查客户姓名是否从下拉框中选择!");
+                        "请检查客户姓名是否从下拉框中选择!");
             }
             data.setBudgetOrderCode(req.getBudgetOrderCode());
         }
@@ -168,14 +168,14 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void approveYesGpsApply(XN632711Req req) {
         GpsApply data = gpsApplyBO.getGpsApply(req.getCode());
         if (!EGpsApplyStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
         gpsApplyBO.approveGpsApply(req.getCode(), EGpsApplyStatus.APPROVE_YES,
-            req.getOperator(), req.getRemark());
+                req.getOperator(), req.getRemark());
 
         for (XN632711ReqChild childReq : req.getGpsList()) {
             if (StringUtils.isBlank(childReq.getCode())) {
@@ -195,8 +195,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         }
         // 产生物流单
         logisticsBO.saveLogisticsGps(ELogisticsType.GPS.getCode(),
-            data.getCode(), data.getApplyUser(), "GPS物流传递", data.getApplyUser(),
-            data.getTeamCode());
+                data.getCode(), data.getApplyUser(), "GPS物流传递", data.getApplyUser(),
+                data.getTeamCode());
     }
 
     @Override
@@ -206,14 +206,14 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
         gpsApplyBO.approveGpsApply(code, EGpsApplyStatus.APPROVE_NO, operator,
-            remark);
+                remark);
     }
 
     @Override
     public Paginable<GpsApply> queryGpsApplyPage(int start, int limit,
             GpsApply condition) {
         Paginable<GpsApply> page = gpsApplyBO.getPaginable(start, limit,
-            condition);
+                condition);
         List<GpsApply> gpsApplyList = page.getList();
         for (GpsApply gpsApply : gpsApplyList) {
             initGpsApply(gpsApply);
@@ -225,13 +225,13 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         SYSUser sysUser = sysUserBO.getUser(gpsApply.getApplyUser());
         gpsApply.setApplyUserName(sysUser.getRealName());
         Department department = departmentBO
-            .getDepartment(gpsApply.getCompanyCode());
+                .getDepartment(gpsApply.getCompanyCode());
         if (department != null) {
             gpsApply.setCompanyName(department.getName());
         }
         if (StringUtils.isNotBlank(gpsApply.getTeamCode())) {
             gpsApply.setTeamName(
-                bizTeamBO.getBizTeam(gpsApply.getTeamCode()).getName());
+                    bizTeamBO.getBizTeam(gpsApply.getTeamCode()).getName());
         }
         if (StringUtils.isNotBlank(sysUser.getRoleCode())) {
             SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
@@ -239,12 +239,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         }
         if (StringUtils.isNotBlank(gpsApply.getInsideJob())) {
             String realName = sysUserBO.getUser(gpsApply.getInsideJob())
-                .getRealName();
+                    .getRealName();
             gpsApply.setInsideJobName(realName);
         }
         if (StringUtils.isNotBlank(gpsApply.getSaleUserId())) {
             String realName = sysUserBO.getUser(gpsApply.getSaleUserId())
-                .getRealName();
+                    .getRealName();
             gpsApply.setSaleUserName(realName);
         }
 
