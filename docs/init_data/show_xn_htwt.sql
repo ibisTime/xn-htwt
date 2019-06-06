@@ -2512,10 +2512,10 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','car_hgz_pic','合格证','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','car_jqx','交强险','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','car_syx','商业险','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','duty_paid_prove_smj','完税证明扫描件','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','green_big_smj','绿大本扫描件','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','duty_paid_prove_smj','完税证明','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','green_big_smj','绿大本','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','car_regcerti','机动车登记证书','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','car_xsz_smj','车辆行驶证扫描件','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','car_xsz_smj','车辆行驶证','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','car_pd','车辆批单','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_config','car_key','车钥匙','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_config','forward_pdf','车辆照片正前','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
@@ -2607,7 +2607,7 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('node_file_list',NULL,'抵押合同','附件',3,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_pledge','pledge_user_id_card_front','代理人身份证正','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_pledge','pledge_user_id_card_reverse','代理人身份证反','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_pledge','car_big_smj','大本扫描件','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_pledge','car_big_smj','大本','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('advance','advance_bill_pdf','垫资水单','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('icbank','special_quato_pic','专项额度核定申请表','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('icbank','red_card_pic_with_id_pic','开卡申请表','图片',1,'USYS201800000000001','2019-06-05 19:59:49');
