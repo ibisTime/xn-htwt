@@ -78,7 +78,7 @@ public enum ENode {
 
     to_commit_bank("f9", "提交银行"), dy_info_confirm_submit("f10", "抵押材料已确认提交"),
 
-    submit_6("f11", "风控寄件（车辆抵押）"), receive_6("f12", "担保公司收件（车辆抵押）"),
+    submit_6("f11", "风控寄件（车辆抵押）"), receive_6("f12", "贷后收件（车辆抵押）"),
 
     second_received_archive("f13", "第二次已收件待存档"), second_archive("f14", "第二次已存档"),
 

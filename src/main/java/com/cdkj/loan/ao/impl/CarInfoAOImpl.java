@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.ICreditUserExtBO;
 import com.cdkj.loan.bo.ILoanProductBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
@@ -57,6 +58,8 @@ import com.cdkj.loan.enums.ECreditJourType;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EInvestigateReportNode;
+import com.cdkj.loan.enums.ELogisticsCurNodeType;
+import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.exception.BizException;
@@ -128,6 +131,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
 
     @Autowired
     private ISYSDictBO sysDictBO;
+
+    @Autowired
+    private ILogisticsBO logisticsBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -586,6 +592,22 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "制卡流程未走完，不能操作");
             }
+
+            // 生成资料传递
+            String logisticsCode = logisticsBO.saveLogistics(
+                    ELogisticsType.BUDGET.getCode(),
+                    ELogisticsCurNodeType.SALE_SEND_BANK_LOAN.getCode(),
+                    cdbiz.getCode(), cdbiz.getSaleUserId(),
+                    ENode.submit_1.getCode(), ENode.receive_approve_1.getCode(),
+                    null);
+
+            // 资料传递日志:银行放款第一步，用记录日志的开始方法
+            sysBizLogBO.saveFirstSYSBizLog(code, EBizLogType.LOGISTICS,
+                    logisticsCode, ENode.submit_1.getCode(),
+                    ENode.receive_approve_1.getCode(), operator);
+            // 资料传递待办
+            bizTaskBO.saveBizTaskNew(code, EBizLogType.LOGISTICS,
+                    logisticsCode, ENode.submit_1.getCode());
 
             // 主状态
             status = ECdbizStatus.A10.getCode();

@@ -80,8 +80,6 @@ import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
-import com.cdkj.loan.enums.ELogisticsCurNodeType;
-import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ERepayBizNode;
@@ -654,22 +652,6 @@ public class CdbizAOImpl implements ICdbizAO {
             intevCurNodeCode = nodeFlow.getNextNode();
             // 面签业务状态记录
             mqStatus = ECdbizStatus.B03.getCode();
-
-            // 生成资料传递
-            String logisticsCode = logisticsBO.saveLogistics(
-                    ELogisticsType.BUDGET.getCode(),
-                    ELogisticsCurNodeType.SALE_SEND_BANK_LOAN.getCode(),
-                    cdbiz.getCode(), cdbiz.getSaleUserId(),
-                    ENode.submit_1.getCode(), ENode.receive_approve_1.getCode(),
-                    null);
-
-            // 资料传递日志:银行放款第一步，用记录日志的开始方法
-            sysBizLogBO.saveFirstSYSBizLog(code, EBizLogType.LOGISTICS,
-                    logisticsCode, ENode.submit_1.getCode(),
-                    ENode.receive_approve_1.getCode(), operator);
-            // 资料传递待办
-            bizTaskBO.saveBizTaskNew(code, EBizLogType.LOGISTICS,
-                    logisticsCode, ENode.submit_1.getCode());
 
             // 面签最后一步操作日志
             sysBizLogBO.saveNewSYSBizLog(cdbiz.getBizCode(),

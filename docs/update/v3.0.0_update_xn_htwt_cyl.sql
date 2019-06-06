@@ -414,8 +414,9 @@ UPDATE `tdq_file_list` SET `vname`='担保人手持授权书照片' WHERE `id`='
 
 UPDATE `tsys_node` SET `name`='财务确认银行收款' WHERE `code`='e5';
 UPDATE `tsys_node` SET `name`='风控寄件（车辆抵押）' WHERE `code`='f11';
-UPDATE `tsys_node` SET `name`='担保公司收件（车辆抵押）' WHERE `code`='f12';
+UPDATE `tsys_node` SET `name`='贷后收件（车辆抵押）' WHERE `code`='f12';
 UPDATE `tsys_node` SET `name`='用户赎回' WHERE `code`='j12';
+
 
 
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua0','担保人身份证正面','图片',1,'USYS201800000000001',now());
@@ -443,3 +444,11 @@ ADD COLUMN `is_first_gua` VARCHAR(4) NULL COMMENT '是否为第一担保人' AFT
 
 ALTER TABLE `tqj_attachment`
 CHANGE COLUMN `url` `url` LONGTEXT NULL DEFAULT NULL COMMENT 'url' ;
+
+UPDATE `dev_xn_htwt`.`tsys_menu` SET `order_no`='2' WHERE `code`='SM201804261354380715184';
+UPDATE `dev_xn_htwt`.`tsys_menu` SET `order_no`='3' WHERE `code`='SM201804261354595823870';
+UPDATE `dev_xn_htwt`.`tsys_menu` SET `order_no`='4' WHERE `code`='SM201804261355188031376';
+UPDATE `dev_xn_htwt`.`tsys_menu` SET `order_no`='1' WHERE `code`='SM201903281819119145446';
+
+ALTER TABLE `dev_xn_htwt`.`tsys_node`
+ADD COLUMN `order_no` VARCHAR(45) NULL COMMENT '排序编号' AFTER `type`;
