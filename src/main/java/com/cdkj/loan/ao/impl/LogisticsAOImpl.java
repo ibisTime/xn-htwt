@@ -347,7 +347,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     cdbizBO.refreshCurNodeStatus(cdbiz);
 
                     // 主流程待办事项
-                    bizTaskBO.handlePreAndAdd(EBizLogType.bank_push, cdbiz.getCode(),
+                    bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, cdbiz.getCode(),
                             cdbiz.getCode(), preNodeCode, nextNodeCode, operator);
 
                 } else if (logistics.getFromNodeCode().equals(ENode.submit_2.getCode())
