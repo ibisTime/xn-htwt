@@ -3,10 +3,12 @@ package com.cdkj.loan.ao.impl;
 import com.cdkj.loan.ao.IInterviewVideoAO;
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.bo.IInterviewVideoRoomBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.domain.InterviewVideo;
 import com.cdkj.loan.domain.InterviewVideoRoom;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN632953Req;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,9 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
 
     @Autowired
     private IInterviewVideoRoomBO interviewVideoRoomBO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
 
     @Override
     public void addInterviewVideo(InterviewVideo data) {
@@ -70,7 +75,8 @@ public class interviewVideoAOImpl implements IInterviewVideoAO {
 
         long i = interviewVideoBO.getTotalCount(interviewVideo);
 
-        String bizId = "49995_"
+        SYSConfig config = sysConfigBO.getSYSConfig("tx_account_type");
+        String bizId = config.getCvalue() + "_"
                 + MD5Util
                 .md5(req.getRoomId() + "_" + req.getUserId() + "_main");
         List<InterviewVideo> videoList = interviewVideoBO

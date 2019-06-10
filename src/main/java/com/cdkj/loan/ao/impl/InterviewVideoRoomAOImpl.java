@@ -5,12 +5,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.IInterviewVideoRoomAO;
 import com.cdkj.loan.bo.IInterviewVideoBO;
 import com.cdkj.loan.bo.IInterviewVideoRoomBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.core.OkHttpUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.InterviewVideo;
 import com.cdkj.loan.domain.InterviewVideoRoom;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN632950Req;
 import com.cdkj.loan.dto.req.XN632951Req;
 import com.cdkj.loan.dto.req.XN632952Req;
@@ -33,6 +35,9 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 
     @Autowired
     private IInterviewVideoBO interviewVideoBO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
 
     @Override
     @Transactional
@@ -106,8 +111,10 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
             inputList.add(jox);
         }
 
+        SYSConfig config = sysConfigBO.getSYSConfig("tx_app_id");
+
         JSONObject para = new JSONObject();
-        para.put("app_id", 1252750864);
+        para.put("app_id", config.getCvalue());
         para.put("interface", "mix_streamv2.start_mix_stream_advanced");
         para.put("mix_stream_session_id", req.getRoomId());
         // para.put("output_stream_id",
@@ -129,10 +136,10 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
         jo.put("eventId", HL.substring(2, 8));
         jo.put("interface", interFace);
 
-        String sign = MD5Util.md5("0db7e7602ce81afb8ab75cd1b17f5785" + time);
+        String sign = MD5Util.md5("c782656f89500921fb1baef1dd3ac49f" + time);
         String string = OkHttpUtils.doAccessHTTPPostJson(
-                "http://fcgi.video.qcloud.com/common_access?appid=1252750864&interface=Mix_StreamV2&t="
-                        + time + "&sign=" + sign,
+                "http://fcgi.video.qcloud.com/common_access?appid=" + config.getCvalue()
+                        + "&interface=Mix_StreamV2&t=" + time + "&sign=" + sign,
                 jo.toString());
         // InterviewVideo interviewVideo = interviewVideoBO
         // .getInterviewVideoByStreamId(videoList.get(0).getStreamId());
@@ -154,7 +161,7 @@ public class InterviewVideoRoomAOImpl implements IInterviewVideoRoomAO {
 //        String string = OkHttpUtils.doAccessHTTPGetJson(
 //                "http://fcgi.video.qcloud.com/common_access?Param.s.channel_id="
 //                        + req.getStreamId()
-//                        + "&appid=1252750864&interface=Live_Tape_GetFilelist&sign="
+//                        + "&appid=1257865511&interface=Live_Tape_GetFilelist&sign="
 //                        + sign + "&t=" + time);
 
         InterviewVideo interviewVideo = new InterviewVideo();
