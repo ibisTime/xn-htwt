@@ -298,4 +298,10 @@ public class Cdbiz extends ABaseDO {
     // 剩余欠款
     private Long restAmount;
 
+    // 垫资日期
+    private Date advanceFundDatetime;
+
+    // 垫资金额
+    private Integer advanceFundAmount;
+
 }
