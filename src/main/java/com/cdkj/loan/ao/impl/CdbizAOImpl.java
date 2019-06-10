@@ -524,6 +524,7 @@ public class CdbizAOImpl implements ICdbizAO {
                         "您的手机号已注册【微车生活】APP，密码为'888888'，请妥善保管");
             } else {
                 userId = user.getUserId();
+                userBO.refreshIdNo(user.getUserId(), applyUser.getIdNo(), applyUser.getUserName());
             }
 
             RepayBiz repayBiz = new RepayBiz();
