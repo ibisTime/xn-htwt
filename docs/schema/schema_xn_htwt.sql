@@ -928,8 +928,8 @@ CREATE TABLE `tdq_budget_order_gps`
   `az_location`  varchar(32)  DEFAULT NULL COMMENT '安装位置',
   `az_datetime`  datetime     DEFAULT NULL COMMENT '安装时间',
   `az_user`      varchar(255) DEFAULT NULL COMMENT '安装人员',
-  `dev_photos`   tinytext COMMENT '设备图片',
-  `az_photos`    tinytext COMMENT '安装图片',
+  `dev_photos`   LONGTEXT COMMENT '设备图片',
+  `az_photos`    LONGTEXT COMMENT '安装图片',
   `remark`       varchar(255) DEFAULT NULL COMMENT '备注',
   `budget_order` varchar(32) NOT NULL COMMENT '预算单编号',
   PRIMARY KEY (`code`)

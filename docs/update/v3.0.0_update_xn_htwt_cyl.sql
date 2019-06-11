@@ -463,6 +463,10 @@ ALTER TABLE `tdh_repay_biz`
 CHANGE COLUMN `settle_attach` `settle_attach` LONGTEXT NULL DEFAULT NULL COMMENT '结清证明' ,
 CHANGE COLUMN `paper_photo` `paper_photo` LONGTEXT NULL DEFAULT NULL COMMENT '纸质申请照片' ;
 
+ALTER TABLE `tdq_budget_order_gps`
+CHANGE COLUMN `dev_photos` `dev_photos` LONGTEXT NULL DEFAULT NULL COMMENT '设备图片' ,
+CHANGE COLUMN `az_photos` `az_photos` LONGTEXT NULL DEFAULT NULL COMMENT '安装图片' ;
+
 
 UPDATE `tsys_node` SET `order_no`='001' WHERE `code`='a1';
 UPDATE `tsys_node` SET `order_no`='002' WHERE `code`='a1x';
