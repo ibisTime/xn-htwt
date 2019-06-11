@@ -19,7 +19,6 @@ public class XN630002Req {
     private String name;
 
     // 角色等级(必填)
-    @NotBlank(message = "角色等级不能为空")
     private String level;
 
     // 更新人(必填)
