@@ -459,6 +459,10 @@ UPDATE `tsys_menu` SET `order_no`='1' WHERE `code`='SM201903281819119145446';
 ALTER TABLE `tsys_node`
 ADD COLUMN `order_no` VARCHAR(45) NULL COMMENT '排序编号' AFTER `type`;
 
+ALTER TABLE `tdh_repay_biz`
+CHANGE COLUMN `settle_attach` `settle_attach` LONGTEXT NULL DEFAULT NULL COMMENT '结清证明' ,
+CHANGE COLUMN `paper_photo` `paper_photo` LONGTEXT NULL DEFAULT NULL COMMENT '纸质申请照片' ;
+
 
 UPDATE `tsys_node` SET `order_no`='001' WHERE `code`='a1';
 UPDATE `tsys_node` SET `order_no`='002' WHERE `code`='a1x';

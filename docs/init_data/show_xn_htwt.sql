@@ -2943,6 +2943,10 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','asset_pdf_gua1','担保人资产资料pdf','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('node_file_list',NULL,'抵押合同','合同',1,'USYS201800000000001',now());
 
+/*
+ SELECT * FROM tstd_cnavigate;
+*/
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201906111411351822429','banner','2','','FvPUNvdRRQOiA3F2N-pz2VXLCxA3','1','index_banner',1,'1','','','1','CD-HTWT000020','CD-HTWT000020');
 
 /*基础数据*/
 INSERT INTO `tb_bank` VALUES ('BA201905161004270369701','ICBC','中国工商银行','','','下沙支行','',0.10000000,0.15000000,0.20000000,0.25000000,0.10000000,0.15000000,0.20000000,0.25000000,'',NULL,'','','90','授权人姓名','15158068891','330122199005100644','中国工商银行授权人地址','1','中国工商银行信用卡名称1','所属区域','1','USYS201800000000001',now(),NULL),

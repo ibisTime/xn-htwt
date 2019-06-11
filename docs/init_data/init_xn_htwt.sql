@@ -72,9 +72,9 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261349236076566','还款卡管理','1','/biz/refundCard.htm','2','USYS201800000000001',now(),'','SM201804261348514693404');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261350336763666','会员查询','1','/biz/memberInquiries.htm','1','USYS201800000000001',now(),'','SM201804261348514693404');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261354138758172','汽车销售管理','1','#','3','USYS201800000000001',now(),'','SM201806161943036384721');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261354380715184','品牌管理','1','/biz/brand.htm','1','USYS201800000000001',now(),'','SM201804261354138758172');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261354595823870','车系管理','1','/biz/carSeries.htm','2','USYS201800000000001',now(),'','SM201804261354138758172');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261355188031376','车型管理','1','/biz/carShape.htm','3','USYS201800000000001',now(),'','SM201804261354138758172');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261354380715184','品牌管理','1','/biz/brand.htm','2','USYS201800000000001',now(),'','SM201804261354138758172');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261354595823870','车系管理','1','/biz/carSeries.htm','3','USYS201800000000001',now(),'','SM201804261354138758172');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261355188031376','车型管理','1','/biz/carShape.htm','4','USYS201800000000001',now(),'','SM201804261354138758172');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261355444488601','车贷申请单处理','1','/biz/handleApply.htm','5','USYS201800000000001',now(),'','SM201804261354138758172');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261356113521261','历史申请单管理','1','/biz/historicalApply.htm','6','USYS201800000000001',now(),'','SM201804261354138758172');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804261442135927079','激活 / 注销','2','/rock','2','USYS201800000000001',now(),'','SM201804261350336763666');
@@ -553,7 +553,7 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281533561609532','上架','2','/up','3','USYS201800000000001',now(),'','SM201903281458345883990');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281534114386512','下架','2','/down','4','USYS201800000000001',now(),'','SM201903281458345883990');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281534299312753','详情','2','/detail','7','USYS201800000000001',now(),'','SM201903281458345883990');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281819119145446','车型配置管理','1','/container/biz/vehicleconfiguration.htm','4','USYS201800000000001',now(),'','SM201804261354138758172');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281819119145446','车型配置管理','1','/container/biz/vehicleconfiguration.htm','1','USYS201800000000001',now(),'','SM201804261354138758172');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281819467923590','新增','2','/add','1','USYS201800000000001',now(),'','SM201903281819119145446');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281820015273143','修改','2','/edit','2','USYS201800000000001',now(),'','SM201903281819119145446');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201903281850356316277','当前车型配置','2','/cxpz','5','USYS201800000000001',now(),'','SM201804261354138758172');
@@ -2932,3 +2932,8 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','hkb_gua1','担保人户口本','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','asset_pdf_gua1','担保人资产资料pdf','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('node_file_list',NULL,'抵押合同','合同',1,'USYS201800000000001',now());
+
+/*
+ SELECT * FROM tstd_cnavigate;
+*/
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201906111411351822429','banner','2','','FvPUNvdRRQOiA3F2N-pz2VXLCxA3','1','index_banner',1,'1','','','1','CD-HTWT000020','CD-HTWT000020');
