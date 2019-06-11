@@ -54,6 +54,8 @@
         <result column="subbranch_bank_name" property="subbranchBankName"/>
         <result column="team_name" property="teamName"/>
         <result column="company_name" property="companyName"/>
+        <result column="advance_fund_datetime" property="advanceFundDatetime"/>
+        <result column="advance_fund_amount" property="advanceFundAmount"/>
         <result column="sale_user_name" property="saleUserName"/>
         <result column="sale_user_company_name" property="saleUserCompanyName"/>
         <result column="sale_user_department_name" property="saleUserDepartMentName"/>
@@ -134,7 +136,7 @@
             </if>
             <if test="teamCode != null and teamCode != '' ">
                 AND (t.team_code = #{teamCode} OR t.code in (select biz_code from tsys_biz_log where
-                operator=#{userId}  group by biz_code))
+                operator=#{userId} group by biz_code))
             </if>
             <if test="captainCode != null and captainCode != '' ">
                 AND t.captain_code = #{captainCode}
@@ -191,7 +193,8 @@
                 AND t.gua_mode = #{guaMode}
             </if>
             <if test="isMy != null and userId != '' and userId != null">
-                AND t.code in (select biz_code from tsys_biz_log where operator=#{userId} group by biz_code)
+                AND t.code in (select biz_code from tsys_biz_log where operator=#{userId} group by
+                biz_code)
             </if>
             <if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
                 AND t.cur_node_code in
@@ -318,6 +321,8 @@
         ,id.name as inside_job_department_name
         ,ip.name as inside_job_post_name
         ,rb.periods as periods
+        ,ta.advance_fund_datetime as advance_fund_datetime
+        ,ta.advance_fund_amount as advance_fund_amount
         FROM
         tqj_cdbiz t left join tsys_user su on t.sale_user_id=su.user_id
         left join tsys_user iu on t.inside_job=iu.user_id
@@ -330,6 +335,7 @@
         left join tsys_department id on iu.department_code=id.code
         left join tsys_department ip on iu.post_code=ip.code
         left join tdh_repay_biz rb on rb.biz_code = t.code
+        left join tdq_advance ta on ta.biz_code = t.code
         <include refid="join_condition"/>
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
@@ -448,6 +454,8 @@
         ,id.name as inside_job_department_name
         ,ip.name as inside_job_post_name
         ,rb.periods as periods
+        ,ta.advance_fund_datetime as advance_fund_datetime
+        ,ta.advance_fund_amount as advance_fund_amount
         FROM
         tqj_cdbiz t left join tsys_user su on t.sale_user_id=su.user_id
         left join tsys_user iu on t.inside_job=iu.user_id
@@ -460,6 +468,7 @@
         left join tsys_department id on iu.department_code=id.code
         left join tsys_department ip on iu.post_code=ip.code
         left join tdh_repay_biz rb on rb.biz_code = t.code
+        left join tdq_advance ta on ta.biz_code = t.code
         <include refid="join_condition"/>
         <include refid="cur_node_condition"/>
         <include refid="intev_node_condition"/>

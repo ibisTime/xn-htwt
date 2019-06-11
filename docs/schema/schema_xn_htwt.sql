@@ -2979,7 +2979,7 @@ CREATE TABLE `tqj_attachment`
   `kname`       varchar(45)  DEFAULT NULL COMMENT '附件key',
   `vname`       varchar(45)  DEFAULT NULL COMMENT '附件value',
   `attach_type` varchar(64)  DEFAULT NULL COMMENT '附件类型（图片/视频/网页）',
-  `url`         varchar(255) DEFAULT NULL COMMENT 'url',
+  `url`         LONGTEXT DEFAULT NULL COMMENT 'url',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='附件 ';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3552,8 +3552,9 @@ CREATE TABLE `tsys_node`
   `code`   varchar(32) NOT NULL COMMENT '节点编号',
   `name`   varchar(255) DEFAULT NULL COMMENT '节点名称',
   `type`   varchar(4)   DEFAULT NULL COMMENT '类型',
+  `order_no`   VARCHAR(45)   DEFAULT NULL COMMENT '排序编号',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`) COMMENT '流程'
+  PRIMARY KEY (`code`) COMMENT '节点'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
