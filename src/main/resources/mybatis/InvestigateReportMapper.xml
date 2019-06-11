@@ -139,6 +139,7 @@
     <select id="select_investigateReport" parameterType="investigateReport"
             resultMap="investigateReport_DB_Result">
         SELECT
+        distinct
         t.code
         ,t.budget_order_code
         ,t.repay_biz_code
@@ -247,7 +248,9 @@
 
     <select id="select_investigateReport_count" parameterType="investigateReport"
             resultType="java.lang.Long">
-        SELECT count(1) FROM tdq_investigate_report t
+        SELECT count(distinct t.code) FROM tdq_investigate_report t
+        inner join tqj_cdbiz c on t.budget_order_code = c.code
+        inner join tsys_role_node r on t.cur_node_code = r.node_code
         <include refid="where_condition"/>
     </select>
 
