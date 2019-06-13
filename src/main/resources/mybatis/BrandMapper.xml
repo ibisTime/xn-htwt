@@ -1,87 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.IBrandDAO">
-	<resultMap id="brand_DB_Result" type="brand">
-		<result column="code" property="code" />
-		<result column="letter" property="letter" />
-		<result column="logo" property="logo" />
-		<result column="name" property="name" />
-		<result column="description" property="description" />
-		<result column="status" property="status" />
-		<result column="location" property="location" />
-		<result column="order_no" property="orderNo" />
-		<result column="updater" property="updater" />
-		<result column="update_datetime" property="updateDatetime" />
-		<result column="remark" property="remark" />
-	</resultMap>
-	
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="location != null and location != '' ">
-				AND t.location = #{location}
-			</if>
-			<if test="letter != null and letter != '' ">
-				AND t.letter = #{letter}
-			</if>
-			<if test="logo != null and logo != '' ">
-				AND t.logo = #{logo}
-			</if>
-			<if test="name != null and name != '' ">
-				AND t.name like "%"#{name}"%"
-			</if>
-			<if test="description != null and description != '' ">
-				AND t.description like "%"#{description}"%"
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
-			</if>
-			<if test="updater != null and updater != '' ">
-				AND t.updater = #{updater}
-			</if>
-			<if test="updateDatetime != null and updateDatetime != '' ">
-				AND t.update_datetime = #{updateDatetime}
-			</if>
-			<if test="remark != null and remark != '' ">
-				AND t.remark = #{remark}
-			</if>
-		</trim>
-	</sql>
-	
-	<select id="select_brand" parameterType="brand" resultMap="brand_DB_Result">
-		SELECT
-		t.code
-		,t.letter
-		,t.logo
-		,t.name
-		,t.description
-		,t.status
-		,t.location
-		,t.order_no
-		,t.updater
-		,t.update_datetime
-		,t.remark
-		FROM
-		tht_brand t
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	<select id="select_brand_count" parameterType="brand" resultType="java.lang.Long">
-		SELECT count(1) FROM tht_brand t
-		<include refid="where_condition" />
-	</select>
-	
-	<insert id="insert_brand" parameterType="brand">
+    <resultMap id="brand_DB_Result" type="brand">
+        <result column="code" property="code"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="type" property="type"/>
+        <result column="letter" property="letter"/>
+        <result column="logo" property="logo"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="status" property="status"/>
+        <result column="location" property="location"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="updater" property="updater"/>
+        <result column="update_datetime" property="updateDatetime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="brandId != null and brandId != '' ">
+                AND t.brand_id = #{brandId}
+            </if>
+            <if test="type != null and type != '' ">
+                AND t.type = #{type}
+            </if>
+            <if test="location != null and location != '' ">
+                AND t.location = #{location}
+            </if>
+            <if test="letter != null and letter != '' ">
+                AND t.letter = #{letter}
+            </if>
+            <if test="logo != null and logo != '' ">
+                AND t.logo = #{logo}
+            </if>
+            <if test="name != null and name != '' ">
+                AND t.name like "%"#{name}"%"
+            </if>
+            <if test="description != null and description != '' ">
+                AND t.description like "%"#{description}"%"
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="updater != null and updater != '' ">
+                AND t.updater = #{updater}
+            </if>
+            <if test="updateDatetime != null and updateDatetime != '' ">
+                AND t.update_datetime = #{updateDatetime}
+            </if>
+            <if test="remark != null and remark != '' ">
+                AND t.remark = #{remark}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="select_brand" parameterType="brand" resultMap="brand_DB_Result">
+        SELECT
+        t.code
+        ,t.brand_id
+        ,t.type
+        ,t.letter
+        ,t.logo
+        ,t.name
+        ,t.description
+        ,t.status
+        ,t.location
+        ,t.order_no
+        ,t.updater
+        ,t.update_datetime
+        ,t.remark
+        FROM
+        tht_brand t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_brand_count" parameterType="brand" resultType="java.lang.Long">
+        SELECT count(1) FROM tht_brand t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_brand" parameterType="brand">
 		INSERT INTO tht_brand(
 		code
+		,brand_id
+		,type
 		,letter
 		,logo
 		,name
@@ -93,6 +105,8 @@
 		)
 		VALUES(
 		#{code}
+		,#{brandId}
+		,#{type}
 		,#{letter}
 		,#{logo}
 		,#{name}
@@ -103,10 +117,11 @@
 		,#{remark}
 		)
 	</insert>
-	
-	<update id="update_brand" parameterType="brand">
+
+    <update id="update_brand" parameterType="brand">
 		UPDATE tht_brand tb SET
-		tb.letter = #{letter}
+		tb.brand_id = #{brandId}
+		,tb.letter = #{letter}
 		,tb.logo = #{logo}
 		,tb.name = #{name}
 		,tb.description = #{description}
@@ -121,8 +136,8 @@
 		tc.brand_name=#{name}
 		WHERE tc.brand_code=#{code};
 	</update>
-	
-	<update id="update_brand_up" parameterType="brand">
+
+    <update id="update_brand_up" parameterType="brand">
 		UPDATE tht_brand SET
 		status = #{status}
 		,location=#{location}
@@ -131,16 +146,16 @@
 		,update_datetime=#{updateDatetime}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="update_brand_down" parameterType="brand">
+
+    <update id="update_brand_down" parameterType="brand">
 		UPDATE tht_brand SET
 		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
-	
-	<delete id="delete_brand" parameterType="brand">
+
+    <delete id="delete_brand" parameterType="brand">
 		DELETE FROM tstd_cnavigate WHERE parent_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
 		DELETE FROM tht_car_carconfig WHERE car_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
 		DELETE FROM tht_car_order WHERE car_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
@@ -149,5 +164,5 @@
 		DELETE FROM tht_series WHERE brand_code=#{code};
 		DELETE FROM tht_brand WHERE code=#{code};
 	</delete>
-	
+
 </mapper>

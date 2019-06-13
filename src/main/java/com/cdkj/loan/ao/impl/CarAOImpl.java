@@ -1,5 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.bo.IActionBO;
 import com.cdkj.loan.bo.IBankBO;
@@ -7,9 +9,12 @@ import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarCarconfigBO;
 import com.cdkj.loan.bo.ICarconfigBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.core.OkHttpUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Action;
 import com.cdkj.loan.domain.Bank;
@@ -18,13 +23,17 @@ import com.cdkj.loan.domain.Calculate;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.Carconfig;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Series;
+import com.cdkj.loan.dto.req.XN630419Req;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
 import com.cdkj.loan.enums.EActionType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
+import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +71,9 @@ public class CarAOImpl implements ICarAO {
     @Autowired
     private ICarCarconfigBO carCarconfigBO;
 
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
+
     @Transactional
     @Override
     public String addCar(XN630420Req req) {
@@ -91,7 +103,7 @@ public class CarAOImpl implements ICarAO {
         car.setLevel(req.getLevel());
         car.setVersion(req.getVersion());
         car.setStructure(req.getStructure());
-        car.setDisplacment(StringValidater.toDouble(req.getDisplacement()));
+        car.setDisplacement(StringValidater.toDouble(req.getDisplacement()));
         car.setFromPlace(req.getFromPlace());
         car.setProcedure(req.getProcedure());
 
@@ -146,7 +158,7 @@ public class CarAOImpl implements ICarAO {
         car.setLevel(req.getLevel());
         car.setVersion(req.getVersion());
         car.setStructure(req.getStructure());
-        car.setDisplacment(StringValidater.toDouble(req.getDisplacement()));
+        car.setDisplacement(StringValidater.toDouble(req.getDisplacement()));
         car.setFromPlace(req.getFromPlace());
         car.setProcedure(req.getProcedure());
         car.setSeriesCode(req.getSeriesCode());
@@ -208,6 +220,84 @@ public class CarAOImpl implements ICarAO {
         car.setUpdateDatetime(new Date());
         car.setRemark(remark);
         carBO.editCar(car);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void refreshCar(XN630419Req req) {
+        SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
+        if (StringUtils.isBlank(req.getSeriesId())) {
+            Series series = new Series();
+            series.setType(ECarProduceType.IMPORT.getCode());
+            List<Series> querySeries = seriesBO.querySeries(series);
+            for (Series domain : querySeries) {
+                refresh(url, domain.getSeriesId(), req.getUpdater());
+            }
+        } else {
+            Series series = seriesBO.getSeriesBySeriesId(req.getSeriesId());
+            if (series == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "车系标识不存在！");
+            }
+            refresh(url, req.getSeriesId(), req.getUpdater());
+        }
+    }
+
+    private void refresh(SYSConfig url, String seriesId, String updater) {
+        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
+        String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
+                + "/getCarModelList" + "?token=" + token.getCvalue() + "&seriesId=" + seriesId);
+        JSONObject jsono = JSONObject.parseObject(json);
+        String status = jsono.get("status").toString();
+        if (status.equals("0")) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    jsono.get("error_msg").toString());
+        }
+
+        Car condition = new Car();
+        condition.setSeriesId(seriesId);
+        condition.setType(ECarProduceType.IMPORT.getCode());
+        List<Car> queryCar = carBO.queryCar(condition);
+        if (CollectionUtils.isNotEmpty(queryCar)) {
+            for (Car car : queryCar) {
+                carBO.removeCar(car.getCode());
+            }
+        }
+        String list = jsono.get("model_list").toString();
+        JSONArray parseArray = JSONArray.parseArray(list);
+        for (Object object : parseArray) {
+            JSONObject jsonObject = (JSONObject) object;
+            String modelId = jsonObject.getString("model_id");
+            String modelName = jsonObject.getString("model_name");
+            String modelPrice = jsonObject.getString("model_price");
+            String modelYear = jsonObject.getString("model_year");
+            String minRegYear = jsonObject.getString("min_reg_year");
+            String maxRegYear = jsonObject.getString("max_reg_year");
+            String liter = jsonObject.getString("liter");
+            String gearType = jsonObject.getString("gear_type");
+            String dischargeStandard = jsonObject
+                    .getString("discharge_standard");
+            String seatNumber = jsonObject.getString("seat_number");
+            Date updateTime = jsonObject.getDate("update_time");
+
+            Car car = new Car();
+            car.setSeriesId(seriesId);
+            car.setModelId(modelId);
+            car.setType(ECarProduceType.IMPORT.getCode());
+            car.setName(modelName);
+            car.setSalePrice(AmountUtil.mul(10000L, StringValidater.toDouble(modelPrice)));
+            car.setModelYear(modelYear);
+            car.setMinRegYear(minRegYear);
+            car.setMaxRegYear(maxRegYear);
+            car.setLiter(liter);
+            car.setGearType(gearType);
+            car.setDischargeStandard(dischargeStandard);
+            car.setSeatNumber(seatNumber);
+            car.setStatus(EBrandStatus.UP.getCode());
+            car.setUpdater(updater);
+            car.setUpdateDatetime(updateTime);
+            carBO.saveCar(car);
+        }
     }
 
     @Override

@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -14,6 +8,10 @@ import com.cdkj.loan.dao.IBrandDAO;
 import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
@@ -35,7 +33,7 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
         if (data != null) {
             if (data.getCode() == null) {
                 code = OrderNoGenerater.generate(EGeneratePrefix.Brand
-                    .getCode());
+                        .getCode());
                 data.setCode(code);
             }
             brandDAO.insert(data);
@@ -61,6 +59,13 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
             }
         }
         return data;
+    }
+
+    @Override
+    public Brand getBrandByBrandId(String brandId) {
+        Brand brand = new Brand();
+        brand.setBrandId(brandId);
+        return brandDAO.select(brand);
     }
 
     @Override

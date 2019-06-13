@@ -1,28 +1,39 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.ISeriesAO;
+import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarCarconfigBO;
 import com.cdkj.loan.bo.ICarconfigBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.OkHttpUtils;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.Carconfig;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630410Req;
 import com.cdkj.loan.dto.req.XN630412Req;
+import com.cdkj.loan.dto.req.XN630418Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
+import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SeriesAOImpl implements ISeriesAO {
@@ -41,6 +52,12 @@ public class SeriesAOImpl implements ISeriesAO {
 
     @Autowired
     private ICarCarconfigBO carCarconfigBO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
+
+    @Autowired
+    private IBrandBO brandBO;
 
     @Override
     public String addSeries(XN630410Req req) {
@@ -105,6 +122,71 @@ public class SeriesAOImpl implements ISeriesAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void refreshSeries(XN630418Req req) {
+        SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
+        if (StringUtils.isBlank(req.getBrandId())) {
+            Brand brand = new Brand();
+            brand.setType(ECarProduceType.IMPORT.getCode());
+            List<Brand> queryBrand = brandBO.queryBrand(brand);
+            for (Brand domain : queryBrand) {
+                refresh(url, domain.getBrandId(), req.getUpdater());
+            }
+        } else {
+            Brand brand = brandBO.getBrandByBrandId(req.getBrandId());
+            if (brand == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "品牌标识不存在！");
+            }
+            refresh(url, req.getBrandId(), req.getUpdater());
+        }
+    }
+
+    private void refresh(SYSConfig url, String brandId, String updater) {
+        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
+        String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
+                + "/getCarSeriesList" + "?token=" + token.getCvalue() + "&brandId=" + brandId);
+        JSONObject jsono = JSONObject.parseObject(json);
+        String status = jsono.get("status").toString();
+        if (status.equals("0")) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    jsono.get("error_msg").toString());
+        }
+        Series condition = new Series();
+        condition.setBrandId(brandId);
+        condition.setType(ECarProduceType.IMPORT.getCode());
+        List<Series> querySeries = seriesBO.querySeries(condition);
+        if (CollectionUtils.isNotEmpty(querySeries)) {
+            for (Series series : querySeries) {
+                seriesBO.removeSeries(series);
+            }
+        }
+
+        String list = jsono.get("series_list").toString();
+        JSONArray parseArray = JSONArray.parseArray(list);
+        for (Object object : parseArray) {
+            JSONObject jsonObject = (JSONObject) object;
+            String seriesId = jsonObject.getString("series_id");
+            String seriesName = jsonObject.getString("series_name");
+            String makerType = jsonObject.getString("maker_type");
+            String seriesGroupName = jsonObject.getString("series_group_name");
+            Date updateTime = jsonObject.getDate("update_time");
+
+            Series series = new Series();
+            series.setBrandId(brandId);
+            series.setSeriesId(seriesId);
+            series.setType(ECarProduceType.IMPORT.getCode());
+            series.setMakerType(makerType);
+            series.setName(seriesName);
+            series.setSeriesGroupName(seriesGroupName);
+            series.setStatus(EBrandStatus.UP.getCode());
+            series.setUpdater(updater);
+            series.setUpdateDatetime(updateTime);
+            seriesBO.saveSeries(series);
+        }
+    }
+
+    @Override
     public Paginable<Series> querySeriesPage(int start, int limit,
             Series condition) {
         Paginable<Series> paginable = seriesBO.getPaginable(start, limit,
@@ -140,18 +222,18 @@ public class SeriesAOImpl implements ISeriesAO {
         condition.setStatus(EBrandStatus.UP.getCode());
         List<Car> cars = carBO.queryCar(condition);
         //最高价，最低价
-        long highest=0;
-        long lowest=0;
+        long highest = 0;
+        long lowest = 0;
         if (!cars.isEmpty()) {
             for (Car car : cars) {
                 //最高价最低价判断
-                if (highest==0&&lowest==0){
-                    highest=car.getSalePrice();
-                    lowest=car.getSalePrice();
-                }else if (car.getSalePrice()>highest){
-                    highest=car.getSalePrice();
-                }else if(car.getSalePrice()<lowest){
-                    lowest=car.getSalePrice();
+                if (highest == 0 && lowest == 0) {
+                    highest = car.getSalePrice();
+                    lowest = car.getSalePrice();
+                } else if (car.getSalePrice() > highest) {
+                    highest = car.getSalePrice();
+                } else if (car.getSalePrice() < lowest) {
+                    lowest = car.getSalePrice();
                 }
                 // 车型下配置列表
                 List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car

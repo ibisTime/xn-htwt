@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -14,6 +8,10 @@ import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
@@ -32,7 +30,7 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
         if (data != null) {
             if (data.getCode() == null) {
                 code = OrderNoGenerater.generate(EGeneratePrefix.Series
-                    .getCode());
+                        .getCode());
                 data.setCode(code);
             }
             seriesDAO.insert(data);
@@ -100,6 +98,13 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
     @Override
     public void removeSeries(Series data) {
         seriesDAO.delete(data);
+    }
+
+    @Override
+    public Series getSeriesBySeriesId(String seriesId) {
+        Series series = new Series();
+        series.setSeriesId(seriesId);
+        return seriesDAO.select(series);
     }
 
 }

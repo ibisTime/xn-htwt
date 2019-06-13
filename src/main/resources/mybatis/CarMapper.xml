@@ -1,200 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICarDAO">
-	<resultMap id="car_DB_Result" type="car">
-		<result column="code" property="code" />
-		<result column="is_referee" property="isReferee" />
-		<result column="name" property="name" />
-		<result column="series_code" property="seriesCode" />
-		<result column="series_name" property="seriesName" />
-		<result column="brand_code" property="brandCode" />
-		<result column="brand_name" property="brandName" />
-		<result column="bank_code" property="bankCode" />
-		<result column="level" property="level" />
-		<result column="version" property="version" />
-		<result column="structure" property="structure" />
-		<result column="displacement" property="displacement" />
-		<result column="from_place" property="fromPlace" />
-		<result column="car_procedure" property="procedure" />
-		<result column="original_price" property="originalPrice" />
-		<result column="sale_price" property="salePrice" />
-		<result column="sf_amount" property="sfAmount" />
-		<result column="fw_amount" property="fwAmount" />
-		<result column="jsq_byhf" property="jsqByhf" />
-		<result column="jsq_sybx" property="jsqSybx" />
-		<result column="location" property="location" />
-		<result column="order_no" property="orderNo" />
-		<result column="slogan" property="slogan" />
-		<result column="adv_pic" property="advPic" />
-		<result column="pic_number" property="picNumber" />
-		<result column="pic" property="pic" />
-		<result column="description" property="description" />
-		<result column="outside_color" property="outsideColor" />
-		<result column="inside_color" property="insideColor" />
-		<result column="status" property="status" />
-		<result column="updater" property="updater" />
-		<result column="update_datetime" property="updateDatetime" />
-		<result column="remark" property="remark" />
-	</resultMap>
-	
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="isReferee != null and isReferee != '' ">
-				AND t.is_referee = #{isReferee}
-			</if>
-			<if test="name != null and name != '' ">
-				AND t.name like "%"#{name}"%"
-			</if>
-			<if test="name != null and name != '' ">
-				AND t.name like "%"#{name}"%"
-			</if>
-			<if test="seriesCode != null and seriesCode != '' ">
-				AND t.series_code = #{seriesCode}
-			</if>
-			<if test="seriesName != null and seriesName != '' ">
-				AND t.series_name like "%"#{seriesName}"%"
-			</if>
-			<if test="brandCode != null and brandCode != '' ">
-				AND t.brand_code = #{brandCode}
-			</if>
-			<if test="brandName != null and brandName != '' ">
-				AND t.brand_name like "%"#{brandName}"%"
-			</if>
-			<if test="originalPrice != null and originalPrice != '' ">
-				AND t.original_price = #{originalPrice}
-			</if>
-			<if test="salePrice != null and salePrice != '' ">
-				AND t.sale_price = #{salePrice}
-			</if>
-			<if test="sfAmount != null and sfAmount != '' ">
-				AND t.sf_amount = #{sfAmount}
-			</if>
-			<if test="location != null and location != '' ">
-				AND t.location = #{location}
-			</if>
-			<if test="orderNo != null and orderNo != '' ">
-				AND t.order_no = #{orderNo}
-			</if>
-			<if test="slogan != null and slogan != '' ">
-				AND t.slogan = #{slogan}
-			</if>
-			<if test="advPic != null and advPic != '' ">
-				AND t.adv_pic = #{advPic}
-			</if>
-			<if test="pic != null and pic != '' ">
-				AND t.pic = #{pic}
-			</if>
-			<if test="description != null and description != '' ">
-				AND t.description = #{description}
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
-			</if>
-			<if test="updater != null and updater != '' ">
-				AND t.updater = #{updater}
-			</if>
-			<if test="updateDatetime != null and updateDatetime != '' ">
-				AND t.update_datetime = #{updateDatetime}
-			</if>
-			<if test="remark != null and remark != '' ">
-				AND t.remark = #{remark}
-			</if>
-			<if test="queryName != null and queryName != '' ">
-				AND t.series_name like "%"#{queryName}"%" OR t.brand_name like "%"#{queryName}"%" 
-				OR t.name like "%"#{queryName}"%"
-			</if>
-			<if test="displacementStart != null and displacementStart != '' ">
-				<![CDATA[AND t.displacement > #{displacementStart}]]>
-			</if>
-			<if test="displacementEnd != null and displacementEnd != '' ">
-				<![CDATA[AND t.displacement <= #{displacementEnd}]]>
-			</if>
-			<if test="priceStart != null and priceStart != '' ">
-				<![CDATA[AND t.sale_price > #{priceStart}]]>
-			</if>
-			<if test="priceEnd != null and priceEnd != '' ">
-				<![CDATA[AND t.sale_price <= #{priceEnd}]]>
-			</if>
-			<if test="levelList != null and levelList.size()>0  ">
-				AND t.level in 
-                <foreach item="item" index="index" collection="levelList" open="(" separator="," close=")">
-	            	#{item}
-                </foreach> 
-			</if>
-			<if test="versionList != null and versionList.size()>0">
-				AND t.version in 
-                <foreach item="item" index="index" collection="versionList" open="(" separator="," close=")">
-	            	#{item}
-                </foreach> 
-			</if>
-			<if test="structureList != null and structureList.size()>0 ">
-				AND t.structure in 
-                <foreach item="item" index="index" collection="structureList" open="(" separator="," close=")">
-	            	#{item}
-                </foreach> 
-			</if>
-		</trim>
-	</sql>
-	
-	<select id="select_car" parameterType="car" resultMap="car_DB_Result">
-		SELECT
-		t.code
-		,t.is_referee
-		,t.name
-		,t.series_code
-		,t.series_name
-		,t.brand_code
-		,t.brand_name
-		,t.bank_code
-		,t.level
-		,t.version
-		,t.structure
-		,t.displacement
-		,t.from_place
-		,t.car_procedure
-		,t.original_price
-		,t.sale_price
-		,t.sf_amount
-		,t.fw_amount
-		,t.jsq_byhf
-		,t.jsq_sybx
-		,t.location
-		,t.order_no
-		,t.slogan
-		,t.adv_pic
-		,t.pic_number
-		,t.pic
-		,t.description
-		,t.outside_color
-		,t.inside_color
-		,t.status
-		,t.updater
-		,t.update_datetime
-		,t.remark
-		FROM
-		tht_car t
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	<select id="select_car_count" parameterType="car" resultType="java.lang.Long">
-		SELECT count(1) FROM tht_car t
-		<include refid="where_condition" />
-	</select>
-	
-	<insert id="insert_car" parameterType="car">
+    <resultMap id="car_DB_Result" type="car">
+        <result column="code" property="code"/>
+        <result column="is_referee" property="isReferee"/>
+        <result column="series_id" property="seriesId"/>
+        <result column="model_id" property="modelId"/>
+        <result column="type" property="type"/>
+        <result column="name" property="name"/>
+        <result column="series_code" property="seriesCode"/>
+        <result column="series_name" property="seriesName"/>
+        <result column="brand_code" property="brandCode"/>
+        <result column="brand_name" property="brandName"/>
+        <result column="bank_code" property="bankCode"/>
+        <result column="level" property="level"/>
+        <result column="version" property="version"/>
+        <result column="structure" property="structure"/>
+        <result column="displacement" property="displacement"/>
+        <result column="from_place" property="fromPlace"/>
+        <result column="car_procedure" property="procedure"/>
+        <result column="original_price" property="originalPrice"/>
+        <result column="sale_price" property="salePrice"/>
+        <result column="model_year" property="modelYear"/>
+        <result column="min_reg_year" property="minRegYear"/>
+        <result column="max_reg_year" property="maxRegYear"/>
+        <result column="liter" property="liter"/>
+        <result column="gear_type" property="gearType"/>
+        <result column="discharge_standard" property="dischargeStandard"/>
+        <result column="seat_number" property="seatNumber"/>
+        <result column="sf_amount" property="sfAmount"/>
+        <result column="fw_amount" property="fwAmount"/>
+        <result column="jsq_byhf" property="jsqByhf"/>
+        <result column="jsq_sybx" property="jsqSybx"/>
+        <result column="location" property="location"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="slogan" property="slogan"/>
+        <result column="adv_pic" property="advPic"/>
+        <result column="pic_number" property="picNumber"/>
+        <result column="pic" property="pic"/>
+        <result column="description" property="description"/>
+        <result column="outside_color" property="outsideColor"/>
+        <result column="inside_color" property="insideColor"/>
+        <result column="status" property="status"/>
+        <result column="updater" property="updater"/>
+        <result column="update_datetime" property="updateDatetime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="isReferee != null and isReferee != '' ">
+                AND t.is_referee = #{isReferee}
+            </if>
+            <if test="name != null and name != '' ">
+                AND t.name like "%"#{name}"%"
+            </if>
+            <if test="seriesId != null and seriesId != '' ">
+                AND t.series_id = #{seriesId}
+            </if>
+            <if test="modelId != null and modelId != '' ">
+                AND t.model_id = #{modelId}
+            </if>
+            <if test="type != null and type != '' ">
+                AND t.type = #{type}
+            </if>
+            <if test="seriesCode != null and seriesCode != '' ">
+                AND t.series_code = #{seriesCode}
+            </if>
+            <if test="seriesName != null and seriesName != '' ">
+                AND t.series_name like "%"#{seriesName}"%"
+            </if>
+            <if test="brandCode != null and brandCode != '' ">
+                AND t.brand_code = #{brandCode}
+            </if>
+            <if test="brandName != null and brandName != '' ">
+                AND t.brand_name like "%"#{brandName}"%"
+            </if>
+            <if test="originalPrice != null and originalPrice != '' ">
+                AND t.original_price = #{originalPrice}
+            </if>
+            <if test="salePrice != null and salePrice != '' ">
+                AND t.sale_price = #{salePrice}
+            </if>
+            <if test="sfAmount != null and sfAmount != '' ">
+                AND t.sf_amount = #{sfAmount}
+            </if>
+            <if test="location != null and location != '' ">
+                AND t.location = #{location}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                AND t.order_no = #{orderNo}
+            </if>
+            <if test="slogan != null and slogan != '' ">
+                AND t.slogan = #{slogan}
+            </if>
+            <if test="advPic != null and advPic != '' ">
+                AND t.adv_pic = #{advPic}
+            </if>
+            <if test="pic != null and pic != '' ">
+                AND t.pic = #{pic}
+            </if>
+            <if test="description != null and description != '' ">
+                AND t.description = #{description}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="updater != null and updater != '' ">
+                AND t.updater = #{updater}
+            </if>
+            <if test="updateDatetime != null and updateDatetime != '' ">
+                AND t.update_datetime = #{updateDatetime}
+            </if>
+            <if test="remark != null and remark != '' ">
+                AND t.remark = #{remark}
+            </if>
+            <if test="queryName != null and queryName != '' ">
+                AND t.series_name like "%"#{queryName}"%" OR t.brand_name like "%"#{queryName}"%"
+                OR t.name like "%"#{queryName}"%"
+            </if>
+            <if test="displacementStart != null and displacementStart != '' ">
+                <![CDATA[AND t.displacement > #{displacementStart}]]>
+            </if>
+            <if test="displacementEnd != null and displacementEnd != '' ">
+                <![CDATA[AND t.displacement <= #{displacementEnd}]]>
+            </if>
+            <if test="priceStart != null and priceStart != '' ">
+                <![CDATA[AND t.sale_price > #{priceStart}]]>
+            </if>
+            <if test="priceEnd != null and priceEnd != '' ">
+                <![CDATA[AND t.sale_price <= #{priceEnd}]]>
+            </if>
+            <if test="levelList != null and levelList.size()>0  ">
+                AND t.level in
+                <foreach item="item" index="index" collection="levelList" open="(" separator=","
+                        close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="versionList != null and versionList.size()>0">
+                AND t.version in
+                <foreach item="item" index="index" collection="versionList" open="(" separator=","
+                        close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="structureList != null and structureList.size()>0 ">
+                AND t.structure in
+                <foreach item="item" index="index" collection="structureList" open="(" separator=","
+                        close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <select id="select_car" parameterType="car" resultMap="car_DB_Result">
+        SELECT
+        t.code
+        ,t.is_referee
+        ,t.series_id
+        ,t.model_id
+        ,t.type
+        ,t.name
+        ,t.series_code
+        ,t.series_name
+        ,t.brand_code
+        ,t.brand_name
+        ,t.bank_code
+        ,t.level
+        ,t.version
+        ,t.structure
+        ,t.displacement
+        ,t.from_place
+        ,t.car_procedure
+        ,t.original_price
+        ,t.sale_price
+        ,t.model_year
+        ,t.min_reg_year
+        ,t.max_reg_year
+        ,t.liter
+        ,t.gear_type
+        ,t.discharge_standard
+        ,t.seat_number
+        ,t.sf_amount
+        ,t.fw_amount
+        ,t.jsq_byhf
+        ,t.jsq_sybx
+        ,t.location
+        ,t.order_no
+        ,t.slogan
+        ,t.adv_pic
+        ,t.pic_number
+        ,t.pic
+        ,t.description
+        ,t.outside_color
+        ,t.inside_color
+        ,t.status
+        ,t.updater
+        ,t.update_datetime
+        ,t.remark
+        FROM
+        tht_car t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_car_count" parameterType="car" resultType="java.lang.Long">
+        SELECT count(1) FROM tht_car t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_car" parameterType="car">
 		INSERT INTO 
 		tht_car(
 		code
 		,is_referee
+		,series_id
+		,model_id
+		,type
 		,name
 		,series_code
 		,series_name
@@ -212,6 +244,13 @@
 		,original_price
 		
 		,sale_price
+		,model_year
+		,min_reg_year
+		,max_reg_year
+		,liter
+		,gear_type
+		,discharge_standard
+		,seat_number
 		,sf_amount
 		,fw_amount
 		,jsq_byhf
@@ -236,6 +275,9 @@
 		VALUES(
 		#{code}
 		,#{isReferee}
+		,#{seriesId}
+		,#{modelId}
+		,#{type}
 		,#{name}
 		,#{seriesCode}
 		,#{seriesName}
@@ -253,6 +295,13 @@
 		,#{originalPrice}
 		
 		,#{salePrice}
+		,#{modelYear}
+		,#{minRegYear}
+		,#{maxRegYear}
+		,#{liter}
+		,#{gearType}
+		,#{dischargeStandard}
+		,#{seatNumber}
 		,#{sfAmount}
 		,#{fwAmount}
 		,#{jsqByhf}
@@ -275,8 +324,8 @@
 		,#{remark}
 		)
 	</insert>
-	
-	<update id="update_car" parameterType="car">
+
+    <update id="update_car" parameterType="car">
 		UPDATE tht_car SET
 		is_referee=#{isReferee}
 		,name = #{name}
@@ -312,8 +361,8 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="update_car_up" parameterType="car">
+
+    <update id="update_car_up" parameterType="car">
 		UPDATE tht_car SET
 		location = #{location}
 		,order_no = #{orderNo}
@@ -323,8 +372,8 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="update_car_down" parameterType="car">
+
+    <update id="update_car_down" parameterType="car">
 		UPDATE tht_car SET
 		status = #{status}
 		,updater = #{updater}
@@ -332,14 +381,14 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-	
-	<delete id="delete_car" parameterType="car">
+
+    <delete id="delete_car" parameterType="car">
 		DELETE FROM tstd_cnavigate WHERE parent_code =#{code};
 		DELETE FROM tht_car_carconfig WHERE car_code =#{code};
 		DELETE FROM tht_car_order WHERE car_code =#{code};
 		DELETE FROM tht_action WHERE to_code =#{code};
 		DELETE FROM tht_car WHERE code=#{code};
 	</delete>
-	
-	
+
+
 </mapper>

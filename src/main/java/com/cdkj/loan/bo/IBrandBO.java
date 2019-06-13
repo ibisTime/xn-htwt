@@ -1,9 +1,8 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Brand;
+import java.util.List;
 
 public interface IBrandBO extends IPaginableBO<Brand> {
 
@@ -20,4 +19,6 @@ public interface IBrandBO extends IPaginableBO<Brand> {
     public List<Brand> queryBrand(Brand condition);
 
     public void removeBrand(Brand data);
+
+    Brand getBrandByBrandId(String brandId);
 }
