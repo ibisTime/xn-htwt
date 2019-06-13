@@ -1,12 +1,11 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.enums.ERepayPlanNode;
+import java.util.List;
 
 public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
@@ -92,4 +91,13 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     // 还款计划结清
     public void refreshSettleDaily(RepayPlan data, Long repayAmount);
 
+    /**
+     * 人工确认还款
+     */
+    void alreadyRepay(RepayPlan repayPlan);
+
+    /**
+     * 查询之前的还款计划
+     */
+    List<RepayPlan> queryBeforePlanList(RepayPlan condition);
 }

@@ -1,12 +1,13 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.dto.req.XN630530Req;
 import com.cdkj.loan.dto.req.XN630532Req;
+import com.cdkj.loan.dto.req.XN630537Req;
 import com.cdkj.loan.dto.req.XN630544Req;
 import com.cdkj.loan.dto.req.XN630545Req;
+import java.util.List;
 
 public interface IRepayPlanAO {
 
@@ -54,4 +55,13 @@ public interface IRepayPlanAO {
     // 每天凌晨定时更新还款计划状态为已结清(商品)
     public void doSettleDailyProduct();
 
+    /**
+     * 人工确认还款
+     */
+    void alreadyRepay(XN630530Req req);
+
+    /**
+     * 人工确认逾期
+     */
+    void alreadyOverDue(XN630537Req req);
 }

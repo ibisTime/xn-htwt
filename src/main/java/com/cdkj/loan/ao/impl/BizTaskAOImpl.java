@@ -1,19 +1,20 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.cdkj.loan.ao.IBizTaskAO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTask;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632520Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizTaskStatus;
+import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BizTaskAOImpl implements IBizTaskAO {
@@ -38,16 +39,37 @@ public class BizTaskAOImpl implements IBizTaskAO {
 
         if (!EBizTaskStatus.TO_HANDLE.getCode().equals(bizTask.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "待办事项未处于可处理状态");
+                    "待办事项未处于可处理状态");
         }
 
         sysUserBO.getUser(operator);
-        bizTaskBO.handleBizTask(code);
+        bizTaskBO.handleBizTask(code, operator);
     }
 
     @Override
     public Paginable<BizTask> queryBizTaskPage(int start, int limit,
             BizTask condition) {
+        SYSUser user = sysUserBO.getUser(condition.getUserId());
+        // 业务员与内勤看自己的
+        if (!ESysRole.SALE.getCode().equals(user.getRoleCode())
+                && !ESysRole.YWNQ.getCode().equals(user.getRoleCode())) {
+            condition.setUserId(null);
+        }
+        // 根据角色权限查待办
+        condition.setRoleCode(user.getRoleCode());
+
+        return bizTaskBO.getPaginableByRole(start, limit, condition);
+    }
+
+    @Override
+    public Paginable<BizTask> queryBizTaskPage(int start, int limit, BizTask condition,
+            String userId) {
+        SYSUser user = sysUserBO.getUser(userId);
+
+        condition.setIsMy(EBoolean.YES.getCode());
+        condition.setUserId(userId);
+        condition.setRoleCode(user.getRoleCode());
+
         return bizTaskBO.getPaginable(start, limit, condition);
     }
 

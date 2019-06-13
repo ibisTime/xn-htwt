@@ -1,19 +1,16 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632115Req;
-import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 按角色编号分页查询征信列表
@@ -23,45 +20,44 @@ import com.cdkj.loan.spring.SpringContextHolder;
  */
 public class XN632115 extends AProcessor {
 
-    private ICreditAO creditAO = SpringContextHolder.getBean(ICreditAO.class);
+    private ICdbizAO cdbizAO = SpringContextHolder.getBean(ICdbizAO.class);
 
     private XN632115Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        Credit condition = new Credit();
+        Cdbiz condition = new Cdbiz();
         condition.setCode(req.getCode());
         condition.setBizCode(req.getBizCode());
         condition.setSaleUserId(req.getSaleUserId());
-        condition.setUserNameQuery(req.getUserName());
-        condition.setBudgetCodeQuery(req.getBudgetOrderCode());
+        condition.setUserName(req.getUserName());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setKeyword(req.getKeyword());
+        // condition.setKeyword(req.getKeyword());
         condition.setRoleCode(req.getRoleCode());
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
-        if (StringUtils.isNotBlank(req.getIsPass())) {
-            if (EBoolean.YES.getCode().equals(req.getIsPass())) {
-                condition.setCurNodeCode(ENode.ACHIEVE.getCode());
-            }
-            if (EBoolean.NO.getCode().equals(req.getIsPass())) {
-                condition.setNoPass(ENode.ACHIEVE.getCode());
-            }
-        }
-        condition.setIsCancel(req.getIsCancel());
+        condition.setUserId(req.getUserId());
+        // if (StringUtils.isNotBlank(req.getIsPass())) {
+        // if (EBoolean.YES.getCode().equals(req.getIsPass())) {
+        // condition.setCurNodeCode(ENode.ACHIEVE.getCode());
+        // }
+        // if (EBoolean.NO.getCode().equals(req.getIsPass())) {
+        // condition.setNoPass(ENode.ACHIEVE.getCode());
+        // }
+        // }
+        // condition.setIsCancel(req.getIsCancel());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = ICreditAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = ICdbizAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
 
-        return creditAO.queryCreditPageByRoleCode(start, limit, condition,
-            req.getUserId());
+        return cdbizAO.queryCdbizPage(start, limit, condition);
     }
 
     @Override

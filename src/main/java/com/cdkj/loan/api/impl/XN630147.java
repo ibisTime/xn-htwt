@@ -1,10 +1,10 @@
 /**
- * @Title XNlh5013.java 
- * @Package com.xnjr.moom.api.impl 
- * @Description 
- * @author haiqingzheng  
- * @date 2016年4月17日 下午7:40:47 
- * @version V1.0   
+ * @Title XNlh5013.java
+ * @Package com.xnjr.moom.api.impl
+ * @Description
+ * @author haiqingzheng
+ * @date 2016年4月17日 下午7:40:47
+ * @version V1.0
  */
 package com.cdkj.loan.api.impl;
 
@@ -20,16 +20,17 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 列表查询流程节点
- * @author: CYL 
+ * @author: CYL
  * @since: 2018年5月23日 下午9:25:37 
  * @history:
  */
 public class XN630147 extends AProcessor {
+
     private INodeAO nodeAO = SpringContextHolder.getBean(INodeAO.class);
 
     private XN630147Req req = null;
 
-    /** 
+    /**
      * @see com.cdkj.loan.api.IProcessor#doBusiness()
      */
     @Override
@@ -39,11 +40,11 @@ public class XN630147 extends AProcessor {
         condition.setType(req.getType());
         condition.setTypeList(req.getTypeList());
         condition.setCodeList(req.getCodeList());
-
+        condition.setOrder("order_no", "asc");
         return nodeAO.queryNodeList(condition);
     }
 
-    /** 
+    /**
      * @see com.cdkj.loan.api.IProcessor#doCheck(java.lang.String)
      */
     @Override

@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdkj.loan.ao.ICarNewsAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -29,6 +31,12 @@ public class XN630457 extends AProcessor {
         condition.setTitle(req.getTitle());
         condition.setTag(req.getTag());
         condition.setStatus(req.getStatus());
+
+        String orderColumn = req.getOrderColumn();
+        if (StringUtils.isBlank(orderColumn)) {
+            orderColumn = ICarNewsAO.DEFAULT_ORDER_COLUMN;
+        }
+        condition.setOrder(orderColumn, req.getOrderDir());
 
         return carNewsAO.queryCarNewsList(condition);
     }

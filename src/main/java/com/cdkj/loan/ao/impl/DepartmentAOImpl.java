@@ -1,12 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.cdkj.loan.ao.IDepartmentAO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -21,6 +14,11 @@ import com.cdkj.loan.enums.EDepartmentStatus;
 import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DepartmentAOImpl implements IDepartmentAO {
@@ -36,13 +34,14 @@ public class DepartmentAOImpl implements IDepartmentAO {
         Department data = new Department();
         data.setType(req.getType());
         data.setName(req.getName());
-        if (!EDepartmentType.POSITION.getCode().equals(req.getType())) {
-            SYSUser sysUser = sysUserBO.getUser(req.getLeadUserId());
-            if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "负责人已被注销");
-            }
-        }
+        // 负责人去掉
+//        if (!EDepartmentType.POSITION.getCode().equals(req.getType())) {
+//            SYSUser sysUser = sysUserBO.getUser(req.getLeadUserId());
+//            if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
+//                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+//                    "负责人已被注销");
+//            }
+//        }
 
         data.setLeadUserId(req.getLeadUserId());
         data.setParentCode(req.getParentCode());
@@ -61,13 +60,19 @@ public class DepartmentAOImpl implements IDepartmentAO {
         data.setType(req.getType());
         data.setName(req.getName());
         SYSUser sysUser = sysUserBO.getUser(req.getLeadUserId());
-        if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "负责人已被注销");
+
+        if (null != sysUser) {
+            if (ESYSUserStatus.BLOCK.getCode().equals(sysUser.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "负责人已被注销");
+            }
+        }
+        if (StringUtils.isNotBlank(req.getOrderNo())) {
+            data.setOrderNo(StringValidater.toInteger(req.getOrderNo()));
         }
 
         data.setLeadUserId(req.getLeadUserId());
         data.setParentCode(req.getParentCode());
-        data.setOrderNo(StringValidater.toInteger(req.getOrderNo()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
@@ -78,10 +83,10 @@ public class DepartmentAOImpl implements IDepartmentAO {
     @Override
     public void dropDepartment(String code) {
         Department department = departmentBO.getDepartment(code);
-        if (EDepartmentStatus.UNAVAILABLE.getCode().equals(
-            department.getStatus())) {
+        if (EDepartmentStatus.UNAVAILABLE.getCode()
+                .equals(department.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前职能部门已被删除");
+                    "当前职能部门已被删除");
         }
         department.setStatus(EDepartmentStatus.UNAVAILABLE.getCode());
         departmentBO.refreshStatus(department);
@@ -91,7 +96,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
     public Paginable<Department> queryDepartmentPage(int start, int limit,
             Department condition) {
         Paginable<Department> page = departmentBO.getPaginable(start, limit,
-            condition);
+                condition);
         for (Department department : page.getList()) {
             initDepartment(department);
         }
@@ -118,7 +123,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
         if (!EDepartmentType.POSITION.getCode().equals(department.getType())) {
             if (StringUtils.isNotBlank(department.getLeadUserId())) {
                 SYSUser leadUser = sysUserBO
-                    .getUser(department.getLeadUserId());
+                        .getUser(department.getLeadUserId());
                 department.setLeadMobile(leadUser.getMobile());
                 department.setLeadName(leadUser.getRealName());
             }

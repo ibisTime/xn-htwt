@@ -1,8 +1,13 @@
 package com.cdkj.loan.dto.req;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
+@Data
 public class XN632000Req {
+
     @NotBlank
     private String type;// 类型
 
@@ -16,78 +21,15 @@ public class XN632000Req {
     private String bankCode;// 银行行别
 
     @NotBlank
-    private String bankName;// 银行名称
-
-    @NotBlank
-    private String subbranch;// 开户支行
-
-    @NotBlank
     private String bankcardNumber;// 账号
 
+    private String subbranch;// 支行名称
+
+    @NotBlank
+    @Min(0)
+    @Max(1)
+    private String pointRate;
+
     private String remark;// 备注
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
-    }
-
-    public String getBankcardNumber() {
-        return bankcardNumber;
-    }
-
-    public void setBankcardNumber(String bankcardNumber) {
-        this.bankcardNumber = bankcardNumber;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 
 }

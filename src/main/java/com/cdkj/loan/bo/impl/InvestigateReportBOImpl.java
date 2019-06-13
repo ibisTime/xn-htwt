@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IInvestigateReportBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -14,6 +8,10 @@ import com.cdkj.loan.domain.InvestigateReport;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InvestigateReportBOImpl extends PaginableBOImpl<InvestigateReport>
@@ -22,11 +20,12 @@ public class InvestigateReportBOImpl extends PaginableBOImpl<InvestigateReport>
     @Autowired
     private IInvestigateReportDAO investigateReportDAO;
 
+    @Override
     public String saveInvestigateReport(InvestigateReport data) {
         String code = null;
         if (data != null) {
             code = OrderNoGenerater
-                .generate(EGeneratePrefix.INVESTIGATEREPORT.getCode());
+                    .generate(EGeneratePrefix.INVESTIGATEREPORT.getCode());
             data.setCode(code);
             investigateReportDAO.insert(data);
         }
@@ -62,7 +61,7 @@ public class InvestigateReportBOImpl extends PaginableBOImpl<InvestigateReport>
             data = investigateReportDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "调查报告不存在！");
+                        "调查报告不存在！");
             }
         }
         return data;

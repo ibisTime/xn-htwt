@@ -85,7 +85,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setCompanyCode(departmentBO.getCompanyByDepartment(data
             .getDepartmentCode()));
 
-        data.setStatus(ESYSUserStatus.BLOCK.getCode());
+        data.setStatus(ESYSUserStatus.NORMAL.getCode());
         sysUserBO.saveUser(data);
 
         // 注册腾讯云用户
@@ -343,18 +343,6 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     public SYSUser getUser(String userId) {
         SYSUser sysUser = sysUserBO.getUser(userId);
-        if (StringUtils.isNotBlank(sysUser.getPostCode())) {
-            sysUser.setPostName(departmentBO.getDepartment(
-                sysUser.getPostCode()).getName());
-        }
-        if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
-            sysUser.setDepartmentName(departmentBO.getDepartment(
-                sysUser.getDepartmentCode()).getName());
-        }
-        if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
-            sysUser.setCompanyName(departmentBO.getDepartment(
-                sysUser.getCompanyCode()).getName());
-        }
         return sysUser;
     }
 

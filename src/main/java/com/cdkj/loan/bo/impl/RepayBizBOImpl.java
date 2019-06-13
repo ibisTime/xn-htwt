@@ -1,18 +1,9 @@
 package com.cdkj.loan.bo.impl;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -22,16 +13,21 @@ import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.SpecsOrder;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632500Req;
+import com.cdkj.loan.dto.req.XN632530Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -40,10 +36,19 @@ import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
-public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
-        implements IRepayBizBO {
+public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
+        IRepayBizBO {
 
     @Autowired
     private IRepayBizDAO repayBizDAO;
@@ -52,7 +57,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     private IBankBO bankBO;
 
     @Autowired
-    private IBankcardAO bankcardAO;
+    private IBankcardBO bankcardBO;
 
     @Autowired
     private IUserBO userBO;
@@ -65,6 +70,65 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Autowired
     private IOrderBO orderBO;
+
+    @Autowired
+    private ILoanProductBO loanProductBO;
+
+    @Autowired
+    private ICdbizBO cdbizBO;
+
+    @Override
+    public String saveRepayBiz(RepayBiz repayBiz) {
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+                .getCode());
+        repayBiz.setCode(code);
+        repayBizDAO.insert(repayBiz);
+        return code;
+    }
+
+    @Override
+    public String saveRepayBiz(XN632120Req req) {
+        RepayBiz repayBiz = new RepayBiz();
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+                .getCode());
+        repayBiz.setCode(code);
+        repayBiz.setBizCode(req.getCode());
+        repayBiz.setLoanProductCode(req.getLoanProductCode());
+        LoanProduct product = loanProductBO.getLoanProduct(req
+                .getLoanProductCode());
+        repayBiz.setLoanProductName(product.getName());
+        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
+        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
+        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
+        repayBiz.setRefCode(req.getCode());
+        repayBizDAO.insert(repayBiz);
+        return code;
+    }
+
+    @Override
+    public String saveRepayBiz(XN632500Req req) {
+        RepayBiz repayBiz = new RepayBiz();
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+                .getCode());
+        repayBiz.setCode(code);
+        repayBiz.setBizCode(req.getCode());
+        repayBiz.setLoanProductCode(req.getLoanProductCode());
+        LoanProduct product = loanProductBO.getLoanProduct(req
+                .getLoanProductCode());
+        repayBiz.setLoanProductName(product.getName());
+        repayBiz.setSfAmount(StringValidater.toLong(req.getFirstAmount()));
+        repayBiz.setSfRate(StringValidater.toDouble(req.getFirstRate()));
+        repayBiz.setPeriods(StringValidater.toInteger(req.getLoanPeriod()));
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
+        repayBiz.setRefCode(req.getCode());
+        repayBiz.setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
+        repayBiz.setFirstRepayAmount(StringValidater.toLong(req
+                .getFirstRepayAmount()));
+        repayBiz.setLyDeposit(StringValidater.toLong(req.getLyDeposit()));
+        repayBizDAO.insert(repayBiz);
+        return code;
+    }
 
     @Override
     public void refreshBankcardNew(String code, String bankcardCode,
@@ -85,8 +149,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setCode(code);
         String bankcardCodelist = repayBiz.getBankcardCode();
         if (!bankcardCode.equals(bankcardCodelist)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "还款卡编号" + bankcardCode + "不存在，请重新添加！！！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "还款卡编号"
+                    + bankcardCode + "不存在，请重新添加！！！");
         }
         repayBiz.setBankcardCode(bankcardCode);
         repayBiz.setUpdater(updater);
@@ -99,8 +163,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public RepayBiz generateCarLoanRepayBiz(BudgetOrder budgetOrder,
             String userId, String bankcardCode, String operator) {
         RepayBiz repayBiz = new RepayBiz();
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.REPAY_BIZ.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+                .getCode());
         repayBiz.setCode(code);
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(budgetOrder.getCode());
@@ -118,8 +182,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setLoanAmount(budgetOrder.getLoanAmount());
 
         repayBiz.setFxDeposit(0L);
-        repayBiz
-            .setPeriods(StringValidater.toInteger(budgetOrder.getLoanPeriod()));
+        repayBiz.setPeriods(StringValidater.toInteger(budgetOrder
+                .getLoanPeriod()));
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         repayBiz.setBankRate(0.0);// 作废
 
@@ -131,7 +195,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setFxDeposit(0L);
 
         repayBiz
-            .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
+                .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
         repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
 
         // int i = 0;
@@ -146,8 +210,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
 
         // 剩余欠款：首期月供+每期月供*（期数-1）
-        Long restAmount = budgetOrder.getRepayFirstMonthAmount() + budgetOrder
-            .getRepayMonthAmount()
+        Long restAmount = budgetOrder.getRepayFirstMonthAmount()
+                + budgetOrder.getRepayMonthAmount()
                 * (StringValidater.toLong(budgetOrder.getLoanPeriod()) - 1);
         repayBiz.setRestAmount(restAmount);
         repayBiz.setRestTotalCost(0L);
@@ -177,7 +241,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBizDAO.updateRepayAll(repayBiz);
         // 日志
         sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(), EBizLogType.REPAY_BIZ,
-            repayBiz.getCode(), repayBiz.getCurNodeCode());
+                repayBiz.getCode(), repayBiz.getCurNodeCode());
     }
 
     @Override
@@ -203,15 +267,15 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBizDAO.updateRepayAllAdvance(repayBiz);
         // 日志
         sysBizLogBO.saveSYSBizLog(repayBiz.getRefCode(), EBizLogType.REPAY_BIZ,
-            repayBiz.getCode(), repayBiz.getCurNodeCode());
+                repayBiz.getCode(), repayBiz.getCurNodeCode());
     }
 
     @Override
     public RepayBiz generateProductLoanRepayBiz(SpecsOrder specsOrder) {
         Order order = orderBO.getOrder(specsOrder.getOrderCode());
         RepayBiz repayBiz = new RepayBiz();
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.REPAY_BIZ.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+                .getCode());
 
         repayBiz.setCode(code);
         repayBiz.setRefType(ERepayBizType.PRODUCT.getCode());
@@ -228,8 +292,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setBizPrice(order.getAmount());
         repayBiz.setSfRate(specsOrder.getSfRate());
         repayBiz.setSfAmount(specsOrder.getSfAmount());
-        String bankCode = bankcardAO.getBankcard(specsOrder.getBankcardCode())
-            .getBankCode();
+        String bankCode = bankcardBO.getBankcard(specsOrder.getBankcardCode())
+                .getBankCode();
         repayBiz.setLoanBank(bankCode);// 存ICBC样式
         repayBiz.setLoanAmount(specsOrder.getLoanAmount());
 
@@ -249,15 +313,15 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         // 贷款总额 = 贷款额+服务费(0)
         // 手续费总额 = 贷款总额*银行利率
         BigDecimal loanmount = new BigDecimal(specsOrder.getLoanAmount());
-        BigDecimal sxfAmount = loanmount
-            .multiply(new BigDecimal(specsOrder.getBankRate()));
+        BigDecimal sxfAmount = loanmount.multiply(new BigDecimal(specsOrder
+                .getBankRate()));
         // 月供=（贷款总额+手续费）/期数 （像下取整）
         BigDecimal periods = new BigDecimal(specsOrder.getPeriods());
         BigDecimal monthAmount = (loanmount.add(sxfAmount)).divide(periods, 0,
-            1);
+                1);
         // 首期月供 = -(月供*(期数-1)-贷款总额-手续费)
         BigDecimal firstMonthAmount = loanmount.add(sxfAmount).subtract(
-            monthAmount.multiply(periods.subtract(new BigDecimal(1))));
+                monthAmount.multiply(periods.subtract(new BigDecimal(1))));
 
         // Long monthlyAmount = new BigDecimal(order.getLoanAmount())
         // .divide(new BigDecimal(order.getPeriods()), 0, RoundingMode.DOWN)
@@ -293,15 +357,16 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount,
             int restPeriods) {
         if (repayBiz != null && realWithholdAmount != null) {
-            repayBiz
-                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
+            repayBiz.setRestAmount(repayBiz.getRestAmount()
+                    - realWithholdAmount);
             repayBiz.setRestPeriods(repayBiz.getRestPeriods() - restPeriods);
             repayBizDAO.updateRepayBizRestAmount(repayBiz);
         }
     }
 
-    /** 
-     * @see com.cdkj.loan.bo.IRepayBizBO#refreshAdvanceRepayProduct(com.cdkj.loan.domain.RepayBiz, java.lang.Long)
+    /**
+     * @see com.cdkj.loan.bo.IRepayBizBO#refreshAdvanceRepayProduct(com.cdkj.loan.domain.RepayBiz,
+     * java.lang.Long)
      */
     @Override
     public void refreshAdvanceRepayProduct(RepayBiz repayBiz,
@@ -310,7 +375,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     }
 
-    /** 
+    /**
      * @see com.cdkj.loan.bo.IRepayBizBO#refreshEnterBlackList(com.cdkj.loan.domain.RepayBiz)
      */
     @Override
@@ -342,11 +407,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void approveByBankCheck(String code, String curNodeCode,
+    public void approveByBankCheck(RepayBiz repayBiz, String curNodeCode,
             Date settleDatetime, String settleAttach, String updater,
             String remark) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setSettleDatetime(settleDatetime);
         repayBiz.setSettleAttach(settleAttach);
@@ -358,10 +421,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void approveByManager(String code, String curNodeCode,
+    public void approveByManager(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
@@ -371,10 +432,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void approveByFinance(String code, String curNodeCode,
+    public void approveByFinance(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
@@ -384,10 +443,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void releaseMortgage(String code, String curNodeCode,
+    public void releaseMortgage(RepayBiz repayBiz, String curNodeCode,
             Date releaseDatetime, String updater) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setReleaseDatetime(releaseDatetime);
         repayBiz.setRestAmount(0L);
@@ -396,12 +453,13 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
         // 更新还款计划
         List<RepayPlan> planList = repayPlanBO
-            .queryRepayPlanListByRepayBizCode(code);
+                .queryRepayPlanListByRepayBizCode(repayBiz.getCode());
         if (CollectionUtils.isNotEmpty(planList)) {
             for (RepayPlan repayPlan : planList) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
                 repayPlan.setRealRepayAmount(repayPlan.getRepayAmount());
                 repayPlan.setOverplusAmount(0L);
+                repayPlan.setOverdueAmount(0L);
                 repayPlanBO.refreshRepayPlanOverdue(repayPlan);
             }
         }
@@ -468,7 +526,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
             data = repayBizDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "还款业务编号" + code + "不存在");
+                        "还款业务编号" + code + "不存在");
             }
         }
         return data;
@@ -481,14 +539,13 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         long totalCount = repayBizDAO.selectTotalCountByRoleCode(condition);
         Page<RepayBiz> page = new Page<RepayBiz>(start, limit, totalCount);
         List<RepayBiz> dataList = repayBizDAO.selectRepayBizByRoleCode(
-            condition, page.getStart(), page.getPageSize());
+                condition, page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
     }
 
     @Override
-    public void refreshRepayAllProduct(String repayBizCode,
-            Long realPayAmount) {
+    public void refreshRepayAllProduct(String repayBizCode, Long realPayAmount) {
         // TODO Auto-generated method stub
 
     }
@@ -501,6 +558,57 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     @Override
     public void refreshRestPeriods(RepayBiz repayBiz) {
         repayBizDAO.updateRestPeriods(repayBiz);
+    }
+
+    @Override
+    public RepayBiz getRepayBizByBizCode(String bizCode) {
+        RepayBiz condition = new RepayBiz();
+        condition.setBizCode(bizCode);
+        RepayBiz repayBiz = repayBizDAO.select(condition);
+        return repayBiz;
+    }
+
+    @Override
+    public String saveRepayBiz(XN632530Req req) {
+        RepayBiz repayBiz = new RepayBiz();
+        EntityUtils.copyData(req, repayBiz);
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+                .getCode());
+        repayBiz.setCode(code);
+        repayBiz.setBizCode(req.getCode());
+        LoanProduct product = loanProductBO.getLoanProduct(req
+                .getLoanProductCode());
+        repayBiz.setLoanProductName(product.getName());
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
+        repayBiz.setRefCode(req.getCode());
+        repayBizDAO.insert(repayBiz);
+        return code;
+    }
+
+    @Override
+    public void refreshRepayBiz(RepayBiz repayBiz, XN632530Req req) {
+        String code = repayBiz.getCode();
+        EntityUtils.copyData(req, repayBiz);
+        LoanProduct product = loanProductBO.getLoanProduct(req
+                .getLoanProductCode());
+        repayBiz.setLoanProductName(product.getName());
+        repayBiz.setLyDeposit(StringValidater.toLong(req.getMonthDeposit()));
+        repayBiz.setCode(code);
+        repayBizDAO.updateRepayBiz(repayBiz);
+    }
+
+    @Override
+    public void refreshRepayBiz(RepayBiz repayBiz) {
+        repayBizDAO.updateRepayBiz(repayBiz);
+    }
+
+    @Override
+    public String removeByBizCode(String bizCode) {
+        RepayBiz repayBiz = getRepayBizByBizCode(bizCode);
+        if (null != repayBiz) {
+            repayBizDAO.delete(repayBiz);
+        }
+        return null;
     }
 
 }

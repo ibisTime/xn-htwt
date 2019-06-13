@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -13,6 +7,10 @@ import com.cdkj.loan.dao.IRepointDAO;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 
@@ -49,6 +47,14 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
 
     @Override
     public List<Repoint> queryRepointList(Repoint condition) {
+        return repointDAO.selectList(condition);
+    }
+
+    @Override
+    public List<Repoint> queryRepointList(String bizCode) {
+        Repoint condition = new Repoint();
+        condition.setBizCode(bizCode);
+
         return repointDAO.selectList(condition);
     }
 

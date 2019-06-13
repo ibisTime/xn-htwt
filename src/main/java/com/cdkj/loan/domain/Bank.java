@@ -1,20 +1,21 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-import java.util.List;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
+import lombok.Data;
 
 /**
  * 银行信息
- * @author: silver 
- * @since: 2018年5月27日 下午3:43:43 
+ *
+ * @author: silver
+ * @since: 2018年5月27日 下午3:43:43
  * @history:
  */
+@Data
 public class Bank extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = 7671886097276757226L;
 
@@ -27,8 +28,17 @@ public class Bank extends ABaseDO {
     // 银行名称
     private String bankName;
 
-    // 支行名称
+    // 贷款机构简称
+    private String mechanismAbb;
+
+    // 银行全称
+    private String bankFullName;
+
+    // 开户支行名称
     private String subbranch;
+
+    // 电话
+    private String mobile;
 
     // 12期
     private Double rate12;
@@ -42,7 +52,55 @@ public class Bank extends ABaseDO {
     // 36期
     private Double rate36;
 
-    // 状态
+    // 直客12期
+    private Double zkRate12;
+
+    // 直客18期
+    private Double zkRate18;
+
+    // 直客24期
+    private Double zkRate24;
+
+    // 直客36期
+    private Double zkRate36;
+
+    // 银行地址
+    private String address;
+
+    // 电话号码
+    private String phoneNumber;
+
+    // 邮编
+    private String postCode;
+
+    // 银行委托人
+    private String bankClient;
+
+    // 委托有效期
+    private Integer clientValidDate;
+
+    // 授权人姓名
+    private String autherName;
+
+    // 授权人电话
+    private String autherPhoneNumber;
+
+    // 授权人身份证
+    private String autherIdNo;
+
+    // 授权人地址
+    private String autherAddress;
+
+    // 信用卡类型
+    private String creditCardType;
+
+    // 信用卡名称
+    private String creditCardName;
+
+    // 所属地区
+    private String belongArea;
+
+    // 状态(预留)
     private String status;
 
     // 更新人
@@ -54,123 +112,12 @@ public class Bank extends ABaseDO {
     // 备注
     private String remark;
 
-    private List<BankRate> bankRateList;
 
     /*---------辅助字段-----------*/
 
     // 更新人名称
     private String updaterName;
 
-    public String getUpdaterName() {
-        return updaterName;
-    }
-
-    public void setUpdaterName(String updaterName) {
-        this.updaterName = updaterName;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public Double getRate12() {
-        return rate12;
-    }
-
-    public void setRate12(Double rate12) {
-        this.rate12 = rate12;
-    }
-
-    public Double getRate18() {
-        return rate18;
-    }
-
-    public void setRate18(Double rate18) {
-        this.rate18 = rate18;
-    }
-
-    public Double getRate24() {
-        return rate24;
-    }
-
-    public void setRate24(Double rate24) {
-        this.rate24 = rate24;
-    }
-
-    public Double getRate36() {
-        return rate36;
-    }
-
-    public void setRate36(Double rate36) {
-        this.rate36 = rate36;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public List<BankRate> getBankRateList() {
-        return bankRateList;
-    }
-
-    public void setBankRateList(List<BankRate> bankRateList) {
-        this.bankRateList = bankRateList;
-    }
-
+    // 支行名称
+    private String subbranchQuery;
 }

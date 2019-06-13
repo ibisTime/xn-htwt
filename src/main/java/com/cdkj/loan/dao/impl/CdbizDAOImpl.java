@@ -1,14 +1,11 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.ICdbizDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Cdbiz;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
-//CHECK 。。。 
 @Repository("cdbizDAOImpl")
 public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
 
@@ -25,25 +22,38 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     @Override
     public Cdbiz select(Cdbiz condition) {
         return super.select(NAMESPACE.concat("select_cdbiz"), condition,
-            Cdbiz.class);
+                Cdbiz.class);
     }
+
 
     @Override
     public long selectTotalCount(Cdbiz condition) {
         return super.selectTotalCount(NAMESPACE.concat("select_cdbiz_count"),
-            condition);
+                condition);
     }
 
     @Override
     public List<Cdbiz> selectList(Cdbiz condition) {
         return super.selectList(NAMESPACE.concat("select_cdbiz"), condition,
-            Cdbiz.class);
+                Cdbiz.class);
     }
 
     @Override
     public List<Cdbiz> selectList(Cdbiz condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_cdbiz"), start, count,
-            condition, Cdbiz.class);
+                condition, Cdbiz.class);
+    }
+
+    @Override
+    public List<Cdbiz> selectListByRoleCode(Cdbiz condition, int start,
+            int count) {
+        return super.selectList(NAMESPACE.concat("select_cdbizByRoleCode"),
+                start, count, condition, Cdbiz.class);
+    }
+
+    @Override
+    public Cdbiz selectForUpdate(Cdbiz condition) {
+        return super.select(NAMESPACE.concat("select_cdbiz_for_update"), condition, Cdbiz.class);
     }
 
     @Override
@@ -62,13 +72,13 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     }
 
     @Override
-    public int updateFircundangStatus(Cdbiz data) {
-        return super.update(NAMESPACE.concat("update_fircundangStatus"), data);
+    public int updateFbhgpsNodeStatus(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_fbhgpsNodeStatus"), data);
     }
 
     @Override
-    public int updateSeccundangStatus(Cdbiz data) {
-        return super.update(NAMESPACE.concat("update_seccundangStatus"), data);
+    public int updateEnterNodeStatus(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_enterNodeStatus"), data);
     }
 
     @Override
@@ -79,6 +89,47 @@ public class CdbizDAOImpl extends AMybatisTemplate implements ICdbizDAO {
     @Override
     public int updateYwy(Cdbiz data) {
         return super.update(NAMESPACE.concat("update_ywy"), data);
+    }
+
+    @Override
+    public int updateMakeCardStatus(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_makeCardStatus"), data);
+    }
+
+    @Override
+    public int updateCurNodeCode(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_curNodeCode"), data);
+    }
+
+    @Override
+    public int updateInsideJob(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_insideJob"), data);
+    }
+
+    @Override
+    public long selectTotalCountByRoleCode(Cdbiz condition) {
+        return super.selectTotalCount(
+                NAMESPACE.concat("select_cdbiz_count_byRoleCode"), condition);
+    }
+
+    @Override
+    public int updateIntevNodeStatus(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_intevNodeStatus"), data);
+    }
+
+    @Override
+    public int updateCurNodeStatus(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_curNodeStatus"), data);
+    }
+
+    @Override
+    public void updateCdbizLocation(Cdbiz data) {
+        super.update(NAMESPACE.concat("update_cdbizLocation"), data);
+    }
+
+    @Override
+    public int updateCdbiz(Cdbiz data) {
+        return super.update(NAMESPACE.concat("update_cdbiz"), data);
     }
 
 }

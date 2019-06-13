@@ -1,29 +1,36 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Attachment;
+import java.util.List;
 
 public interface IAttachmentBO extends IPaginableBO<Attachment> {
 
-    public String saveAttachment(String bizCode, String name,
-            String attachType, String url);
+    String saveAttachment(String bizCode, String name, String attachType,
+            String url);
 
-    public void removeAttachmentByBiz(String bizCode, String attachType);
+    <T> void saveAttachment(String bizCode, T clazz);
 
-    public List<Attachment> queryAttachmentList(Attachment condition);
+    void removeAttachmentByBiz(String bizCode, String attachType);
 
-    public Attachment getAttachment(String code);
+    List<Attachment> queryAttachmentList(Attachment condition);
 
-    public List<Attachment> queryBizAttachments(String bizCode);
+    Attachment getAttachment(String code);
 
-    public void removeByName(String bizCode, String name);
+    Attachment getAttachment(String bizCode, String category,
+            String kname);
 
-    public void removeBizAttachments(String bizCode);
+    <T> T parseAttachment(String bizCode, String category, T clazz);
 
-    public void refreshAttachment(String bizCode, String name, String url);
+    List<Attachment> queryBizAttachments(String bizCode);
 
-    public boolean isAttachmentExist(String bizCode, String attachName);
+    void removeByKname(String bizCode, String name);
 
+    void removeBizAttachments(String bizCode);
+
+    Attachment refreshAttachment(String bizCode, String name, String url);
+
+    boolean isAttachmentExist(String bizCode, String attachName);
+
+    void removeByCategory(String code, String car_procedure);
 }

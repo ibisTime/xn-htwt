@@ -1,15 +1,17 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
+import lombok.Data;
 
 /**
-* 待办事项表
-* @author: silver 
-* @since: 2019-04-03 11:39:28
-* @history:
-*/
+ * 待办事项表
+ *
+ * @author: silver
+ * @since: 2019-04-03 11:39:28
+ * @history:
+ */
+@Data
 public class BizTask extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -47,92 +49,22 @@ public class BizTask extends ABaseDO {
     // 完成时间
     private Date finishDatetime;
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    //*************db properties*************
 
-    public String getCode() {
-        return code;
-    }
+    // 查询是否是我的,不空查询我的
+    private String isMy;
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
-    }
+    private String roleCode;
 
-    public String getBizCode() {
-        return bizCode;
-    }
+    private String userId;
 
-    public void setRefType(String refType) {
-        this.refType = refType;
-    }
+    // 操作人名称
+    private String operaterName;
 
-    public String getRefType() {
-        return refType;
-    }
+    // 操作角色名称
+    private String operateRoleName;
 
-    public void setRefOrder(String refOrder) {
-        this.refOrder = refOrder;
-    }
-
-    public String getRefOrder() {
-        return refOrder;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Date getCreateDatetime() {
-        return createDatetime;
-    }
-
-    public void setCreateDatetime(Date createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getOperater() {
-        return operater;
-    }
-
-    public void setOperater(String operater) {
-        this.operater = operater;
-    }
-
-    public String getOperateRole() {
-        return operateRole;
-    }
-
-    public void setOperateRole(String operateRole) {
-        this.operateRole = operateRole;
-    }
-
-    public Date getFinishDatetime() {
-        return finishDatetime;
-    }
-
-    public void setFinishDatetime(Date finishDatetime) {
-        this.finishDatetime = finishDatetime;
-    }
-
-    public String getRefNode() {
-        return refNode;
-    }
-
-    public void setRefNode(String refNode) {
-        this.refNode = refNode;
-    }
+    // 客户姓名
+    private String userName;
 
 }

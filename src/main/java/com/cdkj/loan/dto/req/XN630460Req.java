@@ -19,7 +19,6 @@ public class XN630460Req {
     @NotBlank
     private String toCode;
 
-    @NotBlank
     private String creater;
 
     private String remark;

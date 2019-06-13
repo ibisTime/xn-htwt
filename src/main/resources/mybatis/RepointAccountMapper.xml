@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IRepointAccountDAO">
+    <resultMap id="RepointAccount_DB_Result" type="RepointAccount">
+        <result column="code" property="code"/>
+        <result column="repoint_code" property="repointCode"/>
+        <result column="repoint_card_code" property="repointCardCode"/>
+        <result column="actual_amount" property="actualAmount"/>
+        <result column="water_bill" property="waterBill"/>
+        <result column="updater" property="updater"/>
+        <result column="update_datetime" property="updateDatetime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="repointCode != null and repointCode != '' ">
+                AND t.repoint_code = #{repointCode}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_RepointAccount" parameterType="RepointAccount"
+            resultMap="RepointAccount_DB_Result">
+        SELECT
+        t.code
+        ,t.repoint_code
+        ,t.repoint_card_code
+        ,t.actual_amount
+        ,t.water_bill
+        ,t.updater
+        ,t.update_datetime
+        ,t.remark
+        FROM
+        tdh_repoint_account t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_RepointAccount_count" parameterType="RepointAccount"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tdh_repoint_account t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_RepointAccount" parameterType="RepointAccount">
+		INSERT INTO
+		tdh_repoint_account(
+		code
+		,repoint_code
+		,repoint_card_code
+		,actual_amount
+		,water_bill
+		,updater
+		,update_datetime
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{repointCode}
+		,#{repointCardCode}
+		,#{actualAmount}
+		,#{waterBill}
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
+		)
+	</insert>
+
+    <update id="update_RepointAccount" parameterType="RepointAccount">
+		UPDATE tdh_repoint_account
+		SET
+		repoint_code = #{repointCode}
+		,repoint_card_code = #{repointCardCode}
+		,actual_amount = #{actualAmount}
+		,water_bill = #{waterBill}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+    <delete id="delete_RepointAccountList" parameterType="RepointAccount">
+        DELETE FROM tdh_repoint_account
+		WHERE repoint_code = #{repointCode}
+    </delete>
+
+</mapper>

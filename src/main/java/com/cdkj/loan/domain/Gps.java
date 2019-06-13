@@ -70,6 +70,20 @@ public class Gps extends ABaseDO {
     // 预算单
     private BudgetOrder budgetOrder;
 
+    // 业务
+    private Cdbiz cdbiz;
+
+    // gps编号模糊查
+    private String gpsDevNoForQuery;
+
+    public Cdbiz getCdbiz() {
+        return cdbiz;
+    }
+
+    public void setCdbiz(Cdbiz cdbiz) {
+        this.cdbiz = cdbiz;
+    }
+
     public String getApplyUserRole() {
         return applyUserRole;
     }
@@ -220,6 +234,14 @@ public class Gps extends ABaseDO {
 
     public void setApplyUserName(String applyUserName) {
         this.applyUserName = applyUserName;
+    }
+
+    public String getGpsDevNoForQuery() {
+        return gpsDevNoForQuery;
+    }
+
+    public void setGpsDevNoForQuery(String gpsDevNoForQuery) {
+        this.gpsDevNoForQuery = gpsDevNoForQuery;
     }
 
 }

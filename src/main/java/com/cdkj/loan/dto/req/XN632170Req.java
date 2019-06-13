@@ -1,5 +1,6 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -8,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @since: 2018年5月30日 下午12:52:02 
  * @history:
  */
+@Data
 public class XN632170Req {
     // 类型
     @NotBlank
@@ -21,6 +23,9 @@ public class XN632170Req {
     @NotBlank
     private String loanBank;
 
+    @NotBlank
+    private String loanPeriod;
+
     // 万元系数
     @NotBlank
     private String wanFactor;
@@ -29,17 +34,9 @@ public class XN632170Req {
     @NotBlank
     private String yearRate;
 
-    // GPS费用
-    @NotBlank
-    private String gpsFee;
-
     // 公证费利率
     @NotBlank
     private String authRate;
-
-    // 返点利率
-    @NotBlank
-    private String backRate;
 
     // 是否前置
     @NotBlank
@@ -49,95 +46,85 @@ public class XN632170Req {
     @NotBlank
     private String preRate;
 
+    //@NotBlank
+    private String assureType;// 担保费类型(1单笔/2贷款额百分比)
+
+    //    @NotBlank
+    private String assureFee;// 单笔担保费
+
+    //    @NotBlank
+    private String assureRate;// 担保费贷款额百分比
+
+    //    @NotBlank
+    private String dzType;// 垫资费类型(1单笔/2贷款额百分比)
+
+    //    @NotBlank
+    private String dzFee;// 单笔垫资费
+
+    //    @NotBlank
+    private String dzRate;// 垫资费贷款额百分比
+
+    //    @NotBlank
+    private String lyAmountType;// 履约保证金类型(1单笔/2贷款额百分比)
+
+    //    @NotBlank
+    private String lyAmountFee;// 单笔履约保证金
+
+    //    @NotBlank
+    private String lyAmountRate;// 履约保证金贷款额百分比
+
+    //    @NotBlank
+    private String gpsType;// GPS类型(1单笔/2贷款额百分比)
+
+    //    @NotBlank
+    private String gpsFee;// 单笔GPS费
+
+    //    @NotBlank
+    private String gpsRate;// GPS垫资费贷款额百分比
+
+    //    @NotBlank
+    private String otherType;// 杂费类型(1单笔/2贷款额百分比)
+
+    //    @NotBlank
+    private String otherFee;// 单笔杂费
+
+    //    @NotBlank
+    private String otherRate;// 杂费贷款额百分比
+
+    //    @NotBlank
+    private String introduceType;// 介绍费类型(1单笔/2贷款额百分比)
+
+    //    @NotBlank
+    private String introduceFee;// 单笔介绍费
+
+    //    @NotBlank
+    private String introduceRate;// 介绍费贷款额百分比
+
+    //    @NotBlank
+    private String returnPointType;// 返点类型(1单笔/2贷款额百分比)
+
+    //    @NotBlank
+    private String returnPointFee;// 单笔返点
+
+    //    @NotBlank
+    private String returnPointRate;// 返点贷款额百分比
+
+    //    @NotBlank
+    private String insuAgencyYear1Type;// 1年保险代理费类型(1平台/2车行)
+
+    private String insuAgencyYear1Fee;// 1年保险代理费
+
+    //    @NotBlank
+    private String insuAgencyYear2Type;// 2年保险代理费类型(1平台/2车行)
+
+    private String insuAgencyYear2Fee;// 2年保险代理费
+
+    //    @NotBlank
+    private String insuAgencyYear3Type;// 3年保险代理费类型(1平台/2车行)
+
+    private String insuAgencyYear3Fee;// 3年保险代理费
+
     // 更新人
     @NotBlank
     private String updater;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getIsPre() {
-        return isPre;
-    }
-
-    public void setIsPre(String isPre) {
-        this.isPre = isPre;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLoanBank() {
-        return loanBank;
-    }
-
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
-    }
-
-    public String getWanFactor() {
-        return wanFactor;
-    }
-
-    public void setWanFactor(String wanFactor) {
-        this.wanFactor = wanFactor;
-    }
-
-    public String getYearRate() {
-        return yearRate;
-    }
-
-    public void setYearRate(String yearRate) {
-        this.yearRate = yearRate;
-    }
-
-    public String getGpsFee() {
-        return gpsFee;
-    }
-
-    public void setGpsFee(String gpsFee) {
-        this.gpsFee = gpsFee;
-    }
-
-    public String getAuthRate() {
-        return authRate;
-    }
-
-    public void setAuthRate(String authRate) {
-        this.authRate = authRate;
-    }
-
-    public String getBackRate() {
-        return backRate;
-    }
-
-    public void setBackRate(String backRate) {
-        this.backRate = backRate;
-    }
-
-    public String getPreRate() {
-        return preRate;
-    }
-
-    public void setPreRate(String preRate) {
-        this.preRate = preRate;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
 }

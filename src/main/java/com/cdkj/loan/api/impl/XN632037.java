@@ -39,5 +39,4 @@ public class XN632037 extends AProcessor {
         req = JsonUtil.json2Bean(inputparams, XN632037Req.class);
         ObjValidater.validateReq(req);
     }
-
 }

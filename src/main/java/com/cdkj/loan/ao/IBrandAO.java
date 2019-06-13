@@ -32,4 +32,6 @@ public interface IBrandAO {
     // 列表查询
     public List<Brand> queryBrandList(Brand condition);
 
+    public void dropBrand(String code);
+
 }

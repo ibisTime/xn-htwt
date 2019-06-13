@@ -1,11 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.cdkj.loan.ao.IRemindLogAO;
 import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -13,9 +7,15 @@ import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RemindLog;
+import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECollectStatus;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RemindLogAOImpl implements IRemindLogAO {
@@ -75,10 +75,13 @@ public class RemindLogAOImpl implements IRemindLogAO {
         if (ECollectStatus.MESSAGE_PUSH.getCode().equals(way)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "暂无消息推送！");
         }
-        String userId = repayPlanBO.getRepayPlan(code).getUserId();
-        String mobile = userBO.getUser(userId).getMobile();
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+        String userId = repayPlan.getUserId();
+        User user = userBO.getUser(userId);
+        String mobile = user.getMobile();
 
-        String content = "您好，请及时还清本月本息，以免逾期给您造成不必要的麻烦";
+        String content = "尊敬的" + user.getRealName() + "(先生/女士)您好，您的第" + repayPlan.getCurPeriods()
+                + "期还款计划已逾期，订单编号为:" + repayPlan.getRepayBizCode() + ",请及时还清本月本息，以免给您造成不必要的麻烦，谢谢！";
         smsOutBO.sendSmsOut(mobile, content);
         RemindLog remindLog = new RemindLog();
         remindLog.setRepayPlanCode(code);

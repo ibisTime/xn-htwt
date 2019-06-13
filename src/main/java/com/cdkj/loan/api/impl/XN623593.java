@@ -11,14 +11,16 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 分页查资源
- * @author: silver 
- * @since: Apr 2, 2019 5:44:17 PM 
+ * 任务作废
+ *
+ * @author: silver
+ * @since: Apr 2, 2019 5:44:17 PM
  * @history:
  */
 public class XN623593 extends AProcessor {
+
     private IMissionAO missionAO = SpringContextHolder
-        .getBean(IMissionAO.class);
+            .getBean(IMissionAO.class);
 
     private XN623593Req req = null;
 

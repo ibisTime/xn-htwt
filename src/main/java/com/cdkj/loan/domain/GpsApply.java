@@ -106,6 +106,12 @@ public class GpsApply extends ABaseDO {
     // 审核的gps列表
     private List<Gps> gpsList;
 
+    // 申请开始时间
+    private Date applyDatetimeStart;
+
+    // 申请结束时间
+    private Date applyDatetimeEnd;
+
     public List<Gps> getGpsList() {
         return gpsList;
     }
@@ -344,6 +350,22 @@ public class GpsApply extends ABaseDO {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
 }

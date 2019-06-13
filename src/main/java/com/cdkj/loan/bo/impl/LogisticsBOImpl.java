@@ -1,27 +1,23 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
-import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
-import com.cdkj.loan.enums.ELogisticsType;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 资料传递
@@ -33,11 +29,9 @@ import com.cdkj.loan.enums.ELogisticsType;
 @Component
 public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         implements ILogisticsBO {
-    @Autowired
-    private ILogisticsDAO logisticsDAO;
 
     @Autowired
-    private IBudgetOrderBO budgetOrderBO;
+    private ILogisticsDAO logisticsDAO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -93,8 +87,24 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public void sendLogistics(Logistics data) {
-        logisticsDAO.updateLogisticsSend(data);
+    public Logistics sendLogistics(XN632150Req req) {
+        Logistics logistics = new Logistics();
+
+        logistics.setCode(req.getCode());
+        logistics.setFilelist(req.getFilelist());
+        logistics.setSendType(req.getSendType());
+        logistics.setLogisticsCompany(req.getLogisticsCompany());
+        logistics.setLogisticsCode(req.getLogisticsCode());
+
+        logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
+            DateUtil.DATA_TIME_PATTERN_1));
+        logistics.setSendNote(req.getSendNote());
+        logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
+        logistics.setSender(req.getOperator());
+
+        logisticsDAO.updateLogisticsSend(logistics);
+
+        return logistics;
     }
 
     @Override
@@ -110,14 +120,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             // 补全日志
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.LOGISTICS.getCode(),
                 code, condition.getFromNodeCode(), null, operator);
-
-            if (ELogisticsType.BUDGET.getCode().equals(condition.getType())) {
-                // 状态为不在物流传递中
-                BudgetOrder budgetOrder = budgetOrderBO
-                    .getBudgetOrder(condition.getBizCode());
-                budgetOrder.setIsLogistics(EBoolean.NO.getCode());
-                budgetOrderBO.updateIsLogistics(budgetOrder);
-            }
         }
     }
 

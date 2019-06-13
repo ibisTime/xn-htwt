@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICNavigateAO;
 import com.cdkj.loan.bo.ICNavigateBO;
+import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.CNavigate;
+import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
@@ -20,6 +22,9 @@ public class CNavigateAOImpl implements ICNavigateAO {
 
     @Autowired
     private ICNavigateBO cNavigateBO;
+
+    @Autowired
+    private ICarBO carBO;
 
     @Override
     public String addCNavigate(CNavigate data) {
@@ -45,8 +50,8 @@ public class CNavigateAOImpl implements ICNavigateAO {
                 // 为指定新增特殊前缀格式
                 String oldCode = data.getCode();
                 if (!data.getCode().contains(EGeneratePrefix.DH.getCode())) {
-                    navigate.setCode(
-                        OrderNoGenerater.generate(oldCode.substring(0, 3)));
+                    navigate.setCode(OrderNoGenerater.generate(oldCode
+                        .substring(0, 3)));
                 } else {
                     navigate.setCode(null);
                 }
@@ -88,11 +93,14 @@ public class CNavigateAOImpl implements ICNavigateAO {
 
     @Override
     public List<CNavigate> queryCNavigateList(CNavigate condition) {
-        return cNavigateBO.queryCNavigateList(condition);
+        List<CNavigate> cNavigates = cNavigateBO.queryCNavigateList(condition);
+        return cNavigates;
     }
 
     @Override
     public CNavigate getCNavigate(String code) {
-        return cNavigateBO.getCNavigate(code);
+        CNavigate cNavigate = cNavigateBO.getCNavigate(code);
+        return cNavigate;
     }
+
 }

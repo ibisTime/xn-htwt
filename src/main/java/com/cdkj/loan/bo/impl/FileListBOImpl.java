@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +20,41 @@ public class FileListBOImpl extends PaginableBOImpl<FileList>
     @Autowired
     private IFileListDAO fileListDAO;
 
-    public void saveFileList(FileList data) {
+    public void saveFileList(String category, String kname, String vname,
+            String attachType, Long number, String updater) {
+        FileList data = new FileList();
+        data.setCategory(category);
+        data.setKname(kname);
+        data.setVname(vname);
+        data.setAttachType(attachType);
+        data.setNumber(number);
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
         fileListDAO.insert(data);
     }
 
     @Override
-    public int removeFileList(int id) {
+    public int removeFileList(Long id) {
         int count = 0;
         if (id != 0) {
             FileList data = new FileList();
-            data.setId(id);
+            data.setId(Long.valueOf(id));
             count = fileListDAO.delete(data);
         }
         return count;
     }
 
     @Override
-    public void refreshFileList(FileList data) {
+    public void refreshFileList(Long id, String category, String kname,
+            String vname, String attachType, Long number, String updater) {
+        FileList data = getFileList(id);
+        data.setCategory(category);
+        data.setKname(kname);
+        data.setVname(vname);
+        data.setAttachType(attachType);
+        data.setNumber(number);
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
         fileListDAO.update(data);
     }
 
@@ -45,11 +64,11 @@ public class FileListBOImpl extends PaginableBOImpl<FileList>
     }
 
     @Override
-    public FileList getFileList(int id) {
+    public FileList getFileList(Long id) {
         FileList data = null;
         if (id != 0) {
             FileList condition = new FileList();
-            condition.setId(id);
+            condition.setId(Long.valueOf(id));
             data = fileListDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -57,5 +76,17 @@ public class FileListBOImpl extends PaginableBOImpl<FileList>
             }
         }
         return data;
+    }
+
+    @Override
+    public FileList getFileListByKname(String kname) {
+        FileList condition = new FileList();
+        condition.setKname(kname);
+        FileList filelist = fileListDAO.select(condition);
+        if(null==filelist){
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    kname+"材料清单不存在！");
+        }
+        return filelist;
     }
 }

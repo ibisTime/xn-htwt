@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 预算单-风控专员审核
+ * 总公司审核
  * @author: xieyj 
  * @since: 2018年5月29日 下午10:17:30 
  * @history:

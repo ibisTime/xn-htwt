@@ -1,13 +1,16 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 预算单-内勤录入抵押信息
- * @author: xieyj 
- * @since: 2018年5月29日 下午10:31:16 
+ *
+ * @author: xieyj
+ * @since: 2018年5月29日 下午10:31:16
  * @history:
  */
+@Data
 public class XN632133Req {
 
     @NotBlank
@@ -45,97 +48,34 @@ public class XN632133Req {
     private String pledgeDatetime;
 
     // 车辆落户日期
+    @NotBlank
     private String carSettleDatetime;
+
+    // 落户地点
+    @NotBlank
+    private String settleAddress;
+
+    // 抵押地点
+    @NotBlank
+    private String pledgeAddress;
+
+    // 代理人
+    @NotBlank
+    private String pledgeUser;
+
+    // 代理人身份证号
+    @NotBlank
+    private String pledgeUserIdCard;
+
+    // 代理人身份证正
+    @NotBlank
+    private String pledgeUserIdCardFront;
+
+    // 代理人身份证反
+    @NotBlank
+    private String pledgeUserIdCardReverse;
 
     @NotBlank
     private String operator;// 操作人
-
-    public String getCarNumber() {
-        return carNumber;
-    }
-
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
-    }
-
-    public String getCarXszSmj() {
-        return carXszSmj;
-    }
-
-    public void setCarXszSmj(String carXszSmj) {
-        this.carXszSmj = carXszSmj;
-    }
-
-    public String getDutyPaidProveSmj() {
-        return dutyPaidProveSmj;
-    }
-
-    public void setDutyPaidProveSmj(String dutyPaidProveSmj) {
-        this.dutyPaidProveSmj = dutyPaidProveSmj;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public String getCarRegcerti() {
-        return carRegcerti;
-    }
-
-    public void setCarRegcerti(String carRegcerti) {
-        this.carRegcerti = carRegcerti;
-    }
-
-    public String getCarPd() {
-        return carPd;
-    }
-
-    public void setCarPd(String carPd) {
-        this.carPd = carPd;
-    }
-
-    public String getCarKey() {
-        return carKey;
-    }
-
-    public void setCarKey(String carKey) {
-        this.carKey = carKey;
-    }
-
-    public String getPledgeDatetime() {
-        return pledgeDatetime;
-    }
-
-    public void setPledgeDatetime(String pledgeDatetime) {
-        this.pledgeDatetime = pledgeDatetime;
-    }
-
-    public String getCarSettleDatetime() {
-        return carSettleDatetime;
-    }
-
-    public void setCarSettleDatetime(String carSettleDatetime) {
-        this.carSettleDatetime = carSettleDatetime;
-    }
-
-    public String getCarBigSmj() {
-        return carBigSmj;
-    }
-
-    public void setCarBigSmj(String carBigSmj) {
-        this.carBigSmj = carBigSmj;
-    }
 
 }

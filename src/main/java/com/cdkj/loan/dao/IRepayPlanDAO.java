@@ -1,11 +1,11 @@
 package com.cdkj.loan.dao;
 
-import java.util.List;
-
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.RepayPlan;
+import java.util.List;
 
 public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
+
     String NAMESPACE = IRepayPlanDAO.class.getName().concat(".");
 
     public void insertList(List<RepayPlan> dataList);
@@ -49,4 +49,13 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
     // 还款审核
     public void prepayPhotoApprove(RepayPlan repayPlan);
 
+    /**
+     * 人工确认还款
+     */
+    void updateRepayPlan(RepayPlan repayPlan);
+
+    /**
+     * 查询之前的还款计划
+     */
+    List<RepayPlan> selectBeforePlanList(RepayPlan condition);
 }

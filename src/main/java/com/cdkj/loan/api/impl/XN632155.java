@@ -1,7 +1,5 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.ILogisticsAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -12,16 +10,19 @@ import com.cdkj.loan.dto.req.XN632155Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 分页查询资料传递
- * @author: silver 
- * @since: 2018年5月30日 下午5:06:19 
+ *
+ * @author: silver
+ * @since: 2018年5月30日 下午5:06:19
  * @history:
  */
 public class XN632155 extends AProcessor {
+
     private ILogisticsAO logisticsAO = SpringContextHolder
-        .getBean(ILogisticsAO.class);
+            .getBean(ILogisticsAO.class);
 
     private XN632155Req req = null;
 
@@ -35,6 +36,10 @@ public class XN632155 extends AProcessor {
         condition.setType(req.getType());
         condition.setTypeList(req.getTypeList());
         condition.setReceiver(req.getReceiver());
+        condition.setBizCodeForQuery(req.getBizCodeForQuery());
+        condition.setFromNodeList(req.getFromNodeList());
+        condition.setToNodeList(req.getToNodeList());
+
         if ("RO201800000000000001".equals(req.getRoleCode())) {
             condition.setReceiver(null);
         }
@@ -42,7 +47,7 @@ public class XN632155 extends AProcessor {
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ILogisticsAO.DEFAULT_ORDER_COLUMN;
         }
-        condition.setOrder(orderColumn, req.getOrderDir());
+        condition.setOrder(orderColumn, "desc");
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
 

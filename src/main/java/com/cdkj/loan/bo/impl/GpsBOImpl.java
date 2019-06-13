@@ -83,6 +83,13 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
+    public List<Gps> queryGpsList(String applyCode) {
+        Gps condition = new Gps();
+        condition.setApplyCode(applyCode);
+        return gpsDAO.selectList(condition);
+    }
+
+    @Override
     public Gps getGps(String code) {
         Gps data = null;
         if (StringUtils.isNotBlank(code)) {

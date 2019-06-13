@@ -1,22 +1,33 @@
 package com.cdkj.loan.domain;
 
+import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.Date;
 import java.util.List;
-
-import com.cdkj.loan.dao.base.ABaseDO;
+import lombok.Data;
 
 /**
-* 还款业务
-* @author: haiqingzheng
-* @since: 2018年05月01日 17:58:51
-* @history:
-*/
+ * 还款业务
+ *
+ * @author: haiqingzheng
+ * @since: 2018年05月01日 17:58:51
+ * @history:
+ */
+@Data
 public class RepayBiz extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
 
     // 编号
     private String code;
+
+    // 业务编号
+    private String bizCode;
+
+    // 贷款产品编号
+    private String loanProductCode;
+
+    // 贷款产品名称
+    private String loanProductName;
 
     // 申请人编号
     private String userId;
@@ -30,7 +41,7 @@ public class RepayBiz extends ABaseDO {
     // 申请人证件号
     private String idNo;
 
-    // 还款卡编号
+    // 还款卡编号(现存卡号)
     private String bankcardCode;
 
     // 关联类型
@@ -43,7 +54,7 @@ public class RepayBiz extends ABaseDO {
     private Long bizPrice;
 
     // 首付比例
-    private double sfRate;
+    private Double sfRate;
 
     // 首付金额
     private Long sfAmount;
@@ -55,13 +66,22 @@ public class RepayBiz extends ABaseDO {
     private Long loanAmount;
 
     // 总期数
-    private int periods;
+    private Integer periods;
 
     // 剩余期数
-    private int restPeriods;
+    private Integer restPeriods;
 
-    // 银行利率(作废)
-    private double bankRate;
+    // 银行利率
+    private Double bankRate;
+
+    // 银行基准利率
+    private Double bankBenchmarkRate;
+
+    // 我司贷款成数
+    private Double companyLoanCs;
+
+    // 综合利率
+    private Double globalRate;
 
     // 贷款时间起点
     private Date loanStartDatetime;
@@ -81,8 +101,8 @@ public class RepayBiz extends ABaseDO {
     // 首期月供金额
     private Long firstRepayAmount;
 
-    // 每期还款日期
-    private int monthDatetime;
+    // 每期还款日期(银行还款日)
+    private Integer monthDatetime;
 
     // 每期月供金额
     private Long monthAmount;
@@ -95,6 +115,9 @@ public class RepayBiz extends ABaseDO {
 
     // 节点
     private String curNodeCode;
+
+    // 担保风险金
+    private String fxAmount;
 
     // 剩余欠款(剩余本金本息，利息已包含在本金中)
     private Long restAmount;
@@ -115,10 +138,10 @@ public class RepayBiz extends ABaseDO {
     private Long overdueAmount;
 
     // 累计逾期期数(记住历史逾期的次数)
-    private int totalOverdueCount;
+    private Integer totalOverdueCount;
 
     // 实际逾期期数(现在在逾期的次数)
-    private int curOverdueCount;
+    private Integer curOverdueCount;
 
     // 黑名单处理结果备案(商品分期)
     private String blackHandleNote;
@@ -204,516 +227,15 @@ public class RepayBiz extends ABaseDO {
 
     private Long retreatDeposit;// 可退押金金额
 
-    public Long getRetreatDeposit() {
-        return retreatDeposit;
-    }
+    // 业务员编号
+    private String saleUserId;
 
-    public void setRetreatDeposit(Long retreatDeposit) {
-        this.retreatDeposit = retreatDeposit;
-    }
+    // 内勤编号
+    private String insideJob;
 
-    public String getRealNameQuery() {
-        return realNameQuery;
-    }
+    //支行
+    private String subbranchBankName;
 
-    public void setRealNameQuery(String realNameQuery) {
-        this.realNameQuery = realNameQuery;
-    }
 
-    public SYSUser getLeadUser() {
-        return leadUser;
-    }
-
-    public void setLeadUser(SYSUser leadUser) {
-        this.leadUser = leadUser;
-    }
-
-    public String getTeamCode() {
-        return teamCode;
-    }
-
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
-    }
-
-    public BizTeam getBizTeam() {
-        return bizTeam;
-    }
-
-    public void setBizTeam(BizTeam bizTeam) {
-        this.bizTeam = bizTeam;
-    }
-
-    public RepayPlan getOverdueRepayPlan() {
-        return overdueRepayPlan;
-    }
-
-    public void setOverdueRepayPlan(RepayPlan overdueRepayPlan) {
-        this.overdueRepayPlan = overdueRepayPlan;
-    }
-
-    public List<String> getCurNodeCodeList() {
-        return curNodeCodeList;
-    }
-
-    public void setCurNodeCodeList(List<String> curNodeCodeList) {
-        this.curNodeCodeList = curNodeCodeList;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public Date getBankFkDatetimeStart() {
-        return bankFkDatetimeStart;
-    }
-
-    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
-        this.bankFkDatetimeStart = bankFkDatetimeStart;
-    }
-
-    public Date getBankFkDatetimeEnd() {
-        return bankFkDatetimeEnd;
-    }
-
-    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
-        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getIdKind() {
-        return idKind;
-    }
-
-    public void setIdKind(String idKind) {
-        this.idKind = idKind;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public Date getBankFkDatetime() {
-        return bankFkDatetime;
-    }
-
-    public void setBankFkDatetime(Date bankFkDatetime) {
-        this.bankFkDatetime = bankFkDatetime;
-    }
-
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
-    }
-
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
-    }
-
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public String getUnRepayTotalAmount() {
-        return unRepayTotalAmount;
-    }
-
-    public void setUnRepayTotalAmount(String unRepayTotalAmount) {
-        this.unRepayTotalAmount = unRepayTotalAmount;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
-    public Long getOverdueTotalDeposit() {
-        return overdueTotalDeposit;
-    }
-
-    public void setOverdueTotalDeposit(Long overdueTotalDeposit) {
-        this.overdueTotalDeposit = overdueTotalDeposit;
-    }
-
-    public Long getOverdueTotalDepositIncome() {
-        return overdueTotalDepositIncome;
-    }
-
-    public void setOverdueTotalDepositIncome(Long overdueTotalDepositIncome) {
-        this.overdueTotalDepositIncome = overdueTotalDepositIncome;
-    }
-
-    public String getIsAdvanceSettled() {
-        return isAdvanceSettled;
-    }
-
-    public void setIsAdvanceSettled(String isAdvanceSettled) {
-        this.isAdvanceSettled = isAdvanceSettled;
-    }
-
-    public String getPaperPhoto() {
-        return paperPhoto;
-    }
-
-    public void setPaperPhoto(String paperPhoto) {
-        this.paperPhoto = paperPhoto;
-    }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
-    }
-
-    public String getLoanBankName() {
-        return loanBankName;
-    }
-
-    public void setLoanBankName(String loanBankName) {
-        this.loanBankName = loanBankName;
-    }
-
-    public Long getLoanBalance() {
-        return loanBalance;
-    }
-
-    public void setLoanBalance(Long loanBalance) {
-        this.loanBalance = loanBalance;
-    }
-
-    public List<RepayPlan> getRepayPlanList() {
-        return repayPlanList;
-    }
-
-    public void setRepayPlanList(List<RepayPlan> repayPlanList) {
-        this.repayPlanList = repayPlanList;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setBankcardCode(String bankcardCode) {
-        this.bankcardCode = bankcardCode;
-    }
-
-    public String getBankcardCode() {
-        return bankcardCode;
-    }
-
-    public void setRefType(String refType) {
-        this.refType = refType;
-    }
-
-    public String getRefType() {
-        return refType;
-    }
-
-    public void setRefCode(String refCode) {
-        this.refCode = refCode;
-    }
-
-    public String getRefCode() {
-        return refCode;
-    }
-
-    public Long getBizPrice() {
-        return bizPrice;
-    }
-
-    public void setBizPrice(Long bizPrice) {
-        this.bizPrice = bizPrice;
-    }
-
-    public double getSfRate() {
-        return sfRate;
-    }
-
-    public void setSfRate(double sfRate) {
-        this.sfRate = sfRate;
-    }
-
-    public Long getSfAmount() {
-        return sfAmount;
-    }
-
-    public void setSfAmount(Long sfAmount) {
-        this.sfAmount = sfAmount;
-    }
-
-    public String getLoanBank() {
-        return loanBank;
-    }
-
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
-    }
-
-    public Long getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(Long loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public int getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(int periods) {
-        this.periods = periods;
-    }
-
-    public int getRestPeriods() {
-        return restPeriods;
-    }
-
-    public void setRestPeriods(int restPeriods) {
-        this.restPeriods = restPeriods;
-    }
-
-    public double getBankRate() {
-        return bankRate;
-    }
-
-    public void setBankRate(double bankRate) {
-        this.bankRate = bankRate;
-    }
-
-    public Date getLoanStartDatetime() {
-        return loanStartDatetime;
-    }
-
-    public void setLoanStartDatetime(Date loanStartDatetime) {
-        this.loanStartDatetime = loanStartDatetime;
-    }
-
-    public Date getLoanEndDatetime() {
-        return loanEndDatetime;
-    }
-
-    public void setLoanEndDatetime(Date loanEndDatetime) {
-        this.loanEndDatetime = loanEndDatetime;
-    }
-
-    public Long getFxDeposit() {
-        return fxDeposit;
-    }
-
-    public void setFxDeposit(Long fxDeposit) {
-        this.fxDeposit = fxDeposit;
-    }
-
-    public Date getFirstRepayDatetime() {
-        return firstRepayDatetime;
-    }
-
-    public void setFirstRepayDatetime(Date firstRepayDatetime) {
-        this.firstRepayDatetime = firstRepayDatetime;
-    }
-
-    public Long getFirstRepayAmount() {
-        return firstRepayAmount;
-    }
-
-    public void setFirstRepayAmount(Long firstRepayAmount) {
-        this.firstRepayAmount = firstRepayAmount;
-    }
-
-    public int getMonthDatetime() {
-        return monthDatetime;
-    }
-
-    public void setMonthDatetime(int monthDatetime) {
-        this.monthDatetime = monthDatetime;
-    }
-
-    public Long getMonthAmount() {
-        return monthAmount;
-    }
-
-    public void setMonthAmount(Long monthAmount) {
-        this.monthAmount = monthAmount;
-    }
-
-    public Long getLyDeposit() {
-        return lyDeposit;
-    }
-
-    public void setLyDeposit(Long lyDeposit) {
-        this.lyDeposit = lyDeposit;
-    }
-
-    public Long getCutLyDeposit() {
-        return cutLyDeposit;
-    }
-
-    public void setCutLyDeposit(Long cutLyDeposit) {
-        this.cutLyDeposit = cutLyDeposit;
-    }
-
-    public Long getRestAmount() {
-        return restAmount;
-    }
-
-    public void setRestAmount(Long restAmount) {
-        this.restAmount = restAmount;
-    }
-
-    public Long getRestTotalCost() {
-        return restTotalCost;
-    }
-
-    public void setRestTotalCost(Long restTotalCost) {
-        this.restTotalCost = restTotalCost;
-    }
-
-    public Long getTotalInDeposit() {
-        return totalInDeposit;
-    }
-
-    public void setTotalInDeposit(Long totalInDeposit) {
-        this.totalInDeposit = totalInDeposit;
-    }
-
-    public Long getOverdueAmount() {
-        return overdueAmount;
-    }
-
-    public void setOverdueAmount(Long overdueAmount) {
-        this.overdueAmount = overdueAmount;
-    }
-
-    public int getTotalOverdueCount() {
-        return totalOverdueCount;
-    }
-
-    public void setTotalOverdueCount(int totalOverdueCount) {
-        this.totalOverdueCount = totalOverdueCount;
-    }
-
-    public int getCurOverdueCount() {
-        return curOverdueCount;
-    }
-
-    public void setCurOverdueCount(int curOverdueCount) {
-        this.curOverdueCount = curOverdueCount;
-    }
-
-    public String getBlackHandleNote() {
-        return blackHandleNote;
-    }
-
-    public void setBlackHandleNote(String blackHandleNote) {
-        this.blackHandleNote = blackHandleNote;
-    }
-
-    public String getSettleAttach() {
-        return settleAttach;
-    }
-
-    public void setSettleAttach(String settleAttach) {
-        this.settleAttach = settleAttach;
-    }
-
-    public Date getSettleDatetime() {
-        return settleDatetime;
-    }
-
-    public void setSettleDatetime(Date settleDatetime) {
-        this.settleDatetime = settleDatetime;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public BudgetOrder getBudgetOrder() {
-        return budgetOrder;
-    }
-
-    public void setBudgetOrder(BudgetOrder budgetOrder) {
-        this.budgetOrder = budgetOrder;
-    }
-
-    public Order getMallOrder() {
-        return mallOrder;
-    }
-
-    public void setMallOrder(Order mallOrder) {
-        this.mallOrder = mallOrder;
-    }
-
-    public Long getActualRefunds() {
-        return actualRefunds;
-    }
-
-    public void setActualRefunds(Long actualRefunds) {
-        this.actualRefunds = actualRefunds;
-    }
-
-    public Date getReleaseDatetime() {
-        return releaseDatetime;
-    }
-
-    public void setReleaseDatetime(Date releaseDatetime) {
-        this.releaseDatetime = releaseDatetime;
-    }
 
 }

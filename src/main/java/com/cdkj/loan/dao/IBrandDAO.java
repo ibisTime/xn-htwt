@@ -11,4 +11,5 @@ public interface IBrandDAO extends IBaseDAO<Brand> {
     public int updateUp(Brand data);
 
     public int updateDown(Brand data);
+
 }

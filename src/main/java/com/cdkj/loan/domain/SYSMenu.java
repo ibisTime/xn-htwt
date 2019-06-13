@@ -44,6 +44,9 @@ public class SYSMenu extends ABaseDO {
     // 名称模糊查询
     private String nameForQuery;
 
+    // URL模糊查
+    private String urlQuery;
+
     public String getCode() {
         return code;
     }
@@ -122,5 +125,13 @@ public class SYSMenu extends ABaseDO {
 
     public void setNameForQuery(String nameForQuery) {
         this.nameForQuery = nameForQuery;
+    }
+
+    public String getUrlQuery() {
+        return urlQuery;
+    }
+
+    public void setUrlQuery(String urlQuery) {
+        this.urlQuery = urlQuery;
     }
 }

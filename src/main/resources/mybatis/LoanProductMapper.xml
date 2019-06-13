@@ -7,15 +7,43 @@
 		<result column="type" property="type" />
 		<result column="name" property="name" />
 		<result column="loan_bank" property="loanBank" />
+		<result column="loan_period" property="loanPeriod"/>
 		<result column="wan_factor" property="wanFactor" />
 		
 	    <result column="year_rate" property="yearRate" />
-		<result column="gps_fee" property="gpsFee" />
 		<result column="auth_rate" property="authRate" />
 		<result column="back_rate" property="backRate" />
 		<result column="is_pre" property="isPre" />
 		<result column="pre_rate" property="preRate" />
-		
+
+		<result column="assure_type" property="assureType"/>
+		<result column="assure_fee" property="assureFee"/>
+		<result column="assure_rate" property="assureRate"/>
+		<result column="dz_type" property="dzType"/>
+		<result column="dz_fee" property="dzFee"/>
+		<result column="dz_rate" property="dzRate"/>
+		<result column="ly_amount_type" property="lyAmountType"/>
+		<result column="ly_amount_fee" property="lyAmountFee"/>
+		<result column="ly_amount_rate" property="lyAmountRate"/>
+		<result column="gps_type" property="gpsType"/>
+		<result column="gps_fee" property="gpsFee"/>
+		<result column="gps_rate" property="gpsRate"/>
+		<result column="other_type" property="otherType"/>
+		<result column="other_fee" property="otherFee"/>
+		<result column="other_rate" property="otherRate"/>
+		<result column="introduce_type" property="introduceType"/>
+		<result column="introduce_fee" property="introduceFee"/>
+		<result column="introduce_rate" property="introduceRate"/>
+		<result column="return_point_type" property="returnPointType"/>
+		<result column="return_point_fee" property="returnPointFee"/>
+		<result column="return_point_rate" property="returnPointRate"/>
+		<result column="insu_agency_year1_type" property="insuAgencyYear1Type"/>
+		<result column="insu_agency_year1_fee" property="insuAgencyYear1Fee"/>
+		<result column="insu_agency_year2_type" property="insuAgencyYear2Type"/>
+		<result column="insu_agency_year2_fee" property="insuAgencyYear2Fee"/>
+		<result column="insu_agency_year3_type" property="insuAgencyYear3Type"/>
+		<result column="insu_agency_year3_fee" property="insuAgencyYear3Fee"/>
+
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -36,6 +64,9 @@
 			<if test="loanBank != null and loanBank != '' ">
 				AND t.loan_bank = #{loanBank}
 			</if>
+			<if test="loanPeriod != null and loanPeriod != '' ">
+				AND t.loan_period = #{loanPeriod}
+			</if>
 			<if test="isPre != null and isPre != '' ">
 				AND t.is_pre = #{isPre}
 			</if>
@@ -51,15 +82,42 @@
 		,t.type
 		,t.name
 		,t.loan_bank
+		,t.loan_period
+
 		,t.wan_factor
-		
 		,t.year_rate
-		,t.gps_fee
 		,t.auth_rate
-		,t.back_rate
+
 		,t.is_pre
 		,t.pre_rate
-		
+		,t.assure_type
+		,t.assure_fee
+		,t.assure_rate
+
+		,t.dz_type
+		,t.dz_fee
+		,t.dz_rate
+		,t.ly_amount_type
+		,t.ly_amount_fee
+		,t.ly_amount_rate
+		,t.gps_type
+		,t.gps_fee
+		,t.gps_rate
+		,t.other_type
+		,t.other_fee
+		,t.other_rate
+		,t.introduce_type
+		,t.introduce_fee
+		,t.introduce_rate
+		,t.return_point_type
+		,t.return_point_fee
+		,t.return_point_rate
+		,t.insu_agency_year1_type
+		,t.insu_agency_year1_fee
+		,t.insu_agency_year2_type
+		,t.insu_agency_year2_fee
+		,t.insu_agency_year3_type
+		,t.insu_agency_year3_fee
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -85,14 +143,42 @@
 		,type
 		,name
 		,loan_bank
+		,loan_period
 		,wan_factor
 		
 		,year_rate
-		,gps_fee
 		,auth_rate
-		,back_rate
 		,is_pre
 		,pre_rate
+
+		,assure_type
+		,assure_fee
+		,assure_rate
+		,dz_type
+		,dz_fee
+		,dz_rate
+		,ly_amount_type
+		,ly_amount_fee
+		,ly_amount_rate
+		,gps_type
+		,gps_fee
+		,gps_rate
+		,other_type
+		,other_fee
+		,other_rate
+		,introduce_type
+		,introduce_fee
+		,introduce_rate
+		,return_point_type
+		,return_point_fee
+		,return_point_rate
+
+		,insu_agency_year1_type
+		,insu_agency_year1_fee
+		,insu_agency_year2_type
+		,insu_agency_year2_fee
+		,insu_agency_year3_type
+		,insu_agency_year3_fee
 		
 		,status
 		,updater
@@ -104,14 +190,41 @@
 		,#{type}
 		,#{name}
 		,#{loanBank}
+		,#{loanPeriod}
 		,#{wanFactor}
 		
 		,#{yearRate}
-		,#{gpsFee}
 		,#{authRate}
-		,#{backRate}
 		,#{isPre}
 		,#{preRate}
+
+		,#{assureType}
+		,#{assureFee}
+		,#{assureRate}
+		,#{dzType}
+		,#{dzFee}
+		,#{dzRate}
+		,#{lyAmountType}
+		,#{lyAmountFee}
+		,#{lyAmountRate}
+		,#{gpsType}
+		,#{gpsFee}
+		,#{gpsRate}
+		,#{otherType}
+		,#{otherFee}
+		,#{otherRate}
+		,#{introduceType}
+		,#{introduceFee}
+		,#{introduceRate}
+		,#{returnPointType}
+		,#{returnPointFee}
+		,#{returnPointRate}
+		,#{insuAgencyYear1Type}
+		,#{insuAgencyYear1Fee}
+		,#{insuAgencyYear2Type}
+		,#{insuAgencyYear2Fee}
+		,#{insuAgencyYear3Type}
+		,#{insuAgencyYear3Fee}
 		
 		,#{status}
 		,#{updater}
@@ -126,17 +239,44 @@
 		t.type = #{type}
 		,t.name = #{name}
 		,t.loan_bank = #{loanBank}
+		,t.loan_period = #{loanPeriod}
 		,t.wan_factor =#{wanFactor}
 		,t.year_rate =#{yearRate}
-		,t.gps_fee = #{gpsFee}
-		
+
 		,t.auth_rate = #{authRate}
-		,t.back_rate = #{backRate}
 		,t.pre_rate = #{preRate}
 		,t.is_pre = #{isPre}
+
+		,t.assure_type = #{assureType}
+		,t.assure_fee = #{assureFee}
+		,t.assure_rate = #{assureRate}
+		,t.dz_type = #{dzType}
+		,t.dz_fee = #{dzFee}
+		,t.dz_rate = #{dzRate}
+		,t.ly_amount_type = #{lyAmountType}
+		,t.ly_amount_fee = #{lyAmountFee}
+		,t.ly_amount_rate = #{lyAmountRate}
+		,t.gps_type = #{gpsType}
+		,t.gps_fee = #{gpsFee}
+		,t.gps_rate = #{gpsRate}
+		,t.other_type = #{otherType}
+		,t.other_fee = #{otherFee}
+		,t.other_rate = #{otherRate}
+		,t.introduce_type = #{introduceType}
+		,t.introduce_fee = #{introduceFee}
+		,t.introduce_rate = #{introduceRate}
+		,t.return_point_type = #{returnPointType}
+		,t.return_point_fee = #{returnPointFee}
+		,t.return_point_rate = #{returnPointRate}
+		,t.insu_agency_year1_type = #{insuAgencyYear1Type}
+		,t.insu_agency_year1_fee = #{insuAgencyYear1Fee}
+		,t.insu_agency_year2_type = #{insuAgencyYear2Type}
+		,t.insu_agency_year2_fee = #{insuAgencyYear2Fee}
+		,t.insu_agency_year3_type = #{insuAgencyYear3Type}
+		,t.insu_agency_year3_fee = #{insuAgencyYear3Fee}
+
 		,t.updater = #{updater}
 		,t.update_datetime = #{updateDatetime}
-		
 		,t.remark = #{remark}
 		WHERE code = #{code}
 	</update>

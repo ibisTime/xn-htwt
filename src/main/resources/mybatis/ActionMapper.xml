@@ -93,6 +93,7 @@
 		DELETE FROM tht_action
 		WHERE code=#{code}
 	</delete>
+	
 
 
 </mapper>

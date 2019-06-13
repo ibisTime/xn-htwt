@@ -105,18 +105,21 @@
 	</insert>
 	
 	<update id="update_brand" parameterType="brand">
-		UPDATE tht_brand SET
-		letter = #{letter}
-		,logo = #{logo}
-		,name = #{name}
-		,description = #{description}
-		,status = #{status}
-		,location=#{location}
-		,order_no=#{orderNo}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		WHERE code = #{code}
+		UPDATE tht_brand tb SET
+		tb.letter = #{letter}
+		,tb.logo = #{logo}
+		,tb.name = #{name}
+		,tb.description = #{description}
+		,tb.status = #{status}
+		,tb.location=#{location}
+		,tb.order_no=#{orderNo}
+		,tb.updater = #{updater}
+		,tb.update_datetime = #{updateDatetime}
+		,tb.remark = #{remark}
+		WHERE tb.code = #{code};
+		UPDATE tht_car tc SET
+		tc.brand_name=#{name}
+		WHERE tc.brand_code=#{code};
 	</update>
 	
 	<update id="update_brand_up" parameterType="brand">
@@ -136,5 +139,15 @@
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_brand" parameterType="brand">
+		DELETE FROM tstd_cnavigate WHERE parent_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
+		DELETE FROM tht_car_carconfig WHERE car_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
+		DELETE FROM tht_car_order WHERE car_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
+		DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_car WHERE brand_code=#{code});
+		DELETE FROM tht_car WHERE brand_code=#{code};
+		DELETE FROM tht_series WHERE brand_code=#{code};
+		DELETE FROM tht_brand WHERE code=#{code};
+	</delete>
 	
 </mapper>

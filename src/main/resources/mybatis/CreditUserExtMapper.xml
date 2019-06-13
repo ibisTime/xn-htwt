@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICreditUserExtDAO">
+	<resultMap id="creditUserExt_DB_Result" type="creditUserExt">
+		<result column="code" property="code" />
+		<result column="credit_user_code" property="creditUserCode" />
+		<result column="gender" property="gender" />
+		<result column="age" property="age" />
+		<result column="marry_state" property="marryState" />
+		
+		<result column="political" property="political" />
+		<result column="nation" property="nation" />
+		<result column="customer_type" property="customerType" />
+		<result column="customer_birth" property="customerBirth" />
+		<result column="now_house_type" property="nowHouseType" />
+		
+		<result column="now_address_province" property="nowAddressProvince" />
+		<result column="now_address_city" property="nowAddressCity" />
+		<result column="now_address_area" property="nowAddressArea" />
+		<result column="now_address" property="nowAddress" />
+		<result column="post_code" property="postCode" />
+		
+		<result column="is_card_mail_address" property="isCardMailAddress" />
+		<result column="family_number" property="familyNumber" />
+		<result column="family_phone" property="familyPhone" />
+		<result column="family_main_asset" property="familyMainAsset" />
+		<result column="main_asset_include" property="mainAssetInclude" />
+		
+		<result column="main_income" property="mainIncome" />
+		<result column="other_income_note" property="otherIncomeNote" />
+		<result column="house_contract" property="houseContract" />
+		<result column="is_house_property" property="isHouseProperty" />
+		<result column="house_property" property="houseProperty" />
+		
+		<result column="month_income" property="monthIncome" />
+		<result column="work_company_property" property="workCompanyProperty" />
+		<result column="work_belong_industry" property="workBelongIndustry" />
+		<result column="work_profession" property="workProfession" />
+		<result column="position" property="position" />
+		
+		<result column="post_title" property="postTitle" />
+		<result column="work_datetime" property="workDatetime" />
+		<result column="self_company_area" property="selfCompanyArea" />
+		<result column="employee_quantity" property="employeeQuantity" />
+		<result column="enterprise_month_output" property="enterpriseMonthOutput" />
+		
+		<result column="is_license" property="isLicense" />
+		<result column="license" property="license" />
+		<result column="organization_code_card" property="organizationCodeCard" />
+		<result column="code_card_address" property="codeCardAddress" />
+		<result column="is_site_prove" property="isSiteProve" />
+		
+		<result column="site_prove" property="siteProve" />
+		<result column="site_area" property="siteArea" />
+		<result column="emergency_name1" property="emergencyName1" />
+		<result column="emergency_relation1" property="emergencyRelation1" />
+		<result column="emergency_mobile1" property="emergencyMobile1" />
+		
+		<result column="emergency_name2" property="emergencyName2" />
+		<result column="emergency_relation2" property="emergencyRelation2" />
+		<result column="emergency_mobile2" property="emergencyMobile2" />
+		<result column="car_type" property="carType" />
+		<result column="is_drice_license" property="isDriceLicense" />
+		
+	</resultMap>
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="creditUserCode != null and creditUserCode != '' ">
+				AND t.credit_user_code = #{creditUserCode}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_creditUserExt" parameterType="creditUserExt" resultMap="creditUserExt_DB_Result">
+		SELECT
+		t.code
+		,t.credit_user_code
+		,t.gender
+		,t.age
+		,t.marry_state
+		
+		,t.political
+		,t.nation
+		,t.customer_type
+		,t.customer_birth
+		,t.now_house_type
+		
+		,t.now_address_province
+		,t.now_address_city
+		,t.now_address_area
+		,t.now_address
+		,t.post_code
+		
+		,t.is_card_mail_address
+		,t.family_number
+		,t.family_phone
+		,t.family_main_asset
+		,t.main_asset_include
+		
+		,t.main_income
+		,t.other_income_note
+		,t.house_contract
+		,t.is_house_property
+		,t.house_property
+		
+		,t.month_income
+		,t.work_company_property
+		,t.work_belong_industry
+		,t.work_profession
+		,t.position
+		
+		,t.post_title
+		,t.work_datetime
+		,t.self_company_area
+		,t.employee_quantity
+		,t.enterprise_month_output
+		
+		,t.is_license
+		,t.license
+		,t.organization_code_card
+		,t.code_card_address
+		,t.is_site_prove
+		
+		,t.site_prove
+		,t.site_area
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		
+		,t.emergency_name2
+		,t.emergency_relation2
+		,t.emergency_mobile2
+		,t.car_type
+		,t.is_drice_license
+		
+		FROM
+		tdq_credit_user_ext t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_creditUserExt_count" parameterType="creditUserExt"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_credit_user_ext t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_creditUserExt" parameterType="creditUserExt">
+		INSERT INTO
+		tdq_credit_user_ext(
+		code
+		,credit_user_code
+		,gender
+		,age
+		,marry_state
+		
+		,political
+		,nation
+		,customer_type
+		,customer_birth
+		,now_house_type
+		
+		,now_address_province
+		,now_address_city
+		,now_address_area
+		,now_address
+		,post_code
+		
+		,is_card_mail_address
+		,family_number
+		,family_phone
+		,family_main_asset
+		,main_asset_include
+		
+		,main_income
+		,other_income_note
+		,house_contract
+		,is_house_property
+		,house_property
+		
+		,month_income
+		,work_company_property
+		,work_belong_industry
+		,work_profession
+		,position
+		
+		,post_title
+		,work_datetime
+		,self_company_area
+		,employee_quantity
+		,enterprise_month_output
+		
+		,is_license
+		,license
+		,organization_code_card
+		,code_card_address
+		,is_site_prove
+		
+		,site_prove
+		,site_area
+		,emergency_name1
+		,emergency_relation1
+		,emergency_mobile1
+		
+		,emergency_name2
+		,emergency_relation2
+		,emergency_mobile2
+		,car_type
+		,is_drice_license
+		
+		)
+		VALUES(
+		#{code}
+		,#{creditUserCode}
+		,#{gender}
+		,#{age}
+		,#{marryState}
+		
+		,#{political}
+		,#{nation}
+		,#{customerType}
+		,#{customerBirth}
+		,#{nowHouseType}
+		
+		,#{nowAddressProvince}
+		,#{nowAddressCity}
+		,#{nowAddressArea}
+		,#{nowAddress}
+		,#{postCode}
+		
+		,#{isCardMailAddress}
+		,#{familyNumber}
+		,#{familyPhone}
+		,#{familyMainAsset}
+		,#{mainAssetInclude}
+		
+		,#{mainIncome}
+		,#{otherIncomeNote}
+		,#{houseContract}
+		,#{isHouseProperty}
+		,#{houseProperty}
+		
+		,#{monthIncome}
+		,#{workCompanyProperty}
+		,#{workBelongIndustry}
+		,#{workProfession}
+		,#{position}
+		
+		,#{postTitle}
+		,#{workDatetime}
+		,#{selfCompanyArea}
+		,#{employeeQuantity}
+		,#{enterpriseMonthOutput}
+		
+		,#{isLicense}
+		,#{license}
+		,#{organizationCodeCard}
+		,#{codeCardAddress}
+		,#{isSiteProve}
+		
+		,#{siteProve}
+		,#{siteArea}
+		,#{emergencyName1}
+		,#{emergencyRelation1}
+		,#{emergencyMobile1}
+		
+		,#{emergencyName2}
+		,#{emergencyRelation2}
+		,#{emergencyMobile2}
+		,#{carType}
+		,#{isDriceLicense}
+		
+		)
+	</insert>
+
+	<update id="update_creditUserExt" parameterType="creditUserExt">
+		UPDATE tdq_credit_user_ext
+		SET
+		gender = #{gender}
+		,age = #{age}
+		,marry_state = #{marryState}
+		,political = #{political}
+		
+		,nation = #{nation}
+		,customer_type = #{customerType}
+		,customer_birth = #{customerBirth}
+		,now_house_type = #{nowHouseType}
+		,now_address_province = #{nowAddressProvince}
+		
+		,now_address_city = #{nowAddressCity}
+		,now_address_area = #{nowAddressArea}
+		,now_address = #{nowAddress}
+		,post_code = #{postCode}
+		,is_card_mail_address = #{isCardMailAddress}
+		
+		,family_number = #{familyNumber}
+		,family_phone = #{familyPhone}
+		,family_main_asset = #{familyMainAsset}
+		,main_asset_include = #{mainAssetInclude}
+		,main_income = #{mainIncome}
+		
+		,other_income_note = #{otherIncomeNote}
+		,house_contract = #{houseContract}
+		,is_house_property = #{isHouseProperty}
+		,house_property = #{houseProperty}
+		,month_income = #{monthIncome}
+		
+		,work_company_property = #{workCompanyProperty}
+		,work_belong_industry = #{workBelongIndustry}
+		,work_profession = #{workProfession}
+		,position = #{position}
+		,post_title = #{postTitle}
+		
+		,work_datetime = #{workDatetime}
+		,self_company_area = #{selfCompanyArea}
+		,employee_quantity = #{employeeQuantity}
+		,enterprise_month_output = #{enterpriseMonthOutput}
+		,is_license = #{isLicense}
+		
+		,license = #{license}
+		,organization_code_card = #{organizationCodeCard}
+		,code_card_address = #{codeCardAddress}
+		,is_site_prove = #{isSiteProve}
+		,site_prove = #{siteProve}
+		
+		,site_area = #{siteArea}
+		,emergency_name1 = #{emergencyName1}
+		,emergency_relation1 = #{emergencyRelation1}
+		,emergency_mobile1 = #{emergencyMobile1}
+		,emergency_name2 = #{emergencyName2}
+		
+		,emergency_relation2 = #{emergencyRelation2}
+		,emergency_mobile2 = #{emergencyMobile2}
+		,car_type = #{carType}
+		,is_drice_license = #{isDriceLicense}
+		WHERE code = #{code}
+	</update>
+	
+	<delete id="delete_creditUserExt" parameterType="creditUserExt">
+		DELETE FROM tdq_credit_user_ext
+		WHERE code=#{code}
+	</delete>
+
+
+</mapper>

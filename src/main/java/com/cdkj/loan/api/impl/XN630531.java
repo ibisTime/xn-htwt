@@ -1,10 +1,10 @@
 /**
- * @Title XN630530.java 
- * @Package com.cdkj.loan.api.impl 
- * @Description 
- * @author haiqingzheng  
- * @date 2018年5月6日 下午5:46:47 
- * @version V1.0   
+ * @Title XN630530.java
+ * @Package com.cdkj.loan.api.impl
+ * @Description
+ * @author haiqingzheng
+ * @date 2018年5月6日 下午5:46:47
+ * @version V1.0
  */
 package com.cdkj.loan.api.impl;
 
@@ -18,9 +18,9 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
-/** 
+/**
  * 催款
- * @author: CYL 
+ * @author: CYL
  * @since: 2018年5月9日 上午10:10:14 
  * @history:
  */
@@ -31,7 +31,7 @@ public class XN630531 extends AProcessor {
 
     private XN630531Req req = null;
 
-    /** 
+    /**
      * @see com.cdkj.loan.api.IProcessor#doBusiness()
      */
     @Override
@@ -40,7 +40,7 @@ public class XN630531 extends AProcessor {
         return new BooleanRes(true);
     }
 
-    /** 
+    /**
      * @see com.cdkj.loan.api.IProcessor#doCheck(java.lang.String, java.lang.String)
      */
     @Override

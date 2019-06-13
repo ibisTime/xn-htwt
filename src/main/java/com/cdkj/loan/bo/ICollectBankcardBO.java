@@ -1,9 +1,8 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CollectBankcard;
+import java.util.List;
 
 public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
 
@@ -18,15 +17,20 @@ public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
 
     public CollectBankcard getCollectBankcard(String code);
 
-    public void saveCollectBankcardList(
-            List<CollectBankcard> CollectBankcardList, String type,
-            String code);
+//    public void saveCollectBankcardList(
+//            List<XN632060ReqCollectBankcard> CollectBankcardList, String type,
+//            String code);
+//
+//    public void saveCollectBankcardList(
+//            List<XN632060ReqCollectBankcard> gsCollectBankcardList,
+//            String type, String belongBank, String code);
 
-    public void saveCollectBankcardList(
-            List<CollectBankcard> gsCollectBankcardList, String type,
-            String bankCode, String code);
+    public void removeCollectBankcardByCompanyCode(String companyCode);
 
-    public void removeCollectBankcardByList(
-            List<CollectBankcard> CollectBankcardList);
+    public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndType(
+            CollectBankcard condition);
+
+    public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndTypeAndBankCode(
+            String carDealerCode, String type, String bankCode);
 
 }

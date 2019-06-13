@@ -12,6 +12,7 @@
 		<result column="start_time" property="startTime" />
 		<result column="end_time" property="endTime" />
 		<result column="file_format" property="fileFormat" />
+		<result column="biz_code" property="bizCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -27,6 +28,13 @@
 			<if test="streamId != null and streamId != '' ">
 				AND t.stream_id = #{streamId}
 			</if>
+			<if test="roomCodeList != null and roomCodeList > 0 ">
+                AND t.room_code in
+                <foreach collection="roomCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
 		</trim>
 	</sql>
 	<select id="select_interviewVideo" parameterType="interviewVideo" resultMap="interviewVideo_DB_Result">
@@ -40,8 +48,10 @@
 		,t.start_time
 		,t.end_time
 		,t.file_format
+		,r.budget_code as biz_code
 		FROM
 		tdq_interview_video t
+		left join tdq_interview_video_room r on t.room_code=r.code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">

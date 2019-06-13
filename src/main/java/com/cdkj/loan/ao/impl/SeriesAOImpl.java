@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ISeriesAO;
 import com.cdkj.loan.bo.ICarBO;
+import com.cdkj.loan.bo.ICarCarconfigBO;
+import com.cdkj.loan.bo.ICarconfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Car;
+import com.cdkj.loan.domain.CarCarconfig;
+import com.cdkj.loan.domain.Carconfig;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630410Req;
 import com.cdkj.loan.dto.req.XN630412Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -30,6 +35,12 @@ public class SeriesAOImpl implements ISeriesAO {
 
     @Autowired
     private ICarBO carBO;
+
+    @Autowired
+    private ICarconfigBO carconfigBO;
+
+    @Autowired
+    private ICarCarconfigBO carCarconfigBO;
 
     @Override
     public String addSeries(XN630410Req req) {
@@ -97,7 +108,7 @@ public class SeriesAOImpl implements ISeriesAO {
     public Paginable<Series> querySeriesPage(int start, int limit,
             Series condition) {
         Paginable<Series> paginable = seriesBO.getPaginable(start, limit,
-            condition);
+                condition);
         for (Series series : paginable.getList()) {
             init(series);
         }
@@ -128,7 +139,52 @@ public class SeriesAOImpl implements ISeriesAO {
         condition.setSeriesCode(series.getCode());
         condition.setStatus(EBrandStatus.UP.getCode());
         List<Car> cars = carBO.queryCar(condition);
+        //最高价，最低价
+        long highest=0;
+        long lowest=0;
+        if (!cars.isEmpty()) {
+            for (Car car : cars) {
+                //最高价最低价判断
+                if (highest==0&&lowest==0){
+                    highest=car.getSalePrice();
+                    lowest=car.getSalePrice();
+                }else if (car.getSalePrice()>highest){
+                    highest=car.getSalePrice();
+                }else if(car.getSalePrice()<lowest){
+                    lowest=car.getSalePrice();
+                }
+                // 车型下配置列表
+                List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
+                        .getCode());
+                // 所有配置
+                List<Carconfig> configs = carconfigBO.queryCarconfigList(null);
+                for (CarCarconfig carCarconfig : configList) {
+                    for (Carconfig carconfig : configs) {
+                        if (carconfig.getCode()
+                                .equals(carCarconfig.getConfigCode())) {
+                            carconfig.setIsConfig(EBoolean.YES.getCode());
+                        } else if (null == carconfig.getIsConfig()) {
+                            carconfig.setIsConfig(EBoolean.NO.getCode());
+                        }
+                    }
+                    carCarconfig.setConfig(carconfigBO.getCarconfig(carCarconfig
+                            .getConfigCode()));
+                }
+
+                car.setCaonfigList(configList);
+                car.setConfigs(configs);
+            }
+        }
+        series.setHighest(highest);
+        series.setLowest(lowest);
         series.setCars(cars);
         series.setCarNumber(Long.valueOf(cars.size()));
+
+    }
+
+    @Override
+    public void dropSeries(String code) {
+        Series series = seriesBO.getSeries(code);
+        seriesBO.removeSeries(series);
     }
 }

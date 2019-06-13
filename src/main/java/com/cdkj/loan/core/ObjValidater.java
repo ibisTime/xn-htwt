@@ -1,16 +1,13 @@
 package com.cdkj.loan.core;
 
+import com.cdkj.loan.exception.ParaException;
 import java.util.Iterator;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 import org.hibernate.validator.internal.engine.path.PathImpl;
-
-import com.cdkj.loan.exception.BizException;
 
 /**
  * Created by tianlei on 2017/十一月/01.
@@ -32,7 +29,7 @@ public class ObjValidater {
 
         if (req == null) {
 
-            throw new BizException("xn702000", "req 为null");
+            throw new ParaException("xn702000", "req 为null");
 
         }
         Set<ConstraintViolation<T>> set = validator.validate(req);
@@ -70,7 +67,7 @@ public class ObjValidater {
         }
 
         if (stringBuilder.toString().isEmpty() == false) {
-            throw new BizException("xn702000", stringBuilder.toString());
+            throw new ParaException("xn702000", stringBuilder.toString());
         }
         // TODO：emjio
     }

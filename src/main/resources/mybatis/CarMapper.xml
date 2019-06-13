@@ -333,4 +333,13 @@
 		WHERE code = #{code}
 	</update>
 	
+	<delete id="delete_car" parameterType="car">
+		DELETE FROM tstd_cnavigate WHERE parent_code =#{code};
+		DELETE FROM tht_car_carconfig WHERE car_code =#{code};
+		DELETE FROM tht_car_order WHERE car_code =#{code};
+		DELETE FROM tht_action WHERE to_code =#{code};
+		DELETE FROM tht_car WHERE code=#{code};
+	</delete>
+	
+	
 </mapper>

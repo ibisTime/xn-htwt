@@ -1,22 +1,20 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CarDealer;
+import java.util.List;
 
 public interface ICarDealerBO extends IPaginableBO<CarDealer> {
 
-    public String saveCarDealer(CarDealer data);
+    String saveCarDealer(CarDealer data);
 
-    public int removeCarDealer(String code);
+    int refreshCarDealer(CarDealer data);
 
-    public int refreshCarDealer(CarDealer data);
+    List<CarDealer> queryCarDealerList(CarDealer condition);
 
-    public List<CarDealer> queryCarDealerList(CarDealer condition);
+    CarDealer getCarDealer(String code);
 
-    public CarDealer getCarDealer(String code);
-
-    public int refreshCarDealerNode(CarDealer data);
+    // 更新节点
+    int refreshCarDealerNode(CarDealer data);
 
 }

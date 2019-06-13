@@ -1,7 +1,5 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.ICarBreakAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -12,16 +10,19 @@ import com.cdkj.loan.dto.req.XN632635Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 分页查询违章
- * @author: silver 
- * @since: 2018年6月6日 下午5:03:46 
+ *
+ * @author: silver
+ * @since: 2018年6月6日 下午5:03:46
  * @history:
  */
 public class XN632635 extends AProcessor {
+
     private ICarBreakAO carBreakAO = SpringContextHolder
-        .getBean(ICarBreakAO.class);
+            .getBean(ICarBreakAO.class);
 
     private XN632635Req req = null;
 
@@ -29,6 +30,7 @@ public class XN632635 extends AProcessor {
     public Object doBusiness() throws BizException {
         CarBreak condition = new CarBreak();
         condition.setUserId(req.getUserId());
+        condition.setStatus(req.getStatus());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

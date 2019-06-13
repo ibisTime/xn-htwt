@@ -8,7 +8,6 @@ import com.cdkj.loan.dao.ICollectBankcardDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.CollectBankcard;
 
-//CHECK 。。。 
 @Repository("collectBankcardDAOImpl")
 public class CollectBankcardDAOImpl extends AMybatisTemplate
         implements ICollectBankcardDAO {
@@ -51,6 +50,15 @@ public class CollectBankcardDAOImpl extends AMybatisTemplate
     @Override
     public int update(CollectBankcard data) {
         return super.update(NAMESPACE.concat("update_collectBankcard"), data);
+    }
+
+    @Override
+    public List<CollectBankcard> selectCollectBankcardByCompanyCodeAndTypeList(
+            CollectBankcard condition) {
+        return super.selectList(
+            NAMESPACE.concat("select_collect_bankcard_byCompanyCodeAndType"),
+            condition, CollectBankcard.class);
+
     }
 
 }

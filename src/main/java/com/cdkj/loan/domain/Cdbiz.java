@@ -1,15 +1,20 @@
 package com.cdkj.loan.domain;
 
-import java.util.List;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import com.cdkj.loan.dto.res.CarInfoRes;
+import com.cdkj.loan.dto.res.LoanInfoRes;
+import java.util.Date;
+import java.util.List;
+import lombok.Data;
 
 /**
-* 车贷业务
-* @author: tao 
-* @since: 2019-04-02 16:54:29
-* @history:
-*/
+ * 车贷业务
+ *
+ * @author: tao
+ * @since: 2019-04-02 16:54:29
+ * @history:
+ */
+@Data
 public class Cdbiz extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -20,41 +25,136 @@ public class Cdbiz extends ABaseDO {
     // 业务编号
     private String bizCode;
 
-    // 主贷人
-    private String mainLoaner;
-
-    // 经办银行
-    private String bankCode;
-
     // 业务类型（0新车1二手车）
+    private String type;
+
+    // 预算单类型 (1正常单2外单)
     private String bizType;
 
-    // 贷款金额
-    private Long dkAmount;
+    // 还款业务编号
+    private String repayBizCode;
+
+    // 业务公司编号
+    private String companyCode;
+
+    // 团队编号
+    private String teamCode;
+
+    // 团队队长
+    private String captainCode;
+
+    // 业务员编号
+    private String saleUserId;
+
+    // 内勤编号
+    private String insideJob;
+
+    // 贷款银行
+    private String loanBank;
+
+    // 贷款信息
+    private BankLoan bankLoan;
+
+    // 征信贷款额
+    private Long creditLoanAmount;
+
+    // 贷款额
+    private Long loanAmount;
+
+    // 入档位置
+    private String enterLocation;
+
+    // 入档时间
+    private Date enterDatetime;
+
+    // 档案目录
+    private String enterFilelist;
+
+    // 还款卡号
+    private String repayCardNumber;
+
+    // 卡邮寄地址省
+    private String cardPostProvince;
+
+    // 卡邮寄地址市
+    private String cardPostCity;
+
+    // 卡邮寄地址区
+    private String cardPostArea;
+
+    // 卡邮寄地址
+    private String cardPostAddress;
+
+    // 卡邮寄地址邮编
+    private String cardPostCode;
 
     // 主线状态
     private String status;
 
+    // 制卡状态
+    private String makeCardStatus;
+
     // 面签状态
-    private String mqStatus;
+    private String intevStatus;
 
     // 发保合GPS状态
     private String fbhgpsStatus;
 
-    // 第一次存档状态
-    private String fircundangStatus;
-
-    // 第二次存档状态
-    private String seccundangStatus;
+    // 存档状态
+    private String enterStatus;
 
     // 作废状态
-    private String zfStatus;
+    private String cancelStatus;
 
-    // 业务员
-    private String ywyUser;
+    // 当前节点编号
+    private String curNodeCode;
 
-    // 团队编号
-    private String teamCode;
+    // 面签节点编号
+    private String intevCurNodeCode;
+
+    // 制卡节点
+    private String makeCardNode;
+
+    // 发保合gps节点
+    private String fbhgpsNode;
+
+    // 入档节点
+    private String enterNodeCode;
+
+    // 客户申请作废时的节点编号
+    private String cancelNodeCode;
+
+    // 是否需要安装GPS
+    private String isGpsAz;
+
+    // 是否融资
+    private String isFinacing;
+
+    // 是否垫资
+    private String isAdvanceFund;
+
+    // 是否我司续保
+    private String isPlatInsure;
+
+    // 应收手续费总额
+    private Long shouldFeeAmount;
+
+    // 实收手续费总额
+    private Long realFeeAmount;
+
+    // 担保方式
+    private String guaMode;
+
+    // 征信说明
+    private String creditNote;
+
+    // 申请时间
+    private Date applyDatetime;
+
+    // 备注
+    private String remark;
+
+    // *********************************
 
     private SYSUser sysUser;
 
@@ -68,164 +168,140 @@ public class Cdbiz extends ABaseDO {
 
     private List<SYSBizLog> bizLogs;
 
-    public List<Attachment> getAttachments() {
-        return attachments;
-    }
+    private List<String> curNodeCodeList;
 
-    public void setAttachments(List<Attachment> attachments) {
-        this.attachments = attachments;
-    }
+    private List<String> intevCurNodeCodeList;
 
-    public List<BizTask> getBizTasks() {
-        return bizTasks;
-    }
+    private List<String> makeCardNodeList;
 
-    public void setBizTasks(List<BizTask> bizTasks) {
-        this.bizTasks = bizTasks;
-    }
+    private List<String> fbhgpsNodeList;
 
-    public List<SYSBizLog> getBizLogs() {
-        return bizLogs;
-    }
+    // 入档节点
+    private List<String> enterNodeCodeList;
 
-    public void setBizLogs(List<SYSBizLog> bizLogs) {
-        this.bizLogs = bizLogs;
-    }
+    private List<String> cancelNodeCodeList;
 
-    public Credit getCredit() {
-        return credit;
-    }
+    private String roleCode;
 
-    public void setCredit(Credit credit) {
-        this.credit = credit;
-    }
+    private String userId;
 
-    public BudgetOrder getBudgetOrder() {
-        return budgetOrder;
-    }
+    private CarInfo carInfo;
 
-    public void setBudgetOrder(BudgetOrder budgetOrder) {
-        this.budgetOrder = budgetOrder;
-    }
+    // 公司名称
+    private String companyName;
 
-    public SYSUser getSysUser() {
-        return sysUser;
-    }
+    // 团队名称
+    private String teamName;
 
-    public void setSysUser(SYSUser sysUser) {
-        this.sysUser = sysUser;
-    }
+    // 业务员名称
+    private String saleUserName;
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    // 业务员公司
+    private String saleUserCompanyName;
 
-    public String getCode() {
-        return code;
-    }
+    // 业务员部门
+    private String saleUserDepartMentName;
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
-    }
+    // 业务员职位
+    private String saleUserPostName;
 
-    public String getBizCode() {
-        return bizCode;
-    }
+    // 内勤名称
+    private String insideJobName;
 
-    public void setMainLoaner(String mainLoaner) {
-        this.mainLoaner = mainLoaner;
-    }
+    // 内勤公司
+    private String insideJobCompanyName;
 
-    public String getMainLoaner() {
-        return mainLoaner;
-    }
+    // 内勤部门
+    private String insideJobDepartMentName;
 
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
+    // 内勤职位
+    private String insideJobPostName;
 
-    public String getBankCode() {
-        return bankCode;
-    }
+    // 主贷人
+    private CreditUser creditUser;
 
-    public void setBizType(String bizType) {
-        this.bizType = bizType;
-    }
+    // 贷款银行
+    private String loanBankName;
 
-    public String getBizType() {
-        return bizType;
-    }
+    //支行名称
+    private String subbranchBankName;
 
-    public void setDkAmount(Long dkAmount) {
-        this.dkAmount = dkAmount;
-    }
+    // 申请时间起
+    private Date applyDatetimeStart;
 
-    public Long getDkAmount() {
-        return dkAmount;
-    }
+    // 申请时间止
+    private Date applyDatetimeEnd;
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    // 征信人列表
+    private List<CreditUser> creditUserList;
 
-    public String getStatus() {
-        return status;
-    }
+    // 二手车评估报告
+    private String secondCarReport;
 
-    public void setMqStatus(String mqStatus) {
-        this.mqStatus = mqStatus;
-    }
+    // 行驶证正面
+    private String xszFront;
 
-    public String getMqStatus() {
-        return mqStatus;
-    }
+    // 行驶证翻面
+    private String xszReverse;
 
-    public void setFbhgpsStatus(String fbhgpsStatus) {
-        this.fbhgpsStatus = fbhgpsStatus;
-    }
+    // 主贷人名称
+    private String userName;
 
-    public String getFbhgpsStatus() {
-        return fbhgpsStatus;
-    }
+    // 还款业务
+    private RepayBiz repayBiz;
 
-    public void setFircundangStatus(String fircundangStatus) {
-        this.fircundangStatus = fircundangStatus;
-    }
+    // 征信人信息
+    private CreditUserExt creditUserExt;
 
-    public String getFircundangStatus() {
-        return fircundangStatus;
-    }
+    // 征信人流水
+    private List<CreditJour> creditJours;
 
-    public void setSeccundangStatus(String seccundangStatus) {
-        this.seccundangStatus = seccundangStatus;
-    }
+    // gps安装列表
+    private List<BudgetOrderGps> budgetOrderGps;
 
-    public String getSeccundangStatus() {
-        return seccundangStatus;
-    }
+    // 存档状态列表
+    private List<String> cundangStatusList;
 
-    public void setZfStatus(String zfStatus) {
-        this.zfStatus = zfStatus;
-    }
+    // 抵押
+    private CarPledge carPledge;
 
-    public String getZfStatus() {
-        return zfStatus;
-    }
+    // 贷款信息
+    private LoanInfoRes loanInfo;
 
-    public void setYwyUser(String ywyUser) {
-        this.ywyUser = ywyUser;
-    }
+    // 车辆信息
+    private CarInfoRes carInfoRes;
 
-    public String getYwyUser() {
-        return ywyUser;
-    }
+    // 车辆信息
+    private Advance advance;
 
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
-    }
+    // 返点列表
+    private List<Repoint> repointList;
 
-    public String getTeamCode() {
-        return teamCode;
-    }
+    // 还款计划列表
+    private List<RepayPlan> repayPlanList;
+
+    // 手续费
+    private BudgetOrderFee budgetOrderFee;
+
+    // 贷款期数
+    private Integer periods;
+
+    // 业务是否经办
+    private String isMy;
+
+    // 作废原因
+    private String cancelReason;
+
+    // 面签生成时间
+    private Date intevDateTime;
+
+    // 剩余欠款
+    private Long restAmount;
+
+    // 垫资日期
+    private Date advanceFundDatetime;
+
+    // 垫资金额
+    private Integer advanceFundAmount;
 
 }

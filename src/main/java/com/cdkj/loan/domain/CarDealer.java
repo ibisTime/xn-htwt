@@ -1,13 +1,13 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-import java.util.List;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
+import lombok.Data;
 
+@Data
 public class CarDealer extends ABaseDO {
 
-    /** 
+    /**
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
      */
     private static final long serialVersionUID = 1L;
@@ -26,21 +26,21 @@ public class CarDealer extends ABaseDO {
 
     private String mainContact;// 主要联系人
 
-    private Long contactPhone;// 联系人电话
+    private String contactPhone;// 联系人电话
 
     private String mainBrand;// 主营品牌
 
     private String parentGroup;// 所属集团
 
-    private String agreement;// 协议
+    private Date agreementValidDateStart;// 合作协议有效期起
 
-    private Date agreementValidDate;// 合作协议有效期
+    private Date agreementValidDateEnd;// 合作协议有效期止
 
-    private String agreementStatus;// 协议状态
+    private String agreementStatus;// 协议状态(0下架1上架)
 
     private String agreementPic;// 车商合作协议
 
-    private String settleWay;// 结算方式
+    private String settleWay;// 结算方式(1现结2月结3季结)
 
     private String businessArea;// 业务区域
 
@@ -48,246 +48,15 @@ public class CarDealer extends ABaseDO {
 
     private String curNodeCode;// 当前节点编号
 
-    private String approveNote;// 审核说明
-
     private String policyNote;// 政策说明
+
+    private String updater;//更新人
+
+    private Date updateDatetime;//更新时间
 
     private String remark;// 备注
 
     /*--------辅助字段----------*/
 
-    private List<CollectBankcard> collectBankcardList;
-
-    private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
-
-    private List<CarDealerProtocol> CarDealerProtocolList;// 经销商协议表
-
-    private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
-
-    private List<CollectBankcard> zhCollectBankcardList;// 中行银行返点账号列表
-
-    private List<CollectBankcard> jhCollectBankcardList;// 建行银行返点账号列表
-
-    public List<CollectBankcard> getCollectBankcardList() {
-        return collectBankcardList;
-    }
-
-    public void setCollectBankcardList(
-            List<CollectBankcard> collectBankcardList) {
-        this.collectBankcardList = collectBankcardList;
-    }
-
-    public List<CarDealerProtocol> getCarDealerProtocolList() {
-        return CarDealerProtocolList;
-    }
-
-    public void setCarDealerProtocolList(
-            List<CarDealerProtocol> carDealerProtocolList) {
-        CarDealerProtocolList = carDealerProtocolList;
-    }
-
-    public List<CollectBankcard> getJxsCollectBankcardList() {
-        return jxsCollectBankcardList;
-    }
-
-    public void setJxsCollectBankcardList(
-            List<CollectBankcard> jxsCollectBankcardList) {
-        this.jxsCollectBankcardList = jxsCollectBankcardList;
-    }
-
-    public List<CollectBankcard> getGsCollectBankcardList() {
-        return gsCollectBankcardList;
-    }
-
-    public void setGsCollectBankcardList(
-            List<CollectBankcard> gsCollectBankcardList) {
-        this.gsCollectBankcardList = gsCollectBankcardList;
-    }
-
-    public List<CollectBankcard> getZhCollectBankcardList() {
-        return zhCollectBankcardList;
-    }
-
-    public void setZhCollectBankcardList(
-            List<CollectBankcard> zhCollectBankcardList) {
-        this.zhCollectBankcardList = zhCollectBankcardList;
-    }
-
-    public List<CollectBankcard> getJhCollectBankcardList() {
-        return jhCollectBankcardList;
-    }
-
-    public void setJhCollectBankcardList(
-            List<CollectBankcard> jhCollectBankcardList) {
-        this.jhCollectBankcardList = jhCollectBankcardList;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getAbbrName() {
-        return abbrName;
-    }
-
-    public void setAbbrName(String abbrName) {
-        this.abbrName = abbrName;
-    }
-
-    public String getIsSelfDevelop() {
-        return isSelfDevelop;
-    }
-
-    public void setIsSelfDevelop(String isSelfDevelop) {
-        this.isSelfDevelop = isSelfDevelop;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCarDealerType() {
-        return carDealerType;
-    }
-
-    public void setCarDealerType(String carDealerType) {
-        this.carDealerType = carDealerType;
-    }
-
-    public String getMainContact() {
-        return mainContact;
-    }
-
-    public void setMainContact(String mainContact) {
-        this.mainContact = mainContact;
-    }
-
-    public Long getContactPhone() {
-        return contactPhone;
-    }
-
-    public void setContactPhone(Long contactPhone) {
-        this.contactPhone = contactPhone;
-    }
-
-    public String getMainBrand() {
-        return mainBrand;
-    }
-
-    public void setMainBrand(String mainBrand) {
-        this.mainBrand = mainBrand;
-    }
-
-    public String getParentGroup() {
-        return parentGroup;
-    }
-
-    public void setParentGroup(String parentGroup) {
-        this.parentGroup = parentGroup;
-    }
-
-    public String getAgreement() {
-        return agreement;
-    }
-
-    public void setAgreement(String agreement) {
-        this.agreement = agreement;
-    }
-
-    public Date getAgreementValidDate() {
-        return agreementValidDate;
-    }
-
-    public void setAgreementValidDate(Date agreementValidDate) {
-        this.agreementValidDate = agreementValidDate;
-    }
-
-    public String getAgreementStatus() {
-        return agreementStatus;
-    }
-
-    public void setAgreementStatus(String agreementStatus) {
-        this.agreementStatus = agreementStatus;
-    }
-
-    public String getAgreementPic() {
-        return agreementPic;
-    }
-
-    public void setAgreementPic(String agreementPic) {
-        this.agreementPic = agreementPic;
-    }
-
-    public String getSettleWay() {
-        return settleWay;
-    }
-
-    public void setSettleWay(String settleWay) {
-        this.settleWay = settleWay;
-    }
-
-    public String getBusinessArea() {
-        return businessArea;
-    }
-
-    public void setBusinessArea(String businessArea) {
-        this.businessArea = businessArea;
-    }
-
-    public String getBelongBranchCompany() {
-        return belongBranchCompany;
-    }
-
-    public void setBelongBranchCompany(String belongBranchCompany) {
-        this.belongBranchCompany = belongBranchCompany;
-    }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
-    }
-
-    public String getApproveNote() {
-        return approveNote;
-    }
-
-    public void setApproveNote(String approveNote) {
-        this.approveNote = approveNote;
-    }
-
-    public String getPolicyNote() {
-        return policyNote;
-    }
-
-    public void setPolicyNote(String policyNote) {
-        this.policyNote = policyNote;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
+    private String abbrNameQuery;// 简称模糊查
 }

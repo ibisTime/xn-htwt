@@ -1,12 +1,10 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.IRepayPlanDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.RepayPlan;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository("repayPlanDAOImpl")
 public class RepayPlanDAOImpl extends AMybatisTemplate
@@ -25,33 +23,33 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     @Override
     public RepayPlan select(RepayPlan condition) {
         return super.select(NAMESPACE.concat("select_repayPlan"), condition,
-            RepayPlan.class);
+                RepayPlan.class);
     }
 
     @Override
     public long selectTotalCount(RepayPlan condition) {
         return super.selectTotalCount(
-            NAMESPACE.concat("select_repayPlan_count"), condition);
+                NAMESPACE.concat("select_repayPlan_count"), condition);
     }
 
     @Override
     public List<RepayPlan> selectList(RepayPlan condition) {
         return super.selectList(NAMESPACE.concat("select_repayPlan"), condition,
-            RepayPlan.class);
+                RepayPlan.class);
     }
 
     @Override
     public List<RepayPlan> selectList(RepayPlan condition, int start,
             int count) {
         return super.selectList(NAMESPACE.concat("select_repayPlan"), start,
-            count, condition, RepayPlan.class);
+                count, condition, RepayPlan.class);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void insertList(List<RepayPlan> dataList) {
         super.insertBatch(NAMESPACE.concat("insert_repayPlanList"),
-            (List) dataList);
+                (List) dataList);
     }
 
     @Override
@@ -92,7 +90,7 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     @Override
     public int judicialLitigationEntry(RepayPlan data) {
         return super.update(NAMESPACE.concat("update_judicialLitigationEntry"),
-            data);
+                data);
     }
 
     @Override
@@ -113,14 +111,14 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     @Override
     public long selectTotalCountByRoleCode(RepayPlan condition) {
         return super.selectTotalCount(
-            NAMESPACE.concat("select_repayPlan_count_byRoleCode"), condition);
+                NAMESPACE.concat("select_repayPlan_count_byRoleCode"), condition);
     }
 
     @Override
     public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,
             int start, int pageSize) {
         return super.selectList(NAMESPACE.concat("select_repayPlan_byRoleCode"),
-            condition, RepayPlan.class);
+                condition, RepayPlan.class);
     }
 
     @Override
@@ -146,6 +144,17 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     @Override
     public void prepayPhotoApprove(RepayPlan data) {
         super.update(NAMESPACE.concat("update_prepayPhotoApprove"), data);
+    }
+
+    @Override
+    public void updateRepayPlan(RepayPlan data) {
+        super.update(NAMESPACE.concat("update_repayPlan"), data);
+    }
+
+    @Override
+    public List<RepayPlan> selectBeforePlanList(RepayPlan condition) {
+        return super.selectList(NAMESPACE.concat("select_beforePlanList"), condition,
+                RepayPlan.class);
     }
 
 }

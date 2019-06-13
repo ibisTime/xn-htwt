@@ -1,9 +1,12 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
+
+@Data
 public class XN632205Req extends APageReq {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = 163932874954488442L;
 
@@ -28,60 +31,7 @@ public class XN632205Req extends APageReq {
     // 是否垫资
     private String isAdvanceFund;
 
-    public String getRepayBizCode() {
-        return repayBizCode;
-    }
+    private String userId;
 
-    public void setRepayBizCode(String repayBizCode) {
-        this.repayBizCode = repayBizCode;
-    }
-
-    public String getSaleUserId() {
-        return saleUserId;
-    }
-
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
-    }
-
-    public String getApplyUserName() {
-        return applyUserName;
-    }
-
-    public void setApplyUserName(String applyUserName) {
-        this.applyUserName = applyUserName;
-    }
-
-    public String getApplyDatetimeStart() {
-        return applyDatetimeStart;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setApplyDatetimeStart(String applyDatetimeStart) {
-        this.applyDatetimeStart = applyDatetimeStart;
-    }
-
-    public String getApplyDatetimeEnd() {
-        return applyDatetimeEnd;
-    }
-
-    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
-        this.applyDatetimeEnd = applyDatetimeEnd;
-    }
-
-    public String getIsAdvanceFund() {
-        return isAdvanceFund;
-    }
-
-    public void setIsAdvanceFund(String isAdvanceFund) {
-        this.isAdvanceFund = isAdvanceFund;
-    }
 
 }

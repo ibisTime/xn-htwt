@@ -1,139 +1,184 @@
 /**
- * @Title XN632515Req.java 
- * @Package com.cdkj.loan.dto.req 
- * @Description 
- * @author taojian  
- * @date 2019年4月2日 下午7:34:42 
- * @version V1.0   
+ * @Title XN632515Req.java
+ * @Package com.cdkj.loan.dto.req
+ * @Description
+ * @author taojian
+ * @date 2019年4月2日 下午7:34:42
+ * @version V1.0
  */
 package com.cdkj.loan.dto.req;
 
-/** 
+import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.domain.BizTask;
+import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.SYSBizLog;
+import com.cdkj.loan.domain.SYSUser;
+import java.util.Date;
+import java.util.List;
+import lombok.Data;
+
+/**
  * 分页查业务
- * @author: taojian 
- * @since: 2019年4月2日 下午7:34:42 
+ *
+ * @author: taojian
+ * @since: 2019年4月2日 下午7:34:42
  * @history:
  */
+@Data
 public class XN632515Req extends APageReq {
 
+    // 编号
     private String code;
 
+    // 业务编号
     private String bizCode;
 
-    private String bankCode;
+    // 业务类型（0新车1二手车）
+    private String type;
 
+    // 预算单类型 (1正常单2外单)
     private String bizType;
 
+    // 还款业务编号
+    private String repayBizCode;
+
+    // 业务公司编号
+    private String companyCode;
+
+
+    // 团队队长
+    private String captainCode;
+
+    // 业务员编号
+    private String saleUserId;
+
+    // 内勤编号
+    private String insideJob;
+
+    // 贷款银行
+    private String loanBank;
+
+    // 贷款额
+    private Long loanAmount;
+
+    // 入档位置
+    private String enterLocation;
+
+    // 入档时间
+    private Date enterDatetime;
+
+    // 档案目录
+    private String enterFilelist;
+
+    // 主线状态
     private String status;
 
-    private String mqStatus;
+    // 制卡状态
+    private String makeCardStatus;
 
+    // 面签状态
+    private String intevStatus;
+
+    // 发保合GPS状态
     private String fbhgpsStatus;
 
-    private String fircundangStatus;
+    // 存档状态
+    private String enterStatus;
 
-    private String seccundangStatus;
+    // 作废状态
+    private String cancelStatus;
 
-    private String zfStatus;
+    // 当前节点编号
+    private String curNodeCode;
 
-    private String ywyUser;
+    // 面签节点编号
+    private String intevCurNodeCode;
 
-    private String teamCode;
+    // 制卡节点
+    private String makeCardNode;
 
-    public String getBizCode() {
-        return bizCode;
-    }
+    // 发保合gps节点
+    private String fbhgpsNode;
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
-    }
+    // 客户申请作废时的节点编号
+    private String cancelNodeCode;
 
-    public String getBankCode() {
-        return bankCode;
-    }
+    // 是否需要安装GPS
+    private String isGpsAz;
 
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
+    // 是否融资
+    private String isFinacing;
 
-    public String getBizType() {
-        return bizType;
-    }
+    // 是否垫资
+    private String isAdvanceFund;
 
-    public void setBizType(String bizType) {
-        this.bizType = bizType;
-    }
+    // 是否我司续保
+    private String isPlatInsure;
 
-    public String getStatus() {
-        return status;
-    }
+    // 应收手续费总额
+    private Long shouldFeeAmount;
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    // 实收手续费总额
+    private Long realFeeAmount;
 
-    public String getMqStatus() {
-        return mqStatus;
-    }
+    // 担保方式
+    private String guaMode;
 
-    public void setMqStatus(String mqStatus) {
-        this.mqStatus = mqStatus;
-    }
+    // 征信说明
+    private String creditNote;
 
-    public String getFbhgpsStatus() {
-        return fbhgpsStatus;
-    }
+    // 申请时间
+    private Date applyDatetime;
 
-    public void setFbhgpsStatus(String fbhgpsStatus) {
-        this.fbhgpsStatus = fbhgpsStatus;
-    }
+    // 备注
+    private String remark;
 
-    public String getFircundangStatus() {
-        return fircundangStatus;
-    }
+    // *********************************
 
-    public void setFircundangStatus(String fircundangStatus) {
-        this.fircundangStatus = fircundangStatus;
-    }
+    private SYSUser sysUser;
 
-    public String getSeccundangStatus() {
-        return seccundangStatus;
-    }
+    private Credit credit;
 
-    public void setSeccundangStatus(String seccundangStatus) {
-        this.seccundangStatus = seccundangStatus;
-    }
+    private BudgetOrder budgetOrder;
 
-    public String getZfStatus() {
-        return zfStatus;
-    }
+    private List<Attachment> attachments;
 
-    public void setZfStatus(String zfStatus) {
-        this.zfStatus = zfStatus;
-    }
+    private List<BizTask> bizTasks;
 
-    public String getYwyUser() {
-        return ywyUser;
-    }
+    private List<SYSBizLog> bizLogs;
 
-    public void setYwyUser(String ywyUser) {
-        this.ywyUser = ywyUser;
-    }
+    private List<String> curNodeCodeList;
 
-    public String getTeamCode() {
-        return teamCode;
-    }
+    private List<String> intevCurNodeCodeList;
 
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
-    }
+    private List<String> makeCardNodeList;
 
-    public String getCode() {
-        return code;
-    }
+    private List<String> fbhgpsNodeList;
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    private List<String> enterNodeCodeList;
+
+    private List<String> cancelNodeCodeList;
+
+    private String roleCode;
+
+    private String userId;
+
+    // 主贷人
+    private CreditUser creditUser;
+
+    // 贷款银行
+    private String loanBankName;
+
+    // 申请时间起
+    private String applyDatetimeStart;
+
+    // 申请时间止
+    private String applyDatetimeEnd;
+
+    private String userName;
+
+    private String isMy;
 
 }

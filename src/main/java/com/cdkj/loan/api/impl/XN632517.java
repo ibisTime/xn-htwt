@@ -12,11 +12,13 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 列表查业务
- * @author: taojian 
- * @since: 2019年4月2日 下午7:47:52 
+ *
+ * @author: taojian
+ * @since: 2019年4月2日 下午7:47:52
  * @history:
  */
 public class XN632517 extends AProcessor {
+
     private ICdbizAO cdbizAO = SpringContextHolder.getBean(ICdbizAO.class);
 
     private XN632517Req req = null;
@@ -26,14 +28,13 @@ public class XN632517 extends AProcessor {
         Cdbiz condition = new Cdbiz();
         condition.setBizType(req.getBizType());
         condition.setBizCode(req.getBizCode());
-        condition.setBankCode(req.getBankCode());
+        condition.setLoanBank(req.getBankCode());
         condition.setStatus(req.getStatus());
-        condition.setMqStatus(req.getMqStatus());
+        condition.setIntevStatus(req.getMqStatus());
         condition.setFbhgpsStatus(req.getFbhgpsStatus());
-        condition.setFircundangStatus(req.getFircundangStatus());
-        condition.setSeccundangStatus(req.getSeccundangStatus());
-        condition.setZfStatus(req.getZfStatus());
-        condition.setYwyUser(req.getYwyUser());
+        condition.setEnterStatus(req.getEnterStatus());
+        condition.setCancelStatus(req.getCancelStatus());
+        condition.setSaleUserId(req.getYwyUser());
         condition.setTeamCode(req.getTeamCode());
         return cdbizAO.queryCdbizList(condition);
     }

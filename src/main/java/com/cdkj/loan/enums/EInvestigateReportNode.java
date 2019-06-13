@@ -5,8 +5,8 @@ import java.util.Map;
 
 /**
  * 调查报告节点
- * @author: CYL 
- * @since: 2018年7月5日 下午6:06:22 
+ * @author: CYL
+ * @since: 2018年7月5日 下午6:06:22
  * @history:
  */
 public enum EInvestigateReportNode {

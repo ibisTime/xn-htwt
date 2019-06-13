@@ -1,210 +1,428 @@
 package com.cdkj.loan.domain;
 
-import java.util.List;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.List;
+import lombok.Data;
 
 /**
  * 征信人员
- * @author: jiafr 
- * @since: 2018年5月24日 下午9:32:23 
+ *
+ * @author: jiafr
+ * @since: 2018年5月24日 下午9:32:23
  * @history:
  */
+@Data
 public class CreditUser extends ABaseDO {
 
-    private static final long serialVersionUID = 1L;
+    /** ************************ 征信结果信息 ************************** */
 
-    // 编号
+    /**
+     * 征信人员编号
+     */
     private String code;
 
-    // 征信单编号
-    private String creditCode;
+    /**
+     * 预算单编号
+     */
+    private String bizCode;
 
-    // 姓名
-    private String userName;
-
-    // 与借款人关系
+    /**
+     * 征信人类型（主贷人/配偶/担保人）
+     */
     private String relation;
 
-    // 贷款角色
+    /**
+     * 贷款角色
+     */
     private String loanRole;
 
-    // 手机号
+    /**
+     * 姓名
+     */
+    private String userName;
+
+    /**
+     * 英文名
+     */
+    private String englishName;
+
+    /**
+     * 手机号
+     */
     private String mobile;
 
-    // 身份证号
+    /**
+     * 证件类型
+     */
+    private String idKind;
+
+    /**
+     * 证件号码
+     */
     private String idNo;
 
-    // 身份证正面
-    private String idNoFront;
+    /**
+     * 发证机关
+     */
+    private String authref;
 
-    // 身份证反面
-    private String idNoReverse;
+    /**
+     * 证件有效期（yyyymmdd）
+     */
+    private String statdate;
 
-    // 征信查询授权书
-    private String authPdf;
-
-    // 面签照片
-    private String interviewPic;
-
-    // 信用卡占比
+    /**
+     * 信用卡占比
+     */
     private Double creditCardOccupation;
 
-    // 银行征信结果
-    private String bankCreditResultPdf;
+    /**
+     * 银行征信结果
+     */
+    private String bankCreditResult;
 
-    // 银行征信结果说明
+    /**
+     * 银行征信结果说明
+     */
     private String bankCreditResultRemark;
 
-    // 银行征信报告
-    private String bankReport;
+    /** ************************ 客户基本信息 ************************ */
 
-    // 大数据报告
-    private String dataReport;
+    /**
+     * 性别
+     */
+    private String gender;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 政治面貌
+     */
+    private String political;
+
+    /**
+     * 民族
+     */
+    private String nation;
+
+    /**
+     * 学历
+     */
+    private String education;
+
+    /**
+     * 职业
+     */
+    private String workProfession;
+
+    /**
+     * 职称
+     */
+    private String postTitle;
+
+    /**
+     * 客户生日
+     */
+    private String customerBirth;
+
+    /**
+     * 现有车辆类型
+     */
+    private String carType;
+
+    /**
+     * 有无驾照
+     */
+    private String isDriceLicense;
+
+    /**
+     * 主要收入来源
+     */
+    private String mainIncome;
+
+    /**
+     * 其他收入说明
+     */
+    private String otherIncomeNote;
+
+    /**
+     * 房产证情况
+     */
+    private String isHouseProperty;
+
+    /** *********************** 紧急联系人信息 ************************ */
+
+    /**
+     * 联系人1姓名
+     */
+    private String emergencyName1;
+
+    /**
+     * 联系人1性别
+     */
+    private String emergencySex1;
+
+    /**
+     * 联系人1与申请人关系
+     */
+    private String emergencyRelation1;
+
+    /**
+     * 联系人1手机号码
+     */
+    private String emergencyMobile1;
+
+    /**
+     * 联系人2姓名
+     */
+    private String emergencyName2;
+
+    /**
+     * 联系人2性别
+     */
+    private String emergencySex2;
+
+    /**
+     * 联系人2与申请人关系
+     */
+    private String emergencyRelation2;
+
+    /**
+     * 联系人2手机号码
+     */
+    private String emergencyMobile2;
+
+    /** *********************** 工作信息 ************************ */
+
+    /**
+     * 所属行业
+     */
+    private String workBelongIndustry;
+
+    /**
+     * 单位性质
+     */
+    private String workCompanyProperty;
+
+    /**
+     * 工作单位名称
+     */
+    private String companyName;
+
+    /**
+     * 工作单位所在省
+     */
+    private String companyProvince;
+
+    /**
+     * 工作单位所在市
+     */
+    private String companyCity;
+
+    /**
+     * 工作单位所在区
+     */
+    private String companyArea;
+
+    /**
+     * 工作单位地址
+     */
+    private String companyAddress;
+
+    /**
+     * 工作单位联系电话
+     */
+    private String companyContactNo;
+
+    /**
+     * 何时进入现单位工作
+     */
+    private String workDatetime;
+
+    /**
+     * 职位
+     */
+    private String position;
+
+    /**
+     * 员工数量
+     */
+    private String employeeQuantity;
+
+    /**
+     * 企业月产值
+     */
+    private String enterpriseMonthOutput;
+
+    /**
+     * 月收入
+     */
+    private Long monthIncome;
+
+    /**
+     * 工作描述及还款来源分析（已确定）
+     */
+    private String otherWorkNote;
+
+    /** ********************** 家庭信息 ************************ */
+
+    /**
+     * 婚姻状况
+     */
+    private String marryState;
+
+    /**
+     * 家庭人口
+     */
+    private Integer familyNumber;
+
+    /**
+     * 家庭电话
+     */
+    private String familyPhone;
+
+    /**
+     * 家庭主要财产
+     */
+    private String familyMainAsset;
+
+    /**
+     * 主要财产包括
+     */
+    private String mainAssetInclude;
+
+    /**
+     * 户籍地省
+     */
+    private String birthAddressProvince;
+
+    /**
+     * 户籍地市
+     */
+    private String birthAddressCity;
+
+    /**
+     * 户籍地区
+     */
+    private String birthAddressArea;
+
+    /**
+     * 户籍地详细地址
+     */
+    private String birthAddress;
+
+    /**
+     * 户口所在地邮编
+     */
+    private String birthPostCode;
+
+    /**
+     * 现住房屋类型
+     */
+    private String nowHouseType;
+
+    /**
+     * 现住地址省
+     */
+    private String nowAddressProvince;
+
+    /**
+     * 现住地址市
+     */
+    private String nowAddressCity;
+
+    /**
+     * 现住地址区
+     */
+    private String nowAddressArea;
+
+    /**
+     * 现居住地址
+     */
+    private String nowAddress;
+
+    /**
+     * 何时入住现居住地址
+     */
+    private String nowAddressDate;
+
+    /**
+     * 现居住地址邮编
+     */
+    private String nowPostCode;
+
+    /**
+     * 是否为第一担保人
+     */
+    private String isFirstGua;
+
+    /**
+     * ******************* 辅助字段 ************************
+     */
 
     // 征信人员列表
     private List<CreditUser> creditUserList;
 
-    public String getBankReport() {
-        return bankReport;
-    }
-
-    public void setBankReport(String bankReport) {
-        this.bankReport = bankReport;
-    }
-
-    public String getDataReport() {
-        return dataReport;
-    }
-
-    public void setDataReport(String dataReport) {
-        this.dataReport = dataReport;
-    }
-
-    public String getBankCreditResultRemark() {
-        return bankCreditResultRemark;
-    }
-
-    public void setBankCreditResultRemark(String bankCreditResultRemark) {
-        this.bankCreditResultRemark = bankCreditResultRemark;
-    }
-
-    public Double getCreditCardOccupation() {
-        return creditCardOccupation;
-    }
-
-    public void setCreditCardOccupation(Double creditCardOccupation) {
-        this.creditCardOccupation = creditCardOccupation;
-    }
-
-    public List<CreditUser> getCreditUserList() {
-        return creditUserList;
-    }
-
-    public void setCreditUserList(List<CreditUser> creditUserList) {
-        this.creditUserList = creditUserList;
-    }
-
-    public String getBankCreditResultPdf() {
-        return bankCreditResultPdf;
-    }
-
-    public void setBankCreditResultPdf(String bankCreditResultPdf) {
-        this.bankCreditResultPdf = bankCreditResultPdf;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCreditCode() {
-        return creditCode;
-    }
-
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getRelation() {
-        return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation;
-    }
-
-    public String getLoanRole() {
-        return loanRole;
-    }
-
-    public void setLoanRole(String loanRole) {
-        this.loanRole = loanRole;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getIdNoFront() {
-        return idNoFront;
-    }
-
-    public void setIdNoFront(String idNoFront) {
-        this.idNoFront = idNoFront;
-    }
-
-    public String getIdNoReverse() {
-        return idNoReverse;
-    }
-
-    public void setIdNoReverse(String idNoReverse) {
-        this.idNoReverse = idNoReverse;
-    }
-
-    public String getAuthPdf() {
-        return authPdf;
-    }
-
-    public void setAuthPdf(String authPdf) {
-        this.authPdf = authPdf;
-    }
-
-    public String getInterviewPic() {
-        return interviewPic;
-    }
-
-    public void setInterviewPic(String interviewPic) {
-        this.interviewPic = interviewPic;
-    }
-
-    /*
-     * // 月收入 private Long monthIncome; // 结息 private Double settleInterest; //
-     * 余额 private Long balance; // 流水是否体现月收入 private String jourShowIncome; //
-     * 是否打件 private String isPrint;
+    /**
+     * 征信报告
      */
+    // 工行征信编号
+    private String icbankCode;
 
+    // 工行征信结果
+    private String result;
+
+    // 工行征信贷款逾期记录
+    private String loanCrdt;
+
+    // 工行征信信用卡逾期记录
+    private String cardCrdt;
+
+    // 工行征信专项卡分期笔数
+    private Long leftNum;
+
+    // 工行征信未结清余额
+    private Long leftAmount;
+
+    // 工行征信备注
+    private String note;
+
+    // 工行征信回调状态
+    private String status;
+
+    private List<Attachment> attachments;
+
+    /**
+     * ************** 附件图片 ************************
+     */
+    private String idFront;
+
+    private String idReverse;
+
+    private String authPdf;
+
+    private String interviewPic;
+
+    private String dataCreditReport;
+
+    private String BankCreditReport;
+
+    private String driceLicense;
+
+    private String marryPdf;
+
+    private String otherPdf;
+
+    private String workAssetPdf;
+
+    private String singleProvePdf;
+
+    private String incomeProvePdf;
+
+    private String liveProvePdf;
+
+    private String buildProvePdf;
 }

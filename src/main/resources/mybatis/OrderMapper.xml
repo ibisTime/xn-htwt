@@ -1,157 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.IOrderDAO">
-	<resultMap id="order_DB_Result" type="order">
-		<result column="code" property="code" />
-		
-		<result column="receiver" property="receiver" />
-		<result column="re_mobile" property="reMobile" />
-		<result column="re_address" property="reAddress" />
-		
-		<result column="apply_user" property="applyUser" />
-		<result column="apply_note" property="applyNote" />
-		<result column="apply_datetime" property="applyDatetime" />
-		<result column="amount" property="amount" />
-		<result column="yunfei" property="yunfei" />
-		
-		
-		<result column="status" property="status" />
-		<result column="pay_type" property="payType" />
-		<result column="pay_group" property="payGroup" />
-		<result column="pay_code" property="payCode" />
-		<result column="pay_datetime" property="payDatetime" />
-		
-		<result column="pay_amount" property="payAmount" />
-		
-		<result column="updater" property="updater" />
-		<result column="update_datetime" property="updateDatetime" />
-		
-		<result column="remark" property="remark" />
-	</resultMap>
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="codeQuery != null and codeQuery != '' ">
-				AND t.code like "%"#{codeQuery}"%"
-			</if>
-			<if test="receiver != null and receiver != '' ">
-				AND t.receiver like "%"#{receiver}"%"
-			</if>
-			<if test="reMobile != null and reMobile != '' ">
-				AND t.re_mobile like "%"#{reMobile}"%"
-			</if>
-			<if test="applyUser != null and applyUser != '' ">
-				AND t.apply_user = #{applyUser}
-			</if>
-			
-			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
-				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
-			</if>
-			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
-				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
-			</if>
-			<if test="status != null and status != '' ">
-				<choose>
-					<when test='status == "payed"'>
-						AND t.status not in(1)
-					</when>
-					<when test='status == "effect"'>
-						AND t.status not in(1,91)
-					</when>
-				    <otherwise>
-						AND t.status = #{status}
-					</otherwise>
-				</choose>
-			</if>
-			<if test="statusList != null and statusList.size() != 0 ">
-				AND t.status in 
-                <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
-	            	#{item}
-                </foreach> 
-			</if>
-			<if test="frontStatus != null and frontStatus != '' ">
-				AND t.status not in (94)
-			</if>
-			<if test="payType != null and payType != '' ">
-				AND t.pay_type = #{payType}
-			</if>
-			<if test="payGroup != null and payGroup != '' ">
-				AND t.pay_group = #{payGroup}
-			</if>
-			<if test="payCode != null and payCode != '' ">
-				AND t.pay_code = #{payCode}
-			</if>
-			<if test="payDatetimeStart != null and payDatetimeStart != '' ">
-				<![CDATA[AND t.pay_datetime >= #{payDatetimeStart}]]>
-			</if>
-			<if test="payDatetimeEnd != null and payDatetimeEnd != '' ">
-				<![CDATA[AND t.pay_datetime <= #{payDatetimeEnd}]]>
-			</if>
-			<if test="deliverer != null and deliverer != '' ">
-				AND t.deliverer like "%"#{deliverer}"%"
-			</if>
-			<if test="deliveryDatetimeStart != null and deliveryDatetimeStart != '' ">
-				<![CDATA[AND t.delivery_datetime >= #{deliveryDatetimeStart}]]>
-			</if>
-			<if test="deliveryDatetimeEnd != null and deliveryDatetimeEnd != '' ">
-				<![CDATA[AND t.delivery_datetime <= #{deliveryDatetimeEnd}]]>
-			</if>
-			<if test="logisticsCode != null and logisticsCode != ''">
-				AND t.logistics_code like "%"#{logisticsCode}"%"
-			</if>
-			<if test="logisticsCompany != null and logisticsCompany != '' ">
-				AND t.logistics_company = #{logisticsCompany}
-			</if>
-			<if test="realName != null and realName != '' ">
-				AND u.real_name = #{realName}
-			</if>
-		</trim>
-	</sql>
-	<select id="select_order" parameterType="order" resultMap="order_DB_Result">
-		SELECT
-		t.code
-		,t.receiver
-		,t.re_mobile
-		,t.re_address
-		
-		,t.apply_user
-		,t.apply_note
-		,t.apply_datetime
-		,t.amount
-		,t.yunfei
-		
-		
-		,t.status
-		,t.pay_type
-		,t.pay_group
-		,t.pay_code
-		,t.pay_datetime
-		
-		,t.pay_amount
-		,t.updater
-		,t.update_datetime
-		
-		,t.remark
-		FROM
-		tmall_order t left join tstd_user u on t.apply_user = u.user_id
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				${order}
-			</if>
-		</trim>
-	</select>
+    <resultMap id="order_DB_Result" type="order">
+        <result column="code" property="code"/>
 
-	<select id="select_order_count" parameterType="order"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tmall_order t left join tstd_user u on t.apply_user = u.user_id
-		<include refid="where_condition" />
-	</select>
+        <result column="receiver" property="receiver"/>
+        <result column="re_mobile" property="reMobile"/>
+        <result column="re_address" property="reAddress"/>
 
-	<insert id="insert_order" parameterType="order">
+        <result column="apply_user" property="applyUser"/>
+        <result column="apply_note" property="applyNote"/>
+        <result column="apply_datetime" property="applyDatetime"/>
+        <result column="amount" property="amount"/>
+        <result column="yunfei" property="yunfei"/>
+
+
+        <result column="status" property="status"/>
+        <result column="pay_type" property="payType"/>
+        <result column="pay_group" property="payGroup"/>
+        <result column="pay_code" property="payCode"/>
+        <result column="pay_datetime" property="payDatetime"/>
+
+        <result column="pay_amount" property="payAmount"/>
+
+        <result column="updater" property="updater"/>
+        <result column="update_datetime" property="updateDatetime"/>
+
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="codeQuery != null and codeQuery != '' ">
+                AND t.code like "%"#{codeQuery}"%"
+            </if>
+            <if test="receiver != null and receiver != '' ">
+                AND t.receiver like "%"#{receiver}"%"
+            </if>
+            <if test="reMobile != null and reMobile != '' ">
+                AND t.re_mobile like "%"#{reMobile}"%"
+            </if>
+            <if test="applyUser != null and applyUser != '' ">
+                AND t.apply_user = #{applyUser}
+            </if>
+
+            <if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+                <![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+            </if>
+            <if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+                <![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
+            </if>
+            <if test="status != null and status != '' ">
+                <choose>
+                    <when test='status == "payed"'>
+                        AND t.status not in(1)
+                    </when>
+                    <when test='status == "effect"'>
+                        AND t.status not in(1,91)
+                    </when>
+                    <otherwise>
+                        AND t.status = #{status}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="statusList != null and statusList.size() != 0 ">
+                AND t.status in
+                <foreach item="item" index="index" collection="statusList" open="(" separator=","
+                        close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="frontStatus != null and frontStatus != '' ">
+                AND t.status not in (94)
+            </if>
+            <if test="payType != null and payType != '' ">
+                AND t.pay_type = #{payType}
+            </if>
+            <if test="payGroup != null and payGroup != '' ">
+                AND t.pay_group = #{payGroup}
+            </if>
+            <if test="payCode != null and payCode != '' ">
+                AND t.pay_code = #{payCode}
+            </if>
+            <if test="payDatetimeStart != null and payDatetimeStart != '' ">
+                <![CDATA[AND t.pay_datetime >= #{payDatetimeStart}]]>
+            </if>
+            <if test="payDatetimeEnd != null and payDatetimeEnd != '' ">
+                <![CDATA[AND t.pay_datetime <= #{payDatetimeEnd}]]>
+            </if>
+            <if test="deliveryDatetimeStart != null and deliveryDatetimeStart != '' ">
+                <![CDATA[AND t.delivery_datetime >= #{deliveryDatetimeStart}]]>
+            </if>
+            <if test="deliveryDatetimeEnd != null and deliveryDatetimeEnd != '' ">
+                <![CDATA[AND t.delivery_datetime <= #{deliveryDatetimeEnd}]]>
+            </if>
+            <if test="realName != null and realName != '' ">
+                AND u.real_name = #{realName}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_order" parameterType="order" resultMap="order_DB_Result">
+        SELECT
+        t.code
+        ,t.receiver
+        ,t.re_mobile
+        ,t.re_address
+
+        ,t.apply_user
+        ,t.apply_note
+        ,t.apply_datetime
+        ,t.amount
+        ,t.yunfei
+
+
+        ,t.status
+        ,t.pay_type
+        ,t.pay_group
+        ,t.pay_code
+        ,t.pay_datetime
+
+        ,t.pay_amount
+        ,t.updater
+        ,t.update_datetime
+
+        ,t.remark
+        FROM
+        tmall_order t left join tstd_user u on t.apply_user = u.user_id
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                ${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_order_count" parameterType="order"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tmall_order t left join tstd_user u on t.apply_user = u.user_id
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_order" parameterType="order">
 		INSERT INTO tmall_order(
 		
 		code
@@ -191,7 +183,7 @@
 		)
 	</insert>
 
-	<update id="update_userCancel" parameterType="order">
+    <update id="update_userCancel" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -201,8 +193,8 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_platCancel" parameterType="order">
+
+    <update id="update_platCancel" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -212,16 +204,13 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	
-	<update id="update_deliverLogistics" parameterType="order">
+
+
+    <update id="update_deliverLogistics" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
-		,deliverer = #{deliverer}
 		,delivery_datetime = #{deliveryDatetime}
-		,logistics_company = #{logisticsCompany}
-		,logistics_code = #{logisticsCode}
 		,pdf = #{pdf}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
@@ -229,8 +218,8 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_payYESuccess" parameterType="order">
+
+    <update id="update_payYESuccess" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -243,8 +232,8 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_paySuccess" parameterType="order">
+
+    <update id="update_paySuccess" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -255,8 +244,8 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_status" parameterType="order">
+
+    <update id="update_status" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -265,8 +254,8 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_payRelationSuccess" parameterType="order">
+
+    <update id="update_payRelationSuccess" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -279,8 +268,8 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_confirm" parameterType="order">
+
+    <update id="update_confirm" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -290,8 +279,8 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_comment" parameterType="order">
+
+    <update id="update_comment" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}
@@ -299,24 +288,24 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<update id="update_payGroup" parameterType="order">
+
+    <update id="update_payGroup" parameterType="order">
 		UPDATE tmall_order
 		SET
 		pay_group = #{payGroup}
 		,pay_type = #{payType}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="update_yunfei" parameterType="order">
+
+    <update id="update_yunfei" parameterType="order">
 		UPDATE tmall_order
 		SET
 		yunfei = #{yunfei}
 		WHERE code = #{code}
 	</update>
-	
-	
-	<update id="update_remove" parameterType="order">
+
+
+    <update id="update_remove" parameterType="order">
 		UPDATE tmall_order
 		SET
 		status = #{status}

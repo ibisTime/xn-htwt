@@ -1,265 +1,276 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ISYSBizLogDAO">
-	<resultMap id="sysBizLog_DB_Result" type="sysBizLog">
-		<result column="id" property="id" />
-		<result column="biz_code" property="bizCode" />
-		<result column="ref_type" property="refType" />
-		<result column="ref_order" property="refOrder" />
-		<result column="deal_node" property="dealNode" />
-		
-		<result column="deal_note" property="dealNote" />
-		<result column="operate_role" property="operateRole" />
-		<result column="operator" property="operator" />
-		<result column="operator_name" property="operatorName" />
-		<result column="operator_mobile" property="operatorMobile" />
-		
-		<result column="start_datetime" property="startDatetime" />
-		<result column="end_datetime" property="endDatetime" />
-		<result column="speed_time" property="speedTime" />
-	</resultMap>
-	
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="id != null ">
-				AND t.id = #{id}
-			</if>
-			<if test="bizCode != null and bizCode != '' ">
-				AND t.biz_code = #{bizCode}
-			</if>
-			<if test="refType != null and refType != '' ">
-				AND t.ref_type = #{refType}
-			</if>
-			<if test="refOrder != null and refOrder != '' ">
-				AND t.ref_order = #{refOrder}
-			</if>
-			<if test="dealNode != null and dealNode != '' ">
-				AND t.deal_node = #{dealNode}
-			</if>
-			<if test="operateRole != null and operateRole != '' ">
-				AND t.operate_role = #{operateRole}
-			</if>
-			<if test="operator != null and operator != '' ">
-				AND t.operator = #{operator}
-			</if>
-			<if test="operatorName != null and operatorName != '' ">
-				AND t.operator_name = #{operatorName}
-			</if>
-			<if test="operatorNameForQuery != null and operatorNameForQuery != '' ">
-				AND t.operator_name like "%"#{operatorNameForQuery}"%"
-			</if>
-			<if test="operatorMobile != null and operatorMobile != '' ">
-				AND t.operator_mobile = #{operatorMobile}
-			</if>
-			<if test="refOrderForQuery != null and refOrderForQuery != '' ">
-				AND t.ref_order like "%"#{refOrderForQuery}"%"
-			</if>
-			<if test="operatorMobileForQuery != null and operatorMobileForQuery != '' ">
-				AND t.operator_mobile like "%"#{operatorMobileForQuery}"%"
-			</if>
-			<if test="roleCode != null and roleCode != '' ">
-				AND trn.role_code = #{roleCode}
-			</if>
-			<if test="isLogistics != null and isLogistics != ''">
-				AND b.is_logistics = #{isLogistics}
-			</if>
-			<if test="endDatetime != null and endDatetime!=''">
-				<![CDATA[AND t.end_datetime <= #{endDatetime}]]>
-			</if>
-		</trim>
-	</sql>
-	<select id="select_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT
-		t.id
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		
-		,t.deal_note
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		FROM
-		tsys_biz_log t
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	<select id="select_last_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT
-		t.id
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		
-		,t.deal_note
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		,max(t.end_datetime)
-		FROM
-		tsys_biz_log t
-		<include refid="where_condition" />
-	</select>
-	
-	<select id="select_sysBizLog_count" parameterType="sysBizLog"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tsys_biz_log t
-		<include refid="where_condition" />
-	</select>
-	
-	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		(SELECT
-		t.id
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		
-		,t.deal_note
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
-			left join tdq_budget_order b on b.code = t.parent_order 
-		where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} 
-		<if test="refType != null and refType != '' ">
-    		AND t.ref_type = #{refType}
-  		</if>
-		<if test="bizCode != null and bizCode != '' ">
-			AND t.biz_code = #{bizCode}
-		</if>
-		order by t.start_datetime desc)
-		union
-		(SELECT
-		t.id
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		
-		,t.deal_note
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
-			where trn.role_code = #{roleCode} and t.ref_type = '012'
-		<if test="refType != null and refType != '' ">
-    		AND t.ref_type = #{refType}
-  		</if>
-		<if test="bizCode != null and bizCode != '' ">
-			AND t.biz_code = #{bizCode}
-		</if>
-		order by t.start_datetime desc)
-		union
-		(SELECT
-		t.id
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		
-		,t.deal_note
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
-			left join tdq_credit c on t.parent_order = c.code 
-			where trn.role_code = #{roleCode} and t.ref_type = '001'
-		<if test="refType != null and refType != '' ">
-    		AND t.ref_type = #{refType}
-  		</if>
-		<if test="bizCode != null and bizCode != '' ">
-			AND t.biz_code = #{bizCode}
-		</if>
-		order by t.start_datetime desc)
-	</select>
-	
-	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
-		resultType="java.lang.Long">
-         select count(*) from ((SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.ref_order where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics} 
-		<if test="refType != null and refType != '' ">
-    		AND t.ref_type = #{refType}
-  		</if>
-		<if test="refOrder != null and refOrder != '' ">
-			AND t.ref_order = #{refOrder}
-		</if>
-		) 
-		union
-		(SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code where trn.role_code = #{roleCode} and t.ref_type = '012'
-		<if test="refType != null and refType != '' ">
-    		AND t.ref_type = #{refType}
-  		</if>
-		<if test="refOrder != null and refOrder != '' ">
-			AND t.ref_order = #{refOrder}
-		</if>
-		) 
-		union
-		(SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code left join tdq_credit c on t.ref_order = c.code where trn.role_code = #{roleCode} and t.ref_type = '001'
-		<if test="refType != null and refType != '' ">
-    		AND t.ref_type = #{refType}
-  		</if>
-		<if test="refOrder != null and refOrder != '' ">
-			AND t.ref_order = #{refOrder}
-		</if>
-		)) a
-	</select>
-	
-	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT
-		t.id
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		
-		,t.deal_note
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		FROM
-		tsys_biz_log t where t.id in (select max(id) FROM tsys_biz_log t
-		<include refid="where_condition" />)
-	</select>
+    <resultMap id="sysBizLog_DB_Result" type="sysBizLog">
+        <result column="id" property="id"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="ref_type" property="refType"/>
+        <result column="ref_order" property="refOrder"/>
+        <result column="deal_node" property="dealNode"/>
 
-	<insert id="insert_sysBizLog" parameterType="sysBizLog" useGeneratedKeys="true">
+        <result column="deal_note" property="dealNote"/>
+        <result column="operate_role" property="operateRole"/>
+        <result column="operator" property="operator"/>
+        <result column="operator_name" property="operatorName"/>
+        <result column="operator_mobile" property="operatorMobile"/>
+
+        <result column="start_datetime" property="startDatetime"/>
+        <result column="end_datetime" property="endDatetime"/>
+        <result column="speed_time" property="speedTime"/>
+
+        <result column="logistics_status" property="logisticsStatus"/>
+    </resultMap>
+
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null ">
+                AND t.id = #{id}
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="refType != null and refType != '' ">
+                AND t.ref_type = #{refType}
+            </if>
+            <if test="refOrder != null and refOrder != '' ">
+                AND t.ref_order = #{refOrder}
+            </if>
+            <if test="dealNode != null and dealNode != '' ">
+                AND t.deal_node = #{dealNode}
+            </if>
+            <if test="operateRole != null and operateRole != '' ">
+                AND t.operate_role = #{operateRole}
+            </if>
+            <if test="operator != null and operator != '' ">
+                AND t.operator = #{operator}
+            </if>
+            <if test="operatorName != null and operatorName != '' ">
+                AND t.operator_name = #{operatorName}
+            </if>
+            <if test="operatorNameForQuery != null and operatorNameForQuery != '' ">
+                AND t.operator_name like "%"#{operatorNameForQuery}"%"
+            </if>
+            <if test="operatorMobile != null and operatorMobile != '' ">
+                AND t.operator_mobile = #{operatorMobile}
+            </if>
+            <if test="refOrderForQuery != null and refOrderForQuery != '' ">
+                AND t.ref_order like "%"#{refOrderForQuery}"%"
+            </if>
+            <if test="operatorMobileForQuery != null and operatorMobileForQuery != '' ">
+                AND t.operator_mobile like "%"#{operatorMobileForQuery}"%"
+            </if>
+            <if test="roleCode != null and roleCode != '' ">
+                AND trn.role_code = #{roleCode}
+            </if>
+            <if test="isLogistics != null and isLogistics != ''">
+                AND b.is_logistics = #{isLogistics}
+            </if>
+            <if test="endDatetime != null and endDatetime!=''">
+                <![CDATA[AND t.end_datetime <= #{endDatetime}]]>
+            </if>
+        </trim>
+    </sql>
+    <select id="select_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+        SELECT
+        t.id
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.deal_node
+
+        ,t.deal_note
+        ,t.operate_role
+        ,t.operator
+        ,t.operator_mobile
+
+        ,t.start_datetime
+        ,t.end_datetime
+        ,t.speed_time
+        ,u.real_name as operator_name
+        ,l.status as logistics_status
+        FROM
+        tsys_biz_log t
+        left join tsys_user u on u.user_id = t.operator
+        left join tdq_logistics l on l.code = t.ref_order
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_last_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+        SELECT
+        t.id
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.deal_node
+
+        ,t.deal_note
+        ,t.operate_role
+        ,t.operator
+        ,t.operator_name
+        ,t.operator_mobile
+
+        ,t.start_datetime
+        ,t.end_datetime
+        ,t.speed_time
+        ,max(t.end_datetime)
+        FROM
+        tsys_biz_log t
+        <include refid="where_condition"/>
+    </select>
+
+    <select id="select_sysBizLog_count" parameterType="sysBizLog"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tsys_biz_log t
+        <include refid="where_condition"/>
+    </select>
+
+    <select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog"
+            resultMap="sysBizLog_DB_Result">
+        (SELECT
+        t.id
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.deal_node
+
+        ,t.deal_note
+        ,t.operate_role
+        ,t.operator
+        ,t.operator_name
+        ,t.operator_mobile
+
+        ,t.start_datetime
+        ,t.end_datetime
+        ,t.speed_time
+        FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code
+        left join tdq_budget_order b on b.code = t.parent_order
+        where trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics}
+        <if test="refType != null and refType != '' ">
+            AND t.ref_type = #{refType}
+        </if>
+        <if test="bizCode != null and bizCode != '' ">
+            AND t.biz_code = #{bizCode}
+        </if>
+        order by t.start_datetime desc)
+        union
+        (SELECT
+        t.id
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.deal_node
+
+        ,t.deal_note
+        ,t.operate_role
+        ,t.operator
+        ,t.operator_name
+        ,t.operator_mobile
+
+        ,t.start_datetime
+        ,t.end_datetime
+        ,t.speed_time
+        FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code
+        where trn.role_code = #{roleCode} and t.ref_type = '012'
+        <if test="refType != null and refType != '' ">
+            AND t.ref_type = #{refType}
+        </if>
+        <if test="bizCode != null and bizCode != '' ">
+            AND t.biz_code = #{bizCode}
+        </if>
+        order by t.start_datetime desc)
+        union
+        (SELECT
+        t.id
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.deal_node
+
+        ,t.deal_note
+        ,t.operate_role
+        ,t.operator
+        ,t.operator_name
+        ,t.operator_mobile
+
+        ,t.start_datetime
+        ,t.end_datetime
+        ,t.speed_time
+        FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node = trn.node_code
+        left join tdq_credit c on t.parent_order = c.code
+        where trn.role_code = #{roleCode} and t.ref_type = '001'
+        <if test="refType != null and refType != '' ">
+            AND t.ref_type = #{refType}
+        </if>
+        <if test="bizCode != null and bizCode != '' ">
+            AND t.biz_code = #{bizCode}
+        </if>
+        order by t.start_datetime desc)
+    </select>
+
+    <select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
+            resultType="java.lang.Long">
+        select count(*) from ((SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON
+        t.deal_node = trn.node_code left join tdq_budget_order b on b.code = t.ref_order where
+        trn.role_code = #{roleCode} and b.is_logistics = #{isLogistics}
+        <if test="refType != null and refType != '' ">
+            AND t.ref_type = #{refType}
+        </if>
+        <if test="refOrder != null and refOrder != '' ">
+            AND t.ref_order = #{refOrder}
+        </if>
+        )
+        union
+        (SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node =
+        trn.node_code where trn.role_code = #{roleCode} and t.ref_type = '012'
+        <if test="refType != null and refType != '' ">
+            AND t.ref_type = #{refType}
+        </if>
+        <if test="refOrder != null and refOrder != '' ">
+            AND t.ref_order = #{refOrder}
+        </if>
+        )
+        union
+        (SELECT t.id FROM tsys_biz_log t INNER JOIN tsys_role_node trn ON t.deal_node =
+        trn.node_code left join tdq_credit c on t.ref_order = c.code where trn.role_code =
+        #{roleCode} and t.ref_type = '001'
+        <if test="refType != null and refType != '' ">
+            AND t.ref_type = #{refType}
+        </if>
+        <if test="refOrder != null and refOrder != '' ">
+            AND t.ref_order = #{refOrder}
+        </if>
+        )) a
+    </select>
+
+    <select id="select_sysBizLog_latest" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+        SELECT
+        t.id
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.deal_node
+
+        ,t.deal_note
+        ,t.operate_role
+        ,t.operator
+        ,t.operator_name
+        ,t.operator_mobile
+
+        ,t.start_datetime
+        ,t.end_datetime
+        ,t.speed_time
+        FROM
+        tsys_biz_log t where t.id in (select max(id) FROM tsys_biz_log t
+        <include refid="where_condition"/>)
+    </select>
+
+    <insert id="insert_sysBizLog" parameterType="sysBizLog" useGeneratedKeys="true">
 		INSERT INTO
 		tsys_biz_log(
 		id
@@ -297,7 +308,7 @@
 		)
 	</insert>
 
-	<update id="update_sysBizLog" parameterType="sysBizLog">
+    <update id="update_sysBizLog" parameterType="sysBizLog">
 		UPDATE tsys_biz_log
 		SET
 		biz_code = #{bizCode}
@@ -316,16 +327,17 @@
 		,speed_time = #{speedTime}
 		WHERE id = #{id}
 	</update>
-	
-	<update id="update_datetime" parameterType="sysBizLog">
+
+    <update id="update_datetime" parameterType="sysBizLog">
 		UPDATE tsys_biz_log
 		SET
 		end_datetime = #{endDatetime}
 		,speed_time = #{speedTime}
 		WHERE id = #{id}
 	</update>
-	
-	<select id="select_latest_operate_record_by_bizCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+
+    <select id="select_latest_operate_record_by_bizCode" parameterType="sysBizLog"
+            resultMap="sysBizLog_DB_Result">
 		SELECT a.* FROM 
 		tsys_biz_log a,
 		(SELECT ref_order,max(end_datetime) as end_datetime FROM tsys_biz_log  
@@ -334,8 +346,9 @@
 		WHERE  
 		a.ref_order=b.ref_order and a.end_datetime=b.end_datetime
 	</select>
-	
-	<select id="select_latest_operate_credit_by_bizCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+
+    <select id="select_latest_operate_credit_by_bizCode" parameterType="sysBizLog"
+            resultMap="sysBizLog_DB_Result">
 		SELECT a.* FROM 
 		tsys_biz_log a,
 		(SELECT ref_order,max(start_datetime) as start_datetime FROM tsys_biz_log  
@@ -344,36 +357,37 @@
 		WHERE  
 		a.ref_order=b.ref_order and a.start_datetime=b.start_datetime and a.deal_node = '001_02'
 	</select>
-	
-	<select id="select_sysBizLog_byBizOrderType" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
-		SELECT
-		t.id
-		,t.biz_code
-		,t.ref_type
-		,t.ref_order
-		,t.deal_node
-		
-		,t.deal_note
-		,t.operate_role
-		,t.operator
-		,t.operator_name
-		,t.operator_mobile
-		
-		,t.start_datetime
-		,t.end_datetime
-		,t.speed_time
-		FROM
-		tsys_biz_log t  
-		WHERE t.ref_order LIKE CONCAT(#{bizOrderType},'%') GROUP BY t.ref_order
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	<select id="select_sysBizLog_count_byBizOrderType" parameterType="sysBizLog"
-		resultType="java.lang.Long">
+
+    <select id="select_sysBizLog_byBizOrderType" parameterType="sysBizLog"
+            resultMap="sysBizLog_DB_Result">
+        SELECT
+        t.id
+        ,t.biz_code
+        ,t.ref_type
+        ,t.ref_order
+        ,t.deal_node
+
+        ,t.deal_note
+        ,t.operate_role
+        ,t.operator
+        ,t.operator_name
+        ,t.operator_mobile
+
+        ,t.start_datetime
+        ,t.end_datetime
+        ,t.speed_time
+        FROM
+        tsys_biz_log t
+        WHERE t.ref_order LIKE CONCAT(#{bizOrderType},'%') GROUP BY t.ref_order
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_sysBizLog_count_byBizOrderType" parameterType="sysBizLog"
+            resultType="java.lang.Long">
 		SELECT count(1) FROM (SELECT * FROM tsys_biz_log WHERE ref_order LIKE #{bizOrderType}'%' GROUP BY ref_order) tb
 	</select>
 </mapper>

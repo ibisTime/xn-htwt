@@ -1,25 +1,25 @@
 /**
- * @Title Invoice.java 
- * @Package com.xnjr.mall.domain 
- * @Description 
- * @author xieyj  
- * @date 2016年5月23日 下午7:32:38 
- * @version V1.0   
+ * @Title Invoice.java
+ * @Package com.xnjr.mall.domain
+ * @Description
+ * @author xieyj
+ * @date 2016年5月23日 下午7:32:38
+ * @version V1.0
  */
 package com.cdkj.loan.domain;
 
+import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.Date;
 import java.util.List;
 
-import com.cdkj.loan.dao.base.ABaseDO;
-
-/** 
- * @author: xieyj 
+/**
+ * @author: xieyj
  * @since: 2016年5月23日 下午7:32:38 
  * @history:
  */
 public class SpecsOrder extends ABaseDO {
-    /** 
+
+    /**
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
      */
     private static final long serialVersionUID = -6380104639754144884L;
@@ -58,7 +58,7 @@ public class SpecsOrder extends ABaseDO {
     private Long price;
 
     // 首付比例
-    private double sfRate;
+    private Double sfRate;
 
     // 首付金额
     private Long sfAmount;
@@ -73,7 +73,7 @@ public class SpecsOrder extends ABaseDO {
     private String status;
 
     // 银行利率
-    private double bankRate;
+    private Double bankRate;
 
     // 运费
     private Long yunfei;
@@ -202,11 +202,11 @@ public class SpecsOrder extends ABaseDO {
         this.price = price;
     }
 
-    public double getSfRate() {
+    public Double getSfRate() {
         return sfRate;
     }
 
-    public void setSfRate(double sfRate) {
+    public void setSfRate(Double sfRate) {
         this.sfRate = sfRate;
     }
 
@@ -242,11 +242,11 @@ public class SpecsOrder extends ABaseDO {
         this.status = status;
     }
 
-    public double getBankRate() {
+    public Double getBankRate() {
         return bankRate;
     }
 
-    public void setBankRate(double bankRate) {
+    public void setBankRate(Double bankRate) {
         this.bankRate = bankRate;
     }
 

@@ -1,4 +1,4 @@
-﻿package com.cdkj.loan.demo;
+package com.cdkj.loan.demo;
 
 import java.util.ArrayList;
 import java.util.Collections;

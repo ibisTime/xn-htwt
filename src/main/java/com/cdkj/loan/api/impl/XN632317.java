@@ -1,7 +1,5 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.IRepointAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -13,13 +11,15 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 列表查询返点支付
- * @author: jiafr 
- * @since: 2018年6月9日 下午2:34:34 
+ *
+ * @author: jiafr
+ * @since: 2018年6月9日 下午2:34:34
  * @history:
  */
 public class XN632317 extends AProcessor {
+
     private IRepointAO repointAO = SpringContextHolder
-        .getBean(IRepointAO.class);
+            .getBean(IRepointAO.class);
 
     private XN632317Req req = null;
 
@@ -29,11 +29,6 @@ public class XN632317 extends AProcessor {
         condition.setTeamCode(req.getTeamCode());
         condition.setStatus(req.getStatus());
 
-        String orderColumn = req.getOrderColumn();
-        if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IRepointAO.DEFAULT_ORDER_COLUMN;
-        }
-        condition.setOrder(orderColumn, req.getOrderDir());
         return repointAO.queryRepointList(condition);
     }
 

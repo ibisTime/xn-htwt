@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICreditJourDAO">
+    <resultMap id="creditJour_DB_Result" type="creditJour">
+        <result column="code" property="code"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="credit_user_code" property="creditUserCode"/>
+        <result column="type" property="type"/>
+        <result column="datetime_start" property="datetimeStart"/>
+
+        <result column="datetime_end" property="datetimeEnd"/>
+        <result column="jour_interest1" property="jourInterest1"/>
+        <result column="jour_interest2" property="jourInterest2"/>
+        <result column="interest1" property="interest1"/>
+        <result column="interest2" property="interest2"/>
+
+        <result column="income" property="income"/>
+        <result column="expend" property="expend"/>
+        <result column="balance" property="balance"/>
+        <result column="month_income" property="monthIncome"/>
+        <result column="month_expend" property="monthExpend"/>
+
+        <result column="pic" property="pic"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="creditUserCode != null and creditUserCode != '' ">
+                AND t.credit_user_code = #{creditUserCode}
+            </if>
+            <if test="type != null and type != '' ">
+                AND t.type = #{type}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="select_creditJour" parameterType="creditJour" resultMap="creditJour_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.credit_user_code
+        ,t.type
+        ,t.datetime_start
+
+        ,t.datetime_end
+        ,t.jour_interest1
+        ,t.jour_interest2
+        ,t.interest1
+        ,t.interest2
+
+        ,t.income
+        ,t.expend
+        ,t.balance
+        ,t.month_income
+        ,t.month_expend
+
+        ,t.pic
+        ,t.remark
+        FROM
+        tdq_credit_jour t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_creditJour_count" parameterType="creditJour"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tdq_credit_jour t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_creditJour" parameterType="creditJour">
+		INSERT INTO
+		tdq_credit_jour(
+		code
+		,biz_code
+		,credit_user_code
+		,type
+		,datetime_start
+		
+		,datetime_end
+		,jour_interest1
+		,jour_interest2
+		,interest1
+		,interest2
+		
+		,income
+		,expend
+		,balance
+		,month_income
+		,month_expend
+		
+		,pic
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{creditUserCode}
+		,#{type}
+		,#{datetimeStart}
+		
+		,#{datetimeEnd}
+		,#{jourInterest1}
+		,#{jourInterest2}
+		,#{interest1}
+		,#{interest2}
+		
+		,#{income}
+		,#{expend}
+		,#{balance}
+		,#{monthIncome}
+		,#{monthExpend}
+		
+		,#{pic}
+		,#{remark}
+		)
+	</insert>
+
+    <update id="update_creditJour" parameterType="creditJour">
+		UPDATE tdq_credit_jour
+		SET
+		datetime_start = #{datetimeStart}
+		,datetime_end = #{datetimeEnd}
+		,jour_interest1 = #{jourInterest1}
+		,jour_interest2 = #{jourInterest2}
+		,interest1 = #{interest1}
+		,interest2 = #{interest2}
+		,income = #{income}
+		,expend = #{expend}
+		,balance = #{balance}
+		,month_income = #{monthIncome}
+		,month_expend = #{monthExpend}
+		,pic = #{pic}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+    <delete id="delete_creditJour" parameterType="creditJour">
+		DELETE FROM tdq_credit_jour
+		WHERE code=#{code}
+	</delete>
+
+    <insert id="insert_jourList" parameterType="List">
+        INSERT INTO
+        tdq_credit_jour(
+        code
+        ,biz_code
+        ,credit_user_code
+        ,type
+        ,datetime_start
+
+        ,datetime_end
+        ,jour_interest1
+        ,jour_interest2
+        ,interest1
+        ,interest2
+
+        ,income
+        ,expend
+        ,balance
+        ,month_income
+        ,month_expend
+
+        ,pic
+        ,remark
+        )
+        VALUES
+        <foreach collection="list" item="domain" separator=",">
+            (#{domain.code}
+            ,#{domain.bizCode}
+            ,#{domain.creditUserCode}
+            ,#{domain.type}
+            ,#{domain.datetimeStart}
+
+            ,#{domain.datetimeEnd}
+            ,#{domain.jourInterest1}
+            ,#{domain.jourInterest2}
+            ,#{domain.interest1}
+            ,#{domain.interest2}
+
+            ,#{domain.income}
+            ,#{domain.expend}
+            ,#{domain.balance}
+            ,#{domain.monthIncome}
+            ,#{domain.monthExpend}
+
+            ,#{domain.pic}
+            ,#{domain.remark}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

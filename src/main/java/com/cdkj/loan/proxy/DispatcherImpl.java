@@ -4,7 +4,9 @@ import com.cdkj.loan.api.IProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DispatcherImpl implements IDispatcher {
 
     @Override
@@ -24,7 +26,7 @@ public class DispatcherImpl implements IDispatcher {
              */
             classname = "com.cdkj.loan.api.impl.XN" + transcode;
             IProcessor processor = (IProcessor) ReflectUtil
-                .getInstance(classname);
+                    .getInstance(classname);
             // 接口调用
             Object data = processor.doProcessor(inputParams, operator);
             rm.setErrorCode(EErrorCode.SUCCESS.getCode());
@@ -38,6 +40,7 @@ public class DispatcherImpl implements IDispatcher {
                 rm.setErrorCode(EErrorCode.BIZ_ERR.getCode());
                 rm.setErrorInfo(((BizException) e).getErrorMessage());
                 rm.setData(e.getMessage());
+
             } else if (e instanceof ParaException) {
                 rm.setErrorCode(EErrorCode.PARA_ERR.getCode());
                 rm.setErrorInfo(((ParaException) e).getErrorMessage());
@@ -52,6 +55,8 @@ public class DispatcherImpl implements IDispatcher {
                 // rm.setErrorInfo("系统错误，请联系客服");
                 rm.setData(e.getMessage());
             }
+
+            log.error("错误异常:{}", e.getMessage());
         } finally {
             result = JsonUtil.Object2Json(rm);
         }

@@ -5,48 +5,93 @@ import java.util.Map;
 
 /**
  * 附件名字
- * @author: taojian 
- * @since: 2019年4月9日 下午8:57:29 
+ *
+ * @author: taojian
+ * @since: 2019年4月9日 下午8:57:29
  * @history:
  */
 public enum EAttachName {
 
     // 二手车资源
-    second_car_report("a1", "网页"), xsz_front("a2", "图片"), xsz_reverse("a3",
-            "图片"), car_check_reprot("a4", "图片"), // 车辆价格核实报告
+    second_car_report("second_car_report", "网页"),
+    xsz_front("drive_license_front", "图片"),
+    xsz_reverse("drive_license_reverse", "图片"),
+    car_check_reprot("third_valuation_pdf", "图片"), // 车辆价格核实报告
 
     // 主贷人资源
-    mainLoaner_bank("z1", "图片"), mainLoaner_id_front("z2", "图片"), mainLoaner_id_reverse(
-            "z3", "图片"), mainLoaner_auth_pdf("z4", "图片"), mainloaner_interview_pic(
-            "z5", "图片"),
+    mainLoaner_bank("bank_report_apply", "图片"),
+    mainLoaner_data("data_report_apply", "图片"),
+    mainLoaner_id_front("id_no_front_apply", "图片"),
+    mainLoaner_id_reverse("id_no_reverse_apply", "图片"),
+    mainLoaner_auth_pdf("auth_pdf_apply", "图片"),
+    mainloaner_interview_pic("interview_pic_apply", "图片"),
 
     // 共还人资源
-    replier_bank("g1", "图片"), replier_id_front("g2", "图片"), replier_id_reverse(
-            "g3", "图片"), replier_auth_pdf("g4", "图片"), replier_interview_pic(
-            "g5", "图片"),
+    replier_bank("bank_report_gh", "图片"),
+    replier_data("data_report_gh", "图片"),
+    replier_id_front("id_no_front_gh", "图片"),
+    replier_id_reverse("id_no_reverse_gh", "图片"),
+    replier_auth_pdf("auth_pdf_gh", "图片"),
+    replier_interview_pic("interview_pic_gh", "图片"),
 
     // 担保人资源
-    assurance_bank("d1", "图片"), assurance_id_front("d2", "图片"), assurance_id_reverse(
-            "d3", "图片"), assurance_auth_pdf("d4", "图片"), assurance_interview_pic(
-            "d5", "图片"),
+    assurance_bank("bank_report_gua0", "图片"),
+    assurance_data("data_report_gua0", "图片"),
+    assurance_id_front("id_no_front_gua0", "图片"),
+    assurance_id_reverse("id_no_reverse_gua0", "图片"),
+    assurance_auth_pdf("auth_pdf_gua0", "图片"),
+    assurance_interview_pic("interview_pic_gua0", "图片"),
 
-    // 银行征信报告
-    bank_credit_report("b1", "图片"),
-
-    // 大数据征信报告
-    data_credit_report("dcr1", "图片"),
+    assurance_bank1("bank_report_gua1", "图片"),
+    assurance_data1("data_report_gua1", "图片"),
+    assurance_id_front1("id_no_front_gua1", "图片"),
+    assurance_id_reverse1("id_no_reverse_gua1", "图片"),
+    assurance_auth_pdf1("auth_pdf_gua1", "图片"),
+    assurance_interview_pic1("interview_pic_gua1", "图片"),
 
     // 房屋信息
-    house_pic("h1", "图片"),
+    house_pic("house_picture_apply", "图片"),
 
     // 面签资源
-    bank_vedio("g1", "视频"), bank_photo("g2", "图片"), company_vedio("g3", "视频"), company_contract(
-            "g4", "图片"), bank_contract("g5", "图片"), advance_fund_pdf("g6", "图片"), other_vedio(
-            "g7", "视频"), interview_other_pdf("g8", "其他"),
+    bank_vedio("bank_video", "视频"),
+    bank_photo("bank_photo", "图片"),
+    company_vedio("company_video", "视频"),
+    company_contract("company_contract", "图片"),
+    bank_contract("bank_contract", "图片"),
+    advance_fund_pdf("advance_fund_amount_pdf", "图片"),
+    other_vedio("other_video", "视频"),
+    interview_other_pdf("interview_other_pdf", "其他"),
 
-    water_bill("h1", "图片")
+    // 录入准入单图片
+    carHgzPic("car_hgz_pic", "合格证"),
+    driveLicenseFront("drive_license_front", "行驶证正面"),
+    driveLicenseReverse("drive_license_reverse", "行驶证反面"),
+    workAssetPdf("work_asset_pdf", "工作资料上传"),
+    assetPdf("asset_pdf_apply", "申请人资产资料pdf"),
+    mateAssetPdf("asset_pdf_gh", "共还人资产资料pdf"),
+    guaAssetPdf("asset_pdf_gua0", "担保人资产资料pdf"),
+    guaAssetPdf1("asset_pdf_gua1", "担保人资产资料pdf"),
+    houseContract("house_contract", "购房合同"),
+    marryPdf("marry_pdf", "结婚证资料"),
+    carPic("car_pic", "车辆照片"),
+    otherPdf("other_pdf", "其他资料"),
+    otherPic("other_pic", "其他辅助资料"),
+    hkBookPdf("hkb_apply", "户口本资料"),
+    houseInvoice("house_invoice", "其他辅助资料"),
+    liveProvePdf("live_prove_pdf", "居住证明"),
+    buildProvePdf("build_prove_pdf", "自建房证明"),
+    housePictureApply("house_picture_apply", "家访照片"),
+    improvePdf("improve_pdf", "收入证明"),
+    frontTablePic("front_table_pic", "单位前台照片"),
+    workPlacePic("work_place_pic", "单位场地照片"),
+    salerAndcustomer("saler_and_customer", "业务员与客户合影"),
+    advanceBillPdf("advance_bill_pdf", "垫资水单"),
 
-    ;
+    //车辆抵押
+    pledgeUserIdCardFront("pledge_user_id_card_front", "代理人身份证正"),
+    pledgeUserIdCardReverse("pledge_user_id_card_reverse", "代理人身份证反"),
+
+    water_bill("h1", "图片");
 
     public static Map<String, EAttachName> getMap() {
         Map<String, EAttachName> map = new HashMap<String, EAttachName>();
@@ -80,5 +125,4 @@ public enum EAttachName {
     public void setValue(String value) {
         this.value = value;
     }
-
 }

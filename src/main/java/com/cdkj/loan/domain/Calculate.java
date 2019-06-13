@@ -1,10 +1,10 @@
 /**
- * @Title Calculate.java 
- * @Package com.cdkj.loan.domain 
- * @Description 
- * @author taojian  
- * @date 2019年3月13日 下午3:21:42 
- * @version V1.0   
+ * @Title Calculate.java
+ * @Package com.cdkj.loan.domain
+ * @Description
+ * @author taojian
+ * @date 2019年3月13日 下午3:21:42
+ * @version V1.0
  */
 package com.cdkj.loan.domain;
 
@@ -12,13 +12,14 @@ import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.enums.EBoolean;
 
-/** 
+/**
  * 车贷计算器
- * @author: taojian 
+ * @author: taojian
  * @since: 2019年3月13日 下午3:21:42 
  * @history:
  */
 public class Calculate {
+
     // 原价
     private Long saleAmount;
 
@@ -59,19 +60,21 @@ public class Calculate {
         if (EBoolean.YES.getCode().equals(isTotal)) {
             this.totalAmount = this.saleAmount + this.sybx + this.byhf;
         } else {
-            this.byhf += car.getFwAmount();
+            if (car.getFwAmount() != null) {
+                this.byhf += car.getFwAmount();
+            }
             this.sfAmount = car.getSfAmount();
             this.yjsfAmount = this.byhf + this.sybx + this.sfAmount;
             this.dkAmount = car.getSalePrice() - car.getSfAmount();
             this.dkTotalAmount = this.dkAmount;
             this.procedureAmount = AmountUtil.mul(this.dkTotalAmount,
-                AmountUtil.div(rate, Long.valueOf(1000)));
+                    AmountUtil.div(rate, Long.valueOf(1000)));
             this.monthReply = AmountUtil.divLL(this.dkTotalAmount
                     + this.procedureAmount, Long.valueOf(period));
             this.extraAmount = this.dkTotalAmount + this.procedureAmount
                     + this.sfAmount - this.saleAmount;
             this.totalAmount = AmountUtil.mul(this.monthReply,
-                Double.valueOf(period))
+                    Double.valueOf(period))
                     + this.yjsfAmount;
         }
 

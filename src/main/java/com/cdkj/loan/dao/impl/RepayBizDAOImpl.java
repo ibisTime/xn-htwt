@@ -1,12 +1,10 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.IRepayBizDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.RepayBiz;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository("repayBizDAOImpl")
 public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
@@ -18,31 +16,31 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public int delete(RepayBiz data) {
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_repayBiz"), data);
     }
 
     @Override
     public RepayBiz select(RepayBiz condition) {
         return super.select(NAMESPACE.concat("select_repayBiz"), condition,
-            RepayBiz.class);
+                RepayBiz.class);
     }
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
-            condition);
+        return super.selectTotalCount(
+                NAMESPACE.concat("select_repayBiz_count"), condition);
     }
 
     @Override
     public List<RepayBiz> selectList(RepayBiz condition) {
         return super.selectList(NAMESPACE.concat("select_repayBiz"), condition,
-            RepayBiz.class);
+                RepayBiz.class);
     }
 
     @Override
     public List<RepayBiz> selectList(RepayBiz condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_repayBiz"), start,
-            count, condition, RepayBiz.class);
+                count, condition, RepayBiz.class);
     }
 
     @Override
@@ -68,7 +66,7 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     @Override
     public int updateRepayBizRestAmount(RepayBiz data) {
         return super.update(NAMESPACE.concat("update_repayBiz_restAmount"),
-            data);
+                data);
     }
 
     @Override
@@ -145,14 +143,14 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     @Override
     public long selectTotalCountByRoleCode(RepayBiz condition) {
         return super.selectTotalCount(
-            NAMESPACE.concat("select_repayBiz_count_byRoleCode"), condition);
+                NAMESPACE.concat("select_repayBiz_count_byRoleCode"), condition);
     }
 
     @Override
     public List<RepayBiz> selectRepayBizByRoleCode(RepayBiz condition,
             int start, int pageSize) {
         return super.selectList(NAMESPACE.concat("select_repayBiz_byRoleCode"),
-            condition, RepayBiz.class);
+                condition, RepayBiz.class);
     }
 
     @Override
@@ -183,5 +181,10 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     @Override
     public void updateRestPeriods(RepayBiz data) {
         super.update(NAMESPACE.concat("update_restPeriods"), data);
+    }
+
+    @Override
+    public void updateRepayBiz(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_repayBiz"), data);
     }
 }

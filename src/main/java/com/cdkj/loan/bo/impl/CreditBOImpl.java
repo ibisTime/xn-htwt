@@ -1,12 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -25,11 +18,17 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 征信单
- * @author: jiafr 
- * @since: 2018年5月25日 下午1:40:05 
+ *
+ * @author: jiafr
+ * @since: 2018年5月25日 下午1:40:05
  * @history:
  */
 @Component
@@ -53,7 +52,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         credit.setCode(code);
         credit.setLoanBankCode(req.getLoanBankCode());
         credit.setBizCode(bizCode);
-        credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
+        credit.setLoanAmount(StringValidater.toLong(req.getCreditLoanAmount()));
         credit.setBizType(req.getBizType());
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
             credit.setSecondCarReport(req.getSecondCarReport());
@@ -61,19 +60,19 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
             credit.setXszReverse(req.getXszReverse());
             // 二手车报告
             EAttachName attachName = EAttachName.getMap().get(
-                EAttachName.second_car_report.getCode());
+                    EAttachName.second_car_report.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getSecondCarReport());
+                    attachName.getValue(), req.getSecondCarReport());
             // 行驶证正面
             attachName = EAttachName.getMap().get(
-                EAttachName.xsz_front.getCode());
+                    EAttachName.xsz_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getXszFront());
+                    attachName.getValue(), req.getXszFront());
             // 行驶证反面
             attachName = EAttachName.getMap().get(
-                EAttachName.xsz_reverse.getCode());
+                    EAttachName.xsz_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                attachName.getValue(), req.getXszReverse());
+                    attachName.getValue(), req.getXszReverse());
         }
         credit.setCompanyCode(sysUser.getCompanyCode());
         credit.setSaleUserId(sysUser.getUserId());
@@ -97,7 +96,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
             data = creditDAO.select(condition);
             if (null == data) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "征信单不存在！");
+                        "征信单不存在！");
             }
         }
         return data;
@@ -109,7 +108,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         condition.setCode(code);
         Credit credit = creditDAO.select(condition);
         List<CreditUser> creditUserList = creditUserBO
-            .queryCreditUserList(code);
+                .queryCreditUserList(code);
         credit.setCreditUserList(creditUserList);
         return credit;
     }
@@ -135,7 +134,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         Paginable<Credit> page = new Page<Credit>(start, limit, totalCount);
 
         List<Credit> dataList = creditDAO.selectReqBudgetByRoleCodeList(
-            condition, page.getStart(), page.getPageSize());
+                condition, page.getStart(), page.getPageSize());
 
         page.setList(dataList);
         return page;
@@ -151,7 +150,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         Paginable<Credit> page = new Page<Credit>(start, limit, totalCount);
 
         List<Credit> dataList = creditDAO.selectReqBudgetByIsCancel(condition,
-            page.getStart(), page.getPageSize());
+                page.getStart(), page.getPageSize());
 
         page.setList(dataList);
         return page;
@@ -167,7 +166,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         Paginable<Credit> page = new Page<Credit>(start, limit, totalCount);
 
         List<Credit> dataList = creditDAO.selectReqBudgetByNotCancel(condition,
-            page.getStart(), page.getPageSize());
+                page.getStart(), page.getPageSize());
 
         page.setList(dataList);
         return page;

@@ -1,15 +1,27 @@
 package com.cdkj.loan.bo;
 
-import java.util.Date;
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SpecsOrder;
+import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632500Req;
+import com.cdkj.loan.dto.req.XN632530Req;
+import java.util.Date;
+import java.util.List;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
+
+    public String removeByBizCode(String bizCode);
+
+    public String saveRepayBiz(RepayBiz repayBiz);
+
+    public String saveRepayBiz(XN632120Req req);
+
+    public String saveRepayBiz(XN632500Req req);
+
+    public String saveRepayBiz(XN632530Req req);
 
     public void refreshBankcardNew(String code, String bankcardCode,
             String updater, String remark);
@@ -46,20 +58,20 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             Long cutLyDeposit, String updater, String remark);
 
     // 驻行人员审核
-    public void approveByBankCheck(String code, String curNodeCode,
+    public void approveByBankCheck(RepayBiz repayBiz, String curNodeCode,
             Date settleDatetime, String settleAttach, String updater,
             String remark);
 
     // 总经理审核
-    public void approveByManager(String code, String curNodeCode,
+    public void approveByManager(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark);
 
     // 财务审核
-    public void approveByFinance(String code, String curNodeCode,
+    public void approveByFinance(RepayBiz repayBiz, String curNodeCode,
             String updater, String remark);
 
     // 业务团队解除抵押
-    public void releaseMortgage(String code, String curNodeCode,
+    public void releaseMortgage(RepayBiz repayBiz, String curNodeCode,
             Date releaseDatetime, String updater);
 
     // 拖车申请
@@ -129,4 +141,16 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void refreshRestPeriods(RepayBiz repayBiz);
 
     // ********************************common********************************
+
+    public RepayBiz getRepayBizByBizCode(String bizCode);
+
+    /**
+     * 修改还款业务
+     */
+    void refreshRepayBiz(RepayBiz repayBiz, XN632530Req req);
+
+    /**
+     * 更新字段
+     */
+    void refreshRepayBiz(RepayBiz repayBiz);
 }

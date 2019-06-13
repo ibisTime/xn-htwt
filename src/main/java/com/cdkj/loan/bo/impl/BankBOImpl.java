@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -13,6 +7,10 @@ import com.cdkj.loan.dao.IBankDAO;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {

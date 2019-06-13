@@ -1,16 +1,20 @@
 package com.cdkj.loan.dto.req;
 
 import java.util.List;
+import lombok.Data;
 
 /**
  * 分页查询资料补发
- * @author: silver 
- * @since: 2018年5月29日 下午11:02:18 
+ *
+ * @author: silver
+ * @since: 2018年5月29日 下午11:02:18
  * @history:
  */
+@Data
 public class XN632155Req extends APageReq {
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = 389113977005434174L;
 
@@ -38,68 +42,14 @@ public class XN632155Req extends APageReq {
     // 状态List
     private List<String> statusList;
 
-    public String getRoleCode() {
-        return roleCode;
-    }
+    // 业务编号模糊查
+    private String bizCodeForQuery;
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
+    //发节点列表
+    private List<String> fromNodeList;
 
-    public List<String> getStatusList() {
-        return statusList;
-    }
-
-    public void setStatusList(List<String> statusList) {
-        this.statusList = statusList;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public List<String> getTypeList() {
-        return typeList;
-    }
-
-    public void setTypeList(List<String> typeList) {
-        this.typeList = typeList;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
-
-    public String getBizCode() {
-        return bizCode;
-    }
-
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
+    //收节点列表
+    private List<String> toNodeList;
 }
+
+

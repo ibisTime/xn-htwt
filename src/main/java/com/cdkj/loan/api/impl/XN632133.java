@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.ICarPledgeAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -11,21 +11,21 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 抵押完成
+ * 录入抵押信息
  * @author: CYL 
  * @since: 2018年5月31日 上午3:35:03 
  * @history:
  */
 public class XN632133 extends AProcessor {
-    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
-        .getBean(IBudgetOrderAO.class);
+    private ICarPledgeAO carPledgeAO = SpringContextHolder
+        .getBean(ICarPledgeAO.class);
 
     private XN632133Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        String result = budgetOrderAO.mortgageFinish(req);
-        return new BooleanRes(true, result);
+        carPledgeAO.entryPledgeInfo(req);
+        return new BooleanRes(true);
     }
 
     @Override

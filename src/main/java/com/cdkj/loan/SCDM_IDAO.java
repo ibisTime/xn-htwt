@@ -9,23 +9,33 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "mission";
+    private static String key = "makeCard";
 
     // 实体名称
-    private static String keyName = "任务";
+    private static String keyName = "制卡";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tqj_mission";
+    private static String dbname = "tdq_make_card";
 
-    private static String[] DBwords = { "code", "biz_code", "name", "time",
-            "creater", "get_user", "status", "create_datetime", "deadline",
-            "finish_datetime" };
+    private static String[] DBwords = { "code", "biz_code", "status",
+            "cur_node_code", "type", "back_advance_status",
+            "back_advance_fund_type", "advance_fund_datetime",
+            "advance_fund_amount", "total_advance_fund_code", "bill_pdf",
+            "advance_note", "back_advance_amount", "back_advance_account",
+            "back_advance_open_bank", "back_advance_subbranch",
+            "back_advance_water_bill", "use_amount", "fund_source",
+            "make_bill_note", "cancel_reason", "pay_back_datetime",
+            "pay_back_bankcard_code", "pay_back_bill_pdf" };
 
-    private static String[] DBwordsName = { "编号", "业务编号", "任务名字", "限时（h）",
-            "发布人", "认领人", "状态", "创建时间", "截止时间", "完成时间" };
+    private static String[] DBwordsName = { "编号", "业务编号", "状态", "当前节点",
+            "1总公司业务 2分公司业务", "退客户垫资款状态", "收回垫资款类型（1客户作废2垫资款退回）", "垫资日期",
+            "垫资金额", "垫资汇总单编号(分公司业务才有)", "水单", "垫资说明", "退客户垫资款 退款金额",
+            "退客户垫资款 收款账号", "退客户垫资款 开户行", "退客户垫资款 开户支行", "退客户垫资款 水单",
+            "用款金额(应退按揭款)", "金额来源(1财务部2预支款)", "制单意见说明", "撤销理由", "付款时间", "付款银行",
+            "付款凭证" };
 
     public void testname() throws Exception {
     }

@@ -1,7 +1,6 @@
 package com.cdkj.loan.dto.req;
 
 import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -10,7 +9,7 @@ public class XN630533Req {
     @NotBlank
     private String code;// 还款计划编号
 
-    @NotEmpty
+    @NotEmpty(message = "没有费用清单，无需缴纳")
     private List<String> costList; // 费用清单列表
 
     @NotBlank

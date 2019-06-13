@@ -1,9 +1,12 @@
 package com.cdkj.loan.api.impl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdkj.loan.ao.IFileListAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.FileList;
 import com.cdkj.loan.dto.req.XN632217Req;
 import com.cdkj.loan.exception.BizException;
@@ -25,9 +28,16 @@ public class XN632217 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         FileList condition = new FileList();
-        condition.setNumber(req.getNumber());
-        condition.setName(req.getName());
+        condition.setCategory(req.getCategory());
+        condition.setId(StringValidater.toLong(req.getId()));
+        condition.setAttachType(req.getAttachType());
         condition.setUpdater(req.getUpdater());
+
+        String column = req.getOrderColumn();
+        if (StringUtils.isBlank(column)) {
+            column = fileListAO.DEFAULT_ORDER_COLUMN;
+        }
+        condition.setOrder(column, req.getOrderDir());
         return fileListAO.queryFileListList(condition);
     }
 

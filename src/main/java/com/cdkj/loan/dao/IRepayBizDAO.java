@@ -1,11 +1,11 @@
 package com.cdkj.loan.dao;
 
-import java.util.List;
-
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.RepayBiz;
+import java.util.List;
 
 public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
+
     String NAMESPACE = IRepayBizDAO.class.getName().concat(".");
 
     public int updateBankcard(RepayBiz data);
@@ -82,4 +82,8 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     public void updateRestPeriods(RepayBiz repayBiz);
 
+    /**
+     * 修改还款业务
+     */
+    void updateRepayBiz(RepayBiz repayBiz);
 }

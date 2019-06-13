@@ -1,9 +1,7 @@
 package com.cdkj.loan.dto.req;
 
 import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 录入征信结果
@@ -15,22 +13,21 @@ public class XN632111Req {
 
     // 征信单编号
     @NotBlank
-    private String creditCode;
+    private String bizCode;
 
     // 操作人
     @NotBlank
     private String operator;
 
     // 征信结果
-    @NotEmpty
     private List<XN632111ReqCreditUser> creditList;
 
-    public String getCreditCode() {
-        return creditCode;
+    public String getBizCode() {
+        return bizCode;
     }
 
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
     public List<XN632111ReqCreditUser> getCreditList() {

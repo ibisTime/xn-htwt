@@ -2,6 +2,7 @@ package com.cdkj.loan.ao;
 
 import java.util.List;
 
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Address;
 
 /** 
@@ -66,6 +67,9 @@ public interface IAddressAO {
      * @history:
      */
     public List<Address> queryAddressList(Address condition);
+
+    public Paginable<Address> queryAddressPage(int start, int limit,
+            Address condition);
 
     /**
      * 收件地址详情

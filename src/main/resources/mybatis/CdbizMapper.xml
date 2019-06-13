@@ -1,198 +1,754 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICdbizDAO">
-	<resultMap id="cdbiz_DB_Result" type="cdbiz">
-		<result column="code" property="code" />
-		<result column="biz_code" property="bizCode" />
-		<result column="main_loaner" property="mainLoaner" />
-		<result column="bank_code" property="bankCode" />
-		<result column="biz_type" property="bizType" />
-		<result column="dk_amount" property="dkAmount" />
-		<result column="status" property="status" />
-		<result column="mq_status" property="mqStatus" />
-		<result column="fbhgps_status" property="fbhgpsStatus" />
-		<result column="fircundang_status" property="fircundangStatus" />
-		<result column="seccundang_status" property="seccundangStatus" />
-		<result column="zf_status" property="zfStatus" />
-		<result column="ywy_user" property="ywyUser" />
-		<result column="team_code" property="teamCode" />
-	</resultMap>
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="bizCode != null and bizCode != '' ">
-				AND t.biz_code = #{bizCode}
-			</if>
-			<if test="bankCode != null and bankCode != '' ">
-				AND t.bank_code = #{bankCode}
-			</if>
-			<if test="bizType != null and bizType != '' ">
-				AND t.biz_type = #{bizType}
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
-			</if>
-			<if test="mqStatus != null and mqStatus != '' ">
-				AND t.mq_status = #{mqStatus}
-			</if>
-			<if test="fbhgpsStatus != null and fbhgpsStatus != '' ">
-				AND t.fbhgps_status = #{fbhgpsStatus}
-			</if>
-			<if test="fircundangStatus != null and fircundangStatus != '' ">
-				AND t.fircundang_status = #{fircundangStatus}
-			</if>
-			<if test="seccundangStatus != null and seccundangStatus != '' ">
-				AND t.seccundang_status = #{seccundangStatus}
-			</if>
-			<if test="zfStatus != null and zfStatus != '' ">
-				AND t.zf_status = #{zfStatus}
-			</if>
-			<if test="ywyUser != null and ywyUser != '' ">
-				AND t.ywy_user = #{ywyUser}
-			</if>
-			<if test="teamCode != null and teamCode != '' ">
-				AND t.team_code = #{teamCode}
-			</if>
-		</trim>
-	</sql>
-	<select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
-		SELECT
-		t.code
-		,t.biz_code
-		,t.main_loaner
-		,t.bank_code
-		,t.biz_type
-		,t.dk_amount
-		,t.status
-		,t.mq_status
-		,t.fbhgps_status
-		,t.fircundang_status
-		,t.seccundang_status
-		,t.zf_status
-		,t.ywy_user
-		,t.team_code
-		FROM
-		tqj_cdbiz t
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
+    <resultMap id="cdbiz_DB_Result" type="cdbiz">
+        <result column="code" property="code"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="type" property="type"/>
+        <result column="biz_type" property="bizType"/>
+        <result column="repay_biz_code" property="repayBizCode"/>
+        <result column="company_code" property="companyCode"/>
+        <result column="team_code" property="teamCode"/>
+        <result column="captain_code" property="captainCode"/>
+        <result column="sale_user_id" property="saleUserId"/>
+        <result column="inside_job" property="insideJob"/>
+        <result column="loan_bank" property="loanBank"/>
+        <result column="credit_loan_amount" property="creditLoanAmount"/>
+        <result column="loan_amount" property="loanAmount"/>
+        <result column="enter_location" property="enterLocation"/>
+        <result column="enter_datetime" property="enterDatetime"/>
+        <result column="enter_filelist" property="enterFilelist"/>
+        <result column="repay_card_number" property="repayCardNumber"/>
+        <result column="card_post_province" property="cardPostProvince"/>
+        <result column="card_post_city" property="cardPostCity"/>
+        <result column="card_post_area" property="cardPostArea"/>
+        <result column="card_post_address" property="cardPostAddress"/>
+        <result column="card_post_code" property="cardPostCode"/>
+        <result column="status" property="status"/>
+        <result column="intev_status" property="intevStatus"/>
+        <result column="make_card_status" property="makeCardStatus"/>
+        <result column="fbhgps_status" property="fbhgpsStatus"/>
+        <result column="enter_status" property="enterStatus"/>
+        <result column="seccundang_status" property="seccundangStatus"/>
+        <result column="cancel_status" property="cancelStatus"/>
+        <result column="cur_node_code" property="curNodeCode"/>
+        <result column="intev_cur_node_code" property="intevCurNodeCode"/>
+        <result column="make_card_node" property="makeCardNode"/>
+        <result column="fbhgps_node" property="fbhgpsNode"/>
+        <result column="enter_node_code" property="enterNodeCode"/>
+        <result column="cancel_node_code" property="cancelNodeCode"/>
+        <result column="is_gps_az" property="isGpsAz"/>
+        <result column="is_finacing" property="isFinacing"/>
+        <result column="is_advance_fund" property="isAdvanceFund"/>
+        <result column="is_plat_insure" property="isPlatInsure"/>
+        <result column="should_fee_amount" property="shouldFeeAmount"/>
+        <result column="real_fee_amount" property="realFeeAmount"/>
+        <result column="gua_mode" property="guaMode"/>
+        <result column="credit_note" property="creditNote"/>
+        <result column="apply_datetime" property="applyDatetime"/>
+        <result column="remark" property="remark"/>
 
-	<select id="select_cdbiz_count" parameterType="cdbiz"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tqj_cdbiz t
-		<include refid="where_condition" />
-	</select>
+        <result column="periods" property="periods"/>
+        <result column="loan_bank_name" property="loanBankName"/>
+        <result column="subbranch_bank_name" property="subbranchBankName"/>
+        <result column="team_name" property="teamName"/>
+        <result column="company_name" property="companyName"/>
+        <result column="advance_fund_datetime" property="advanceFundDatetime"/>
+        <result column="advance_fund_amount" property="advanceFundAmount"/>
+        <result column="sale_user_name" property="saleUserName"/>
+        <result column="sale_user_company_name" property="saleUserCompanyName"/>
+        <result column="sale_user_department_name" property="saleUserDepartMentName"/>
+        <result column="sale_user_post_name" property="saleUserPostName"/>
+        <result column="inside_job_name" property="insideJobName"/>
+        <result column="inside_job_company_name" property="insideJobCompanyName"/>
+        <result column="inside_job_department_name" property="insideJobDepartMentName"/>
+        <result column="inside_job_post_name" property="insideJobPostName"/>
+    </resultMap>
 
-	<insert id="insert_cdbiz" parameterType="cdbiz">
+    <sql id="join_condition">
+        <if test="userName != null and userName != '' ">
+            join tdq_credit_user tcu on tcu.biz_code = t.code and tcu.loan_role = '1'
+        </if>
+    </sql>
+
+    <sql id="cur_node_condition">
+        <if test="curNodeCodeList != null and curNodeCodeList.size()>0 ">
+            inner join tsys_role_node trn on t.cur_node_code=trn.node_code
+        </if>
+    </sql>
+
+    <sql id="intev_node_condition">
+        <if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size()  ">
+            inner join tsys_role_node trn on t.intev_cur_node_code=trn.node_code
+        </if>
+    </sql>
+
+    <sql id="make_card_condition">
+        <if test="makeCardNodeList != null and makeCardNodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.make_card_node=trn.node_code
+        </if>
+    </sql>
+
+    <sql id="fbhgps_node_condition">
+        <if test="fbhgpsNodeList != null and fbhgpsNodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.fbhgps_node=trn.node_code
+        </if>
+    </sql>
+
+    <sql id="enter_node_condition">
+        <if test="enterNodeCodeList != null and enterNodeCodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.enter_node_code=trn.node_code
+        </if>
+    </sql>
+
+    <sql id="cancel_node_condition">
+        <if test="cancelNodeCodeList != null and cancelNodeCodeList.size() > 0 ">
+            inner join tsys_role_node trn on t.cancel_node_code=trn.node_code
+        </if>
+    </sql>
+
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code like "%"#{code}"%"
+            </if>
+            <if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+                <![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+            </if>
+            <if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+                <![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
+            </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
+            <if test="type != null and type != '' ">
+                AND t.type = #{type}
+            </if>
+            <if test="bizType != null and bizType != '' ">
+                AND t.biz_type = #{bizType}
+            </if>
+            <if test="repayBizCode != null and repayBizCode != '' ">
+                AND t.repay_biz_code = #{repayBizCode}
+            </if>
+            <if test="companyCode != null and companyCode != '' ">
+                AND t.company_code = #{companyCode}
+            </if>
+            <if test="teamCode != null and teamCode != '' ">
+                AND (t.team_code = #{teamCode} OR t.code in (select biz_code from tsys_biz_log where
+                operator=#{userId} group by biz_code))
+            </if>
+            <if test="captainCode != null and captainCode != '' ">
+                AND t.captain_code = #{captainCode}
+            </if>
+            <if test="saleUserId != null and saleUserId != '' ">
+                AND t.sale_user_id = #{saleUserId}
+            </if>
+            <if test="insideJob != null and insideJob != '' ">
+                AND t.inside_job = #{insideJob}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="intevStatus != null and intevStatus != '' ">
+                AND t.intev_status = #{intevStatus}
+            </if>
+            <if test="fbhgpsStatus != null and fbhgpsStatus != '' ">
+                AND t.fbhgps_status = #{fbhgpsStatus}
+            </if>
+            <if test="enterStatus != null and enterStatus != '' ">
+                AND t.enter_status = #{enterStatus}
+            </if>
+            <if test="cancelStatus != null and cancelStatus != '' ">
+                AND t.cancel_status = #{cancelStatus}
+            </if>
+            <if test="curNodeCode != null and curNodeCode != '' ">
+                AND t.cur_node_code = #{curNodeCode}
+            </if>
+            <if test="intevCurNodeCode != null and intevCurNodeCode != '' ">
+                AND t.intev_cur_node_code = #{intevCurNodeCode}
+            </if>
+            <if test="enterNodeCode != null and enterNodeCode != '' ">
+                AND t.enter_node_code = #{enterNodeCode}
+            </if>
+            <if test="makeCardNode != null and makeCardNode != '' ">
+                AND t.make_card_node = #{makeCardNode}
+            </if>
+            <if test="fbhgpsNode != null and fbhgpsNode != '' ">
+                AND t.fbhgps_node = #{fbhgpsNode}
+            </if>
+            <if test="enterNodeCode != null and enterNodeCode != '' ">
+                AND t.enter_node_code = #{enterNodeCode}
+            </if>
+            <if test="cancelNodeCode != null and cancelNodeCode != '' ">
+                AND t.cancel_node_code = #{cancelNodeCode}
+            </if>
+            <if test="isGpsAz != null and isGpsAz != '' ">
+                AND t.is_gps_az = #{isGpsAz}
+            </if>
+            <if test="isAdvanceFund != null and isAdvanceFund != '' ">
+                AND t.is_advance_fund = #{isAdvanceFund}
+            </if>
+            <if test="guaMode != null and guaMode != '' ">
+                AND t.gua_mode = #{guaMode}
+            </if>
+            <if test="isMy != null and userId != '' and userId != null">
+                AND t.code in (select biz_code from tsys_biz_log where operator=#{userId} group by
+                biz_code)
+            </if>
+            <if test="curNodeCodeList != null and curNodeCodeList.size() > 0 ">
+                AND t.cur_node_code in
+                <foreach collection="curNodeCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0 ">
+                AND t.intev_cur_node_code in
+                <foreach collection="intevCurNodeCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="makeCardNodeList != null and makeCardNodeList.size() > 0 ">
+                AND t.make_card_node in
+                <foreach collection="makeCardNodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="fbhgpsNodeList != null and fbhgpsNodeList.size() > 0 ">
+                AND t.fbhgps_node in
+                <foreach collection="fbhgpsNodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="enterNodeCodeList != null and enterNodeCodeList.size() > 0 ">
+                AND t.enter_node_code in
+                <foreach collection="enterNodeCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="cundangStatusList != null and cundangStatusList.size() > 0 ">
+                AND (t.enter_status in
+                <foreach collection="cundangStatusList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>)
+            </if>
+            <if test="cancelNodeCodeList != null and cancelNodeCodeList.size() > 0 ">
+                AND (t.cancel_node_code in
+                <foreach collection="cancelNodeCodeList" index="index" item="item" open="("
+                        separator="," close=")">
+                    #{item}
+                </foreach>)
+            </if>
+            <if test="roleCode != null and roleCode != '' and
+            ((curNodeCodeList != null and curNodeCodeList.size() > 0 )
+             or (intevCurNodeCodeList != null and intevCurNodeCodeList.size() > 0)
+             or (makeCardNodeList != null and makeCardNodeList.size() > 0)
+             or (fbhgpsNodeList != null and fbhgpsNodeList.size() > 0)
+             or (enterNodeCodeList != null and enterNodeCodeList.size() > 0)
+             or (cundangStatusList != null and cundangStatusList.size() > 0)
+             or (cancelNodeCodeList != null and cancelNodeCodeList.size() > 0))">
+                AND trn.role_code = #{roleCode}
+            </if>
+            <if test="userName != null and userName != '' ">
+                AND tcu.user_name like "%"#{userName}"%"
+            </if>
+
+        </trim>
+    </sql>
+
+    <select id="select_cdbiz" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+        SELECT
+        distinct
+        t.code
+        ,t.biz_code
+        ,t.type
+        ,t.biz_type
+        ,t.repay_biz_code
+        ,t.company_code
+        ,t.team_code
+        ,t.captain_code
+        ,t.sale_user_id
+        ,t.inside_job
+        ,t.loan_bank
+        ,t.credit_loan_amount
+        ,t.loan_amount
+        ,t.enter_location
+        ,t.enter_datetime
+        ,t.enter_filelist
+        ,t.repay_card_number
+        ,t.card_post_province
+        ,t.card_post_city
+        ,t.card_post_area
+        ,t.card_post_address
+        ,t.card_post_code
+        ,t.status
+        ,t.intev_status
+        ,t.make_card_status
+        ,t.fbhgps_status
+        ,t.enter_status
+        ,t.cancel_status
+        ,t.cur_node_code
+        ,t.intev_cur_node_code
+        ,t.make_card_node
+        ,t.fbhgps_node
+        ,t.enter_node_code
+        ,t.cancel_node_code
+        ,t.is_gps_az
+        ,t.is_finacing
+        ,t.is_advance_fund
+        ,t.is_plat_insure
+        ,t.should_fee_amount
+        ,t.real_fee_amount
+        ,t.gua_mode
+        ,t.credit_note
+        ,t.apply_datetime
+        ,t.remark
+        ,b.bank_name as loan_bank_name
+        ,b.subbranch as subbranch_bank_name
+        ,bt.name as team_name
+        ,su.real_name as sale_user_name
+        ,sc.name as sale_user_company_name
+        ,sd.name as sale_user_department_name
+        ,sp.name as sale_user_post_name
+        ,iu.real_name as inside_job_name
+        ,ic.name as inside_job_company_name
+        ,id.name as inside_job_department_name
+        ,ip.name as inside_job_post_name
+        ,rb.periods as periods
+        ,ta.advance_fund_datetime as advance_fund_datetime
+        ,ta.advance_fund_amount as advance_fund_amount
+        FROM
+        tqj_cdbiz t left join tsys_user su on t.sale_user_id=su.user_id
+        left join tsys_user iu on t.inside_job=iu.user_id
+        left join tb_bank b on b.code = t.loan_bank
+        left join tsys_biz_team bt on bt.code = t.team_code
+        left join tsys_department sc on su.company_code=sc.code
+        left join tsys_department sd on su.department_code=sd.code
+        left join tsys_department sp on su.post_code=sp.code
+        left join tsys_department ic on iu.company_code=ic.code
+        left join tsys_department id on iu.department_code=id.code
+        left join tsys_department ip on iu.post_code=ip.code
+        left join tdh_repay_biz rb on rb.biz_code = t.code
+        left join tdq_advance ta on ta.biz_code = t.code
+        <include refid="join_condition"/>
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_cdbiz_for_update" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.type
+        ,t.biz_type
+        ,t.repay_biz_code
+        ,t.company_code
+        ,t.team_code
+        ,t.captain_code
+        ,t.sale_user_id
+        ,t.inside_job
+        ,t.loan_bank
+        ,t.credit_loan_amount
+        ,t.loan_amount
+        ,t.enter_location
+        ,t.enter_datetime
+        ,t.enter_filelist
+        ,t.repay_card_number
+        ,t.card_post_province
+        ,t.card_post_city
+        ,t.card_post_area
+        ,t.card_post_address
+        ,t.card_post_code
+        ,t.status
+        ,t.intev_status
+        ,t.make_card_status
+        ,t.fbhgps_status
+        ,t.enter_status
+        ,t.cancel_status
+        ,t.cur_node_code
+        ,t.intev_cur_node_code
+        ,t.make_card_node
+        ,t.fbhgps_node
+        ,t.enter_node_code
+        ,t.cancel_node_code
+        ,t.is_gps_az
+        ,t.is_finacing
+        ,t.is_advance_fund
+        ,t.is_plat_insure
+        ,t.should_fee_amount
+        ,t.real_fee_amount
+        ,t.gua_mode
+        ,t.credit_note
+        ,t.apply_datetime
+        ,t.remark
+        FROM
+        tqj_cdbiz t where t.code = #{code} for update
+    </select>
+
+    <select id="select_cdbizByRoleCode" parameterType="cdbiz" resultMap="cdbiz_DB_Result">
+        SELECT
+        distinct
+        t.code
+        ,t.biz_code
+        ,t.type
+        ,t.biz_type
+        ,t.repay_biz_code
+        ,t.company_code
+        ,t.team_code
+        ,t.captain_code
+        ,t.sale_user_id
+        ,t.inside_job
+        ,t.loan_bank
+        ,t.credit_loan_amount
+        ,t.loan_amount
+        ,t.enter_location
+        ,t.enter_datetime
+        ,t.enter_filelist
+        ,t.repay_card_number
+        ,t.card_post_province
+        ,t.card_post_city
+        ,t.card_post_area
+        ,t.card_post_address
+        ,t.card_post_code
+        ,t.status
+        ,t.intev_status
+        ,t.make_card_status
+        ,t.fbhgps_status
+        ,t.enter_status
+        ,t.cancel_status
+        ,t.cur_node_code
+        ,t.intev_cur_node_code
+        ,t.make_card_node
+        ,t.fbhgps_node
+        ,t.enter_node_code
+        ,t.cancel_node_code
+        ,t.is_gps_az
+        ,t.is_finacing
+        ,t.is_advance_fund
+        ,t.is_plat_insure
+        ,t.should_fee_amount
+        ,t.real_fee_amount
+        ,t.gua_mode
+        ,t.credit_note
+        ,t.apply_datetime
+        ,t.remark
+        ,b.bank_name as loan_bank_name
+        ,b.subbranch as subbranch_bank_name
+        ,bt.name as team_name
+        ,su.real_name as sale_user_name
+        ,sc.name as sale_user_company_name
+        ,sd.name as sale_user_department_name
+        ,sp.name as sale_user_post_name
+        ,iu.real_name as inside_job_name
+        ,ic.name as inside_job_company_name
+        ,id.name as inside_job_department_name
+        ,ip.name as inside_job_post_name
+        ,rb.periods as periods
+        ,ta.advance_fund_datetime as advance_fund_datetime
+        ,ta.advance_fund_amount as advance_fund_amount
+        FROM
+        tqj_cdbiz t left join tsys_user su on t.sale_user_id=su.user_id
+        left join tsys_user iu on t.inside_job=iu.user_id
+        left join tb_bank b on b.code = t.loan_bank
+        left join tsys_biz_team bt on bt.code = t.team_code
+        left join tsys_department sc on su.company_code=sc.code
+        left join tsys_department sd on su.department_code=sd.code
+        left join tsys_department sp on su.post_code=sp.code
+        left join tsys_department ic on iu.company_code=ic.code
+        left join tsys_department id on iu.department_code=id.code
+        left join tsys_department ip on iu.post_code=ip.code
+        left join tdh_repay_biz rb on rb.biz_code = t.code
+        left join tdq_advance ta on ta.biz_code = t.code
+        <include refid="join_condition"/>
+        <include refid="cur_node_condition"/>
+        <include refid="intev_node_condition"/>
+        <include refid="make_card_condition"/>
+        <include refid="fbhgps_node_condition"/>
+        <include refid="enter_node_condition"/>
+        <include refid="cancel_node_condition"/>
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_cdbiz_count_byRoleCode" parameterType="budgetOrder"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM (SELECT distinct t.code FROM tqj_cdbiz t
+        <include refid="join_condition"/>
+        <include refid="cur_node_condition"/>
+        <include refid="intev_node_condition"/>
+        <include refid="make_card_condition"/>
+        <include refid="fbhgps_node_condition"/>
+        <include refid="enter_node_condition"/>
+        <include refid="cancel_node_condition"/>
+        <include refid="where_condition"/>) tb
+    </select>
+
+    <select id="select_cdbiz_count" parameterType="cdbiz"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tqj_cdbiz t
+        <include refid="join_condition"/>
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_cdbiz" parameterType="cdbiz">
 		INSERT INTO
 		tqj_cdbiz(
 		code
 		,biz_code
-		,main_loaner
-		,bank_code
+		,type
 		,biz_type
-		,dk_amount
-		,status
-		,mq_status
-		,fbhgps_status
-		,fircundang_status
-		,seccundang_status
-		,zf_status
-		,ywy_user
+		,repay_biz_code
+		,company_code
 		,team_code
+		,captain_code
+		,sale_user_id
+		,inside_job
+		,loan_bank
+		,credit_loan_amount
+		,loan_amount
+		,enter_location
+		,enter_datetime
+		,enter_filelist
+		,status
+		,intev_status
+		,make_card_status
+		,fbhgps_status
+		,enter_status
+		,cancel_status
+		,cur_node_code
+		,intev_cur_node_code
+		,make_card_node
+		,fbhgps_node
+		,enter_node_code
+		,cancel_node_code
+		,is_gps_az
+		,is_finacing
+		,is_advance_fund
+		,is_plat_insure
+		,should_fee_amount
+		,real_fee_amount
+		,gua_mode
+		,credit_note
+		,apply_datetime
+		,remark
 		)
 		VALUES(
 		#{code}
 		,#{bizCode}
-		,#{mainLoaner}
-		,#{bankCode}
+		,#{type}
 		,#{bizType}
-		,#{dkAmount}
-		,#{status}
-		,#{mqStatus}
-		,#{fbhgpsStatus}
-		,#{fircundangStatus}
-		,#{seccundangStatus}
-		,#{zfStatus}
-		,#{ywyUser}
+		,#{repayBizCode}
+		,#{companyCode}
 		,#{teamCode}
+		,#{captainCode}
+		,#{saleUserId}
+		,#{insideJob}
+		,#{loanBank}
+		,#{creditLoanAmount}
+		,#{loanAmount}
+		,#{enterLocation}
+		,#{enterDatetime}
+		,#{enterFilelist}
+		,#{status}
+		,#{intevStatus}
+		,#{makeCardStatus}
+		,#{fbhgpsStatus}
+		,#{enterStatus}
+		,#{cancelStatus}
+		,#{curNodeCode}
+		,#{intevCurNodeCode}
+		,#{makeCardNode}
+		,#{fbhgpsNode}
+		,#{enterNodeCode}
+		,#{cancelNodeCode}
+		,#{isGpsAz}
+		,#{isFinacing}
+		,#{isAdvanceFund}
+		,#{isPlatInsure}
+		,#{shouldFeeAmount}
+		,#{realFeeAmount}
+		,#{guaMode}
+		,#{creditNote}
+		,#{applyDatetime}
+		,#{remark}
 		)
 	</insert>
 
-	<update id="update_cdbiz" parameterType="cdbiz">
+    <update id="update_cdbiz" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		biz_code = #{bizCode}
-		,main_loaner = #{mainLoaner}
-		,bank_code = #{bankCode}
+		,type = #{type}
 		,biz_type = #{bizType}
-		,dk_amount = #{dkAmount}
-		,status = #{status}
-		,mq_status = #{mqStatus}
-		,fbhgps_status = #{fbhgpsStatus}
-		,fircundang_status = #{fircundangStatus}
-		,seccundang_status = #{seccundangStatus}
-		,zf_status = #{zfStatus}
-		,ywy_user = #{ywyUser}
+		,repay_biz_code = #{repayBizCode}
+		,company_code = #{companyCode}
 		,team_code = #{teamCode}
+		,captain_code = #{captainCode}
+		,sale_user_id = #{saleUserId}
+		,inside_job = #{insideJob}
+		,loan_bank = #{loanBank}
+		,credit_loan_amount = #{creditLoanAmount}
+		,loan_amount = #{loanAmount}
+		,enter_location = #{enterLocation}
+		,enter_datetime = #{enterDatetime}
+		,enter_filelist = #{enterFilelist}
+		,card_post_address=#{cardPostAddress}
+		,card_post_province=#{cardPostProvince}
+		,card_post_city=#{cardPostCity}
+		,card_post_area=#{cardPostArea}
+		,card_post_code=#{cardPostCode}
+		,status = #{status}
+		,intev_status = #{intevStatus}
+		,repay_card_number=#{repayCardNumber}
+		,make_card_status = #{makeCardStatus}
+		,fbhgps_status = #{fbhgpsStatus}
+		,enter_status = #{enterStatus}
+		,cancel_status = #{cancelStatus}
+		,cur_node_code = #{curNodeCode}
+		,intev_cur_node_code = #{intevCurNodeCode}
+		,make_card_node = #{makeCardNode}
+		,fbhgps_node = #{fbhgpsNode}
+		,enter_node_code = #{enterNodeCode}
+		,cancel_node_code = #{cancelNodeCode}
+		,is_gps_az = #{isGpsAz}
+		,is_finacing = #{isFinacing}
+		,is_advance_fund = #{isAdvanceFund}
+		,is_plat_insure = #{isPlatInsure}
+		,should_fee_amount = #{shouldFeeAmount}
+		,real_fee_amount = #{realFeeAmount}
+		,gua_mode = #{guaMode}
+		,credit_note = #{creditNote}
+		,apply_datetime = #{applyDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="update_status" parameterType="cdbiz">
+
+    <update id="update_status" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
 		status=#{status}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_mqStatus" parameterType="cdbiz">
-		UPDATE tqj_cdbiz
-		SET
-		mq_status=#{mqStatus}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_fbhgpsStatus" parameterType="cdbiz">
-		UPDATE tqj_cdbiz
-		SET
-		fbhgps_status=#{fbhgpsStatus}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_fircundangStatus" parameterType="cdbiz">
-		UPDATE tqj_cdbiz
-		SET
-		fircundang_status=#{fircundangStatus}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_seccundangStatus" parameterType="cdbiz">
-		UPDATE tqj_cdbiz
-		SET
-		seccundang_status=#{seccundangStatus}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_zfStatus" parameterType="cdbiz">
-		UPDATE tqj_cdbiz
-		SET
-		zf_status=#{zfStatus}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_ywy" parameterType="cdbiz">
-		UPDATE tqj_cdbiz
-		SET
-		ywy_user=#{ywyUser}
+		,remark=#{remark}
 		WHERE code=#{code}
 	</update>
 
+    <update id="update_makeCardStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		make_card_status=#{makeCardStatus}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_intevStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		intev_status=#{intevStatus}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_fbhgpsStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		fbhgps_status=#{fbhgpsStatus}
+		,fbhgps_node = #{fbhgpsNode}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_fbhgpsNodeStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		fbhgps_status=#{fbhgpsStatus}
+		,fbhgps_node = #{fbhgpsNode}
+		,is_advance_fund = #{isAdvanceFund}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_enterNodeStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		enter_status=#{enterStatus}
+		,enter_node_code=#{enterNodeCode}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_cancelStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cancel_status=#{cancelStatus}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_node" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cur_node_code=#{curNodeCode}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_cdbizLocation" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		enter_location=#{enterLocation}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_intevNodeStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cur_node_code=#{curNodeCode}
+		,intev_cur_node_code=#{intevCurNodeCode}
+		,intev_status=#{intevStatus}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_curNodeStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cur_node_code=#{curNodeCode}
+		,status=#{status}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_makeCardNode" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		make_card_node=#{makeCardNode}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_insideJob" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		inside_job=#{insideJob}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_curNodeCode" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cur_node_code=#{curNodeCode}
+		WHERE code=#{code}
+	</update>
+
+    <update id="update_zfStatus" parameterType="cdbiz">
+		UPDATE tqj_cdbiz
+		SET
+		cancel_status=#{cancelStatus},
+		cancel_node_code=#{cancelNodeCode}
+		WHERE code=#{code}
+	</update>
 
 </mapper>

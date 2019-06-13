@@ -1,66 +1,28 @@
 package com.cdkj.loan.dto.req;
 
+import com.cdkj.loan.dto.res.XN632310ReqRes;
+import java.util.List;
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 确认返点支付
- * @author: jiafr 
- * @since: 2018年6月9日 下午2:10:21 
+ *
+ * @author: jiafr
+ * @since: 2018年6月9日 下午2:10:21
  * @history:
  */
+@Data
 public class XN632310Req {
 
     @NotBlank
     private String code;
 
-    @NotBlank
-    private String actualAmount;
-
-    @NotBlank
-    private String waterBill;
+    @NotEmpty(message = "返点账号列表不能为空")
+    private List<XN632310ReqRes> repointAccountList;
 
     @NotBlank
     private String updater;
 
-    private String remark;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getActualAmount() {
-        return actualAmount;
-    }
-
-    public void setActualAmount(String actualAmount) {
-        this.actualAmount = actualAmount;
-    }
-
-    public String getWaterBill() {
-        return waterBill;
-    }
-
-    public void setWaterBill(String waterBill) {
-        this.waterBill = waterBill;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }
