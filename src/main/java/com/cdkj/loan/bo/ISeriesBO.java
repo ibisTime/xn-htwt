@@ -27,4 +27,7 @@ public interface ISeriesBO extends IPaginableBO<Series> {
     void removeSeries(Series data);
 
     Series getSeriesBySeriesId(String seriesId);
+
+    // 更新最高价和最低价
+    void refreshHighestAndLowest(String code, Long highest, Long lowest);
 }

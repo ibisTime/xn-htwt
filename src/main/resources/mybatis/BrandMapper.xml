@@ -98,6 +98,8 @@
 		,logo
 		,name
 		,description
+		,location
+        ,order_no
 		,status
 		,updater
 		,update_datetime
@@ -111,6 +113,8 @@
 		,#{logo}
 		,#{name}
 		,#{description}
+		,#{location}
+		,#{orderNo}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}

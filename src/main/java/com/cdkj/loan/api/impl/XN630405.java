@@ -1,7 +1,5 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -12,11 +10,13 @@ import com.cdkj.loan.dto.req.XN630405Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 分页查询
- * @author: CYL 
- * @since: 2018年4月24日 下午5:35:06 
+ *
+ * @author: CYL
+ * @since: 2018年4月24日 下午5:35:06
  * @history:
  */
 
@@ -36,6 +36,9 @@ public class XN630405 extends AProcessor {
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBrandAO.DEFAULT_ORDER_COLUMN;
+        }
+        if (StringUtils.isBlank(req.getOrderDir())) {
+            req.setOrderDir("asc");
         }
         condition.setOrder(orderColumn, req.getOrderDir());
 

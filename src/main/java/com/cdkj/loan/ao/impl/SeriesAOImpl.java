@@ -130,7 +130,8 @@ public class SeriesAOImpl implements ISeriesAO {
             brand.setType(ECarProduceType.IMPORT.getCode());
             List<Brand> queryBrand = brandBO.queryBrand(brand);
             for (Brand domain : queryBrand) {
-                refresh(url, domain.getBrandId(), req.getUpdater());
+                int i = 1;
+                refresh(url, domain.getBrandId(), domain.getCode(), req.getUpdater(), i);
             }
         } else {
             Brand brand = brandBO.getBrandByBrandId(req.getBrandId());
@@ -138,11 +139,13 @@ public class SeriesAOImpl implements ISeriesAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "品牌标识不存在！");
             }
-            refresh(url, req.getBrandId(), req.getUpdater());
+            int i = 1;
+            refresh(url, req.getBrandId(), brand.getCode(), req.getUpdater(), i);
         }
     }
 
-    private void refresh(SYSConfig url, String brandId, String updater) {
+    private void refresh(SYSConfig url, String brandId, String brandCode, String updater,
+            int i) {
         SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
                 + "/getCarSeriesList" + "?token=" + token.getCvalue() + "&brandId=" + brandId);
@@ -174,10 +177,14 @@ public class SeriesAOImpl implements ISeriesAO {
 
             Series series = new Series();
             series.setBrandId(brandId);
+            series.setBrandCode(brandCode);
             series.setSeriesId(seriesId);
             series.setType(ECarProduceType.IMPORT.getCode());
             series.setMakerType(makerType);
             series.setName(seriesName);
+            series.setLocation(EBoolean.YES.getCode());
+            series.setOrderNo(i);
+            i++;
             series.setSeriesGroupName(seriesGroupName);
             series.setStatus(EBrandStatus.UP.getCode());
             series.setUpdater(updater);

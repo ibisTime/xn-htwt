@@ -168,9 +168,9 @@
         ,t.type
         ,t.name
         ,t.series_code
-        ,t.series_name
+        ,s.name as series_name
         ,t.brand_code
-        ,t.brand_name
+        ,b.name as brand_name
         ,t.bank_code
         ,t.level
         ,t.version
@@ -204,8 +204,9 @@
         ,t.updater
         ,t.update_datetime
         ,t.remark
-        FROM
-        tht_car t
+        FROM tht_car t
+        left join tht_brand b on t.brand_code = b.code
+        left join tht_series s on t.series_code = s.code
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">

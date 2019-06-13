@@ -107,4 +107,13 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
         return seriesDAO.select(series);
     }
 
+    @Override
+    public void refreshHighestAndLowest(String code, Long highest, Long lowest) {
+        Series series = new Series();
+        series.setCode(code);
+        series.setHighest(highest);
+        series.setLowest(lowest);
+        seriesDAO.updateHighestAndLowest(series);
+    }
+
 }

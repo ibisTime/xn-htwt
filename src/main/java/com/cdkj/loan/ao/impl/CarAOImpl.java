@@ -231,7 +231,13 @@ public class CarAOImpl implements ICarAO {
             series.setType(ECarProduceType.IMPORT.getCode());
             List<Series> querySeries = seriesBO.querySeries(series);
             for (Series domain : querySeries) {
-                refresh(url, domain.getSeriesId(), req.getUpdater());
+                int i = 1;
+                Long highest = 0L;
+                Long lowest = 0L;
+                refresh(url, domain.getSeriesId(), domain.getBrandCode(), domain.getCode(),
+                        req.getUpdater(), i, highest, lowest);
+
+                seriesBO.refreshHighestAndLowest(domain.getCode(), highest, lowest);
             }
         } else {
             Series series = seriesBO.getSeriesBySeriesId(req.getSeriesId());
@@ -239,11 +245,18 @@ public class CarAOImpl implements ICarAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "车系标识不存在！");
             }
-            refresh(url, req.getSeriesId(), req.getUpdater());
+            int i = 1;
+            Long highest = 0L;
+            Long lowest = 0L;
+            refresh(url, req.getSeriesId(), series.getBrandCode(), series.getCode(),
+                    req.getUpdater(), i, highest, lowest);
+
+            seriesBO.refreshHighestAndLowest(series.getCode(), highest, lowest);
         }
     }
 
-    private void refresh(SYSConfig url, String seriesId, String updater) {
+    private void refresh(SYSConfig url, String seriesId, String brandCode, String seriesCode,
+            String updater, int i, Long highest, Long lowest) {
         SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
                 + "/getCarModelList" + "?token=" + token.getCvalue() + "&seriesId=" + seriesId);
@@ -280,12 +293,28 @@ public class CarAOImpl implements ICarAO {
             String seatNumber = jsonObject.getString("seat_number");
             Date updateTime = jsonObject.getDate("update_time");
 
+            Long salePrice = AmountUtil.mul(10000000L, StringValidater.toDouble(modelPrice));
+            //如果是第一次进
+            if (i == 1) {
+                highest = salePrice;
+                lowest = salePrice;
+            } else {
+                //比较最低价和最高价
+                if (salePrice > highest) {
+                    highest = salePrice;
+                }
+                if (salePrice < lowest) {
+                    lowest = salePrice;
+                }
+            }
             Car car = new Car();
             car.setSeriesId(seriesId);
             car.setModelId(modelId);
             car.setType(ECarProduceType.IMPORT.getCode());
             car.setName(modelName);
-            car.setSalePrice(AmountUtil.mul(10000L, StringValidater.toDouble(modelPrice)));
+            car.setBrandCode(brandCode);
+            car.setSeriesCode(seriesCode);
+            car.setSalePrice(salePrice);
             car.setModelYear(modelYear);
             car.setMinRegYear(minRegYear);
             car.setMaxRegYear(maxRegYear);
@@ -293,6 +322,9 @@ public class CarAOImpl implements ICarAO {
             car.setGearType(gearType);
             car.setDischargeStandard(dischargeStandard);
             car.setSeatNumber(seatNumber);
+            car.setLocation(EBoolean.YES.getCode());
+            car.setOrderNo(i);
+            i++;
             car.setStatus(EBrandStatus.UP.getCode());
             car.setUpdater(updater);
             car.setUpdateDatetime(updateTime);

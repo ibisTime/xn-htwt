@@ -15,6 +15,7 @@ import com.cdkj.loan.dto.req.XN630400Req;
 import com.cdkj.loan.dto.req.XN630402Req;
 import com.cdkj.loan.dto.req.XN630408Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
@@ -120,6 +121,7 @@ public class BrandAOImpl implements IBrandAO {
         JSONObject jsono = JSONObject.parseObject(json);
         String s = jsono.get("brand_list").toString();
         JSONArray parseArray = JSONArray.parseArray(s);
+        int i = 0;
         for (Object object : parseArray) {
             JSONObject jsonObject = (JSONObject) object;
             String brandId = jsonObject.getString("brand_id");
@@ -131,6 +133,9 @@ public class BrandAOImpl implements IBrandAO {
             brand.setBrandId(brandId);
             brand.setType(ECarProduceType.IMPORT.getCode());
             brand.setName(brandName);
+            brand.setLocation(EBoolean.YES.getCode());
+            i++;
+            brand.setOrderNo(i);
             brand.setLetter(initial);
             brand.setStatus(EBrandStatus.UP.getCode());
             brand.setUpdater(req.getUpdater());

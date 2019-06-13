@@ -7,14 +7,15 @@ public interface ISeriesDAO extends IBaseDAO<Series> {
 
     String NAMESPACE = ISeriesDAO.class.getName().concat(".");
 
-    public int update(Series data);
+    int update(Series data);
 
-    public int updateUp(Series data);
+    int updateUp(Series data);
 
-    public int updateDown(Series data);
+    int updateDown(Series data);
 
-    public int updateHighest(Series data);
+    int updateHighest(Series data);
 
-    public int updateLowest(Series data);
+    int updateLowest(Series data);
 
+    void updateHighestAndLowest(Series series);
 }
