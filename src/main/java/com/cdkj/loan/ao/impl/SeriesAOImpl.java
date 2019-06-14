@@ -198,9 +198,6 @@ public class SeriesAOImpl implements ISeriesAO {
             Series condition) {
         Paginable<Series> paginable = seriesBO.getPaginable(start, limit,
                 condition);
-        for (Series series : paginable.getList()) {
-            init(series);
-        }
         return paginable;
     }
 
