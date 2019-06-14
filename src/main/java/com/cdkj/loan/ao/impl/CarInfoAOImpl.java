@@ -606,9 +606,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "面签流程未走完，不能操作");
             }
-            if (!ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
+            if (!ECdbizStatus.H2.getCode().equals(cdbiz.getMakeCardStatus())
+                    && !ECdbizStatus.H3.getCode().equals(cdbiz.getMakeCardStatus())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "制卡流程未走完，不能操作");
+                        "制卡未申请，不能操作");
             }
 
             // 生成资料传递

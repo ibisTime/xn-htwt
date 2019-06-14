@@ -29,7 +29,6 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
@@ -84,17 +83,14 @@ import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
-import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ESysRole;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -726,6 +722,7 @@ public class CdbizAOImpl implements ICdbizAO {
             bizTaskBO.saveBizTaskNew(cdbiz.getCode(), EBizLogType.enter,
                     cdbiz.getCode(), ENode.confirm_archive.getCode());
         }
+        cdbiz.setEnterCode(req.getEnterCode());
         cdbiz.setEnterLocation(req.getEnterLocation());
         cdbizBO.refreshLocation(cdbiz);
 
@@ -751,39 +748,6 @@ public class CdbizAOImpl implements ICdbizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前状态不是已入档状态，不能确认入档");
         }
-
-        // 绑定用户银行卡
-        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
-        repayBiz.setLoanBank(cdbiz.getLoanBank());
-        repayBiz.setBankcardCode(cdbiz.getRepayCardNumber());
-        repayBiz.setRestPeriods(repayBiz.getPeriods());
-        repayBiz.setRestAmount(repayBiz.getLoanAmount());
-        repayBiz.setRestTotalCost(0L);
-        repayBiz.setOverdueAmount(0L);
-        repayBiz.setTotalOverdueCount(0);
-        repayBiz.setCurOverdueCount(0);
-        Date loanDate = DateUtil.getTodayStart();
-        repayBiz.setLoanStartDatetime(loanDate);
-        Date addMonths = DateUtils.addMonths(loanDate, repayBiz.getPeriods());
-        repayBiz.setLoanEndDatetime(addMonths);
-        repayBiz.setFxDeposit(0L);
-        repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
-
-        if (repayBiz.getFirstRepayDatetime() == null) {
-            Date date = DateUtil.getTomorrowStart(DateUtil.getTodayStart());
-            repayBiz.setFirstRepayDatetime(date);
-        }
-
-        SYSUser user = sysUserBO.getUser(cdbiz.getSaleUserId());
-        repayBiz.setTeamCode(user.getTeamCode());
-        repayBizBO.refreshRepayBiz(repayBiz);
-
-        // 自动生成还款业务
-        // RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(
-        // budgetOrder, userId, bankcardCode, operator);
-
-        // 自动生成还款计划
-        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 更新业务状态
         cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),

@@ -1,89 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.IOverdueMenuDAO">
-	<resultMap id="overdueMenu_DB_Result" type="overdueMenu">
-		<result column="code" property="code" />
-		<result column="real_name" property="realName" />
-		<result column="id_no" property="idNo" />
-		<result column="loan_bank_name" property="loanBankName" />
-		<result column="loan_amount" property="loanAmount" />
-		<result column="periods" property="periods" />
-		<result column="remain_amount" property="remainAmount" />
-		<result column="fk_datetime" property="fkDatetime" />
-		<result column="overdue_amount" property="overdueAmount" />
-		<result column="overdue_datetime" property="overdueDatetime" />
-		<result column="import_datetime" property="importDatetime" />
-		<result column="import_note" property="importNote" />
-		<result column="status" property="status" />
-		<result column="handle_datetime" property="handleDatetime" />
-		<result column="handle_note" property="handleNote" />
-		<result column="budget_order_code" property="budgetOrderCode" />
-		<result column="repay_biz_code" property="repayBizCode" />
-		<result column="repay_plan_code" property="repayPlanCode" />
-	</resultMap>
-	<sql id="where_condition">
-		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
-			</if>
-			<if test="realName != null and realName != '' ">
-				AND t.real_name = #{realName}
-			</if>
-			<if test="idNo != null and idNo != '' ">
-				AND t.id_no = #{idNo}
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
-			</if>
-			<if test="budgetOrderCode != null and budgetOrderCode != '' ">
-				AND t.budget_order_code = #{budgetOrderCode}
-			</if>
-			<if test="repayBizCode != null and repayBizCode != '' ">
-				AND t.repay_biz_code = #{repayBizCode}
-			</if>
-			<if test="repayPlanCode != null and repayPlanCode != '' ">
-				AND t.repay_plan_code = #{repayPlanCode}
-			</if>
-		</trim>
-	</sql>
-	<select id="select_overdueMenu" parameterType="overdueMenu" resultMap="overdueMenu_DB_Result">
-		SELECT
-		t.code
-		,t.real_name
-		,t.id_no
-		,t.loan_bank_name
-		,t.loan_amount
-		,t.periods
-		,t.remain_amount
-		,t.fk_datetime
-		,t.overdue_amount
-		,t.overdue_datetime
-		,t.import_datetime
-		,t.import_note
-		,t.status
-		,t.handle_datetime
-		,t.handle_note
-		,t.budget_order_code
-		,t.repay_biz_code
-		,t.repay_plan_code
-		FROM
-		tdh_overdue_menu t
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
+    <resultMap id="overdueMenu_DB_Result" type="overdueMenu">
+        <result column="code" property="code"/>
+        <result column="real_name" property="realName"/>
+        <result column="id_no" property="idNo"/>
+        <result column="loan_bank_name" property="loanBankName"/>
+        <result column="loan_amount" property="loanAmount"/>
+        <result column="periods" property="periods"/>
+        <result column="remain_amount" property="remainAmount"/>
+        <result column="fk_datetime" property="fkDatetime"/>
+        <result column="overdue_amount" property="overdueAmount"/>
+        <result column="overdue_datetime" property="overdueDatetime"/>
+        <result column="import_datetime" property="importDatetime"/>
+        <result column="import_note" property="importNote"/>
+        <result column="status" property="status"/>
+        <result column="handle_datetime" property="handleDatetime"/>
+        <result column="handle_note" property="handleNote"/>
+        <result column="budget_order_code" property="budgetOrderCode"/>
+        <result column="repay_biz_code" property="repayBizCode"/>
+        <result column="repay_plan_code" property="repayPlanCode"/>
+        <result column="create_datetime" property="createDatetime"/>
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="realName != null and realName != '' ">
+                AND t.real_name = #{realName}
+            </if>
+            <if test="idNo != null and idNo != '' ">
+                AND t.id_no = #{idNo}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="budgetOrderCode != null and budgetOrderCode != '' ">
+                AND t.budget_order_code = #{budgetOrderCode}
+            </if>
+            <if test="repayBizCode != null and repayBizCode != '' ">
+                AND t.repay_biz_code = #{repayBizCode}
+            </if>
+            <if test="repayPlanCode != null and repayPlanCode != '' ">
+                AND t.repay_plan_code = #{repayPlanCode}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_overdueMenu" parameterType="overdueMenu" resultMap="overdueMenu_DB_Result">
+        SELECT
+        t.code
+        ,t.real_name
+        ,t.id_no
+        ,t.loan_bank_name
+        ,t.loan_amount
+        ,t.periods
+        ,t.remain_amount
+        ,t.fk_datetime
+        ,t.overdue_amount
+        ,t.overdue_datetime
+        ,t.import_datetime
+        ,t.import_note
+        ,t.status
+        ,t.handle_datetime
+        ,t.handle_note
+        ,t.budget_order_code
+        ,t.repay_biz_code
+        ,t.repay_plan_code
+        ,t.create_datetime
+        FROM
+        tdh_overdue_menu t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
 
-	<select id="select_overdueMenu_count" parameterType="overdueMenu"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM tdh_overdue_menu t
-		<include refid="where_condition" />
-	</select>
+    <select id="select_overdueMenu_count" parameterType="overdueMenu"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tdh_overdue_menu t
+        <include refid="where_condition"/>
+    </select>
 
-	<insert id="insert_overdueMenu" parameterType="overdueMenu">
+    <insert id="insert_overdueMenu" parameterType="overdueMenu">
 		INSERT INTO
 		tdh_overdue_menu(
 		code
@@ -102,6 +104,7 @@
 		,budget_order_code
 		,repay_biz_code
 		,repay_plan_code
+		,create_datetime
 		)
 		VALUES(
 		#{code}
@@ -120,10 +123,11 @@
 		,#{budgetOrderCode}
 		,#{repayBizCode}
 		,#{repayPlanCode}
+		,#{createDatetime}
 		)
 	</insert>
 
-	<update id="update_overdueMenu" parameterType="overdueMenu">
+    <update id="update_overdueMenu" parameterType="overdueMenu">
 		UPDATE tdh_overdue_menu
 		SET
 		status = #{status}
@@ -132,6 +136,7 @@
 		,budget_order_code = #{budgetOrderCode}
 		,repay_biz_code = #{repayBizCode}
 		,repay_plan_code = #{repayPlanCode}
+		,create_datetime = #{createDatetime}
 		WHERE code = #{code}
 	</update>
 </mapper>

@@ -16,6 +16,7 @@
         <result column="loan_bank" property="loanBank"/>
         <result column="credit_loan_amount" property="creditLoanAmount"/>
         <result column="loan_amount" property="loanAmount"/>
+        <result column="enter_code" property="enterCode"/>
         <result column="enter_location" property="enterLocation"/>
         <result column="enter_datetime" property="enterDatetime"/>
         <result column="enter_filelist" property="enterFilelist"/>
@@ -278,6 +279,7 @@
         ,t.loan_bank
         ,t.credit_loan_amount
         ,t.loan_amount
+        ,t.enter_code
         ,t.enter_location
         ,t.enter_datetime
         ,t.enter_filelist
@@ -360,6 +362,7 @@
         ,t.loan_bank
         ,t.credit_loan_amount
         ,t.loan_amount
+        ,t.enter_code
         ,t.enter_location
         ,t.enter_datetime
         ,t.enter_filelist
@@ -411,6 +414,7 @@
         ,t.loan_bank
         ,t.credit_loan_amount
         ,t.loan_amount
+        ,t.enter_code
         ,t.enter_location
         ,t.enter_datetime
         ,t.enter_filelist
@@ -520,6 +524,7 @@
 		,loan_bank
 		,credit_loan_amount
 		,loan_amount
+		,enter_code
 		,enter_location
 		,enter_datetime
 		,enter_filelist
@@ -560,6 +565,7 @@
 		,#{loanBank}
 		,#{creditLoanAmount}
 		,#{loanAmount}
+		,#{enterCode}
 		,#{enterLocation}
 		,#{enterDatetime}
 		,#{enterFilelist}
@@ -701,7 +707,8 @@
     <update id="update_cdbizLocation" parameterType="cdbiz">
 		UPDATE tqj_cdbiz
 		SET
-		enter_location=#{enterLocation}
+		enter_code=#{enterCode}
+		,enter_location=#{enterLocation}
 		WHERE code=#{code}
 	</update>
 

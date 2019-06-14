@@ -60,3 +60,9 @@ CREATE TABLE `tdh_basic_valuation` (
   `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基础估值';
+
+ALTER TABLE `tdh_overdue_menu` 
+ADD COLUMN `create_datetime` DATETIME NULL COMMENT '创建时间（银行）' AFTER `repay_plan_code`;
+
+ALTER TABLE `tqj_cdbiz`
+ADD COLUMN `enter_code` VARCHAR(255) NULL COMMENT '入档编号' AFTER `loan_amount`;

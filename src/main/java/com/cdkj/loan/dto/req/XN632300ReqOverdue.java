@@ -1,7 +1,9 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
+@Data
 public class XN632300ReqOverdue {
 
     @NotBlank
@@ -24,60 +26,8 @@ public class XN632300ReqOverdue {
 
     private String remainAmount;// 剩余金额
 
-    public String getRealName() {
-        return realName;
-    }
+    // 创建时间
+    private String createDatetime;
 
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(String loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public String getFkDatetime() {
-        return fkDatetime;
-    }
-
-    public void setFkDatetime(String fkDatetime) {
-        this.fkDatetime = fkDatetime;
-    }
-
-    public String getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(String periods) {
-        this.periods = periods;
-    }
-
-    public String getOverdueAmount() {
-        return overdueAmount;
-    }
-
-    public void setOverdueAmount(String overdueAmount) {
-        this.overdueAmount = overdueAmount;
-    }
-
-    public String getRemainAmount() {
-        return remainAmount;
-    }
-
-    public void setRemainAmount(String remainAmount) {
-        this.remainAmount = remainAmount;
-    }
 
 }

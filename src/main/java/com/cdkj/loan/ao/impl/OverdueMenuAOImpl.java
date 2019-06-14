@@ -123,6 +123,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             overdueMenu.setLoanBankCode(loanBankCode);
             overdueMenu.setLoanBankName(bank.getBankName());
 
+            overdueMenu.setCreateDatetime(DateUtil.strToDate(overdue.getCreateDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             overdueMenu.setImportDatetime(new Date());
             overdueMenuBO.saveOverdueMenu(overdueMenu);
         }
@@ -154,7 +156,6 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
         overdueMenu.setStatus(EOverdueMenuStatus.YSDCL.getCode());
         overdueMenu.setRepayBizCode(curMonthRepayPlan.getRepayBizCode());
         overdueMenu.setRepayPlanCode(curMonthRepayPlan.getCode());
-
         overdueMenu.setHandleDatetime(new Date());
         overdueMenuBO.refreshOverdueMenu(overdueMenu);
     }

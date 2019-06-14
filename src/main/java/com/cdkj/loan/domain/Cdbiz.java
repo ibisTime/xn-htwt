@@ -61,6 +61,9 @@ public class Cdbiz extends ABaseDO {
     // 贷款额
     private Long loanAmount;
 
+    // 入档编号
+    private String enterCode;
+
     // 入档位置
     private String enterLocation;
 
