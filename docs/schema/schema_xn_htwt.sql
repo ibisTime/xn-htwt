@@ -3677,3 +3677,37 @@ CREATE TABLE `tsys_user`
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tdh_city_list`;
+CREATE TABLE `tdh_city_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `city_id` int(11) DEFAULT NULL COMMENT '城市ID',
+  `city_name` varchar(32) DEFAULT NULL COMMENT '城市名称',
+  `prov_id` int(11) DEFAULT NULL COMMENT '所属省份ID',
+  `prov_name` varchar(32) DEFAULT NULL COMMENT '所属省份名称',
+  `create_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='城市列表';
+
+
+DROP TABLE IF EXISTS `tdh_basic_valuation`;
+CREATE TABLE `tdh_basic_valuation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `model_id` varchar(32) DEFAULT NULL COMMENT '车型标识',
+  `reg_date` varchar(32) DEFAULT NULL COMMENT '待估车辆的上牌时间',
+  `mile` double DEFAULT NULL COMMENT '待估车辆的公里数(单位万公里)',
+  `zone` varchar(32) DEFAULT NULL COMMENT '城市标识',
+  `eval_price` varchar(32) DEFAULT NULL COMMENT '评估价格',
+  `low_price` varchar(32) DEFAULT NULL COMMENT '最低价',
+  `good_price` varchar(32) DEFAULT NULL COMMENT '最优价',
+  `high_price` varchar(32) DEFAULT NULL COMMENT '最高价',
+  `dealer_buy_price` varchar(32) DEFAULT NULL COMMENT '车商收购价',
+  `individual_price` varchar(32) DEFAULT NULL COMMENT '个人交易价',
+  `dealer_price` varchar(32) DEFAULT NULL COMMENT '车商零售价',
+  `url` varchar(255) DEFAULT NULL COMMENT '地址',
+  `price` varchar(32) DEFAULT NULL COMMENT '新车售价',
+  `discharge_standard` varchar(32) DEFAULT NULL COMMENT '排放标准',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `car_logo_url` varchar(255) DEFAULT NULL COMMENT '汽车标志网址',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基础估值';

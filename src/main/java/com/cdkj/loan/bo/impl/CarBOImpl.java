@@ -1,11 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -13,6 +7,10 @@ import com.cdkj.loan.dao.ICarDAO;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CarBOImpl extends PaginableBOImpl<Car> implements ICarBO {
@@ -69,6 +67,13 @@ public class CarBOImpl extends PaginableBOImpl<Car> implements ICarBO {
         Car car = new Car();
         car.setCode(code);
         carDAO.delete(car);
+    }
+
+    @Override
+    public Car getCarByModelId(String modelId) {
+        Car car = new Car();
+        car.setModelId(modelId);
+        return carDAO.select(car);
     }
 
 }

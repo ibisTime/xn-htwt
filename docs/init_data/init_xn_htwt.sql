@@ -2768,6 +2768,9 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_periods','48','2000','USYS201800000000001',now(),'公章管理',NULL,NULL);
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_periods','48','10000','USYS201800000000001',now(),'1',NULL,NULL);
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('app_start_pic','app_start_pic','Ft0QjiHN4SJ2z8-5MgJnieZCXi0E||FoObcTGwWOgAX9nCGvEk-KsYMBbO','USYS201800000000001',now(),'app启动图','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_refresh','url','http://api.che300.com/service','USYS201800000000001',now(),'车辆刷新url','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_refresh','token','ed34a9f390e806112420863423cd8dbc','USYS201800000000001',now(),'车辆刷新token','CD-CHTWT000020','CD-CHTWT000020');
+
 
 /*
 -- Query: SELECT `bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,0 as `max_order`,0 as `order_amount`,0 as `day_amount`,0 as `month_amount`,`remark` FROM tstd_channel_bank
