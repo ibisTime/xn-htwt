@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import com.cdkj.loan.ao.ICdbizAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAdvanceBO;
+import com.cdkj.loan.bo.IAdvanceCollectCardBO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankLoanBO;
@@ -32,6 +33,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
+import com.cdkj.loan.domain.AdvanceCollectCard;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankLoan;
@@ -178,6 +180,9 @@ public class CdbizAOImpl implements ICdbizAO {
 
     @Autowired
     private ISmsOutBO smsOutBO;
+
+    @Autowired
+    private IAdvanceCollectCardBO advanceCollectCardBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -1244,6 +1249,13 @@ public class CdbizAOImpl implements ICdbizAO {
         // 财务垫资
         Advance advance = advanceBO.getAdvanceByBizCode(cdbiz.getCode());
         cdbiz.setAdvance(advance);
+
+        // 垫资收款账号
+        AdvanceCollectCard advanceCollectCard = new AdvanceCollectCard();
+        advanceCollectCard.setBizCode(cdbiz.getCode());
+        List<AdvanceCollectCard> advanceCollectCardList = advanceCollectCardBO
+                .queryAdvanceCollectCardList(advanceCollectCard);
+        cdbiz.setAdvanceCollectCardList(advanceCollectCardList);
 
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(cdbiz.getCode());
         cdbiz.setBankLoan(bankLoan);

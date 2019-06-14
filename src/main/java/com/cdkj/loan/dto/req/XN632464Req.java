@@ -1,7 +1,9 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 上传复核回单
@@ -32,10 +34,16 @@ public class XN632464Req {
     private String billPdf;
 
     /**
-     * 垫资账号
+     * 出款账号
      */
-    @NotBlank(message = "垫资账号不能为空")
+    @NotBlank(message = "出款账号不能为空")
     private String advanceCardCode;
+
+    /**
+     * 收款账号
+     */
+    @NotEmpty(message = "收款账号不能为空")
+    private List<String> collectCardCodeList;
 
 
 }

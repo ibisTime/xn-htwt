@@ -304,4 +304,6 @@ public class Cdbiz extends ABaseDO {
     // 垫资金额
     private Integer advanceFundAmount;
 
+    // 垫资收款账号
+    private List<AdvanceCollectCard> advanceCollectCardList;
 }

@@ -184,5 +184,6 @@
         <typeAlias alias="enterFileList" type="com.cdkj.loan.domain.EnterFileList"/>
         <typeAlias alias="cityList" type="com.cdkj.loan.domain.CityList"/>
         <typeAlias alias="basicValuation" type="com.cdkj.loan.domain.BasicValuation"/>
+        <typeAlias alias="advanceCollectCard" type="com.cdkj.loan.domain.AdvanceCollectCard"/>
     </typeAliases>
 </configuration>

@@ -2,9 +2,11 @@ package com.cdkj.loan.ao.impl;
 
 import com.cdkj.loan.ao.IAdvanceAO;
 import com.cdkj.loan.bo.IAdvanceBO;
+import com.cdkj.loan.bo.IAdvanceCollectCardBO;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.IMissionBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -12,6 +14,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
+import com.cdkj.loan.domain.AdvanceCollectCard;
 import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.dto.req.XN632462ReqMission;
@@ -53,6 +56,12 @@ public class AdvanceAOImpl implements IAdvanceAO {
 
     @Autowired
     private IAttachmentBO attachmentBO;
+
+    @Autowired
+    private IAdvanceCollectCardBO advanceCollectCardBO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -254,6 +263,18 @@ public class AdvanceAOImpl implements IAdvanceAO {
                 req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         advance.setAdvanceCardCode(req.getAdvanceCardCode());
         advanceBO.advanceBackUp(advance);
+
+        //收款账号列表
+        for (String code : req.getCollectCardCodeList()) {
+            if (code.equals(req.getAdvanceCardCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "收款账号与出款账号重复");
+            }
+            collectBankcardBO.getCollectBankcard(code);
+            AdvanceCollectCard advanceCollectCard = new AdvanceCollectCard();
+            advanceCollectCard.setBizCode(req.getCode());
+            advanceCollectCard.setCollectBankcardCode(code);
+            advanceCollectCardBO.saveAdvanceCollectCard(advanceCollectCard);
+        }
 
         // 水单
         EAttachName attachName = EAttachName.getMap().get(

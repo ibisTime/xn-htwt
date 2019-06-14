@@ -3711,3 +3711,12 @@ CREATE TABLE `tdh_basic_valuation` (
   `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基础估值';
+
+
+DROP TABLE IF EXISTS `tdq_advance_collect_card`;
+CREATE TABLE `tdq_advance_collect_card` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
+  `collect_bankcard_code` varchar(32) DEFAULT NULL COMMENT '收款卡编号',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='垫资收款卡号';
