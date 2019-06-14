@@ -538,6 +538,9 @@ public class CdbizAOImpl implements ICdbizAO {
             repayBizBO.saveRepayBiz(repayBiz);
 
         } else {
+            if (StringUtils.isBlank(req.getApproveNote())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             cdbiz.setCurNodeCode(nodeFlow.getBackNode());
             cdbiz.setStatus(ECdbizStatus.A1x.getCode());
             cdbizBO.refreshCurNodeStatus(cdbiz);
@@ -663,6 +666,10 @@ public class CdbizAOImpl implements ICdbizAO {
             bizTaskBO.handlePreBizTask(code, EBizLogType.INTERVIEW.getCode(),
                     code, preCurrentNode, operator);
         } else {
+
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             intevCurNodeCode = nodeFlow.getBackNode();
             mqStatus = ECdbizStatus.B02.getCode();
 
@@ -1418,6 +1425,9 @@ public class CdbizAOImpl implements ICdbizAO {
             }
 
         } else {
+            if (StringUtils.isBlank(req.getApproveNote())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             node = null;
             cancelStatus = ECdbizStatus.G0.getCode();
         }
@@ -1449,6 +1459,9 @@ public class CdbizAOImpl implements ICdbizAO {
             cancelStatus = ECdbizStatus.G4.getCode();
 
         } else {
+            if (StringUtils.isBlank(req.getApproveNote())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             cancelNode = null;
             cancelStatus = ECdbizStatus.G0.getCode();
         }

@@ -302,6 +302,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getNextNode();
         } else {
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getBackNode();
@@ -350,6 +353,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getNextNode();
         } else {
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getBackNode();
@@ -390,6 +396,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getNextNode();
         } else {
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getBackNode();
@@ -439,6 +448,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getNextNode();
         } else {
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getBackNode();
@@ -476,6 +488,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
                     .getNextNode();
 
         } else {
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             status = ECdbizStatus.A3x.getCode();
             curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode)
                     .getBackNode();
@@ -540,6 +555,9 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // 生成报告、返点、费用
             lastApprove(cdbiz, req.getOperator());
         } else {
+            if (StringUtils.isBlank(req.getApproveNote())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             curNodeCode = nodeFlow.getBackNode();
             status = ECdbizStatus.A3x.getCode();
             // 待办事项
@@ -636,6 +654,10 @@ public class CarInfoAOImpl implements ICarInfoAO {
             // 生成报告、返点、费用
             lastApprove(cdbiz, operator);
         } else {
+
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             curNodeCode = ENode.renew_budget.getCode();
             status = ECdbizStatus.A3x.getCode();
             // 待办事项

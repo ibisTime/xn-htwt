@@ -24,6 +24,7 @@ import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.exception.BizException;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,6 +117,9 @@ public class AdvanceAOImpl implements IAdvanceAO {
             nextStatus = ECdbizStatus.F2.getCode();
 
         } else {
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                     preFbhgpsNode).getBackNode();
             nextStatus = ECdbizStatus.C01.getCode();
@@ -172,6 +176,9 @@ public class AdvanceAOImpl implements IAdvanceAO {
                         cdbiz.getSaleUserId());
             }
         } else {
+            if (StringUtils.isBlank(approveNote)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+            }
             nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                     preFbhgpsNode).getBackNode();
             nextStatus = ECdbizStatus.C01.getCode();
