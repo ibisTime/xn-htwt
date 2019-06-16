@@ -218,8 +218,12 @@ public class CdbizAOImpl implements ICdbizAO {
             Car car = carBO.getCar(req.getCarModel());
             CarInfo carInfo = new CarInfo();
             EntityUtils.copyData(req, carInfo);
-            carInfo.setCarColor(car.getOutsideColor());
-            carInfo.setOriginalPrice(car.getOriginalPrice().toString());
+            if (StringUtils.isNotBlank(car.getOutsideColor())) {
+                carInfo.setCarColor(car.getOutsideColor());
+            }
+            if (car.getOriginalPrice() != null) {
+                carInfo.setOriginalPrice(car.getOriginalPrice().toString());
+            }
             carInfoBO.saveCarInfo(carInfo);
         }
 

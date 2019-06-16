@@ -56,6 +56,9 @@
         <result column="team_fee" property="teamFee"/>
         <result column="bank_fee" property="bankFee"/>
         <result column="month_deposit" property="monthDeposit"/>
+
+        <result column="car_brand_name" property="carBrandName"/>
+        <result column="car_series_name" property="carSeriesName"/>
     </resultMap>
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -76,7 +79,6 @@
         ,t.car_model
         ,t.reg_date
         ,t.mile
-        ,t.car_model_name
         ,t.car_type
         ,t.car_color
         ,t.car_frame_no
@@ -122,8 +124,14 @@
         ,t.team_fee
         ,t.bank_fee
         ,t.month_deposit
+        ,b.name as car_brand_name
+        ,s.name as car_series_name
+        ,c.name as car_model_name
         FROM
         tdq_car_info t
+        left join tht_brand b on t.car_brand = b.code
+        left join tht_series s on t.car_series = s.code
+        left join tht_car c ON t.car_model = c.code
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">

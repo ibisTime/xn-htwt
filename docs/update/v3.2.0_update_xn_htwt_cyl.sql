@@ -70,3 +70,23 @@ ADD COLUMN `enter_code` VARCHAR(255) NULL COMMENT '入档编号' AFTER `loan_amo
 ALTER TABLE `tdq_car_info`
 ADD COLUMN `reg_date` VARCHAR(255) NULL COMMENT '上牌时间' AFTER `car_model`,
 ADD COLUMN `mile` VARCHAR(255) NULL COMMENT '行驶公里数' AFTER `reg_date`;
+
+
+UPDATE `tdq_file_list` SET `kname`='id_no_front_gua' WHERE `id`='232';
+UPDATE `tdq_file_list` SET `kname`='id_no_reverse_gua' WHERE `id`='233';
+UPDATE `tdq_file_list` SET `kname`='auth_pdf_gua' WHERE `id`='234';
+UPDATE `tdq_file_list` SET `kname`='interview_pic_gua' WHERE `id`='235';
+UPDATE `tdq_file_list` SET `kname`='house_picture_gua' WHERE `id`='236';
+UPDATE `tdq_file_list` SET `kname`='bank_report_gua' WHERE `id`='237';
+UPDATE `tdq_file_list` SET `kname`='data_report_gua' WHERE `id`='238';
+UPDATE `tdq_file_list` SET `kname`='hkb_gua' WHERE `id`='239';
+UPDATE `tdq_file_list` SET `kname`='asset_pdf_gua' WHERE `id`='240';
+UPDATE `tdq_file_list` SET `vname`='担保人2身份证正面' WHERE `id`='241';
+UPDATE `tdq_file_list` SET `vname`='担保人2身份证反面' WHERE `id`='242';
+UPDATE `tdq_file_list` SET `vname`='担保人2征信查询授权书' WHERE `id`='243';
+UPDATE `tdq_file_list` SET `vname`='担保人2手持授权书照片' WHERE `id`='244';
+UPDATE `tdq_file_list` SET `vname`='担保人2家访照片' WHERE `id`='245';
+UPDATE `tdq_file_list` SET `vname`='担保人2银行征信报告' WHERE `id`='246';
+UPDATE `tdq_file_list` SET `vname`='担保人2大数据报告' WHERE `id`='247';
+UPDATE `tdq_file_list` SET `vname`='担保人2户口本' WHERE `id`='248';
+UPDATE `tdq_file_list` SET `vname`='担保人2资产资料pdf' WHERE `id`='249';

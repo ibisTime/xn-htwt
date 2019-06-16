@@ -191,4 +191,9 @@ public class CarInfo extends ABaseDO {
     // 商业险
     private String carSyx;
 
+    // 品牌
+    private String carBrandName;
+
+    // 车系
+    private String carSeriesName;
 }

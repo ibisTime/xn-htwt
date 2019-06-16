@@ -81,4 +81,13 @@ public class CarInfoRes {
     // 银行服务费
     private Long bankFee;// carInfo
 
+    // 品牌
+    private String carBrandName;
+
+    // 车系
+    private String carSeriesName;
+
+    // 车型名称
+    private String carModelName;
+
 }
