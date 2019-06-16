@@ -1,5 +1,6 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -8,18 +9,12 @@ import org.hibernate.validator.constraints.NotBlank;
  * @since: 2018年5月26日 下午2:35:44 
  * @history:
  */
+@Data
 public class XN632117Req {
 
     // 征信人员编号
     @NotBlank
-    private String code;
+    private String creditUserCode;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
 }

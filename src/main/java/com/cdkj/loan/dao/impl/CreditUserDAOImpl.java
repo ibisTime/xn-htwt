@@ -77,4 +77,9 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
     public void updateIcbankCode(CreditUser creditUser) {
         super.update(NAMESPACE.concat("update_icbankCredit"), creditUser);
     }
+
+    @Override
+    public void updateTongdun(CreditUser creditUser) {
+        super.update(NAMESPACE.concat("update_tongdun"), creditUser);
+    }
 }

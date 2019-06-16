@@ -393,6 +393,9 @@ public class CreditUser extends ABaseDO {
     // 工行征信回调状态
     private String status;
 
+    //同盾结果（json形式）
+    private String tongdunResult;
+
     private List<Attachment> attachments;
 
     /**

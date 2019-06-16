@@ -1175,6 +1175,7 @@ CREATE TABLE `tdq_credit_user`
   `note`                      varchar(255) DEFAULT NULL,
   `status`                    varchar(4)   DEFAULT NULL,
   `is_first_gua`              varchar(4)   DEFAULT NULL COMMENT '是否为第一担保人',
+  `tongdun_result`            LONGTEXT     DEFAULT NULL COMMENT '同盾返回结果',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

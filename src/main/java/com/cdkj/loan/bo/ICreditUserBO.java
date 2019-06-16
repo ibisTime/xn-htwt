@@ -1,6 +1,8 @@
 package com.cdkj.loan.bo;
 
+import com.alibaba.fastjson.JSON;
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.domain.BodyGuardApiResponse;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
@@ -47,5 +49,7 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     int refreshIcbankCredit(CreditUser data, CreditIcbank creditIcbank);
 
     CreditIcbank getCreditIcbank(String icbankCode);
+
+    String getTongdunResult(CreditUser creditUser);
 
 }

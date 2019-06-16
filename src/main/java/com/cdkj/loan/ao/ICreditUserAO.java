@@ -1,6 +1,8 @@
 package com.cdkj.loan.ao;
 
+import com.alibaba.fastjson.JSON;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.BodyGuardApiResponse;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632532Req;
 import com.cdkj.loan.dto.req.XN632533Req;
@@ -56,4 +58,5 @@ public interface ICreditUserAO {
     Paginable<CreditUser> queryCreditUserPage(int start, int limit,
             CreditUser condition);
 
+    public String getTongdunResult(String creditUserCode);
 }

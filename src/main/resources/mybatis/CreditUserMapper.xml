@@ -93,6 +93,7 @@
         <result column="left_amount" property="leftAmount"/>
         <result column="note" property="note"/>
         <result column="is_first_gua" property="isFirstGua"/>
+        <result column="tongdun_result" property="tongdunResult"/>
 
     </resultMap>
     <sql id="where_condition">
@@ -208,6 +209,7 @@
         ,t.left_amount
         ,note
         ,is_first_gua
+        ,tongdun_result
         from tdq_credit_user t
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
@@ -566,6 +568,12 @@
           , status                    = #{status}
           , icbank_code               = #{icbankCode}
          WHERE code = #{code}
+    </update>
+
+    <update id="update_tongdun" parameterType="creditUser">
+      UPDATE tdq_credit_user
+      SET tongdun_result                   = #{tongdunResult}
+      WHERE code = #{code}
     </update>
 
 

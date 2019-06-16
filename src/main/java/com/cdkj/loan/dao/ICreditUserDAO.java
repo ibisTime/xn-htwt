@@ -21,4 +21,6 @@ public interface ICreditUserDAO extends IBaseDAO<CreditUser> {
     int updateIcbankCredit(CreditUser creditUser);
 
     void updateIcbankCode(CreditUser creditUser);
+
+    void updateTongdun(CreditUser creditUser);
 }

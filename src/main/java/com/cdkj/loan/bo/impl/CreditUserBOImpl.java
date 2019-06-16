@@ -1,19 +1,24 @@
 package com.cdkj.loan.bo.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.Attachment;
+import com.cdkj.loan.domain.BodyGuardApiResponse;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.dto.req.XN632500Req;
+import com.cdkj.loan.dto.req.XN798600Req;
 import com.cdkj.loan.enums.EAttachName;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
@@ -365,5 +370,28 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
          */
         String birth = idNo.substring(6, 10);
         return birth;
+    }
+
+    @Override
+    public String getTongdunResult(CreditUser creditUser) {
+        String result=null;
+        XN798600Req req=new XN798600Req();
+        req.setIdNumber(creditUser.getIdNo());
+        req.setAccountMobile(creditUser.getMobile());
+        req.setAccountName(creditUser.getUserName());
+        req.setSystemCode("CD-TDUN00030");
+        req.setCompanyCode("CD-TDUN00030");
+        try {
+            result= BizConnecter.getBizData("798600", JsonUtils.object2Json(req));
+              //转json储存在数据库
+              creditUser.setTongdunResult(JsonUtil.Object2Json(result));
+              creditUserDAO.updateTongdun(creditUser);
+        }catch (Exception e) {
+            logger.info("同盾结果返回异常");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),"同盾结果返回异常");
+
+        }
+
+        return  result;
     }
 }
