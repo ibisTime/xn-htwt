@@ -1,5 +1,6 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -8,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author : cyl
  * @since : 2019-05-02 19:29
  */
+@Data
 public class XN632531Req {
 
     // 业务编号
@@ -72,158 +74,4 @@ public class XN632531Req {
     private String carHgzPic;
 
     /****************车辆信息end***************/
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public String getVehicleCompanyName() {
-        return vehicleCompanyName;
-    }
-
-    public void setVehicleCompanyName(String vehicleCompanyName) {
-        this.vehicleCompanyName = vehicleCompanyName;
-    }
-
-    public String getInvoiceCompany() {
-        return invoiceCompany;
-    }
-
-    public void setInvoiceCompany(String invoiceCompany) {
-        this.invoiceCompany = invoiceCompany;
-    }
-
-
-    public String getCarType() {
-        return carType;
-    }
-
-    public void setCarType(String carType) {
-        this.carType = carType;
-    }
-
-    public String getCarBrand() {
-        return carBrand;
-    }
-
-    public void setCarBrand(String carBrand) {
-        this.carBrand = carBrand;
-    }
-
-    public String getCarSeries() {
-        return carSeries;
-    }
-
-    public void setCarSeries(String carSeries) {
-        this.carSeries = carSeries;
-    }
-
-    public String getCarModel() {
-        return carModel;
-    }
-
-    public void setCarModel(String carModel) {
-        this.carModel = carModel;
-    }
-
-
-    public String getCarColor() {
-        return carColor;
-    }
-
-    public void setCarColor(String carColor) {
-        this.carColor = carColor;
-    }
-
-    public String getCarFrameNo() {
-        return carFrameNo;
-    }
-
-    public void setCarFrameNo(String carFrameNo) {
-        this.carFrameNo = carFrameNo;
-    }
-
-    public String getCarEngineNo() {
-        return carEngineNo;
-    }
-
-    public void setCarEngineNo(String carEngineNo) {
-        this.carEngineNo = carEngineNo;
-    }
-
-    public String getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(String originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public String getCarDealerSubsidy() {
-        return carDealerSubsidy;
-    }
-
-    public void setCarDealerSubsidy(String carDealerSubsidy) {
-        this.carDealerSubsidy = carDealerSubsidy;
-    }
-
-    public String getOilSubsidyKil() {
-        return oilSubsidyKil;
-    }
-
-    public void setOilSubsidyKil(String oilSubsidyKil) {
-        this.oilSubsidyKil = oilSubsidyKil;
-    }
-
-    public String getOilSubsidy() {
-        return oilSubsidy;
-    }
-
-    public void setOilSubsidy(String oilSubsidy) {
-        this.oilSubsidy = oilSubsidy;
-    }
-
-
-    public String getSettleAddress() {
-        return settleAddress;
-    }
-
-    public void setSettleAddress(String settleAddress) {
-        this.settleAddress = settleAddress;
-    }
-
-    public String getCarPic() {
-        return carPic;
-    }
-
-    public void setCarPic(String carPic) {
-        this.carPic = carPic;
-    }
-
-    public String getCarHgzPic() {
-        return carHgzPic;
-    }
-
-    public void setCarHgzPic(String carHgzPic) {
-        this.carHgzPic = carHgzPic;
-    }
 }

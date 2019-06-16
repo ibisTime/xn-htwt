@@ -65,8 +65,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());
         creditUser.setMobile(child.getMobile());
-        creditUser.setIdFront(child.getIdNoFront());
-        creditUser.setIdReverse(child.getIdNoReverse());
+        creditUser.setIdFront(child.getIdFront());
+        creditUser.setIdReverse(child.getIdReverse());
         creditUser.setAuthPdf(child.getAuthPdf());
         creditUser.setInterviewPic(child.getInterviewPic());
         creditUser.setIdNo(child.getIdNo());
@@ -79,6 +79,13 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         String sex = getSexByIdNo(child.getIdNo());
         creditUser.setGender(sex);
         creditUser.setStatus(ECreditUserStatus.to_icCredit.getCode());
+        if (child.getIdCardInfo() != null) {
+            creditUser.setNation(child.getIdCardInfo().getNationality());
+            creditUser.setAuthref(child.getIdCardInfo().getIssue());
+            creditUser.setStatdate(child.getIdCardInfo().getEndDate());
+            creditUser.setCustomerBirth(child.getIdCardInfo().getBirth());
+            creditUser.setBirthAddress(child.getIdCardInfo().getResidenceAddress());
+        }
         // 主贷人
         if (ECreditUserLoanRole.APPLY_USER.getCode()
                 .equals(child.getLoanRole())) {
@@ -86,12 +93,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             EAttachName attachName = EAttachName.getMap().get(
                     EAttachName.mainLoaner_id_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoFront());
+                    attachName.getValue(), child.getIdFront());
             // 身份证反面
             attachName = EAttachName.getMap().get(
                     EAttachName.mainLoaner_id_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoReverse());
+                    attachName.getValue(), child.getIdReverse());
             // 征信查询授权
             attachName = EAttachName.getMap().get(
                     EAttachName.mainLoaner_auth_pdf.getCode());
@@ -109,12 +116,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             EAttachName attachName = EAttachName.getMap().get(
                     EAttachName.replier_id_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoFront());
+                    attachName.getValue(), child.getIdFront());
             // 身份证反面
             attachName = EAttachName.getMap().get(
                     EAttachName.replier_id_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoReverse());
+                    attachName.getValue(), child.getIdReverse());
             // 征信查询授权
             attachName = EAttachName.getMap().get(
                     EAttachName.replier_auth_pdf.getCode());
@@ -134,12 +141,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
                 EAttachName attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_front1.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoFront());
+                        attachName.getValue(), child.getIdFront());
                 // 身份证反面
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_reverse1.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoReverse());
+                        attachName.getValue(), child.getIdReverse());
                 // 征信查询授权
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_auth_pdf1.getCode());
@@ -155,12 +162,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
                 EAttachName attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_front.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoFront());
+                        attachName.getValue(), child.getIdFront());
                 // 身份证反面
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_reverse.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoReverse());
+                        attachName.getValue(), child.getIdReverse());
                 // 征信查询授权
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_auth_pdf.getCode());

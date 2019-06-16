@@ -154,10 +154,12 @@ public class IdOcrPicImpl {
         }
 
         String birth = idOcrRes.getBirth();
-        String year = birth.substring(0, 4);
-        String month = birth.substring(4, 6);
-        String day = birth.substring(6, 8);
-        idOcrRes.setBirth(year + "-" + month + "-" + day);
+        if (StringUtils.isNotBlank(birth)) {
+            String year = birth.substring(0, 4);
+            String month = birth.substring(4, 6);
+            String day = birth.substring(6, 8);
+            idOcrRes.setBirth(year + "-" + month + "-" + day);
+        }
         return idOcrRes;
     }
 
