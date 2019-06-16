@@ -51,6 +51,6 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     CreditIcbank getCreditIcbank(String icbankCode);
 
-    BodyGuardWZHYResponse getTongdunResult(CreditUser creditUser);
+    String getTongdunResult(CreditUser creditUser);
 
 }
