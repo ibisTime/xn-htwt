@@ -384,6 +384,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         try {
             result= BizConnecter.getBizData("798600", JsonUtils.object2Json(req));
             result=result.replace("\"","");
+            result=result.replace("\\","");
               //转json储存在数据库
               creditUser.setTongdunResult(result);
               creditUserDAO.updateTongdun(creditUser);
