@@ -66,3 +66,7 @@ ADD COLUMN `create_datetime` DATETIME NULL COMMENT '创建时间（银行）' AF
 
 ALTER TABLE `tqj_cdbiz`
 ADD COLUMN `enter_code` VARCHAR(255) NULL COMMENT '入档编号' AFTER `loan_amount`;
+
+ALTER TABLE `tdq_car_info`
+ADD COLUMN `reg_date` VARCHAR(255) NULL COMMENT '上牌时间' AFTER `car_model`,
+ADD COLUMN `mile` VARCHAR(255) NULL COMMENT '行驶公里数' AFTER `reg_date`;
