@@ -7,6 +7,7 @@ import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.domain.BodyGuardApiResponse;
+import com.cdkj.loan.domain.BodyGuardWZHYResponse;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632532Req;
@@ -169,7 +170,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
     }
 
     @Override
-    public String getTongdunResult(String creditUserCode) {
+    public BodyGuardWZHYResponse getTongdunResult(String creditUserCode) {
         CreditUser creditUser=creditUserBO.getCreditUser(creditUserCode);
         return creditUserBO.getTongdunResult(creditUser);
     }
