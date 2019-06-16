@@ -32,6 +32,12 @@ public class CarInfo extends ABaseDO {
     // 车型
     private String carModel;
 
+    // 上牌时间
+    private String regDate;
+
+    // 行驶公里数
+    private String mile;
+
     // 车型名称
     private String carModelName;
 

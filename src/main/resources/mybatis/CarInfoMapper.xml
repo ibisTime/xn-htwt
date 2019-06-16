@@ -8,6 +8,8 @@
         <result column="car_brand" property="carBrand"/>
         <result column="car_series" property="carSeries"/>
         <result column="car_model" property="carModel"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="mile" property="mile"/>
         <result column="car_model_name" property="carModelName"/>
         <result column="car_type" property="carType"/>
         <result column="car_color" property="carColor"/>
@@ -72,6 +74,8 @@
         ,t.car_brand
         ,t.car_series
         ,t.car_model
+        ,t.reg_date
+        ,t.mile
         ,t.car_model_name
         ,t.car_type
         ,t.car_color
@@ -142,6 +146,8 @@
 		,car_brand
 		,car_series
 		,car_model
+		,reg_date
+		,mile
 		,car_model_name
 		,car_type
 		,car_color
@@ -195,6 +201,8 @@
 		,#{carBrand}
 		,#{carSeries}
 		,#{carModel}
+		,#{regDate}
+		,#{mile}
 		,#{carModelName}
 		,#{carType}
 		,#{carColor}
@@ -258,6 +266,8 @@
 		car_brand = #{carBrand}
 		,car_series = #{carSeries}
 		,car_model = #{carModel}
+		,reg_date = #{regDate}
+		,mile = #{mile}
 		,car_model_name = #{carModelName}
 		,car_type = #{carType}
 		,car_color = #{carColor}

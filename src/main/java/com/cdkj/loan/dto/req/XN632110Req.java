@@ -34,6 +34,12 @@ public class XN632110Req {
     // 车型
     private String carModel;// carInfo
 
+    // 上牌时间
+    private String regDate;// carInfo
+
+    // 行驶公里数
+    private String mile;// carInfo
+
     // 所属区域
     private String region;// carInfo
 
