@@ -208,6 +208,11 @@ public class CdbizAOImpl implements ICdbizAO {
             // 二手车材料处理
             secondHandOperate(cdbiz, req.getSecondCarReport(),
                     req.getXszFront(), req.getXszReverse());
+
+            // 车辆信息
+            CarInfo carInfo = new CarInfo();
+            EntityUtils.copyData(req, carInfo);
+            carInfoBO.saveCarInfo(carInfo);
         }
 
         // 新增征信人员
@@ -237,11 +242,22 @@ public class CdbizAOImpl implements ICdbizAO {
 
         EntityUtils.copyData(req, cdbiz);
         if (ENewBizType.second_hand.getCode().equals(req.getBizType())) {
-            // 删除附件
-            // attachmentBO.removeBizAttachments(bizCode);
             // 二手车材料处理
             secondHandOperate(cdbiz, req.getSecondCarReport(),
                     req.getXszFront(), req.getXszReverse());
+
+            // 判断车辆信息是否存在，存在则修改，不存在则新增
+            CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getBizCode());
+            if (carInfo == null) {
+                CarInfo data = new CarInfo();
+                EntityUtils.copyData(req, data);
+                carInfoBO.saveCarInfo(data);
+            } else {
+                String code = carInfo.getCode();
+                EntityUtils.copyData(req, carInfo);
+                carInfo.setCode(code);
+                carInfoBO.refreshCarInfo(carInfo);
+            }
         }
         // 修改业务
         cdbiz.setLoanAmount(StringValidater.toLong(req.getCreditLoanAmount()));

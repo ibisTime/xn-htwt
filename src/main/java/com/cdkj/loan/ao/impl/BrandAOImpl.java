@@ -163,9 +163,9 @@ public class BrandAOImpl implements IBrandAO {
     @Override
     public List<Brand> queryBrandList(Brand condition) {
         List<Brand> brandList = brandBO.queryBrand(condition);
-        for (Brand brand : brandList) {
-            initBrand(brand);
-        }
+//        for (Brand brand : brandList) {
+//            initBrand(brand);
+//        }
         return brandList;
     }
 
