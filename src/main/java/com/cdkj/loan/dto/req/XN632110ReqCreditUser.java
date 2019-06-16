@@ -1,13 +1,17 @@
 package com.cdkj.loan.dto.req;
 
+import com.cdkj.loan.dto.res.IdCardInfoRes;
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 征信新增 （征信人员）
- * @author: jiafr 
- * @since: 2018年5月25日 下午10:23:09 
+ *
+ * @author: jiafr
+ * @since: 2018年5月25日 下午10:23:09
  * @history:
  */
+@Data
 public class XN632110ReqCreditUser {
 
     // 姓名
@@ -46,76 +50,7 @@ public class XN632110ReqCreditUser {
     @NotBlank
     private String interviewPic;
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getRelation() {
-        return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation;
-    }
-
-    public String getLoanRole() {
-        return loanRole;
-    }
-
-    public void setLoanRole(String loanRole) {
-        this.loanRole = loanRole;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getIdNoFront() {
-        return idFront;
-    }
-
-    public void setIdNoFront(String idNoFront) {
-        this.idFront = idNoFront;
-    }
-
-    public String getIdNoReverse() {
-        return idReverse;
-    }
-
-    public void setIdNoReverse(String idNoReverse) {
-        this.idReverse = idNoReverse;
-    }
-
-    public String getAuthPdf() {
-        return authPdf;
-    }
-
-    public void setAuthPdf(String authPdf) {
-        this.authPdf = authPdf;
-    }
-
-    public String getInterviewPic() {
-        return interviewPic;
-    }
-
-    public void setInterviewPic(String interviewPic) {
-        this.interviewPic = interviewPic;
-    }
+    // 身份证信息
+    private IdCardInfoRes idCardInfo;
 
 }

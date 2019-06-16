@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
+import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
@@ -40,6 +41,7 @@ import com.cdkj.loan.domain.BizTask;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
+import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.domain.Cdbiz;
@@ -180,6 +182,9 @@ public class CdbizAOImpl implements ICdbizAO {
     @Autowired
     private IAdvanceCollectCardBO advanceCollectCardBO;
 
+    @Autowired
+    private ICarBO carBO;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String addCredit(XN632110Req req) {
@@ -210,8 +215,11 @@ public class CdbizAOImpl implements ICdbizAO {
                     req.getXszFront(), req.getXszReverse());
 
             // 车辆信息
+            Car car = carBO.getCar(req.getCarModel());
             CarInfo carInfo = new CarInfo();
             EntityUtils.copyData(req, carInfo);
+            carInfo.setCarColor(car.getOutsideColor());
+            carInfo.setOriginalPrice(car.getOriginalPrice().toString());
             carInfoBO.saveCarInfo(carInfo);
         }
 
@@ -247,14 +255,19 @@ public class CdbizAOImpl implements ICdbizAO {
                     req.getXszFront(), req.getXszReverse());
 
             // 判断车辆信息是否存在，存在则修改，不存在则新增
+            Car car = carBO.getCar(req.getCarModel());
             CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getBizCode());
             if (carInfo == null) {
                 CarInfo data = new CarInfo();
                 EntityUtils.copyData(req, data);
+                data.setCarColor(car.getOutsideColor());
+                data.setOriginalPrice(car.getOriginalPrice().toString());
                 carInfoBO.saveCarInfo(data);
             } else {
                 String code = carInfo.getCode();
                 EntityUtils.copyData(req, carInfo);
+                carInfo.setCarColor(car.getOutsideColor());
+                carInfo.setOriginalPrice(car.getOriginalPrice().toString());
                 carInfo.setCode(code);
                 carInfoBO.refreshCarInfo(carInfo);
             }

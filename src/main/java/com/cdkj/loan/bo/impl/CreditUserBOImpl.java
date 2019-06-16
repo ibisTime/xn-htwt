@@ -1,7 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -11,7 +9,6 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.Attachment;
-import com.cdkj.loan.domain.BodyGuardApiResponse;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
@@ -64,8 +61,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());
         creditUser.setMobile(child.getMobile());
-        creditUser.setIdFront(child.getIdNoFront());
-        creditUser.setIdReverse(child.getIdNoReverse());
+        creditUser.setIdFront(child.getIdFront());
+        creditUser.setIdReverse(child.getIdReverse());
         creditUser.setAuthPdf(child.getAuthPdf());
         creditUser.setInterviewPic(child.getInterviewPic());
         creditUser.setIdNo(child.getIdNo());
@@ -78,6 +75,13 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         String sex = getSexByIdNo(child.getIdNo());
         creditUser.setGender(sex);
         creditUser.setStatus(ECreditUserStatus.to_icCredit.getCode());
+        if (child.getIdCardInfo() != null) {
+            creditUser.setNation(child.getIdCardInfo().getNationality());
+            creditUser.setAuthref(child.getIdCardInfo().getIssue());
+            creditUser.setStatdate(child.getIdCardInfo().getEndDate());
+            creditUser.setCustomerBirth(child.getIdCardInfo().getBirth());
+            creditUser.setBirthAddress(child.getIdCardInfo().getResidenceAddress());
+        }
         // 主贷人
         if (ECreditUserLoanRole.APPLY_USER.getCode()
                 .equals(child.getLoanRole())) {
@@ -85,12 +89,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             EAttachName attachName = EAttachName.getMap().get(
                     EAttachName.mainLoaner_id_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoFront());
+                    attachName.getValue(), child.getIdFront());
             // 身份证反面
             attachName = EAttachName.getMap().get(
                     EAttachName.mainLoaner_id_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoReverse());
+                    attachName.getValue(), child.getIdReverse());
             // 征信查询授权
             attachName = EAttachName.getMap().get(
                     EAttachName.mainLoaner_auth_pdf.getCode());
@@ -108,12 +112,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             EAttachName attachName = EAttachName.getMap().get(
                     EAttachName.replier_id_front.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoFront());
+                    attachName.getValue(), child.getIdFront());
             // 身份证反面
             attachName = EAttachName.getMap().get(
                     EAttachName.replier_id_reverse.getCode());
             attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                    attachName.getValue(), child.getIdNoReverse());
+                    attachName.getValue(), child.getIdReverse());
             // 征信查询授权
             attachName = EAttachName.getMap().get(
                     EAttachName.replier_auth_pdf.getCode());
@@ -133,12 +137,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
                 EAttachName attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_front1.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoFront());
+                        attachName.getValue(), child.getIdFront());
                 // 身份证反面
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_reverse1.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoReverse());
+                        attachName.getValue(), child.getIdReverse());
                 // 征信查询授权
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_auth_pdf1.getCode());
@@ -154,12 +158,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
                 EAttachName attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_front.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoFront());
+                        attachName.getValue(), child.getIdFront());
                 // 身份证反面
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_id_reverse.getCode());
                 attachmentBO.saveAttachment(bizCode, attachName.getCode(),
-                        attachName.getValue(), child.getIdNoReverse());
+                        attachName.getValue(), child.getIdReverse());
                 // 征信查询授权
                 attachName = EAttachName.getMap().get(
                         EAttachName.assurance_auth_pdf.getCode());
@@ -374,24 +378,24 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
 
     @Override
     public String getTongdunResult(CreditUser creditUser) {
-        String result=null;
-        XN798600Req req=new XN798600Req();
+        String result = null;
+        XN798600Req req = new XN798600Req();
         req.setIdNumber(creditUser.getIdNo());
         req.setAccountMobile(creditUser.getMobile());
         req.setAccountName(creditUser.getUserName());
         req.setSystemCode("CD-TDUN00030");
         req.setCompanyCode("CD-TDUN00030");
         try {
-            result= BizConnecter.getBizData("798600", JsonUtils.object2Json(req));
-              //转json储存在数据库
-              creditUser.setTongdunResult(JsonUtil.Object2Json(result));
-              creditUserDAO.updateTongdun(creditUser);
-        }catch (Exception e) {
+            result = BizConnecter.getBizData("798600", JsonUtils.object2Json(req));
+            //转json储存在数据库
+            creditUser.setTongdunResult(JsonUtil.Object2Json(result));
+            creditUserDAO.updateTongdun(creditUser);
+        } catch (Exception e) {
             logger.info("同盾结果返回异常");
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),"同盾结果返回异常");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "同盾结果返回异常");
 
         }
 
-        return  result;
+        return result;
     }
 }

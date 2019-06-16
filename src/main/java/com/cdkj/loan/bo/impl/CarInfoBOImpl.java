@@ -1,12 +1,14 @@
 package com.cdkj.loan.bo.impl;
 
 import com.cdkj.loan.bo.IAttachmentBO;
+import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICarInfoDAO;
+import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632500Req;
@@ -30,6 +32,9 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
     @Autowired
     private IAttachmentBO attachmentBO;
+
+    @Autowired
+    private ICarBO carBO;
 
     @Override
     public boolean isCarInfoExist(String code) {
@@ -201,6 +206,7 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
 
     @Override
     public void saveCarInfo(XN632531Req req) {
+        Car car = carBO.getCar(req.getCarModel());
         CarInfo carInfo = new CarInfo();
         if (StringUtils.isBlank(req.getOilSubsidy())) {
             req.setOilSubsidy("0");
@@ -209,6 +215,8 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
             req.setOilSubsidyKil("0");
         }
         EntityUtils.copyData(req, carInfo);
+        carInfo.setCarColor(car.getOutsideColor());
+        carInfo.setOriginalPrice(car.getOriginalPrice().toString());
         //重置code
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
         carInfo.setCode(code);
