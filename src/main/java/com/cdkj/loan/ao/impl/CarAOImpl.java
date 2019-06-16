@@ -234,10 +234,9 @@ public class CarAOImpl implements ICarAO {
                 int i = 1;
                 Long highest = 0L;
                 Long lowest = 0L;
-                refresh(url, domain.getSeriesId(), domain.getBrandCode(), domain.getCode(),
+                refresh(domain.getCode(), url, domain.getSeriesId(), domain.getBrandCode(),
+                        domain.getCode(),
                         req.getUpdater(), i, highest, lowest);
-
-                seriesBO.refreshHighestAndLowest(domain.getCode(), highest, lowest);
             }
         } else {
             Series series = seriesBO.getSeriesBySeriesId(req.getSeriesId());
@@ -248,14 +247,14 @@ public class CarAOImpl implements ICarAO {
             int i = 1;
             Long highest = 0L;
             Long lowest = 0L;
-            refresh(url, req.getSeriesId(), series.getBrandCode(), series.getCode(),
+            refresh(series.getCode(), url, req.getSeriesId(), series.getBrandCode(),
+                    series.getCode(),
                     req.getUpdater(), i, highest, lowest);
-
-            seriesBO.refreshHighestAndLowest(series.getCode(), highest, lowest);
         }
     }
 
-    private void refresh(SYSConfig url, String seriesId, String brandCode, String seriesCode,
+    private void refresh(String code, SYSConfig url, String seriesId, String brandCode,
+            String seriesCode,
             String updater, int i, Long highest, Long lowest) {
         SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
@@ -330,14 +329,15 @@ public class CarAOImpl implements ICarAO {
             car.setUpdateDatetime(updateTime);
             carBO.saveCar(car);
         }
+        seriesBO.refreshHighestAndLowest(code, highest, lowest);
     }
 
     @Override
     public Paginable<Car> queryCarPage(int start, int limit, Car condition) {
         Paginable<Car> paginable = carBO.getPaginable(start, limit, condition);
-        for (Car car : paginable.getList()) {
-            initCar(car);
-        }
+//        for (Car car : paginable.getList()) {
+//            initCar(car);
+//        }
         return paginable;
     }
 

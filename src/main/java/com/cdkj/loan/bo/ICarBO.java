@@ -1,19 +1,20 @@
 package com.cdkj.loan.bo;
 
-import java.util.List;
-
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Car;
+import java.util.List;
 
 public interface ICarBO extends IPaginableBO<Car> {
 
-    public String saveCar(Car data);
+    String saveCar(Car data);
 
-    public Car getCar(String code);
+    Car getCar(String code);
 
-    public int editCar(Car data);
+    int editCar(Car data);
 
-    public List<Car> queryCar(Car condition);
+    List<Car> queryCar(Car condition);
 
-    public void removeCar(String code);
+    void removeCar(String code);
+
+    Car getCarByModelId(String modelId);
 }

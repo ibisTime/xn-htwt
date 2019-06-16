@@ -35,6 +35,8 @@ public interface ICarInfoBO extends IPaginableBO<CarInfo> {
 
     void saveCarInfo(XN632531Req req);
 
+    void saveCarInfo(CarInfo data);
+
     int refreshCarInfo(CarInfo data, XN632530Req req);
 
     int refreshCarInfo(CarInfo data, XN632531Req req);

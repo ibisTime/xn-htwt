@@ -9,22 +9,20 @@ import java.io.IOException;
 public class Test {
 
     // 实体
-    private static String key = "RepointAccount";
+    private static String key = "AdvanceCollectCard";
 
     // 实体名称
-    private static String keyName = "返点账号列表";
+    private static String keyName = "垫资收款卡号";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdh_repoint_account";
+    private static String dbname = "tdq_advance_collect_card";
 
-    private static String[] DBwords = {"code", "repoint_code", "repoint_card_code",
-            "actual_amount", "water_bill", "updater", "update_datetime", "remark"};
+    private static String[] DBwords = {"code", "biz_code", "collect_bankcard_code"};
 
-    private static String[] DBwordsName = {"编号", "返点编号", "返点账号编号", "实返金额", "水单",
-            "更新人", "更新时间", "备注"};
+    private static String[] DBwordsName = {"编号", "业务编号", "收款卡编号"};
 
     private static String[] DOwords = getDOwords();
 
@@ -318,7 +316,7 @@ public class Test {
                 + "import org.springframework.stereotype.Repository;\n\n"
                 + "import " + packge + "dao.I" + Key + "DAO;\n" + "import "
                 + packge + "dao.base.support.AMybatisTemplate;\n" + "import "
-                + packge + "domain." + Key + ";\n\n\n\n" + "//CHECK 。。。 \n"
+                + packge + "domain." + Key + ";\n\n\n\n"
                 + "@Repository(\"" + key + "DAOImpl\")\n" + "public class "
                 + Key + "DAOImpl extends AMybatisTemplate implements I" + Key
                 + "DAO {\n\n\n\t" + "@Override\n\tpublic int insert(" + Key
@@ -353,10 +351,10 @@ public class Test {
                 + "bo.base.IPaginableBO;\n" + "import " + packge + "domain."
                 + Key + ";\n\n\n\n" + "\n" + "public interface I" + Key
                 + "BO extends IPaginableBO<" + Key + "> {\n\n\n\t"
-                + "public String save" + Key + "(" + Key + " data);\n\n\n\t"
-                + "public int remove" + Key + "(String code);\n\n\n\t"
-                + "public int refresh" + Key + "(" + Key + " data);\n\n\n\t"
-                + "public List<" + Key + "> query" + Key + "List(" + Key
+                + "String save" + Key + "(" + Key + " data);\n\n\n\t"
+                + "int remove" + Key + "(String code);\n\n\n\t"
+                + "int refresh" + Key + "(" + Key + " data);\n\n\n\t"
+                + "List<" + Key + "> query" + Key + "List(" + Key
                 + " condition);\n\n\n\t" + "public " + Key + " get" + Key
                 + "(String code);\n\n\n}";
         return str;
@@ -381,7 +379,7 @@ public class Test {
                 + key + "DAO;\n\n\t" + "public String save" + Key + "(" + Key
                 + " data) {\n\t\tString code = null;\n\t\t"
                 + "if (data != null) {\n\t\t\t"
-                + "code = OrderNoGenerater.generateM(EGeneratePrefix.CT.getCode());\n\t\t\t"
+                + "code = OrderNoGenerater.generate(EGeneratePrefix.CT.getCode());\n\t\t\t"
                 + "data.setCode(code);\n\t\t\t" + key
                 + "DAO.insert(data);\n\t\t}\n\t\treturn code;\n\t}\n\n\t"
                 + "@Override\n\tpublic int remove" + Key
@@ -414,15 +412,15 @@ public class Test {
         String str = "package " + packge + "ao;\n\n"
                 + "import java.util.List;\n\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
-                + ";\n\n\n\n" + "//CHECK \n@Component\n"
+                + ";\n\n\n\n" + "\n@Component\n"
                 + "public interface I" + Key + "AO {\n\t"
                 + "static final String DEFAULT_ORDER_COLUMN = \"code\";\n\n\n\t"
-                + "public String add" + Key + "(" + Key + " data);\n\n\t"
-                + "public int drop" + Key + "(String code);\n\n\t"
-                + "public int edit" + Key + "(" + Key + " data);\n\n\t"
-                + "public Paginable<" + Key + "> query" + Key
+                + "String add" + Key + "(" + Key + " data);\n\n\t"
+                + "int drop" + Key + "(String code);\n\n\t"
+                + "int edit" + Key + "(" + Key + " data);\n\n\t"
+                + "Paginable<" + Key + "> query" + Key
                 + "Page(int start, int limit, " + Key + " condition);\n\n\t"
-                + "public List<" + Key + "> query" + Key + "List(" + Key
+                + "List<" + Key + "> query" + Key + "List(" + Key
                 + " condition);\n\n\t" + "public " + Key + " get" + Key
                 + "(String code);\n\n}";
         return str;
@@ -437,7 +435,7 @@ public class Test {
                 + packge + "bo.I" + Key + "BO;\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
                 + ";\n" + "import " + packge + "exception.BizException;\n\n\n\n"
-                + "//CHECK \n@Service\n" + "public class " + Key
+                + "\n@Service\n" + "public class " + Key
                 + "AOImpl implements I" + Key + "AO {\n\n\t"
                 + "@Autowired\n\tprivate I" + Key + "BO " + key + "BO;\n\n\t"
                 + "@Override\n\tpublic String add" + Key + "(" + Key

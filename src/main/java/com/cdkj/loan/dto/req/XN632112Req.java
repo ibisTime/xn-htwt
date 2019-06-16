@@ -28,6 +28,18 @@ public class XN632112Req {
     @NotBlank
     private String bizType;
 
+    // 品牌
+    private String carBrand;// carInfo
+
+    // 车系
+    private String carSeries;// carInfo
+
+    // 车型
+    private String carModel;// carInfo
+
+    // 所属区域
+    private String region;// carInfo
+
     // 二手车评估报告
     private String secondCarReport;
 

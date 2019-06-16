@@ -50,6 +50,7 @@ import com.cdkj.loan.exception.BizException;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -423,6 +424,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String nextNodeCode = getNextNodeCode(preCurNodeCode,
                 req.getApproveResult());
 
+        if (EBoolean.NO.getCode().equals(req.getApproveResult()) && StringUtils
+                .isBlank(req.getRemark())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的备注");
+        }
+
         repayBizBO.approveByBankCheck(repayBiz, nextNodeCode,
                 DateUtil.strToDate(req.getSettleDatetime(),
                         DateUtil.FRONT_DATE_FORMAT_STRING),
@@ -444,6 +450,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         if (!ERepayBizNode.MANAGER_CHECK.getCode().equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前还款业务不处于总经理审核中");
+        }
+
+        if (EBoolean.NO.getCode().equals(approveResult) && StringUtils
+                .isBlank(remark)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
         }
 
         String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
@@ -468,6 +479,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
                     "当前还款业务不处于财务审核中");
         }
 
+        if (EBoolean.NO.getCode().equals(approveResult) && StringUtils
+                .isBlank(remark)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
+        }
         String nextNodeCode = getNextNodeCode(preCurNodeCode, approveResult);
         repayBizBO.approveByFinance(repayBiz, nextNodeCode, updater, remark);
         // 日志

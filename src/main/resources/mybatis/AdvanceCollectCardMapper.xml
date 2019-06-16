@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IAdvanceCollectCardDAO">
+    <resultMap id="AdvanceCollectCard_DB_Result" type="AdvanceCollectCard">
+        <result column="code" property="code"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="collect_bankcard_code" property="collectBankcardCode"/>
+
+        <result column="bankcard_number" property="bankcardNumber"/>
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_AdvanceCollectCard" parameterType="AdvanceCollectCard"
+            resultMap="AdvanceCollectCard_DB_Result">
+        SELECT
+        t.code
+        ,t.biz_code
+        ,t.collect_bankcard_code
+        ,cb.bankcard_number as bankcard_number
+        FROM tdq_advance_collect_card t
+        left join tb_collect_bankcard cb on t.collect_bankcard_code = cb.code
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_AdvanceCollectCard_count" parameterType="AdvanceCollectCard"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tdq_advance_collect_card t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_AdvanceCollectCard" parameterType="AdvanceCollectCard">
+		INSERT INTO
+		tdq_advance_collect_card(
+		code
+		,biz_code
+		,collect_bankcard_code
+		)
+		VALUES(
+		#{code}
+		,#{bizCode}
+		,#{collectBankcardCode}
+		)
+	</insert>
+
+    <update id="update_AdvanceCollectCard" parameterType="AdvanceCollectCard">
+		UPDATE tdq_advance_collect_card
+		SET
+		biz_code = #{bizCode}
+		,collect_bankcard_code = #{collectBankcardCode}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

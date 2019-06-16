@@ -1,15 +1,17 @@
 package com.cdkj.loan.domain;
 
-import java.util.Date;
-
 import com.cdkj.loan.dao.base.ABaseDO;
+import java.util.Date;
+import lombok.Data;
 
 /**
-* 导入逾期名单
-* @author: CYunlai 
-* @since: 2018-06-02 17:37:07
-* @history:
-*/
+ * 导入逾期名单
+ *
+ * @author: CYunlai
+ * @since: 2018-06-02 17:37:07
+ * @history:
+ */
+@Data
 public class OverdueMenu extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -68,6 +70,9 @@ public class OverdueMenu extends ABaseDO {
     // 还款计划
     private String repayPlanCode;
 
+    // 创建时间（银行）
+    private Date createDatetime;
+
     /*--------辅助字段----------*/
 
     private Date advanceFundDatetimeStart;// 垫资日期始
@@ -84,197 +89,5 @@ public class OverdueMenu extends ABaseDO {
 
     // 业务类型
     private RepayBiz repayBiz;
-
-    public RepayBiz getRepayBiz() {
-        return repayBiz;
-    }
-
-    public void setRepayBiz(RepayBiz repayBiz) {
-        this.repayBiz = repayBiz;
-    }
-
-    public Date getBankFkDatetimeStart() {
-        return bankFkDatetimeStart;
-    }
-
-    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
-        this.bankFkDatetimeStart = bankFkDatetimeStart;
-    }
-
-    public Date getBankFkDatetimeEnd() {
-        return bankFkDatetimeEnd;
-    }
-
-    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
-        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
-    }
-
-    public Date getHandleDatetime() {
-        return handleDatetime;
-    }
-
-    public void setHandleDatetime(Date handleDatetime) {
-        this.handleDatetime = handleDatetime;
-    }
-
-    public String getLoanBankName() {
-        return loanBankName;
-    }
-
-    public void setLoanBankName(String loanBankName) {
-        this.loanBankName = loanBankName;
-    }
-
-    public String getRepayBizCode() {
-        return repayBizCode;
-    }
-
-    public void setRepayBizCode(String repayBizCode) {
-        this.repayBizCode = repayBizCode;
-    }
-
-    public String getRepayPlanCode() {
-        return repayPlanCode;
-    }
-
-    public void setRepayPlanCode(String repayPlanCode) {
-        this.repayPlanCode = repayPlanCode;
-    }
-
-    public Date getAdvanceFundDatetimeStart() {
-        return advanceFundDatetimeStart;
-    }
-
-    public void setAdvanceFundDatetimeStart(Date advanceFundDatetimeStart) {
-        this.advanceFundDatetimeStart = advanceFundDatetimeStart;
-    }
-
-    public Date getAdvanceFundDatetimeEnd() {
-        return advanceFundDatetimeEnd;
-    }
-
-    public void setAdvanceFundDatetimeEnd(Date advanceFundDatetimeEnd) {
-        this.advanceFundDatetimeEnd = advanceFundDatetimeEnd;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public String getLoanBankCode() {
-        return loanBankCode;
-    }
-
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
-    }
-
-    public Long getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(Long loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public int getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(int periods) {
-        this.periods = periods;
-    }
-
-    public Long getRemainAmount() {
-        return remainAmount;
-    }
-
-    public void setRemainAmount(Long remainAmount) {
-        this.remainAmount = remainAmount;
-    }
-
-    public Date getFkDatetime() {
-        return fkDatetime;
-    }
-
-    public void setFkDatetime(Date fkDatetime) {
-        this.fkDatetime = fkDatetime;
-    }
-
-    public Long getOverdueAmount() {
-        return overdueAmount;
-    }
-
-    public void setOverdueAmount(Long overdueAmount) {
-        this.overdueAmount = overdueAmount;
-    }
-
-    public Date getOverdueDatetime() {
-        return overdueDatetime;
-    }
-
-    public void setOverdueDatetime(Date overdueDatetime) {
-        this.overdueDatetime = overdueDatetime;
-    }
-
-    public Date getImportDatetime() {
-        return importDatetime;
-    }
-
-    public void setImportDatetime(Date importDatetime) {
-        this.importDatetime = importDatetime;
-    }
-
-    public void setImportNote(String importNote) {
-        this.importNote = importNote;
-    }
-
-    public String getImportNote() {
-        return importNote;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setHandleNote(String handleNote) {
-        this.handleNote = handleNote;
-    }
-
-    public String getHandleNote() {
-        return handleNote;
-    }
-
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
-    }
-
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
-    }
 
 }

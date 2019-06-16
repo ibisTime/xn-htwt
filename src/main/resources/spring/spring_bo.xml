@@ -469,4 +469,16 @@
     <bean id="enterFileListBO" class="com.cdkj.loan.bo.impl.EnterFileListBOImpl">
         <property name="paginableDAO" ref="enterFileListDAOImpl"/>
     </bean>
+
+    <bean id="cityListBO" class="com.cdkj.loan.bo.impl.CityListBOImpl">
+        <property name="paginableDAO" ref="cityListDAOImpl"/>
+    </bean>
+
+    <bean id="basicValuationBO" class="com.cdkj.loan.bo.impl.BasicValuationBOImpl">
+        <property name="paginableDAO" ref="basicValuationDAOImpl"/>
+    </bean>
+
+    <bean id="advanceCollectCardBO" class="com.cdkj.loan.bo.impl.AdvanceCollectCardBOImpl">
+        <property name="paginableDAO" ref="advanceCollectCardDAOImpl"/>
+    </bean>
 </beans>

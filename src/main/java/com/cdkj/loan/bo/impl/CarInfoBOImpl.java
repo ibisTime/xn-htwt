@@ -182,8 +182,10 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         CarInfo carInfo = new CarInfo();
 
         carInfo.setBizCode(bizCode);
-        carInfo.setPolicyDatetime(DateUtil.strToDate(policyDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
-        carInfo.setPolicyDueDate(DateUtil.strToDate(policyDueDate, DateUtil.FRONT_DATE_FORMAT_STRING));
+        carInfo.setPolicyDatetime(
+                DateUtil.strToDate(policyDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
+        carInfo.setPolicyDueDate(
+                DateUtil.strToDate(policyDueDate, DateUtil.FRONT_DATE_FORMAT_STRING));
 
         carInfoDAO.updateEntryFbhInfo(carInfo);
     }
@@ -208,6 +210,13 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
         }
         EntityUtils.copyData(req, carInfo);
         //重置code
+        String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
+        carInfo.setCode(code);
+        carInfoDAO.insert(carInfo);
+    }
+
+    @Override
+    public void saveCarInfo(CarInfo carInfo) {
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
         carInfo.setCode(code);
         carInfoDAO.insert(carInfo);

@@ -6,13 +6,16 @@ import com.cdkj.loan.bo.IBizTaskBO;
 import com.cdkj.loan.bo.ICdbizBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BankLoan;
 import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -20,9 +23,11 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.ENode;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.exception.BizException;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +52,12 @@ public class BankLoanAOImpl implements IBankLoanAO {
 
     @Autowired
     private IRepayBizBO repayBizBO;
+
+    @Autowired
+    private IRepayPlanBO repayPlanBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -171,6 +182,35 @@ public class BankLoanAOImpl implements IBankLoanAO {
         cdbiz.setStatus(ECdbizStatus.A16.getCode());
         cdbiz.setCurNodeCode(nextNodeCode);
         cdbizBO.refreshCurNodeStatus(cdbiz);
+
+        // 修改还款业务信息
+        RepayBiz repayBiz = repayBizBO.getRepayBizByBizCode(cdbiz.getCode());
+        repayBiz.setLoanBank(cdbiz.getLoanBank());
+        repayBiz.setBankcardCode(cdbiz.getRepayCardNumber());
+        repayBiz.setRestPeriods(repayBiz.getPeriods());
+        repayBiz.setRestAmount(repayBiz.getLoanAmount());
+        repayBiz.setRestTotalCost(0L);
+        repayBiz.setOverdueAmount(0L);
+        repayBiz.setTotalOverdueCount(0);
+        repayBiz.setCurOverdueCount(0);
+        Date loanDate = DateUtil.getTodayStart();
+        repayBiz.setLoanStartDatetime(loanDate);
+        Date addMonths = DateUtils.addMonths(loanDate, repayBiz.getPeriods());
+        repayBiz.setLoanEndDatetime(addMonths);
+        repayBiz.setFxDeposit(0L);
+        repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
+
+        if (repayBiz.getFirstRepayDatetime() == null) {
+            Date date = DateUtil.getTomorrowStart(DateUtil.getTodayStart());
+            repayBiz.setFirstRepayDatetime(date);
+        }
+
+        SYSUser user = sysUserBO.getUser(cdbiz.getSaleUserId());
+        repayBiz.setTeamCode(user.getTeamCode());
+        repayBizBO.refreshRepayBiz(repayBiz);
+
+        // 自动生成还款计划
+        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 操作日志
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,

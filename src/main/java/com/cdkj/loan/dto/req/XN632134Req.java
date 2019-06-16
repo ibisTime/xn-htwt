@@ -21,6 +21,9 @@ public class XN632134Req {
     @NotBlank
     private String operator;// 操作人
 
+    // 入档编号
+    private String enterCode;
+
     @NotBlank
     private String enterLocation;// 入档位置
 

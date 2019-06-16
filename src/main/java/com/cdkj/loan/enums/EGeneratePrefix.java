@@ -67,7 +67,7 @@ public enum EGeneratePrefix {
 
     BANK_LOAN("BL", "银行放款"), CAR_PLEDGE("CP", "车辆抵押"), car_info("CI", "车辆信息"),
 
-    BANKSUBBRANCH("BS", "支行"), ADVANCE("A", "财务垫资");
+    BANKSUBBRANCH("BS", "支行"), ADVANCE("A", "财务垫资"), ADVANCECOLLECTCARD("ACC", "垫资收款账号");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
