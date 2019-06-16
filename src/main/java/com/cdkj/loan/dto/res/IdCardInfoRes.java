@@ -12,7 +12,7 @@ public class IdCardInfoRes {
     /**
      * 姓名
      */
-    private String realName;
+    private String userName;
 
     /**
      * 性别
@@ -22,7 +22,7 @@ public class IdCardInfoRes {
     /**
      * 民族
      */
-    private String nationality;
+    private String nation;
 
     /**
      * 身份证号
@@ -32,7 +32,7 @@ public class IdCardInfoRes {
     /**
      * 生日
      */
-    private String birth;
+    private String customerBirth;
 
     /**
      * 地址
@@ -42,12 +42,12 @@ public class IdCardInfoRes {
     /**
      * 发证机关
      */
-    private String issue;
+    private String authref;
 
     /**
      * 证件有效期
      */
-    private String endDate;
+    private String statdate;
 
 }
 

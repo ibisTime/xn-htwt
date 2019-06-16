@@ -153,12 +153,12 @@ public class IdOcrPicImpl {
                     "识别身份证照片失败！");
         }
 
-        String birth = idOcrRes.getBirth();
+        String birth = idOcrRes.getCustomerBirth();
         if (StringUtils.isNotBlank(birth)) {
             String year = birth.substring(0, 4);
             String month = birth.substring(4, 6);
             String day = birth.substring(6, 8);
-            idOcrRes.setBirth(year + "-" + month + "-" + day);
+            idOcrRes.setCustomerBirth(year + "-" + month + "-" + day);
         }
         return idOcrRes;
     }

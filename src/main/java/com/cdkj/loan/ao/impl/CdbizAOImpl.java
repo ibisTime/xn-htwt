@@ -217,6 +217,7 @@ public class CdbizAOImpl implements ICdbizAO {
             // 车辆信息
             Car car = carBO.getCar(req.getCarModel());
             CarInfo carInfo = new CarInfo();
+            carInfo.setBizCode(cdbiz.getCode());
             EntityUtils.copyData(req, carInfo);
             if (StringUtils.isNotBlank(car.getOutsideColor())) {
                 carInfo.setCarColor(car.getOutsideColor());
@@ -263,15 +264,24 @@ public class CdbizAOImpl implements ICdbizAO {
             CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getBizCode());
             if (carInfo == null) {
                 CarInfo data = new CarInfo();
+                carInfo.setBizCode(cdbiz.getCode());
                 EntityUtils.copyData(req, data);
-                data.setCarColor(car.getOutsideColor());
-                data.setOriginalPrice(car.getOriginalPrice().toString());
+                if (StringUtils.isNotBlank(car.getOutsideColor())) {
+                    data.setCarColor(car.getOutsideColor());
+                }
+                if (car.getOriginalPrice() != null) {
+                    data.setOriginalPrice(car.getOriginalPrice().toString());
+                }
                 carInfoBO.saveCarInfo(data);
             } else {
                 String code = carInfo.getCode();
                 EntityUtils.copyData(req, carInfo);
-                carInfo.setCarColor(car.getOutsideColor());
-                carInfo.setOriginalPrice(car.getOriginalPrice().toString());
+                if (StringUtils.isNotBlank(car.getOutsideColor())) {
+                    carInfo.setCarColor(car.getOutsideColor());
+                }
+                if (car.getOriginalPrice() != null) {
+                    carInfo.setOriginalPrice(car.getOriginalPrice().toString());
+                }
                 carInfo.setCode(code);
                 carInfoBO.refreshCarInfo(carInfo);
             }

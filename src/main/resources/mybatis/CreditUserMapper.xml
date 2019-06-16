@@ -234,6 +234,8 @@
                                    , mobile
                                    , id_kind
                                    , id_no
+                                   , authref
+                                   , statdate
                                    , credit_card_occupation
                                    , bank_credit_result
                                    , bank_credit_result_remark
@@ -293,6 +295,8 @@
                , #{mobile}
                , #{idKind}
                , #{idNo}
+               , #{authref}
+               , #{statdate}
                , #{creditCardOccupation}
                , #{bankCreditResult}
                , #{bankCreditResultRemark}
@@ -357,6 +361,8 @@
         , mobile
         , id_kind
         , id_no
+        , authref
+        , statdate
         , credit_card_occupation
         , bank_credit_result
         , bank_credit_result_remark
@@ -419,6 +425,8 @@
             , #{mobile}
             , #{idKind}
             , #{idNo}
+            , #{authref}
+            , #{statdate}
             , #{creditCardOccupation}
             , #{bankCreditResult}
             , #{bankCreditResultRemark}

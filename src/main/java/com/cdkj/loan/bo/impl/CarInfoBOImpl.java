@@ -215,8 +215,12 @@ public class CarInfoBOImpl extends PaginableBOImpl<CarInfo> implements
             req.setOilSubsidyKil("0");
         }
         EntityUtils.copyData(req, carInfo);
-        carInfo.setCarColor(car.getOutsideColor());
-        carInfo.setOriginalPrice(car.getOriginalPrice().toString());
+        if (StringUtils.isNotBlank(car.getOutsideColor())) {
+            carInfo.setCarColor(car.getOutsideColor());
+        }
+        if (car.getOriginalPrice() != null) {
+            carInfo.setOriginalPrice(car.getOriginalPrice().toString());
+        }
         //重置code
         String code = OrderNoGenerater.generate(EGeneratePrefix.car_info.getCode());
         carInfo.setCode(code);
