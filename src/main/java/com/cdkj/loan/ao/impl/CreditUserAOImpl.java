@@ -170,7 +170,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
     }
 
     @Override
-    public BodyGuardWZHYResponse getTongdunResult(String creditUserCode) {
+    public String getTongdunResult(String creditUserCode) {
         CreditUser creditUser=creditUserBO.getCreditUser(creditUserCode);
         return creditUserBO.getTongdunResult(creditUser);
     }

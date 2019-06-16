@@ -374,8 +374,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     }
 
     @Override
-    public BodyGuardWZHYResponse getTongdunResult(CreditUser creditUser) {
-        BodyGuardWZHYResponse result=null;
+    public String getTongdunResult(CreditUser creditUser) {
+        String result=null;
         XN798600Req req=new XN798600Req();
         req.setIdNumber(creditUser.getIdNo());
         req.setAccountMobile(creditUser.getMobile());
@@ -383,8 +383,9 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         req.setSystemCode("CD-TDUN00030");
         req.setCompanyCode("CD-TDUN00030");
         try {
-            result= BizConnecter.getBizData("798600", JsonUtils.object2Json(req),BodyGuardWZHYResponse.class);
-
+            result= BizConnecter.getBizData("798600", JsonUtils.object2Json(req));
+//            result=result.replace("\"","'");
+            result=result.replace("\\","");
               //转json储存在数据库
               creditUser.setTongdunResult(JsonUtil.Object2Json(result));
               creditUserDAO.updateTongdun(creditUser);

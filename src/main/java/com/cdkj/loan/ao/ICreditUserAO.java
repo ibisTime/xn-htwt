@@ -59,5 +59,5 @@ public interface ICreditUserAO {
     Paginable<CreditUser> queryCreditUserPage(int start, int limit,
             CreditUser condition);
 
-    public BodyGuardWZHYResponse getTongdunResult(String creditUserCode);
+    public String getTongdunResult(String creditUserCode);
 }
