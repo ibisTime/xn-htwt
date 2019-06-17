@@ -216,7 +216,7 @@ public class BankLoanAOImpl implements IBankLoanAO {
         sysBizLogBO.saveNewSYSBizLog(req.getCode(), EBizLogType.bank_push,
                 cdbiz.getCode(), preCurNodeCode, null, req.getOperator());
         // 待办事项
-        bizTaskBO.handlePreAndAdd(EBizLogType.bank_push, req.getCode(),
+        bizTaskBO.handlePreAndAdd(EBizLogType.Pledge, req.getCode(),
                 cdbiz.getCode(), preCurNodeCode, nextNodeCode,
                 req.getOperator());
     }

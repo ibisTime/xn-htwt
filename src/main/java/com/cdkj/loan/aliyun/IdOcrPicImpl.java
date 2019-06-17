@@ -160,6 +160,14 @@ public class IdOcrPicImpl {
             String day = birth.substring(6, 8);
             idOcrRes.setCustomerBirth(year + "-" + month + "-" + day);
         }
+
+        String startDate = idOcrRes.getStartDate();
+        if (StringUtils.isNotBlank(startDate)) {
+            String year = startDate.substring(0, 4);
+            String month = startDate.substring(4, 6);
+            String day = startDate.substring(6, 8);
+            idOcrRes.setStartDate(year + "-" + month + "-" + day);
+        }
         return idOcrRes;
     }
 

@@ -63,6 +63,7 @@ public class SeriesAOImpl implements ISeriesAO {
     public String addSeries(XN630410Req req) {
         Series series = new Series();
         series.setBrandCode(req.getBrandCode());
+        series.setType(ECarProduceType.WRITE.getCode());
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());

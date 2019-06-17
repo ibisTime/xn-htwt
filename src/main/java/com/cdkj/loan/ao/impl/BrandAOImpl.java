@@ -42,6 +42,7 @@ public class BrandAOImpl implements IBrandAO {
     public String addBrand(XN630400Req req) {
         Brand brand = new Brand();
         brand.setLetter(req.getLetter());
+        brand.setType(ECarProduceType.WRITE.getCode());
         brand.setLogo(req.getLogo());
         brand.setName(req.getName());
         brand.setDescription(req.getDescription());

@@ -35,12 +35,12 @@ public enum EAttachName {
     replier_interview_pic("interview_pic_gh", "图片"),
 
     // 担保人资源
-    assurance_bank("bank_report_gua0", "图片"),
-    assurance_data("data_report_gua0", "图片"),
-    assurance_id_front("id_no_front_gua0", "图片"),
-    assurance_id_reverse("id_no_reverse_gua0", "图片"),
-    assurance_auth_pdf("auth_pdf_gua0", "图片"),
-    assurance_interview_pic("interview_pic_gua0", "图片"),
+    assurance_bank("bank_report_gua", "图片"),
+    assurance_data("data_report_gua", "图片"),
+    assurance_id_front("id_no_front_gua", "图片"),
+    assurance_id_reverse("id_no_reverse_gua", "图片"),
+    assurance_auth_pdf("auth_pdf_gua", "图片"),
+    assurance_interview_pic("interview_pic_gua", "图片"),
 
     assurance_bank1("bank_report_gua1", "图片"),
     assurance_data1("data_report_gua1", "图片"),
@@ -69,7 +69,7 @@ public enum EAttachName {
     workAssetPdf("work_asset_pdf", "工作资料上传"),
     assetPdf("asset_pdf_apply", "申请人资产资料pdf"),
     mateAssetPdf("asset_pdf_gh", "共还人资产资料pdf"),
-    guaAssetPdf("asset_pdf_gua0", "担保人资产资料pdf"),
+    guaAssetPdf("asset_pdf_gua", "担保人资产资料pdf"),
     guaAssetPdf1("asset_pdf_gua1", "担保人资产资料pdf"),
     houseContract("house_contract", "购房合同"),
     marryPdf("marry_pdf", "结婚证资料"),

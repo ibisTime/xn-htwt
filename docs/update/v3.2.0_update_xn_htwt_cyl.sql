@@ -25,6 +25,10 @@ ADD COLUMN `gear_type` VARCHAR(255) NULL COMMENT '变速箱' AFTER `liter`,
 ADD COLUMN `discharge_standard` VARCHAR(255) NULL COMMENT '排放标准' AFTER `gear_type`,
 ADD COLUMN `seat_number` VARCHAR(255) NULL COMMENT '座位数' AFTER `discharge_standard`;
 
+UPDATE `tht_brand` SET `type`='2';
+UPDATE `tht_series` SET `type`='2';
+UPDATE `tht_car` SET `type`='2';
+
 
 DROP TABLE IF EXISTS `tdh_city_list`;
 CREATE TABLE `tdh_city_list` (
@@ -72,6 +76,22 @@ ADD COLUMN `reg_date` VARCHAR(255) NULL COMMENT '上牌时间' AFTER `car_model`
 ADD COLUMN `mile` VARCHAR(255) NULL COMMENT '行驶公里数' AFTER `reg_date`;
 
 
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906161557117059656','同盾征信','1','/postloantools/tdunzhengxing.htm','2','USYS201800000000001','2019-06-16 16:01:05','','SM201805291053375683183');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906162346231725574','刷新','2','/refresh','9','USYS201800000000001','2019-06-16 23:46:23','','SM201804261354380715184');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906162348543878481','刷新','2','/refresh','9','USYS201800000000001','2019-06-16 23:48:54','','SM201804261355188031376');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906162349310723832','刷新','2','/refresh','9','USYS201800000000001','2019-06-16 23:49:31','','SM201804261354595823870');
+
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906161557117059656','USYS201800000000001','2019-06-17 12:32:16',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906162346231725574','USYS201800000000001','2019-06-17 12:32:16',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906162348543878481','USYS201800000000001','2019-06-17 12:32:16',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906162349310723832','USYS201800000000001','2019-06-17 12:32:16',NULL);
+
+
+UPDATE `tsys_node` SET `name`='抵押申请' WHERE `code`='e6';
+
+ALTER TABLE `tb_collect_bankcard`
+ADD COLUMN `advance_type` VARCHAR(4) NULL COMMENT '垫资类型(1收款，2出款)' AFTER `type`;
+
 UPDATE `tdq_file_list` SET `kname`='id_no_front_gua' WHERE `id`='232';
 UPDATE `tdq_file_list` SET `kname`='id_no_reverse_gua' WHERE `id`='233';
 UPDATE `tdq_file_list` SET `kname`='auth_pdf_gua' WHERE `id`='234';
@@ -90,3 +110,5 @@ UPDATE `tdq_file_list` SET `vname`='担保人2银行征信报告' WHERE `id`='24
 UPDATE `tdq_file_list` SET `vname`='担保人2大数据报告' WHERE `id`='247';
 UPDATE `tdq_file_list` SET `vname`='担保人2户口本' WHERE `id`='248';
 UPDATE `tdq_file_list` SET `vname`='担保人2资产资料pdf' WHERE `id`='249';
+
+UPDATE `tdq_file_list` SET `attach_type`='链接' WHERE `id`='123';

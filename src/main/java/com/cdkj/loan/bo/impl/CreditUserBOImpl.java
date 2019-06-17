@@ -80,7 +80,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             creditUser.setAuthref(child.getIdCardInfo().getAuthref());
             creditUser.setStatdate(child.getIdCardInfo().getStatdate());
             creditUser.setCustomerBirth(child.getIdCardInfo().getCustomerBirth());
-            creditUser.setBirthAddress(child.getIdCardInfo().getResidenceAddress());
+            creditUser.setBirthAddress(child.getIdCardInfo().getBirthAddress());
         }
         // 主贷人
         if (ECreditUserLoanRole.APPLY_USER.getCode()
