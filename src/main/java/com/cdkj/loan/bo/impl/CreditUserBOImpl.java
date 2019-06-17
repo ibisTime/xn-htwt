@@ -389,8 +389,11 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
             result = BizConnecter.getBizData("798600", JsonUtils.object2Json(req));
 //            result=result.replace("\"","'");
             result = result.replace("\\", "");
+            //去首尾双引号
+            result=result.substring(0,result.length()-1);
+            result=result.substring(1);
             //转json储存在数据库
-            creditUser.setTongdunResult(JsonUtil.Object2Json(result));
+            creditUser.setTongdunResult(result);
             creditUserDAO.updateTongdun(creditUser);
         } catch (Exception e) {
             logger.info("同盾结果返回异常");
@@ -399,5 +402,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         }
 
         return result;
+    }
+
+    public static void main(String[] args){
+        System.out.println("skr"
+                + "skr");
     }
 }
