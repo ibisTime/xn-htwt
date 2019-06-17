@@ -37,7 +37,7 @@ public class IdCardInfoRes {
     /**
      * 地址
      */
-    private String residenceAddress;
+    private String birthAddress;
 
     /**
      * 发证机关

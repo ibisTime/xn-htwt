@@ -30,6 +30,12 @@ public class CarInfoRes {
     // 车型
     private String carModel;// carInfo
 
+    // 上牌时间
+    private String regDate;
+
+    // 行驶公里数
+    private String mile;
+
     // 颜色
     private String carColor;// carInfo
 
