@@ -25,6 +25,10 @@ ADD COLUMN `gear_type` VARCHAR(255) NULL COMMENT '变速箱' AFTER `liter`,
 ADD COLUMN `discharge_standard` VARCHAR(255) NULL COMMENT '排放标准' AFTER `gear_type`,
 ADD COLUMN `seat_number` VARCHAR(255) NULL COMMENT '座位数' AFTER `discharge_standard`;
 
+UPDATE `tht_brand` SET `type`='2';
+UPDATE `tht_series` SET `type`='2';
+UPDATE `tht_car` SET `type`='2';
+
 
 DROP TABLE IF EXISTS `tdh_city_list`;
 CREATE TABLE `tdh_city_list` (

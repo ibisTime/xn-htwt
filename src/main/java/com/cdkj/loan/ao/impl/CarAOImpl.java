@@ -93,6 +93,7 @@ public class CarAOImpl implements ICarAO {
 
         Brand brand = brandBO.getBrand(series.getBrandCode());
         car.setIsReferee(req.getIsReferee());
+        car.setType(ECarProduceType.WRITE.getCode());
         car.setName(req.getName());
         car.setSeriesCode(req.getSeriesCode());
         car.setSeriesName(series.getName());
