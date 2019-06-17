@@ -14,6 +14,9 @@ public class XN632000Req {
     @NotBlank
     private String companyCode;// 公司编号
 
+    // 垫资类型(1收款，2出款)
+    private String advanceType;
+
     @NotBlank
     private String realName;// 户名
 

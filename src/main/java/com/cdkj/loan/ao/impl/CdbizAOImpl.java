@@ -633,6 +633,22 @@ public class CdbizAOImpl implements ICdbizAO {
         if (StringUtils.isBlank(applyUser.getCompanyName())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "工作信息未填写完整，请补充完整再提交");
         }
+
+        CreditUser guarantor = creditUserBO
+                .getCreditUserByBizCode(code, ECreditUserLoanRole.GUARANTOR);
+        if (guarantor != null) {
+            if (StringUtils.isBlank(guarantor.getEducation())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "担保人信息未填写完整，请补充完整再提交");
+            }
+        }
+
+        CreditUser ghr = creditUserBO
+                .getCreditUserByBizCode(code, ECreditUserLoanRole.GHR);
+        if (ghr != null) {
+            if (StringUtils.isBlank(ghr.getEducation())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "共还人信息未填写完整，请补充完整再提交");
+            }
+        }
         String preNodeCode = cdbiz.getCurNodeCode(); // 当前节点
 
         // 日志记录

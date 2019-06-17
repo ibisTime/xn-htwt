@@ -14,6 +14,9 @@
             <if test="code != null and code != '' ">
                 AND t.code = #{code}
             </if>
+            <if test="bizCode != null and bizCode != '' ">
+                AND t.biz_code = #{bizCode}
+            </if>
         </trim>
     </sql>
     <select id="select_AdvanceCollectCard" parameterType="AdvanceCollectCard"

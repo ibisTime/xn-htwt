@@ -15,6 +15,9 @@ public class CollectBankcard extends ABaseDO {
 
     private String type;// 类型
 
+    // 垫资类型(1收款，2出款)
+    private String advanceType;
+
     private String belongBank;// 三种银行
 
     private String companyCode;// 公司编号

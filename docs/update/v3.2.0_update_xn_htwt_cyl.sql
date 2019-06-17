@@ -87,6 +87,11 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906162349310723832','USYS201800000000001','2019-06-17 12:32:16',NULL);
 
 
+UPDATE `tsys_node` SET `name`='抵押申请' WHERE `code`='e6';
+
+ALTER TABLE `tb_collect_bankcard`
+ADD COLUMN `advance_type` VARCHAR(4) NULL COMMENT '垫资类型(1收款，2出款)' AFTER `type`;
+
 UPDATE `tdq_file_list` SET `kname`='id_no_front_gua' WHERE `id`='232';
 UPDATE `tdq_file_list` SET `kname`='id_no_reverse_gua' WHERE `id`='233';
 UPDATE `tdq_file_list` SET `kname`='auth_pdf_gua' WHERE `id`='234';
