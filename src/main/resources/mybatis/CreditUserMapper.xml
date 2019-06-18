@@ -207,9 +207,9 @@
         ,t.card_crdt
         ,t.left_num
         ,t.left_amount
-        ,note
-        ,is_first_gua
-        ,tongdun_result
+        ,t.note
+        ,t.is_first_gua
+        ,t.tongdun_result
         from tdq_credit_user t
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
