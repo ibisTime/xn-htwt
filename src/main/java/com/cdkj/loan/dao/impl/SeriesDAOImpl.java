@@ -15,6 +15,17 @@ public class SeriesDAOImpl extends AMybatisTemplate implements ISeriesDAO {
     }
 
     @Override
+    public void insertList(List<Series> seriesList) {
+        super.insertBatch(NAMESPACE.concat("insert_seriesList"),
+                (List) seriesList);
+    }
+
+    @Override
+    public int deleteByCondition(Series data) {
+        return super.delete(NAMESPACE.concat("delete_seriesByCondition"), data);
+    }
+
+    @Override
     public int delete(Series data) {
         return super.delete(NAMESPACE.concat("delete_series"), data);
     }

@@ -2,6 +2,7 @@ package com.cdkj.loan.bo;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Series;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ISeriesBO extends IPaginableBO<Series> {
@@ -30,4 +31,8 @@ public interface ISeriesBO extends IPaginableBO<Series> {
 
     // 更新最高价和最低价
     void refreshHighestAndLowest(String code, Long highest, Long lowest);
+
+    void removeByCondition(Series condition);
+
+    void saveSeriesList(ArrayList<Series> seriesList);
 }

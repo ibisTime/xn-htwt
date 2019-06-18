@@ -227,18 +227,28 @@ public class CarAOImpl implements ICarAO {
     @Transactional(rollbackFor = Exception.class)
     public void refreshCar(XN630419Req req) {
         SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
+        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         if (StringUtils.isBlank(req.getSeriesId())) {
             Series series = new Series();
             series.setType(ECarProduceType.IMPORT.getCode());
             List<Series> querySeries = seriesBO.querySeries(series);
+
+            Car condition = new Car();
+            condition.setType(ECarProduceType.IMPORT.getCode());
+            carBO.removeByCondition(condition);
+
+            ArrayList<Car> carArrayList = new ArrayList<>();
             for (Series domain : querySeries) {
+                // i：UI次序，highest：最高价，lowest：最低价
                 int i = 1;
                 Long highest = 0L;
                 Long lowest = 0L;
-                refresh(domain.getCode(), url, domain.getSeriesId(), domain.getBrandCode(),
-                        domain.getCode(),
-                        req.getUpdater(), i, highest, lowest);
+                ArrayList<Car> carList = refresh(domain.getCode(), url, token, domain.getSeriesId(),
+                        domain.getBrandCode(), domain.getCode(), req.getUpdater(), i, highest,
+                        lowest);
+                carArrayList.addAll(carList);
             }
+            carBO.saveCarList(carArrayList);
         } else {
             Series series = seriesBO.getSeriesBySeriesId(req.getSeriesId());
             if (series == null) {
@@ -248,16 +258,15 @@ public class CarAOImpl implements ICarAO {
             int i = 1;
             Long highest = 0L;
             Long lowest = 0L;
-            refresh(series.getCode(), url, req.getSeriesId(), series.getBrandCode(),
-                    series.getCode(),
-                    req.getUpdater(), i, highest, lowest);
+            ArrayList<Car> carArrayList = refresh(series.getCode(), url, token, req.getSeriesId(),
+                    series.getBrandCode(), series.getCode(), req.getUpdater(), i, highest, lowest);
+            carBO.saveCarList(carArrayList);
         }
     }
 
-    private void refresh(String code, SYSConfig url, String seriesId, String brandCode,
-            String seriesCode,
-            String updater, int i, Long highest, Long lowest) {
-        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
+    private ArrayList<Car> refresh(String code, SYSConfig url, SYSConfig token, String seriesId,
+            String brandCode, String seriesCode, String updater, int i, Long highest, Long lowest) {
+
         String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
                 + "/getCarModelList" + "?token=" + token.getCvalue() + "&seriesId=" + seriesId);
         JSONObject jsono = JSONObject.parseObject(json);
@@ -267,17 +276,9 @@ public class CarAOImpl implements ICarAO {
                     jsono.get("error_msg").toString());
         }
 
-        Car condition = new Car();
-        condition.setSeriesId(seriesId);
-        condition.setType(ECarProduceType.IMPORT.getCode());
-        List<Car> queryCar = carBO.queryCar(condition);
-        if (CollectionUtils.isNotEmpty(queryCar)) {
-            for (Car car : queryCar) {
-                carBO.removeCar(car.getCode());
-            }
-        }
         String list = jsono.get("model_list").toString();
         JSONArray parseArray = JSONArray.parseArray(list);
+        ArrayList<Car> carList = new ArrayList<>();
         for (Object object : parseArray) {
             JSONObject jsonObject = (JSONObject) object;
             String modelId = jsonObject.getString("model_id");
@@ -308,6 +309,7 @@ public class CarAOImpl implements ICarAO {
                 }
             }
             Car car = new Car();
+            car.setCode(modelId);
             car.setSeriesId(seriesId);
             car.setModelId(modelId);
             car.setType(ECarProduceType.IMPORT.getCode());
@@ -328,9 +330,10 @@ public class CarAOImpl implements ICarAO {
             car.setStatus(EBrandStatus.UP.getCode());
             car.setUpdater(updater);
             car.setUpdateDatetime(updateTime);
-            carBO.saveCar(car);
+            carList.add(car);
         }
         seriesBO.refreshHighestAndLowest(code, highest, lowest);
+        return carList;
     }
 
     @Override

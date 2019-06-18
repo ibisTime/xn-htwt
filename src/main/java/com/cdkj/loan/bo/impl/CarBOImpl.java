@@ -7,6 +7,7 @@ import com.cdkj.loan.dao.ICarDAO;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,17 @@ public class CarBOImpl extends PaginableBOImpl<Car> implements ICarBO {
         }
         return code;
     }
+
+    @Override
+    public void saveCarList(ArrayList<Car> carArrayList) {
+        carDAO.insertList(carArrayList);
+    }
+
+    @Override
+    public void removeByCondition(Car condition) {
+        carDAO.deleteByCondition(condition);
+    }
+
 
     @Override
     public int editCar(Car data) {
@@ -75,5 +87,6 @@ public class CarBOImpl extends PaginableBOImpl<Car> implements ICarBO {
         car.setModelId(modelId);
         return carDAO.select(car);
     }
+
 
 }

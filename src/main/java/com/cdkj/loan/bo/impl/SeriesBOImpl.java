@@ -8,6 +8,7 @@ import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,16 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
             seriesDAO.insert(data);
         }
         return code;
+    }
+
+    @Override
+    public void saveSeriesList(ArrayList<Series> seriesList) {
+        seriesDAO.insertList(seriesList);
+    }
+
+    @Override
+    public void removeByCondition(Series condition) {
+        seriesDAO.deleteByCondition(condition);
     }
 
     @Override

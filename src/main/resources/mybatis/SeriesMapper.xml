@@ -169,6 +169,58 @@
 		)
 	</insert>
 
+    <insert id="insert_seriesList" parameterType="series">
+        INSERT INTO tht_series(
+        code
+        ,brand_id
+        ,series_id
+        ,type
+        ,maker_type
+        ,brand_code
+        ,name
+        ,series_group_name
+        ,slogan
+        ,adv_pic
+        ,pic_number
+        ,price
+        ,highest
+        ,lowest
+        ,level
+        ,location
+        ,order_no
+        ,status
+        ,updater
+        ,update_datetime
+        ,remark
+        )
+        VALUES
+        <foreach collection="list" item="series" separator=",">
+            (
+            #{code}
+            ,#{brandId}
+            ,#{seriesId}
+            ,#{type}
+            ,#{makerType}
+            ,#{brandCode}
+            ,#{name}
+            ,#{seriesGroupName}
+            ,#{slogan}
+            ,#{advPic}
+            ,#{picNumber}
+            ,#{price}
+            ,#{highest}
+            ,#{lowest}
+            ,#{level}
+            ,#{location}
+            ,#{orderNo}
+            ,#{status}
+            ,#{updater}
+            ,#{updateDatetime}
+            ,#{remark}
+            )
+        </foreach>
+    </insert>
+
     <update id="update_series" parameterType="series">
 		UPDATE tht_series ts SET
 		ts.brand_code = #{brandCode}
@@ -233,5 +285,9 @@
 		DELETE FROM tht_series WHERE code = #{code};
 	</delete>
 
+    <delete id="delete_seriesByCondition" parameterType="series">
+        DELETE FROM tht_series t
+        <include refid="where_condition"/>
+    </delete>
 
 </mapper>

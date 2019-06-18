@@ -326,6 +326,115 @@
 		)
 	</insert>
 
+    <insert id="insert_carList" parameterType="car">
+        INSERT INTO
+        tht_car(
+        code
+        ,is_referee
+        ,series_id
+        ,model_id
+        ,type
+        ,name
+        ,series_code
+        ,series_name
+
+        ,brand_code
+        ,brand_name
+        ,bank_code
+        ,level
+        ,version
+
+        ,structure
+        ,displacement
+        ,from_place
+        ,car_procedure
+        ,original_price
+
+        ,sale_price
+        ,model_year
+        ,min_reg_year
+        ,max_reg_year
+        ,liter
+        ,gear_type
+        ,discharge_standard
+        ,seat_number
+        ,sf_amount
+        ,fw_amount
+        ,jsq_byhf
+        ,jsq_sybx
+
+        ,location
+        ,order_no
+        ,slogan
+        ,adv_pic
+        ,pic_number
+
+        ,pic
+        ,description
+        ,outside_color
+        ,inside_color
+        ,status
+
+        ,updater
+        ,update_datetime
+        ,remark
+        )
+        VALUES
+        <foreach collection="list" item="car" separator=",">
+            (
+            #{code}
+            ,#{isReferee}
+            ,#{seriesId}
+            ,#{modelId}
+            ,#{type}
+            ,#{name}
+            ,#{seriesCode}
+            ,#{seriesName}
+
+            ,#{brandCode}
+            ,#{brandName}
+            ,#{bankCode}
+            ,#{level}
+            ,#{version}
+
+            ,#{structure}
+            ,#{displacement}
+            ,#{fromPlace}
+            ,#{procedure}
+            ,#{originalPrice}
+
+            ,#{salePrice}
+            ,#{modelYear}
+            ,#{minRegYear}
+            ,#{maxRegYear}
+            ,#{liter}
+            ,#{gearType}
+            ,#{dischargeStandard}
+            ,#{seatNumber}
+            ,#{sfAmount}
+            ,#{fwAmount}
+            ,#{jsqByhf}
+            ,#{jsqSybx}
+
+            ,#{location}
+            ,#{orderNo}
+            ,#{slogan}
+            ,#{advPic}
+            ,#{picNumber}
+
+            ,#{pic}
+            ,#{description}
+            ,#{outsideColor}
+            ,#{insideColor}
+            ,#{status}
+
+            ,#{updater}
+            ,#{updateDatetime}
+            ,#{remark}
+            )
+        </foreach>
+    </insert>
+
     <update id="update_car" parameterType="car">
 		UPDATE tht_car SET
 		is_referee=#{isReferee}
@@ -391,5 +500,8 @@
 		DELETE FROM tht_car WHERE code=#{code};
 	</delete>
 
-
+    <delete id="delete_carByCondition" parameterType="car">
+        DELETE FROM tht_car t
+        <include refid="where_condition"/>
+    </delete>
 </mapper>

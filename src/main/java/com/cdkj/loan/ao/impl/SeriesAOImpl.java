@@ -27,9 +27,9 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -126,14 +126,28 @@ public class SeriesAOImpl implements ISeriesAO {
     @Transactional(rollbackFor = Exception.class)
     public void refreshSeries(XN630418Req req) {
         SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
+        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         if (StringUtils.isBlank(req.getBrandId())) {
+            //查询所有品牌
             Brand brand = new Brand();
             brand.setType(ECarProduceType.IMPORT.getCode());
             List<Brand> queryBrand = brandBO.queryBrand(brand);
+
+            //删除所有车系
+            Series condition = new Series();
+            condition.setType(ECarProduceType.IMPORT.getCode());
+            seriesBO.removeByCondition(condition);
+
+            // 根据品牌标识获取车系，导入
+            ArrayList<Series> seriesArrayList = new ArrayList<>();
             for (Brand domain : queryBrand) {
                 int i = 1;
-                refresh(url, domain.getBrandId(), domain.getCode(), req.getUpdater(), i);
+                ArrayList<Series> seriesList = refresh(url, token, domain.getBrandId(),
+                        domain.getCode(),
+                        req.getUpdater(), i);
+                seriesArrayList.addAll(seriesList);
             }
+            seriesBO.saveSeriesList(seriesArrayList);
         } else {
             Brand brand = brandBO.getBrandByBrandId(req.getBrandId());
             if (brand == null) {
@@ -141,13 +155,15 @@ public class SeriesAOImpl implements ISeriesAO {
                         "品牌标识不存在！");
             }
             int i = 1;
-            refresh(url, req.getBrandId(), brand.getCode(), req.getUpdater(), i);
+            ArrayList<Series> seriesList = refresh(url, token, req.getBrandId(), brand.getCode(),
+                    req.getUpdater(), i);
+            seriesBO.saveSeriesList(seriesList);
         }
     }
 
-    private void refresh(SYSConfig url, String brandId, String brandCode, String updater,
-            int i) {
-        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
+    private ArrayList<Series> refresh(SYSConfig url, SYSConfig token, String brandId,
+            String brandCode, String updater, int i) {
+
         String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
                 + "/getCarSeriesList" + "?token=" + token.getCvalue() + "&brandId=" + brandId);
         JSONObject jsono = JSONObject.parseObject(json);
@@ -156,18 +172,10 @@ public class SeriesAOImpl implements ISeriesAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     jsono.get("error_msg").toString());
         }
-        Series condition = new Series();
-        condition.setBrandId(brandId);
-        condition.setType(ECarProduceType.IMPORT.getCode());
-        List<Series> querySeries = seriesBO.querySeries(condition);
-        if (CollectionUtils.isNotEmpty(querySeries)) {
-            for (Series series : querySeries) {
-                seriesBO.removeSeries(series);
-            }
-        }
 
         String list = jsono.get("series_list").toString();
         JSONArray parseArray = JSONArray.parseArray(list);
+        ArrayList<Series> seriesList = new ArrayList<>();
         for (Object object : parseArray) {
             JSONObject jsonObject = (JSONObject) object;
             String seriesId = jsonObject.getString("series_id");
@@ -177,6 +185,7 @@ public class SeriesAOImpl implements ISeriesAO {
             Date updateTime = jsonObject.getDate("update_time");
 
             Series series = new Series();
+            series.setCode(seriesId);
             series.setBrandId(brandId);
             series.setBrandCode(brandCode);
             series.setSeriesId(seriesId);
@@ -190,8 +199,9 @@ public class SeriesAOImpl implements ISeriesAO {
             series.setStatus(EBrandStatus.UP.getCode());
             series.setUpdater(updater);
             series.setUpdateDatetime(updateTime);
-            seriesBO.saveSeries(series);
+            seriesList.add(series);
         }
+        return seriesList;
     }
 
     @Override
