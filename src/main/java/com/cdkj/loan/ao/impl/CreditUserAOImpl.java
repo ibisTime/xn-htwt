@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.EntityUtils;
+import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.domain.BodyGuardApiResponse;
 import com.cdkj.loan.domain.BodyGuardWZHYResponse;
 import com.cdkj.loan.domain.CreditIcbank;
@@ -17,9 +18,12 @@ import com.cdkj.loan.dto.req.XN632535Req;
 import com.cdkj.loan.dto.req.XN632536Req;
 import com.cdkj.loan.dto.res.XN632536Res;
 import com.cdkj.loan.enums.EAttachName;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
+import com.cdkj.loan.exception.BizException;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -172,6 +176,9 @@ public class CreditUserAOImpl implements ICreditUserAO {
     @Override
     public String getTongdunResult(String creditUserCode) {
         CreditUser creditUser=creditUserBO.getCreditUser(creditUserCode);
+        if(StringUtils.isNotBlank(creditUser.getTongdunResult())){
+            return creditUser.getTongdunResult();
+        }
         return creditUserBO.getTongdunResult(creditUser);
     }
 }

@@ -264,7 +264,7 @@ public class CdbizAOImpl implements ICdbizAO {
             CarInfo carInfo = carInfoBO.getCarInfoByBizCode(req.getBizCode());
             if (carInfo == null) {
                 CarInfo data = new CarInfo();
-                carInfo.setBizCode(cdbiz.getCode());
+                data.setBizCode(cdbiz.getCode());
                 EntityUtils.copyData(req, data);
                 if (StringUtils.isNotBlank(car.getOutsideColor())) {
                     data.setCarColor(car.getOutsideColor());

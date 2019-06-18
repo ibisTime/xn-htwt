@@ -387,11 +387,11 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         req.setCompanyCode("CD-TDUN00030");
         try {
             result = BizConnecter.getBizData("798600", JsonUtils.object2Json(req));
-//            result=result.replace("\"","'");
+            //去斜杠
             result = result.replace("\\", "");
             //去首尾双引号
-            result=result.substring(0,result.length()-1);
-            result=result.substring(1);
+            result = result.substring(0, result.length() - 1);
+            result = result.substring(1);
             //转json储存在数据库
             creditUser.setTongdunResult(result);
             creditUserDAO.updateTongdun(creditUser);
@@ -404,7 +404,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         return result;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         System.out.println("skr"
                 + "skr");
     }
