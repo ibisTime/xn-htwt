@@ -33,7 +33,6 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.EntityUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Advance;
-import com.cdkj.loan.domain.AdvanceCollectCard;
 import com.cdkj.loan.domain.Attachment;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankLoan;
@@ -1276,13 +1275,6 @@ public class CdbizAOImpl implements ICdbizAO {
         // 财务垫资
         Advance advance = advanceBO.getAdvanceByBizCode(cdbiz.getCode());
         cdbiz.setAdvance(advance);
-
-        // 垫资收款账号
-        AdvanceCollectCard advanceCollectCard = new AdvanceCollectCard();
-        advanceCollectCard.setBizCode(cdbiz.getCode());
-        List<AdvanceCollectCard> advanceCollectCardList = advanceCollectCardBO
-                .queryAdvanceCollectCardList(advanceCollectCard);
-        cdbiz.setAdvanceCollectCardList(advanceCollectCardList);
 
         BankLoan bankLoan = bankLoanBO.getBankLoanByBiz(cdbiz.getCode());
         cdbiz.setBankLoan(bankLoan);

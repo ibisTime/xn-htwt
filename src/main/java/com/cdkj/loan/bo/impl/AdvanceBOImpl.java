@@ -1,10 +1,12 @@
 package com.cdkj.loan.bo.impl;
 
 import com.cdkj.loan.bo.IAdvanceBO;
+import com.cdkj.loan.bo.IAdvanceCollectCardBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IAdvanceDAO;
 import com.cdkj.loan.domain.Advance;
+import com.cdkj.loan.domain.AdvanceCollectCard;
 import com.cdkj.loan.enums.ECdbizStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ENode;
@@ -20,6 +22,9 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
 
     @Autowired
     private IAdvanceDAO advanceDAO;
+
+    @Autowired
+    private IAdvanceCollectCardBO advanceCollectCardBO;
 
     @Override
     public String saveAdvance(String bizCode) {
@@ -104,6 +109,13 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
             Advance condition = new Advance();
             condition.setBizCode(code);
             advance = advanceDAO.select(condition);
+
+            // 垫资收款账号
+            AdvanceCollectCard advanceCollectCard = new AdvanceCollectCard();
+            advanceCollectCard.setBizCode(code);
+            List<AdvanceCollectCard> advanceCollectCardList = advanceCollectCardBO
+                    .queryAdvanceCollectCardList(advanceCollectCard);
+            advance.setAdvanceCollectCardList(advanceCollectCardList);
         }
         return advance;
     }

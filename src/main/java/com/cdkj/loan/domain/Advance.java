@@ -2,6 +2,7 @@ package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -88,7 +89,10 @@ public class Advance extends ABaseDO {
     // 付款凭证
     private String payBackBillPdf;
 
-    // 垫资账号
+    // 垫资出款账号
     private String advanceCardCode;
+
+    // 垫资收款账号
+    private List<AdvanceCollectCard> advanceCollectCardList;
 
 }
