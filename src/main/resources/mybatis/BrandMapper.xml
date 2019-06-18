@@ -122,7 +122,7 @@
 		)
 	</insert>
 
-    <insert id="insert_brandList" parameterType="brand">
+    <insert id="insert_brandList" parameterType="List">
         INSERT INTO tht_brand(
         code
         ,brand_id
@@ -141,19 +141,19 @@
         VALUES
         <foreach collection="list" item="brand" separator=",">
             (
-            #{code}
-            ,#{brandId}
-            ,#{type}
-            ,#{letter}
-            ,#{logo}
-            ,#{name}
-            ,#{description}
-            ,#{location}
-            ,#{orderNo}
-            ,#{status}
-            ,#{updater}
-            ,#{updateDatetime}
-            ,#{remark}
+            #{brand.code}
+            ,#{brand.brandId}
+            ,#{brand.type}
+            ,#{brand.letter}
+            ,#{brand.logo}
+            ,#{brand.name}
+            ,#{brand.description}
+            ,#{brand.location}
+            ,#{brand.orderNo}
+            ,#{brand.status}
+            ,#{brand.updater}
+            ,#{brand.updateDatetime}
+            ,#{brand.remark}
             )
         </foreach>
     </insert>
@@ -206,8 +206,7 @@
 	</delete>
 
     <delete id="delete_brandByCondition" parameterType="brand">
-        DELETE FROM tht_brand t
-        <include refid="where_condition"/>
+        DELETE FROM tht_brand where type = '1'
     </delete>
 
 </mapper>

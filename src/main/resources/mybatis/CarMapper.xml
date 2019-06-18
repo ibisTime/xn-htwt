@@ -326,7 +326,7 @@
 		)
 	</insert>
 
-    <insert id="insert_carList" parameterType="car">
+    <insert id="insert_carList" parameterType="List">
         INSERT INTO
         tht_car(
         code
@@ -382,55 +382,50 @@
         VALUES
         <foreach collection="list" item="car" separator=",">
             (
-            #{code}
-            ,#{isReferee}
-            ,#{seriesId}
-            ,#{modelId}
-            ,#{type}
-            ,#{name}
-            ,#{seriesCode}
-            ,#{seriesName}
+            #{car.code}
+            ,#{car.isReferee}
+            ,#{car.seriesId}
+            ,#{car.modelId}
+            ,#{car.type}
+            ,#{car.name}
+            ,#{car.seriesCode}
+            ,#{car.seriesName}
+            ,#{car.brandCode}
+            ,#{car.brandName}
+            ,#{car.bankCode}
+            ,#{car.level}
+            ,#{car.version}
+            ,#{car.structure}
+            ,#{car.displacement}
+            ,#{car.fromPlace}
+            ,#{car.procedure}
+            ,#{car.originalPrice}
 
-            ,#{brandCode}
-            ,#{brandName}
-            ,#{bankCode}
-            ,#{level}
-            ,#{version}
-
-            ,#{structure}
-            ,#{displacement}
-            ,#{fromPlace}
-            ,#{procedure}
-            ,#{originalPrice}
-
-            ,#{salePrice}
-            ,#{modelYear}
-            ,#{minRegYear}
-            ,#{maxRegYear}
-            ,#{liter}
-            ,#{gearType}
-            ,#{dischargeStandard}
-            ,#{seatNumber}
-            ,#{sfAmount}
-            ,#{fwAmount}
-            ,#{jsqByhf}
-            ,#{jsqSybx}
-
-            ,#{location}
-            ,#{orderNo}
-            ,#{slogan}
-            ,#{advPic}
-            ,#{picNumber}
-
-            ,#{pic}
-            ,#{description}
-            ,#{outsideColor}
-            ,#{insideColor}
-            ,#{status}
-
-            ,#{updater}
-            ,#{updateDatetime}
-            ,#{remark}
+            ,#{car.salePrice}
+            ,#{car.modelYear}
+            ,#{car.minRegYear}
+            ,#{car.maxRegYear}
+            ,#{car.liter}
+            ,#{car.gearType}
+            ,#{car.dischargeStandard}
+            ,#{car.seatNumber}
+            ,#{car.sfAmount}
+            ,#{car.fwAmount}
+            ,#{car.jsqByhf}
+            ,#{car.jsqSybx}
+            ,#{car.location}
+            ,#{car.orderNo}
+            ,#{car.slogan}
+            ,#{car.advPic}
+            ,#{car.picNumber}
+            ,#{car.pic}
+            ,#{car.description}
+            ,#{car.outsideColor}
+            ,#{car.insideColor}
+            ,#{car.status}
+            ,#{car.updater}
+            ,#{car.updateDatetime}
+            ,#{car.remark}
             )
         </foreach>
     </insert>
@@ -501,7 +496,6 @@
 	</delete>
 
     <delete id="delete_carByCondition" parameterType="car">
-        DELETE FROM tht_car t
-        <include refid="where_condition"/>
+        DELETE FROM tht_car where type = '1'
     </delete>
 </mapper>

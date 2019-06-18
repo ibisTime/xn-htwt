@@ -169,7 +169,7 @@
 		)
 	</insert>
 
-    <insert id="insert_seriesList" parameterType="series">
+    <insert id="insert_seriesList" parameterType="List">
         INSERT INTO tht_series(
         code
         ,brand_id
@@ -196,27 +196,27 @@
         VALUES
         <foreach collection="list" item="series" separator=",">
             (
-            #{code}
-            ,#{brandId}
-            ,#{seriesId}
-            ,#{type}
-            ,#{makerType}
-            ,#{brandCode}
-            ,#{name}
-            ,#{seriesGroupName}
-            ,#{slogan}
-            ,#{advPic}
-            ,#{picNumber}
-            ,#{price}
-            ,#{highest}
-            ,#{lowest}
-            ,#{level}
-            ,#{location}
-            ,#{orderNo}
-            ,#{status}
-            ,#{updater}
-            ,#{updateDatetime}
-            ,#{remark}
+            #{series.code}
+            ,#{series.brandId}
+            ,#{series.seriesId}
+            ,#{series.type}
+            ,#{series.makerType}
+            ,#{series.brandCode}
+            ,#{series.name}
+            ,#{series.seriesGroupName}
+            ,#{series.slogan}
+            ,#{series.advPic}
+            ,#{series.picNumber}
+            ,#{series.price}
+            ,#{series.highest}
+            ,#{series.lowest}
+            ,#{series.level}
+            ,#{series.location}
+            ,#{series.orderNo}
+            ,#{series.status}
+            ,#{series.updater}
+            ,#{series.updateDatetime}
+            ,#{series.remark}
             )
         </foreach>
     </insert>
@@ -286,8 +286,7 @@
 	</delete>
 
     <delete id="delete_seriesByCondition" parameterType="series">
-        DELETE FROM tht_series t
-        <include refid="where_condition"/>
+        DELETE FROM tht_series where type = '1'
     </delete>
 
 </mapper>
