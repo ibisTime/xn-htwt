@@ -509,11 +509,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.releaseMortgage(repayBiz, nextNodeCode, releaseDatetime,
                 updater);
         // 日志
-        sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,
-                repayBiz.getCode(), preCurNodeCode, null, updater);
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ.getCode(), repayBiz.getBizCode(),
+                preCurNodeCode, null, updater);
         //待办
-        bizTaskBO.handlePreBizTask(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ.getCode(),
-                repayBiz.getCode(), preCurNodeCode, updater);
+//        bizTaskBO.handlePreBizTask(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ.getCode(),
+//                repayBiz.getCode(), preCurNodeCode, updater);
     }
 
     @Override
