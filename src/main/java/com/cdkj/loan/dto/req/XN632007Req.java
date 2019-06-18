@@ -1,5 +1,8 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
+
+@Data
 public class XN632007Req {
 
     private String type;// 类型
@@ -8,28 +11,8 @@ public class XN632007Req {
 
     private String keyword;// 关键字
 
-    public String getType() {
-        return type;
-    }
+    // 垫资类型(1收款，2出款)
+    private String advanceType;
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
 
 }

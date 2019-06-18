@@ -12,13 +12,15 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 列表查询收款账号
- * @author: CYL 
- * @since: 2018年5月25日 下午4:55:45 
+ *
+ * @author: CYL
+ * @since: 2018年5月25日 下午4:55:45
  * @history:
  */
 public class XN632007 extends AProcessor {
+
     private ICollectBankcardAO collectBankcardAO = SpringContextHolder
-        .getBean(ICollectBankcardAO.class);
+            .getBean(ICollectBankcardAO.class);
 
     private XN632007Req req = null;
 
@@ -28,6 +30,7 @@ public class XN632007 extends AProcessor {
         condition.setType(req.getType());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setKeyword(req.getKeyword());
+        condition.setAdvanceType(req.getAdvanceType());
 
         return collectBankcardAO.queryCollectBankcardList(condition);
     }
