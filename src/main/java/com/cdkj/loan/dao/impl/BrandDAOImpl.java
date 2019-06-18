@@ -1,12 +1,10 @@
 package com.cdkj.loan.dao.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.cdkj.loan.dao.IBrandDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Brand;
+import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository("brandDAOImpl")
 public class BrandDAOImpl extends AMybatisTemplate implements IBrandDAO {
@@ -17,35 +15,46 @@ public class BrandDAOImpl extends AMybatisTemplate implements IBrandDAO {
     }
 
     @Override
+    public void insertList(List<Brand> brandList) {
+        super.insertBatch(NAMESPACE.concat("insert_brandList"),
+                (List) brandList);
+    }
+
+    @Override
     public int delete(Brand data) {
         return super.delete(NAMESPACE.concat("delete_brand"), data);
+    }
+
+    @Override
+    public int deleteByCondition(Brand data) {
+        return super.delete(NAMESPACE.concat("delete_brandByCondition"), data);
     }
 
     @Override
     public Brand select(Brand condition) {
         // TODO Auto-generated method stub
         return super.select(NAMESPACE.concat("select_brand"), condition,
-            Brand.class);
+                Brand.class);
     }
 
     @Override
     public long selectTotalCount(Brand condition) {
         // TODO Auto-generated method stub
         return super.selectTotalCount(NAMESPACE.concat("select_brand_count"),
-            condition);
+                condition);
     }
 
     @Override
     public List<Brand> selectList(Brand condition) {
         return super.selectList(NAMESPACE.concat("select_brand"), condition,
-            Brand.class);
+                Brand.class);
     }
 
     @Override
     public List<Brand> selectList(Brand condition, int start, int count) {
         // TODO Auto-generated method stub
         return super.selectList(NAMESPACE.concat("select_brand"), start, count,
-            condition, Brand.class);
+                condition, Brand.class);
     }
 
     @Override

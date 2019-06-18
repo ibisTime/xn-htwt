@@ -122,6 +122,42 @@
 		)
 	</insert>
 
+    <insert id="insert_brandList" parameterType="brand">
+        INSERT INTO tht_brand(
+        code
+        ,brand_id
+        ,type
+        ,letter
+        ,logo
+        ,name
+        ,description
+        ,location
+        ,order_no
+        ,status
+        ,updater
+        ,update_datetime
+        ,remark
+        )
+        VALUES
+        <foreach collection="list" item="brand" separator=",">
+            (
+            #{code}
+            ,#{brandId}
+            ,#{type}
+            ,#{letter}
+            ,#{logo}
+            ,#{name}
+            ,#{description}
+            ,#{location}
+            ,#{orderNo}
+            ,#{status}
+            ,#{updater}
+            ,#{updateDatetime}
+            ,#{remark}
+            )
+        </foreach>
+    </insert>
+
     <update id="update_brand" parameterType="brand">
 		UPDATE tht_brand tb SET
 		tb.brand_id = #{brandId}
@@ -168,5 +204,10 @@
 		DELETE FROM tht_series WHERE brand_code=#{code};
 		DELETE FROM tht_brand WHERE code=#{code};
 	</delete>
+
+    <delete id="delete_brandByCondition" parameterType="brand">
+        DELETE FROM tht_brand t
+        <include refid="where_condition"/>
+    </delete>
 
 </mapper>

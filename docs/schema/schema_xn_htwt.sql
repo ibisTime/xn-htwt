@@ -89,6 +89,7 @@ CREATE TABLE `tb_collect_bankcard`
 (
   `code`            varchar(32) NOT NULL COMMENT '编号',
   `type`            varchar(4)    DEFAULT NULL COMMENT '类型(1 普通账户 2 经销商的收款账号 3 经销商返点账号)',
+  `advance_type`    VARCHAR(4)    DEFAULT NULL COMMENT '垫资类型(1收款，2出款)',
   `company_code`    varchar(32)   DEFAULT NULL COMMENT '公司编号',
   `belong_bank`     varchar(32)   DEFAULT NULL COMMENT '三种银行',
   `real_name`       varchar(255)  DEFAULT NULL COMMENT '户名',
@@ -265,6 +266,7 @@ CREATE TABLE `tdh_overdue_menu`
   `budget_order_code` varchar(32)  DEFAULT NULL COMMENT '准入单编号',
   `repay_biz_code`    varchar(32)  DEFAULT NULL COMMENT '还款业务编号',
   `repay_plan_code`   varchar(32)  DEFAULT NULL COMMENT '还款计划编号',
+  `create_datetime`   DATETIME DEFAULT NULL COMMENT '创建时间（银行）',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='导入逾期名单';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -950,6 +952,8 @@ CREATE TABLE `tdq_car_info`
   `car_brand`               varchar(64)  DEFAULT NULL COMMENT '车辆品牌',
   `car_series`              varchar(64)  DEFAULT NULL COMMENT '车系',
   `car_model`               varchar(64)  DEFAULT NULL COMMENT '车型',
+  `reg_date`                VARCHAR(255) DEFAULT NULL COMMENT '上牌时间',
+  `mile`                    VARCHAR(255) DEFAULT NULL COMMENT '行驶公里数',
   `car_model_name`          varchar(64)  DEFAULT NULL COMMENT '车型名称',
   `car_type`                varchar(4)   DEFAULT NULL COMMENT '车辆类型',
   `car_color`               varchar(64)  DEFAULT NULL COMMENT '颜色',
@@ -1639,6 +1643,8 @@ DROP TABLE IF EXISTS `tht_brand`;
 CREATE TABLE `tht_brand`
 (
   `code`            varchar(32) NOT NULL COMMENT '编号',
+  `brand_id`        VARCHAR(255) DEFAULT NULL COMMENT '品牌标识',
+  `type`            VARCHAR(4) DEFAULT NULL COMMENT '品牌类型（1接口导入,2用户新增）',
   `letter`          varchar(32)  DEFAULT NULL COMMENT '字母序号',
   `logo`            varchar(255) DEFAULT NULL COMMENT 'logo',
   `name`            varchar(255) DEFAULT NULL COMMENT '名称',
@@ -1664,6 +1670,9 @@ CREATE TABLE `tht_car`
 (
   `code`            varchar(32) NOT NULL COMMENT '编号',
   `is_referee`      varchar(4)   DEFAULT NULL COMMENT '是否推荐',
+  `series_id`       VARCHAR(255) DEFAULT NULL COMMENT '车系标识',
+  `model_id`        VARCHAR(255) DEFAULT NULL COMMENT '车型标识',
+  `type`            VARCHAR(4)   DEFAULT NULL COMMENT '车型类型（1接口导入,2用户新增）',
   `name`            varchar(255) DEFAULT NULL COMMENT '名称',
   `series_code`     varchar(32)  DEFAULT NULL COMMENT '车系编号',
   `series_name`     varchar(255) DEFAULT NULL COMMENT '车系名称',
@@ -1678,6 +1687,13 @@ CREATE TABLE `tht_car`
   `car_procedure`   varchar(64)  DEFAULT NULL COMMENT '手续',
   `original_price`  bigint(32) DEFAULT NULL COMMENT '原价',
   `sale_price`      bigint(32) DEFAULT NULL COMMENT '参考价',
+  `model_year` VARCHAR(255) DEFAULT NULL COMMENT '年款',
+  `min_reg_year` VARCHAR(255) DEFAULT NULL COMMENT '最小上牌年份',
+  `max_reg_year` VARCHAR(255) DEFAULT NULL COMMENT '最大上牌年份',
+  `liter` VARCHAR(255) DEFAULT NULL COMMENT '排量',
+  `gear_type` VARCHAR(255) DEFAULT NULL COMMENT '变速箱',
+  `discharge_standard` VARCHAR(255) DEFAULT NULL COMMENT '排放标准',
+  `seat_number` VARCHAR(255) DEFAULT NULL COMMENT '座位数',
   `sf_amount`       bigint(20) DEFAULT NULL COMMENT '首付金额',
   `fw_amount`       bigint(20) DEFAULT NULL COMMENT '服务费',
   `jsq_byhf`        bigint(20) DEFAULT NULL COMMENT '必要花费',
@@ -1803,8 +1819,13 @@ DROP TABLE IF EXISTS `tht_series`;
 CREATE TABLE `tht_series`
 (
   `code`            varchar(32) NOT NULL COMMENT '编号',
+  `brand_id`        VARCHAR(255) DEFAULT NULL COMMENT '品牌标识',
+  `series_id`       VARCHAR(255) DEFAULT NULL COMMENT '车系标识',
+  `type`            VARCHAR(4) DEFAULT NULL COMMENT '车系类型（1接口导入,2用户新增）',
+  `maker_type`      VARCHAR(4) DEFAULT NULL COMMENT '制造商类型',
   `brand_code`      varchar(32)  DEFAULT NULL COMMENT '品牌编号',
   `name`            varchar(255) DEFAULT NULL COMMENT '名称',
+  `series_group_name` VARCHAR(255) DEFAULT NULL COMMENT '系列组名',
   `slogan`          text COMMENT '广告语',
   `adv_pic`         varchar(255) DEFAULT NULL COMMENT '广告图',
   `pic_number`      int(11) DEFAULT NULL COMMENT '照片数量',
@@ -3059,6 +3080,7 @@ CREATE TABLE `tqj_cdbiz`
   `loan_bank`           varchar(32)  DEFAULT NULL COMMENT '经办银行',
   `credit_loan_amount`  bigint(20) DEFAULT NULL COMMENT '征信贷款金额',
   `loan_amount`         bigint(20) DEFAULT NULL COMMENT '贷款金额',
+  `enter_code`          VARCHAR(255) DEFAULT NULL COMMENT '入档编号',
   `enter_location`      varchar(32)  DEFAULT NULL COMMENT '入档位置',
   `enter_datetime`      datetime     DEFAULT NULL COMMENT '入档时间',
   `enter_filelist`      varchar(32)  DEFAULT NULL COMMENT '档案目录',

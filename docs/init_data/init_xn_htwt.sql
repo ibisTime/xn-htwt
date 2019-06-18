@@ -623,6 +623,10 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201905251632521624200','我的业务','1','/loanarchives/businessMe.htm','2','USYS201800000000001',now(),'','SM201904151542045356328');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201905251634054947035','详情','2','/detail','9','USYS201800000000001',now(),'','SM201905251632521624200');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201908230006532272220','人工确认逾期','2','/ManualConfirmationOverdue','4','USYS201800000000001',now(),'','SM201805081056379762242');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906161557117059656','同盾征信','1','/postloantools/tdunzhengxing.htm','2','USYS201800000000001','2019-06-16 16:01:05','','SM201805291053375683183');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906162346231725574','刷新','2','/refresh','9','USYS201800000000001','2019-06-16 23:46:23','','SM201804261354380715184');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906162348543878481','刷新','2','/refresh','9','USYS201800000000001','2019-06-16 23:48:54','','SM201804261355188031376');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201906162349310723832','刷新','2','/refresh','9','USYS201800000000001','2019-06-16 23:49:31','','SM201804261354595823870');
 
 /*
 -- Query: SELECT role_code,menu_code,'USYS201800000000001' as updater,now() as update_datetime,remark FROM tsys_menu_role
@@ -1224,6 +1228,10 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('SR201905182249305279191','SM201805292311143936143','USYS201800000000001','2019-06-10 17:27:25',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('SR201905182249305279191','SM201805291023424289358','USYS201800000000001','2019-06-10 17:27:25',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('SR201905182249305279191','SM201806010056218043812','USYS201800000000001','2019-06-10 17:27:25',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906161557117059656','USYS201800000000001','2019-06-17 12:32:16',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906162346231725574','USYS201800000000001','2019-06-17 12:32:16',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906162348543878481','USYS201800000000001','2019-06-17 12:32:16',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201906162349310723832','USYS201800000000001','2019-06-17 12:32:16',NULL);
 
 
 /*
@@ -2802,7 +2810,7 @@ INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`
 */
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_price','used_car_current_rate','二手车市场成交价最低及最高截图','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_price','third_valuation_pdf','第三方评估价截图（车辆价格核实报告）','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_price','second_car_report','二手车评估报告','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_price','second_car_report','二手车评估报告','链接',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_price','second_300_pdf','车300评估页','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_price','second_qxb_pic','汽修宝截图','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('car_procedure','drive_license_front','行驶证正面','图片',1,'USYS201800000000001',now());
@@ -2911,24 +2919,24 @@ INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('icbank','special_quato_pic','专项额度核定申请表','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('icbank','red_card_pic_with_id_pic','开卡申请表','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('make_card','red_card_pic','红卡照片','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua0','担保人身份证正面','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gua0','担保人身份证反面','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_gua0','担保人征信查询授权书','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua0','担保人手持授权书照片','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','house_picture_gua0','担保人家访照片','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_gua0','担保人银行征信报告','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gua0','担保人大数据报告','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','hkb_gua0','担保人户口本','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','asset_pdf_gua0','担保人资产资料pdf','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua1','担保人身份证正面','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gua1','担保人身份证反面','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_gua1','担保人征信查询授权书','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua1','担保人手持授权书照片','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','house_picture_gua1','担保人家访照片','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_gua1','担保人银行征信报告','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gua1','担保人大数据报告','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','hkb_gua1','担保人户口本','图片',1,'USYS201800000000001',now());
-INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','asset_pdf_gua1','担保人资产资料pdf','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua','担保人身份证正面','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gua','担保人身份证反面','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_gua','担保人征信查询授权书','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua','担保人手持授权书照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','house_picture_gua','担保人家访照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_gua','担保人银行征信报告','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gua','担保人大数据报告','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','hkb_gua','担保人户口本','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','asset_pdf_gua','担保人资产资料pdf','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_front_gua1','担保人2身份证正面','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','id_no_reverse_gua1','担保人2身份证反面','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','auth_pdf_gua1','担保人2征信查询授权书','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','interview_pic_gua1','担保人2手持授权书照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','house_picture_gua1','担保人2家访照片','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','bank_report_gua1','担保人2银行征信报告','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','data_report_gua1','担保人2大数据报告','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','hkb_gua1','担保人2户口本','图片',1,'USYS201800000000001',now());
+INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('credit_user','asset_pdf_gua1','担保人2资产资料pdf','图片',1,'USYS201800000000001',now());
 INSERT INTO `tdq_file_list` (`category`,`kname`,`vname`,`attach_type`,`number`,`updater`,`update_datetime`) VALUES ('node_file_list',NULL,'抵押合同','合同',1,'USYS201800000000001',now());
 
 /*

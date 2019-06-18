@@ -1,9 +1,12 @@
 package com.cdkj.loan.dto.req;
 
+import lombok.Data;
+
+@Data
 public class XN630406Req extends APageReq {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = 67761930202644722L;
 
@@ -19,36 +22,7 @@ public class XN630406Req extends APageReq {
     // 是否推荐（选填）
     private String location;
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLetter() {
-        return letter;
-    }
-
-    public void setLetter(String letter) {
-        this.letter = letter;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    // 品牌类型（1接口导入,2用户新增）（选填）
+    private String type;
 
 }

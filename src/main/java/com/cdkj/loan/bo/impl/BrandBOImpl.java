@@ -8,6 +8,7 @@ import com.cdkj.loan.dao.IBrandDAO;
 import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,16 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
             brandDAO.insert(data);
         }
         return code;
+    }
+
+    @Override
+    public void insertBrandList(ArrayList<Brand> brandList) {
+        brandDAO.insertList(brandList);
+    }
+
+    @Override
+    public void deleteByCondition(Brand condition) {
+        brandDAO.deleteByCondition(condition);
     }
 
     @Override

@@ -19,9 +19,9 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,17 +112,13 @@ public class BrandAOImpl implements IBrandAO {
         }
         Brand condition = new Brand();
         condition.setType(ECarProduceType.IMPORT.getCode());
-        List<Brand> queryBrand = brandBO.queryBrand(condition);
-        if (CollectionUtils.isNotEmpty(queryBrand)) {
-            for (Brand brand : queryBrand) {
-                brandBO.removeBrand(brand);
-            }
-        }
+        brandBO.deleteByCondition(condition);
 
         JSONObject jsono = JSONObject.parseObject(json);
         String s = jsono.get("brand_list").toString();
         JSONArray parseArray = JSONArray.parseArray(s);
         int i = 0;
+        ArrayList<Brand> brandList = new ArrayList<>();
         for (Object object : parseArray) {
             JSONObject jsonObject = (JSONObject) object;
             String brandId = jsonObject.getString("brand_id");
@@ -131,6 +127,7 @@ public class BrandAOImpl implements IBrandAO {
             Date updateTime = jsonObject.getDate("update_time");
 
             Brand brand = new Brand();
+            brand.setCode(brandId);
             brand.setBrandId(brandId);
             brand.setType(ECarProduceType.IMPORT.getCode());
             brand.setName(brandName);
@@ -141,8 +138,9 @@ public class BrandAOImpl implements IBrandAO {
             brand.setStatus(EBrandStatus.UP.getCode());
             brand.setUpdater(req.getUpdater());
             brand.setUpdateDatetime(updateTime);
-            brandBO.saveBrand(brand);
+            brandList.add(brand);
         }
+        brandBO.insertBrandList(brandList);
     }
 
     @Override

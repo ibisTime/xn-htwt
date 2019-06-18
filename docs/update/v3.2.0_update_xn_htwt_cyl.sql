@@ -110,5 +110,4 @@ UPDATE `tdq_file_list` SET `vname`='担保人2银行征信报告' WHERE `id`='24
 UPDATE `tdq_file_list` SET `vname`='担保人2大数据报告' WHERE `id`='247';
 UPDATE `tdq_file_list` SET `vname`='担保人2户口本' WHERE `id`='248';
 UPDATE `tdq_file_list` SET `vname`='担保人2资产资料pdf' WHERE `id`='249';
-
 UPDATE `tdq_file_list` SET `attach_type`='链接' WHERE `id`='123';
