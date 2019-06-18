@@ -430,7 +430,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             cdbizBO.refreshCurNodeStatus(cdbiz);
 
                             EBizLogType bizLogType = EBoolean.YES.getCode().equals(approveResult)
-                                    ? EBizLogType.bank_push
+                                    ? EBizLogType.Pledge
                                     : EBizLogType.LOGISTICS;
                             // 待办事项
                             bizTaskBO.handlePreAndAdd(bizLogType, cdbiz.getCode(),

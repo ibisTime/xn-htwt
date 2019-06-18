@@ -88,7 +88,7 @@ public interface ICdbizAO {
     /**
      * 确认入档
      */
-    void confirmArchive(String code, String operator, String enterLocation);
+    void confirmArchive(String code, String operator, String enterLocation, String enterCode);
 
     // 申请作废
     void applyCancel(XN632190Req req);

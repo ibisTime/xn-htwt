@@ -801,7 +801,7 @@ public class CdbizAOImpl implements ICdbizAO {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void confirmArchive(String code, String operator,
-            String enterLocation) {
+            String enterLocation, String enterCode) {
         Cdbiz cdbiz = cdbizBO.getCdbiz(code);
         if (!ENode.second_archive.getCode().equals(cdbiz.getEnterNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -811,6 +811,10 @@ public class CdbizAOImpl implements ICdbizAO {
         // 更新业务状态
         cdbizBO.refreshEnterNodeStatus(cdbiz, ECdbizStatus.E4.getCode(),
                 ENode.confirm_archive.getCode());
+
+        cdbiz.setEnterCode(enterCode);
+        cdbiz.setEnterLocation(enterLocation);
+        cdbizBO.refreshLocation(cdbiz);
 
         // 日志记录
         sysBizLogBO.saveNewSYSBizLog(code, EBizLogType.BUDGET_ORDER,

@@ -428,10 +428,12 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 .isBlank(req.getRemark())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的备注");
         }
-
-        repayBizBO.approveByBankCheck(repayBiz, nextNodeCode,
-                DateUtil.strToDate(req.getSettleDatetime(),
-                        DateUtil.FRONT_DATE_FORMAT_STRING),
+        Date date = null;
+        if (StringUtils.isNotBlank(req.getSettleDatetime())) {
+            date = DateUtil.strToDate(req.getSettleDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING);
+        }
+        repayBizBO.approveByBankCheck(repayBiz, nextNodeCode, date,
                 req.getSettleAttach(), req.getOperator(), req.getRemark());
         // 日志
         sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,
@@ -489,8 +491,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,
                 repayBiz.getCode(), preCurNodeCode, remark, updater);
         //待办
-        bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getCode(), repayBiz.getBizCode(),
-                preCurNodeCode, nextNodeCode, updater);
+//        bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getCode(), repayBiz.getBizCode(),
+//                preCurNodeCode, nextNodeCode, updater);
     }
 
     @Override

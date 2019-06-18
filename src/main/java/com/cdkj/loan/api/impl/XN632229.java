@@ -25,7 +25,7 @@ public class XN632229 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         cdbizAO.confirmArchive(req.getCode(), req.getOperator(),
-                req.getEnterLocation());
+                req.getEnterLocation(), req.getEnterCode());
         return new BooleanRes(true);
     }
 
