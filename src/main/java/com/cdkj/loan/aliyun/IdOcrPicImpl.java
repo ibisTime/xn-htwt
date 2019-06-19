@@ -153,6 +153,7 @@ public class IdOcrPicImpl {
                     "识别身份证照片失败！");
         }
 
+        // 时间格式转化
         String birth = idOcrRes.getCustomerBirth();
         if (StringUtils.isNotBlank(birth)) {
             String year = birth.substring(0, 4);
@@ -167,6 +168,13 @@ public class IdOcrPicImpl {
             String month = startDate.substring(4, 6);
             String day = startDate.substring(6, 8);
             idOcrRes.setStartDate(year + "-" + month + "-" + day);
+        }
+        String statdate = idOcrRes.getStatdate();
+        if (StringUtils.isNotBlank(statdate)) {
+            String year = statdate.substring(0, 4);
+            String month = statdate.substring(4, 6);
+            String day = statdate.substring(6, 8);
+            idOcrRes.setStatdate(year + "-" + month + "-" + day);
         }
         return idOcrRes;
     }

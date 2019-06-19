@@ -1,10 +1,10 @@
 /**
- * @Title APIServlet.java 
- * @Package com.hsnet.pz.api 
- * @Description 
- * @author miyb  
- * @date 2015-3-24 下午4:23:53 
- * @version V1.0   
+ * @Title APIServlet.java
+ * @Package com.hsnet.pz.api
+ * @Description
+ * @author miyb
+ * @date 2015-3-24 下午4:23:53
+ * @version V1.0
  */
 package com.cdkj.loan;
 
@@ -18,15 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
-/** 
- * @author: miyb 
+/**
+ * @author: miyb
  * @since: 2015-3-24 下午4:23:53 
  * @history:
  */
 public class APIServlet extends HttpServlet {
+
     static Logger logger = Logger.getLogger(APIServlet.class);
 
-    /** 
+    /**
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
      */
     private static final long serialVersionUID = 6175432226630152841L;
@@ -38,8 +39,8 @@ public class APIServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         logger.info("Successful Deployment");
         PrintWriter writer = response.getWriter();
-        writer.append("Version:1.5.0/ \n");
-        writer.append("Description:htwt_meet_1228 \n");
+        writer.append("Version:3.2.0/ \n");
+        writer.append("Description:wzcd_meet_619 \n");
         writer.flush();
     }
 
