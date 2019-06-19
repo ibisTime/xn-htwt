@@ -2,6 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -15,6 +16,8 @@ public class XN632111ReqCreditUser {
     // 征信人员编号
     @NotBlank
     private String creditUserCode;
+
+    private String code;
 
     // 信用卡占比
     @NotBlank
@@ -53,6 +56,9 @@ public class XN632111ReqCreditUser {
     }
 
     public String getCreditUserCode() {
+        if(StringUtils.isBlank(this.creditUserCode)&&StringUtils.isNotBlank(this.code)){
+            creditUserCode=this.code;
+        }
         return creditUserCode;
     }
 
@@ -84,4 +90,11 @@ public class XN632111ReqCreditUser {
         this.creditNote = creditNote;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }
