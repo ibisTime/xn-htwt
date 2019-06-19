@@ -654,7 +654,11 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE code = #{code};
+        UPDATE tqj_cdbiz
+        SET
+        cur_node_code = #{curNodeCode}
+        WHERE code=#{bizCode}
 	</update>
 
     <update id="update_trailerManage" parameterType="repayBiz">
