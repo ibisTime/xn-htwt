@@ -491,8 +491,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         sysBizLogBO.saveNewSYSBizLog(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ,
                 repayBiz.getCode(), preCurNodeCode, remark, updater);
         //待办
-//        bizTaskBO.handlePreAndAdd(EBizLogType.REPAY_BIZ, repayBiz.getCode(), repayBiz.getBizCode(),
-//                preCurNodeCode, nextNodeCode, updater);
+        bizTaskBO.handlePreBizTask(repayBiz.getBizCode(), EBizLogType.REPAY_BIZ.getCode(),
+                repayBiz.getCode(), preCurNodeCode, updater);
     }
 
     @Override

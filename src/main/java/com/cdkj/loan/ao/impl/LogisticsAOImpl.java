@@ -298,6 +298,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (EBoolean.YES.getCode().equals(approveResult)) {
             logisticsBO.receiveLogistics(code, operator, remark);
         } else {
+            if (StringUtils.isBlank(remark)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写补件原因");
+            }
             logisticsBO.sendAgainLogistics(code, remark);
         }
 
