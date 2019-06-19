@@ -3,6 +3,15 @@
 -- Date: 2019-05-04 20:48
 */
 INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`real_name`,`login_pwd`,`login_pwd_strength`,`create_datetime`,`role_code`,`company_code`,`department_code`,`post_code`,`updater`,`update_datetime`,`status`,`remark`,`team_code`,`archive_code`) VALUES ('USYS201800000000001','P',NULL,'admin',NULL,'admin','fb62579e990da4e2a8f15c3d1e123438','1',now(),'RO201800000000000001','DP201800000000000000001',null,null,'USYS201800000000001',now(),'1','',NULL,NULL);
+INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`real_name`,`login_pwd`,`login_pwd_strength`,`create_datetime`,`role_code`,`company_code`,`department_code`,`post_code`,`updater`,`update_datetime`,`status`,`remark`,`team_code`,`archive_code`) VALUES ('U201906121131127371924','P',NULL,'nqzy','17611591956','内勤专员','96e79218965eb72c92a549dd5a330112','1',now(),'SR20180000000000000NQZY','DP201800000000000000001','DP201906061418149427263','DP201906061421596341638',NULL,NULL,'1',NULL,NULL,NULL);
+INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`real_name`,`login_pwd`,`login_pwd_strength`,`create_datetime`,`role_code`,`company_code`,`department_code`,`post_code`,`updater`,`update_datetime`,`status`,`remark`,`team_code`,`archive_code`) VALUES ('U201906121131408799619','P',NULL,'tdz','17611591957','团队长','96e79218965eb72c92a549dd5a330112','1',now(),'SR201800000000000000YWY','DP201800000000000000001','DP201906061418149427263','DP201906061420030966112',NULL,NULL,'1',NULL,'BT201906121155146011574',NULL);
+INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`real_name`,`login_pwd`,`login_pwd_strength`,`create_datetime`,`role_code`,`company_code`,`department_code`,`post_code`,`updater`,`update_datetime`,`status`,`remark`,`team_code`,`archive_code`) VALUES ('U201906121134414433190','P',NULL,'shg','17611591958','审核岗','96e79218965eb72c92a549dd5a330112','1',now(),'SR201905182249305279191','DP201800000000000000001','DP201906061418149427263','DP201906061423535922314',NULL,NULL,'1',NULL,NULL,NULL);
+
+/*
+-- Query: SELECT * FROM tsys_biz_team;
+-- Date: 2019-05-04 20:48
+*/
+INSERT INTO `tsys_biz_team` (`code`,`name`,`captain`,`company_code`,`status`,`updater`,`update_datetime`,`account_no`,`bank`,`subbranch`,`water_bill`,`region`,`place`) VALUES ('BT201906121155146011574','业务团队','U201906121131408799619','DP201800000000000000001','1','USYS201800000000001',now(),'3746738234444532','SHB','支行',NULL,'2','1');
 
 /*
 -- Query: SELECT * FROM tsys_role
@@ -26,6 +35,11 @@ INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`rema
 -- Date: 2019-05-05 12:25
 */
 INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201800000000000000001','1','温州浩源有限公司',NULL,'0',NULL,'1','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201906061418149427263','2','业务部',NULL,'DP201800000000000000001',1,'1','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201906061418229735934','3','业务员',NULL,'DP201906061418149427263',0,'1','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201906061420030966112','3','团队长',NULL,'DP201906061418149427263',0,'1','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201906061421596341638','3','内勤专员',NULL,'DP201906061418149427263',0,'1','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_department` (`code`,`type`,`name`,`lead_user_id`,`parent_code`,`order_no`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201906061423535922314','3','审核人员',NULL,'DP201906061418149427263',0,'1','USYS201800000000001',now(),NULL);
 
 
 /*
@@ -2757,12 +2771,12 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('integral_rule','product_normal','50','USYS201800000000001',now(),'申请成功一次商品分期','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('exchange_rule','jf_exchange','100','USYS201800000000001',now(),'积分兑换人民币比例','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('leave','leave_year_hour','40','USYS201800000000001',now(),'年休假小时数','CD-CHTWT000020','CD-CHTWT000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_code','1400211355','USYS201800000000001',now(),'应用编号','CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_code','1400219841','USYS201800000000001',now(),'应用编号','CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_admin','administrator','USYS201800000000001',now(),'账号管理员','CD-HTWT000020','CD-HTWT000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_access_key','-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEkZQMHqnO5uSkymL4eVZ1jSTb9u/M\nwW03Yc2YgF+nTmhrh+re4nAsZ6JLLUBbXX1zVDWcjOEKRFdK121y+MgeCw==\n-----END PUBLIC KEY-----','USYS201800000000001',now(),'公钥','CD-HTWT000020','CD-HTWT000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_secret_key','-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgFeBDPy92N5rkSwS+\naMglg6HDYRok2bqIBXi8Nq5YH0KhRANCAASRlAweqc7m5KTKYvh5VnWNJNv278zB\nbTdhzZiAX6dOaGuH6t7icCxnokstQFtdfXNUNZyM4QpEV0rXbXL4yB4L\n-----END PRIVATE KEY-----','USYS201800000000001',now(),'私钥','CD-HTWT000020','CD-HTWT000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_account_type','49995','USYS201800000000001',now(),'账号类型','CD-HTWT000020','CD-HTWT000020');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im', 'tx_app_id', '1257953104', 'USYS201800000000001', '2019-06-10 13:42:00', 'appid', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_access_key','-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEvzx3CUzu0S9F3uJ5hJU/MaWuvKRi\ndALZRCeQxaf8IpwsHFBQM2iil6Hp7WdZ+fCI214JrR20Ir8yMVNTf6p47Q==\n-----END PUBLIC KEY-----','USYS201800000000001',now(),'公钥','CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_secret_key','-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgE5rbHYLCkZ9DC8UU\naF4KuuuO2yrkF3Q9v9pzBRZiOB6hRANCAAS/PHcJTO7RL0Xe4nmElT8xpa68pGJ0\nAtlEJ5DFp/winCwcUFAzaKKXoentZ1n58IjbXgmtHbQivzIxU1N/qnjt\n-----END PRIVATE KEY-----','USYS201800000000001',now(),'私钥','CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_account_type','52604','USYS201800000000001',now(),'账号类型','CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_id','1257953104','USYS201800000000001',now(),'appid','CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('repayplan','repayplan_step','50','USYS201800000000001',now(),'还款计划每次处理的条数','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiUrl','https://api.limuzhengxin.com','USYS201800000000001',now(),'立木征信apiUrl','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('id_no_authentication','apiKey','4268765441801243','USYS201800000000001',now(),'立木征信apiKey','CD-CWZCD000020','CD-CWZCD000020');
@@ -2778,6 +2792,9 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('app_start_pic','app_start_pic','Ft0QjiHN4SJ2z8-5MgJnieZCXi0E||FoObcTGwWOgAX9nCGvEk-KsYMBbO','USYS201800000000001',now(),'app启动图','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_refresh','url','http://api.che300.com/service','USYS201800000000001',now(),'车辆刷新url','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_refresh','token','ed34a9f390e806112420863423cd8dbc','USYS201800000000001',now(),'车辆刷新token','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST','http://dm-51.data.aliyun.com','USYS201800000000001',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST_REST_CODE','/rest/160601/ocr/ocr_idcard.json','USYS201800000000001',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_APPCODE','1bd9832a74284772a7549ff0cc51043e','USYS201800000000001',now(),'阿里云appcode编号','CD-CWZCD000020','CD-CWZCD000020');
 
 
 /*
