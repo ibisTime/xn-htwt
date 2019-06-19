@@ -109,13 +109,14 @@ public class AdvanceBOImpl extends PaginableBOImpl<Advance>
             Advance condition = new Advance();
             condition.setBizCode(code);
             advance = advanceDAO.select(condition);
-
-            // 垫资收款账号
-            AdvanceCollectCard advanceCollectCard = new AdvanceCollectCard();
-            advanceCollectCard.setBizCode(code);
-            List<AdvanceCollectCard> advanceCollectCardList = advanceCollectCardBO
-                    .queryAdvanceCollectCardList(advanceCollectCard);
-            advance.setAdvanceCollectCardList(advanceCollectCardList);
+            if(null!=advance) {
+                // 垫资收款账号
+                AdvanceCollectCard advanceCollectCard = new AdvanceCollectCard();
+                advanceCollectCard.setBizCode(code);
+                List<AdvanceCollectCard> advanceCollectCardList = advanceCollectCardBO
+                        .queryAdvanceCollectCardList(advanceCollectCard);
+                advance.setAdvanceCollectCardList(advanceCollectCardList);
+            }
         }
         return advance;
     }
