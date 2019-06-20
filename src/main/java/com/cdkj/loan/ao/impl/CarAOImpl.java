@@ -451,6 +451,9 @@ public class CarAOImpl implements ICarAO {
     @Override
     public Calculate calculate(String carCode, String period, String isTotal) {
         Car car = carBO.getCar(carCode);
+        if(ECarProduceType.IMPORT.getCode().equals(car.getType())){
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),"该车型无法车贷计算器");
+        }
         Bank bank = bankBO.getBank(car.getBankCode());
         Calculate calculate = null;
         if ("12".equals(period)) {
