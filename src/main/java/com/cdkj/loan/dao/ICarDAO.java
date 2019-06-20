@@ -2,6 +2,7 @@ package com.cdkj.loan.dao;
 
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.Car;
+import com.cdkj.loan.domain.Series;
 import java.util.List;
 
 public interface ICarDAO extends IBaseDAO<Car> {
@@ -17,5 +18,6 @@ public interface ICarDAO extends IBaseDAO<Car> {
     public int updateUp(Car data);
 
     public int updateDown(Car data);
+
 
 }

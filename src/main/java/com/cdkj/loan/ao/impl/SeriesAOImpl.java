@@ -284,4 +284,9 @@ public class SeriesAOImpl implements ISeriesAO {
         Series series = seriesBO.getSeries(code);
         seriesBO.removeSeries(series);
     }
+
+    @Override
+    public Paginable<Series> querySeriesPageByCarCondition(int start, int limit, Series condition) {
+        return seriesBO.getSeriesPageByCarCondition(condition,start,limit);
+    }
 }

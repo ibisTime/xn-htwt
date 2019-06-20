@@ -5,8 +5,8 @@
 set tomcat_path "/mnt/www/htwt/tomcat_xn_htwt"
 set war_name "xn-htwt"
 
-set host_ip "47.110.249.120"
-set host_pwd "Enuo0918"
+set host_ip "47.99.163.139"
+set host_pwd "cdkjqwertyQ01"
 
 ######## 1.传输文件至服务器根目录 ########
 spawn scp ./${war_name}.war root@${host_ip}:~/

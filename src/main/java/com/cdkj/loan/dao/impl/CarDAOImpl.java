@@ -48,6 +48,7 @@ public class CarDAOImpl extends AMybatisTemplate implements ICarDAO {
                 Car.class);
     }
 
+
     @Override
     public List<Car> selectList(Car condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_car"), start, count,

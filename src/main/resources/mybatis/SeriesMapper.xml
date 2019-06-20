@@ -79,8 +79,56 @@
             <if test="remark != null and remark != '' ">
                 AND t.remark = #{remark}
             </if>
+
+
         </trim>
     </sql>
+
+  <sql id="car_condition">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="queryName != null and queryName != '' ">
+        AND t.series_name like "%"#{queryName}"%" OR t.brand_name like "%"#{queryName}"%"
+        OR t.name like "%"#{queryName}"%"
+      </if>
+      <if test="displacementStart != null and displacementStart != '' ">
+        <![CDATA[AND t.displacement > #{displacementStart}]]>
+      </if>
+      <if test="displacementEnd != null and displacementEnd != '' ">
+        <![CDATA[AND t.displacement <= #{displacementEnd}]]>
+      </if>
+      <if test="priceStart != null and priceStart != '' ">
+        <![CDATA[AND t.sale_price > #{priceStart}]]>
+      </if>
+      <if test="priceEnd != null and priceEnd != '' ">
+        <![CDATA[AND t.sale_price <= #{priceEnd}]]>
+      </if>
+      <if test="levelList != null and levelList.size()>0  ">
+        AND t.level in
+        <foreach item="item" index="index" collection="levelList" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="versionList != null and versionList.size()>0">
+        AND t.version in
+        <foreach item="item" index="index" collection="versionList" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="structureList != null and structureList.size()>0 ">
+        AND t.structure in
+        <foreach item="item" index="index" collection="structureList" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+
+
+    </trim>
+  </sql>
+
+
 
     <select id="select_series" parameterType="series" resultMap="series_DB_Result">
         SELECT
@@ -250,43 +298,82 @@
 	</update>
 
     <update id="update_series_down" parameterType="series">
-		UPDATE tht_series SET
-		status = #{status}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
-	</update>
+      UPDATE tht_series SET
+      status = #{status}
+      ,updater = #{updater}
+      ,update_datetime = #{updateDatetime}
+      WHERE code = #{code}
+    </update>
 
     <update id="update_series_highest" parameterType="series">
-		UPDATE tht_series SET
-		highest = #{highest}
-		WHERE code = #{code}
-	</update>
+      UPDATE tht_series SET
+      highest = #{highest}
+      WHERE code = #{code}
+    </update>
 
     <update id="update_series_lowest" parameterType="series">
-		UPDATE tht_series SET
-		lowest = #{lowest}
-		WHERE code = #{code}
-	</update>
+      UPDATE tht_series SET
+      lowest = #{lowest}
+      WHERE code = #{code}
+    </update>
 
     <update id="update_series_highestAndLowest" parameterType="series">
-		UPDATE tht_series SET
-		highest = #{highest}
-		,lowest = #{lowest}
-		WHERE code = #{code}
-	</update>
+      UPDATE tht_series SET
+      highest = #{highest}
+      ,lowest = #{lowest}
+      WHERE code = #{code}
+    </update>
 
     <delete id="delete_series" parameterType="series">
-		DELETE FROM tstd_cnavigate WHERE parent_code in  (SELECT code FROM tht_car WHERE series_code=#{code});
-		DELETE FROM tht_car_carconfig WHERE car_code in (SELECT code FROM tht_car WHERE series_code=#{code});
-		DELETE FROM tht_car_order WHERE car_code in (SELECT code FROM tht_car WHERE series_code=#{code});
-		DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_car WHERE series_code=#{code});
-		DELETE FROM tht_car WHERE series_code=#{code};
-		DELETE FROM tht_series WHERE code = #{code};
-	</delete>
+      DELETE FROM tstd_cnavigate WHERE parent_code in  (SELECT code FROM tht_car WHERE series_code=#{code});
+      DELETE FROM tht_car_carconfig WHERE car_code in (SELECT code FROM tht_car WHERE series_code=#{code});
+      DELETE FROM tht_car_order WHERE car_code in (SELECT code FROM tht_car WHERE series_code=#{code});
+      DELETE FROM tht_action WHERE to_code in (SELECT code FROM tht_car WHERE series_code=#{code});
+      DELETE FROM tht_car WHERE series_code=#{code};
+      DELETE FROM tht_series WHERE code = #{code};
+    </delete>
 
     <delete id="delete_seriesByCondition" parameterType="series">
         DELETE FROM tht_series where type = '1'
     </delete>
+
+    <select id="select_series_by_car_condition" parameterType="series" resultMap="series_DB_Result">
+      SELECT
+      t.code
+      ,t.brand_id
+      ,t.series_id
+      ,t.type
+      ,t.maker_type
+      ,t.brand_code
+      ,t.name
+      ,t.series_group_name
+      ,t.slogan
+      ,t.adv_pic
+      ,t.pic_number
+      ,t.price
+      ,t.highest
+      ,t.lowest
+      ,t.level
+      ,t.location
+      ,t.order_no
+      ,t.status
+      ,t.updater
+      ,t.update_datetime
+      ,t.remark
+      FROM
+      tht_series t
+      <include refid="car_condition"/>
+        <trim prefix="ORDER BY ">
+          <if test="order != null and order != '' ">
+            t.${order}
+          </if>
+        </trim>
+    </select>
+
+    <select id="select_series_count_by_car_condition" parameterType="series" resultType="java.lang.Long">
+      SELECT count(1) FROM tht_car t
+      <include refid="car_condition"/>
+      GROUP BY series_code
+    </select>
 
 </mapper>

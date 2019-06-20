@@ -1,9 +1,12 @@
 package com.cdkj.loan.bo.impl;
 
 import com.cdkj.loan.bo.ISeriesBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ISeriesDAO;
+import com.cdkj.loan.domain.Cdbiz;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -127,4 +130,13 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
         seriesDAO.updateHighestAndLowest(series);
     }
 
+    @Override
+    public Paginable<Series> getSeriesPageByCarCondition(Series condition, int start, int limit) {
+        Long count=seriesDAO.selectTotalCountByCarCondition(condition);
+        Paginable<Series> page = new Page<Series>(start, limit, count);
+        List<Series> dataList = seriesDAO.selectListByCarCondition(condition,
+                page.getStart(), page.getPageSize());
+        page.setList(dataList);
+        return page;
+    }
 }

@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import com.cdkj.loan.enums.ECarProduceType;
 import java.util.Date;
 import java.util.List;
 
@@ -61,10 +62,12 @@ public class CarOrderAOImpl implements ICarOrderAO {
         carOrder.setSeriesName(series.getName());
         carOrder.setCarCode(req.getCarCode());
         carOrder.setCarName(car.getName());
-        carOrder.setPrice(car.getSalePrice());
-        carOrder.setSfRate(AmountUtil.div(car.getSfAmount().doubleValue(),
-            car.getSalePrice()));
-        carOrder.setSfAmount(car.getSfAmount());
+        if (!ECarProduceType.IMPORT.getCode().equals(car.getType())) {
+            carOrder.setPrice(car.getSalePrice());
+            carOrder.setSfRate(AmountUtil.div(car.getSfAmount().doubleValue(),
+                    car.getSalePrice()));
+            carOrder.setSfAmount(car.getSfAmount());
+        }
         carOrder.setCreateDatetime(new Date());
         carOrder.setStatus(ECarOrderStatus.DCL.getCode());
         return carOrderBO.saveCarOrder(carOrder);
@@ -95,7 +98,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
     public Paginable<CarOrder> queryCarPage(int start, int limit,
             CarOrder condition) {
         Paginable<CarOrder> results = carOrderBO.getPaginable(start, limit,
-            condition);
+                condition);
         List<CarOrder> list = results.getList();
         for (CarOrder carOrder : list) {
             initOrder(carOrder);

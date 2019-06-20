@@ -65,4 +65,43 @@ public class Series extends ABaseDO {
     private List<Car> cars;
 
     private Long carNumber;
+
+    //************车型搜索条件*********
+
+    // 搜索名称
+    private String queryName;
+
+    // 排量起
+    private Double displacementStart;
+
+    // 排量止
+    private Double displacementEnd;
+
+    // 价格起
+    private Long priceStart;
+
+    // 价格止
+    private Long priceEnd;
+
+    // 级别列表
+    private List<String> levelList;
+
+    // 结构列表
+    private List<String> structureList;
+
+    // 规格版本列表
+    private List<String> versionList;
+
+    // 车型配置列表
+    private List<CarCarconfig> caonfigList;
+
+    // 收藏数
+    private Long collectNumber;
+
+    // 全部配置
+    private List<Carconfig> configs;
+
+    private String isMore;
+
+    private String isCollect;// 是否收藏
 }

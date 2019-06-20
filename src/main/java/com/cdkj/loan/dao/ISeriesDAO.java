@@ -23,4 +23,8 @@ public interface ISeriesDAO extends IBaseDAO<Series> {
     int updateLowest(Series data);
 
     void updateHighestAndLowest(Series series);
+
+    public long selectTotalCountByCarCondition(Series condition);
+
+    public List<Series> selectListByCarCondition(Series condition, int start, int count);
 }

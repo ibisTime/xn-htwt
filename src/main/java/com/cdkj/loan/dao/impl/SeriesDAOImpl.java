@@ -84,4 +84,15 @@ public class SeriesDAOImpl extends AMybatisTemplate implements ISeriesDAO {
         super.update(NAMESPACE.concat("update_series_highestAndLowest"), data);
     }
 
+    @Override
+    public long selectTotalCountByCarCondition(Series condition) {
+        return super.selectTotalCount(NAMESPACE.concat("select_series_count_by_car_condition"),
+                condition);
+    }
+
+    @Override
+    public List<Series> selectListByCarCondition(Series condition, int start, int count) {
+        return super.selectList(NAMESPACE.concat("select_series_by_car_condition"), start,
+                count, condition, Series.class);
+    }
 }

@@ -38,4 +38,7 @@ public interface ISeriesAO {
 
     // 车系刷新
     void refreshSeries(XN630418Req req);
+
+    Paginable<Series> querySeriesPageByCarCondition(int start, int limit,
+            Series condition);
 }

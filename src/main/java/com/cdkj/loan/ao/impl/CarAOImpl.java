@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.ICarconfigBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
+import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.core.OkHttpUtils;
@@ -414,6 +415,12 @@ public class CarAOImpl implements ICarAO {
             }
         }
         return seriess;
+    }
+
+    @Override
+    public Paginable<Series> querySeriesPageByCarCondition(Car condition,int start,int limit) {
+        List<Car> queryCar = carBO.queryCar(condition);
+        return null;
     }
 
     private void initCar(Car car) {

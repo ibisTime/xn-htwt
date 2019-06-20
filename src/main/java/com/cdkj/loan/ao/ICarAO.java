@@ -35,6 +35,9 @@ public interface ICarAO {
     // 列表查询
     List<Series> queryCarList(Car condition);
 
+    //分页查
+    Paginable<Series> querySeriesPageByCarCondition(Car condition,int start,int limit);
+
     // 车贷计算器
     Calculate calculate(String carCode, String period, String isTotal);
 

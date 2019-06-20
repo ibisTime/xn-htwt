@@ -1,6 +1,7 @@
 package com.cdkj.loan.bo;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Series;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,4 +36,6 @@ public interface ISeriesBO extends IPaginableBO<Series> {
     void removeByCondition(Series condition);
 
     void saveSeriesList(ArrayList<Series> seriesList);
+
+    Paginable<Series> getSeriesPageByCarCondition(Series condition,int start,int limit);
 }

@@ -48,6 +48,8 @@
         <result column="remark" property="remark"/>
     </resultMap>
 
+
+
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="code != null and code != '' ">
@@ -498,4 +500,5 @@
     <delete id="delete_carByCondition" parameterType="car">
         DELETE FROM tht_car where type = '1'
     </delete>
+
 </mapper>
