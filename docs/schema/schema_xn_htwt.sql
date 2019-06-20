@@ -43,6 +43,38 @@ CREATE TABLE `tb_bank`
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `tb_bank_subbranch`
+--
+
+DROP TABLE IF EXISTS `tb_bank_subbranch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_bank_subbranch` (
+  `code` varchar(32) NOT NULL COMMENT '序号',
+  `bank_code` varchar(255) DEFAULT NULL COMMENT '银行编号',
+  `bank_type` varchar(32) DEFAULT NULL COMMENT '银行行别',
+  `abbr_name` varchar(255) DEFAULT NULL COMMENT '简称',
+  `full_name` varchar(255) DEFAULT NULL COMMENT '全称',
+  `open_bank` varchar(255) DEFAULT NULL COMMENT '开户行',
+  `address` varchar(255) DEFAULT NULL COMMENT '银行地址',
+  `phone_number` varchar(32) DEFAULT NULL COMMENT '电话号码',
+  `post_code` varchar(32) DEFAULT NULL COMMENT '邮编',
+  `bank_client` varchar(255) DEFAULT NULL COMMENT '银行委托人',
+  `client_valid_date` int(11) DEFAULT NULL COMMENT '委托有效期',
+  `auther_name` varchar(255) DEFAULT NULL COMMENT '授权人姓名',
+  `auther_phone_number` varchar(32) DEFAULT NULL COMMENT '授权人电话',
+  `auther_id_no` varchar(255) DEFAULT NULL COMMENT '授权人身份证',
+  `auther_address` varchar(255) DEFAULT NULL COMMENT '授权人地址',
+  `credit_card_type` varchar(4) DEFAULT NULL COMMENT '信用卡类型',
+  `credit_card_name` varchar(255) DEFAULT NULL COMMENT '信用卡名称',
+  `belong_area` varchar(255) DEFAULT NULL COMMENT '所属地区',
+  `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行支行信息表';
+
+--
 -- Table structure for table `tb_car_dealer`
 --
 
@@ -77,6 +109,54 @@ CREATE TABLE `tb_car_dealer`
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='经销商信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tb_car_dealer_protocol`
+--
+
+DROP TABLE IF EXISTS `tb_car_dealer_protocol`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_car_dealer_protocol` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `car_dealer_code` varchar(32) DEFAULT NULL COMMENT '经销商编号',
+  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行编号',
+  `plat_ct_rate12` decimal(18,8) DEFAULT NULL COMMENT '我司12期基准利率传统',
+  `plat_ct_rate24` decimal(18,8) DEFAULT NULL COMMENT '我司24期基准利率传统',
+  `plat_ct_rate36` decimal(18,8) DEFAULT NULL COMMENT '我司36期基准利率传统',
+  `plat_zk_rate12` decimal(18,8) DEFAULT NULL COMMENT '我司12期基准利率直客',
+  `plat_zk_rate24` decimal(18,8) DEFAULT NULL COMMENT '我司24期基准利率直客',
+  `plat_zk_rate36` decimal(18,8) DEFAULT NULL COMMENT '我司36期基准利率直客',
+  `assure_type` varchar(32) DEFAULT NULL COMMENT '担保费类型(1单笔/2贷款额百分比)',
+  `assure_fee` bigint(20) DEFAULT NULL COMMENT '单笔担保费',
+  `assure_rate` decimal(18,8) DEFAULT NULL COMMENT '担保费贷款额百分比',
+  `dz_type` varchar(32) DEFAULT NULL COMMENT '垫资费类型(1单笔/2贷款额百分比)',
+  `dz_fee` bigint(20) DEFAULT NULL COMMENT '单笔垫资费',
+  `dz_rate` decimal(18,8) DEFAULT NULL COMMENT '垫资费贷款额百分比',
+  `ly_amount_type` varchar(32) DEFAULT NULL COMMENT '履约保证金类型(1单笔/2贷款额百分比)',
+  `ly_amount_fee` bigint(20) DEFAULT NULL COMMENT '单笔履约保证金',
+  `ly_amount_rate` decimal(18,8) DEFAULT NULL COMMENT '履约保证金贷款额百分比',
+  `gps_type` varchar(32) DEFAULT NULL COMMENT 'GPS类型(1单笔/2贷款额百分比)',
+  `gps_fee` bigint(20) DEFAULT NULL COMMENT '单笔GPS费',
+  `gps_rate` decimal(18,8) DEFAULT NULL COMMENT 'GPS垫资费贷款额百分比',
+  `other_type` varchar(32) DEFAULT NULL COMMENT '杂费类型(1单笔/2贷款额百分比)',
+  `other_fee` bigint(20) DEFAULT NULL COMMENT '单笔杂费',
+  `other_rate` decimal(18,8) DEFAULT NULL COMMENT '杂费贷款额百分比',
+  `introduce_type` varchar(32) DEFAULT NULL COMMENT '介绍费类型(1单笔/2贷款额百分比)',
+  `introduce_fee` bigint(20) DEFAULT NULL COMMENT '单笔介绍费',
+  `introduce_rate` decimal(18,8) DEFAULT NULL COMMENT '介绍费贷款额百分比',
+  `return_point_type` varchar(32) DEFAULT NULL COMMENT '返点类型(1单笔/2贷款额百分比)',
+  `return_point_fee` bigint(20) DEFAULT NULL COMMENT '单笔返点',
+  `return_point_rate` decimal(18,8) DEFAULT NULL COMMENT '返点贷款额百分比',
+  `is_dz` varchar(32) DEFAULT NULL COMMENT '是否垫资(1 是 0 否)',
+  `insu_agency_year1_type` varchar(32) DEFAULT NULL COMMENT '1年保险代理费类型(1平台/2车行)',
+  `insu_agency_year1_fee` bigint(20) DEFAULT NULL COMMENT '1年保险代理费',
+  `insu_agency_year2_type` varchar(32) DEFAULT NULL COMMENT '2年保险代理费类型(1平台/2车行)',
+  `insu_agency_year2_fee` bigint(20) DEFAULT NULL COMMENT '2年保险代理费',
+  `insu_agency_year3_type` varchar(32) DEFAULT NULL COMMENT '3年保险代理费类型(1平台/2车行)',
+  `insu_agency_year3_fee` bigint(20) DEFAULT NULL COMMENT '3年保险代理费',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='经销商协议表';
 
 --
 -- Table structure for table `tb_collect_bankcard`
