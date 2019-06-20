@@ -87,37 +87,37 @@
   <sql id="car_condition">
     <trim prefix="WHERE" prefixOverrides="AND | OR">
       <if test="queryName != null and queryName != '' ">
-        AND t.series_name like "%"#{queryName}"%" OR t.brand_name like "%"#{queryName}"%"
-        OR t.name like "%"#{queryName}"%"
+        AND tc.series_name like "%"#{queryName}"%" OR tc.brand_name like "%"#{queryName}"%"
+        OR tc.name like "%"#{queryName}"%"
       </if>
       <if test="displacementStart != null and displacementStart != '' ">
-        <![CDATA[AND t.displacement > #{displacementStart}]]>
+        <![CDATA[AND tc.displacement > #{displacementStart}]]>
       </if>
       <if test="displacementEnd != null and displacementEnd != '' ">
-        <![CDATA[AND t.displacement <= #{displacementEnd}]]>
+        <![CDATA[AND tc.displacement <= #{displacementEnd}]]>
       </if>
       <if test="priceStart != null and priceStart != '' ">
-        <![CDATA[AND t.sale_price > #{priceStart}]]>
+        <![CDATA[AND tc.sale_price > #{priceStart}]]>
       </if>
       <if test="priceEnd != null and priceEnd != '' ">
-        <![CDATA[AND t.sale_price <= #{priceEnd}]]>
+        <![CDATA[AND tc.sale_price <= #{priceEnd}]]>
       </if>
       <if test="levelList != null and levelList.size()>0  ">
-        AND t.level in
+        AND tc.level in
         <foreach item="item" index="index" collection="levelList" open="(" separator=","
           close=")">
           #{item}
         </foreach>
       </if>
       <if test="versionList != null and versionList.size()>0">
-        AND t.version in
+        AND tc.version in
         <foreach item="item" index="index" collection="versionList" open="(" separator=","
           close=")">
           #{item}
         </foreach>
       </if>
       <if test="structureList != null and structureList.size()>0 ">
-        AND t.structure in
+        AND tc.structure in
         <foreach item="item" index="index" collection="structureList" open="(" separator=","
           close=")">
           #{item}
@@ -361,8 +361,8 @@
       ,t.update_datetime
       ,t.remark
       FROM
-      tht_series t
-      <include refid="car_condition"/>
+      tht_series t WHERE t.code in (SELECT tc.code FROM tht_car tc
+      <include refid="car_condition"/>)
         <trim prefix="ORDER BY ">
           <if test="order != null and order != '' ">
             t.${order}
@@ -371,9 +371,8 @@
     </select>
 
     <select id="select_series_count_by_car_condition" parameterType="series" resultType="java.lang.Long">
-      SELECT count(1) FROM tht_car t
-      <include refid="car_condition"/>
-      GROUP BY series_code
+      SELECT count(1) FROM tht_series t WHERE t.code in (SELECT tc.code from tht_car tc
+      <include refid="car_condition"/>)
     </select>
 
 </mapper>
