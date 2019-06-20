@@ -25,6 +25,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.log4j.Logger;
 
 @Service
 public class BrandAOImpl implements IBrandAO {
@@ -37,6 +38,10 @@ public class BrandAOImpl implements IBrandAO {
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
+
+    private static Logger logger = Logger.getLogger(
+            BrandAOImpl.class);
+
 
     @Override
     public String addBrand(XN630400Req req) {
@@ -106,6 +111,7 @@ public class BrandAOImpl implements IBrandAO {
         SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
                 + "/getCarBrandList" + "?token=" + token.getCvalue());
+        logger.info("json:"+json);
         if (json == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "查询结果为空，请检查地址和token是否正确！");
@@ -115,7 +121,9 @@ public class BrandAOImpl implements IBrandAO {
         brandBO.deleteByCondition(condition);
 
         JSONObject jsono = JSONObject.parseObject(json);
+
         String s = jsono.get("brand_list").toString();
+        logger.info("brand_list:"+s);
         JSONArray parseArray = JSONArray.parseArray(s);
         int i = 0;
         ArrayList<Brand> brandList = new ArrayList<>();
