@@ -1,16 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
 import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
@@ -36,11 +25,19 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.EWorkStatus;
 import com.cdkj.loan.exception.BizException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 /**
- * 
- * @author: jiafr 
- * @since: 2018年6月4日 下午7:41:28 
+ * @author: jiafr
+ * @since: 2018年6月4日 下午7:41:28
  * @history:
  */
 @Service
@@ -70,7 +67,7 @@ public class ArchiveAOImpl implements IArchiveAO {
 
         Archive data = new Archive();
         String code = OrderNoGenerater
-            .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
+                .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
         data.setCode(code);
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
@@ -78,14 +75,14 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setAvatar(req.getAvatar());
         data.setJobNo(req.getJobNo());
         data.setEntryDatetime(DateUtil.strToDate(req.getEntryDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         String departmentCode = departmentBO.getDepartment(req.getPostCode())
-            .getParentCode();
+                .getParentCode();
         data.setDepartmentCode(departmentCode);
         data.setPostCode(req.getPostCode());
         data.setJobClasses(req.getJobClasses());
         data.setBirthday(DateUtil.strToDate(req.getBirthday(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGender(req.getGender());
         data.setNation(req.getNation());
         data.setNativePlace(req.getNativePlace());
@@ -102,8 +99,8 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
         data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                        DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -111,9 +108,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setContractType(req.getContractType());
         data.setProbationTime(req.getProbationTime());
         data.setConvertDatetime(DateUtil.strToDate(req.getConvertDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setLeaveDatetime(DateUtil.strToDate(req.getLeaveDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setEntranceNo(req.getEntranceNo());
         data.setCheckNo(req.getCheckNo());
         data.setCarNo(req.getCarNo());
@@ -137,28 +134,28 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (StringUtils.isNotBlank(req.getLeaveDatetime())
                 && StringUtils.isNotBlank(req.getEntryDatetime())) {
             int num = DateUtil.daysBetween(req.getEntryDatetime(),
-                req.getLeaveDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING);
+                    req.getLeaveDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING);
             String workingYears = String.valueOf(((int) (num / 365)));
             data.setWorkingYears(workingYears);
         }
 
         SYSUser sysUserLoginName = sysUserBO
-            .getUserByLoginName(req.getRealName());
+                .getUserByLoginName(req.getRealName());
         if (sysUserLoginName != null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该姓名已存在，请重新填写！");
+                    "该姓名已存在，请重新填写！");
         }
         SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
         if (sysUserMobile != null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该手机号已存在，请重新填写！");
+                    "该手机号已存在，请重新填写！");
         }
         String userId = null;
         // 默认生成账号为真实姓名，默认密码为手机号码
         userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
-            req.getRealName(), req.getMobile(), req.getMobile(),
-            req.getAvatar(), req.getRealName(), SysConstants.COMMON_ROLE,
-            req.getPostCode(), code);
+                req.getRealName(), req.getMobile(), req.getMobile(),
+                req.getAvatar(), req.getRealName(), SysConstants.COMMON_ROLE,
+                req.getPostCode(), code, null);
         data.setUserId(userId);
         archiveBO.saveArchive(data);
 
@@ -193,14 +190,14 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setAvatar(req.getAvatar());
         data.setJobNo(req.getJobNo());
         data.setEntryDatetime(DateUtil.strToDate(req.getEntryDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         String departmentCode = departmentBO.getDepartment(req.getPostCode())
-            .getParentCode();
+                .getParentCode();
         data.setDepartmentCode(departmentCode);
         data.setPostCode(req.getPostCode());
         data.setJobClasses(req.getJobClasses());
         data.setBirthday(DateUtil.strToDate(req.getBirthday(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setGender(req.getGender());
         data.setNation(req.getNation());
         data.setNativePlace(req.getNativePlace());
@@ -217,8 +214,8 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
         data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                        DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -226,9 +223,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setContractType(req.getContractType());
         data.setProbationTime(req.getProbationTime());
         data.setConvertDatetime(DateUtil.strToDate(req.getConvertDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setLeaveDatetime(DateUtil.strToDate(req.getLeaveDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setEntranceNo(req.getEntranceNo());
         data.setCheckNo(req.getCheckNo());
         data.setCarNo(req.getCarNo());
@@ -275,7 +272,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             sysUser.setPostCode(data.getPostCode());
             sysUser.setDepartmentCode(data.getDepartmentCode());
             sysUser.setCompanyCode(
-                departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
+                    departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
             sysUserBO.refreshMobileDepartment(sysUser);
         }
     }
@@ -298,7 +295,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         SocialRelation condition = new SocialRelation();
         condition.setArchiveCode(code);
         List<SocialRelation> list = socialRelationBO
-            .querySocialRelationList(condition);
+                .querySocialRelationList(condition);
 
         archive.setSocialRelationList(list);
 

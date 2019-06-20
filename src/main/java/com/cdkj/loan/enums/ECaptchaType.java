@@ -1,18 +1,18 @@
 package com.cdkj.loan.enums;
 
+import com.cdkj.loan.exception.BizException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.cdkj.loan.exception.BizException;
-
 /**
- * @author: xieyj 
- * @since: 2016年11月11日 上午10:09:32 
+ * @author: xieyj
+ * @since: 2016年11月11日 上午10:09:32
  * @history:
  */
 public enum ECaptchaType {
 
-    C_REG("805041", "C端会员注册"), CHANGE_MOBILE("805061", "修改手机号");
+    C_REG("805041", "C端会员注册"), CHANGE_MOBILE("805061", "修改手机号"),
+    S_REG("630050", "B端注册");
 
     public static ECaptchaType getBizType(String code) {
         Map<String, ECaptchaType> map = getBizTypeMap();
