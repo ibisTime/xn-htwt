@@ -2795,7 +2795,7 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST','http://dm-51.data.aliyun.com','USYS201800000000001',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST_REST_CODE','/rest/160601/ocr/ocr_idcard.json','USYS201800000000001',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_APPCODE','1bd9832a74284772a7549ff0cc51043e','USYS201800000000001',now(),'阿里云appcode编号','CD-CWZCD000020','CD-CWZCD000020');
-
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('is_register','is_register','1','USYS201800000000001',now(),'能否注册用户','CD-CWZCD000020','CD-CWZCD000020');
 
 /*
 -- Query: SELECT `bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,0 as `max_order`,0 as `order_amount`,0 as `day_amount`,0 as `month_amount`,`remark` FROM tstd_channel_bank

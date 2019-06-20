@@ -497,5 +497,8 @@
 
     <delete id="delete_carByCondition" parameterType="car">
         DELETE FROM tht_car where type = '1'
+        <if test="seriesId != null and seriesId != '' ">
+            AND series_id = #{seriesId}
+        </if>
     </delete>
 </mapper>

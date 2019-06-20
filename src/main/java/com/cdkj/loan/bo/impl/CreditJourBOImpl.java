@@ -5,7 +5,6 @@ import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
-import com.cdkj.loan.common.NumberUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditJourDAO;
@@ -47,14 +46,14 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
         data.setDatetimeEnd(DateUtil.strToDate(req.getDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        data.setInterest1(NumberUtil.parseInt(req.getInterest1()));
-        data.setInterest2(NumberUtil.parseInt(req.getInterest2()));
-        data.setIncome(NumberUtil.parseInt(req.getIncome()));
-        data.setExpend(NumberUtil.parseInt(req.getExpend()));
-        data.setBalance(NumberUtil.parseInt(req.getBalance()));
+        data.setInterest1(StringValidater.toLong(req.getInterest1()));
+        data.setInterest2(StringValidater.toLong(req.getInterest2()));
+        data.setIncome(StringValidater.toLong(req.getIncome()));
+        data.setExpend(StringValidater.toLong(req.getExpend()));
+        data.setBalance(StringValidater.toLong(req.getBalance()));
 
-        data.setMonthIncome(NumberUtil.parseInt(req.getMonthIncome()));
-        data.setMonthExpend(NumberUtil.parseInt(req.getMonthExpend()));
+        data.setMonthIncome(StringValidater.toLong(req.getMonthIncome()));
+        data.setMonthExpend(StringValidater.toLong(req.getMonthExpend()));
         data.setPic(req.getPic());
         data.setRemark(req.getRemark());
 
@@ -81,14 +80,14 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
         data.setDatetimeEnd(DateUtil.strToDate(req.getDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        data.setInterest1(NumberUtil.parseInt(req.getInterest1()));
-        data.setInterest2(NumberUtil.parseInt(req.getInterest2()));
-        data.setIncome(NumberUtil.parseInt(req.getIncome()));
-        data.setExpend(NumberUtil.parseInt(req.getExpend()));
-        data.setBalance(NumberUtil.parseInt(req.getBalance()));
+        data.setInterest1(StringValidater.toLong(req.getInterest1()));
+        data.setInterest2(StringValidater.toLong(req.getInterest2()));
+        data.setIncome(StringValidater.toLong(req.getIncome()));
+        data.setExpend(StringValidater.toLong(req.getExpend()));
+        data.setBalance(StringValidater.toLong(req.getBalance()));
 
-        data.setMonthIncome(NumberUtil.parseInt(req.getMonthIncome()));
-        data.setMonthExpend(NumberUtil.parseInt(req.getMonthExpend()));
+        data.setMonthIncome(StringValidater.toLong(req.getMonthIncome()));
+        data.setMonthExpend(StringValidater.toLong(req.getMonthExpend()));
         data.setPic(req.getPic());
         data.setRemark(req.getRemark());
 
@@ -137,23 +136,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                         .setDatetimeEnd(DateUtil.strToDate(
                                 req.getWxJourDatetimeEnd(),
                                 DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getWxJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getWxJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getWxInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getWxInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getWxJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getWxJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getWxJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getWxJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getWxJourMonthExpend()));
                 creditJour.setPic(req.getWxJourPic());
                 creditJour.setRemark(req.getWxJourRemark());
@@ -172,23 +171,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                         .setDatetimeEnd(DateUtil.strToDate(
                                 req.getZfbJourDatetimeEnd(),
                                 DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getZfbJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getZfbJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getZfbInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getZfbInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getZfbJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getZfbJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getZfbJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getZfbJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getZfbJourMonthExpend()));
                 creditJour.setPic(req.getZfbJourPic());
                 creditJour.setRemark(req.getZfbJourRemark());
@@ -206,23 +205,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                                 DateUtil.DB_DATE_FORMAT_STRING));
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
                         req.getJourDatetimeEnd(), DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getJourMonthExpend()));
                 creditJour.setPic(req.getJourPic());
                 creditJour.setRemark(req.getJourRemark());
@@ -244,23 +243,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
                         req.getMateWxJourDatetimeEnd(),
                         DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getMateWxJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getMateWxJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getMateWxInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getMateWxInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getMateWxJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getMateWxJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getMateWxJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getMateWxJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getMateWxJourMonthExpend()));
                 creditJour.setPic(req.getMateWxJourPic());
                 creditJour.setRemark(req.getMateWxJourRemark());
@@ -278,23 +277,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
                         req.getMateZfbJourDatetimeEnd(),
                         DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getMateZfbJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getMateZfbJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getMateZfbInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getMateZfbInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getMateZfbJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getMateZfbJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getMateZfbJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getMateZfbJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getMateZfbJourMonthExpend()));
                 creditJour.setPic(req.getMateZfbJourPic());
                 creditJour.setRemark(req.getMateZfbJourRemark());
@@ -312,23 +311,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
                         req.getMateJourDatetimeEnd(),
                         DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getMateJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getMateJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getMateInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getMateInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getMateJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getMateJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getMateJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getMateJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getMateJourMonthExpend()));
                 creditJour.setPic(req.getMateJourPic());
                 creditJour.setRemark(req.getMateJourRemark());
@@ -349,23 +348,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
                         req.getGuaWxJourDatetimeEnd(),
                         DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getGuaWxJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getGuaWxJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getGuaWxInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getGuaWxInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getGuaWxJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getGuaWxJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getGuaWxJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getGuaWxJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getGuaWxJourMonthExpend()));
                 creditJour.setPic(req.getGuaWxJourPic());
                 creditJour.setRemark(req.getGuaWxJourRemark());
@@ -383,23 +382,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                 creditJour.setDatetimeEnd(DateUtil.strToDate(
                         req.getGuaZfbJourDatetimeEnd(),
                         DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getGuaZfbJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getGuaZfbJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getGuaZfbInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getGuaZfbInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getGuaZfbJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getGuaZfbJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getGuaZfbJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getGuaZfbJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getGuaZfbJourMonthExpend()));
                 creditJour.setPic(req.getGuaZfbJourPic());
                 creditJour.setRemark(req.getGuaZfbJourRemark());
@@ -418,23 +417,23 @@ public class CreditJourBOImpl extends PaginableBOImpl<CreditJour> implements
                         .setDatetimeEnd(DateUtil.strToDate(
                                 req.getGuaJourDatetimeEnd(),
                                 DateUtil.DB_DATE_FORMAT_STRING));
-                creditJour.setJourInterest1(StringValidater.toInteger(req
+                creditJour.setJourInterest1(StringValidater.toLong(req
                         .getGuaJourInterest1()));
-                creditJour.setJourInterest2(StringValidater.toInteger(req
+                creditJour.setJourInterest2(StringValidater.toLong(req
                         .getGuaJourInterest2()));
-                creditJour.setInterest1(StringValidater.toInteger(req
+                creditJour.setInterest1(StringValidater.toLong(req
                         .getGuaInterest1()));
-                creditJour.setInterest2(StringValidater.toInteger(req
+                creditJour.setInterest2(StringValidater.toLong(req
                         .getGuaInterest2()));
-                creditJour.setIncome(StringValidater.toInteger(req
+                creditJour.setIncome(StringValidater.toLong(req
                         .getGuaJourIncome()));
-                creditJour.setExpend(StringValidater.toInteger(req
+                creditJour.setExpend(StringValidater.toLong(req
                         .getGuaJourExpend()));
-                creditJour.setBalance(StringValidater.toInteger(req
+                creditJour.setBalance(StringValidater.toLong(req
                         .getGuaJourBalance()));
-                creditJour.setMonthIncome(StringValidater.toInteger(req
+                creditJour.setMonthIncome(StringValidater.toLong(req
                         .getGuaJourMonthIncome()));
-                creditJour.setMonthExpend(StringValidater.toInteger(req
+                creditJour.setMonthExpend(StringValidater.toLong(req
                         .getGuaJourMonthExpend()));
                 creditJour.setPic(req.getGuaJourPic());
                 creditJour.setRemark(req.getGuaJourRemark());

@@ -1,12 +1,10 @@
 package com.cdkj.loan.ao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630060Req;
+import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public interface ISYSUserAO {
@@ -61,7 +59,7 @@ public interface ISYSUserAO {
 
     public String doAddUser(String type, String loginName, String loginPwd,
             String mobile, String avatar, String realName, String roleCode,
-            String postCode, String archiveCode);
+            String postCode, String archiveCode, String smsCaptcha);
 
     // 设置团队
     public void doModifyTeam(String userId, String teamCode, String updater);

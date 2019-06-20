@@ -1,14 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IBizTeamBO;
@@ -27,11 +18,19 @@ import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630060Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ECaptchaType;
 import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.exception.BizException;
+import java.util.Date;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SYSUserAOImpl implements ISYSUserAO {
@@ -63,7 +62,12 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
             String mobile, String avatar, String realName, String roleCode,
-            String postCode, String archiveCode) {
+            String postCode, String archiveCode, String smsCaptcha) {
+
+        if (StringUtils.isNotBlank(smsCaptcha)) {
+            // 验证短信验证码
+            smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.S_REG.getCode());
+        }
 
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
@@ -83,7 +87,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setPostCode(postCode);
         data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
         data.setCompanyCode(departmentBO.getCompanyByDepartment(data
-            .getDepartmentCode()));
+                .getDepartmentCode()));
 
         data.setStatus(ESYSUserStatus.NORMAL.getCode());
         sysUserBO.saveUser(data);
@@ -234,7 +238,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         while (true) {
             Department department = departmentBO.getDepartment(departmentCode);
             if (EDepartmentType.DEPARTMENT.getCode().equals(
-                department.getType())) {
+                    department.getType())) {
                 departmentCode = department.getCode();
                 break;
             } else {
@@ -247,7 +251,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         while (true) {
             Department company = departmentBO.getDepartment(companyCode);
             if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(
-                company.getType())) {
+                    company.getType())) {
                 companyCode = company.getCode();
                 break;
             } else {
@@ -256,7 +260,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         }
 
         sysUserBO.refreshPost(userId, postCode, departmentCode, companyCode,
-            updater, remark);
+                updater, remark);
     }
 
     @Override
@@ -298,28 +302,28 @@ public class SYSUserAOImpl implements ISYSUserAO {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
                 && condition.getCreateDatetimeEnd().before(
-                    condition.getCreateDatetimeStart())) {
+                condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         Paginable<SYSUser> page = sysUserBO.getPaginable(start, limit,
-            condition);
+                condition);
 
         for (SYSUser sysUser : page.getList()) {
             if (StringUtils.isNotBlank(sysUser.getPostCode())) {
                 sysUser.setPostName(departmentBO.getDepartment(
-                    sysUser.getPostCode()).getName());
+                        sysUser.getPostCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
                 sysUser.setDepartmentName(departmentBO.getDepartment(
-                    sysUser.getDepartmentCode()).getName());
+                        sysUser.getDepartmentCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
                 sysUser.setCompanyName(departmentBO.getDepartment(
-                    sysUser.getCompanyCode()).getName());
+                        sysUser.getCompanyCode()).getName());
             }
             if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
                 sysUser.setTeamName(bizTeamBO.getBizTeam(sysUser.getTeamCode())
-                    .getName());
+                        .getName());
             }
             if (StringUtils.isNotBlank(sysUser.getRoleCode())) {
                 SYSRole sysRole = sysRoleBO.getSYSRole(sysUser.getRoleCode());
@@ -334,7 +338,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
                 && condition.getCreateDatetimeEnd().before(
-                    condition.getCreateDatetimeStart())) {
+                condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         return sysUserBO.queryUserList(condition);
@@ -363,17 +367,17 @@ public class SYSUserAOImpl implements ISYSUserAO {
         if (CollectionUtils.isNotEmpty(userList)
                 && !user.getMobile().equals(req.getMobile())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该手机号已存在，请重新输入！");
+                    "该手机号已存在，请重新输入！");
         }
         user.setMobile(req.getMobile());
         user.setRealName(req.getRealName());
         user.setRoleCode(req.getRoleCode());
         user.setPostCode(req.getPostCode());
         String departmentCode = departmentBO.getDepartmentByPost(req
-            .getPostCode());
+                .getPostCode());
         user.setDepartmentCode(departmentCode);
         String companyCode = departmentBO
-            .getCompanyByDepartment(departmentCode);
+                .getCompanyByDepartment(departmentCode);
         user.setCompanyCode(companyCode);
         user.setUpdater(req.getUpdater());
         user.setUpdateDatetime(new Date());

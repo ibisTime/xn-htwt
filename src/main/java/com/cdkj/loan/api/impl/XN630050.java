@@ -12,8 +12,9 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 新增用户
- * @author: CYL 
- * @since: 2018年5月10日 下午2:12:30 
+ *
+ * @author: CYL
+ * @since: 2018年5月10日 下午2:12:30
  * @history:
  */
 public class XN630050 extends AProcessor {
@@ -25,8 +26,8 @@ public class XN630050 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         return new PKCodeRes(userAO.doAddUser(req.getType(), req.getLoginName(),
-            req.getLoginPwd(), req.getMobile(), null, req.getRealName(),
-            req.getRoleCode(), req.getPostCode(), req.getArchiveCode()));
+                req.getLoginPwd(), req.getMobile(), null, req.getRealName(),
+                req.getRoleCode(), req.getPostCode(), req.getArchiveCode(), req.getSmsCaptcha()));
     }
 
     @Override

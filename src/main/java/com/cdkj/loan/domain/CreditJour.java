@@ -35,31 +35,31 @@ public class CreditJour extends ABaseDO {
     private Date datetimeEnd;
 
     // 流水结息1
-    private Integer jourInterest1;
+    private Long jourInterest1;
 
     // 流水结息2
-    private Integer jourInterest2;
+    private Long jourInterest2;
 
     // 结息1
-    private Integer interest1;
+    private Long interest1;
 
     // 结息2
-    private Integer interest2;
+    private Long interest2;
 
     // 收入
-    private Integer income;
+    private Long income;
 
     // 支出
-    private Integer expend;
+    private Long expend;
 
     // 帐户余额
-    private Integer balance;
+    private Long balance;
 
     // 月均收入
-    private Integer monthIncome;
+    private Long monthIncome;
 
     // 月均支出
-    private Integer monthExpend;
+    private Long monthExpend;
 
     // 流水图片
     private String pic;

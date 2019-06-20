@@ -237,30 +237,29 @@ public class CarAOImpl implements ICarAO {
             condition.setType(ECarProduceType.IMPORT.getCode());
             carBO.removeByCondition(condition);
 
-            ArrayList<Car> carArrayList = new ArrayList<>();
             for (Series domain : querySeries) {
                 // i：UI次序，highest：最高价，lowest：最低价
                 int i = 1;
                 Long highest = 0L;
                 Long lowest = 0L;
-                ArrayList<Car> carList = refresh(domain.getCode(), url, token, domain.getSeriesId(),
-                        domain.getBrandCode(), domain.getCode(), req.getUpdater(), i, highest,
-                        lowest);
-                carArrayList.addAll(carList);
+                refresh(domain.getCode(), url, token, domain.getSeriesId(), domain.getBrandCode(),
+                        domain.getCode(), req.getUpdater(), i, highest, lowest);
             }
-            carBO.saveCarList(carArrayList);
         } else {
             Series series = seriesBO.getSeriesBySeriesId(req.getSeriesId());
             if (series == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "车系标识不存在！");
             }
+            Car condition = new Car();
+            condition.setType(ECarProduceType.IMPORT.getCode());
+            condition.setSeriesId(req.getSeriesId());
+            carBO.removeByCondition(condition);
             int i = 1;
             Long highest = 0L;
             Long lowest = 0L;
-            ArrayList<Car> carArrayList = refresh(series.getCode(), url, token, req.getSeriesId(),
+            refresh(series.getCode(), url, token, req.getSeriesId(),
                     series.getBrandCode(), series.getCode(), req.getUpdater(), i, highest, lowest);
-            carBO.saveCarList(carArrayList);
         }
     }
 
@@ -333,6 +332,7 @@ public class CarAOImpl implements ICarAO {
             carList.add(car);
         }
         seriesBO.refreshHighestAndLowest(code, highest, lowest);
+        carBO.saveCarList(carList);
         return carList;
     }
 
