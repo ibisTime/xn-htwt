@@ -41,15 +41,16 @@ public class BankAOImpl implements IBankAO {
     public String addBank(XN632030Req req) {
         Bank condition = new Bank();
         condition.setBankCode(req.getBankCode());
+        condition.setSubbranch(req.getSubbranch());
         List<Bank> bankList = bankBO.queryBankList(condition);
         if (CollectionUtils.isNotEmpty(bankList)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "银行信息已存在，请勿重复添加!");
+                    "该银行支行已存在，请勿重复添加!");
         }
 
         Bank data = new Bank();
         //Integer类型判定
-        if(null!=req.getClientValidDate()&&req.getClientValidDate().length()==0){
+        if (null != req.getClientValidDate() && req.getClientValidDate().length() == 0) {
             req.setClientValidDate(null);
         }
         EntityUtils.copyData(req, data);
