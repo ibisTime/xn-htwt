@@ -340,9 +340,9 @@ public class CarAOImpl implements ICarAO {
     @Override
     public Paginable<Car> queryCarPage(int start, int limit, Car condition) {
         Paginable<Car> paginable = carBO.getPaginable(start, limit, condition);
-//        for (Car car : paginable.getList()) {
-//            initCar(car);
-//        }
+        for (Car car : paginable.getList()) {
+            initCar(car);
+        }
         return paginable;
     }
 
@@ -424,15 +424,15 @@ public class CarAOImpl implements ICarAO {
     }
 
     private void initCar(Car car) {
-        if (StringUtils.isNotBlank(car.getUpdater())) {
-            SYSUser user = sysUserBO.getUser(car.getUpdater());
-            car.setUpdaterName(user.getRealName());
-        }
-        Action condition = new Action();
-        condition.setToCode(car.getCode());
-        condition.setType(EActionType.collect.getCode());
-        Long collectNumber = actionBO.getTotalCount(condition);
-        car.setCollectNumber(collectNumber);
+//        if (StringUtils.isNotBlank(car.getUpdater())) {
+//            SYSUser user = sysUserBO.getUser(car.getUpdater());
+//            car.setUpdaterName(user.getRealName());
+//        }
+//        Action condition = new Action();
+//        condition.setToCode(car.getCode());
+//        condition.setType(EActionType.collect.getCode());
+//        Long collectNumber = actionBO.getTotalCount(condition);
+//        car.setCollectNumber(collectNumber);
         // 车型下配置列表
         List<CarCarconfig> configList = carCarconfigBO.getCarconfigs(car
                 .getCode());

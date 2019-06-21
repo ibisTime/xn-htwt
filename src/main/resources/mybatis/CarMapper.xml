@@ -46,6 +46,8 @@
         <result column="updater" property="updater"/>
         <result column="update_datetime" property="updateDatetime"/>
         <result column="remark" property="remark"/>
+        <result column="updater_name" property="updaterName"/>
+        <result column="collect_number" property="collectNumber"/>
     </resultMap>
 
 
@@ -204,11 +206,14 @@
         ,t.inside_color
         ,t.status
         ,t.updater
+        ,tu.real_name as updaterName
         ,t.update_datetime
         ,t.remark
+        ,(SELECT count(1) FROM tht_action WHERE to_code=t.code AND type='3') AS collectNumber
         FROM tht_car t
         left join tht_brand b on t.brand_code = b.code
         left join tht_series s on t.series_code = s.code
+        left join tsys_user tu on t.updater = tu.user_id
         <include refid="where_condition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != '' ">
