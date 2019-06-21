@@ -275,7 +275,8 @@ public class CarAOImpl implements ICarAO {
 
         String list = jsono.get("model_list").toString();
         JSONArray parseArray = JSONArray.parseArray(list);
-        ArrayList<Car> carList = new ArrayList<>();
+        ArrayList<Car> carList1 = new ArrayList<>();
+        ArrayList<Car> carList2 = new ArrayList<>();
         for (Object object : parseArray) {
             JSONObject jsonObject = (JSONObject) object;
             String modelId = jsonObject.getString("model_id");
@@ -318,7 +319,7 @@ public class CarAOImpl implements ICarAO {
             car.setMinRegYear(minRegYear);
             car.setMaxRegYear(maxRegYear);
             car.setLiter(liter);
-            String displacement = liter.substring(0, 3);
+            String displacement = liter.substring(0, liter.length() - 1);
             car.setDisplacement(StringValidater.toDouble(displacement));
             car.setGearType(gearType);
             car.setDischargeStandard(dischargeStandard);
@@ -330,12 +331,19 @@ public class CarAOImpl implements ICarAO {
             car.setUpdater(updater);
             car.setUpdateDatetime(updateTime);
 
-            carList.add(car);
+            if (i > 200) {
+                carList2.add(car);
+            } else {
+                carList1.add(car);
+            }
         }
         seriesBO.refreshHighestAndLowest(code, highest, lowest);
-        carBO.saveCarList(carList);
+        carBO.saveCarList(carList1);
+        if (CollectionUtils.isNotEmpty(carList2)) {
+            carBO.saveCarList(carList2);
+        }
 
-        return carList;
+        return carList1;
     }
 
     @Override
