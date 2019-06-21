@@ -90,11 +90,11 @@ public class SYSUserAOImpl implements ISYSUserAO {
                 .getDepartmentCode()));
 
         long totalCount = sysUserBO.getTotalCount(new SYSUser());
-        String jobNO = String.valueOf(totalCount) + 1;
+        String jobNO = String.valueOf(totalCount + 1);
         if (jobNO.length() == 1) {
-            jobNO = "0" + jobNO;
-        } else if (jobNO.length() == 2) {
             jobNO = "00" + jobNO;
+        } else if (jobNO.length() == 2) {
+            jobNO = "0" + jobNO;
         }
         data.setJobNo(jobNO);
 

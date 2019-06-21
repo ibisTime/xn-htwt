@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 
 /**
  * @author: miyb
- * @since: 2015-3-24 下午4:23:53 
+ * @since: 2015-3-24 下午4:23:53
  * @history:
  */
 public class APIServlet extends HttpServlet {
@@ -28,7 +28,7 @@ public class APIServlet extends HttpServlet {
     static Logger logger = Logger.getLogger(APIServlet.class);
 
     /**
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
      */
     private static final long serialVersionUID = 6175432226630152841L;
 
@@ -40,7 +40,7 @@ public class APIServlet extends HttpServlet {
         logger.info("Successful Deployment");
         PrintWriter writer = response.getWriter();
         writer.append("Version:3.2.0/ \n");
-        writer.append("Description:wzcd_meet_619 \n");
+        writer.append("Description:wzcd_meet_621 \n");
         writer.flush();
     }
 

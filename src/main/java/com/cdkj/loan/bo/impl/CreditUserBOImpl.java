@@ -4,7 +4,6 @@ import com.cdkj.loan.bo.IAttachmentBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICreditUserDAO;
@@ -60,6 +59,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         creditUser.setRelation(child.getRelation());
         creditUser.setUserName(child.getUserName());
         creditUser.setLoanRole(child.getLoanRole());
+        if (StringUtils.isBlank(child.getMobile())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "请填写" + child.getUserName() + "的手机号");
+        }
         creditUser.setMobile(child.getMobile());
         creditUser.setIdFront(child.getIdFront());
         creditUser.setIdReverse(child.getIdReverse());

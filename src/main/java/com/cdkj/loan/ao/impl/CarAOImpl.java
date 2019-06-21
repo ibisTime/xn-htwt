@@ -318,7 +318,7 @@ public class CarAOImpl implements ICarAO {
             car.setMinRegYear(minRegYear);
             car.setMaxRegYear(maxRegYear);
             car.setLiter(liter);
-            String displacement = list.substring(0, 3);
+            String displacement = liter.substring(0, 3);
             car.setDisplacement(StringValidater.toDouble(displacement));
             car.setGearType(gearType);
             car.setDischargeStandard(dischargeStandard);
@@ -334,6 +334,7 @@ public class CarAOImpl implements ICarAO {
         }
         seriesBO.refreshHighestAndLowest(code, highest, lowest);
         carBO.saveCarList(carList);
+
         return carList;
     }
 
