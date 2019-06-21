@@ -18,6 +18,7 @@
         <result column="department_code" property="departmentCode"/>
         <result column="post_code" property="postCode"/>
         <result column="role_code" property="roleCode"/>
+        <result column="job_no" property="jobNo"/>
         <result column="updater" property="updater"/>
         <result column="updateDatetime" property="update_datetime"/>
 
@@ -104,6 +105,7 @@
         ,t.department_code
         ,t.post_code
         ,t.role_code
+        ,t.job_no
         ,t.updater
         ,t.update_datetime
         ,t.status
@@ -150,6 +152,7 @@
 		,department_code
 		,post_code
 		,role_code
+		,job_no
 		,updater
 		,update_datetime
 		
@@ -173,6 +176,7 @@
 		,#{departmentCode}
 		,#{postCode}
 		,#{roleCode}
+		,#{jobNo}
 		,#{updater}
 		,#{updateDatetime}
 		
@@ -191,7 +195,6 @@
 		,post_code = #{postCode}
 		,department_code = #{departmentCode}
 		,company_code = #{companyCode}
-		
 		,remark = #{remark}
 		WHERE user_id = #{userId}
 	</update>
@@ -284,6 +287,7 @@
 		,department_code = #{departmentCode}
 		,post_code = #{postCode}
 		,role_code = #{roleCode}
+		,job_no = #{jobNo}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

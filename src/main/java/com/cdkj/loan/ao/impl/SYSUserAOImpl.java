@@ -65,7 +65,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
             String postCode, String archiveCode, String smsCaptcha) {
 
         if (StringUtils.isNotBlank(smsCaptcha)) {
-            // 验证短信验证码
+            // 验证短信验证码（用于ios上架）
             smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.S_REG.getCode());
         }
 
@@ -88,6 +88,15 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
         data.setCompanyCode(departmentBO.getCompanyByDepartment(data
                 .getDepartmentCode()));
+
+        long totalCount = sysUserBO.getTotalCount(new SYSUser());
+        String jobNO = String.valueOf(totalCount) + 1;
+        if (jobNO.length() == 1) {
+            jobNO = "0" + jobNO;
+        } else if (jobNO.length() == 2) {
+            jobNO = "00" + jobNO;
+        }
+        data.setJobNo(jobNO);
 
         data.setStatus(ESYSUserStatus.NORMAL.getCode());
         sysUserBO.saveUser(data);

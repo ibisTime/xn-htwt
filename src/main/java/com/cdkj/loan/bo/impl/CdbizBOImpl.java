@@ -11,8 +11,8 @@ import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.EntityUtils;
-import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICdbizDAO;
 import com.cdkj.loan.dao.ICreditUserDAO;
@@ -36,6 +36,7 @@ import com.cdkj.loan.enums.ECreditUserLoanRole;
 import com.cdkj.loan.enums.ECreditUserStatus;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ENewBizType;
 import com.cdkj.loan.enums.ENode;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
@@ -145,8 +146,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
     public Cdbiz saveCdbiz(String bankCode, String bizType, Long creditLoanAmount,
             SYSUser sysUser, BizTeam bizTeam, String node, String dealType,
             String remark) {
-        String code = OrderNoGenerater
-                .generate(EGeneratePrefix.Cdbiz.getCode());
+        String code = gengrateCode(sysUser.getJobNo(), bizType);
         Cdbiz cdbiz = new Cdbiz();
         cdbiz.setCode(code);
         cdbiz.setBizCode(code);
@@ -182,6 +182,34 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
         cdbizDAO.insert(cdbiz);
 
         return cdbiz;
+    }
+
+    private String gengrateCode(String jobNo, String bizType) {
+        String code;
+        // 省份编号
+        String provinceNo = "33";
+        String today = DateUtil.getToday(DateUtil.DB_DATE_FORMAT_STRING);
+        String year = today.substring(0, 4);
+        String month = today.substring(4, 6);
+        String day = today.substring(6);
+
+        Cdbiz cdbiz = new Cdbiz();
+        cdbiz.setApplyDatetimeStart(DateUtil.getTodayStart());
+        cdbiz.setApplyDatetimeEnd(DateUtil.getTodayEnd());
+        long count = cdbizDAO.selectTotalCount(cdbiz) + 1;
+        String bizNO = String.valueOf(count);
+        if (bizNO.length() == 1) {
+            bizNO = "0" + bizNO;
+        }
+        String type;
+        if (ENewBizType.new_car.getCode().equals(bizType)) {
+            type = "A";
+        } else {
+            type = "B";
+        }
+        code = EGeneratePrefix.Cdbiz.getCode() + provinceNo + year + month + day
+                + jobNo + bizNO + type;
+        return code;
     }
 
     @Override
@@ -351,7 +379,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
             String idFront = null;
             String idReverse = null;
             String authPdf = null;
-            String interviewPic=null;
+            String interviewPic = null;
             if (ECreditUserLoanRole.APPLY_USER.getCode().equals(
                     creditUser.getLoanRole())) {
                 relation = "本人";
@@ -361,7 +389,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                         EAttachName.mainLoaner_id_reverse.getCode()).getUrl();
                 authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.mainLoaner_auth_pdf.getCode()).getUrl();
-                interviewPic=attachmentBO.getAttachment(cdbiz.getCode(), null,
+                interviewPic = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.mainloaner_interview_pic.getCode()).getUrl();
             } else if (ECreditUserLoanRole.GHR.getCode().equals(
                     creditUser.getLoanRole())) {
@@ -372,7 +400,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                         EAttachName.replier_id_reverse.getCode()).getUrl();
                 authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.replier_auth_pdf.getCode()).getUrl();
-                interviewPic=attachmentBO.getAttachment(cdbiz.getCode(), null,
+                interviewPic = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.replier_interview_pic.getCode()).getUrl();
             } else {
                 relation = "反担保";
@@ -382,7 +410,7 @@ public class CdbizBOImpl extends PaginableBOImpl<Cdbiz> implements ICdbizBO {
                         EAttachName.assurance_id_reverse.getCode()).getUrl();
                 authPdf = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.assurance_auth_pdf.getCode()).getUrl();
-                interviewPic=attachmentBO.getAttachment(cdbiz.getCode(), null,
+                interviewPic = attachmentBO.getAttachment(cdbiz.getCode(), null,
                         EAttachName.assurance_interview_pic.getCode()).getUrl();
             }
             req.setRelation(relation);
