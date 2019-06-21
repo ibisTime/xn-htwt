@@ -12,7 +12,6 @@ import com.cdkj.loan.bo.ICarconfigBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
-import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.core.OkHttpUtils;
@@ -25,7 +24,6 @@ import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarCarconfig;
 import com.cdkj.loan.domain.Carconfig;
 import com.cdkj.loan.domain.SYSConfig;
-import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630419Req;
 import com.cdkj.loan.dto.req.XN630420Req;
@@ -225,7 +223,6 @@ public class CarAOImpl implements ICarAO {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void refreshCar(XN630419Req req) {
         SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
         SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
@@ -321,6 +318,8 @@ public class CarAOImpl implements ICarAO {
             car.setMinRegYear(minRegYear);
             car.setMaxRegYear(maxRegYear);
             car.setLiter(liter);
+            String displacement = list.substring(0, 3);
+            car.setDisplacement(StringValidater.toDouble(displacement));
             car.setGearType(gearType);
             car.setDischargeStandard(dischargeStandard);
             car.setSeatNumber(seatNumber);
@@ -330,6 +329,7 @@ public class CarAOImpl implements ICarAO {
             car.setStatus(EBrandStatus.UP.getCode());
             car.setUpdater(updater);
             car.setUpdateDatetime(updateTime);
+
             carList.add(car);
         }
         seriesBO.refreshHighestAndLowest(code, highest, lowest);
@@ -418,7 +418,7 @@ public class CarAOImpl implements ICarAO {
     }
 
     @Override
-    public Paginable<Series> querySeriesPageByCarCondition(Car condition,int start,int limit) {
+    public Paginable<Series> querySeriesPageByCarCondition(Car condition, int start, int limit) {
         List<Car> queryCar = carBO.queryCar(condition);
         return null;
     }
@@ -458,8 +458,8 @@ public class CarAOImpl implements ICarAO {
     @Override
     public Calculate calculate(String carCode, String period, String isTotal) {
         Car car = carBO.getCar(carCode);
-        if(ECarProduceType.IMPORT.getCode().equals(car.getType())){
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),"该车型无法车贷计算器");
+        if (ECarProduceType.IMPORT.getCode().equals(car.getType())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该车型无法车贷计算器");
         }
         Bank bank = bankBO.getBank(car.getBankCode());
         Calculate calculate = null;
