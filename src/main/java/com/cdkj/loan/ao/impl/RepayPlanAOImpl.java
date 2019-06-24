@@ -435,6 +435,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void alreadyOverDue(XN630537Req req) {
         for (String code : req.getCodeList()) {
             //更新还款计划
@@ -443,7 +444,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             if (!ERepayPlanNode.OVERDUE_TO_TRUE.getCode().equals(repayPlan.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         repayBiz.getRealName() + "的第" + repayPlan.getCurPeriods()
-                                + "期还款计划不是逾期待处理状态");
+                                + "期还款计划不是逾期待确认状态");
             }
             repayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
             repayPlanBO.alreadyRepay(repayPlan);

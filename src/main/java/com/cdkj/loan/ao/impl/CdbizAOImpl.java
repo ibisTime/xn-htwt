@@ -581,9 +581,6 @@ public class CdbizAOImpl implements ICdbizAO {
             repayBizBO.saveRepayBiz(repayBiz);
 
         } else {
-            if (StringUtils.isBlank(req.getApproveNote())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写审核不通过的审核说明");
-            }
             cdbiz.setCurNodeCode(nodeFlow.getBackNode());
             cdbiz.setStatus(ECdbizStatus.A1x.getCode());
             cdbizBO.refreshCurNodeStatus(cdbiz);
