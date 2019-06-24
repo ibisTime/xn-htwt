@@ -281,75 +281,67 @@ public class CarAOImpl implements ICarAO {
 
         String list = jsono.get("model_list").toString();
         JSONArray parseArray = JSONArray.parseArray(list);
-        ArrayList<Car> carList1 = new ArrayList<>();
-        ArrayList<Car> carList2 = new ArrayList<>();
+        ArrayList<Car> carList = new ArrayList<>();
         for (Object object : parseArray) {
-            JSONObject jsonObject = (JSONObject) object;
-            String modelId = jsonObject.getString("model_id");
-            String modelName = jsonObject.getString("model_name");
-            String modelPrice = jsonObject.getString("model_price");
-            String modelYear = jsonObject.getString("model_year");
-            String minRegYear = jsonObject.getString("min_reg_year");
-            String maxRegYear = jsonObject.getString("max_reg_year");
-            String liter = jsonObject.getString("liter");
-            String gearType = jsonObject.getString("gear_type");
-            String dischargeStandard = jsonObject
-                    .getString("discharge_standard");
-            String seatNumber = jsonObject.getString("seat_number");
-            Date updateTime = jsonObject.getDate("update_time");
+                JSONObject jsonObject = (JSONObject) object;
+                String modelId = jsonObject.getString("model_id");
+                String modelName = jsonObject.getString("model_name");
+                String modelPrice = jsonObject.getString("model_price");
+                String modelYear = jsonObject.getString("model_year");
+                String minRegYear = jsonObject.getString("min_reg_year");
+                String maxRegYear = jsonObject.getString("max_reg_year");
+                String liter = jsonObject.getString("liter");
+                String gearType = jsonObject.getString("gear_type");
+                String dischargeStandard = jsonObject
+                        .getString("discharge_standard");
+                String seatNumber = jsonObject.getString("seat_number");
+                Date updateTime = jsonObject.getDate("update_time");
 
-            Long salePrice = AmountUtil.mul(10000000L, StringValidater.toDouble(modelPrice));
-            //如果是第一次进
-            if (i == 1) {
-                highest = salePrice;
-                lowest = salePrice;
-            } else {
-                //比较最低价和最高价
-                if (salePrice > highest) {
+                Long salePrice = AmountUtil.mul(10000000L, StringValidater.toDouble(modelPrice));
+                //如果是第一次进
+                if (i == 1) {
                     highest = salePrice;
-                }
-                if (salePrice < lowest) {
                     lowest = salePrice;
+                } else {
+                    //比较最低价和最高价
+                    if (salePrice > highest) {
+                        highest = salePrice;
+                    }
+                    if (salePrice < lowest) {
+                        lowest = salePrice;
+                    }
                 }
-            }
-            Car car = new Car();
-            car.setCode(modelId);
-            car.setSeriesId(seriesId);
-            car.setModelId(modelId);
-            car.setType(ECarProduceType.IMPORT.getCode());
-            car.setName(modelName);
-            car.setBrandCode(brandCode);
-            car.setSeriesCode(seriesCode);
-            car.setSalePrice(salePrice);
-            car.setModelYear(modelYear);
-            car.setMinRegYear(minRegYear);
-            car.setMaxRegYear(maxRegYear);
-            car.setLiter(liter);
-            String displacement = liter.substring(0, liter.length() - 1);
-            car.setDisplacement(StringValidater.toDouble(displacement));
-            car.setGearType(gearType);
-            car.setDischargeStandard(dischargeStandard);
-            car.setSeatNumber(seatNumber);
-            car.setLocation(EBoolean.YES.getCode());
-            car.setOrderNo(i);
-            i++;
-            car.setStatus(EBrandStatus.UP.getCode());
-            car.setUpdater(updater);
-            car.setUpdateDatetime(updateTime);
+                Car car = new Car();
+                car.setCode(modelId);
+                car.setSeriesId(seriesId);
+                car.setModelId(modelId);
+                car.setType(ECarProduceType.IMPORT.getCode());
+                car.setName(modelName);
+                car.setBrandCode(brandCode);
+                car.setSeriesCode(seriesCode);
+                car.setSalePrice(salePrice);
+                car.setModelYear(modelYear);
+                car.setMinRegYear(minRegYear);
+                car.setMaxRegYear(maxRegYear);
+                car.setLiter(liter);
+                String displacement = liter.substring(0,liter.length()-1);
+                car.setDisplacement(StringValidater.toDouble(displacement));
+                car.setGearType(gearType);
+                car.setDischargeStandard(dischargeStandard);
+                car.setSeatNumber(seatNumber);
+                car.setLocation(EBoolean.YES.getCode());
+                car.setOrderNo(i);
+                i++;
+                car.setStatus(EBrandStatus.UP.getCode());
+                car.setUpdater(updater);
+                car.setUpdateDatetime(updateTime);
 
-            if (i > 200) {
-                carList2.add(car);
-            } else {
-                carList1.add(car);
-            }
+                carList.add(car);
         }
         seriesBO.refreshHighestAndLowest(code, highest, lowest);
-        carBO.saveCarList(carList1);
-        if (CollectionUtils.isNotEmpty(carList2)) {
-            carBO.saveCarList(carList2);
-        }
+        carBO.saveCarList(carList);
 
-        return carList1;
+        return carList;
     }
 
     @Override
