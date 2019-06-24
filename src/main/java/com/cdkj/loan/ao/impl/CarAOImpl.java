@@ -277,7 +277,6 @@ public class CarAOImpl implements ICarAO {
         JSONArray parseArray = JSONArray.parseArray(list);
         ArrayList<Car> carList = new ArrayList<>();
         for (Object object : parseArray) {
-
                 JSONObject jsonObject = (JSONObject) object;
                 String modelId = jsonObject.getString("model_id");
                 String modelName = jsonObject.getString("model_name");
@@ -332,7 +331,6 @@ public class CarAOImpl implements ICarAO {
                 car.setUpdateDatetime(updateTime);
 
                 carList.add(car);
-
         }
         seriesBO.refreshHighestAndLowest(code, highest, lowest);
         carBO.saveCarList(carList);
