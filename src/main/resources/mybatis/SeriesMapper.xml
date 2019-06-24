@@ -84,101 +84,100 @@
         </trim>
     </sql>
 
-  <sql id="car_condition">
-    <trim prefix="WHERE" prefixOverrides="AND | OR">
-      <if test="code != null and code != '' ">
-        AND t.code = #{code}
-      </if>
-      <if test="brandId != null and brandId != '' ">
-        AND t.brand_id = #{brandId}
-      </if>
-      <if test="seriesId != null and seriesId != '' ">
-        AND t.series_id = #{seriesId}
-      </if>
-      <if test="type != null and type != '' ">
-        AND t.type = #{type}
-      </if>
-      <if test="makerType != null and makerType != '' ">
-        AND t.maker_type = #{makerType}
-      </if>
-      <if test="level != null and level != '' ">
-        AND t.level = #{level}
-      </if>
-      <if test="brandCode != null and brandCode != '' ">
-        AND t.brand_code = #{brandCode}
-      </if>
-      <if test="name != null and name != '' ">
-        AND t.name like "%"#{name}"%"
-      </if>
-      <if test="slogan != null and slogan != '' ">
-        AND t.slogan = #{slogan}
-      </if>
-      <if test="advPic != null and advPic != '' ">
-        AND t.adv_pic = #{advPic}
-      </if>
-      <if test="price != null and price != '' ">
-        AND t.price = #{price}
-      </if>
-      <if test="location != null and location != '' ">
-        AND t.location = #{location}
-      </if>
-      <if test="orderNo != null and orderNo != '' ">
-        AND t.order_no = #{orderNo}
-      </if>
-      <if test="status != null and status != '' ">
-        AND t.status = #{status}
-      </if>
-      <if test="updater != null and updater != '' ">
-        AND t.updater = #{updater}
-      </if>
-      <if test="updateDatetime != null and updateDatetime != '' ">
-        AND t.update_datetime = #{updateDatetime}
-      </if>
-      <if test="remark != null and remark != '' ">
-        AND t.remark = #{remark}
-      </if>
-      <if test="queryName != null and queryName != '' ">
-        AND tc.series_name like "%"#{queryName}"%" OR tc.brand_name like "%"#{queryName}"%"
-        OR tc.name like "%"#{queryName}"%"
-      </if>
-      <if test="displacementStart != null and displacementStart != '' ">
-        <![CDATA[AND tc.displacement > #{displacementStart}]]>
-      </if>
-      <if test="displacementEnd != null and displacementEnd != '' ">
-        <![CDATA[AND tc.displacement <= #{displacementEnd}]]>
-      </if>
-      <if test="priceStart != null and priceStart != '' ">
-        <![CDATA[AND tc.sale_price > #{priceStart}]]>
-      </if>
-      <if test="priceEnd != null and priceEnd != '' ">
-        <![CDATA[AND tc.sale_price <= #{priceEnd}]]>
-      </if>
-      <if test="levelList != null and levelList.size()>0  ">
-        AND tc.level in
-        <foreach item="item" index="index" collection="levelList" open="(" separator=","
-          close=")">
-          #{item}
-        </foreach>
-      </if>
-      <if test="versionList != null and versionList.size()>0">
-        AND tc.version in
-        <foreach item="item" index="index" collection="versionList" open="(" separator=","
-          close=")">
-          #{item}
-        </foreach>
-      </if>
-      <if test="structureList != null and structureList.size()>0 ">
-        AND tc.structure in
-        <foreach item="item" index="index" collection="structureList" open="(" separator=","
-          close=")">
-          #{item}
-        </foreach>
-      </if>
+    <sql id="car_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+            <if test="brandId != null and brandId != '' ">
+                AND t.brand_id = #{brandId}
+            </if>
+            <if test="seriesId != null and seriesId != '' ">
+                AND t.series_id = #{seriesId}
+            </if>
+            <if test="type != null and type != '' ">
+                AND t.type = #{type}
+            </if>
+            <if test="makerType != null and makerType != '' ">
+                AND t.maker_type = #{makerType}
+            </if>
+            <if test="level != null and level != '' ">
+                AND t.level = #{level}
+            </if>
+            <if test="brandCode != null and brandCode != '' ">
+                AND t.brand_code = #{brandCode}
+            </if>
+            <if test="name != null and name != '' ">
+                AND t.name like "%"#{name}"%"
+            </if>
+            <if test="slogan != null and slogan != '' ">
+                AND t.slogan = #{slogan}
+            </if>
+            <if test="advPic != null and advPic != '' ">
+                AND t.adv_pic = #{advPic}
+            </if>
+            <if test="price != null and price != '' ">
+                AND t.price = #{price}
+            </if>
+            <if test="location != null and location != '' ">
+                AND t.location = #{location}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                AND t.order_no = #{orderNo}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.status = #{status}
+            </if>
+            <if test="updater != null and updater != '' ">
+                AND t.updater = #{updater}
+            </if>
+            <if test="updateDatetime != null and updateDatetime != '' ">
+                AND t.update_datetime = #{updateDatetime}
+            </if>
+            <if test="remark != null and remark != '' ">
+                AND t.remark = #{remark}
+            </if>
+            <if test="queryName != null and queryName != '' ">
+                AND tc.series_name like "%"#{queryName}"%" OR tc.brand_name like "%"#{queryName}"%"
+                OR tc.name like "%"#{queryName}"%"
+            </if>
+            <if test="displacementStart != null and displacementStart != '' ">
+                <![CDATA[AND tc.displacement > #{displacementStart}]]>
+            </if>
+            <if test="displacementEnd != null and displacementEnd != '' ">
+                <![CDATA[AND tc.displacement <= #{displacementEnd}]]>
+            </if>
+            <if test="priceStart != null and priceStart != '' ">
+                <![CDATA[AND tc.sale_price > #{priceStart}]]>
+            </if>
+            <if test="priceEnd != null and priceEnd != '' ">
+                <![CDATA[AND tc.sale_price <= #{priceEnd}]]>
+            </if>
+            <if test="levelList != null and levelList.size()>0  ">
+                AND tc.level in
+                <foreach item="item" index="index" collection="levelList" open="(" separator=","
+                        close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="versionList != null and versionList.size()>0">
+                AND tc.version in
+                <foreach item="item" index="index" collection="versionList" open="(" separator=","
+                        close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="structureList != null and structureList.size()>0 ">
+                AND tc.structure in
+                <foreach item="item" index="index" collection="structureList" open="(" separator=","
+                        close=")">
+                    #{item}
+                </foreach>
+            </if>
 
 
-    </trim>
-  </sql>
-
+        </trim>
+    </sql>
 
 
     <select id="select_series" parameterType="series" resultMap="series_DB_Result">
@@ -386,44 +385,48 @@
 
     <delete id="delete_seriesByCondition" parameterType="series">
         DELETE FROM tht_series where type = '1'
+        <if test="brandId != null and brandId != '' ">
+            AND brand_id = #{brandId}
+        </if>
     </delete>
 
     <select id="select_series_by_car_condition" parameterType="series" resultMap="series_DB_Result">
-      SELECT
-      t.code
-      ,t.brand_id
-      ,t.series_id
-      ,t.type
-      ,t.maker_type
-      ,t.brand_code
-      ,t.name
-      ,t.series_group_name
-      ,t.slogan
-      ,t.adv_pic
-      ,t.pic_number
-      ,t.price
-      ,t.highest
-      ,t.lowest
-      ,t.level
-      ,t.location
-      ,t.order_no
-      ,t.status
-      ,t.updater
-      ,t.update_datetime
-      ,t.remark
-      FROM
-      tht_series t WHERE t.code in (SELECT tc.code FROM tht_car tc
-      <include refid="car_condition"/>)
+        SELECT
+        t.code
+        ,t.brand_id
+        ,t.series_id
+        ,t.type
+        ,t.maker_type
+        ,t.brand_code
+        ,t.name
+        ,t.series_group_name
+        ,t.slogan
+        ,t.adv_pic
+        ,t.pic_number
+        ,t.price
+        ,t.highest
+        ,t.lowest
+        ,t.level
+        ,t.location
+        ,t.order_no
+        ,t.status
+        ,t.updater
+        ,t.update_datetime
+        ,t.remark
+        FROM
+        tht_series t WHERE t.code in (SELECT tc.code FROM tht_car tc
+        <include refid="car_condition"/>)
         <trim prefix="ORDER BY ">
-          <if test="order != null and order != '' ">
-            t.${order}
-          </if>
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
         </trim>
     </select>
 
-    <select id="select_series_count_by_car_condition" parameterType="series" resultType="java.lang.Long">
-      SELECT count(1) FROM tht_series t WHERE t.code in (SELECT tc.code from tht_car tc
-      <include refid="car_condition"/>)
+    <select id="select_series_count_by_car_condition" parameterType="series"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tht_series t WHERE t.code in (SELECT tc.code from tht_car tc
+        <include refid="car_condition"/>)
     </select>
 
 </mapper>

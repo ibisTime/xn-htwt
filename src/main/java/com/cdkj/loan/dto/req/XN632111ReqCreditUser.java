@@ -1,14 +1,13 @@
 package com.cdkj.loan.dto.req;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 录入征信结果（征信人员）
- * @author: jiafr 
- * @since: 2018年5月25日 下午10:23:09 
+ *
+ * @author: jiafr
+ * @since: 2018年5月25日 下午10:23:09
  * @history:
  */
 public class XN632111ReqCreditUser {
@@ -20,9 +19,6 @@ public class XN632111ReqCreditUser {
     private String code;
 
     // 信用卡占比
-    @NotBlank
-    @Min(0)
-    @Max(1)
     private String creditCardOccupation;
 
     // 银行征信结果
@@ -30,7 +26,6 @@ public class XN632111ReqCreditUser {
     private String bankResult;
 
     // 银行征信结果
-    @NotBlank
     private String bankCreditReport;
 
     // 大数据征信结果
@@ -56,8 +51,8 @@ public class XN632111ReqCreditUser {
     }
 
     public String getCreditUserCode() {
-        if(StringUtils.isBlank(this.creditUserCode)&&StringUtils.isNotBlank(this.code)){
-            creditUserCode=this.code;
+        if (StringUtils.isBlank(this.creditUserCode) && StringUtils.isNotBlank(this.code)) {
+            creditUserCode = this.code;
         }
         return creditUserCode;
     }

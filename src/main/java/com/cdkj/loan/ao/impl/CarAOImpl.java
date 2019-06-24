@@ -103,7 +103,10 @@ public class CarAOImpl implements ICarAO {
         car.setLevel(req.getLevel());
         car.setVersion(req.getVersion());
         car.setStructure(req.getStructure());
-        car.setDisplacement(StringValidater.toDouble(req.getDisplacement()));
+        car.setLiter(req.getLiter());
+        if (StringUtils.isNotBlank(req.getDisplacement())) {
+            car.setDisplacement(StringValidater.toDouble(req.getDisplacement()));
+        }
         car.setFromPlace(req.getFromPlace());
         car.setProcedure(req.getProcedure());
 
@@ -158,7 +161,10 @@ public class CarAOImpl implements ICarAO {
         car.setLevel(req.getLevel());
         car.setVersion(req.getVersion());
         car.setStructure(req.getStructure());
-        car.setDisplacement(StringValidater.toDouble(req.getDisplacement()));
+        car.setLiter(req.getLiter());
+        if (StringUtils.isNotBlank(req.getDisplacement())) {
+            car.setDisplacement(StringValidater.toDouble(req.getDisplacement()));
+        }
         car.setFromPlace(req.getFromPlace());
         car.setProcedure(req.getProcedure());
         car.setSeriesCode(req.getSeriesCode());

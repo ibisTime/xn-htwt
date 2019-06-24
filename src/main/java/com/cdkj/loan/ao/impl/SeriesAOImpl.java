@@ -154,6 +154,12 @@ public class SeriesAOImpl implements ISeriesAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "品牌标识不存在！");
             }
+            //删除所有车系
+            Series condition = new Series();
+            condition.setType(ECarProduceType.IMPORT.getCode());
+            condition.setBrandId(req.getBrandId());
+            seriesBO.removeByCondition(condition);
+
             int i = 1;
             ArrayList<Series> seriesList = refresh(url, token, req.getBrandId(), brand.getCode(),
                     req.getUpdater(), i);
@@ -287,6 +293,6 @@ public class SeriesAOImpl implements ISeriesAO {
 
     @Override
     public Paginable<Series> querySeriesPageByCarCondition(int start, int limit, Series condition) {
-        return seriesBO.getSeriesPageByCarCondition(condition,start,limit);
+        return seriesBO.getSeriesPageByCarCondition(condition, start, limit);
     }
 }
