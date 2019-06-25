@@ -16,6 +16,7 @@ import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarInfoBO;
 import com.cdkj.loan.bo.ICarPledgeBO;
 import com.cdkj.loan.bo.ICdbizBO;
+import com.cdkj.loan.bo.ICityListBO;
 import com.cdkj.loan.bo.ICreditJourBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
@@ -44,6 +45,7 @@ import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarInfo;
 import com.cdkj.loan.domain.CarPledge;
 import com.cdkj.loan.domain.Cdbiz;
+import com.cdkj.loan.domain.CityList;
 import com.cdkj.loan.domain.CreditIcbank;
 import com.cdkj.loan.domain.CreditJour;
 import com.cdkj.loan.domain.CreditUser;
@@ -184,6 +186,9 @@ public class CdbizAOImpl implements ICdbizAO {
     @Autowired
     private ICarBO carBO;
 
+    @Autowired
+    private ICityListBO cityListBO;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String addCredit(XN632110Req req) {
@@ -218,6 +223,8 @@ public class CdbizAOImpl implements ICdbizAO {
             CarInfo carInfo = new CarInfo();
             carInfo.setBizCode(cdbiz.getCode());
             EntityUtils.copyData(req, carInfo);
+            CityList cityList = cityListBO.getCityList(StringValidater.toInteger(req.getRegion()));
+            carInfo.setRegion(cityList.getCityId());
             if (StringUtils.isNotBlank(car.getOutsideColor())) {
                 carInfo.setCarColor(car.getOutsideColor());
             }
@@ -265,6 +272,9 @@ public class CdbizAOImpl implements ICdbizAO {
                 CarInfo data = new CarInfo();
                 data.setBizCode(cdbiz.getCode());
                 EntityUtils.copyData(req, data);
+                CityList cityList = cityListBO
+                        .getCityList(StringValidater.toInteger(req.getRegion()));
+                carInfo.setRegion(cityList.getCityId());
                 if (StringUtils.isNotBlank(car.getOutsideColor())) {
                     data.setCarColor(car.getOutsideColor());
                 }
@@ -275,6 +285,9 @@ public class CdbizAOImpl implements ICdbizAO {
             } else {
                 String code = carInfo.getCode();
                 EntityUtils.copyData(req, carInfo);
+                CityList cityList = cityListBO
+                        .getCityList(StringValidater.toInteger(req.getRegion()));
+                carInfo.setRegion(cityList.getCityId());
                 if (StringUtils.isNotBlank(car.getOutsideColor())) {
                     carInfo.setCarColor(car.getOutsideColor());
                 }
