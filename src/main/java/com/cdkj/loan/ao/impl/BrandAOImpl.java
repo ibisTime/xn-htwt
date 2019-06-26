@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.bo.IBrandBO;
+import com.cdkj.loan.bo.IBrandLogoBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OkHttpUtils;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Brand;
+import com.cdkj.loan.domain.BrandLogo;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630400Req;
@@ -18,20 +21,24 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.enums.ECarProduceType;
+import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.log4j.Logger;
 
 @Service
 public class BrandAOImpl implements IBrandAO {
 
     @Autowired
     private IBrandBO brandBO;
+
+    @Autowired
+    private IBrandLogoBO brandLogoBO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -111,7 +118,7 @@ public class BrandAOImpl implements IBrandAO {
         SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
                 + "/getCarBrandList" + "?token=" + token.getCvalue());
-        logger.info("json:"+json);
+        logger.info("json:" + json);
         if (json == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "查询结果为空，请检查地址和token是否正确！");
@@ -120,10 +127,14 @@ public class BrandAOImpl implements IBrandAO {
         condition.setType(ECarProduceType.IMPORT.getCode());
         brandBO.deleteByCondition(condition);
 
+        // 品牌logo
+        List<BrandLogo> brandLogoList = brandLogoBO.queryBrandLogoList(new BrandLogo());
+        ArrayList<String> nameList = new ArrayList<>();
+
         JSONObject jsono = JSONObject.parseObject(json);
 
         String s = jsono.get("brand_list").toString();
-        logger.info("brand_list:"+s);
+        logger.info("brand_list:" + s);
         JSONArray parseArray = JSONArray.parseArray(s);
         int i = 0;
         ArrayList<Brand> brandList = new ArrayList<>();
@@ -134,11 +145,18 @@ public class BrandAOImpl implements IBrandAO {
             String initial = jsonObject.getString("initial");
             Date updateTime = jsonObject.getDate("update_time");
 
+            String logo = null;
+            for (BrandLogo brandLogo : brandLogoList) {
+                if (brandName.equals(brandLogo.getBrandName())) {
+                    logo = brandLogo.getBrandLogo();
+                }
+            }
             Brand brand = new Brand();
             brand.setCode(brandId);
             brand.setBrandId(brandId);
             brand.setType(ECarProduceType.IMPORT.getCode());
             brand.setName(brandName);
+            brand.setLogo(logo);
             brand.setLocation(EBoolean.YES.getCode());
             i++;
             brand.setOrderNo(i);
@@ -147,6 +165,12 @@ public class BrandAOImpl implements IBrandAO {
             brand.setUpdater(req.getUpdater());
             brand.setUpdateDatetime(updateTime);
             brandList.add(brand);
+
+            // 品牌logo
+            BrandLogo brandLogo = new BrandLogo();
+            brandLogo.setCode(OrderNoGenerater.generate(EGeneratePrefix.BRANDLOGO.getCode()));
+            brandLogo.setBrandName(brandName);
+            brandLogoList.add(brandLogo);
         }
         brandBO.insertBrandList(brandList);
     }

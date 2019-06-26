@@ -17,7 +17,7 @@ public enum EGeneratePrefix {
 
     Brand("B", "品牌"), Series("S", "车系"), Car("C", "车型"), Car_Order("COD",
             "购买意向"), Carconfig("CC", "车辆配置"), CarCarconfig("CCC", "车型配置"), CarNews(
-            "CN", "车辆资讯"), Action("A", "用户行为"),
+            "CN", "车辆资讯"), Action("A", "用户行为"), BRANDLOGO("BL", "品牌Logo"),
 
     CATEGORY("FL", "分类"), PRODUCT("CP", "产品"), PRODUCT_SPECS("PS", "产品"), ORDER(
             "DD", "订单"), PRODUCT_ORDER("CD", "产品订单"), PAY_GROUP("PG", "支付组号"), BANKCARD(

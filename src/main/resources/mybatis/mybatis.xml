@@ -35,6 +35,7 @@
 
         <!-- 车贷意向  -->
         <typeAlias alias="brand" type="com.cdkj.loan.domain.Brand"/>
+        <typeAlias alias="brandLogo" type="com.cdkj.loan.domain.BrandLogo"/>
         <typeAlias alias="series" type="com.cdkj.loan.domain.Series"/>
         <typeAlias alias="car" type="com.cdkj.loan.domain.Car"/>
         <typeAlias alias="carorder" type="com.cdkj.loan.domain.CarOrder"/>

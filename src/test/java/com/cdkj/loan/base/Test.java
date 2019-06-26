@@ -9,20 +9,20 @@ import java.io.IOException;
 public class Test {
 
     // 实体
-    private static String key = "AdvanceCollectCard";
+    private static String key = "BrandLogo";
 
     // 实体名称
-    private static String keyName = "垫资收款卡号";
+    private static String keyName = "品牌logo";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_advance_collect_card";
+    private static String dbname = "tht_brand_logo";
 
-    private static String[] DBwords = {"code", "biz_code", "collect_bankcard_code"};
+    private static String[] DBwords = {"code", "brand_name", "brand_logo"};
 
-    private static String[] DBwordsName = {"编号", "业务编号", "收款卡编号"};
+    private static String[] DBwordsName = {"编号", "品牌名称", "品牌logo"};
 
     private static String[] DOwords = getDOwords();
 

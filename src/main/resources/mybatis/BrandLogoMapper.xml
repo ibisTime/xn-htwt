@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBrandLogoDAO">
+    <resultMap id="BrandLogo_DB_Result" type="BrandLogo">
+        <result column="code" property="code"/>
+        <result column="brand_name" property="brandName"/>
+        <result column="brand_logo" property="brandLogo"/>
+    </resultMap>
+    <sql id="where_condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="code != null and code != '' ">
+                AND t.code = #{code}
+            </if>
+        </trim>
+    </sql>
+    <select id="select_BrandLogo" parameterType="BrandLogo" resultMap="BrandLogo_DB_Result">
+        SELECT
+        t.code
+        ,t.brand_name
+        ,t.brand_logo
+        FROM
+        tht_brand_logo t
+        <include refid="where_condition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != '' ">
+                t.${order}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select_BrandLogo_count" parameterType="BrandLogo"
+            resultType="java.lang.Long">
+        SELECT count(1) FROM tht_brand_logo t
+        <include refid="where_condition"/>
+    </select>
+
+    <insert id="insert_BrandLogo" parameterType="BrandLogo">
+		INSERT INTO
+		tht_brand_logo(
+		code
+		,brand_name
+		,brand_logo
+		)
+		VALUES(
+		#{code}
+		,#{brandName}
+		,#{brandLogo}
+		)
+	</insert>
+
+    <insert id="insert_brandLogoList" parameterType="List">
+        INSERT INTO
+        tht_brand_logo(
+        code
+        ,brand_name
+        ,brand_logo
+        )
+        VALUES
+        <foreach collection="list" item="brandLogo" separator=",">
+            (
+            #{brandLogo.code}
+            ,#{brandLogo.brandName}
+            ,#{brandLogo.brandLogo}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update_BrandLogo" parameterType="BrandLogo">
+		UPDATE tht_brand_logo
+		SET
+		brand_name = #{brandName}
+		,brand_logo = #{brandLogo}
+		WHERE code = #{code}
+	</update>
+
+    <delete id="delete_BrandLogo" parameterType="BrandLogo">
+        DELETE FROM tht_brand_logo where code = #{code}
+    </delete>
+</mapper>

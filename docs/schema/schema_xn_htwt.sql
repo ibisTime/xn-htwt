@@ -3823,3 +3823,12 @@ CREATE TABLE `tdq_advance_collect_card` (
   `collect_bankcard_code` varchar(32) DEFAULT NULL COMMENT '收款卡编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='垫资收款卡号';
+
+
+DROP TABLE IF EXISTS `tht_brand_logo`;
+CREATE TABLE `tht_brand_logo` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `brand_name` varchar(255) DEFAULT NULL COMMENT '品牌名称',
+  `brand_logo` varchar(255) DEFAULT NULL COMMENT '品牌logo',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌logo';
