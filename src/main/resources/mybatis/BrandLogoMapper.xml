@@ -12,6 +12,9 @@
             <if test="code != null and code != '' ">
                 AND t.code = #{code}
             </if>
+            <if test="brandName != null and brandName != '' ">
+                AND t.brand_name like "%"#{brandName}"%"
+            </if>
         </trim>
     </sql>
     <select id="select_BrandLogo" parameterType="BrandLogo" resultMap="BrandLogo_DB_Result">
