@@ -59,7 +59,6 @@ public class ArchiveDAOImpl extends AMybatisTemplate implements IArchiveDAO {
 
     @Override
     public int updateLeaveArchive(Archive data) {
-
         return super.update(NAMESPACE.concat("update_leave_archive"), data);
     }
 

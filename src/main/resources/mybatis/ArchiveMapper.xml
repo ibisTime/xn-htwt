@@ -382,6 +382,8 @@
 		,leave_datetime = #{leaveDatetime}
 		,heir_people = #{heirPeople}
 		,leave_reason = #{leaveReason}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
