@@ -867,6 +867,7 @@
 		,political
 		,nation
 		,education
+		,id_kind
 		,id_no
 		,family_number
 		,mobile
@@ -1083,6 +1084,7 @@
 		,#{political}
 		,#{nation}
 		,#{education}
+		,#{idKind}
 		,#{idNo}
 		,#{familyNumber}
 		,#{mobile}

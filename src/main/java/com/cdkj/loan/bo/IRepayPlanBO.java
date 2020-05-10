@@ -10,10 +10,6 @@ import com.cdkj.loan.enums.ERepayPlanNode;
 
 public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
-    public boolean checkRepayComplete(String repayBizCode, String repayPlanCode);
-
-    public boolean checkPreUnpay(String repayBizCode, int curPeriod);
-
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition);
 
     public RepayPlan getRepayPlanCurMonth(String repayBizCode);
@@ -37,7 +33,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     // 进入逾期
     public void refreshRepayPlanOverdue(RepayPlan repayPlan);
 
-    // 逾期后更新
+    // 逾期后处理
     public void refreshRepayPlanOverdueHandle(RepayPlan repayPlan);
 
     // 进入绿名单
@@ -64,6 +60,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     // 清欠催收部申请赎回
     public void qkcsbRedeemApply(RepayPlan repayPlan);
 
+    // 风险控经理审核
     public void riskManagerCheck(RepayPlan repayPlan);
 
     public Paginable<RepayPlan> getPaginableByRoleCode(int start, int limit,
@@ -81,4 +78,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 缴纳代偿金额
     public void repayAmount(RepayPlan repayPlan);
+
+    // 还款计划结清
+    public void refreshSettleDaily(RepayPlan data, Long repayAmount);
 }

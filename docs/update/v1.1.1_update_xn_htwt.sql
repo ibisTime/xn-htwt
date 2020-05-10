@@ -241,3 +241,9 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee','1','银行服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee','2','公司服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee','3','团队服务费','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('repayplan','repayplan_step','50','admin',now(),'还款计划每次处理的条数','CD-CHTWT000020','CD-CHTWT000020');
+
+ALTER TABLE `tdh_repay_plan` 
+CHANGE COLUMN `repay_interest` `repay_interest` BIGINT(20) NULL DEFAULT NULL COMMENT '本期利息' ,
+ADD COLUMN `month_repay_amount` BIGINT(20) NULL COMMENT '还款金额' AFTER `repay_interest`;

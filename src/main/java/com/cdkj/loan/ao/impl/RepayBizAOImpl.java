@@ -191,10 +191,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         for (RepayPlan repayPlan : planList) {
             if (ERepayPlanNode.TO_REPAY.getCode().equals(
                 repayPlan.getCurNodeCode())) {
-                Long monthRepayAmount = repayPlan.getRepayCapital()
-                        + repayPlan.getRepayInterest();
                 // 更新还款计划
-                repayPlanBO.repaySuccess(repayPlan, monthRepayAmount);
+                repayPlanBO.repaySuccess(repayPlan, repayPlan.getRepayAmount());
             }
         }
     }
@@ -223,7 +221,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
         Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
         // 更新还款业务
-        repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
+        repayBizBO.refreshRepayAllProduct(code, realWithholdAmount);
         // 改变还款计划状态
         RepayPlan rpCondition = new RepayPlan();
         rpCondition.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());

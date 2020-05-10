@@ -24,7 +24,7 @@ public class XN630534 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayPlanAO.repayAmount(req.getCode(), req.getOperator(),
+        repayPlanAO.chargeRepayAmount(req.getCode(), req.getOperator(),
             req.getPayType());
         return new BooleanRes(true);
     }

@@ -38,11 +38,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void refreshAdvanceRepayCarLoan(RepayBiz repayBiz,
             Long realWithholdAmount);
 
-    // 车贷还款订单
-    public void refreshRepayCarLoan(String repayBizCode, Long realWithholdAmount);
-
-    // 车贷确认结算
-    public void confirmSettledProduct(RepayBiz repayBiz);
+    // 车贷全部还清订单
+    public void refreshRepayCarAll(RepayBiz repayBiz);
 
     // 清欠催收部审核
     public void approveByQkcsDepartment(RepayBiz repayBiz, String curNodeCode,
@@ -100,20 +97,21 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             Long realWithholdAmount);
 
     // 产品正常还款
-    public void refreshRepayAllCarProduct(String repayBizCode);
+    public void refreshRepayAllProduct(String repayBizCode, Long realPayAmount);
 
     // 加入黑名单
     public void refreshEnterBlackList(RepayBiz data);
 
-    // 产品确认结算
-    public void confirmSettledCarProduct(RepayBiz repayBiz);
+    // 产品确认结清
+    public void confirmSettledProduct(RepayBiz repayBiz);
 
     // ********************************product********************************
 
     // ********************************common********************************
 
-    // 部分还款更新还款金额
-    public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount);
+    // 部分还款更新还款金额,restPeriods =0部分还款，restPeriods=1全部还款
+    public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount,
+            int restPeriods);
 
     // 更新逾期金额
     public void repayOverdue(RepayBiz repayBiz);
