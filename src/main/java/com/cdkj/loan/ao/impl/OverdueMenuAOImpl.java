@@ -78,6 +78,7 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             overdueMenu.setStatus(EOverdueMenuStatus.DCL.getCode());
             overdueMenu.setOverdueAmount(StringValidater.toLong(overdue
                 .getOverdueAmount()));
+
             // 判断是否有准入单，没有，状态设置为待处理，原因是信息不匹配,
             if (CollectionUtils.isNotEmpty(repayBizList)) {
                 // 有,状态设置为已处理,根据准入单查询还款业务表再查最新一条还款计划,设置还款计划状态为逾期名单
