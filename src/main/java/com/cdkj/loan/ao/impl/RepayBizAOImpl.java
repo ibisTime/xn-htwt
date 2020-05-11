@@ -581,6 +581,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    @Transactional
     public void financeApprove(XN630562Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.FINANCE_MANAGER_CHECK.getCode().equals(
@@ -588,31 +589,41 @@ public class RepayBizAOImpl implements IRepayBizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是财务经理审核节点，不能操作！");
         }
+
         RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
             req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             if (ERepayPlanSuggest.SIX_SAFEGUARDS.getCode().equals(
                 repayPlan.getSuggest())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
+                repayPlanBO.financeApprove(repayPlan);
+
                 repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
                 repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() - 1);
                 repayBiz.setOverdueAmount(repayBiz.getOverdueAmount()
                         - repayPlan.getOverdueAmount());
+                repayBiz.setUpdater(req.getOperator());
+                repayBiz.setUpdateDatetime(new Date());
+                repayBizBO.financeApprove(repayBiz);
             } else {
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
+                repayPlanBO.financeApprove(repayPlan);
+
                 repayBiz.setCurNodeCode(ERepayBizNode.RELEASE_MORTGAGE
                     .getCode());
                 repayBiz.setCurOverdueCount(0);
                 repayBiz.setOverdueAmount(0L);
+                repayBiz.setUpdater(req.getOperator());
+                repayBiz.setUpdateDatetime(new Date());
+                repayBizBO.financeApprove(repayBiz);
             }
-            repayPlanBO.financeApprove(repayPlan);
         } else {
             repayBiz.setCurNodeCode(ERepayBizNode.RISK_MANAGER_CHECK.getCode());
+            repayBiz.setUpdater(req.getOperator());
+            repayBiz.setUpdateDatetime(new Date());
+            repayBizBO.financeApprove(repayBiz);
         }
 
-        repayBiz.setUpdater(req.getOperator());
-        repayBiz.setUpdateDatetime(new Date());
-        repayBizBO.financeApprove(repayBiz);
     }
 
     private String getNextNodeCode(String curNodeCode, String approveResult) {

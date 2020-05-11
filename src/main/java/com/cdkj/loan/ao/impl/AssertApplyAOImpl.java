@@ -12,15 +12,18 @@ import com.cdkj.loan.bo.IAssertApplyBO;
 import com.cdkj.loan.bo.IAssertGoodsBO;
 import com.cdkj.loan.bo.IAssertUserBO;
 import com.cdkj.loan.bo.ICompProductBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.AssertApply;
 import com.cdkj.loan.domain.AssertGoods;
 import com.cdkj.loan.domain.AssertUser;
 import com.cdkj.loan.domain.CompProduct;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632640Req;
 import com.cdkj.loan.dto.req.XN632640ReqChild1;
 import com.cdkj.loan.dto.req.XN632640ReqChild2;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -43,6 +46,9 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
 
     @Autowired
     private IAssertUserBO assertUserBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Autowired
     private IArchiveBO archiveBO;
@@ -109,9 +115,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
         Paginable<AssertApply> paginable = assertApplyBO.getPaginable(start,
             limit, condition);
         for (AssertApply assertApply : paginable.getList()) {
-            String realName = archiveBO.getArchiveByUserid(
-                assertApply.getApplyUser()).getRealName();
-            assertApply.setApplyUserName(realName);
+            initAssertApply(assertApply);
         }
         return paginable;
     }
@@ -138,7 +142,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
             }
             assertApply.setAssertGoodsList(assertGoodsList);
         }
-        if ("1".equals(assertApply.getIsPrint())) {
+        if (EBoolean.YES.getCode().equals(assertApply.getIsPrint())) {
             AssertUser condition2 = new AssertUser();
             condition2.setAssertCode(assertApply.getCode());
             List<AssertUser> assertUserList = assertUserBO
@@ -148,15 +152,12 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 Archive archive = archiveBO.getArchiveByUserid(assertUser
                     .getUserId());
                 assertUser.setArchive(archive);
-
             }
 
             assertApply.setAssertUserList(assertUserList);
         }
 
-        String realName = archiveBO.getArchiveByUserid(
-            assertApply.getApplyUser()).getRealName();
-        assertApply.setApplyUserName(realName);
+        initAssertApply(assertApply);
 
         return assertApply;
     }
@@ -167,11 +168,13 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
         Paginable<AssertApply> paginable = assertApplyBO
             .getPaginableByDepartmentCode(start, limit, condition);
         for (AssertApply assertApply : paginable.getList()) {
-            String realName = archiveBO.getArchiveByUserid(
-                assertApply.getApplyUser()).getRealName();
-            assertApply.setApplyUserName(realName);
+            initAssertApply(assertApply);
         }
         return paginable;
     }
 
+    private void initAssertApply(AssertApply assertApply) {
+        SYSUser sysUser = sysUserBO.getUser(assertApply.getApplyUser());
+        assertApply.setApplyUserName(sysUser.getRealName());
+    }
 }

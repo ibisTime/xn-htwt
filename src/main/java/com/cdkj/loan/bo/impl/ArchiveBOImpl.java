@@ -24,8 +24,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class ArchiveBOImpl extends PaginableBOImpl<Archive>
-        implements IArchiveBO {
+public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
+        IArchiveBO {
 
     @Autowired
     private IArchiveDAO archiveDAO;
@@ -84,8 +84,8 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
     public String saveArchive(Archive data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.RECRUITAPPLY
+                .getCode());
             data.setCode(code);
             data.setStatus("1");
             archiveDAO.insert(data);
@@ -116,10 +116,10 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
     public List<Archive> queryArchiveList(Archive condition) {
         List<Archive> archiveList = archiveDAO.selectList(condition);
         for (Archive archive : archiveList) {
-            archive.setDepartmentName(departmentBO
-                .getDepartment(archive.getDepartmentCode()).getName());
-            archive.setPostName(
-                departmentBO.getDepartment(archive.getPostCode()).getName());
+            archive.setDepartmentName(departmentBO.getDepartment(
+                archive.getDepartmentCode()).getName());
+            archive.setPostName(departmentBO.getDepartment(
+                archive.getPostCode()).getName());
         }
         return archiveList;
     }
@@ -153,9 +153,6 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
             Archive condition = new Archive();
             condition.setUserId(userId);
             data = archiveDAO.select(condition);
-            if (data == null) {
-                throw new BizException("xn0000", "人事档案不存在");
-            }
         }
         return data;
     }
